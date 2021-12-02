@@ -83,7 +83,6 @@ export const navBarData = [
       {
         labelText: 'Graphql',
         link: '/graphql',
-        ß,
       },
     ],
   },
