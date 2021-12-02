@@ -63,9 +63,10 @@ const LandingController = ({ classes }) => (
           <div className={classes.contentLeft}>
             <div className={classes.about}>
               <div className={classes.aboutImageSection}>
-                <img src={imgAbout} className={classes.aboutImage} alt="GMB about" />
+                {/* <img src={imgAbout} className={classes.aboutImage} alt="GMB about" /> */}
+                <img src={imgAbout} className={classes.aboutImage} alt="PCDC about" />
               </div>
-              <div className={classes.GMBWords}>
+              <div className={classes.PCDCWords}>
                 About
                 {' '}
                 <br />
@@ -83,7 +84,7 @@ const LandingController = ({ classes }) => (
               </div>
               <div className={classes.aboutButtonSection}>
                 <div className={classes.aboutButtonLeft}>
-                  <img src={iconAbout} className={classes.iconAbout} alt="GMB about icon" />
+                  <img src={iconAbout} className={classes.iconAbout} alt="PCDC about icon" />
                 </div>
                 <div className={classes.aboutButtonRight}>
                   <Link to="/purpose" className={classes.aboutButton}>EXPLORE</Link>
@@ -95,28 +96,29 @@ const LandingController = ({ classes }) => (
             <div className={classes.contentRightTop}>
               <div className={classes.program}>
                 <div className={classes.programImg}>
-                  <img className={classes.image} src={imgTrial} alt="GMB  Trials" />
+                  <img className={classes.image} src={imgTrial} alt="PCDC Programs" />
                 </div>
                 <div className={classes.content}>
-                  <div className={classes.contentHeader}> Trials</div>
+                  <div className={classes.contentHeader}> Programs</div>
                   <div className={classes.contentContainer}>
-                    View summaries of clinical trials within GMB.
+                    View summaries of clinical programs within PCDC.
                   </div>
 
                 </div>
                 <div className={classes.yellowButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="GMB about " />
+                    <img className={classes.icon} src={icon} alt="PCDC about " />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
-                    <Link to="/trials" className={classes.blueButton}>READ MORE</Link>
+                    {/* <Link to="/trials" className={classes.blueButton}>READ MORE</Link> */}
+                    <Link to="/programs" className={classes.blueButton}>READ MORE</Link>
                   </div>
                 </div>
               </div>
               <div className={classes.studies}>
                 <div className={classes.programImg}>
-                  <img className={classes.image} src={imgAccess} alt="GMB Request ACCESS" />
+                  <img className={classes.image} src={imgAccess} alt="PCDC Request ACCESS" />
                 </div>
                 <div className={classes.content}>
                   <div className={classes.contentHeader}>This Space Open</div>
@@ -128,7 +130,7 @@ const LandingController = ({ classes }) => (
                 </div>
                 <div className={classes.brownButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="GMB about" />
+                    <img className={classes.icon} src={icon} alt="PCDC about" />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
@@ -142,13 +144,13 @@ const LandingController = ({ classes }) => (
               <div className={classes.cases}>
                 <div className={classes.greyContentHeader}> Cases</div>
                 <div className={classes.greyContent}>
-                  Search all the Cases and build cohorts from all the
-                  Programs/Studies within the GMB. The data files from
+                  Search all the studies and build cohorts from all the
+                  Program within the PCDC. The data files from
                   these cohorts can then be analyzed in the Cloud Resources.
                 </div>
                 <div className={classes.greybuttonSection}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.greyIcon} src={icon} alt="GMB about " />
+                    <img className={classes.greyIcon} src={icon} alt="PCDC about " />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
@@ -291,7 +293,7 @@ const styles = () => ({
   },
   aboutImageSection: {
   },
-  GMBWords: {
+  PCDCWords: {
     height: '168px',
     background: '#0B2731',
     color: '#FFFFFF',

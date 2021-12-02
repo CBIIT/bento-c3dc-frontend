@@ -15,12 +15,12 @@ export const landingPageData = {
   },
   landingPageStatsBar: [
     {
-      statTitle: 'Trials',
+      statTitle: 'Programs',
       type: 'field',
       statAPI: 'numberOfTrials',
     },
     {
-      statTitle: 'Cases',
+      statTitle: 'Studies',
       type: 'field',
       statAPI: 'numberOfSubjects',
     },

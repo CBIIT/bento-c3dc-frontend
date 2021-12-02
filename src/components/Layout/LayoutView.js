@@ -11,13 +11,16 @@ import CaseDetail from '../../pages/caseDetail/caseDetailController';
 import ArmDetail from '../../pages/armDetail/armDetailController';
 import modelPage from '../../pages/modelPage/modelPageView';
 import table from '../../pages/table/tableView';
+// routes
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
 import Trials from '../../pages/trials/trialsController';
+import Programs from '../../pages/programs/programsController';
 import TrialDetail from '../../pages/trialDetail/trialDetailController';
 import Sites from '../../pages/sites/sitesController';
 import SiteDetail from '../../pages/siteDetail/siteDetailController';
+// end routes
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';
 import JBrowse from '../JBrowse/JBrowseView';
@@ -46,6 +49,7 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route exact path="/home" component={Home} />
             <Route path="/cases" component={Dashboard} />
             <Route path="/trials" component={Trials} />
+            <Route path="/programs" component={Programs} />
             <Route path="/sites" component={Sites} />
             <Route path="/model" component={modelPage} />
             <Route path="/table" component={table} />

@@ -15,7 +15,7 @@ export default {
   // Ideal size for icon is 20x20 px
   link_sections: [
     {
-      title: 'About GMB',
+      title: 'About PCDC',
       items: [
         {
           text: 'Purpose',

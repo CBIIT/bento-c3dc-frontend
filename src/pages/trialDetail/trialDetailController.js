@@ -6,6 +6,7 @@ import { Typography } from '../../components/Wrappers/Wrappers';
 import { GET_TRIAL_DETAIL_DATA_QUERY } from '../../bento/trialDetailData';
 
 const TrialDetailContainer = ({ match }) => {
+  debugger; // eslint-disable-line no-debugger
   const { loading, error, data } = useQuery(GET_TRIAL_DETAIL_DATA_QUERY, {
     variables: { trial_id: match.params.id },
   });

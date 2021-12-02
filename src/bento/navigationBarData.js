@@ -48,10 +48,15 @@ export const navBarData = [
     type: 'link',
     link: '/home',
   },
-  {
+  /* {
     labelText: 'trials',
     type: 'link',
     link: '/trials',
+  }, */
+  {
+    labelText: 'programs',
+    type: 'link',
+    link: '/programs',
   },
   {
     labelText: 'sites',
