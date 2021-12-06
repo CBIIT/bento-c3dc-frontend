@@ -111,7 +111,6 @@ const LandingController = ({ classes }) => (
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
-                    {/* <Link to="/trials" className={classes.blueButton}>READ MORE</Link> */}
                     <Link to="/programs" className={classes.blueButton}>READ MORE</Link>
                   </div>
                 </div>
@@ -121,20 +120,19 @@ const LandingController = ({ classes }) => (
                   <img className={classes.image} src={imgAccess} alt="PCDC Request ACCESS" />
                 </div>
                 <div className={classes.content}>
-                  <div className={classes.contentHeader}>This Space Open</div>
+                  <div className={classes.contentHeader}>Studies</div>
                   <div className={classes.contentContainer}>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     Nullam dictum at purus.
                   </div>
-
                 </div>
                 <div className={classes.brownButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="PCDC about" />
+                    <img className={classes.icon} src={icon} alt="access PCDC studies" />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
-                    <Link to="/request-access" className={classes.brownButton}>READ MORE</Link>
+                    <Link to="/studies" className={classes.brownButton}>READ MORE</Link>
                   </div>
                 </div>
               </div>

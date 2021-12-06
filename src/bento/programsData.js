@@ -21,7 +21,7 @@ const table = {
     {
       dataField: 'trial_id',
       header: 'Program ID',
-      link: '/program/{program_id}',
+      link: '/program/{trial_id}',
     },
     {
       dataField: 'trialName',

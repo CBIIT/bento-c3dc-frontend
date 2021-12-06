@@ -15,11 +15,14 @@ import table from '../../pages/table/tableView';
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
-import Trials from '../../pages/trials/trialsController';
+// import Trials from '../../pages/trials/trialsController';
 import Programs from '../../pages/programs/programsController';
-import TrialDetail from '../../pages/trialDetail/trialDetailController';
-import Sites from '../../pages/sites/sitesController';
-import SiteDetail from '../../pages/siteDetail/siteDetailController';
+// import TrialDetail from '../../pages/trialDetail/trialDetailController';
+import ProgramDetail from '../../pages/programDetail/programDetailController';
+// import Sites from '../../pages/sites/sitesController';
+import Studies from '../../pages/studies/studiesController';
+import StudyDetail from '../../pages/studyDetail/studyDetailController';
+// import SiteDetail from '../../pages/siteDetail/siteDetailController';
 // end routes
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';
@@ -48,14 +51,16 @@ const Layout = ({ classes, isSidebarOpened }) => (
             <Route exact path="/" component={Home} />
             <Route exact path="/home" component={Home} />
             <Route path="/cases" component={Dashboard} />
-            <Route path="/trials" component={Trials} />
+            {/* <Route path="/trials" component={Trials} /> */}
+            <Route path="/studies" component={Studies} />
             <Route path="/programs" component={Programs} />
-            <Route path="/sites" component={Sites} />
+            {/* <Route path="/sites" component={Sites} /> */}
             <Route path="/model" component={modelPage} />
             <Route path="/table" component={table} />
             <Route path="/fileCentricCart" component={fileCentricCart} />
-            <Route path="/trial/:id" component={TrialDetail} />
-            <Route path="/site/:id" component={SiteDetail} />
+            {/* <Route path="/trial/:id" component={TrialDetail} /> */}
+            <Route path="/program/:id" component={ProgramDetail} />
+            <Route path="/study/:id" component={StudyDetail} />
             <Route path="/case/:id" component={CaseDetail} />
             <Route path="/arm/:id" component={ArmDetail} />
             <Route path="/JBrowse" component={JBrowse} />
