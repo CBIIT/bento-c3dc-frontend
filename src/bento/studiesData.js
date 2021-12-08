@@ -17,46 +17,44 @@ const externalLinkIcon = {
 const table = {
   display: true,
   title: 'Studies',
-  dataField: 'sitesInfo',
-  defaultSortField: 'site_id',
+  dataField: 'list_of_studies',
+  defaultSortField: 'study_id',
   defaultSortDirection: 'asc',
   selectableRows: false,
   columns: [
     {
-      dataField: 'site_id',
+      dataField: 'study_id',
       header: 'Study ID',
-      link: '/study/{site_id}',
+      link: '/study/{study_id}',
     },
     {
-      dataField: 'siteName',
-      header: 'Study Name',
-    },
-    {
-      dataField: 'siteAddress',
-      header: 'Address',
-    },
-    {
-      dataField: 'siteStatus',
-      header: 'Status',
+      dataField: 'study_description',
+      header: 'Study Description',
     },
     {
       dataField: 'num_subjects',
       header: 'Associated Cases',
+      link: '/cases',
     },
   ],
 };
 
 // --------------- GraphQL query - Retrieve sites info --------------
+// const GET_STUDIES_DATA_QUERY = gql`{
+//   sitesInfo{
+//       site_id
+//       siteName
+//       siteAddress
+//       siteStatus
+//       num_subjects
+//   }
+// }`;
 const GET_STUDIES_DATA_QUERY = gql`{
-  sitesInfo{
-      site_id
-      siteName
-      siteAddress
-      siteStatus
-      num_subjects
+  list_of_studies{
+      study_id
+      study_description
   }
-}
- `;
+}`;
 
 export {
   studyListingIcon,

@@ -2,11 +2,11 @@ import gql from 'graphql-tag';
 
 const pageTitle = {
   label: 'Program:',
-  dataField: 'trialName',
+  dataField: 'cancer',
 };
 
 const pageSubTitle = {
-  dataField: 'trial_id',
+  dataField: 'program_id',
 };
 
 const breadcrumbs = {
@@ -21,30 +21,47 @@ const aggregateCount = {
   display: true,
 };
 
-const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query trialDetail($trial_id: String){
-    trialDetail(trial_id: $trial_id){
-        trial_id
-        trialName
-        trialLongName
-        trialDesription
-        leadOrganization
-        trialType
-        trialPrincipalInvestigator
-        num_subjects
-        num_files
-        sites{
-          site_id
-          siteName
-          siteAddress
-          siteStatus
-          subjectCount
-        }
+const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query programDetail($progam_id: String){
+  programDetail(program_id: $program_id) {
+    program_id
+    cancer
+    headquarters
+    consortium_manager
+    consortium
+    num_subjects
+    num_files
+    studies{
+      study_id
+      study_description
+      subject_count
     }
-    subjectCountByStageAtEntry(trial_id: $trial_id){
-        group
-        subjects
-    }
+  }
 }`;
+
+// const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query trialDetail($program_id: String){
+//     trialDetail(trial_id: $program_id){
+//         trial_id
+//         trialName
+//         trialLongName
+//         trialDesription
+//         leadOrganization
+//         trialType
+//         trialPrincipalInvestigator
+//         num_subjects
+//         num_files
+//         sites{
+//           site_id
+//           siteName
+//           siteAddress
+//           siteStatus
+//           subjectCount
+//         }
+//     }
+//     subjectCountByStageAtEntry(trial_id: $program_id){
+//         group
+//         subjects
+//     }
+// }`;
 
 const programDetailIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
@@ -54,28 +71,24 @@ const programDetailIcon = {
 const leftPanel = {
   attributes: [
     {
-      dataField: 'trialName',
+      dataField: 'cancer',
       label: 'Program',
     },
     {
-      dataField: 'trialLongName',
-      label: 'Program Name',
+      dataField: 'program_headquarters',
+      label: 'Program Headquarters',
     },
     {
-      dataField: 'trial_id',
+      dataField: 'program_id',
       label: 'Program Id',
     },
     {
-      dataField: 'trialDesription',
-      label: 'Program Description',
+      dataField: 'program_consortium',
+      label: 'Program Consortium',
     },
     {
-      dataField: 'leadOrganization',
-      label: 'Lead Organization',
-    },
-    {
-      dataField: 'trialPrincipalInvestigator',
-      label: 'Principal Investigator',
+      dataField: 'consortium_manager',
+      label: 'Program Consortium Manager',
     },
   ],
 };
@@ -106,22 +119,22 @@ const externalLinkIcon = {
 
 const table = {
   display: true,
-  title: 'Sites',
-  dataField: 'sites',
-  defaultSortField: 'site_id',
+  title: 'Studies',
+  dataField: 'studies',
+  defaultSortField: 'study_id',
   defaultSortDirection: 'asc',
   selectableRows: false,
   columns: [
     {
-      dataField: 'site_id',
-      header: 'Site ID',
-      link: '/study/{site_id}',
+      dataField: 'study_id',
+      header: 'Study ID',
+      link: '/study/{study_id}',
     },
     {
-      dataField: 'siteName',
-      header: 'Name',
+      dataField: 'study_description',
+      header: 'Study Description',
     },
-    {
+    /* {
       dataField: 'siteAddress',
       header: 'Address',
     },
@@ -132,7 +145,7 @@ const table = {
     {
       dataField: 'subjectCount',
       header: 'Cases',
-    },
+    }, */
   ],
 };
 

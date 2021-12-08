@@ -13,38 +13,56 @@ const externalLinkIcon = {
 const table = {
   display: true,
   title: 'Programs',
-  dataField: 'trialsInfo',
-  defaultSortField: 'trial_id',
+  dataField: 'listOfPrograms',
+  defaultSortField: 'program_id',
   defaultSortDirection: 'asc',
   selectableRows: false,
   columns: [
     {
-      dataField: 'trial_id',
+      dataField: 'program_id',
       header: 'Program ID',
-      link: '/program/{trial_id}',
+      link: '/program/{program_id}',
     },
     {
-      dataField: 'trialName',
-      header: 'Program Name',
+      dataField: 'cancer',
+      header: 'Cancer Name',
+    }, {
+      dataField: 'program_consortium',
+      header: 'Program Consortium',
+    }, {
+      dataField: 'consortium_manager',
+      header: 'Consortium Manager',
     },
     {
-      dataField: 'trialType',
-      header: 'Program Type',
+      dataField: 'program_headquarters',
+      header: 'Program Headquarters',
     },
     {
-      dataField: 'num_subjects',
-      header: 'Associated Cases',
+      dataField: 'associated_sub_count',
+      header: 'Associated Subjects',
+      link: '/cases',
     },
   ],
 };
 
+// const GET_PROGRAMS_DATA_QUERY = gql`{
+//    trialsInfo{
+//     trial_id
+//     trialName
+//     trialType
+//     trialDescription
+//     num_subjects
+//    }
+// }`;
+
 const GET_PROGRAMS_DATA_QUERY = gql`{
-   trialsInfo{
-    trial_id
-    trialName
-    trialType
-    trialDescription
-    num_subjects
+  listOfPrograms{
+    program_id
+    cancer
+    program_consortium
+    consortium_manager
+    program_headquarters
+    associated_sub_count
    }
 }`;
 

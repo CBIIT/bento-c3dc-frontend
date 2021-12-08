@@ -27,8 +27,8 @@ import Widget from '../../components/Widgets/WidgetView';
 import colors from '../../utils/colors';
 
 const ProgramView = ({ classes, data, theme }) => {
-  const programData = data.trialDetail;
-  const widgetData = data.subjectCountByStageAtEntry;
+  const programData = data.programDetail;
+  const widgetData = []; // data.subjectCountByStageAtEntry;
 
   const redirectTo = () => {
     setSideBarToLoading();
@@ -55,7 +55,7 @@ const ProgramView = ({ classes, data, theme }) => {
   };
 
   const stat = {
-    numberOfTrials: 1,
+    numberOfPrograms: 1,
     numberOfSubjects: programData.num_subjects !== undefined ? programData.num_subjects : 'undefined',
     numberOfFiles: programData.num_files !== undefined ? programData.num_files : 'undefined',
   };

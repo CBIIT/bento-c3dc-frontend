@@ -113,24 +113,20 @@ const table = {
   ],
 };
 
-// --------------- GraphQL query - Retrieve program details --------------
-const GET_STUDY_DETAIL_DATA_QUERY = gql`
-query siteDetail($site_id: String){
-    siteDetail(site_id: $site_id){
-        site_id
-        siteName
-        siteAddress
-        siteContact
-        sitePhone
-        siteEmail
-        siteStatus
-        num_subjects
-        num_files
-        subjects{
-            subject_id
-            race
-            diseaseTerm
-        }
+// --------------- GraphQL query - Retrieve study details --------------
+const GET_STUDY_DETAIL_DATA_QUERY = gql`query studyDetail($study_id: String){
+    studyDetail(study_id: $study_id){       
+      study_id
+      study_description
+      num_subjects
+      num_files
+      subjects{
+        pcdc_subject_id
+        age_at_enrollment
+        treatment_arm
+        enrolled_status
+        year_at_enrollment
+      }
     }
 }`;
 

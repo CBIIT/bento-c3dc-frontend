@@ -22,13 +22,13 @@ export const landingPageData = {
     {
       statTitle: 'Studies',
       type: 'field',
-      statAPI: 'numberOfSubjects',
+      statAPI: 'numberOfStudies',
     },
-    {
+    /* {
       statTitle: 'files',
       type: 'field',
       statAPI: 'numberOfFiles',
-    },
+    }, */
   ],
   tile1: {
     alt: '',
@@ -66,8 +66,8 @@ export const landingPageData = {
 
 // --------------- GraphQL query - Retrieve Landing page data --------------
 export const GET_LANDING_PAGE_DATA_QUERY = gql`{
-  numberOfTrials
-  numberOfSubjects
-  numberOfFiles
+  numOfPrograms
+  num_of_studies
+#  numberOfFiles
   }
   `;

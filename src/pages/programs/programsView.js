@@ -13,6 +13,13 @@ import {
 } from '../dashboardTab/store/dashboardReducer';
 
 const Programs = ({ classes, data }) => {
+  console.group('Information in program view to view table');
+  // eslint-disable no-console
+  console.log('Classes: ', classes);
+  console.log('Data: ', data);
+  console.log('Table information: ', table);
+  console.groupEnd();
+  // eslint-enable no-console
   const redirectTo = (program) => {
     setSideBarToLoading();
     setDashboardTableLoading();
