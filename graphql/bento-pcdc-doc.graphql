@@ -599,6 +599,8 @@ type QueryType {
 
     numOfPrograms: Int 
     num_of_studies: Int 
+    numberOfSubjects: Int 
+    numberOfFiles: Int 
     
     listOfPrograms: [ProgramInfo] 
 

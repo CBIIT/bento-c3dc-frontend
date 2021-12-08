@@ -42,6 +42,8 @@ type QueryType {
 
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
     num_of_studies: Int @cypher(statement: "MATCH (x:Study) RETURN COUNT(x)")
+    numberOfSubjects: Int @cypher(statement: "MATCH (x:Subject_Characteristics_Table) RETURN COUNT(x)")
+    numberOfFiles: Int @cypher(statement: "MATCH (x:File) RETURN COUNT(x)")
     
     listOfPrograms: [ProgramInfo] @cypher(statement: """
         MATCH (p: Program)
