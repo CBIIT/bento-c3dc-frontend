@@ -589,24 +589,67 @@ type ProgramInfo {
     associated_sub_count: Int
 }
 
+type ProgramDetail {
+    program_id: String
+    cancer: String
+    program_consortium: String
+    program_consortium_manager: String
+    program_headquarters: String
+    num_files: Int
+    num_studies: Int
+    studies: [StudySubjectCount]
+}
+
+type StudyDetail {
+    study_id: String
+    study_description: String
+    num_cases: Int
+    num_files: Int
+    subjects: [SubjectDetail]
+}
+
+type SubjectDetail {
+    pcdc_subject_id: String
+    honest_broker_subject_id: String
+    data_contributor_id: String
+    age_at_enrollment: Int
+    treatment_arm: String
+    enrolled_status: String
+    year_at_enrollment: Int
+}
+
+type StudySubjectCount {
+    study_id: String
+    study_description: String
+    subjectCount: Int
+}
+
 schema {
     query: QueryType
 }
 
 type QueryType {
-
+    
+    # Schema metadata
     schemaVersion: String 
 
+    # Node count queries
     numOfPrograms: Int 
     num_of_studies: Int 
     numberOfSubjects: Int 
     numberOfFiles: Int 
     
+    # Queries to list nodes
     listOfPrograms: [ProgramInfo] 
 
     list_of_studies: [StudyInfo] 
 
     list_of_studies_by_program(program_id: String): [StudyInfo] 
+
+    # Node detail queries
+    programDetails(program_id: String): ProgramDetail 
+
+    studyDetails(study_id: String): StudyDetail 
 
     fileOverview(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
 
