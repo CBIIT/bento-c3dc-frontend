@@ -608,6 +608,10 @@ type StudyDetail {
     subjects: [SubjectDetail]
 }
 
+type SubjectId {
+    pcdc_subject_id: String
+}
+
 type SubjectDetail {
     pcdc_subject_id: String
     honest_broker_subject_id: String
@@ -654,6 +658,12 @@ type QueryType {
     fileOverview(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
 
     fileOverviewDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
+
+    subjectIdsOfStudy(study_id: String): [SubjectId] 
+
+    subjectIdsOfProgram(program_id: String): [SubjectId] 
+
+    subjectCountByTreatmentArm(program_ids: [String] = []): [GroupCount] 
 
     subjectCountByProgram(subject_ids: [String] = []): [GroupCount] 
 

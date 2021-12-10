@@ -51,6 +51,10 @@ type StudyDetail {
     subjects: [SubjectDetail]
 }
 
+type SubjectId {
+    pcdc_subject_id: String
+}
+
 type SubjectDetail {
     pcdc_subject_id: String
     honest_broker_subject_id: String
@@ -238,12 +242,37 @@ type QueryType {
         ELSE f.FILE_NAME END DESC
     """, passThrough: true)
 
+    subjectIdsOfStudy(study_id: String): [SubjectId] @cypher(statement: """
+        MATCH (s: Study)<--(sc: Subject_Characteristics_Table)
+            WHERE s.STUDY_ID = $study_id
+        RETURN {
+            pcdc_subject_id: sc.PCDC_SUBJECT_ID
+        }
+    """, passThrough: true)
+
+    subjectIdsOfProgram(program_id: String): [SubjectId] @cypher(statement: """
+        MATCH (p: Program)<-[*]-(sc: Subject_Characteristics_Table)
+            WHERE p.PROGRAM_ID = $program_id
+        RETURN {
+            pcdc_subject_id: sc.PCDC_SUBJECT_ID
+        }
+    """, passThrough: true)
+
+    subjectCountByTreatmentArm(program_ids: [String] = []): [GroupCount] @cypher(statement: """
+        MATCH (p: Program)<-[*]-(sc: Subject_Characteristics_Table)
+          WHERE (size($program_ids) = 0 OR p.PROGRAM_ID IN $program_ids)
+        RETURN {
+          group: sc.TREATMENT_ARM,
+          subjects: count(DISTINCT(sc))
+        }
+    """, passThrough: true)
+
     subjectCountByProgram(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (sc: Subject_Characteristics_Table)-[*]->(p: Program)
           WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: p.PROGRAM_ID,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }
     """, passThrough: true)
 
@@ -252,7 +281,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: s.STUDY_ID,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }
     """, passThrough: true)
 
@@ -261,7 +290,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: sc.DATA_CONTRIBUTOR_ID,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }
     """, passThrough: true)
 
@@ -270,7 +299,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: dc.DISEASE_PHASE,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }  
     """, passThrough: true) 
 
@@ -279,7 +308,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: demo.SEX,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }  
     """, passThrough: true) 
 
@@ -288,7 +317,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: demo.RACE,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }
     """, passThrough: true) 
 
@@ -297,7 +326,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: ct.COURSE,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }
     """, passThrough: true)  
 
@@ -306,7 +335,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: dc.DISEASE_SITE,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }
     """, passThrough: true)  
 
@@ -315,7 +344,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: ae.AE_GRADE,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }
     """, passThrough: true) 
 
@@ -324,7 +353,7 @@ type QueryType {
             WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: ae.AE_OUTCOME,
-          count: count(DISTINCT(sc))
+          subjects: count(DISTINCT(sc))
         }
     """, passThrough: true) 
 
