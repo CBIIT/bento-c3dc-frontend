@@ -59,10 +59,10 @@ type SubjectDetail {
     pcdc_subject_id: String
     honest_broker_subject_id: String
     data_contributor_id: String
-    age_at_enrollment: Int
+    age_at_enrollment: Float
     treatment_arm: String
     enrolled_status: String
-    year_at_enrollment: Int
+    year_at_enrollment: Float
 }
 
 type StudySubjectCount {
