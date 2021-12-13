@@ -15,53 +15,30 @@ const breadcrumbs = {
 };
 
 const aggregateCount = {
-  labelText: 'Cases',
-  dataField: 'num_subjects',
-  link: '/cases',
+  labelText: 'Studies',
+  dataField: 'num_studies',
+  link: '/studies',
   display: true,
 };
 
-const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query programDetail($progam_id: String){
-  programDetail(program_id: $program_id) {
-    program_id
+const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query programDetails($program_id : String){
+  programDetails(program_id: $program_id) {
     cancer
-    headquarters
-    consortium_manager
-    consortium
-    num_subjects
+    program_headquarters
+    program_consortium_manager
+    num_studies
     num_files
+    program_consortium
     studies{
       study_id
       study_description
-      subject_count
     }
   }
+    subjectCountByTreatmentArm(program_ids: [$program_id]) {
+        group
+        subjects
+    }
 }`;
-
-// const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query trialDetail($program_id: String){
-//     trialDetail(trial_id: $program_id){
-//         trial_id
-//         trialName
-//         trialLongName
-//         trialDesription
-//         leadOrganization
-//         trialType
-//         trialPrincipalInvestigator
-//         num_subjects
-//         num_files
-//         sites{
-//           site_id
-//           siteName
-//           siteAddress
-//           siteStatus
-//           subjectCount
-//         }
-//     }
-//     subjectCountByStageAtEntry(trial_id: $program_id){
-//         group
-//         subjects
-//     }
-// }`;
 
 const programDetailIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
@@ -87,8 +64,16 @@ const leftPanel = {
       label: 'Program Consortium',
     },
     {
-      dataField: 'consortium_manager',
+      dataField: 'program_consortium_manager',
       label: 'Program Consortium Manager',
+    },
+    {
+      dataField: 'num_studies',
+      label: 'No. of Studies',
+    },
+    {
+      dataField: 'num_files',
+      label: 'No. of Files',
     },
   ],
 };
@@ -128,24 +113,12 @@ const table = {
     {
       dataField: 'study_id',
       header: 'Study ID',
-      link: '/study/{study_id}',
+      link: '/studies/{study_id}',
     },
     {
       dataField: 'study_description',
       header: 'Study Description',
     },
-    /* {
-      dataField: 'siteAddress',
-      header: 'Address',
-    },
-    {
-      dataField: 'siteStatus',
-      header: 'Status',
-    },
-    {
-      dataField: 'subjectCount',
-      header: 'Cases',
-    }, */
   ],
 };
 

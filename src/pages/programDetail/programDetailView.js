@@ -26,10 +26,11 @@ import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
 import Widget from '../../components/Widgets/WidgetView';
 import colors from '../../utils/colors';
 
-const ProgramView = ({ classes, data, theme }) => {
-  const programData = data.programDetail;
-  const widgetData = []; // data.subjectCountByStageAtEntry;
-
+const ProgramView = ({
+  classes, data, theme, identifier,
+}) => {
+  const programData = { program_id: identifier, ...data.programDetails };
+  const widgetData = data.subjectCountByTreatmentArm;
   const redirectTo = () => {
     setSideBarToLoading();
     setDashboardTableLoading();
@@ -56,6 +57,7 @@ const ProgramView = ({ classes, data, theme }) => {
 
   const stat = {
     numberOfPrograms: 1,
+    num_of_studies: programData.num_studies !== undefined ? programData.num_studies : 'undefined',
     numberOfSubjects: programData.num_subjects !== undefined ? programData.num_subjects : 'undefined',
     numberOfFiles: programData.num_files !== undefined ? programData.num_files : 'undefined',
   };
