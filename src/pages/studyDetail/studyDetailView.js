@@ -15,10 +15,10 @@ import {
 
 import {
   pageTitle, table, externalLinkIcon,
-  studyDetailIcon, breadCrumb, pageSubTitle, aggregateCount,
+  studyDetailIcon, breadCrumb, pageSubTitle, aggregateCount, statBarItems,
   leftPanel, rightPanel,
 } from '../../bento/studyDetailData';
-import StatsView from '../../components/Stats/StatsView';
+import CustomStatsView from '../../components/Stats/CustomStatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import {
   singleCheckBox, setSideBarToLoading, setDashboardTableLoading,
@@ -28,9 +28,8 @@ import Widget from '../../components/Widgets/WidgetView';
 import colors from '../../utils/colors';
 
 const StudyView = ({ classes, data, theme }) => {
-  const siteData = data.siteDetail;
+  const studyData = data.studyDetails;
   const widgetData = data.subjectCountByStageAtEntry;
-
   const redirectTo = () => {
     setSideBarToLoading();
     setDashboardTableLoading();
@@ -38,7 +37,7 @@ const StudyView = ({ classes, data, theme }) => {
       datafield: 'registeringInstitution',
       groupName: 'Registering Institution',
       isChecked: true,
-      name: siteData.siteName,
+      name: studyData.siteName,
       section: 'Filter By Cases',
     }]);
   };
@@ -56,9 +55,9 @@ const StudyView = ({ classes, data, theme }) => {
   };
 
   const stat = {
-    numberOfTrials: 1,
-    numberOfSubjects: siteData.num_subjects !== undefined ? siteData.num_subjects : 'undefined',
-    numberOfFiles: siteData.num_files !== undefined ? siteData.num_files : 'undefined',
+    num_of_studies: 1,
+    numberOfSubjects: studyData.num_cases !== undefined ? studyData.num_cases : 'undefined',
+    numberOfFiles: studyData.num_files !== undefined ? studyData.num_files : 'undefined',
   };
 
   const breadCrumbJson = [{
@@ -71,7 +70,8 @@ const StudyView = ({ classes, data, theme }) => {
 
   return (
     <>
-      <StatsView data={stat} />
+      {/* <StatsView data={stat} /> */}
+      <CustomStatsView data={stat} displayItems={statBarItems} />
       <div className={classes.container}>
         <div className={classes.header}>
           <div className={classes.logo}>
@@ -89,14 +89,14 @@ const StudyView = ({ classes, data, theme }) => {
                 <span>
                   {' '}
                   {' '}
-                  {siteData[pageTitle.dataField]}
+                  {studyData[pageTitle.dataField]}
                 </span>
               </span>
             </div>
             <div className={cn(classes.headerMSubTitle, classes.headerSubTitleCate)}>
               <span id="program_detail_subtile">
                 {' '}
-                {siteData[pageSubTitle.dataField]}
+                {studyData[pageSubTitle.dataField]}
               </span>
 
             </div>
@@ -116,7 +116,7 @@ const StudyView = ({ classes, data, theme }) => {
                   <span className={classes.headerButtonColumn}>{': '}</span>
                   <span className={classes.headerButtonLinkNumber} id="program_detail_header_file_count">
 
-                    {siteData[aggregateCount.dataField]}
+                    {studyData[aggregateCount.dataField]}
 
                   </span>
                 </Link>
@@ -148,9 +148,9 @@ const StudyView = ({ classes, data, theme }) => {
                                                           {' '}
                                                           <Link
                                                             className={classes.link}
-                                                            to={`${attribute.actualLink}${siteData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
+                                                            to={`${attribute.actualLink}${studyData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
                                                           >
-                                                            {siteData[attribute.dataField]}
+                                                            {studyData[attribute.dataField]}
                                                           </Link>
                                                           {' '}
                                                         </span>
@@ -169,12 +169,12 @@ const StudyView = ({ classes, data, theme }) => {
                                                           <span className={classes.content}>
                                                             {' '}
                                                             <a
-                                                              href={`${attribute.actualLink}${siteData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
+                                                              href={`${attribute.actualLink}${studyData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
                                                               target="_blank"
                                                               rel="noopener noreferrer"
                                                               className={classes.link}
                                                             >
-                                                              {siteData[attribute.dataField]}
+                                                              {studyData[attribute.dataField]}
                                                             </a>
                                                             <img
                                                               src={externalLinkIcon.src}
@@ -194,7 +194,7 @@ const StudyView = ({ classes, data, theme }) => {
                                                                 classes.detailContainerHeaderLink
 }
                                                           >
-                                                            <a href={`${siteData[attribute.dataField]}`} rel="noopener noreferrer">{attribute.label}</a>
+                                                            <a href={`${studyData[attribute.dataField]}`} rel="noopener noreferrer">{attribute.label}</a>
                                                           </span>
                                                         </div>
                                                       )
@@ -206,7 +206,7 @@ const StudyView = ({ classes, data, theme }) => {
                                                                   classes.detailContainerHeaderLink
 }
                                                             >
-                                                              <a href={`${siteData[attribute.dataField]}`} target="_blank" rel="noopener noreferrer">{attribute.label}</a>
+                                                              <a href={`${studyData[attribute.dataField]}`} target="_blank" rel="noopener noreferrer">{attribute.label}</a>
                                                               <img
                                                                 src={externalLinkIcon.src}
                                                                 alt={externalLinkIcon.alt}
@@ -228,7 +228,7 @@ const StudyView = ({ classes, data, theme }) => {
                                                             <div>
                                                               <span className={classes.content} id={`program_detail_left_section_description_${index + 1}`}>
                                                                 {' '}
-                                                                {siteData[attribute.dataField]}
+                                                                {studyData[attribute.dataField]}
                                                                 {' '}
                                                               </span>
                                                             </div>
@@ -298,7 +298,7 @@ const StudyView = ({ classes, data, theme }) => {
                           />
                         </div>
                         <div className={classes.fileCount} id="program_detail_file_count">
-                          {siteData[rightPanel.files[0].dataField]}
+                          {studyData[rightPanel.files[0].dataField]}
                         </div>
                       </div>
                     </div>
@@ -322,7 +322,7 @@ const StudyView = ({ classes, data, theme }) => {
                 <Grid item xs={12}>
                   <Typography>
                     <CustomDataTable
-                      data={siteData[table.dataField]}
+                      data={studyData[table.dataField]}
                       columns={getColumns(table, classes, data, externalLinkIcon, '/cases', redirectToArm)}
                       options={getOptions(table, classes)}
                     />

@@ -15,12 +15,17 @@ export const globalStatsData = [
   {
     statTitle: 'Programs',
     type: 'field',
-    statAPI: 'numberOfPrograms',
+    statAPI: 'numOfPrograms',
   },
   {
     statTitle: 'Studies',
     type: 'field',
     statAPI: 'num_of_studies',
+  },
+  {
+    statTitle: 'Cases',
+    type: 'field',
+    statAPI: 'numberOfSubjects',
   },
   {
     statTitle: 'files',
@@ -31,7 +36,8 @@ export const globalStatsData = [
 
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_GLOBAL_STATS_DATA_QUERY = gql`{
-  numOfPrograms
-  num_of_studies
-  }
-  `;
+    numOfPrograms
+    num_of_studies
+    numberOfSubjects
+    numberOfFiles
+}`;

@@ -8,11 +8,11 @@ import { GET_STUDY_DETAIL_DATA_QUERY } from '../../bento/studyDetailData';
 
 const StudyDetailContainer = ({ match }) => {
   const { loading, error, data } = useQuery(GET_STUDY_DETAIL_DATA_QUERY, {
-    variables: { site_id: match.params.id },
+    variables: { study_id: match.params.id },
   });
 
   if (loading) return <CircularProgress />;
-  if (error || !data || data.siteDetail.site_id !== match.params.id) {
+  if (error || !data || data.studyDetails.study_id !== match.params.id) {
     return (
       <Typography variant="headline" color="error" size="sm">
         {error ? `An error has occurred in loading stats component: ${error}` : 'Received wrong data'}

@@ -15,9 +15,10 @@ import {
 import {
   pageTitle, table, externalLinkIcon,
   programDetailIcon, breadcrumbs, aggregateCount,
-  pageSubTitle, leftPanel, rightPanel,
+  pageSubTitle, leftPanel, statBarItems, rightPanel,
 } from '../../bento/programDetailData';
-import StatsView from '../../components/Stats/StatsView';
+
+import CustomStatsView from '../../components/Stats/CustomStatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import {
   singleCheckBox, setSideBarToLoading, setDashboardTableLoading,
@@ -56,9 +57,8 @@ const ProgramView = ({
   };
 
   const stat = {
-    numberOfPrograms: 1,
+    numOfPrograms: 1,
     num_of_studies: programData.num_studies !== undefined ? programData.num_studies : 'undefined',
-    numberOfSubjects: programData.num_subjects !== undefined ? programData.num_subjects : 'undefined',
     numberOfFiles: programData.num_files !== undefined ? programData.num_files : 'undefined',
   };
 
@@ -72,7 +72,7 @@ const ProgramView = ({
 
   return (
     <>
-      <StatsView data={stat} />
+      <CustomStatsView displayItems={statBarItems} data={stat} />
       <div className={classes.container}>
         <div className={classes.header}>
           <div className={classes.logo}>

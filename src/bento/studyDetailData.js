@@ -3,11 +3,11 @@ import gql from 'graphql-tag';
 // --------------- Page title configuration --------------
 const pageTitle = {
   label: 'Study:',
-  dataField: 'siteName',
+  dataField: 'study_description',
 };
 
 const pageSubTitle = {
-  dataField: 'site_id',
+  dataField: 'study_id',
 };
 
 const breadCrumb = {
@@ -18,7 +18,7 @@ const breadCrumb = {
 // --------------- Aggregated count configuration --------------
 const aggregateCount = {
   labelText: 'Cases',
-  dataField: 'num_subjects',
+  dataField: 'num_cases',
   link: '/cases',
   display: true,
 };
@@ -41,11 +41,11 @@ const externalLinkIcon = {
 const leftPanel = {
   attributes: [
     {
-      dataField: 'siteName',
+      dataField: 'study_description',
       label: 'Study',
     },
     {
-      dataField: 'site_id',
+      dataField: 'study_id',
       label: 'Study Id',
     },
     {
@@ -88,6 +88,24 @@ const rightPanel = {
   ],
 };
 
+const statBarItems = [
+  {
+    statTitle: 'Studies',
+    type: 'field',
+    statAPI: 'num_of_studies',
+  },
+  {
+    statTitle: 'Cases',
+    type: 'field',
+    statAPI: 'numberOfSubjects',
+  },
+  {
+    statTitle: 'files',
+    type: 'field',
+    statAPI: 'numberOfFiles',
+  },
+];
+
 // --------------- Table configuration --------------
 const table = {
   display: true,
@@ -98,35 +116,54 @@ const table = {
   selectableRows: false,
   columns: [
     {
-      dataField: 'subject_id',
+      dataField: 'pcdc_subject_id',
       header: 'Case ID',
-      link: '/case/{subject_id}',
+      link: '/case/{pcdc_subject_id}',
     },
     {
-      dataField: 'race',
-      header: 'Race',
+      dataField: 'treatment_arm',
+      header: 'Treatment Arm',
     },
     {
-      dataField: 'diseaseTerm',
-      header: 'DiseaseTerm',
+      dataField: 'enrolled_status',
+      header: 'Enrolled Status',
+    },
+    {
+      dataField: 'age_at_enrollment',
+      header: 'Enrollment Age',
+    },
+    {
+      dataField: 'year_at_enrollment',
+      header: 'Enrollment Year',
+    },
+    {
+      dataField: 'honest_broker_subject_id',
+      header: 'Broker Subject ID',
+    },
+    {
+      dataField: 'data_contributor_id',
+      header: 'Contributor ID',
     },
   ],
 };
 
 // --------------- GraphQL query - Retrieve study details --------------
-const GET_STUDY_DETAIL_DATA_QUERY = gql`query studyDetail($study_id: String){
-    studyDetail(study_id: $study_id){       
-      study_id
-      study_description
-      num_subjects
-      num_files
-      subjects{
-        pcdc_subject_id
-        age_at_enrollment
-        treatment_arm
-        enrolled_status
-        year_at_enrollment
-      }
+
+const GET_STUDY_DETAIL_DATA_QUERY = gql`query studyDetail($study_id: String) {
+    studyDetails(study_id: $study_id) {
+        study_id
+        study_description
+        num_cases
+        num_files
+        subjects {
+            pcdc_subject_id
+            honest_broker_subject_id
+            data_contributor_id
+            age_at_enrollment
+            treatment_arm
+            enrolled_status
+            year_at_enrollment
+        }
     }
 }`;
 
@@ -141,4 +178,5 @@ export {
   breadCrumb,
   GET_STUDY_DETAIL_DATA_QUERY,
   table,
+  statBarItems,
 };

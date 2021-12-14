@@ -33,7 +33,7 @@ const LandingController = ({ classes }) => (
               <div className={classes.headerButtonSection}>
                 <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
                   <Button className={classes.transparentButton} bgColor="neonBlue" color="white">
-                    Search cases
+                    Explore The Site
                     <span className={classes.rightArrow}>
                       ▶
                     </span>
@@ -48,7 +48,7 @@ const LandingController = ({ classes }) => (
     <div className={classes.container}>
       <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
         <div className={classes.bannerTexture}>
-          Find and explore protocol 48 data
+          Find and explore data
         </div>
       </Grid>
       <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
@@ -64,27 +64,25 @@ const LandingController = ({ classes }) => (
             <div className={classes.about}>
               <div className={classes.aboutImageSection}>
                 {/* <img src={imgAbout} className={classes.aboutImage} alt="GMB about" /> */}
-                <img src={imgAbout} className={classes.aboutImage} alt="PCDC about" />
+                <img src={imgAbout} className={classes.aboutImage} alt="C3DC about" />
               </div>
-              <div className={classes.PCDCWords}>
+              <div className={classes.C3DCWords}>
                 About
                 {' '}
                 <br />
                 {' '}
-                Prostate Cancer Natural History (PCNH)
+                C3DC
               </div>
               <div className={classes.aboutContent}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
-                ut aliquip ex ea commodo consequat.
+                Effective data management is key to scientific discovery.
+                Bento is an open source framework,
+                developed by the Frederick National Laboratory for Cancer Research,
+                to support the creation of data sharing platforms,
+                that adhere to the FAIR principles of scientific data management.
               </div>
               <div className={classes.aboutButtonSection}>
                 <div className={classes.aboutButtonLeft}>
-                  <img src={iconAbout} className={classes.iconAbout} alt="PCDC about icon" />
+                  <img src={iconAbout} className={classes.iconAbout} alt="C3DC about icon" />
                 </div>
                 <div className={classes.aboutButtonRight}>
                   <Link to="/purpose" className={classes.aboutButton}>EXPLORE</Link>
@@ -96,18 +94,18 @@ const LandingController = ({ classes }) => (
             <div className={classes.contentRightTop}>
               <div className={classes.program}>
                 <div className={classes.programImg}>
-                  <img className={classes.image} src={imgTrial} alt="PCDC Programs" />
+                  <img className={classes.image} src={imgTrial} alt="C3DC Programs" />
                 </div>
                 <div className={classes.content}>
                   <div className={classes.contentHeader}> Programs</div>
                   <div className={classes.contentContainer}>
-                    View summaries of clinical programs within PCDC.
+                    View summaries of clinical programs within C3DC.
                   </div>
 
                 </div>
                 <div className={classes.yellowButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="PCDC about " />
+                    <img className={classes.icon} src={icon} alt="C3DC about " />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
@@ -117,18 +115,17 @@ const LandingController = ({ classes }) => (
               </div>
               <div className={classes.studies}>
                 <div className={classes.programImg}>
-                  <img className={classes.image} src={imgAccess} alt="PCDC Request ACCESS" />
+                  <img className={classes.image} src={imgAccess} alt="C3DC Request ACCESS" />
                 </div>
                 <div className={classes.content}>
                   <div className={classes.contentHeader}>Studies</div>
                   <div className={classes.contentContainer}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam dictum at purus.
+                    View summaries of clinical studies within C3DC.
                   </div>
                 </div>
                 <div className={classes.brownButton}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="access PCDC studies" />
+                    <img className={classes.icon} src={icon} alt="access C3DC studies" />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
@@ -143,12 +140,12 @@ const LandingController = ({ classes }) => (
                 <div className={classes.greyContentHeader}> Cases</div>
                 <div className={classes.greyContent}>
                   Search all the studies and build cohorts from all the
-                  Program within the PCDC. The data files from
+                  Program within the C3DC. The data files from
                   these cohorts can then be analyzed in the Cloud Resources.
                 </div>
                 <div className={classes.greybuttonSection}>
                   <div className={classes.blueButtonLeft}>
-                    <img className={classes.greyIcon} src={icon} alt="PCDC about " />
+                    <img className={classes.greyIcon} src={icon} alt="C3DC about " />
                     {' '}
                   </div>
                   <div className={classes.blueButtonRight}>
@@ -291,7 +288,7 @@ const styles = () => ({
   },
   aboutImageSection: {
   },
-  PCDCWords: {
+  C3DCWords: {
     height: '168px',
     background: '#0B2731',
     color: '#FFFFFF',

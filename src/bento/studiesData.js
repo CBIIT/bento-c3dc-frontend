@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 // Ideal size for externalLinkIcon is 16x16 px
 const studyListingIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'PCDC Studies logo',
+  alt: 'C3DC Studies logo',
 };
 
 const externalLinkIcon = {

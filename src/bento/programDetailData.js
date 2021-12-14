@@ -21,6 +21,24 @@ const aggregateCount = {
   display: true,
 };
 
+const statBarItems = [
+  {
+    statTitle: 'Programs',
+    type: 'field',
+    statAPI: 'numOfPrograms',
+  },
+  {
+    statTitle: 'Studies',
+    type: 'field',
+    statAPI: 'num_of_studies',
+  },
+  {
+    statTitle: 'Files',
+    type: 'field',
+    statAPI: 'numberOfFiles',
+  },
+];
+
 const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query programDetails($program_id : String){
   programDetails(program_id: $program_id) {
     cancer
@@ -42,7 +60,7 @@ const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query programDetails($program_id : Str
 
 const programDetailIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'PCDC Program logo',
+  alt: 'C3DC Program logo',
 };
 
 const leftPanel = {
@@ -132,5 +150,6 @@ export {
   externalLinkIcon,
   breadcrumbs,
   GET_PROGRAM_DETAIL_DATA_QUERY,
+  statBarItems,
   table,
 };
