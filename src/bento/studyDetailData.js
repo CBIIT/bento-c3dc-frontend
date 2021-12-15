@@ -165,6 +165,11 @@ const GET_STUDY_DETAIL_DATA_QUERY = gql`query studyDetail($study_id: String) {
             year_at_enrollment
         }
     }
+
+    studySubjectCountByDiseasePhase(study_id: $study_id) {
+        group
+        subjects
+    }
 }`;
 
 export {

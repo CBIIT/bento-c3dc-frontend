@@ -29,7 +29,7 @@ import colors from '../../utils/colors';
 
 const StudyView = ({ classes, data, theme }) => {
   const studyData = data.studyDetails;
-  const widgetData = data.subjectCountByStageAtEntry;
+  const widgetData = data.studySubjectCountByDiseasePhase;
   const redirectTo = () => {
     setSideBarToLoading();
     setDashboardTableLoading();
@@ -37,7 +37,7 @@ const StudyView = ({ classes, data, theme }) => {
       datafield: 'registeringInstitution',
       groupName: 'Registering Institution',
       isChecked: true,
-      name: studyData.siteName,
+      name: studyData.study_description,
       section: 'Filter By Cases',
     }]);
   };
@@ -46,7 +46,7 @@ const StudyView = ({ classes, data, theme }) => {
     setSideBarToLoading();
     setDashboardTableLoading();
     singleCheckBox([{
-      datafield: 'studies',
+      datafield: 'studyDetails',
       groupName: 'Arm',
       isChecked: true,
       name: `${programArm.rowData[0]}: ${programArm.rowData[1]}`,
@@ -70,7 +70,6 @@ const StudyView = ({ classes, data, theme }) => {
 
   return (
     <>
-      {/* <StatsView data={stat} /> */}
       <CustomStatsView data={stat} displayItems={statBarItems} />
       <div className={classes.container}>
         <div className={classes.header}>
