@@ -242,6 +242,14 @@ type QueryType {
         ELSE f.FILE_NAME END DESC
     """, passThrough: true)
 
+    studySubjectCountByDiseasePhase(study_id: String): [GroupCount] @cypher(statement: """
+        MATCH (s: Study {STUDY_ID: $study_id})<--(sc: Subject_Characteristics_Table)<--(dc: Disease_Characteristics_Table)
+        RETURN {
+          group: dc.DISEASE_PHASE,
+          subjects: count(DISTINCT(sc))
+        }  
+    """, passThrough: true) 
+
     subjectIdsOfStudy(study_id: String): [SubjectId] @cypher(statement: """
         MATCH (s: Study)<--(sc: Subject_Characteristics_Table)
             WHERE s.STUDY_ID = $study_id

@@ -659,6 +659,8 @@ type QueryType {
 
     fileOverviewDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
 
+    studySubjectCountByDiseasePhase(study_id: String): [GroupCount] 
+
     subjectIdsOfStudy(study_id: String): [SubjectId] 
 
     subjectIdsOfProgram(program_id: String): [SubjectId] 
