@@ -628,6 +628,23 @@ type StudySubjectCount {
     subjectCount: Int
 }
 
+type SubjectOverview {
+    pcdc_subject_id: String
+    race: String
+    disease_phase: String
+    treatment_arm: String
+    disease_site: String
+    data_conttributor_id: String
+    ae_grade: String
+    ae_outcome: String
+    study_id: String
+    files: [FileId]
+}
+
+type FileId {
+    file_id: String
+}
+
 schema {
     query: QueryType
 }
@@ -635,7 +652,7 @@ schema {
 type QueryType {
     
     # Schema metadata
-    schemaVersion: String @cypher(statement: "RETURN '0.0.1'")
+    schemaVersion: String @cypher(statement: "RETURN '0.0.2'")
 
     # Node count queries
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
@@ -797,6 +814,100 @@ type QueryType {
             WHEN "study_id" THEN s.STUDY_ID
             WHEN "program_id" THEN p.PROGRAM_ID
         ELSE f.FILE_NAME END DESC
+    """, passThrough: true)
+
+    subjectOverviewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
+        MATCH (sc: Subject_Characteristics_Table)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR sc.PCDC_SUBJECT_ID IN $subject_ids)
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+        OPTIONAL MATCH (dc: Disease_Characteristics_Table)-->(sc)
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+        OPTIONAL MATCH (f: File)-->(sc)
+        WITH 
+            sc.PCDC_SUBJECT_ID AS pcdc_subject_id,
+            demo.RACE AS race,
+            dpt.DISEASE_PHASE AS disease_phase,
+            sc.TREATMENT_ARM AS treatment_arm,
+            dc.DISEASE_SITE AS disease_site,
+            sc.DATA_CONTRIBUTOR_ID AS data_conttributor_id,
+            ae.AE_GRADE AS ae_grade,
+            ae.AE_OUTCOME AS ae_outcome,
+            sc.STUDY_ID AS study_id,
+            COLLECT(DISTINCT f {
+                file_id: f.UUID
+            }) AS files
+        RETURN {
+            pcdc_subject_id: pcdc_subject_id,
+            race: race,
+            disease_phase: disease_phase,
+            treatment_arm: treatment_arm,
+            disease_site: disease_site,
+            data_conttributor_id: data_conttributor_id,
+            ae_grade: ae_grade,
+            ae_outcome: ae_outcome,
+            study_id: study_id,
+            files: files
+        }
+        ORDER BY CASE $order_by
+            WHEN "pcdc_subject_id" THEN pcdc_subject_id
+            WHEN "race" THEN race
+            WHEN "disease_phase" THEN disease_phase
+            WHEN "treatment_arm" THEN treatment_arm
+            WHEN "disease_site" THEN disease_site
+            WHEN "data_conttributor_id" THEN data_conttributor_id
+            WHEN "ae_grade" THEN ae_grade
+            WHEN "ae_outcome" THEN ae_outcome
+            WHEN "study_id" THEN study_id
+            WHEN "files" THEN files
+        ELSE pcdc_subject_id END
+    """, passThrough: true)
+
+    subjectOverviewPagedDesc(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] @cypher(statement: """
+        MATCH (sc: Subject_Characteristics_Table)
+            WHERE (size($subject_ids) = 0 OR $subject_ids IS NULL OR sc.PCDC_SUBJECT_ID IN $subject_ids)
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+        OPTIONAL MATCH (dc: Disease_Characteristics_Table)-->(sc)
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+        OPTIONAL MATCH (f: File)-->(sc)
+        WITH 
+            sc.PCDC_SUBJECT_ID AS pcdc_subject_id,
+            demo.RACE AS race,
+            dpt.DISEASE_PHASE AS disease_phase,
+            sc.TREATMENT_ARM AS treatment_arm,
+            dc.DISEASE_SITE AS disease_site,
+            sc.DATA_CONTRIBUTOR_ID AS data_conttributor_id,
+            ae.AE_GRADE AS ae_grade,
+            ae.AE_OUTCOME AS ae_outcome,
+            sc.STUDY_ID AS study_id,
+            COLLECT(DISTINCT f {
+                file_id: f.UUID
+            }) AS files
+        RETURN {
+            pcdc_subject_id: pcdc_subject_id,
+            race: race,
+            disease_phase: disease_phase,
+            treatment_arm: treatment_arm,
+            disease_site: disease_site,
+            data_conttributor_id: data_conttributor_id,
+            ae_grade: ae_grade,
+            ae_outcome: ae_outcome,
+            study_id: study_id,
+            files: files
+        }
+        ORDER BY CASE $order_by
+            WHEN "pcdc_subject_id" THEN pcdc_subject_id
+            WHEN "race" THEN race
+            WHEN "disease_phase" THEN disease_phase
+            WHEN "treatment_arm" THEN treatment_arm
+            WHEN "disease_site" THEN disease_site
+            WHEN "data_conttributor_id" THEN data_conttributor_id
+            WHEN "ae_grade" THEN ae_grade
+            WHEN "ae_outcome" THEN ae_outcome
+            WHEN "study_id" THEN study_id
+            WHEN "files" THEN files
+        ELSE pcdc_subject_id END DESC
     """, passThrough: true)
 
     studySubjectCountByDiseasePhase(study_id: String): [GroupCount] @cypher(statement: """

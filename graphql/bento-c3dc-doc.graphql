@@ -628,6 +628,23 @@ type StudySubjectCount {
     subjectCount: Int
 }
 
+type SubjectOverview {
+    pcdc_subject_id: String
+    race: String
+    disease_phase: String
+    treatment_arm: String
+    disease_site: String
+    data_conttributor_id: String
+    ae_grade: String
+    ae_outcome: String
+    study_id: String
+    files: [FileId]
+}
+
+type FileId {
+    file_id: String
+}
+
 schema {
     query: QueryType
 }
@@ -658,6 +675,10 @@ type QueryType {
     fileOverview(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
 
     fileOverviewDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
+
+    subjectOverviewPaged(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] 
+
+    subjectOverviewPagedDesc(subject_ids: [String] = [], order_by: String = ""): [SubjectOverview] 
 
     studySubjectCountByDiseasePhase(study_id: String): [GroupCount] 
 
