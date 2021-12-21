@@ -200,7 +200,7 @@ export const tabContainers = [
           // datafield where file file column exists in the table
           fileSizeColumn: 'file_size',
           // datafield where file file id exists in the table which is used to get file location
-          fileLocationColumn: 'file_id',
+          fileLocationColumn: 'uuid',
           // file download icon
           iconFileDownload: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/DocumentDownloadPDF.svg',
           // file preview ico
@@ -731,15 +731,16 @@ export const FILTER_QUERY = gql`
 export const GET_FILES_OVERVIEW_QUERY = gql`
     query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
         fileOverview(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-            file_id
+            uuid
             file_name
             file_description
+            file_type
             file_format
             file_size
-            trial_id
-            trial_short_name
-            arm
+            program_id
             subject_id
+            study_id
+            file_status
         }
     }
 `;
@@ -747,15 +748,16 @@ export const GET_FILES_OVERVIEW_QUERY = gql`
 export const GET_FILES_OVERVIEW_DESC_QUERY = gql`
     query fileOverviewDesc($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
         fileOverviewDesc(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-            file_ids
+            uuid
             file_name
             file_description
+            file_type
             file_format
             file_size
-            trial_id
-            trial_short_name
-            arm
+            program_id
             subject_id
+            study_id
+            file_status
         }
     }
 `;
@@ -830,7 +832,7 @@ export const GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL = gql`
 export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
     query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by: String = "file_name") {
         fileOverview(file_ids: $file_ids, offset: $offset, first: $first, order_by: $order_by) {
-            file_ids
+            uuid
         }
     }
 `;
@@ -859,6 +861,6 @@ export const GET_FILE_IDS_FROM_FILE_NAME = gql`
             order_by:$order_by
         )
         {
-            file_id
+            uuid
         }
     }`;
