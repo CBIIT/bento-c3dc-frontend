@@ -23,11 +23,11 @@ export const tabContainers = [
     name: 'Cases',
     dataField: 'dataCase',
     api: 'GET_CASES_OVERVIEW_QUERY',
-    paginationAPIField: 'subjectOverViewPaged',
-    paginationAPIFieldDesc: 'subjectOverViewPagedDesc',
+    paginationAPIField: 'subjectOverviewPaged',
+    paginationAPIFieldDesc: 'subjectOverviewPagedDesc',
     count: 'numberOfSubjects',
-    dataKey: 'subject_id',
-    defaultSortField: 'subject_id',
+    dataKey: 'pcdc_subject_id',
+    defaultSortField: 'pcdc_subject_id',
     defaultSortDirection: 'asc',
     buttonText: 'Add Selected Files',
     saveButtonDefaultStyle: {
@@ -48,10 +48,10 @@ export const tabContainers = [
     },
     columns: [
       {
-        dataField: 'subject_id',
+        dataField: 'pcdc_subject_id',
         header: 'Case ID',
         sort: 'asc',
-        link: '/case/{subject_id}',
+        link: '/case/{pcdc_subject_id}',
         primary: true,
         display: true,
       },
@@ -62,75 +62,46 @@ export const tabContainers = [
         display: true,
       },
       {
-        dataField: 'diseaseTerm',
-        header: 'Disease Term',
+        dataField: 'disease_phase',
+        header: 'Disease Phase',
         sort: 'asc',
         display: true,
       },
       {
-        dataField: 'registeringInstitution',
-        header: 'Registering Institution',
+        dataField: 'treatment_arm',
+        header: 'Treatment Arm',
         sort: 'asc',
         display: true,
       },
       {
-        dataField: 'stageAtEntry',
-        header: 'Stage at Entry',
+        dataField: 'disease_site',
+        header: 'Disease Site',
         sort: 'asc',
         display: true,
       },
       {
-        dataField: 'causeOfDeath',
-        header: 'Cause of Death',
+        dataField: 'data_conttributor_id',
+        header: 'Data Contributor',
         sort: 'asc',
         display: true,
       },
       {
-        dataField: 'sitesOfDiseaseAtAutopsy',
-        header: 'Sites of Disease at Autopsy',
+        dataField: 'ae_grade',
+        header: 'Adverse Events Grade',
         sort: 'asc',
         display: true,
       },
       {
-        dataField: 'sourceOfTheLabData',
-        header: 'Source of The Lab Data',
+        dataField: 'ae_outcome',
+        header: 'Adverse Events Outcome',
         sort: 'asc',
         display: true,
       },
       {
-        dataField: 'labTest',
-        header: 'Lab Test',
+        dataField: 'study_id',
+        header: 'Study Id',
         sort: 'asc',
-        display: true,
-      },
-      {
-        dataField: 'systemOrganClass',
-        header: 'System Organ Class',
-        sort: 'asc',
-        display: true,
-      },
-      {
-        dataField: 'serious',
-        header: 'Serious',
-        sort: 'asc',
-        display: true,
-      },
-      {
-        dataField: 'outcome',
-        header: 'Outcome',
-        sort: 'asc',
-        display: true,
-      },
-      {
-        dataField: 'pathogenicity',
-        header: 'Pathogenicity',
-        sort: 'asc',
-        display: true,
-      },
-      {
-        dataField: 'germlinePathogenicity',
-        header: 'Germline Pathogenicity',
-        sort: 'asc',
+        link: '/study/{study_id}',
         display: true,
       },
     ],
@@ -189,7 +160,7 @@ export const tabContainers = [
         display: true,
       },
       {
-        dataField: 'file_id',
+        dataField: 'uuid',
         header: 'File ID',
         sort: 'asc',
         display: false,
@@ -291,608 +262,603 @@ export const tabIndex = [
 ];
 
 export const DASHBOARD_QUERY = gql`{
-  numberOfTrials
-  numberOfSubjects
-  numberOfFiles
+    numOfPrograms
+    num_of_studies
+    numberOfSubjects
+    numberOfFiles
+    subjectCountByProgram{
+        group
+        subjects
+    }
+    subjectCountByStudy{
+        group
+        subjects
+    }
+    subjectCountByDataContributorId{
+        group
+        subjects
+    }
+    subjectCountByDiseasePhase{
+        group
+        subjects
+    }
+    subjectCountBySex{
+        group
+        subjects
+    }
     subjectCountByRace{
         group
         subjects
-      }
-    subjectCountByDiseaseTerm{
+    }
+    subjectCountByCourse{
         group
         subjects
-      }
-    subjectCountByRegisteringInstitution{
+    }
+    subjectCountByDiseaseSite{
         group
         subjects
-      }
-    subjectCountByPatientSubgroup{
+    }
+    subjectCountByAEGrade{
         group
         subjects
-      }
-    subjectCountByDiseaseStageAtEntry{
+    }
+    subjectCountByAEOutcome{
         group
         subjects
-      }
-    subjectCountByCauseOfDeath{
-        group
-        subjects
-      }
-    subjectCountBySitesOfDiseaseAtAutopsy{
-        group
-        subjects
-      }
-    subjectCountBySourceOfTheLabData{
-        group
-        subjects
-      }
-    subjectCountByLabTest{
-        group
-        subjects
-      }
-    subjectCountBySystemOrganClass{
-        group
-        subjects
-      }
-    subjectCountBySerious{
-        group
-        subjects
-      }
-    subjectCountByOutcome{
-        group
-        subjects
-      }
-    subjectCountBySomaticPathogenicity{
-        group
-        subjects
-      }
-    subjectCountByFileType{
-        group
-        subjects
-      }
-    subjectCountByGermlinePathogenicity{
-        group
-        subjects
-      }
-  subjectOverViewPaged(first: 10) {
-      subject_id
-      race
-      diseaseTerm
-      registeringInstitution
-      patientSubgroup
-      stageAtEntry
-      causeOfDeath
-      sitesOfDiseaseAtAutopsy
-      sourceOfTheLabData
-      labTest
-      systemOrganClass
-      serious
-      outcome
-      pathogenicity
-      germlinePathogenicity
-      files{
-        file_id
-      }
-  }
-  }`;
+    }
+    subjectOverviewPaged(first: 10) {
+        pcdc_subject_id
+        race
+        disease_phase
+        treatment_arm
+        disease_site
+        data_conttributor_id
+        ae_grade
+        ae_outcome
+        study_id
+        files{
+            file_id
+        }
+    }
+}`;
 
 export const FILTER_GROUP_QUERY = gql`
-  query groupCounts($subject_ids: [String]){
-    subjectCountByGermlinePathogenicity (subject_ids: $subject_ids){
-      group
-      subjects
+    query groupCounts($subject_ids: [String]){
+        subjectCountByProgram (subject_ids: $subject_ids){
+            group
+            subjects
+        }
+        subjectCountByStudy (subject_ids: $subject_ids){
+            group
+            subjects
+        }
+        subjectCountByDataContributorId (subject_ids: $subject_ids){
+            group
+            subjects
+        }
+        subjectCountByDiseasePhase (subject_ids: $subject_ids){
+            group
+            subjects
+        }
+        subjectCountBySex (subject_ids: $subject_ids){
+            group
+            subjects
+        }
+        subjectCountByRace (subject_ids: $subject_ids){
+            group
+            subjects
+        }
+        subjectCountByCourse(subject_ids: $subject_ids) {
+            group
+            subjects
+        }
+        subjectCountByDiseaseSite(subject_ids: $subject_ids) {
+            group
+            subjects
+        }
+        subjectCountByAEGrade(subject_ids: $subject_ids) {
+            group
+            subjects
+        }
+        subjectCountByAEOutcome(subject_ids: $subject_ids) {
+            group
+            subjects
+        }
     }
-    subjectCountBySomaticPathogenicity (subject_ids: $subject_ids){
-      group
-      subjects
-    }
-    subjectCountByRegisteringInstitution (subject_ids: $subject_ids){
-      group
-      subjects
-    }
-    subjectCountByRace (subject_ids: $subject_ids){
-      group
-      subjects
-    }
-    subjectCountByDiseaseStageAtEntry (subject_ids: $subject_ids){
-      group
-      subjects
-    }
-    subjectCountBySerious (subject_ids: $subject_ids){
-      group
-      subjects
-    } 
-}
- `;
+`;
 
 export const FILTER_QUERY = gql`
-query search(
-  $race: [String] ,
-  $diseaseTerm: [String] ,
-  $registeringInstitution: [String] ,
-  $patientSubgroup: [String] ,
-  $stageAtEntry: [String] ,
-  $causeOfDeath: [String] ,
-  $sitesOfDiseaseAtAutopsy: [String] ,
-  $sourceOfTheLabData: [String] ,
-  $labTest: [String] ,
-  $systemOrganClass: [String] ,
-  $serious: [String],
-  $outcome: [String],
-  $somaticPathogenicity: [String],
-  $germlinePathogenicity: [String],
-  $fileType: [String]
-  ) {
-searchSubjects(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-  numberOfTrials
-  numberOfSubjects
-  numberOfFiles
-  fileIds
-  subject_ids
-}
+    query search(
+        $race: [String] ,
+        $diseaseTerm: [String] ,
+        $registeringInstitution: [String] ,
+        $patientSubgroup: [String] ,
+        $stageAtEntry: [String] ,
+        $causeOfDeath: [String] ,
+        $sitesOfDiseaseAtAutopsy: [String] ,
+        $sourceOfTheLabData: [String] ,
+        $labTest: [String] ,
+        $systemOrganClass: [String] ,
+        $serious: [String],
+        $outcome: [String],
+        $somaticPathogenicity: [String],
+        $germlinePathogenicity: [String],
+        $fileType: [String]
+    ) {
+        searchSubjects(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            numberOfTrials
+            numberOfSubjects
+            numberOfFiles
+            fileIds
+            subject_ids
+        }
 
-filterSubjectCountByRace(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-  group
-  subjects
-}
+        filterSubjectCountByRace(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByDiseaseTerm(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountByDiseaseTerm(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByRegisteringInstitution(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountByRegisteringInstitution(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByPatientSubgroup(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountByPatientSubgroup(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByDiseaseStageAtEntry(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountByDiseaseStageAtEntry(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByCauseOfDeath(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountByCauseOfDeath(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountBySitesOfDiseaseAtAutopsy(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountBySitesOfDiseaseAtAutopsy(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountBySourceOfTheLabData(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountBySourceOfTheLabData(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByLabTest(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountByLabTest(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountBySystemOrganClass(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountBySystemOrganClass(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountBySerious(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountBySerious(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByOutcome(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountByOutcome(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountBySomaticPathogenicity(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountBySomaticPathogenicity(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByFileType(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
+        filterSubjectCountByFileType(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
 
-filterSubjectCountByGermlinePathogenicity(
-      race: $race,
-      diseaseTerm: $diseaseTerm,
-      registeringInstitution: $registeringInstitution,
-      patientSubgroup: $patientSubgroup,
-      stageAtEntry: $stageAtEntry,
-      causeOfDeath: $causeOfDeath,
-      sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
-      sourceOfTheLabData: $sourceOfTheLabData,
-      labTest: $labTest,
-      systemOrganClass: $systemOrganClass,
-      serious: $serious,
-      outcome: $outcome,
-      somaticPathogenicity: $somaticPathogenicity,
-      germlinePathogenicity: $germlinePathogenicity,       
-      fileType: $fileType
-) {
-    group
-    subjects
-  }
-}
+        filterSubjectCountByGermlinePathogenicity(
+            race: $race,
+            diseaseTerm: $diseaseTerm,
+            registeringInstitution: $registeringInstitution,
+            patientSubgroup: $patientSubgroup,
+            stageAtEntry: $stageAtEntry,
+            causeOfDeath: $causeOfDeath,
+            sitesOfDiseaseAtAutopsy: $sitesOfDiseaseAtAutopsy,
+            sourceOfTheLabData: $sourceOfTheLabData,
+            labTest: $labTest,
+            systemOrganClass: $systemOrganClass,
+            serious: $serious,
+            outcome: $outcome,
+            somaticPathogenicity: $somaticPathogenicity,
+            germlinePathogenicity: $germlinePathogenicity,
+            fileType: $fileType
+        ) {
+            group
+            subjects
+        }
+    }
 
 `;
 
 // --------------- GraphQL query - Retrieve files tab details --------------
 export const GET_FILES_OVERVIEW_QUERY = gql`
-query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
-  fileOverview(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-    file_id
-    file_name
-    file_description
-    file_format
-    file_size
-    trial_id
-    trial_short_name
-    arm
-    subject_id
-  }
-}
-  `;
+    query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
+        fileOverview(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
+            file_id
+            file_name
+            file_description
+            file_format
+            file_size
+            trial_id
+            trial_short_name
+            arm
+            subject_id
+        }
+    }
+`;
 
 export const GET_FILES_OVERVIEW_DESC_QUERY = gql`
-  query fileOverviewDesc($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
-    fileOverviewDesc(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-      file_ids
-      file_name
-      file_description
-      file_format
-      file_size
-      trial_id
-      trial_short_name
-      arm
-      subject_id
+    query fileOverviewDesc($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String ="file_name"){
+        fileOverviewDesc(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
+            file_ids
+            file_name
+            file_description
+            file_format
+            file_size
+            trial_id
+            trial_short_name
+            arm
+            subject_id
+        }
     }
-  }
-    `;
+`;
 
 // --------------- GraphQL query - Retrieve Cases tab details --------------
 export const GET_CASES_OVERVIEW_QUERY = gql`
-query subjectOverViewPaged($subject_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String =""){
-  subjectOverViewPaged(subject_ids: $subject_ids, first: $first, offset: $offset, order_by: $order_by) {
-      subject_id
-      race
-      diseaseTerm
-      registeringInstitution
-      patientSubgroup
-      stageAtEntry
-      causeOfDeath
-      sitesOfDiseaseAtAutopsy
-      sourceOfTheLabData
-      labTest
-      systemOrganClass
-      serious
-      outcome
-      pathogenicity
-      germlinePathogenicity
-      files{
-        file_id
-      }
-  }
-}
-  `;
-
-// --------------- GraphQL query - Retrieve sample tab details --------------
-
-export const GET_CASES_OVERVIEW_DESC_QUERY = gql`
-  query subjectOverViewPaged($subject_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String =""){
-    subjectOverViewPagedDesc(subject_ids: $subject_ids, first: $first, offset: $offset, order_by: $order_by) {
-      subject_id
-      race
-      diseaseTerm
-      registeringInstitution
-      patientSubgroup
-      stageAtEntry
-      causeOfDeath
-      sitesOfDiseaseAtAutopsy
-      sourceOfTheLabData
-      labTest
-      systemOrganClass
-      serious
-      outcome
-      pathogenicity
-      germlinePathogenicity
-      files{
-        file_id
-      }
-    }
-}
-  `;
-
-export const GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL = gql`
-  query subjectOverViewPaged($subject_ids: [String], $first: Int = 10000000){
-    subjectOverViewPaged(subject_ids: $subject_ids, first: $first) {
-        files {
-          file_id
+    query subjectOverViewPaged($subject_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by:String =""){
+        subjectOverviewPaged(subject_ids: $subject_ids, first: $first, offset: $offset, order_by: $order_by) {
+            pcdc_subject_id
+            race
+            disease_phase
+            treatment_arm
+            disease_site
+            data_conttributor_id
+            ae_grade
+            ae_outcome
+            study_id
+            files{
+                file_id
+            }
         }
     }
-}
-  `;
+`;
+
+// --------------- GraphQL query - Retrieve sample tab details --------------
+export const GET_CASES_OVERVIEW_DESC_QUERY = gql`
+    query subjectOverViewPaged($subject_ids: [String],
+    $offset: Int = 0, $first: Int = 10, $order_by:String =""){
+        subjectOverviewPagedDesc(subject_ids: $subject_ids,
+        first: $first, offset: $offset, order_by: $order_by) {
+            pcdc_subject_id
+            race
+            disease_phase
+            treatment_arm
+            disease_site
+            data_conttributor_id
+            ae_grade
+            ae_outcome
+            study_id
+            files{
+                file_id
+            }
+        }
+    }
+`;
+
+/*
+* pcdc_subject_id
+            race
+            disease_phase
+            treatment_arm
+            disease_site
+            data_conttributor_id
+            ae_grade
+            ae_outcome
+            study_id
+            files{
+                file_id
+            }
+* */
+
+export const GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL = gql`
+    query subjectOverViewPaged($subject_ids: [String], $first: Int = 10000000){
+        subjectOverviewPaged(subject_ids: $subject_ids, first: $first) {
+            files {
+                file_id
+            }
+        }
+    }
+`;
 
 export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
-query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by: String = "file_name") {
-  fileOverview(file_ids: $file_ids, offset: $offset, first: $first, order_by: $order_by) {
-    file_ids
-  }
-}
-  `;
+    query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 10, $order_by: String = "file_name") {
+        fileOverview(file_ids: $file_ids, offset: $offset, first: $first, order_by: $order_by) {
+            file_ids
+        }
+    }
+`;
 
 // --------------- GraphQL query - Retrieve files tab details --------------
 export const GET_FILES_NAME_QUERY = gql`
-query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 100000, $order_by:String ="file_name"){
-  fileOverview(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
-    file_name
-  }
-}
-  `;
+    query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 100000, $order_by:String ="file_name"){
+        fileOverview(file_ids: $file_ids, offset: $offset,first: $first, order_by: $order_by) {
+            file_name
+        }
+    }
+`;
 
 export const GET_FILE_IDS_FROM_FILE_NAME = gql`
-  query (
-      $file_name: [String],
-      $offset: Int,
-      $first: Int,
-      $order_by: String
-  )
-  {
-      fileIdsFromFileNameDesc(
-          file_name:$file_name, 
-          offset:$offset,
-          first:$first,
-          order_by:$order_by
-      )
-      {
-        file_id
-      }
-  }`;
+    query (
+        $file_name: [String],
+        $offset: Int,
+        $first: Int,
+        $order_by: String
+    )
+    {
+        fileIdsFromFileNameDesc(
+            file_name:$file_name,
+            offset:$offset,
+            first:$first,
+            order_by:$order_by
+        )
+        {
+            file_id
+        }
+    }`;

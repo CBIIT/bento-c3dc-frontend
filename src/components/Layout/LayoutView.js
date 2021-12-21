@@ -15,14 +15,10 @@ import table from '../../pages/table/tableView';
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutController';
 import DataDictonary from '../../pages/dataDictionary/dataDictonaryController';
-// import Trials from '../../pages/trials/trialsController';
 import Programs from '../../pages/programs/programsController';
-// import TrialDetail from '../../pages/trialDetail/trialDetailController';
 import ProgramDetail from '../../pages/programDetail/programDetailController';
-// import Sites from '../../pages/sites/sitesController';
 import Studies from '../../pages/studies/studiesController';
 import StudyDetail from '../../pages/studyDetail/studyDetailController';
-// import SiteDetail from '../../pages/siteDetail/siteDetailController';
 // end routes
 import GraphqlClient from '../GraphqlClient/GraphqlView';
 import fileCentricCart from '../../pages/fileCentricCart/cartController';

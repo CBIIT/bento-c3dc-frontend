@@ -17,12 +17,12 @@ const Stats = ({ filter }) => {
       initDashboardStatus();
     }
     return state.dashboard
-      && state.dashboard.subjectOverView
-       && state.dashboard.subjectOverView.data
+      && state.dashboard.subjectOverview
+       && state.dashboard.subjectOverview.data
       ? (
         function extraData(d) {
           return getFilteredStat(d);
-        }(state.dashboard.subjectOverView.data.filter(
+        }(state.dashboard.subjectOverview.data.filter(
           (d) => (filterData(d, filter)),
         ))
       ) : [];

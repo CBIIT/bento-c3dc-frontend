@@ -31,24 +31,10 @@ const table = {
       dataField: 'study_description',
       header: 'Study Description',
     },
-    {
-      dataField: 'num_subjects',
-      header: 'Associated Cases',
-      link: '/cases',
-    },
   ],
 };
 
-// --------------- GraphQL query - Retrieve sites info --------------
-// const GET_STUDIES_DATA_QUERY = gql`{
-//   sitesInfo{
-//       site_id
-//       siteName
-//       siteAddress
-//       siteStatus
-//       num_subjects
-//   }
-// }`;
+// --------------- GraphQL query - Retrieve studies info --------------
 const GET_STUDIES_DATA_QUERY = gql`{
   list_of_studies{
       study_id

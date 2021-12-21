@@ -51,7 +51,7 @@ const initialState = {
     checkboxForAll: {
       data: [],
     },
-    subjectOverView: {
+    subjectOverview: {
       data: [],
     },
     checkbox: {
@@ -391,8 +391,8 @@ export async function fetchAllFileIDsForSelectAll(fileCount = 100000) {
       },
     })
     .then((result) => {
-      const RESULT_DATA = getState().currentActiveTab === tabIndex[1].title ? 'fileOverview' : 'subjectOverViewPaged';
-      const fileIdsFromQuery = RESULT_DATA === 'fileOverview' ? transformfileIdsToFiles(result.data[RESULT_DATA]) : RESULT_DATA === 'subjectOverViewPaged' ? transformCasesFileIdsToFiles(result.data[RESULT_DATA]) : result.data[RESULT_DATA] || [];
+      const RESULT_DATA = getState().currentActiveTab === tabIndex[1].title ? 'fileOverview' : 'subjectOverviewPaged';
+      const fileIdsFromQuery = RESULT_DATA === 'fileOverview' ? transformfileIdsToFiles(result.data[RESULT_DATA]) : RESULT_DATA === 'subjectOverviewPaged' ? transformCasesFileIdsToFiles(result.data[RESULT_DATA]) : result.data[RESULT_DATA] || [];
       return fileIdsFromQuery;
     });
 
@@ -519,7 +519,7 @@ export async function fetchAllFileIDs(fileCount = 100000, selectedIds = [], offs
       filesIds = await getFileIDsByFileName(selectedIds, offset, first, order_by);
       break;
     default:
-      filesIds = await getFileIDs(fileCount, GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL, selectedIds, [], 'subjectOverViewPaged');
+      filesIds = await getFileIDs(fileCount, GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL, selectedIds, [], 'subjectOverviewPaged');
   }
   return filterOutFileIds(filesIds);
 }
@@ -850,7 +850,8 @@ const reducers = {
       currentActiveTab: item.currentTab,
       datatable: {
         ...state.datatable,
-        dataCase: item.sortDirection === 'desc' ? item.data.subjectOverViewPagedDesc : item.data.subjectOverViewPaged,
+        // data: item.data.subjectOverviewPaged,
+        dataCase: item.sortDirection === 'desc' ? item.data.subjectOverviewPagedDesc : item.data.subjectOverviewPaged,
         dataSample: item.sortDirection === 'desc' ? item.data.sampleOverviewDesc : item.data.sampleOverview,
         dataFile: item.sortDirection === 'desc' ? item.data.fileOverviewDesc : item.data.fileOverview,
       },
@@ -867,10 +868,10 @@ const reducers = {
   SET_DASHBOARDTABLE_LOADING: (state) => ({ ...state, isDashboardTableLoading: true }),
   TOGGGLE_CHECKBOX: (state, item) => {
     const dataTableFilters = getFilters(state.datatable.filters, item);
-    const tableData = state.subjectOverView.data.filter((d) => (filterData(d, dataTableFilters)));
+    const tableData = state.subjectOverview.data.filter((d) => (filterData(d, dataTableFilters)));
     const updatedCheckboxData = dataTableFilters && dataTableFilters.length !== 0
       ? getCheckBoxData(
-        state.subjectOverView.data,
+        state.subjectOverview.data,
         state.checkboxForAll.data,
         state.checkbox.data.filter((d) => item[0].groupName === d.groupName)[0],
         dataTableFilters,
@@ -948,8 +949,8 @@ const reducers = {
         filteredSubjectIds: null,
         filteredSampleIds: null,
         filteredFileIds: null,
-        subjectOverView: {
-          data: item.data.subjectOverViewPaged,
+        subjectOverview: {
+          data: item.data.subjectOverviewPaged,
         },
         checkboxForAll: {
           data: checkboxData,
@@ -958,7 +959,7 @@ const reducers = {
           data: checkboxData,
         },
         datatable: {
-          dataCase: item.data.subjectOverViewPaged,
+          dataCase: item.data.subjectOverviewPaged,
           dataSample: item.data.sampleOverview,
           dataFile: item.data.fileOverview,
           filters: [],

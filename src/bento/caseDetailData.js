@@ -452,13 +452,13 @@ const dataRoot = 'subjectDetail';
 // query name, also used as key for files to Samples Mapping.
 const filesOfSamples = 'samplesForSubjectId';
 // Primary ID field used to query a case
-const caseIDField = 'subject_id';
+const caseIDField = 'pcdc_subject_id';
 
 // GraphQL query to retrieve detailed info for a case
 const GET_CASE_DETAIL_DATA_QUERY = gql`
   query subjectDetail($subject_id: String!) {
     subjectDetail(subject_id: $subject_id) {
-      subject_id
+      pcdc_subject_id
       gender
       ageAtEntry
       race

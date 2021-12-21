@@ -2,7 +2,7 @@ import gql from 'graphql-tag';
 
 export const GET_CASES_TAB = gql`
 query subjectOverViewPaged($subject_ids: [String], $offset: Int = 0, $first: Int = 1000, $order_by:String =""){
-  subjectOverViewPaged(subject_ids: $subject_ids, first: $first, offset: $offset, order_by: $order_by) {
+    subjectOverviewPaged(subject_ids: $subject_ids, first: $first, offset: $offset, order_by: $order_by) {
       subject_id
       race
       diseaseTerm
@@ -31,7 +31,7 @@ export const customCasesTabDownloadCSV = {
   header: ['Case ID', 'Race', 'Disease Term', 'Registering Institution', 'Patient Subgroup', 'Stage at Entry', 'Cause of Death',
     'Sites of Disease at Autopsy', 'Source of The Lab Data', 'Lab Test'],
   query: GET_CASES_TAB,
-  apiVariable: 'subjectOverViewPaged',
+  apiVariable: 'subjectOverviewPaged',
   fileName: 'GMB_Cases_download',
   defaultFullTableDownload: true,
 };

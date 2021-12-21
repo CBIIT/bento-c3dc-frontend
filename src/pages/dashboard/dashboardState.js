@@ -25,7 +25,7 @@ export const initialState = {
     checkboxForAll: {
       data: [],
     },
-    subjectOverView: {
+    subjectOverview: {
       data: [],
     },
     checkbox: {
@@ -229,10 +229,10 @@ export default function dashboardReducer(state = initialState, action) {
   switch (action.type) {
     case SINGLE_CHECKBOX: {
       const dataTableFilters = action.payload;
-      const tableData = state.subjectOverView.data.filter((d) => (filterData(d, dataTableFilters)));
+      const tableData = state.subjectOverview.data.filter((d) => (filterData(d, dataTableFilters)));
       const updatedCheckboxData = dataTableFilters && dataTableFilters.length !== 0
         ? getCheckBoxData(
-          state.subjectOverView.data,
+          state.subjectOverview.data,
           state.checkboxForAll.data,
           state.checkbox.data.filter((d) => action.payload[0].groupName === d.groupName)[0],
           dataTableFilters,
@@ -257,10 +257,10 @@ export default function dashboardReducer(state = initialState, action) {
     // if checkbox status has been changed, dashboard data table need to be update as well.
     case TOGGLE_CHECKBOX: {
       const dataTableFilters = getFilters(state.datatable.filters, action.payload);
-      const tableData = state.subjectOverView.data.filter((d) => (filterData(d, dataTableFilters)));
+      const tableData = state.subjectOverview.data.filter((d) => (filterData(d, dataTableFilters)));
       const updatedCheckboxData = dataTableFilters && dataTableFilters.length !== 0
         ? getCheckBoxData(
-          state.subjectOverView.data,
+          state.subjectOverview.data,
           state.checkboxForAll.data,
           state.checkbox.data.filter((d) => action.payload[0].groupName === d.groupName)[0],
           dataTableFilters,
@@ -292,8 +292,8 @@ export default function dashboardReducer(state = initialState, action) {
           hasError: false,
           error: '',
           stats: getStatInit(action.payload.data),
-          subjectOverView: {
-            data: action.payload.data.subjectOverViewPaged,
+          subjectOverview: {
+            data: action.payload.data.subjectOverviewPaged,
           },
           checkboxForAll: {
             data: checkboxData,
@@ -302,7 +302,7 @@ export default function dashboardReducer(state = initialState, action) {
             data: checkboxData,
           },
           datatable: {
-            data: action.payload.data.subjectOverViewPaged,
+            data: action.payload.data.subjectOverviewPaged,
             filters: [],
           },
           widgets: getWidgetsInitData(action.payload.data),
@@ -322,11 +322,11 @@ export default function dashboardReducer(state = initialState, action) {
       return {
         ...state,
         isDataTableUptoDate: true,
-        subjectOverView: {
-          data: action.payload.data.subjectOverViewPaged,
+        subjectOverview: {
+          data: action.payload.data.subjectOverviewPaged,
         },
         datatable: {
-          data: action.payload.data.subjectOverViewPaged,
+          data: action.payload.data.subjectOverviewPaged,
           filters: [],
         },
       };
