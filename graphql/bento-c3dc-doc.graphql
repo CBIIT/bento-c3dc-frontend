@@ -631,18 +631,30 @@ type StudySubjectCount {
 type SubjectOverview {
     pcdc_subject_id: String
     race: String
+    sex: String
     disease_phase: String
     treatment_arm: String
     disease_site: String
-    data_conttributor_id: String
+    data_contributor_id: String
     ae_grade: String
     ae_outcome: String
     study_id: String
+    program_id: String
+    cancer: String
     files: [FileId]
 }
 
 type FileId {
     file_id: String
+}
+
+type SearchResult {
+    numOfPrograms: Int
+    numOfSubjects: Int
+    num_of_studies: Int
+    numOfFiles: Int
+    fileIds: [String],
+    subjectIds: [String]
 }
 
 schema {
@@ -708,134 +720,183 @@ type QueryType {
 
     subjectCountByAEOutcome(subject_ids: [String] = []): [GroupCount] 
 
-    filterSubjectCountByProgram(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByDataContributor (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-
-    filterSubjectCountByStudy(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByStudy (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-    filterSubjectCountByDataContributor(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByTreatmentArm (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-    filterSubjectCountByDiseasePhase(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByRace (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-    filterSubjectCountBySex(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountBySex (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-    filterSubjectCountByRace(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByDiseasePhase (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-    filterSubjectCountByCourse(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByAEOutcome (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-    filterSubjectCountByDiseaseSite(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByAEGrade (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-    filterSubjectCountByAEGrade(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByDiseaseSite (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
 
-    filterSubjectCountByAEOutcome(
-        program_id: [String] = [],
-        study_id: [String] = [],
+    filterSubjectCountByFileType (
+        pcdc_subject_id: [String] = [],
         data_contributor_id: [String] = [],
-        disease_phase: [String] = [],
-        sex: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
         race: [String] = [],
-        course: [String] = [],
-        disease_site: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
         ae_grade: [String] = [],
-        ae_outcome: [String] = []
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
     ): [GroupCount] 
+
+    filterSubjectCountByCancer (
+        pcdc_subject_id: [String] = [],
+        data_contributor_id: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
+        race: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
+        ae_grade: [String] = [],
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
+    ): [GroupCount] 
+
+    searchSubjects(
+        pcdc_subject_id: [String] = [],
+        data_contributor_id: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
+        race: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
+        ae_grade: [String] = [],
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
+    ): SearchResult 
 }
