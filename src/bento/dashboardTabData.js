@@ -56,6 +56,18 @@ export const tabContainers = [
         display: true,
       },
       {
+        dataField: 'cancer',
+        header: 'Cancer',
+        sort: 'asc',
+        display: true,
+      },
+      {
+        dataField: 'sex',
+        header: 'Sex',
+        sort: 'asc',
+        display: true,
+      },
+      {
         dataField: 'race',
         header: 'Race',
         sort: 'asc',
@@ -80,7 +92,7 @@ export const tabContainers = [
         display: true,
       },
       {
-        dataField: 'data_conttributor_id',
+        dataField: 'data_contributor_id',
         header: 'Data Contributor',
         sort: 'asc',
         display: true,
@@ -208,10 +220,10 @@ export const tabContainers = [
         },
       },
       {
-        dataField: 'subject_id',
+        dataField: 'pcdc_subject_id',
         header: 'Case ID',
         sort: 'asc',
-        link: '/case/{subject_id}',
+        link: '/case/{pcdc_subject_id}',
         display: true,
       },
     ],
@@ -312,7 +324,7 @@ export const DASHBOARD_QUERY = gql`{
         disease_phase
         treatment_arm
         disease_site
-        data_conttributor_id
+        data_contributor_id
         ae_grade
         ae_outcome
         study_id
@@ -368,6 +380,214 @@ export const FILTER_GROUP_QUERY = gql`
 `;
 
 export const FILTER_QUERY = gql`
+    query search(
+        $pcdc_subject_id: [String],
+        $data_contributor_id: [String],
+        $study_id: [String],
+        $treatment_arm: [String],
+        $race: [String]
+        $sex: [String],
+        $disease_phase: [String],
+        $ae_outcome: [String],
+        $ae_grade: [String],
+        $disease_site: [String],
+        $fileType: [String],
+        $cancer: [String]
+    ) {
+        searchSubjects(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            numOfPrograms
+            numOfSubjects
+            num_of_studies
+            numOfFiles
+            fileIds
+            subjectIds
+        }
+        
+        filterSubjectCountByDataContributor(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCountByStudy(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCountByTreatmentArm(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCountByRace(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCountBySex(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCountByAEOutcome(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCountByAEGrade(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCounrByDiseaseSite(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCountByFileType(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+        
+        filterSubjectCountByCancer(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $study_id
+            race: $race
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
+        }
+    }
+`;
+
+export const FILTER_QUERY1 = gql`
     query search(
         $race: [String] ,
         $diseaseTerm: [String] ,
@@ -771,7 +991,7 @@ export const GET_CASES_OVERVIEW_QUERY = gql`
             disease_phase
             treatment_arm
             disease_site
-            data_conttributor_id
+            data_contributor_id
             ae_grade
             ae_outcome
             study_id
@@ -793,7 +1013,7 @@ export const GET_CASES_OVERVIEW_DESC_QUERY = gql`
             disease_phase
             treatment_arm
             disease_site
-            data_conttributor_id
+            data_contributor_id
             ae_grade
             ae_outcome
             study_id
@@ -803,21 +1023,6 @@ export const GET_CASES_OVERVIEW_DESC_QUERY = gql`
         }
     }
 `;
-
-/*
-* pcdc_subject_id
-            race
-            disease_phase
-            treatment_arm
-            disease_site
-            data_conttributor_id
-            ae_grade
-            ae_outcome
-            study_id
-            files{
-                file_id
-            }
-* */
 
 export const GET_ALL_FILEIDS_CASESTAB_FOR_SELECT_ALL = gql`
     query subjectOverViewPaged($subject_ids: [String], $first: Int = 10000000){

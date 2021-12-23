@@ -69,7 +69,7 @@ export const facetSearchData = [
     label: 'Course',
     field: 'group',
     api: 'subjectCountByCourse',
-    apiForFiltering: 'filterSubjectCountByCourse',
+    apiForFiltering: '',
     datafield: 'course',
     section: 'Filter By Cases',
     show: true,
@@ -92,56 +92,6 @@ export const facetSearchData = [
     section: 'Filter By Cases',
     show: true,
   },
-];
-
-// A maximum of 12 facetSearchData are allowed
-/* export const facetSearchData = [
-
-  {
-    label: 'System Organ Class',
-    field: 'group',
-    api: 'subjectCountBySystemOrganClass',
-    apiForFiltering: 'filterSubjectCountBySystemOrganClass',
-    datafield: 'systemOrganClass',
-    section: 'Filter By Cases',
-    show: true,
-  },
-  {
-    label: 'Serious',
-    field: 'group',
-    api: 'subjectCountBySerious',
-    apiForFiltering: 'filterSubjectCountBySerious',
-    datafield: 'serious',
-    section: 'Filter By Cases',
-    show: true,
-  },
-  {
-    label: 'Outcome',
-    field: 'group',
-    api: 'subjectCountByOutcome',
-    apiForFiltering: 'filterSubjectCountByOutcome',
-    datafield: 'outcome',
-    section: 'Filter By Cases',
-    show: true,
-  },
-  {
-    label: 'Somatic Pathogenicity',
-    field: 'group',
-    api: 'subjectCountBySomaticPathogenicity',
-    apiForFiltering: 'filterSubjectCountBySomaticPathogenicity',
-    datafield: 'somaticPathogenicity',
-    section: 'Filter By Cases',
-    show: true,
-  },
-  {
-    label: 'Germline Pathogenicity',
-    field: 'group',
-    api: 'subjectCountByGermlinePathogenicity',
-    apiForFiltering: 'filterSubjectCountByGermlinePathogenicity',
-    datafield: 'germlinePathogenicity',
-    section: 'Filter By Cases',
-    show: true,
-  },
   {
     label: 'File Type',
     field: 'group',
@@ -151,7 +101,7 @@ export const facetSearchData = [
     section: 'Filter By Files',
     show: true,
   },
-]; */
+];
 
 // --------------- Dashboard Sidebar Sections styling --------------
 export const facetSectionVariables = {
@@ -190,14 +140,14 @@ export const defaultFacetSectionVariables = {
 // --------------- Dashboard Widgets configuration --------------
 // A maximum of 6 widgets are allowed
 export const widgetsData = [
-  // {
-  //   type: 'donut',
-  //   label: 'Treatment Arm',
-  //   dataName: 'subjectCountByTreatmentArm',
-  //   datatable_field: 'treatment_arm',
-  //   titleText: 'Cases',
-  //   show: true,
-  // },
+  {
+    type: 'donut',
+    label: 'Treatment Arm',
+    dataName: 'subjectCountByTreatmentArm',
+    datatable_field: 'treatment_arm',
+    titleText: 'Cases',
+    show: true,
+  },
   {
     type: 'donut',
     label: 'Adverse Events Outcome',
@@ -222,14 +172,14 @@ export const widgetsData = [
     titleText: 'Cases',
     show: true,
   },
-  // {
-  //   type: 'donut',
-  //   label: 'Race',
-  //   dataName: 'subjectCountByRace',
-  //   datatable_field: 'race',
-  //   titleText: 'Cases',
-  //   show: true,
-  // },
+  {
+    type: 'donut',
+    label: 'Race',
+    dataName: 'subjectCountByRace',
+    datatable_field: 'race',
+    titleText: 'Cases',
+    show: true,
+  },
   {
     type: 'donut',
     label: 'Disease Phase',
@@ -238,19 +188,35 @@ export const widgetsData = [
     titleText: 'Cases',
     show: true,
   },
+  {
+    type: 'donut',
+    label: 'Sex',
+    dataName: 'subjectCountBySex',
+    datatable_field: 'sex',
+    titleText: 'Cases',
+    show: true,
+  },
   // {
   //   type: 'donut',
-  //   label: 'Sex',
-  //   dataName: 'subjectCountBySex',
-  //   datatable_field: 'sex',
+  //   label: 'Course',
+  //   dataName: 'subjectCountByCourse',
+  //   datatable_field: 'course',
   //   titleText: 'Cases',
   //   show: true,
   // },
   {
     type: 'donut',
-    label: 'Course',
-    dataName: 'subjectCountByAEOutcome',
-    datatable_field: 'ae_outcome',
+    label: 'Disease Site',
+    dataName: 'subjectCountByDiseaseSite',
+    datatable_field: 'disease_site',
+    titleText: 'Cases',
+    show: true,
+  },
+  {
+    type: 'donut',
+    label: 'Contributor ID',
+    dataName: 'subjectCountByDataContributorId',
+    datatable_field: 'data_contributor_id',
     titleText: 'Cases',
     show: true,
   },
@@ -296,9 +262,22 @@ export const dashboardTable = {
       display: true,
     },
     {
+      dataField: 'sex',
+      header: 'Sex',
+      sort: 'asc',
+      display: true,
+    },
+    {
       dataField: 'disease_phase',
       header: 'Disease Phase',
       sort: 'asc',
+      display: true,
+    },
+    {
+      dataField: 'cancer',
+      header: 'Cancer',
+      sort: 'asc',
+      link: '/program/{program_id}',
       display: true,
     },
     {
@@ -314,7 +293,7 @@ export const dashboardTable = {
       display: true,
     },
     {
-      dataField: 'data_conttributor_id',
+      dataField: 'data_contributor_id',
       header: 'Data Contributor',
       sort: 'asc',
       display: true,
@@ -333,7 +312,7 @@ export const dashboardTable = {
     },
     {
       dataField: 'study_id',
-      header: 'Study Id',
+      header: 'Study ID',
       sort: 'asc',
       display: true,
     },
@@ -400,7 +379,7 @@ export const GET_DASHBOARD_DATA_QUERY = gql`{
         disease_phase
         treatment_arm
         disease_site
-        data_conttributor_id
+        data_contributor_id
         ae_grade
         ae_outcome
         study_id
@@ -410,110 +389,6 @@ export const GET_DASHBOARD_DATA_QUERY = gql`{
     }
 }`;
 
-/* export const GET_DASHBOARD_DATA_QUERY = gql`{
-    numberOfPrograms
-    numberOfSubjects
-    numberOfSamples
-    numberOfLabProcedures
-    numberOfFiles
-    subjectCountByProgram{
-        group
-        subjects
-    }
-    subjectCountByStudy{
-        group
-        subjects
-    }
-    subjectCountByDiagnoses{
-        group
-        subjects
-    }
-    subjectCountByRecurrenceScore{
-        group
-        subjects
-    }
-    subjectCountByTumorSize{
-        group
-        subjects
-    }
-    subjectCountByChemotherapyRegimen{
-        group
-        subjects
-    }
-    subjectCountByTumorGrade{
-        group
-        subjects
-    }
-    subjectCountByErStatus{
-        group
-        subjects
-    }
-    subjectCountByPrStatus{
-        group
-        subjects
-    }
-    subjectCountByMenopauseStatus{
-        group
-        subjects
-    }
-    subjectCountByChemotherapyRegimen{
-        group
-        subjects
-    }
-    subjectCountByEndocrineTherapy{
-        group
-        subjects
-    }
-    subjectCountByFileType{
-        group
-        subjects
-    }
-    subjectCountByFileAssociation {
-        group
-        subjects
-    }
-    subjectCountByTissueComposition{
-        group
-        subjects
-    }
-    subjectCountByTissueType{
-        group
-        subjects
-    }
-    armsByPrograms {
-        program
-        caseSize
-        children {
-            arm
-            caseSize
-            size
-        }
-    }
-    subjectOverViewPaged(first: 100) {
-        subject_id
-        program_id
-        study_info
-        samples
-        program
-        study_acronym
-        diagnosis
-        recurrence_score
-        tumor_size
-        tumor_grade
-        er_status
-        pr_status
-        chemotherapy
-        endocrine_therapy
-        menopause_status
-        age_at_index
-        survival_time
-        lab_procedures
-        files{
-            file_id
-        }
-    }
-}`; */
-
 // --------------- Dashboard Query configuration --------------
 export const GET_DASHBOARD_TABLE_DATA_QUERY = gql`{
     subjectOverViewPaged(first: 1000000) {
@@ -522,7 +397,7 @@ export const GET_DASHBOARD_TABLE_DATA_QUERY = gql`{
         disease_phase
         treatment_arm
         disease_site
-        data_conttributor_id
+        data_contributor_id
         ae_grade
         ae_outcome
         study_id
