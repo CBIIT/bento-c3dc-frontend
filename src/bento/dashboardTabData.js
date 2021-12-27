@@ -384,7 +384,7 @@ export const FILTER_QUERY = gql`
         $pcdc_subject_id: [String],
         $data_contributor_id: [String],
         $study_id: [String],
-        $treatment_arm: [String],
+#        $treatment_arm: [String],
         $race: [String]
         $sex: [String],
         $disease_phase: [String],
@@ -398,8 +398,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -419,8 +420,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -436,8 +438,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -453,8 +456,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -470,8 +474,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -487,7 +492,8 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+            sex: $sex
+#            treatment_arm: $treatment_arm
             race: $race
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
@@ -504,8 +510,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -521,8 +528,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -534,12 +542,13 @@ export const FILTER_QUERY = gql`
             subjects
         }
         
-        filterSubjectCounrByDiseaseSite(
+        filterSubjectCountByDiseaseSite(
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -555,8 +564,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade
@@ -572,8 +582,9 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-            treatment_arm: $study_id
+#            treatment_arm: $treatment_arm
             race: $race
+            sex: $sex
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
             ae_grade: $ae_grade

@@ -69,7 +69,7 @@ export const facetSearchData = [
     label: 'Course',
     field: 'group',
     api: 'subjectCountByCourse',
-    apiForFiltering: '',
+    apiForFiltering: 'filterSubjectCountByCourse',
     datafield: 'course',
     section: 'Filter By Cases',
     show: true,
@@ -92,6 +92,56 @@ export const facetSearchData = [
     section: 'Filter By Cases',
     show: true,
   },
+];
+
+// A maximum of 12 facetSearchData are allowed
+/* export const facetSearchData = [
+
+  {
+    label: 'System Organ Class',
+    field: 'group',
+    api: 'subjectCountBySystemOrganClass',
+    apiForFiltering: 'filterSubjectCountBySystemOrganClass',
+    datafield: 'systemOrganClass',
+    section: 'Filter By Cases',
+    show: true,
+  },
+  {
+    label: 'Serious',
+    field: 'group',
+    api: 'subjectCountBySerious',
+    apiForFiltering: 'filterSubjectCountBySerious',
+    datafield: 'serious',
+    section: 'Filter By Cases',
+    show: true,
+  },
+  {
+    label: 'Outcome',
+    field: 'group',
+    api: 'subjectCountByOutcome',
+    apiForFiltering: 'filterSubjectCountByOutcome',
+    datafield: 'outcome',
+    section: 'Filter By Cases',
+    show: true,
+  },
+  {
+    label: 'Somatic Pathogenicity',
+    field: 'group',
+    api: 'subjectCountBySomaticPathogenicity',
+    apiForFiltering: 'filterSubjectCountBySomaticPathogenicity',
+    datafield: 'somaticPathogenicity',
+    section: 'Filter By Cases',
+    show: true,
+  },
+  {
+    label: 'Germline Pathogenicity',
+    field: 'group',
+    api: 'subjectCountByGermlinePathogenicity',
+    apiForFiltering: 'filterSubjectCountByGermlinePathogenicity',
+    datafield: 'germlinePathogenicity',
+    section: 'Filter By Cases',
+    show: true,
+  },
   {
     label: 'File Type',
     field: 'group',
@@ -101,7 +151,7 @@ export const facetSearchData = [
     section: 'Filter By Files',
     show: true,
   },
-];
+]; */
 
 // --------------- Dashboard Sidebar Sections styling --------------
 export const facetSectionVariables = {
@@ -140,14 +190,14 @@ export const defaultFacetSectionVariables = {
 // --------------- Dashboard Widgets configuration --------------
 // A maximum of 6 widgets are allowed
 export const widgetsData = [
-  {
-    type: 'donut',
-    label: 'Treatment Arm',
-    dataName: 'subjectCountByTreatmentArm',
-    datatable_field: 'treatment_arm',
-    titleText: 'Cases',
-    show: true,
-  },
+  // {
+  //   type: 'donut',
+  //   label: 'Treatment Arm',
+  //   dataName: 'subjectCountByTreatmentArm',
+  //   datatable_field: 'treatment_arm',
+  //   titleText: 'Cases',
+  //   show: true,
+  // },
   {
     type: 'donut',
     label: 'Adverse Events Outcome',
@@ -196,14 +246,14 @@ export const widgetsData = [
     titleText: 'Cases',
     show: true,
   },
-  // {
-  //   type: 'donut',
-  //   label: 'Course',
-  //   dataName: 'subjectCountByCourse',
-  //   datatable_field: 'course',
-  //   titleText: 'Cases',
-  //   show: true,
-  // },
+  {
+    type: 'donut',
+    label: 'Course',
+    dataName: 'subjectCountByCourse',
+    datatable_field: 'course',
+    titleText: 'Cases',
+    show: true,
+  },
   {
     type: 'donut',
     label: 'Disease Site',
