@@ -243,7 +243,7 @@ function toggleCheckBoxWithAPIAction(payload, currentAllFilterVariables) {
     })
     .then((result) => client.query({ // request to get the filtered group counts
       query: FILTER_GROUP_QUERY,
-      variables: { subject_ids: result.data.searchSubjects.subject_ids },
+      variables: { subject_ids: result.data.searchSubjects.subjectIds },
     })
       .then((result2) => store.dispatch({
         type: 'TOGGGLE_CHECKBOX_WITH_API',
