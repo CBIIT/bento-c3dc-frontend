@@ -93,9 +93,9 @@ type FileId {
 
 type SearchResult {
     numOfPrograms: Int
-    numOfSubjects: Int
+    numberOfSubjects: Int
     num_of_studies: Int
-    numOfFiles: Int
+    numberOfFiles: Int
     fileIds: [String],
     subjectIds: [String]
 }
@@ -1083,37 +1083,25 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): SearchResult @cypher(statement: """
-        MATCH (sc:Subject_Characteristics_Table)
+        MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table), (dpt: Disease_Phase_Timing_Table)-->(sc), (ae: Adverse_Events_Table)-->(sc), (dct: Disease_Characteristics_Table)-->(sc), (f: File)-->(sc), (p: Program)<--(s: Study)<--(sc)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
                 (size($study_id) = 0 OR $study_id IS NULL OR sc.STUDY_ID IN $study_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
-            WHERE
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
-            WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
-            WHERE
+                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex) AND
+                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase) AND
                 (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
-            WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
-            WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
+                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade) AND
+                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site) AND
+                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         RETURN{
             numOfPrograms: COUNT(DISTINCT p),
-            numOfSubjects: COUNT(DISTINCT sc),
+            numberOfSubjects: COUNT(DISTINCT sc),
             num_of_studies: COUNT(DISTINCT s),
-            numOfFiles: COUNT(DISTINCT f),
+            numberOfFiles: COUNT(DISTINCT f),
             fileIds: COLLECT(DISTINCT f.UUID),
             subjectIds: COLLECT(DISTINCT sc.PCDC_SUBJECT_ID)
         }

@@ -650,9 +650,9 @@ type FileId {
 
 type SearchResult {
     numOfPrograms: Int
-    numOfSubjects: Int
+    numberOfSubjects: Int
     num_of_studies: Int
-    numOfFiles: Int
+    numberOfFiles: Int
     fileIds: [String],
     subjectIds: [String]
 }
