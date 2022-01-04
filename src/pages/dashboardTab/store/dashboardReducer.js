@@ -706,7 +706,8 @@ export function updateFilteredAPIDataIntoCheckBoxData(data, facetSearchDataFromC
   return (
     facetSearchDataFromConfig.map((mapping) => ({
       groupName: mapping.label,
-      checkboxItems: transformAPIDataIntoCheckBoxData(data[mapping.apiForFiltering], mapping.field),
+      checkboxItems:
+        transformAPIDataIntoCheckBoxData((data[mapping.apiForFiltering] || []), mapping.field),
       datafield: mapping.datafield,
       show: mapping.show,
       section: mapping.section,
@@ -827,13 +828,13 @@ const reducers = {
     );
     const checkboxData1 = setSelectedFilterValues(updatedCheckboxData1, item.allFilters);
     fetchDataForDashboardTab(state.currentActiveTab,
-      item.data.searchSubjects.subject_ids, item.data.searchSubjects.sampleIds,
+      item.data.searchSubjects.subjectIds, item.data.searchSubjects.sampleIds,
       item.data.searchSubjects.fileIds);
     return {
       ...state,
       setSideBarLoading: false,
       allActiveFilters: item.allFilters,
-      filteredSubjectIds: item.data.searchSubjects.subject_ids,
+      filteredSubjectIds: item.data.searchSubjects.subjectIds,
       filteredSampleIds: item.data.searchSubjects.sampleIds,
       filteredFileIds: item.data.searchSubjects.fileIds,
       checkbox: {
@@ -1004,7 +1005,6 @@ const reducers = {
   SORT_ALL_GROUP_CHECKBOX: (state) => {
     const { sortByList = {} } = state;
     const { data } = state.checkbox;
-
     data.map((group) => {
       const checkboxItems = sortByList[group.groupName] === 'count'
         ? sortByCheckboxItemsByCount(group.checkboxItems)
