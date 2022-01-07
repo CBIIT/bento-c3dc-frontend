@@ -698,7 +698,9 @@ type QueryType {
 
     subjectIdsOfProgram(program_id: String): [SubjectId] 
 
-    subjectCountByTreatmentArm(program_ids: [String] = []): [GroupCount] 
+    programSubjectCountByTreatmentArm(program_ids: [String] = []): [GroupCount] 
+
+    subjectCountByTreatmentArm(subject_ids: [String] = []): [GroupCount] 
 
     subjectCountByProgram(subject_ids: [String] = []): [GroupCount] 
 

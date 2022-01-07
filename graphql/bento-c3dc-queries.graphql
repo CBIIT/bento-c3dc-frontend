@@ -107,7 +107,7 @@ schema {
 type QueryType {
     
     # Schema metadata
-    schemaVersion: String @cypher(statement: "RETURN '0.0.2'")
+    schemaVersion: String @cypher(statement: "RETURN '0.1.0'")
 
     # Node count queries
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
@@ -413,9 +413,18 @@ type QueryType {
         }
     """, passThrough: true)
 
-    subjectCountByTreatmentArm(program_ids: [String] = []): [GroupCount] @cypher(statement: """
+    programSubjectCountByTreatmentArm(program_ids: [String] = []): [GroupCount] @cypher(statement: """
         MATCH (p: Program)<-[*]-(sc: Subject_Characteristics_Table)
           WHERE (size($program_ids) = 0 OR p.PROGRAM_ID IN $program_ids)
+        RETURN {
+          group: sc.TREATMENT_ARM,
+          subjects: count(DISTINCT(sc))
+        }
+    """, passThrough: true)
+
+    subjectCountByTreatmentArm(subject_ids: [String] = []): [GroupCount] @cypher(statement: """
+        MATCH (p: Program)<-[*]-(sc: Subject_Characteristics_Table)
+          WHERE (size($subject_ids) = 0 OR sc.PCDC_SUBJECT_ID IN $subject_ids)
         RETURN {
           group: sc.TREATMENT_ARM,
           subjects: count(DISTINCT(sc))
