@@ -27,3 +27,8 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+modules.xml
+vcs.xml
+workspace.xml
+bento-c3dc-frontend.iml
