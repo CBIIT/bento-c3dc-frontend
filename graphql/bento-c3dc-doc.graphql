@@ -578,6 +578,7 @@ type FileOverview {
 type StudyInfo {
     study_id: String
     study_description: String
+    associated_subject_count: Int
 }
 
 type ProgramInfo {
@@ -587,6 +588,7 @@ type ProgramInfo {
     program_consortium: String
     consortium_manager: String
     associated_sub_count: Int
+    associated_study_count: Int
 }
 
 type ProgramDetail {

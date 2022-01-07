@@ -21,6 +21,7 @@ type FileOverview {
 type StudyInfo {
     study_id: String
     study_description: String
+    associated_subject_count: Int
 }
 
 type ProgramInfo {
@@ -30,6 +31,7 @@ type ProgramInfo {
     program_consortium: String
     consortium_manager: String
     associated_sub_count: Int
+    associated_study_count: Int
 }
 
 type ProgramDetail {
@@ -107,7 +109,7 @@ schema {
 type QueryType {
     
     # Schema metadata
-    schemaVersion: String @cypher(statement: "RETURN '0.1.0'")
+    schemaVersion: String @cypher(statement: "RETURN '0.1.1'")
 
     # Node count queries
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
@@ -119,29 +121,35 @@ type QueryType {
     listOfPrograms: [ProgramInfo] @cypher(statement: """
         MATCH (p: Program)
         OPTIONAL MATCH (p)<-[*]-(sc: Subject_Characteristics_Table)
+        OPTIONAL MATCH (p)<--(s:Study)
         RETURN {
             program_id: p.PROGRAM_ID,
             cancer: p.Cancer,
             program_headquarters: p.Headquarters,
             program_consortium: p.Consortium,
             consortium_manager: p.Consortium_Manager,
-            associated_sub_count: COUNT(DISTINCT sc.PCDC_SUBJECT_ID)
+            associated_sub_count: COUNT(DISTINCT sc.PCDC_SUBJECT_ID),
+            associated_study_count: COUNT(DISTINCT s)
         }
     """, passThrough: true)
 
     list_of_studies: [StudyInfo] @cypher(statement: """
         MATCH (s:Study)
+        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
         RETURN {
             study_id: s.STUDY_ID,
-            study_description: s.STUDY_Description
+            study_description: s.STUDY_Description,
+            associated_subject_count: COUNT(DISTINCT sc)
         }
     """, passThrough: true)
 
     list_of_studies_by_program(program_id: String): [StudyInfo] @cypher(statement: """
         MATCH (p: Program {PROGRAM_ID: $program_id})<--(s: Study)
+        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
         RETURN {
             study_id: s.STUDY_ID,
-            study_description: s.STUDY_Description
+            study_description: s.STUDY_Description,
+            associated_subject_count: COUNT(DISTINCT sc)
         }
     """, passThrough: true)
 
@@ -158,7 +166,9 @@ type QueryType {
                 subjectCount: num_study_subjects
             }) AS studies
         MATCH (p: Program {PROGRAM_ID: $program_id})
-        OPTIONAL MATCH (p)<--(s: Study)<--(sc: Subject_Characteristics_Table)<--(f: File)
+        OPTIONAL MATCH (p)<--(s: Study)
+        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
+        OPTIONAL MATCH (sc)<--(f: File)
         WITH
             p, studies, 
             COUNT(DISTINCT f) AS num_files,
@@ -189,7 +199,8 @@ type QueryType {
                 year_at_enrollment: sc.YEAR_AT_ENROLLMENT
             }) AS subjects
         MATCH (s: Study {STUDY_ID: $study_id})
-        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)<--(f: File)
+        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
+        OPTIONAL MATCH (sc)<--(f: File)
         WITH
             s, subjects,
             COUNT(DISTINCT sc) AS num_cases,
