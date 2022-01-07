@@ -278,6 +278,10 @@ export const DASHBOARD_QUERY = gql`{
     num_of_studies
     numberOfSubjects
     numberOfFiles
+    subjectCountByTreatmentArm {
+        group
+        subjects
+    }
     subjectCountByProgram{
         group
         subjects
@@ -336,6 +340,18 @@ export const DASHBOARD_QUERY = gql`{
 
 export const FILTER_GROUP_QUERY = gql`
     query groupCounts($subject_ids: [String]){
+        searchSubjects(pcdc_subject_id: $subject_ids) {
+            numOfPrograms
+            numberOfSubjects
+            num_of_studies
+            numberOfFiles
+            fileIds
+            subjectIds
+        }
+#        subjectCountByTreatmentArm (subject_id: $subject_ids){
+#            group
+#            subjects
+#        }
         subjectCountByProgram (subject_ids: $subject_ids){
             group
             subjects
@@ -384,7 +400,7 @@ export const FILTER_QUERY = gql`
         $pcdc_subject_id: [String],
         $data_contributor_id: [String],
         $study_id: [String],
-#        $treatment_arm: [String],
+        $treatment_arm: [String],
         $race: [String]
         $sex: [String],
         $disease_phase: [String],
@@ -398,7 +414,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -409,18 +425,36 @@ export const FILTER_QUERY = gql`
             cancer: $cancer
         ) {
             numOfPrograms
-            numOfSubjects
+            numberOfSubjects
             num_of_studies
-            numOfFiles
+            numberOfFiles
             fileIds
             subjectIds
+        }
+        
+        filterSubjectCountByTreatmentArm(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $treatment_arm
+            race: $race
+            sex: $sex
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            cancer: $cancer
+        ) {
+            group
+            subjects
         }
         
         filterSubjectCountByDataContributor(
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -438,7 +472,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -456,7 +490,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -474,7 +508,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -493,7 +527,7 @@ export const FILTER_QUERY = gql`
             data_contributor_id: $data_contributor_id
             study_id: $study_id
             sex: $sex
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             disease_phase: $disease_phase
             ae_outcome: $ae_outcome
@@ -510,7 +544,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -528,7 +562,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -546,7 +580,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -564,7 +598,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -582,7 +616,7 @@ export const FILTER_QUERY = gql`
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
-#            treatment_arm: $treatment_arm
+            treatment_arm: $treatment_arm
             race: $race
             sex: $sex
             disease_phase: $disease_phase
@@ -632,6 +666,33 @@ export const GET_FILES_OVERVIEW_DESC_QUERY = gql`
         }
     }
 `;
+// todo: filterSUbjectCountBy
+//   data_contributor_id: [String] = [],
+//   study_id: [String] = [],
+//   treatment_arm: [String] = [],
+//   race: [String] = [],
+//   sex: [String] = [],
+//   disease_phase: [String] = [],
+//   ae_outcome: [String] = [],
+//   ae_grade: [String] = [],
+//   disease_site: [String] = [],
+//   fileType: [String] = [],
+//   cancer: [String] = []
+//
+// todo: SubjectOverviewPaged
+// pcdc_subject_id: String
+// race: String
+// sex: String
+// disease_phase: String
+// treatment_arm: String
+// disease_site: String
+// data_contributor_id: String
+// ae_grade: String
+// ae_outcome: String
+// study_id: String
+// program_id: String
+// cancer: String
+// files: [FileId]
 
 // --------------- GraphQL query - Retrieve Cases tab details --------------
 export const GET_CASES_OVERVIEW_QUERY = gql`
@@ -639,6 +700,7 @@ export const GET_CASES_OVERVIEW_QUERY = gql`
         subjectOverviewPaged(subject_ids: $subject_ids, first: $first, offset: $offset, order_by: $order_by) {
             pcdc_subject_id
             race
+            sex
             disease_phase
             treatment_arm
             disease_site
@@ -661,6 +723,7 @@ export const GET_CASES_OVERVIEW_DESC_QUERY = gql`
         first: $first, offset: $offset, order_by: $order_by) {
             pcdc_subject_id
             race
+            sex
             disease_phase
             treatment_arm
             disease_site

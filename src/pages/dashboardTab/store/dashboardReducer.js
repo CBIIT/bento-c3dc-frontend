@@ -117,7 +117,8 @@ function getFilteredStat(input, statCountVariables) {
  * @param {object} data
  *  @param {object}
  */
-const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.subjects !== 0);
+const removeEmptySubjectsFromDonutData = (data) => (data || [])
+  .filter((item) => item.subjects !== 0);
 
 /**
  * Returns the widgets data.

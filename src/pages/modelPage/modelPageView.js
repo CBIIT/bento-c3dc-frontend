@@ -53,7 +53,7 @@ const ModelPage = ({ classes }) => {
     <>
       <AboutBody data={{
         img: stockImg,
-        title: data.title,
+        title: Object.prototype.hasOwnProperty.call(data, 'title') ? data.title : '',
         content: data.content,
         table: data.table,
       }}
@@ -69,7 +69,7 @@ const ModelPage = ({ classes }) => {
           velocityEqualToMove,
           velocity: enableVelocity,
         }}
-        pinch={{ disabled: !pinchEnabled }}
+        pinch={{ disabled: (!(pinchEnabled)) }}
         doubleClick={{ disabled: !dbClickEnabled }}
         wheel={{
           wheelEnabled: enableWheel,
@@ -96,7 +96,7 @@ const ModelPage = ({ classes }) => {
             </div>
             <div className={classes.imgSection}>
               <TransformComponent>
-                <img src="https://cbiit.github.io/ctdc-model/model-desc/ctdc-model.svg" alt="ICDC schema" className={classes.img} />
+                <img src="../../assets/c3dc.svg" alt="C 3 D C schema" className={classes.img} />
               </TransformComponent>
             </div>
           </div>

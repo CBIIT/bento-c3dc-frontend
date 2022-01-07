@@ -11,6 +11,15 @@ export const facetSearchData = [
     section: 'Filter By Cases',
     show: true,
   },
+  // {
+  //   label: 'Treatment Arm',
+  //   field: 'group',
+  //   api: 'subjectCountByTreatmentArm',
+  //   apiForFiltering: 'filterSubjectCountBySubjectCount',
+  //   datafield: 'treatment_arm',
+  //   section: 'Filter By Cases',
+  //   show: true,
+  // },
   {
     label: 'Disease Phase',
     field: 'group',
@@ -160,7 +169,7 @@ export const facetSectionVariables = {
     checkBoxColorsOne: '#E8F7DC',
     checkBoxColorsTwo: '#F5FDEE',
     height: '5px',
-    isExpanded: false,
+    isExpanded: true,
   },
   'Filter By Samples': {
     color: '#10BEFF',
@@ -190,14 +199,14 @@ export const defaultFacetSectionVariables = {
 // --------------- Dashboard Widgets configuration --------------
 // A maximum of 6 widgets are allowed
 export const widgetsData = [
-  // {
-  //   type: 'donut',
-  //   label: 'Treatment Arm',
-  //   dataName: 'subjectCountByTreatmentArm',
-  //   datatable_field: 'treatment_arm',
-  //   titleText: 'Cases',
-  //   show: true,
-  // },
+  {
+    type: 'donut',
+    label: 'Treatment Arm',
+    dataName: 'subjectCountByTreatmentArm',
+    datatable_field: 'treatment_arm',
+    titleText: 'Cases',
+    show: true,
+  },
   {
     type: 'donut',
     label: 'Adverse Events Outcome',
@@ -383,6 +392,10 @@ export const GET_DASHBOARD_DATA_QUERY = gql`{
     numberOfPrograms
     numberOfSubjects
     numberOfFiles
+    subjectCountByTreatmentArm {
+        group
+        subjects
+    }
     subjectCountByProgram {
         group
         subjects

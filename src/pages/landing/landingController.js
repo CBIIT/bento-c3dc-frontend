@@ -13,7 +13,7 @@ const landingController = () => {
     return (
       <Typography variant="h5" color="error" size="sm">
         {error && `An error has occurred in loading stats component: ${error}`}
-      </Typography>
+      </Typography>``
     );
   }
 

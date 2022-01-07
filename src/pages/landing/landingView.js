@@ -6,7 +6,6 @@ import {
 import { Link } from 'react-router-dom';
 import { cn } from 'bento-components';
 import { landingPageData } from '../../bento/landingPageData';
-import { Button } from '../../components/Wrappers/Wrappers';
 import imgAbout from '../../assets/landing/About.png';
 import imgTrial from '../../assets/landing/Trials.png';
 import imgAccess from '../../assets/landing/RequestAccess.png';
@@ -14,15 +13,20 @@ import icon from '../../assets/landing/LP_ReadMore.svg';
 import iconAbout from '../../assets/landing/LP_About_Fullarticle.Arrow.svg';
 import texturebg from '../../assets/landing/BackgroundTexture-LP.jpg';
 import casesImage from '../../assets/landing/Cases.png';
-import hero from '../../assets/landing/hero.png';
+import hero from '../../assets/landing/C3DC.LandingPage.png';
 
 const LandingController = ({ classes }) => (
   <div className={classes.page}>
     <div className={classes.container}>
       <div className={classes.hero}>
         <Grid container spacing={16} direction="row">
-          <div className={classes.heroImage} />
-          <div className={classes.heroTextContainer}>
+          <Link to={landingPageData.callToActionLink} className={classes.landingImageContainer}>
+            <div className={classes.landingImageContainer}>
+              <div className={classes.heroImage} />
+            </div>
+          </Link>
+
+          {/* <div className={classes.heroTextContainer}>
             <div className={classes.heroTextWrapper}>
               <div className={classes.headerTitle}>
                 { landingPageData.callToActionTitle }
@@ -41,7 +45,7 @@ const LandingController = ({ classes }) => (
                 </Link>
               </div>
             </div>
-          </div>
+          </div> */}
         </Grid>
       </div>
     </div>
@@ -63,7 +67,6 @@ const LandingController = ({ classes }) => (
           <div className={classes.contentLeft}>
             <div className={classes.about}>
               <div className={classes.aboutImageSection}>
-                {/* <img src={imgAbout} className={classes.aboutImage} alt="GMB about" /> */}
                 <img src={imgAbout} className={classes.aboutImage} alt="C3DC about" />
               </div>
               <div className={classes.C3DCWords}>
@@ -165,9 +168,14 @@ const styles = () => ({
   page: {
     marginTop: '-47px',
   },
+  landingImageContainer: {
+    display: 'block',
+    width: '100%',
+  },
   heroImage: {
     width: '100%',
     height: '600px',
+    cursor: 'pointer', // can be removed when a better image has been provided.
     backgroundRepeat: 'no-repeat',
     // backgroundSize: '100% 100%',
     background: `url(${hero})`,

@@ -32,7 +32,7 @@ const SideBarContent = ({ classes }) => {
           root: classes.drawerPaperRoot,
         },
       }}
-      open={1}
+      open
       classes={{
         paper: classes.drawerPaper,
       }}

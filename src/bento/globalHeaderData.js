@@ -1,8 +1,10 @@
 // globalHeaderLogo image 468x100
 // globalHeaderImage: image 2200x100
+import image from '../assets/header/c3dc_header_logo_.svg';
+
 export default {
-  globalHeaderLogo: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/gmb/images/logos/svgs/GMB_logo.svg',
+  globalHeaderLogo: image,
   globalHeaderLogoLink: '/',
-  globalHeaderLogoAltText: 'GMB Logo',
+  globalHeaderLogoAltText: 'C3DC Logo',
   globalHeaderImage: '',
 };

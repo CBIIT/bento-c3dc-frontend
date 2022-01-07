@@ -11,6 +11,9 @@ export const landingPageData = {
     + 'Model, Store and Share your Data Sets using the Bento Framework for Data Sharing Platforms.',
   callToActionButtonText: 'EXPLORE THE SITE',
   callToActionLink: '/cases',
+  landingImageContainer: {
+    display: 'block',
+  },
   landingPageHero: {
     alt: 'Alt tag1',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_Hero_Graphic.png',
