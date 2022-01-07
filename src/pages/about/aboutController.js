@@ -4,6 +4,7 @@ import axios from 'axios';
 import YAMLData from '../../content/prod/aboutPagesContent.yaml';
 import env from '../../utils/env';
 import AboutView from './aboutView';
+import modelImage from '../../assets/c3dc.svg';
 
 const ABOUT_CONTENT_URL = env.REACT_APP_ABOUT_CONTENT_URL;
 
@@ -30,7 +31,7 @@ const About = ({ match }) => {
   }, [match.path]);
 
   return (
-    <AboutView data={data} />
+    <AboutView data={data} modelImg={modelImage} />
   );
 };
 export default About;

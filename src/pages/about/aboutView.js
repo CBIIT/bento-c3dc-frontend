@@ -3,7 +3,7 @@ import { AboutHeader, AboutBody } from 'bento-components';
 import { withStyles } from '@material-ui/core';
 import Stats from '../../components/Stats/AllStatsController';
 
-const AboutView = ({ classes, data }) => {
+const AboutView = ({ classes, data, modelImg }) => {
   const getImage = (imgPath, alt) => <img className={classes.img} src={imgPath != null ? imgPath : ''} alt={alt} />;
 
   return (
@@ -17,7 +17,8 @@ const AboutView = ({ classes, data }) => {
         content: data.content ? data.content : '',
         table: data.table ? data.table : '',
         secondaryImage: data.secondaryZoomImage ? data.secondaryZoomImage : null,
-        secondaryImageData: getImage(data.secondaryZoomImage, 'secondary zoominout'),
+        secondaryImageData: getImage(data.secondaryZoomImage && data.secondaryZoomImage.length
+          ? data.secondaryZoomImage : modelImg, 'secondary zoominout'),
         secondaryZoomImageTitle: data.secondaryZoomImageTitle ? data.secondaryZoomImageTitle : null,
       }}
       />
