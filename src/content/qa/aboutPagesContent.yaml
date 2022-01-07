@@ -14,4 +14,4 @@
     - paragraph: "•	Frontend: $$[https://github.com/CBIIT/bento-frontend](https://github.com/CBIIT/bento-frontend)"
     - paragraph: "•	File and Data Loaders: $$[https://github.com/CBIIT/icdc-dataloader](https://github.com/CBIIT/icdc-dataloader)"
   secondaryZoomImageTitle: "The C3DC Core Data Model"
-  secondaryZoomImage: ''
+  secondaryZoomImage: ' '

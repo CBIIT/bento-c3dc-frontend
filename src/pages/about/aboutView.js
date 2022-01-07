@@ -17,7 +17,7 @@ const AboutView = ({ classes, data, modelImg }) => {
         content: data.content ? data.content : '',
         table: data.table ? data.table : '',
         secondaryImage: data.secondaryZoomImage ? data.secondaryZoomImage : null,
-        secondaryImageData: getImage(data.secondaryZoomImage && data.secondaryZoomImage.length
+        secondaryImageData: getImage(data.secondaryZoomImage && data.secondaryZoomImage.length > 1
           ? data.secondaryZoomImage : modelImg, 'secondary zoominout'),
         secondaryZoomImageTitle: data.secondaryZoomImageTitle ? data.secondaryZoomImageTitle : null,
       }}
