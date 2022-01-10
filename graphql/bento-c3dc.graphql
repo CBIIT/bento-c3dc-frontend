@@ -666,7 +666,7 @@ schema {
 type QueryType {
     
     # Schema metadata
-    schemaVersion: String @cypher(statement: "RETURN '0.1.1'")
+    schemaVersion: String @cypher(statement: "RETURN '0.2.0'")
 
     # Node count queries
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
@@ -768,6 +768,93 @@ type QueryType {
             num_cases: num_cases,
             num_files: num_files,
             subjects: subjects
+        }
+    """, passThrough: true)
+
+    subjectDetails(subject_id: String): SubjectDetail @cypher(statement: """
+        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})
+        RETURN {
+            pcdc_subject_id: sc.PCDC_SUBJECT_ID,
+            honest_broker_subject_id: sc.HONEST_BROKER_SUBJECT_ID,
+            data_contributor_id: sc.DATA_CONTRIBUTOR_ID,
+            age_at_enrollment: sc.AGE_AT_ENROLLMENT,
+            treatment_arm: sc.TREATMENT_ARM,
+            enrolled_status: sc.ENROLLED_STATUS,
+            year_at_enrollment: sc.YEAR_AT_ENROLLMENT
+        }
+    """, passThrough: true)
+
+    subjectAdverseEvents(subject_id: String): [Adverse_Events_Table] @cypher(statement: """
+        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(ae: Adverse_Events_Table)
+        RETURN {
+            AGE_AT_AE:  ae.AGE_AT_AE,
+            DISEASE_PHASE:  ae.DISEASE_PHASE,
+            DISEASE_PHASE_NUMBER:  ae.DISEASE_PHASE_NUMBER,
+            COURSE:  ae.COURSE,
+            COURSE_NUMBER:  ae.COURSE_NUMBER,
+            ADVERSE_EVENT:  ae.ADVERSE_EVENT,
+            AE_CODE:  ae.AE_CODE,
+            AE_SYSTEM:  ae.AE_SYSTEM,
+            AE_SYSTEM_VERSION:  ae.AE_SYSTEM_VERSION,
+            AE_GRADE:  ae.AE_GRADE,
+            AE_ATTRIBUTION:  ae.AE_ATTRIBUTION,
+            AE_OUTCOME:  ae.AE_OUTCOME,
+            AE_ICU:  ae.AE_ICU,
+            AE_MEDICATION:  ae.AE_MEDICATION,
+            AE_INTERVENTION:  ae.AE_INTERVENTION,
+            AE_MED_INTERVENTION_DETAIL:  ae.AE_MED_INTERVENTION_DETAIL,
+            AE_PATHOGEN:  ae.AE_PATHOGEN,
+            AE_PATHOGEN_CONFIRMATION:  ae.AE_PATHOGEN_CONFIRMATION,
+            GVHD_ACUITY:  ae.GVHD_ACUITY,
+            GVHD_ORGAN:  ae.GVHD_ORGAN,
+            AGE_AT_AE_RESOLVED:  ae.AGE_AT_AE_RESOLVED,
+            AVN_JOINT:  ae.AVN_JOINT,
+            AVN_JOINT_LATERALITY:  ae.AVN_JOINT_LATERALITY,
+            AVN_METHOD:  ae.AVN_METHOD,
+            ORTHOPEDIC_PROCEDURE:  ae.ORTHOPEDIC_PROCEDURE,
+            INFECTION_CLASSIFICATION:  ae.INFECTION_CLASSIFICATION
+        }
+    """, passThrough: true)
+
+    subjectRadiationTherapy(subject_id: String): [Radiation_Therapy_Table] @cypher(statement: """
+        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(rt: Radiation_Therapy_Table)
+        RETURN {
+            AGE_AT_RT_START: rt.AGE_AT_RT_START,
+            AGE_AT_RT_END: rt.AGE_AT_RT_END,
+            DISEASE_PHASE: rt.DISEASE_PHASE,
+            DISEASE_PHASE_NUMBER: rt.DISEASE_PHASE_NUMBER,
+            COURSE: rt.COURSE,
+            COURSE_NUMBER: rt.COURSE_NUMBER,
+            RT_SITE: rt.RT_SITE,
+            RT_DOSE: rt.RT_DOSE,
+            RT_UNIT: rt.RT_UNIT,
+            TUMOR_CLASSIFICATION: rt.TUMOR_CLASSIFICATION,
+            TUMOR_TISSUE_TYPE: rt.TUMOR_TISSUE_TYPE,
+            RT_LATERALITY: rt.RT_LATERALITY,
+            ENERGY_TYPE: rt.ENERGY_TYPE,
+            NUM_FRACTION: rt.NUM_FRACTION,
+            TRANSPOSITION_ORGAN: rt.TRANSPOSITION_ORGAN,
+            BOOST: rt.BOOST
+        }
+    """, passThrough: true)
+
+    subjectMedicalHistory(subject_id: String): [Medical_History_Table] @cypher(statement: """
+        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(mh: Medical_History_Table)
+        RETURN {
+            MEDICAL_HISTORY: mh.MEDICAL_HISTORY,
+            DYSGENETIC_GONAD: mh.DYSGENETIC_GONAD
+        }
+    """, passThrough: true)
+
+    subjectCourseTiming(subject_id: String): [Course_Timing_Table] @cypher(statement: """
+        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(ct: Course_Timing_Table)
+        RETURN {
+            COURSE: ct.COURSE,
+            COURSE_NUMBER: ct.COURSE_NUMBER,
+            AGE_AT_COURSE_START: ct.AGE_AT_COURSE_START,
+            AGE_AT_COURSE_END: ct.AGE_AT_COURSE_END,
+            AGE_AT_COURSE_ANC_500: ct.AGE_AT_COURSE_ANC_500,
+            AGE_AT_TXASSIGN: ct.AGE_AT_TXASSIGN
         }
     """, passThrough: true)
 

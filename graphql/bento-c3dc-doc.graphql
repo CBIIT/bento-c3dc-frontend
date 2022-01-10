@@ -686,6 +686,16 @@ type QueryType {
 
     studyDetails(study_id: String): StudyDetail 
 
+    subjectDetails(subject_id: String): SubjectDetail 
+
+    subjectAdverseEvents(subject_id: String): [Adverse_Events_Table] 
+
+    subjectRadiationTherapy(subject_id: String): [Radiation_Therapy_Table] 
+
+    subjectMedicalHistory(subject_id: String): [Medical_History_Table] 
+
+    subjectCourseTiming(subject_id: String): [Course_Timing_Table] 
+
     fileOverview(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
 
     fileOverviewDesc(file_ids: [String] = [], order_by: String = ""): [FileOverview] 
