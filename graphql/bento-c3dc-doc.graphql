@@ -622,6 +622,10 @@ type SubjectDetail {
     treatment_arm: String
     enrolled_status: String
     year_at_enrollment: Float
+    adverse_events: [Adverse_Events_Table]
+    radiation_therapy: [Radiation_Therapy_Table]
+    medical_history: [Medical_History_Table]
+    course_timing: [Course_Timing_Table]
 }
 
 type StudySubjectCount {
@@ -687,12 +691,6 @@ type QueryType {
     studyDetails(study_id: String): StudyDetail 
 
     subjectDetails(subject_id: String): SubjectDetail 
-
-    subjectAdverseEvents(subject_id: String): [Adverse_Events_Table] 
-
-    subjectRadiationTherapy(subject_id: String): [Radiation_Therapy_Table] 
-
-    subjectMedicalHistory(subject_id: String): [Medical_History_Table] 
 
     subjectCourseTiming(subject_id: String): [Course_Timing_Table] 
 
