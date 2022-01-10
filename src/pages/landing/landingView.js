@@ -171,6 +171,7 @@ const styles = () => ({
   landingImageContainer: {
     display: 'block',
     width: '100%',
+    backgroundColor: '#F7F8FA',
   },
   heroImage: {
     width: '100%',
@@ -191,22 +192,26 @@ const styles = () => ({
     },
     '@media (min-width: 1400px)': {
       backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
+      backgroundPosition: 'center',
+      backgroundSize: '80% 100%',
       background: `url(${hero})`,
     },
     '@media (min-width: 1600px)': {
       backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
+      backgroundPosition: 'center',
+      backgroundSize: '80% 100%',
       background: `url(${hero})`,
     },
     '@media (min-width: 1800px)': {
       backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
+      backgroundPosition: 'center',
+      backgroundSize: '80% 100%',
       background: `url(${hero})`,
     },
     '@media (min-width: 2000px)': {
       backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
+      backgroundPosition: 'center',
+      backgroundSize: '80% 100%',
       background: `url(${hero})`,
     },
   },
