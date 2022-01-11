@@ -671,7 +671,7 @@ schema {
 type QueryType {
     
     # Schema metadata
-    schemaVersion: String @cypher(statement: "RETURN '0.2.3'")
+    schemaVersion: String @cypher(statement: "RETURN '0.2.4'")
 
     # Node count queries
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
@@ -1254,10 +1254,9 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, groups
         WITH sc.DATA_CONTRIBUTOR_ID AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1306,10 +1305,9 @@ type QueryType {
         OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
             WHERE
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, s, groups
         WITH s.STUDY_ID AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1358,10 +1356,9 @@ type QueryType {
             WHERE
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id)
-        WITH DISTINCT sc, groups
         WITH sc.TREATMENT_ARM AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1408,10 +1405,9 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, demo, groups
         WITH demo.RACE AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1458,10 +1454,9 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, demo, groups
         WITH demo.SEX AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1508,10 +1503,9 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, dpt, groups
         WITH dpt.DISEASE_PHASE AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1558,10 +1552,9 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, ae, groups
         WITH ae.AE_OUTCOME AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1608,9 +1601,8 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, ae, groups
         WITH ae.AE_GRADE AS count_group,
-             count(sc) AS count,
+             count(DISTINCT sc) AS count,
              groups
         UNWIND groups AS group
         RETURN {
@@ -1658,10 +1650,9 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, dct, groups
         WITH dct.DISEASE_SITE AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1708,10 +1699,9 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        WITH DISTINCT sc, f, groups
         WITH f.FILE_TYPE AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
@@ -1758,10 +1748,9 @@ type QueryType {
             WHERE
                 (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        WITH DISTINCT sc, p, groups
         WITH p.Cancer AS count_group,
-             count(sc) AS count,
-             groups
+            count(DISTINCT sc) AS count,
+            groups
         UNWIND groups AS group
         RETURN {
             group: group,
