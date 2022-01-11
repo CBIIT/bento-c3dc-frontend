@@ -626,6 +626,7 @@ type SubjectDetail {
     radiation_therapy: [Radiation_Therapy_Table]
     medical_history: [Medical_History_Table]
     course_timing: [Course_Timing_Table]
+    files: [File]
 }
 
 type StudySubjectCount {
@@ -670,7 +671,7 @@ schema {
 type QueryType {
     
     # Schema metadata
-    schemaVersion: String @cypher(statement: "RETURN '0.2.2'")
+    schemaVersion: String @cypher(statement: "RETURN '0.2.3'")
 
     # Node count queries
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
@@ -848,6 +849,23 @@ type QueryType {
             adverse_events,
             radiation_therapy,
             medical_history
+        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(f: File)
+        WITH
+            COLLECT (DISTINCT f{
+                FILE_NAME: f.FILE_NAME,
+                FILE_TYPE: f.FILE_TYPE,
+                FILE_DESCRIPTION: f.FILE_DESCRIPTION,
+                FILE_FORMAT: f.FILE_FORMAT,
+                FILE_SIZE: f.FILE_SIZE,
+                MD5SUM: f.MD5SUM,
+                FILE_STATUS: f.FILE_STATUS,
+                UUID: f.UUID,
+                FILE_LOCATION: f.FILE_LOCATION
+            }) as files,
+            adverse_events,
+            radiation_therapy,
+            medical_history,
+            course_timing
         MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})
         RETURN {
             pcdc_subject_id: sc.PCDC_SUBJECT_ID,
@@ -860,7 +878,8 @@ type QueryType {
             adverse_events: adverse_events,
             radiation_therapy: radiation_therapy,
             medical_history: medical_history,
-            course_timing: course_timing
+            course_timing: course_timing,
+            files: files
         }
     """, passThrough: true)
 

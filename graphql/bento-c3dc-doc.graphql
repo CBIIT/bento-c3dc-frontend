@@ -626,6 +626,7 @@ type SubjectDetail {
     radiation_therapy: [Radiation_Therapy_Table]
     medical_history: [Medical_History_Table]
     course_timing: [Course_Timing_Table]
+    files: [File]
 }
 
 type StudySubjectCount {
