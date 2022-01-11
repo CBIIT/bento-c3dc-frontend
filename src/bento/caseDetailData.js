@@ -10,7 +10,7 @@ export const tooltipContent = {
 // -------------- Case ID area configurations --------------
 const caseHeader = {
   label: 'Case ID',
-  dataField: 'subject_id',
+  dataField: 'pcdc_subject_id',
 };
 
 // --------------- Data panel configuration --------------
@@ -18,33 +18,41 @@ const leftPanel = [
   // Each object here represents a subsection in the panel
   // A maximum of 3 subsections are allowed
   {
-    sectionHeader: 'Demographics',
+    sectionHeader: 'Subject Detail Information',
     // sectionDesc: 'Demographic Related Info',
     properties: [
       // A maximum of 10 properties are allowed
       {
-        label: 'Gender',
-        dataField: 'gender',
+        label: 'Subject ID',
+        dataField: 'pcdc_subject_id',
       },
       {
-        label: 'Race',
-        dataField: 'race',
+        label: 'Age at Enrollment',
+        dataField: 'age_at_enrollment',
       },
       {
-        label: 'Age at Entry',
-        dataField: 'ageAtEntry',
+        label: 'Treatment Arm',
+        dataField: 'treatment_arm',
       },
       {
-        label: 'Registering Institution',
-        dataField: 'registeringInstitution',
+        label: 'Enrolled Status',
+        dataField: 'enrolled_status',
       },
       {
-        label: 'Disease Term',
-        dataField: 'diseaseTerm',
+        label: 'Data Contributor ID',
+        dataField: 'data_contributor_id',
       },
       {
-        label: 'Patient Subgroup',
-        dataField: 'patientSubgroup',
+        label: 'Honest Broker Subject ID',
+        dataField: 'honest_broker_subject_id',
+      },
+      {
+        label: 'Data Contributor ID',
+        dataField: 'honest_broker_subject_id',
+      },
+      {
+        label: 'Year At Enrollment',
+        dataField: 'year_at_enrollment',
       },
     ],
   },
@@ -168,18 +176,24 @@ export const tab = {
     },
     {
       index: 1,
-      label: 'GERMLINE VARIANT',
+      label: 'RADIATION THERAPY',
       value: 'table2',
       primaryColor: '#F7D7F7',
     },
     {
       index: 2,
-      label: 'SOMATIC VARIANT',
+      label: 'MEDICAL HISTORY',
       value: 'table2',
       primaryColor: '#D6F2EA',
     },
     {
       index: 3,
+      label: 'COURSE TIMING',
+      value: 'table2',
+      primaryColor: '#F7D7F7',
+    },
+    {
+      index: 4,
       label: 'ASSOCIATED FILES',
       value: 'table2',
       primaryColor: '#F7D7F7',
@@ -187,16 +201,16 @@ export const tab = {
   ],
 };
 
-// --------------- Table 1 configuration --------------
+// --------------- Table 1 adverse events --------------
 const table1 = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
   tableTitle: 'Adverse Events',
   // Field name for files data, need to be updated only when using a different GraphQL query
-  subjectDetailField: 'adverseEvents',
+  subjectDetailField: 'adverse_events',
   // Value must be one of the 'dataField's in fileTableColumns
-  defaultSortField: 'organClass',
+  defaultSortField: 'ae_code',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Text to appear on Add to cart button
@@ -232,16 +246,52 @@ const table1 = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'organClass',
-      header: 'Organ Class',
+      dataField: 'ADVERSE_EVENT',
+      header: 'Adverse Event',
     },
     {
-      dataField: 'outcome',
-      header: 'Outcome',
+      dataField: 'AE_CODE',
+      header: 'Adverse Event Code',
     },
     {
-      dataField: 'serious',
-      header: 'Serious',
+      dataField: 'COURSE',
+      header: 'Course',
+    },
+    {
+      dataField: 'COURSE_NUMBER',
+      header: 'Course Number',
+    },
+    {
+      dataField: 'AE_SYSTEM',
+      header: 'Adverse Event System',
+    },
+    {
+      dataField: 'AE_GRADE',
+      header: 'Adverse Event Grade',
+    },
+    {
+      dataField: 'AE_OUTCOME',
+      header: 'Adverse Event Outcome',
+    },
+    {
+      dataField: 'AE_MEDICATION',
+      header: 'Adverse Event Medication',
+    },
+    {
+      dataField: 'AE_PATHOGEN',
+      header: 'Adverse Event Pathogen',
+    },
+    {
+      dataField: 'AVN_METHOD',
+      header: 'AVN Method',
+    },
+    {
+      dataField: 'INFECTION_CLASSIFICATION',
+      header: 'Infection Classification',
+    },
+    {
+      dataField: 'AGE_AT_AE_RESOLVED',
+      header: 'Age at AE Resolved',
     },
   ],
   // Util Functions
@@ -249,16 +299,16 @@ const table1 = {
   customOnRowsSelect: FileOnRowsSelect,
 };
 
-// --------------- Table 2: Germline Variant --------------
+// --------------- Table 2: radiation therapy --------------
 const table2 = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  tableTitle: 'Germline Variant',
+  tableTitle: 'Radiation Therapy',
   // Field name for files data, need to be updated only when using a different GraphQL query
-  subjectDetailField: 'germlineVariant',
+  subjectDetailField: 'radiation_therapy',
   // Value must be one of the 'dataField's in fileTableColumns
-  defaultSortField: 'panelCode',
+  defaultSortField: 'disease_phase_number',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Text to appear on Add to cart button
@@ -294,16 +344,64 @@ const table2 = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'panelCode',
-      header: 'Panel Code',
+      dataField: 'AGE_AT_RT_START',
+      header: 'Age at RT Start',
     },
     {
-      dataField: 'germlinePathogenicity',
-      header: 'Pathogenicity',
+      dataField: 'AGE_AT_RT_END',
+      header: 'Age at RT End',
     },
     {
-      dataField: 'genePathogenicVariant',
-      header: 'Pathogenic Variant',
+      dataField: 'DISEASE_PHASE',
+      header: 'Disease Phase',
+    },
+    {
+      dataField: 'DISEASE_PHASE_NUMBER',
+      header: 'Disease Phase Number',
+    },
+    {
+      dataField: 'COURSE',
+      header: 'Course',
+    },
+    {
+      dataField: 'COURSE_NUMBER',
+      header: 'Course Number',
+    },
+    {
+      dataField: 'RT_SITE',
+      header: 'RT Site',
+    },
+    {
+      dataField: 'RT_DOSE',
+      header: 'RT Dose',
+    },
+    {
+      dataField: 'RT_UNIT',
+      header: 'RT Unit',
+    },
+    {
+      dataField: 'TUMOR_CLASSIFICATION',
+      header: 'Tumor Classification',
+    },
+    {
+      dataField: 'TUMOR_TISSUE_TYPE',
+      header: 'Tumor Tissue Type',
+    },
+    {
+      dataField: 'RT_LATERALITY',
+      header: 'RT Laterality',
+    },
+    {
+      dataField: 'ENERGY_TYPE',
+      header: 'Energy Type',
+    },
+    {
+      dataField: 'TRANSPOSITION_ORGAN',
+      header: 'Transposition Organ',
+    },
+    {
+      dataField: 'BOOST',
+      header: 'Boost',
     },
   ],
   // Util Functions
@@ -311,16 +409,16 @@ const table2 = {
   customOnRowsSelect: FileOnRowsSelect,
 };
 
-// --------------- Table 3: Somatic Variant --------------
+// --------------- Table 3: medical history --------------
 const table3 = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
-  tableTitle: 'Somatic Variant',
+  tableTitle: 'Medical History',
   // Field name for files data, need to be updated only when using a different GraphQL query
-  subjectDetailField: 'somaticVariant',
+  subjectDetailField: 'medical_history',
   // Value must be one of the 'dataField's in fileTableColumns
-  defaultSortField: 'genePanel500',
+  defaultSortField: 'medical_history',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Text to appear on Add to cart button
@@ -356,16 +454,86 @@ const table3 = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'genePanel500',
-      header: 'Panel Code',
+      dataField: 'MEDICAL_HISTORY',
+      header: 'Medical History',
     },
     {
-      dataField: 'somaticPathogenicity',
-      header: 'Pathogenicity',
+      dataField: 'DYSGENETIC_GONAD',
+      header: 'Dysgenetic Gonad',
+    },
+  ],
+  // Util Functions
+  // Custom function on select checkbox is selected.
+  customOnRowsSelect: FileOnRowsSelect,
+};
+
+// --------------- Table 4: Course Timing --------------
+const table4 = {
+  // Set 'display' to false to hide the table entirely
+  display: true,
+  // Table title
+  tableTitle: 'Course Timing',
+  // Field name for files data, need to be updated only when using a different GraphQL query
+  subjectDetailField: 'course_timing',
+  // Value must be one of the 'dataField's in fileTableColumns
+  defaultSortField: 'course_number',
+  // 'asc' or 'desc'
+  defaultSortDirection: 'asc',
+  // Text to appear on Add to cart button
+  buttonText: 'Add Selected Files',
+  saveButtonDefaultStyle: {
+    color: '#fff',
+    backgroundColor: '#09A175',
+    opacity: '1',
+    border: '0px',
+    cursor: 'pointer',
+  },
+  ActiveSaveButtonDefaultStyle: {
+    disabled: 'true',
+    opacity: '0.3',
+    cursor: 'auto',
+  },
+  DeactiveSaveButtonDefaultStyle: {
+    cursor: 'pointer',
+    opacity: 'unset',
+    border: 'unset',
+  },
+  // Help Icon Message
+  tooltipMessage: 'Click button to add selected files.',
+  helpMessage: 'Here help message',
+  // showHideColumns 'true' or 'false'
+  showHideColumns: true,
+  // download csv 'true' or 'false'
+  download: false,
+  // downloaded File Name
+  downloadFileName: 'Bento_case_samples_download',
+  // Set 'selectableRows' to true to show the row selection
+  selectableRows: true,
+  // A maximum of 10 columns are allowed
+  columns: [
+    {
+      dataField: 'COURSE',
+      header: 'Course',
     },
     {
-      dataField: 'genePathogenicVariant',
-      header: 'Pathogenic Variant',
+      dataField: 'COURSE_NUMBER',
+      header: 'Course Number',
+    },
+    {
+      dataField: 'AGE_AT_COURSE_START',
+      header: 'Age at Course Start',
+    },
+    {
+      dataField: 'AGE_AT_COURSE_END',
+      header: 'Age at Course End',
+    },
+    {
+      dataField: 'AGE_AT_COURSE_ANC_500',
+      header: 'Age at Course ANC 500',
+    },
+    {
+      dataField: 'AGE_AT_TXASSIGN',
+      header: 'Age at Treatment Assign',
     },
   ],
   // Util Functions
@@ -374,7 +542,7 @@ const table3 = {
 };
 
 // --------------- Table 4 configuration --------------
-const table4 = {
+const table5 = {
   // Set 'display' to false to hide the table entirely
   display: true,
   // Table title
@@ -418,23 +586,27 @@ const table4 = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'file_name',
+      dataField: 'FILE_NAME',
       header: 'File Name',
     },
     {
-      dataField: 'file_type',
+      dataField: 'UUID',
+      header: 'File ID',
+    },
+    {
+      dataField: 'FILE_TYPE',
       header: 'File Type',
     },
     {
-      dataField: 'file_description',
+      dataField: 'FILE_DESCRIPTION',
       header: 'Description',
     },
     {
-      dataField: 'file_format',
+      dataField: 'FILE_FORMAT',
       header: 'Format',
     },
     {
-      dataField: 'file_size',
+      dataField: 'FILE_SIZE',
       header: 'Size',
       // set formatBytes to true to display file size (in bytes) in a more human readable format
       formatBytes: true,
@@ -448,7 +620,7 @@ const table4 = {
 // --------------- GraphQL query configuration --------------
 
 // query name, also used as root of returned data
-const dataRoot = 'subjectDetail';
+const dataRoot = 'subjectDetails';
 // query name, also used as key for files to Samples Mapping.
 const filesOfSamples = 'samplesForSubjectId';
 // Primary ID field used to query a case
@@ -456,68 +628,84 @@ const caseIDField = 'pcdc_subject_id';
 
 // GraphQL query to retrieve detailed info for a case
 const GET_CASE_DETAIL_DATA_QUERY = gql`
-  query subjectDetail($subject_id: String!) {
-    subjectDetail(subject_id: $subject_id) {
-      pcdc_subject_id
-      gender
-      ageAtEntry
-      race
-      registeringInstitution
-      diseaseTerm
-      patientSubgroup
-      files {
-        subject_id
-        file_name
-        file_type
-        file_description
-        file_format
-        file_size
-        file_id
-        md5sum
-      }
-      enrollments {
-        dateOfDiagnosis
-        histology
-        eligibility
-        gleasonScore
-        consentSignedDate
-        consentVersionDate
-        stageAtEntry
-        labsInclusionStartDate
-      }
-      adverseEvents{
-        course
-        courseDay
-        onsetDate
-        resolvedDate
-        term
-        organClass
-        eventDescription
-        grade
-        researchAttribution
-        otherAttribution
-        otherExtra
-        unexpectedAdverseEvents
-        serious
-        action
-        therapy
-        outcome
-        expeditedReportToIRB
-        expeditedReportToCCR
-      }
-      somaticVariant{
-        genePanel500
-        genePathogenicVariant
-        somaticPathogenicity
-      }
-      germlineVariant{
-        panelCode
-        genePathogenicVariant
-        germlinePathogenicity
-      }
-
+    query subjectDetail($subject_id: String!) {
+        subjectDetails(subject_id: $subject_id) {
+            pcdc_subject_id
+            honest_broker_subject_id
+            data_contributor_id
+            age_at_enrollment
+            treatment_arm
+            enrolled_status
+            year_at_enrollment
+            adverse_events{
+                AGE_AT_AE
+                DISEASE_PHASE
+                DISEASE_PHASE_NUMBER
+                COURSE
+                COURSE_NUMBER
+                ADVERSE_EVENT
+                AE_CODE
+                AE_SYSTEM
+                AE_SYSTEM_VERSION
+                AE_GRADE
+                AE_ATTRIBUTION
+                AE_OUTCOME
+                AE_ICU
+                AE_MEDICATION
+                AE_INTERVENTION
+                AE_MED_INTERVENTION_DETAIL
+                AE_PATHOGEN
+                AE_PATHOGEN_CONFIRMATION
+                GVHD_ACUITY
+                GVHD_ORGAN
+                AGE_AT_AE_RESOLVED
+                AVN_JOINT
+                AVN_JOINT_LATERALITY
+                AVN_METHOD
+                ORTHOPEDIC_PROCEDURE
+                INFECTION_CLASSIFICATION
+            }
+            radiation_therapy{
+                AGE_AT_RT_START
+                AGE_AT_RT_END
+                DISEASE_PHASE
+                DISEASE_PHASE_NUMBER
+                COURSE
+                COURSE_NUMBER
+                RT_SITE
+                RT_DOSE
+                RT_UNIT
+                TUMOR_CLASSIFICATION
+                TUMOR_TISSUE_TYPE
+                RT_LATERALITY
+                ENERGY_TYPE
+                NUM_FRACTION
+                TRANSPOSITION_ORGAN
+                BOOST
+            }
+            medical_history{
+                MEDICAL_HISTORY
+                DYSGENETIC_GONAD
+            }
+            course_timing{
+                COURSE
+                COURSE_NUMBER
+                AGE_AT_COURSE_START
+                AGE_AT_COURSE_END
+                AGE_AT_COURSE_ANC_500
+                AGE_AT_TXASSIGN
+            }
+            files {
+                FILE_NAME
+                FILE_TYPE
+                FILE_DESCRIPTION
+                FILE_FORMAT
+                FILE_SIZE
+                UUID
+                MD5SUM
+            }
+        }
     }
-  }
 `;
 
 export {
@@ -531,5 +719,6 @@ export {
   table2,
   table3,
   table4,
+  table5,
   GET_CASE_DETAIL_DATA_QUERY,
 };

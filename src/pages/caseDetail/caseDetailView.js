@@ -20,6 +20,7 @@ import {
   table2,
   table3,
   table4,
+  table5,
   tooltipContent,
   tab,
 } from '../../bento/caseDetailData';
@@ -62,7 +63,7 @@ const CaseDetail = ({ data, classes }) => {
   const stat = {
     numberOfTrials: 1,
     numberOfSubjects: 1,
-    numberOfFiles: data.files.length,
+    numberOfFiles: (data.files && data.files.length) || 0,
   };
 
   const breadCrumbJson = [{
@@ -221,6 +222,10 @@ const CaseDetail = ({ data, classes }) => {
       <TabPanel value={currentTab} index={3}>
         {table4.display
           ? (tableGenerator(table4)) : ''}
+      </TabPanel>
+      <TabPanel value={currentTab} index={4}>
+        {table5.display
+          ? (tableGenerator(table5)) : ''}
       </TabPanel>
       <div className={classes.blankSpace} />
     </>

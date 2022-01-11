@@ -278,10 +278,10 @@ export const DASHBOARD_QUERY = gql`{
     num_of_studies
     numberOfSubjects
     numberOfFiles
-    subjectCountByTreatmentArm {
-        group
-        subjects
-    }
+#    subjectCountByTreatmentArm {
+#        group
+#        subjects
+#    }
     subjectCountByProgram{
         group
         subjects
@@ -306,10 +306,10 @@ export const DASHBOARD_QUERY = gql`{
         group
         subjects
     }
-    subjectCountByCourse{
-        group
-        subjects
-    }
+#    subjectCountByCourse{
+#        group
+#        subjects
+#    }
     subjectCountByDiseaseSite{
         group
         subjects

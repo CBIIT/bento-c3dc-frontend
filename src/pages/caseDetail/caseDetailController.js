@@ -9,7 +9,7 @@ import {
 
 const CaseDetailContainer = ({ match }) => {
   const { loading, error, data } = useQuery(GET_CASE_DETAIL_DATA_QUERY, {
-    variables: { [caseIDField]: match.params.id },
+    variables: { subject_id: match.params.id },
   });
 
   if (loading) return <CircularProgress />;

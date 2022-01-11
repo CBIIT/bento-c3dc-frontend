@@ -30,7 +30,7 @@ export const facetSearchData = [
     show: true,
   },
   {
-    label: 'Sites of Disease',
+    label: 'Disease Sites',
     field: 'group',
     api: 'subjectCountByDiseaseSite',
     apiForFiltering: 'filterSubjectCountByDiseaseSite',
@@ -42,8 +42,8 @@ export const facetSearchData = [
     label: 'Program',
     field: 'group',
     api: 'subjectCountByProgram',
-    apiForFiltering: 'filterSubjectCountByProgram',
-    datafield: 'program_id',
+    apiForFiltering: 'filterSubjectCountByCancer',
+    datafield: 'cancer',
     section: 'Filter By Cases',
     show: true,
   },
@@ -66,7 +66,7 @@ export const facetSearchData = [
     show: true,
   },
   {
-    label: 'Disease Stage at Entry',
+    label: 'Sex',
     field: 'group',
     api: 'subjectCountBySex',
     apiForFiltering: 'filterSubjectCountBySex',
@@ -74,15 +74,15 @@ export const facetSearchData = [
     section: 'Filter By Cases',
     show: true,
   },
-  {
-    label: 'Course',
-    field: 'group',
-    api: 'subjectCountByCourse',
-    apiForFiltering: 'filterSubjectCountByCourse',
-    datafield: 'course',
-    section: 'Filter By Cases',
-    show: true,
-  },
+  // {
+  //   label: 'Course',
+  //   field: 'group',
+  //   api: 'subjectCountByCourse',
+  //   apiForFiltering: 'filterSubjectCountByCourse',
+  //   datafield: 'course',
+  //   section: 'Filter By Cases',
+  //   show: true,
+  // },
   {
     label: 'Adverse Event Grade',
     field: 'group',
@@ -199,14 +199,14 @@ export const defaultFacetSectionVariables = {
 // --------------- Dashboard Widgets configuration --------------
 // A maximum of 6 widgets are allowed
 export const widgetsData = [
-  {
-    type: 'donut',
-    label: 'Treatment Arm',
-    dataName: 'subjectCountByTreatmentArm',
-    datatable_field: 'treatment_arm',
-    titleText: 'Cases',
-    show: true,
-  },
+  // {
+  //   type: 'donut',
+  //   label: 'Treatment Arm',
+  //   dataName: 'subjectCountByTreatmentArm',
+  //   datatable_field: 'treatment_arm',
+  //   titleText: 'Cases',
+  //   show: true,
+  // },
   {
     type: 'donut',
     label: 'Adverse Events Outcome',
@@ -257,9 +257,9 @@ export const widgetsData = [
   },
   {
     type: 'donut',
-    label: 'Course',
-    dataName: 'subjectCountByCourse',
-    datatable_field: 'course',
+    label: 'Program',
+    dataName: 'subjectCountByProgram',
+    datatable_field: 'cancer',
     titleText: 'Cases',
     show: true,
   },
@@ -392,14 +392,14 @@ export const GET_DASHBOARD_DATA_QUERY = gql`{
     numberOfPrograms
     numberOfSubjects
     numberOfFiles
-    subjectCountByTreatmentArm {
-        group
-        subjects
-    }
-    subjectCountByProgram {
-        group
-        subjects
-    }
+#    subjectCountByTreatmentArm {
+#        group
+#        subjects
+#    }
+#    subjectCountByProgram {
+#        group
+#        subjects
+#    }
     subjectCountByStudy {
         group
         subjects
@@ -420,10 +420,10 @@ export const GET_DASHBOARD_DATA_QUERY = gql`{
         group
         subjects
     }
-    subjectCountByCourse {
-        group
-        subjects
-    }
+#    subjectCountByCourse {
+#        group
+#        subjects
+#    }
     subjectCountByDiseaseSite {
         group
         subjects
