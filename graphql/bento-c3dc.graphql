@@ -671,7 +671,7 @@ schema {
 type QueryType {
     
     # Schema metadata
-    schemaVersion: String @cypher(statement: "RETURN '0.2.4'")
+    schemaVersion: String @cypher(statement: "RETURN '0.2.5'")
 
     # Node count queries
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
@@ -749,7 +749,7 @@ type QueryType {
 
     studyDetails(study_id: String): StudyDetail @cypher(statement: """
         MATCH (s: Study {STUDY_ID: $study_id})
-        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)<--(f: File)
+        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
         WITH 
             COLLECT(DISTINCT sc{
                 pcdc_subject_id: sc.PCDC_SUBJECT_ID,
