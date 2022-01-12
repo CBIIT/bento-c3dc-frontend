@@ -52,7 +52,7 @@ const GET_PROGRAM_DETAIL_DATA_QUERY = gql`query programDetails($program_id : Str
       study_description
     }
   }
-    subjectCountByTreatmentArm(program_ids: [$program_id]) {
+    programSubjectCountByTreatmentArm(program_ids: [$program_id]) {
         group
         subjects
     }

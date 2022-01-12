@@ -31,7 +31,7 @@ const ProgramView = ({
   classes, data, theme, identifier,
 }) => {
   const programData = { program_id: identifier, ...data.programDetails };
-  const widgetData = data.subjectCountByTreatmentArm;
+  const widgetData = data.programSubjectCountByTreatmentArm;
   const redirectTo = () => {
     setSideBarToLoading();
     setDashboardTableLoading();

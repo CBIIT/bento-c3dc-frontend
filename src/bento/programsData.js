@@ -38,9 +38,9 @@ const table = {
       header: 'Program Headquarters',
     },
     {
-      dataField: 'associated_sub_count',
-      header: 'Associated Subjects',
-      link: '/cases',
+      dataField: 'associated_study_count',
+      header: 'Associated Studies',
+      link: '/studies',
     },
   ],
 };
@@ -56,14 +56,15 @@ const table = {
 // }`;
 
 const GET_PROGRAMS_DATA_QUERY = gql`{
-  listOfPrograms{
-    program_id
-    cancer
-    program_consortium
-    consortium_manager
-    program_headquarters
-    associated_sub_count
-   }
+    listOfPrograms{
+        program_id
+        cancer
+        program_consortium
+        consortium_manager
+        program_headquarters
+        associated_sub_count
+        associated_study_count
+    }
 }`;
 
 export {
