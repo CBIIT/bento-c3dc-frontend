@@ -405,7 +405,6 @@ type Subject_Characteristics_Table {
   PCDC_SUBJECT_ID: String
   HONEST_BROKER_SUBJECT_ID: String
   DATA_CONTRIBUTOR_ID: String
-  STUDY_ID: String
   AGE_AT_ENROLLMENT: Float
   TREATMENT_ARM: String
   ENROLLED_STATUS: String
@@ -671,7 +670,7 @@ schema {
 type QueryType {
     
     # Schema metadata
-    schemaVersion: String @cypher(statement: "RETURN '0.2.4'")
+    schemaVersion: String @cypher(statement: "RETURN '0.2.6'")
 
     # Node count queries
     numOfPrograms: Int @cypher(statement: "MATCH (x:Program) RETURN COUNT(x)")
@@ -749,8 +748,12 @@ type QueryType {
 
     studyDetails(study_id: String): StudyDetail @cypher(statement: """
         MATCH (s: Study {STUDY_ID: $study_id})
-        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)<--(f: File)
+        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
+        OPTIONAL MATCH (sc)<--(f: File)
         WITH 
+            s,
+            COUNT(DISTINCT sc) AS num_cases,
+            COUNT(DISTINCT f) AS num_files,
             COLLECT(DISTINCT sc{
                 pcdc_subject_id: sc.PCDC_SUBJECT_ID,
                 honest_broker_subject_id: sc.HONEST_BROKER_SUBJECT_ID,
@@ -760,13 +763,6 @@ type QueryType {
                 enrolled_status: sc.ENROLLED_STATUS,
                 year_at_enrollment: sc.YEAR_AT_ENROLLMENT
             }) AS subjects
-        MATCH (s: Study {STUDY_ID: $study_id})
-        OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
-        OPTIONAL MATCH (sc)<--(f: File)
-        WITH
-            s, subjects,
-            COUNT(DISTINCT sc) AS num_cases,
-            COUNT(DISTINCT f) AS num_files
         RETURN {
             study_id: s.STUDY_ID,
             study_description: s.STUDY_Description,
@@ -777,7 +773,7 @@ type QueryType {
     """, passThrough: true)
 
     subjectDetails(subject_id: String): SubjectDetail @cypher(statement: """
-        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(ae: Adverse_Events_Table)
+        OPTIONAL MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(ae: Adverse_Events_Table)
         WITH
             COLLECT (DISTINCT ae{
                 AGE_AT_AE:  ae.AGE_AT_AE,
@@ -807,7 +803,7 @@ type QueryType {
                 ORTHOPEDIC_PROCEDURE:  ae.ORTHOPEDIC_PROCEDURE,
                 INFECTION_CLASSIFICATION:  ae.INFECTION_CLASSIFICATION
             }) as adverse_events
-        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(rt: Radiation_Therapy_Table)
+        OPTIONAL MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(rt: Radiation_Therapy_Table)
         WITH
             COLLECT (DISTINCT rt{
                 AGE_AT_RT_START: rt.AGE_AT_RT_START,
@@ -828,7 +824,7 @@ type QueryType {
                 BOOST: rt.BOOST
             }) AS radiation_therapy,
             adverse_events
-        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(mh: Medical_History_Table)
+        OPTIONAL MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(mh: Medical_History_Table)
         WITH
             COLLECT (DISTINCT mh{
                 MEDICAL_HISTORY: mh.MEDICAL_HISTORY,
@@ -836,7 +832,7 @@ type QueryType {
             }) AS medical_history,
             adverse_events,
             radiation_therapy
-        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(ct: Course_Timing_Table)
+        OPTIONAL MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(ct: Course_Timing_Table)
         WITH
             COLLECT (DISTINCT ct{
                 COURSE: ct.COURSE,
@@ -849,7 +845,7 @@ type QueryType {
             adverse_events,
             radiation_therapy,
             medical_history
-        MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(f: File)
+        OPTIONAL MATCH (sc: Subject_Characteristics_Table {PCDC_SUBJECT_ID: $subject_id})<--(f: File)
         WITH
             COLLECT (DISTINCT f{
                 FILE_NAME: f.FILE_NAME,

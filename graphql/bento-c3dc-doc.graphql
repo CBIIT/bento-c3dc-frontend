@@ -405,7 +405,6 @@ type Subject_Characteristics_Table {
   PCDC_SUBJECT_ID: String
   HONEST_BROKER_SUBJECT_ID: String
   DATA_CONTRIBUTOR_ID: String
-  STUDY_ID: String
   AGE_AT_ENROLLMENT: Float
   TREATMENT_ARM: String
   ENROLLED_STATUS: String
