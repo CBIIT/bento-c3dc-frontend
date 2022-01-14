@@ -131,7 +131,7 @@ const table = {
     {
       dataField: 'study_id',
       header: 'Study ID',
-      link: '/studies/{study_id}',
+      link: '/study/{study_id}',
     },
     {
       dataField: 'study_description',
