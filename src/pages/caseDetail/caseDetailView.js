@@ -5,13 +5,14 @@ import {
 } from '@material-ui/core';
 // import { useDispatch } from 'react-redux';
 import { getOptions, getColumns } from 'bento-components';
-import StatsView from '../../components/Stats/StatsView';
+// import StatsView from '../../components/Stats/StatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import GridWithFooter from '../../components/GridWithFooter/GridView';
 import icon from '../../assets/icons/Cases.Icon.svg';
 import Subsection from '../../components/PropertySubsection/caseDetailSubsection';
 import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
 import TabThemeProvider from './components/tabThemeConfig';
+import CustomStatsView from '../../components/Stats/CustomStatsView';
 import {
   caseHeader,
   leftPanel,
@@ -23,6 +24,7 @@ import {
   table5,
   tooltipContent,
   tab,
+  statBarItems,
 } from '../../bento/caseDetailData';
 import Snackbar from '../../components/Snackbar';
 import Tab from './components/Tab';
@@ -61,7 +63,8 @@ const CaseDetail = ({ data, classes }) => {
   }, []);
 
   const stat = {
-    numberOfTrials: 1,
+    numOfPrograms: undefined,
+    num_of_studies: undefined,
     numberOfSubjects: 1,
     numberOfFiles: (data.files && data.files.length) || 0,
   };
@@ -115,7 +118,8 @@ const CaseDetail = ({ data, classes }) => {
         autoHideDuration={3000}
         classes={classes}
       />
-      <StatsView data={stat} />
+      {/* <StatsView data={stat} /> */}
+      <CustomStatsView data={stat} displayItems={statBarItems} />
       <div className={classes.container}>
         <div className={classes.innerContainer}>
           <div className={classes.header}>

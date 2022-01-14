@@ -96,6 +96,19 @@ const leftPanel = [
   // },
 ];
 
+const statBarItems = [
+  {
+    statTitle: 'Cases',
+    type: 'field',
+    statAPI: 'numberOfSubjects',
+  },
+  {
+    statTitle: 'Files',
+    type: 'field',
+    statAPI: 'numberOfFiles',
+  },
+];
+
 const rightPanel = [
   // Each object here represents a subsection in the panel
   // A maximum of 3 subsections are allowed
@@ -721,4 +734,5 @@ export {
   table4,
   table5,
   GET_CASE_DETAIL_DATA_QUERY,
+  statBarItems,
 };
