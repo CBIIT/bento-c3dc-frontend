@@ -42,7 +42,7 @@ export const facetSearchData = [
     label: 'Program',
     field: 'group',
     api: 'subjectCountByProgram',
-    apiForFiltering: 'filterSubjectCountByCancer',
+    apiForFiltering: 'filterSubjectCountByProgram',
     datafield: 'cancer',
     section: 'Filter By Cases',
     show: true,

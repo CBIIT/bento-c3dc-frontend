@@ -612,7 +612,7 @@ export const FILTER_QUERY = gql`
             subjects
         }
         
-        filterSubjectCountByCancer(
+        filterSubjectCountByProgram(
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
             study_id: $study_id
