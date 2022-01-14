@@ -749,25 +749,15 @@ type QueryType {
     studyDetails(study_id: String): StudyDetail @cypher(statement: """
         MATCH (s: Study {STUDY_ID: $study_id})
         OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
-        WITH 
-            DISTINCT sc AS sc
         WITH
-            CASE WHEN sc.PCDC_SUBJECT_ID IS NULL THEN "" ELSE sc.PCDC_SUBJECT_ID END AS pcdc_subject_id,
-            CASE WHEN sc.HONEST_BROKER_SUBJECT_ID IS NULL THEN "" ELSE sc.HONEST_BROKER_SUBJECT_ID END AS honest_broker_subject_id,
-            CASE WHEN sc.DATA_CONTRIBUTOR_ID IS NULL THEN "" ELSE sc.DATA_CONTRIBUTOR_ID END AS data_contributor_id,
-            CASE WHEN sc.AGE_AT_ENROLLMENT IS NULL THEN 0 ELSE sc.AGE_AT_ENROLLMENT END AS age_at_enrollment,
-            CASE WHEN sc.TREATMENT_ARM IS NULL THEN "" ELSE sc.TREATMENT_ARM END AS treatment_arm,
-            CASE WHEN sc.ENROLLED_STATUS IS NULL THEN "" ELSE sc.ENROLLED_STATUS END AS enrolled_status,
-            CASE WHEN sc.YEAR_AT_ENROLLMENT IS NULL THEN 0 ELSE sc.YEAR_AT_ENROLLMENT END AS year_at_enrollment
-        WITH
-            COLLECT({
-                pcdc_subject_id: pcdc_subject_id,
-                honest_broker_subject_id: honest_broker_subject_id,
-                data_contributor_id: data_contributor_id,
-                age_at_enrollment: age_at_enrollment,
-                treatment_arm: treatment_arm,
-                enrolled_status: enrolled_status,
-                year_at_enrollment: year_at_enrollment
+            COLLECT(DISTINCT sc{
+                pcdc_subject_id: sc.PCDC_SUBJECT_ID,
+                honest_broker_subject_id: sc.HONEST_BROKER_SUBJECT_ID,
+                data_contributor_id: sc.DATA_CONTRIBUTOR_ID,
+                age_at_enrollment: sc.AGE_AT_ENROLLMENT,
+                treatment_arm: sc.TREATMENT_ARM,
+                enrolled_status: sc.ENROLLED_STATUS,
+                year_at_enrollment: sc.YEAR_AT_ENROLLMENT
             }) AS subjects
         MATCH (s: Study {STUDY_ID: $study_id})
         OPTIONAL MATCH (s)<--(sc: Subject_Characteristics_Table)
@@ -1222,8 +1212,60 @@ type QueryType {
         }
     """, passThrough: true) 
 
+    filterSubjectCountByProgram(
+        pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
+        data_contributor_id: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
+        race: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
+        ae_grade: [String] = [],
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
+    ): [GroupCount] @cypher(statement: """
+        MATCH (p:Program)
+            WITH COLLECT(DISTINCT p.PROGRAM_ID) AS groups
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+            WHERE
+                (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
+                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+            WHERE
+                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
+                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+            WHERE
+                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+            WHERE
+                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
+                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+            WHERE
+                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
+        OPTIONAL MATCH (f: File)-->(sc)
+            WHERE
+                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+        WITH p.PROGRAM_ID AS count_group,
+            count(DISTINCT sc) AS count,
+            groups
+        UNWIND groups AS group
+        RETURN {
+            group: group,
+            subjects: SUM(CASE count_group WHEN group THEN count ELSE 0 END)
+        }
+    """, passThrough: true)
+
     filterSubjectCountByDataContributor (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1238,10 +1280,13 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (sc:Subject_Characteristics_Table)
             WITH COLLECT(DISTINCT sc.DATA_CONTRIBUTOR_ID) AS groups
-        MATCH (sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
@@ -1259,10 +1304,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH sc.DATA_CONTRIBUTOR_ID AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1275,6 +1316,7 @@ type QueryType {
 
     filterSubjectCountByStudy (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1289,11 +1331,13 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (sc: Subject_Characteristics_Table)-->(s: Study)
             WITH COLLECT(DISTINCT s.STUDY_ID) AS groups
-        MATCH (sc: Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
@@ -1311,9 +1355,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH s.STUDY_ID AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1326,6 +1367,7 @@ type QueryType {
 
     filterSubjectCountByTreatmentArm (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1340,10 +1382,13 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (sc:Subject_Characteristics_Table)
             WITH COLLECT(DISTINCT sc.TREATMENT_ARM) AS groups
-        MATCH (sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id)
+                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
@@ -1361,10 +1406,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id)
         WITH sc.TREATMENT_ARM AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1377,6 +1418,7 @@ type QueryType {
 
     filterSubjectCountByRace (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1391,11 +1433,14 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (demo: Demographics_Table)
             WITH COLLECT(DISTINCT demo.RACE) AS groups
-        MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(demo:Demographics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
                 (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
+                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
                 (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
         OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
             WHERE
@@ -1410,10 +1455,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH demo.RACE AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1426,6 +1467,7 @@ type QueryType {
 
     filterSubjectCountBySex (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1440,11 +1482,14 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (demo: Demographics_Table)
             WITH COLLECT(DISTINCT demo.SEX) AS groups
-        MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(demo:Demographics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
                 (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
+                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race)
         OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
             WHERE
@@ -1459,10 +1504,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH demo.SEX AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1475,6 +1516,7 @@ type QueryType {
 
     filterSubjectCountByDiseasePhase (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1489,11 +1531,15 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (dpt: Disease_Phase_Timing_Table)
             WITH COLLECT(DISTINCT dpt.DISEASE_PHASE) AS groups
-        MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(dpt:Disease_Phase_Timing_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
+                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
@@ -1508,10 +1554,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH dpt.DISEASE_PHASE AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1524,6 +1566,7 @@ type QueryType {
 
     filterSubjectCountByAEOutcome (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1538,11 +1581,14 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (ae: Adverse_Events_Table)
             WITH COLLECT(DISTINCT ae.AE_OUTCOME) AS groups
-        MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(ae:Adverse_Events_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
                 (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
+                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
                 (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
@@ -1557,10 +1603,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH ae.AE_OUTCOME AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1573,6 +1615,7 @@ type QueryType {
 
     filterSubjectCountByAEGrade (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1587,11 +1630,14 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (ae: Adverse_Events_Table)
             WITH COLLECT(DISTINCT ae.AE_GRADE) AS groups
-        MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(ae:Adverse_Events_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
                 (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
+                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
                 (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
@@ -1606,10 +1652,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH ae.AE_GRADE AS count_group,
              count(DISTINCT sc) AS count,
              groups
@@ -1622,6 +1664,7 @@ type QueryType {
 
     filterSubjectCountByDiseaseSite (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1636,11 +1679,15 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (dct: Disease_Characteristics_Table)
             WITH COLLECT(DISTINCT dct.DISEASE_SITE) AS groups
-        MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(dct:Disease_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
+                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
@@ -1655,10 +1702,6 @@ type QueryType {
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH dct.DISEASE_SITE AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1671,6 +1714,7 @@ type QueryType {
 
     filterSubjectCountByFileType (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1685,11 +1729,15 @@ type QueryType {
     ): [GroupCount] @cypher(statement: """
         MATCH (f: File)
             WITH COLLECT(DISTINCT f.FILE_TYPE) AS groups
-        MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(f:File)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
+                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
@@ -1704,10 +1752,6 @@ type QueryType {
         OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
             WHERE
                 (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc)
-            WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
         WITH f.FILE_TYPE AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1720,6 +1764,7 @@ type QueryType {
 
     filterSubjectCountByCancer (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1737,8 +1782,10 @@ type QueryType {
         MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
         OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
             WHERE
                 (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
@@ -1755,7 +1802,6 @@ type QueryType {
                 (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
         OPTIONAL MATCH (f: File)-->(sc)
             WHERE
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
         WITH p.Cancer AS count_group,
             count(DISTINCT sc) AS count,
@@ -1769,6 +1815,7 @@ type QueryType {
 
     searchSubjects(
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -1794,7 +1841,8 @@ type QueryType {
                 (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade) AND
                 (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site) AND
                 (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
+                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
+                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
         RETURN{
             numOfPrograms: COUNT(DISTINCT p),
             numberOfSubjects: COUNT(DISTINCT sc),

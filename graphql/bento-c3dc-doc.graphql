@@ -732,8 +732,25 @@ type QueryType {
 
     subjectCountByAEOutcome(subject_ids: [String] = []): [GroupCount] 
 
+    filterSubjectCountByProgram(
+        pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
+        data_contributor_id: [String] = [],
+        study_id: [String] = [],
+        treatment_arm: [String] = [],
+        race: [String] = [],
+        sex: [String] = [],
+        disease_phase: [String] = [],
+        ae_outcome: [String] = [],
+        ae_grade: [String] = [],
+        disease_site: [String] = [],
+        fileType: [String] = [],
+        cancer: [String] = []
+    ): [GroupCount] 
+
     filterSubjectCountByDataContributor (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -749,6 +766,7 @@ type QueryType {
 
     filterSubjectCountByStudy (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -764,6 +782,7 @@ type QueryType {
 
     filterSubjectCountByTreatmentArm (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -779,6 +798,7 @@ type QueryType {
 
     filterSubjectCountByRace (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -794,6 +814,7 @@ type QueryType {
 
     filterSubjectCountBySex (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -809,6 +830,7 @@ type QueryType {
 
     filterSubjectCountByDiseasePhase (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -824,6 +846,7 @@ type QueryType {
 
     filterSubjectCountByAEOutcome (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -839,6 +862,7 @@ type QueryType {
 
     filterSubjectCountByAEGrade (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -854,6 +878,7 @@ type QueryType {
 
     filterSubjectCountByDiseaseSite (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -869,6 +894,7 @@ type QueryType {
 
     filterSubjectCountByFileType (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -884,6 +910,7 @@ type QueryType {
 
     filterSubjectCountByCancer (
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
@@ -899,6 +926,7 @@ type QueryType {
 
     searchSubjects(
         pcdc_subject_id: [String] = [],
+        program_id: [String] = [],
         data_contributor_id: [String] = [],
         study_id: [String] = [],
         treatment_arm: [String] = [],
