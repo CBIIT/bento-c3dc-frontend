@@ -31,6 +31,10 @@ const table = {
       dataField: 'study_description',
       header: 'Study Description',
     },
+    {
+      dataField: 'associated_subject_count',
+      header: 'Associated Subject Count',
+    },
   ],
 };
 
@@ -39,6 +43,7 @@ const GET_STUDIES_DATA_QUERY = gql`{
   list_of_studies{
       study_id
       study_description
+      associated_subject_count
   }
 }`;
 
