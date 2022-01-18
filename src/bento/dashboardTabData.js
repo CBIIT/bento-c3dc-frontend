@@ -408,7 +408,7 @@ export const FILTER_QUERY = gql`
         $ae_grade: [String],
         $disease_site: [String],
         $fileType: [String],
-        $cancer: [String]
+        $program_id: [String]
     ) {
         searchSubjects(
             pcdc_subject_id: $pcdc_subject_id
@@ -422,7 +422,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             numOfPrograms
             numberOfSubjects
@@ -444,7 +444,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -462,7 +462,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -480,7 +480,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -498,7 +498,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -516,7 +516,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -534,7 +534,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -552,7 +552,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -570,7 +570,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -588,7 +588,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -606,7 +606,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects
@@ -624,7 +624,7 @@ export const FILTER_QUERY = gql`
             ae_grade: $ae_grade
             disease_site: $disease_site
             fileType: $fileType
-            cancer: $cancer
+            program_id: $program_id
         ) {
             group
             subjects

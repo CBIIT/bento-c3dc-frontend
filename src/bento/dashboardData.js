@@ -43,7 +43,7 @@ export const facetSearchData = [
     field: 'group',
     api: 'subjectCountByProgram',
     apiForFiltering: 'filterSubjectCountByProgram',
-    datafield: 'cancer',
+    datafield: 'program_id',
     section: 'Filter By Cases',
     show: true,
   },
@@ -259,7 +259,7 @@ export const widgetsData = [
     type: 'donut',
     label: 'Program',
     dataName: 'subjectCountByProgram',
-    datatable_field: 'cancer',
+    datatable_field: 'program_id',
     titleText: 'Cases',
     show: true,
   },
@@ -333,7 +333,7 @@ export const dashboardTable = {
       display: true,
     },
     {
-      dataField: 'cancer',
+      dataField: 'program_id',
       header: 'Cancer',
       sort: 'asc',
       link: '/program/{program_id}',
@@ -396,10 +396,10 @@ export const GET_DASHBOARD_DATA_QUERY = gql`{
 #        group
 #        subjects
 #    }
-#    subjectCountByProgram {
-#        group
-#        subjects
-#    }
+    subjectCountByProgram {
+        group
+        subjects
+    }
     subjectCountByStudy {
         group
         subjects
