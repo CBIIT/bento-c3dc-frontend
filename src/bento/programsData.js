@@ -62,7 +62,6 @@ const GET_PROGRAMS_DATA_QUERY = gql`{
         program_consortium
         consortium_manager
         program_headquarters
-        associated_sub_count
         associated_study_count
     }
 }`;
