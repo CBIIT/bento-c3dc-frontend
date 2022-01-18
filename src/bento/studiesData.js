@@ -34,6 +34,7 @@ const table = {
     {
       dataField: 'associated_subject_count',
       header: 'Associated Subject Count',
+      link: '/cases',
     },
   ],
 };
