@@ -1227,33 +1227,63 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (p:Program)
-            WITH COLLECT(DISTINCT p.PROGRAM_ID) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        WITH p.PROGRAM_ID AS count_group,
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (p: Program)
+        WITH ids, p, COLLECT(DISTINCT p.PROGRAM_ID) AS groups
+        OPTIONAL MATCH (p)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
+        WITH 
+            p.PROGRAM_ID AS count_group,
             count(DISTINCT sc) AS count,
             groups
         UNWIND groups AS group
@@ -1279,31 +1309,64 @@ type QueryType {
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (sc:Subject_Characteristics_Table)
-            WITH COLLECT(DISTINCT sc.DATA_CONTRIBUTOR_ID) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (sc:Subject_Characteristics_Table)
+        WITH ids, sc, COLLECT(DISTINCT sc.DATA_CONTRIBUTOR_ID) AS groups
+        MATCH (sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH sc.DATA_CONTRIBUTOR_ID AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1329,32 +1392,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (sc: Subject_Characteristics_Table)-->(s: Study)
-            WITH COLLECT(DISTINCT s.STUDY_ID) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (s:Study)
+        WITH ids, s, COLLECT(DISTINCT s.STUDY_ID) AS groups
+        OPTIONAL MATCH (s)<--(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH s.STUDY_ID AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1381,31 +1473,64 @@ type QueryType {
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
         MATCH (sc:Subject_Characteristics_Table)
-            WITH COLLECT(DISTINCT sc.TREATMENT_ARM) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (sc:Subject_Characteristics_Table)
+        WITH ids, sc, COLLECT(DISTINCT sc.TREATMENT_ARM) AS groups
+        MATCH (sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH sc.TREATMENT_ARM AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1431,30 +1556,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (demo: Demographics_Table)
-            WITH COLLECT(DISTINCT demo.RACE) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(demo:Demographics_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (demo:Demographics_Table)
+        WITH ids, demo, COLLECT(DISTINCT demo.RACE) AS groups
+        OPTIONAL MATCH (demo)-->(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH demo.RACE AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1480,30 +1636,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (demo: Demographics_Table)
-            WITH COLLECT(DISTINCT demo.SEX) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(demo:Demographics_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (demo:Demographics_Table)
+        WITH ids, demo, COLLECT(DISTINCT demo.SEX) AS groups
+        OPTIONAL MATCH (demo)-->(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH demo.SEX AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1529,31 +1716,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (dpt: Disease_Phase_Timing_Table)
-            WITH COLLECT(DISTINCT dpt.DISEASE_PHASE) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(dpt:Disease_Phase_Timing_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (dpt: Disease_Phase_Timing_Table)
+        WITH ids, dpt, COLLECT(DISTINCT dpt.DISEASE_PHASE) AS groups
+        OPTIONAL MATCH (dpt)-->(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH dpt.DISEASE_PHASE AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1579,30 +1796,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (ae: Adverse_Events_Table)
-            WITH COLLECT(DISTINCT ae.AE_OUTCOME) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(ae:Adverse_Events_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (ae:Adverse_Events_Table)
+        WITH ids, ae, COLLECT(DISTINCT ae.AE_OUTCOME) AS groups
+        OPTIONAL MATCH (ae)-->(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH ae.AE_OUTCOME AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1628,30 +1876,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (ae: Adverse_Events_Table)
-            WITH COLLECT(DISTINCT ae.AE_GRADE) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(ae:Adverse_Events_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (ae:Adverse_Events_Table)
+        WITH ids, ae, COLLECT(DISTINCT ae.AE_GRADE) AS groups
+        OPTIONAL MATCH (ae)-->(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH ae.AE_GRADE AS count_group,
              count(DISTINCT sc) AS count,
              groups
@@ -1677,31 +1956,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (dct: Disease_Characteristics_Table)
-            WITH COLLECT(DISTINCT dct.DISEASE_SITE) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(dct:Disease_Characteristics_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (f: File)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (dct: Disease_Characteristics_Table)
+        WITH ids, dct, COLLECT(DISTINCT dct.DISEASE_SITE) AS groups
+        OPTIONAL MATCH (dct)-->(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH dct.DISEASE_SITE AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1727,31 +2036,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (f: File)
-            WITH COLLECT(DISTINCT f.FILE_TYPE) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)<--(f:File)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id) AND
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (f:File)
+        WITH ids, f, COLLECT(DISTINCT f.FILE_TYPE) AS groups
+        OPTIONAL MATCH (f)-->(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH f.FILE_TYPE AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1777,32 +2116,61 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): [GroupCount] @cypher(statement: """
-        MATCH (p: Program)
-            WITH COLLECT(DISTINCT p.Cancer) AS groups
-        MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
-        OPTIONAL MATCH (demo: Demographics_Table)-->(sc)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex)
-        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc)
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase)
-        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc)
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade)
-        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc)
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site)
-        OPTIONAL MATCH (f: File)-->(sc)
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
             WHERE
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType)
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (p:Program)
+        WITH ids, p, COLLECT(DISTINCT p.Cancer) AS groups
+        OPTIONAL MATCH (p)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         WITH p.Cancer AS count_group,
             count(DISTINCT sc) AS count,
             groups
@@ -1828,21 +2196,67 @@ type QueryType {
         fileType: [String] = [],
         cancer: [String] = []
     ): SearchResult @cypher(statement: """
-        MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table), (dpt: Disease_Phase_Timing_Table)-->(sc), (ae: Adverse_Events_Table)-->(sc), (dct: Disease_Characteristics_Table)-->(sc), (f: File)-->(sc), (p: Program)<--(s: Study)<--(sc)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE
                 (size($pcdc_subject_id) = 0 OR $pcdc_subject_id IS NULL OR sc.PCDC_SUBJECT_ID IN $pcdc_subject_id) AND
                 (size($data_contributor_id) = 0 OR $data_contributor_id IS NULL OR sc.DATA_CONTRIBUTOR_ID IN $data_contributor_id) AND
-                (size($study_id) = 0 OR $study_id IS NULL OR s.STUDY_ID IN $study_id) AND
-                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm) AND
-                (size($race) = 0 OR $race IS NULL OR demo.RACE IN $race) AND
-                (size($sex) = 0 OR $sex IS NULL OR demo.SEX IN $sex) AND
-                (size($disease_phase) = 0 OR $disease_phase IS NULL OR dpt.DISEASE_PHASE IN $disease_phase) AND
-                (size($ae_outcome) = 0 OR $ae_outcome IS NULL OR ae.AE_OUTCOME IN $ae_outcome) AND
-                (size($ae_grade) = 0 OR $ae_grade IS NULL OR ae.AE_GRADE IN $ae_grade) AND
-                (size($disease_site) = 0 OR $disease_site IS NULL OR dct.DISEASE_SITE IN $disease_site) AND
-                (size($fileType) = 0 OR $fileType IS NULL OR f.FILE_TYPE IN $fileType) AND
-                (size($cancer) = 0 OR $cancer IS NULL OR p.Cancer IN $cancer) AND
-                (size($program_id) = 0 OR $program_id IS NULL OR p.PROGRAM_ID IN $program_id)
+                (size($treatment_arm) = 0 OR $treatment_arm IS NULL OR sc.TREATMENT_ARM IN $treatment_arm)
+        WITH COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+            WHERE
+                p.PROGRAM_ID IN $program_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($program_id) = 0 OR $program_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+            WHERE
+                p.Cancer IN $cancer AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($cancer) = 0 OR $cancer IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (p: Program)<--(s: Study)<--(sc:Subject_Characteristics_Table)
+            WHERE
+                s.STUDY_ID IN $study_id AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($study_id) = 0 OR $study_id IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                demo.RACE IN $race AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($race) = 0 OR $race IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (demo: Demographics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                demo.SEX IN $sex AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($sex) = 0 OR $sex IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dpt: Disease_Phase_Timing_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dpt.DISEASE_PHASE IN $disease_phase AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_phase) = 0 OR $disease_phase IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_OUTCOME IN $ae_outcome AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_outcome) = 0 OR $ae_outcome IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (ae: Adverse_Events_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                ae.AE_GRADE IN $ae_grade AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($ae_grade) = 0 OR $ae_grade IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (dct: Disease_Characteristics_Table)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                dct.DISEASE_SITE IN $disease_site AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($disease_site) = 0 OR $disease_site IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        OPTIONAL MATCH (f: File)-->(sc:Subject_Characteristics_Table)
+            WHERE
+                f.FILE_TYPE IN $fileType AND
+                sc.PCDC_SUBJECT_ID IN ids
+        WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
+        MATCH (sc:Subject_Characteristics_Table)-->(s:Study)-->(p:Program)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
+        WITH sc, s, p, ids
+        MATCH (sc:Subject_Characteristics_Table)<--(f:File)
+            WHERE sc.PCDC_SUBJECT_ID IN ids
         RETURN{
             numOfPrograms: COUNT(DISTINCT p),
             numberOfSubjects: COUNT(DISTINCT sc),
