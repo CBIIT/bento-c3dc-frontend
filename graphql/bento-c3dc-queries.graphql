@@ -1696,11 +1696,11 @@ type QueryType {
                 f.FILE_TYPE IN $fileType AND
                 sc.PCDC_SUBJECT_ID IN ids
         WITH CASE WHEN (size($fileType) = 0 OR $fileType IS NULL) THEN ids ELSE COLLECT(DISTINCT sc.PCDC_SUBJECT_ID) END AS ids
-        MATCH (sc:Subject_Characteristics_Table)-->(s:Study)-->(p:Program)
+        MATCH (sc:Subject_Characteristics_Table)
             WHERE sc.PCDC_SUBJECT_ID IN ids
-        WITH sc, s, p, ids
-        MATCH (sc:Subject_Characteristics_Table)<--(f:File)
-            WHERE sc.PCDC_SUBJECT_ID IN ids
+        OPTIONAL MATCH (sc)-->(s:Study)-->(p:Program)
+        OPTIONAL MATCH (f:File)-->(sc)
+        WITH sc, s, p, f, ids
         RETURN{
             numOfPrograms: COUNT(DISTINCT p),
             numberOfSubjects: COUNT(DISTINCT sc),
