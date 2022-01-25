@@ -576,6 +576,24 @@ export const FILTER_QUERY = gql`
             subjects
         }
         
+        filterSubjectCountByDiseasePhase(
+            pcdc_subject_id: $pcdc_subject_id
+            data_contributor_id: $data_contributor_id
+            study_id: $study_id
+            treatment_arm: $treatment_arm
+            race: $race
+            sex: $sex
+            disease_phase: $disease_phase
+            ae_outcome: $ae_outcome
+            ae_grade: $ae_grade
+            disease_site: $disease_site
+            fileType: $fileType
+            program_id: $program_id
+        ) {
+            group
+            subjects
+        }
+        
         filterSubjectCountByDiseaseSite(
             pcdc_subject_id: $pcdc_subject_id
             data_contributor_id: $data_contributor_id
