@@ -4,29 +4,19 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { cn } from 'bento-components';
+// import StatsView from './components/statsView';
+import { Button } from '../../components/Wrappers/Wrappers';
 import { landingPageData } from '../../bento/landingPageData';
-import imgAbout from '../../assets/landing/About.png';
-import imgTrial from '../../assets/landing/Trials.png';
-import imgAccess from '../../assets/landing/RequestAccess.png';
 import icon from '../../assets/landing/LP_ReadMore.svg';
 import iconAbout from '../../assets/landing/LP_About_Fullarticle.Arrow.svg';
-import texturebg from '../../assets/landing/BackgroundTexture-LP.jpg';
-import casesImage from '../../assets/landing/Cases.png';
-import hero from '../../assets/landing/C3DC.LandingPage.png';
 
-const LandingController = ({ classes }) => (
+const LandingView = ({ classes }) => (
   <div className={classes.page}>
     <div className={classes.container}>
       <div className={classes.hero}>
         <Grid container spacing={16} direction="row">
-          <Link to={landingPageData.callToActionLink} className={classes.landingImageContainer}>
-            <div className={classes.landingImageContainer}>
-              <div className={classes.heroImage} />
-            </div>
-          </Link>
-
-          {/* <div className={classes.heroTextContainer}>
+          <div className={classes.heroImage} />
+          <div className={classes.heroTextContainer}>
             <div className={classes.heroTextWrapper}>
               <div className={classes.headerTitle}>
                 { landingPageData.callToActionTitle }
@@ -34,125 +24,151 @@ const LandingController = ({ classes }) => (
               <div className={classes.headerContent}>
                 { landingPageData.callToActionDescription}
               </div>
-              <div className={classes.headerButtonSection}>
+              {/* <div className={classes.headerButtonSection}>
                 <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
-                  <Button className={classes.transparentButton} bgColor="neonBlue" color="white">
-                    Explore The Site
-                    <span className={classes.rightArrow}>
-                      ▶
-                    </span>
+                  <Button className={classes.buttonText} bgColor="neonBlue" color="white">
+                    {landingPageData.callToActionButtonText}
                   </Button>
                 </Link>
-              </div>
+              </div> */}
             </div>
-          </div> */}
+          </div>
         </Grid>
       </div>
     </div>
-    <div className={classes.container}>
-      <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
-        <div className={classes.bannerTexture}>
-          Find and explore data
-        </div>
-      </Grid>
-      <Grid container spacing={16} direction="row" className={cn(classes.paddingTop30, classes.paddingLeft50)}>
-        <div className={classes.ButtonSection}>
-          <Link to="/cases" className={classes.grayButton}>View data</Link>
-        </div>
-      </Grid>
-    </div>
+    <div className={classes.whiteSection} />
+    {/* <StatsView stats={landingPageData.landingPageStatsBar} statsData={statsData} /> */}
     <div className={classes.container}>
       <div className={classes.texture}>
         <Grid container spacing={16} direction="row" className={classes.landingContainer}>
-          <div className={classes.contentLeft}>
-            <div className={classes.about}>
-              <div className={classes.aboutImageSection}>
-                <img src={imgAbout} className={classes.aboutImage} alt="C3DC about" />
-              </div>
-              <div className={classes.C3DCWords}>
-                About
-                {' '}
-                <br />
-                {' '}
-                C3DC
-              </div>
-              <div className={classes.aboutContent}>
-                Effective data management is key to scientific discovery.
-                Bento is an open source framework,
-                developed by the Frederick National Laboratory for Cancer Research,
-                to support the creation of data sharing platforms,
-                that adhere to the FAIR principles of scientific data management.
-              </div>
-              <div className={classes.aboutButtonSection}>
-                <div className={classes.aboutButtonLeft}>
-                  <img src={iconAbout} className={classes.iconAbout} alt="C3DC about icon" />
+          <div className={classes.landingContainerInner}>
+            <div className={classes.contentLeft}>
+              <div className={classes.about}>
+                <div className={classes.aboutImageSection}>
+                  <img
+                    src={landingPageData.tile1.img}
+                    className={classes.aboutImage}
+                    alt={landingPageData.tile1.alt}
+                    id="tile1_image"
+                  />
                 </div>
-                <div className={classes.aboutButtonRight}>
-                  <Link to="/purpose" className={classes.aboutButton}>EXPLORE</Link>
+                <div className={classes.DCWords} id="tile1_title">
+                {landingPageData.tile1.titleText}
+                  {/* {landingPageData.tile1.titleText.match(/\b(\w+)\b/g).map((word) => (
+                    <>
+                      {word} 
+                    </>
+                  ))} */}
+                </div>
+                <div className={classes.aboutContent} id="tile1_description">
+                  {landingPageData.tile1.descriptionText}
+                </div>
+                <div className={classes.aboutButtonSection}>
+                  <div className={classes.aboutButtonLeft}>
+                    <img src={iconAbout} className={classes.iconAbout} alt="CTDC about icon" />
+                  </div>
+                  <div className={classes.aboutButtonRight} id="tile1_button">
+                    <Link
+                      to={landingPageData.tile1.callToActionLink}
+                      className={classes.aboutButton}
+                    >
+                      {landingPageData.tile1.callToActionText}
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className={classes.contentRight}>
-            <div className={classes.contentRightTop}>
-              <div className={classes.program}>
-                <div className={classes.programImg}>
-                  <img className={classes.image} src={imgTrial} alt="C3DC Programs" />
-                </div>
-                <div className={classes.content}>
-                  <div className={classes.contentHeader}> Programs</div>
-                  <div className={classes.contentContainer}>
-                    View summaries of clinical programs within C3DC.
+            <div className={classes.contentRight}>
+              <div className={classes.contentRightTop}>
+                <div className={classes.program}>
+                  <div className={classes.programImg}>
+                    <img
+                      className={classes.image}
+                      src={landingPageData.tile2.img}
+                      alt={landingPageData.tile2.alt}
+                      id="tile2_image"
+                    />
                   </div>
+                  <div className={classes.content}>
+                    <div className={classes.contentHeader} id="tile2_title">
+                      {landingPageData.tile2.titleText}
+                    </div>
+                    <div className={classes.contentContainer} id="tile2_description">
+                      {landingPageData.tile2.descriptionText}
+                    </div>
 
-                </div>
-                <div className={classes.yellowButton}>
-                  <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="C3DC about " />
-                    {' '}
                   </div>
-                  <div className={classes.blueButtonRight}>
-                    <Link to="/programs" className={classes.blueButton}>READ MORE</Link>
-                  </div>
-                </div>
-              </div>
-              <div className={classes.studies}>
-                <div className={classes.programImg}>
-                  <img className={classes.image} src={imgAccess} alt="C3DC Request ACCESS" />
-                </div>
-                <div className={classes.content}>
-                  <div className={classes.contentHeader}>Studies</div>
-                  <div className={classes.contentContainer}>
-                    View summaries of clinical studies within C3DC.
+                  <div className={classes.blueButton}>
+                    <div className={classes.blueButtonLeft}>
+                      <img className={classes.icon} src={icon} alt="CTDC about " />
+                      {' '}
+                    </div>
+                    <div className={classes.blueButtonRight} id="tile2_button">
+                      <Link
+                        to={landingPageData.tile2.callToActionLink}
+                        className={classes.blueButton}
+                      >
+                        {landingPageData.tile2.callToActionText}
+                      </Link>
+                    </div>
                   </div>
                 </div>
-                <div className={classes.brownButton}>
-                  <div className={classes.blueButtonLeft}>
-                    <img className={classes.icon} src={icon} alt="access C3DC studies" />
-                    {' '}
+                <div className={classes.studies}>
+                  <div className={classes.programImg}>
+                    <img
+                      className={classes.image}
+                      src={landingPageData.tile3.img}
+                      alt={landingPageData.tile3.alt}
+                      id="tile3_image"
+                    />
                   </div>
-                  <div className={classes.blueButtonRight}>
-                    <Link to="/studies" className={classes.brownButton}>READ MORE</Link>
-                  </div>
-                </div>
-              </div>
+                  <div className={classes.content}>
+                    <div className={classes.contentHeader} id="tile3_title">
+                      {landingPageData.tile3.titleText}
+                    </div>
+                    <div className={classes.contentContainer} id="tile3_description">
+                      {landingPageData.tile3.descriptionText}
+                    </div>
 
-            </div>
-            <div className={classes.contentRightBottom}>
-              <div className={classes.cases}>
-                <div className={classes.greyContentHeader}> Cases</div>
-                <div className={classes.greyContent}>
-                  Search all the studies and build cohorts from all the
-                  Program within the C3DC. The data files from
-                  these cohorts can then be analyzed in the Cloud Resources.
-                </div>
-                <div className={classes.greybuttonSection}>
-                  <div className={classes.blueButtonLeft}>
-                    <img className={classes.greyIcon} src={icon} alt="C3DC about " />
-                    {' '}
                   </div>
-                  <div className={classes.blueButtonRight}>
-                    <Link to="/cases" className={classes.greybutton}>Explore</Link>
+                  <div className={classes.blueButton}>
+                    <div className={classes.blueButtonLeft}>
+                      <img className={classes.icon} src={icon} alt="CTDC about " />
+                      {' '}
+                    </div>
+                    <div className={classes.blueButtonRight} id="tile3_button">
+                      <Link
+                        to={landingPageData.tile3.callToActionLink}
+                        className={classes.blueButton}
+                      >
+                        {landingPageData.tile3.callToActionText}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+              <div className={classes.contentRightBottom}>
+                <div className={classes.cases} id="tile4_image">
+                  <div className={classes.mountainMeadowContentHeader} id="tile4_title">
+                    {landingPageData.tile4.titleText}
+                  </div>
+                  <div className={classes.mountainMeadowContent} id="tile4_description">
+                    {landingPageData.tile4.descriptionText}
+                  </div>
+                  <div className={classes.mountainMeadowButtonSection}>
+                    <div className={classes.blueButtonLeft}>
+                      <img className={classes.mountainMeadowIcon} src={icon} alt="CTDC about " />
+                      {' '}
+                    </div>
+                    <div className={classes.blueButtonRight} id="tile4_button">
+                      <Link
+                        to={landingPageData.tile4.callToActionLink}
+                        className={classes.mountainMeadowButton}
+                      >
+                        {landingPageData.tile4.callToActionText}
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -166,60 +182,18 @@ const LandingController = ({ classes }) => (
 );
 const styles = () => ({
   page: {
-    marginTop: '-47px',
-  },
-  landingImageContainer: {
-    display: 'block',
-    width: '100%',
-    backgroundColor: '#F7F8FA',
+    marginTop: '-53px',
   },
   heroImage: {
     width: '100%',
-    height: '600px',
-    cursor: 'pointer', // can be removed when a better image has been provided.
+    height: '900px',
     backgroundRepeat: 'no-repeat',
-    // backgroundSize: '100% 100%',
-    background: `url(${hero})`,
-    '@media (min-width: 1000px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 1200px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundSize: '100% 100%',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 1400px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      backgroundSize: '1200px 600px',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 1600px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      backgroundSize: '1200px 600px',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 1800px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      backgroundSize: '1200px 600px',
-      background: `url(${hero})`,
-    },
-    '@media (min-width: 2000px)': {
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'center',
-      backgroundSize: '1200px 600px',
-      background: `url(${hero})`,
-    },
+    backgroundSize: '100% 100%',
+    backgroundImage: `url(${landingPageData.landingPageHero.img})`,
   },
   texture: {
     backgroundSize: 'cover',
-    backgroundImage: `url(${texturebg})`,
-    backgroundRepeat: 'no-repeat',
-    backgroundAttachment: 'fixed',
+    background: '#096761',
     padding: '120px 0 80px 0',
   },
   container: {
@@ -227,28 +201,10 @@ const styles = () => ({
     margin: '0 auto',
 
   },
-
-  bannerTexture: {
-    color: '#4898B4',
-    fontFamily: 'Raleway',
-    fontSize: '19px',
-    fontWeight: '600',
-    lineHeight: '60px',
-    textAlign: 'center',
-    margin: '0 auto',
-    letterSpacing: '0.050pt',
-    textTransform: 'uppercase',
-    width: '869px',
+  whiteSection: {
+    background: 'white',
   },
-  ButtonSection: {
-    margin: '0 auto -15px auto',
-    background: '#505050',
-    width: '179px',
-    height: '47px',
-    borderRadius: '50px',
-    textAlign: 'center',
-  },
-  grayButton: {
+  redButton: {
     height: '13px',
     color: '#FFFFFF',
     fontFamily: 'Raleway',
@@ -262,25 +218,26 @@ const styles = () => ({
   },
   headerTitle: {
     paddingTop: '94px',
-    fontFamily: 'Inter Light, Raleway, sans-serif',
-    fontSize: '36px',
-    fontWeight: '500',
-    lineHeight: '35px',
-    color: '#0F253A',
-    letterSpacing: '-0px',
-    textTransform: 'uppercase',
+    fontFamily: 'Poppins, Inter, Raleway, sans-serif',
+    fontSize: '45px',
+    fontWeight: '600',
+    lineHeight: '45px',
+    color: '#009485',
   },
   paddingLeft50: {
     paddingLeft: '50px',
   },
   headerContent: {
-    color: '#3390B6',
+    color: '#000000',
     fontFamily: 'Lato, Raleway',
     fontSize: '16px',
     fontWeight: '500',
     lineHeight: '27px',
     marginTop: '16px',
     marginBottom: '26px',
+  },
+  headerLink: {
+    textDecoration: 'none',
   },
 
   iconAbout: {
@@ -297,24 +254,24 @@ const styles = () => ({
 
   aboutImage: {
     width: '300px',
-    padding: '14px',
+    height: '249px',
   },
   aboutImageSection: {
+    height: '249px',
   },
-  C3DCWords: {
-    height: '168px',
-    background: '#0B2731',
+  DCWords: {
+    height: '200px',
+    background: '#3E61DE',
     color: '#FFFFFF',
-    fontSize: '26px',
-    textTransform: 'uppercase',
-    lineHeight: '29px',
-    padding: '24px 75px 26px 26px',
-    fontFamily: 'Oswald',
+    fontFamily: 'Poppins',
+    fontSize: '28px',
+    lineHeight: '28px',
+    fontWeight: '500',    
+    padding: '26px 26px 26px 26px',
   },
   landingContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    paddingLeft: '15px',
   },
   contentLeft: {
     float: 'left',
@@ -322,24 +279,25 @@ const styles = () => ({
   },
   about: {
     width: '300px',
-    backgroundColor: '#76C4E4',
+    backgroundColor: 'white',
   },
   image: {
     width: '293px',
-    height: '251px',
+    height: '249px',
   },
   aboutContent: {
-    background: '#76C4E4',
+    background: 'white',
     minHeight: '372px',
     width: '300px',
     padding: '30px 30px 32px 30px',
-    color: '#fff',
-    fontFamily: '"Open Sans"',
-    fontSize: '14px',
+    color: '#000000',
+    fontFamily: 'Nunito',
+    fontSize: '16px',
+    fontWeight: '500',
     lineHeight: '22px',
   },
   aboutButtonSection: {
-    background: '#76C4E4',
+    background: 'white',
     height: '71px',
   },
   imgIconAbout: {
@@ -347,12 +305,12 @@ const styles = () => ({
   },
   aboutButtonLeft: {
     float: 'left',
-    background: '#0F253A',
+    background: '#AE5E1B',
     height: '45px',
     width: '48px',
   },
   aboutButtonRight: {
-    background: '#16688A',
+    background: '#CB864C',
     float: 'left',
     height: '45px',
     width: '132px',
@@ -366,29 +324,31 @@ const styles = () => ({
     lineHeight: '45px',
     paddingLeft: '20px',
     boxShadow: 'none',
+    letterSpacing: '1px',
   },
 
   content: {
     width: '100%',
+    height: '155px',
+    overflowY: 'auto',
     background: '#fff',
     paddingLeft: '30px',
-    paddingTop: '6px',
-    minHeight: '130px',
+    paddingTop: '5px',
+    minHeight: '138px',
   },
   contentHeader: {
-    color: '#20506A',
-    fontFamily: 'Oswald',
-    fontSize: '26px',
-    fontWeight: '500',
+    color: '#033D6F',
+    fontFamily: 'Raleway, Lato',
+    fontSize: '28px',
+    fontWeight: 'bold',
     lineHeight: '27px',
     padding: '10px 0',
-    textTransform: 'uppercase',
   },
   contentContainer: {
     width: '215px',
     color: '#010101',
-    fontFamily: 'Lato',
-    fontSize: '15px',
+    fontFamily: 'Poppins, Nunito',
+    fontSize: '16px',
     lineHeight: '22px',
     paddingLeft: '2px',
     paddingBottom: '10px',
@@ -396,10 +356,11 @@ const styles = () => ({
 
   program: {
     float: 'left',
-    padding: '0 10px 8px 0px',
+    padding: '0 10px 6.8px 0px',
   },
   programImg: {
     background: '#fff',
+    height: '249px',
   },
   studies: {
     float: 'left',
@@ -409,25 +370,25 @@ const styles = () => ({
     float: 'left',
     width: '597px',
     background: '#fff',
-    backgroundImage: `url(${casesImage})`,
+    backgroundImage: `url(${landingPageData.tile4.img})`,
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
   },
   cases: {
-    height: '438px',
-    paddingLeft: '370px',
+    height: '436px',
+    paddingLeft: '340px',
     paddingTop: '70px',
   },
-  greybuttonSection: {
+  mountainMeadowButtonSection: {
     height: '46px',
     width: '176px',
-    backgroundColor: '#20506A',
+    backgroundColor: '#0E8662',
     marginTop: '20px',
 
   },
   blueButton: {
     height: '45px',
-    background: '#E5A553',
+    background: '#1365C6',
     color: '#FFFFFF',
     fontFamily: 'Raleway',
     fontSize: '12px',
@@ -435,61 +396,42 @@ const styles = () => ({
     lineHeight: '25px',
     paddingLeft: '8px',
     textDecoration: 'none',
-  },
-  yellowButton: {
-    height: '45px',
-    background: '#E5A553',
-    color: '#FFFFFF',
-    fontFamily: 'Raleway',
-    fontSize: '12px',
-    fontWeight: '600',
-    lineHeight: '25px',
-    paddingLeft: '8px',
-    textDecoration: 'none',
-  },
-  brownButton: {
-    height: '45px',
-    background: '#8C7D6B',
-    color: '#FFFFFF',
-    fontFamily: 'Raleway',
-    fontSize: '12px',
-    fontWeight: '600',
-    lineHeight: '25px',
-    paddingLeft: '8px',
-    textDecoration: 'none',
+    letterSpacing: '1px',
   },
   blueButtonLeft: {
     float: 'left',
   },
   blueButtonRight: {
     float: 'left',
-    lineHeight: '47px',
+    lineHeight: '44px',
+    marginLeft: '8px',
+    fontFamily: 'Lato',
+    fontSize: '14px',
     color: '#fff',
     textTransform: 'uppercase',
   },
-  greyContentHeader: {
-    color: '#20506A',
-    fontFamily: 'Oswald',
-    fontSize: '31px',
-    fontWeight: '500',
+  mountainMeadowContentHeader: {
+    color: '#033D6F',
+    fontFamily: 'Poppins, Lato',
+    fontSize: '28px',
+    fontWeight: 'bold',
     lineHeight: '32px',
     padding: '15px 0',
-    textTransform: 'uppercase',
   },
-  greyContent: {
-    height: '173px',
-    width: '166px',
+  mountainMeadowContent: {
+    height: '143px',
+    width: '230px',
     color: '#010101',
-    fontFamily: 'Lato',
+    fontFamily: 'Nunito',
     fontSize: '15px',
     lineHeight: '22px',
   },
-  greyIcon: {
+  mountainMeadowIcon: {
     width: '20px',
-    marginTop: '15px',
+    marginTop: '12px',
     marginLeft: '28px',
   },
-  greybutton: {
+  mountainMeadowButton: {
     padding: '15px 5px 0 0',
     height: '9px',
     width: '71px',
@@ -500,6 +442,7 @@ const styles = () => ({
     lineHeight: '19.31px',
     textDecoration: 'none',
     marginLeft: '8px',
+    letterSpacing: '1px',
     '&:hover': {
       color: '#ffffff',
     },
@@ -512,45 +455,37 @@ const styles = () => ({
   },
   animationContainer: {
     position: 'relative',
-    height: '800px',
-    maxHeight: '800px',
-    overflow: 'hidden',
+    left: '33%',
   },
 
   paddingLeft2: {
     paddingLeft: '2px',
   },
-
   heroTextContainer: {
     position: 'absolute',
     width: '400px',
     margin: 'auto',
-    left: '0px',
+    top: '200px',
     right: 0,
     '@media (min-width: 900px)': {
       width: '906px',
     },
   },
   heroTextWrapper: {
-    width: '360px',
+    width: '580px',
+    textAlign: 'center',
   },
-  headerLink: {
-    textDecoration: 'none',
-  },
-  transparentButton: {
-    padding: '12px 15px',
+  buttonText: {
+    padding: '12px 30px',
     height: '40px',
-    color: '#505050 !important',
-    backgroundColor: '#ffffff00 !important',
-    fontSize: '16px',
-    borderBottom: ' 2px #79C5E4 solid',
-    borderRadius: '0px',
   },
-  rightArrow: {
-    marginLeft: '5px',
-    fontSize: '16px',
-    color: '#76C4E4',
+  landingContainerInner: {
+    width: '940px',
+    display: 'flex',
+    justifyContent: 'center',
+    background: '#3A8581',
+    paddingTop: '18px',
+    paddingBottom: '18px',
   },
-
 });
-export default withStyles(styles, { withTheme: true })(LandingController);
+export default withStyles(styles, { withTheme: true })(LandingView);

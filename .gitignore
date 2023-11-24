@@ -14,9 +14,6 @@
 # vscode
 /.vscode
 
-#webstorm
-/.idea
-
 # misc
 .DS_Store
 .env.local
@@ -28,7 +25,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-modules.xml
-vcs.xml
-workspace.xml
-bento-c3dc-frontend.iml
+/src/bento-core

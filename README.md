@@ -1,14 +1,15 @@
+CCDI Portal frontend code base.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/aea34d83cecf4c5b82c9fb017bc032d6)](https://app.codacy.com/gh/CBIIT/bento-frontend?utm_source=github.com&utm_medium=referral&utm_content=CBIIT/bento-frontend&utm_campaign=Badge_Grade_Dashboard)
+Please run "npm install" first and then "npm start".
 
-In the project directory, you can run:
-To run the independently of backend update the REACT_APP_BACKEND_API varibale from REACT_APP_BACKEND_API=http://localhost:8084/v1/graphql/
- to REACT_APP_BACKEND_API=https://api-dev.bento-tools.org/v1/graphql/
+### `npm install`
 
-"npm install" and then "npm start"
+To install dependencies/libaries for the frontend to run 
+
 ### `npm start`
 
 Runs the app in the development mode.<br>

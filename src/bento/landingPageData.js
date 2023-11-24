@@ -1,78 +1,88 @@
 import gql from 'graphql-tag';
 // import Test from '../assets/header/CTDC_Logo.svg';
 
+import landingPageHeroImage from '../assets/landing/Landingpage_Image.svg'
+
+// TODO: Mmove it to Data common asstes folder later on.
+// Titles
+import landingTile1 from '../assets/landing/landingTile1.png'
+import landingTile2 from '../assets/landing/landingTile2.png'
+import landingTile3 from '../assets/landing/landingTile3.png'
+
 // The ideal image size of landingPageHero 1400x600px
 // Tile1 Tile2 Tile3 images 293x349 px
 // Tile4 image optimum size 600x 436 px
 export const landingPageData = {
-  callToActionTitle: 'C3DC',
-  callToActionDescription: '\n'
-    + 'Explore, Analyze, Visualize Clinical Trial Data Sets\n'
-    + 'Model, Store and Share your Data Sets using the Bento Framework for Data Sharing Platforms.',
+  callToActionTitle: 'Access, Analyze, Visualize Data Sets within the C3DC Community',
+  callToActionDescription: 'Get to know C3DC by selecting available Information below',
   callToActionButtonText: 'EXPLORE THE SITE',
-  callToActionLink: '/cases',
-  landingImageContainer: {
-    display: 'block',
-  },
+  callToActionLink: '/explore',
   landingPageHero: {
     alt: 'Alt tag1',
-    img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_Hero_Graphic.png',
+    img: landingPageHeroImage,
   },
   landingPageStatsBar: [
     {
       statTitle: 'Programs',
-      type: 'field',
-      statAPI: 'numberOfTrials',
+      statAPI: 'numberOfPrograms',
     },
     {
-      statTitle: 'Studies',
-      type: 'field',
+      statTitle: 'Arms',
       statAPI: 'numberOfStudies',
     },
     {
+      statTitle: 'Cases',
+      statAPI: 'numberOfSubjects',
+    },
+    {
+      statTitle: 'samples',
+      statAPI: 'numberOfSamples',
+    },
+    {
       statTitle: 'files',
-      type: 'field',
       statAPI: 'numberOfFiles',
     },
   ],
   tile1: {
     alt: '',
-    img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_tileAbout.png',
-    titleText: 'The Bento Framework',
+    img: landingTile1,
+    titleText: 'About the Childhood Cancer Clinical Data Commons',
     descriptionText: 'Effective data management is key to scientific discovery. Bento is an open source framework, developed by the Frederick National Laboratory for Cancer Research, to support the creation of data sharing platforms, that adhere to the FAIR principles of scientific data management.',
-    callToActionText: 'Read More',
-    callToActionLink: '/bento', // This links to the "About" static page.
+    callToActionText: 'Explore',
+    callToActionLink: '/explore', // This links to the "About" static page.
   },
   tile2: {
     alt: '',
-    img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_tileProgam.png',
-    titleText: 'Programs',
-    descriptionText: 'Access data from the TAILORx clinical trial, on this data sharing platform, built on Bento.',
-    callToActionText: 'View',
+    img: landingTile2,
+    titleText: 'Data Model',
+    descriptionText: 'Navigate the C3DC Data Model.',
+    callToActionText: 'Go to Data Model',
     callToActionLink: '/programs', // This links to the Programs Listing Page.
   },
   tile3: {
     alt: '',
-    img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_tileAnalytics.png',
-    titleText: 'Resources',
-    descriptionText: 'Use Bento to build your own data sharing platform.',
-    callToActionText: 'Read More',
+    img: landingTile3,
+    titleText: 'Submit Data',
+    descriptionText: 'Submitters should start by contacting the C3DC helpdesk@mail.nih.gov',
+    callToActionText: 'Start the process',
     callToActionLink: '/resources', // Link to the "Resources" Static Page
   },
   tile4: {
     alt: '',
     img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_tileCases.png',
-    titleText: 'Cases',
-    descriptionText: 'Analyze cases from the TAILORx clinical trial.',
-    callToActionText: 'Explore',
-    callToActionLink: '/cases', // This links to the cases dashboard.
+    titleText: 'C3DC Data',
+    descriptionText: 'Search C3DC cases and export data from C3DC cohorts. The data files from these cohorts can then be analyzed in an NCI Cloud Resource.',
+    callToActionText: 'Learn More',
+    callToActionLink: '/explore', // This links to the cases dashboard.
   },
 };
 
 // --------------- GraphQL query - Retrieve Landing page data --------------
 export const GET_LANDING_PAGE_DATA_QUERY = gql`{
-  numOfPrograms
-  num_of_studies
+  numberOfPrograms
+  numberOfStudies
+  numberOfSubjects
+  numberOfSamples
   numberOfFiles
   }
   `;

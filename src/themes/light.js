@@ -16,7 +16,7 @@ const success = '#3CD4A0';
 const info = '#3f2b2f';
 const tableHeader = '#ffffff';
 const black = 'black';
-const lochmara = '#3478A5';
+const lochmara = '#60797B';
 const lightenRate = 7.5;
 const darkenRate = 15;
 const tableHeaderBorder = '#42779A 3px solid';
@@ -28,7 +28,7 @@ export default {
   custom: {
     maxContentWidth: '1440px',
     maxContent: 'white',
-    bodyBackGround: '#FFFFFF',
+    bodyBackGround: '#E5F0FA',
     cardBackGround: '#f0f6f8',
     fontFamilySans: '"Open Sans", sans-serif',
     footorBackground: '#325068',
@@ -221,12 +221,15 @@ export default {
       primary: '#4A4A4A',
       secondary: '#6E6E6E',
       hint: '#B9B9B9',
-      link: '#1669aa',
+      link: '#0083c6',
       footerText: 'white',
     },
     background: {
       default: '#E5F0FA',
       light: '#F3F5FF',
+    },
+    clearQueryResultColor: {
+      color: '#000000',
     },
   },
   customShadows: {
@@ -263,6 +266,9 @@ export default {
       root: {
         minHeight: '38px',
         padding: '0 12px 0 35px',
+        '&.Mui-focused': {
+          backgroundColor: '#f4f4f4',
+        },
       },
       content: {
         margin: '4px 0',
@@ -363,9 +369,15 @@ export default {
         '&:nth-child(even)': {
           color: '#004C73',
         },
+        '&:nth-child(even) td': {
+          background: '#f5f5f5',
+        },
         '&:nth-child(odd)': {
           color: '#004C73 !important',
           background: '#f4f5f5 !important',
+        },
+        '&:nth-child(odd) td': {
+          background: '#fff',
         },
       },
     },

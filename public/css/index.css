@@ -1,28 +1,102 @@
 @font-face {
-    font-family: 'NunitoSans-Black';
-    src: local('NunitoSans-Black'), url(./fonts/NunitoSans-Black.ttf) format('ttf');
-  }
-  @font-face {
-    font-family: 'NunitoSans-BlackItalic';
-    src: local('NunitoSans-BlackItalic'), url(./fonts/NunitoSans-BlackItalic.ttf) format('ttf');
-  }
-  @font-face {
-    font-family: 'Nunito Sans';
-    src: local('Nunito Sans'), url(./fonts/NunitoSans-Black.ttf) format('ttf');
-  }
-  @font-face {
-    font-family: 'Oswald';
-    src: local('Oswald'), url(./fonts/Oswald-Regular.ttf) format('ttf');
-  }
-  @font-face {
-    font-family: 'Lato';
-    src: local('Lato'), url(./fonts/Lato-Regular.ttf) format('ttf');
-  }
-  @font-face {
-    font-family: 'Inter';
-    src: local('Inter'), url(./fonts/Inter-Regular-slnt=0.ttf) format('ttf');
-  }
-  @font-face {
-    font-family: 'Inter-Semibold';
-    src: local('Inter-Semibold'), url(./fonts/Inter-SemiBold.ttf) format('ttf');
-  }
+  font-family:"poppins";
+  src:url(./fonts/Poppins-Light.ttf);
+  font-weight:300;
+}
+
+@font-face {
+  font-family:"poppins";
+  src:url(./fonts/Poppins-Regular.ttf);
+  font-weight:400;
+}
+
+@font-face {
+  font-family:"poppins";
+  src:url(./fonts/Poppins-Medium.ttf);
+  font-weight:500;
+}
+
+@font-face {
+  font-family:"poppins";
+  src:url(./fonts/Poppins-SemiBold.ttf);
+  font-weight:600;
+}
+
+@font-face {
+  font-family:"poppins";
+  src:url(./fonts/Poppins-Bold.ttf);
+  font-weight:700;
+}
+
+@font-face {
+  font-family:"Inter";
+  src:url(./fonts/Inter-Light.woff2) format("woff2"),
+  url(./fonts/Inter-Light.woff) format("woff");
+  font-display:auto;font-style:normal;font-weight:300;font-stretch:normal;
+}
+
+@font-face {
+  font-family:"Inter";
+  src:url(./fonts/Inter-Regular.woff2) format("woff2"),
+  url(./fonts/Inter-Regular.woff) format("woff");
+  font-display:auto;font-style:normal;font-weight:400;font-stretch:normal;
+}
+
+@font-face {
+  font-family:"Inter";
+  src:url(./fonts/Inter-Medium.woff2) format("woff2"),
+  url(./fonts/Inter-Medium.woff) format("woff");
+  font-display:auto;font-style:normal;font-weight:500;font-stretch:normal;
+}
+
+@font-face {
+  font-family:"Inter";
+  src:url(./fonts/Inter-SemiBold.woff2) format("woff2"),
+  url(./fonts/Inter-SemiBold.woff) format("woff");
+  font-display:auto;font-style:normal;font-weight:600;font-stretch:normal;
+}
+
+@font-face {
+  font-family:"Inter";
+  src:url(./fonts/Inter-Bold.woff2) format("woff2"),
+  url(./fonts/Inter-Bold.woff) format("woff");
+  font-display:auto;font-style:normal;font-weight:700;font-stretch:normal;
+}
+
+@font-face {
+  font-family:"Inter";
+  src:url(./fonts/Inter-ExtraBold.woff2) format("woff2"),
+  url(./fonts/Inter-ExtraBold.woff) format("woff");
+  font-display:auto;font-style:normal;font-weight:800;font-stretch:normal;
+}
+
+@font-face {
+  font-family:"Open Sans";
+  src:url(./fonts/OpenSans-VariableFont.ttf);
+}
+
+@font-face {
+  font-family:"Reem Kufi";
+  src:url(./fonts/ReemKufi-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family:"Nunito";
+  src:url(./fonts/Nunito-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family:"Oswald";
+  src:url(./fonts/Oswald-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family:"Montserrat";
+  src:url(./fonts/Montserrat-VariableFont_wght.ttf);
+}
+
+@font-face {
+  font-family:"Lato";
+  src:url(./fonts/Lato-Medium.ttf);
+  font-weight:500;
+}
