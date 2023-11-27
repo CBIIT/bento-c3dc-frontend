@@ -2,6 +2,7 @@ import Logo from '../assets/header/Portal_Logo.svg';
 import LogoSmall from '../assets/header/Portal_Logo_Small.svg';
 import searchbarIcon from '../assets/header/Search_Icon.svg';
 import cartLogo from '../assets/header/Cart_Logo.svg';
+import usFlagSmall from '../assets/header/us_flag_small.png';
 
 // globalHeaderLogo image 468x100
 // globalHeaderImage: image 2200x100
@@ -12,6 +13,10 @@ export const headerData = {
   globalHeaderLogoAltText: 'Portal Logo',
   globalHeaderSearchIcon: searchbarIcon,
   globalHeaderSearchIconAltText: 'search Icon',
+};
+
+export const USGovBannerData = {
+  logo: usFlagSmall,
 };
 
 export const navMobileList = [
