@@ -20,6 +20,7 @@ const LogoArea = styled.div`
         height: 47px;
         background-image: url(${headerData.globalHeaderLogo});
         background-size: contain;
+        background-repeat: no-repeat;
     }
 `;
 

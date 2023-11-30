@@ -115,7 +115,6 @@ const Cart = (props) => {
                 {navBarCartData.cartLabel}
                 <Tooltip title="Files" placement="bottom-end">
                   <span className="badge">
-                    <div className='myFilesText'>MY FILES</div>
                     <img
                       className="cartIcon"
                       src={navBarCartData.cartIcon}

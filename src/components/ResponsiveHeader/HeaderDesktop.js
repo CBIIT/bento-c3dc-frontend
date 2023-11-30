@@ -35,11 +35,18 @@ const NavBarContainer = styled.div`
   position: relative;
 `;
 const USGovBanner = styled.div`
-    background-color: #f0f0f0;
-    height: 46px;
-    display: flex;
-    align-items: center;
-    padding: 0 52px;
+  background-color: #f0f0f0;
+  height: 46px;
+  width: 100%;
+  align-items: center;
+    .USGovBannerInner {
+      padding: 8px 32px;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin: 0 auto;
+      max-width: 1420px;
+    }
 
     img {
       height: 15px;
@@ -87,13 +94,15 @@ const Header = () => {
   return (
     <>
       <USGovBanner>
-        <div className='bannerLeft'>
-          <img src={USGovBannerData.logo} alt={"US Flag logo"}></img>
-          <span className='bannerText'>An official website of the United States government</span>
-        </div>
+        <div className ='USGovBannerInner'>
+          <div className='bannerLeft'>
+            <img src={USGovBannerData.logo} alt={"US Flag logo"}></img>
+            <span className='bannerText'>An official website of the United States government</span>
+          </div>
 
-        <div className='bannerRight'>
-          <span className='bannerButton'>Español</span>
+          <div className='bannerRight'>
+            <span className='bannerButton'>Español</span>
+          </div>
         </div>
       </USGovBanner>
       <HeaderBanner role="banner">
