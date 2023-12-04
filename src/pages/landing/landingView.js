@@ -15,22 +15,67 @@ const LandingView = ({ classes }) => (
     <div className={classes.container}>
       <div className={classes.hero}>
         <Grid container spacing={16} direction="row">
-          <div className={classes.heroImage} />
-          <div className={classes.heroTextContainer}>
-            <div className={classes.heroTextWrapper}>
-              <div className={classes.headerTitle}>
-                { landingPageData.callToActionTitle }
+          <div className={classes.heroImage}>
+            <div className={classes.heroTextContainer}>
+              <div className={classes.heroTextWrapper}>
+                <div className={classes.headerTitle}>
+                  { landingPageData.callToActionTitle }
+                </div>
+                <div className={classes.headerContent}>
+                  { landingPageData.callToActionDescription}
+                </div>
+                <div className={classes.statsBubbleContainer}>
+                  <div className={classes.statsBubbleDiagnoses}>
+                    <div className={classes.statsBubbleDiagnosesNumber}>
+                      100
+                    </div>
+                    <div className={classes.statsBubbleText}>
+                      Diagnoses
+                    </div>
+                    <div className={classes.statsBubbleDiagnosesIcon}>
+                      <img 
+                        src={landingPageData.landingPageStatsIcons.diagnosesIcon} 
+                        alt={landingPageData.landingPageStatsIcons.diagnosesIconAlt} 
+                      />
+                    </div>
+                  </div>
+                  <div className={classes.statsBubbleParticipants}>
+                    <div className={classes.statsBubbleParticipantsNumber}>
+                      200
+                    </div>
+                    <div className={classes.statsBubbleText}>
+                      Participants
+                    </div>
+                    <div className={classes.statsBubbleParticipantsIcon}>
+                      <img
+                        src={landingPageData.landingPageStatsIcons.participantsIcon}
+                        alt={landingPageData.landingPageStatsIcons.participantsIconAlt}
+                      />
+                    </div>
+                  </div>
+                  <div className={classes.statsBubbleStudies}>
+                    <div className={classes.statsBubbleStudiesNumber}>
+                      300
+                    </div>
+                    <div className={classes.statsBubbleText}>
+                      Studies
+                    </div>
+                    <div className={classes.statsBubbleStudiesIcon}>
+                      <img
+                        src={landingPageData.landingPageStatsIcons.studiesIcon}
+                        alt={landingPageData.landingPageStatsIcons.studiesIconAlt}
+                      />
+                    </div>
+                  </div>
+                </div>
+                {/* <div className={classes.headerButtonSection}>
+                  <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
+                    <Button className={classes.buttonText} bgColor="neonBlue" color="white">
+                      {landingPageData.callToActionButtonText}
+                    </Button>
+                  </Link>
+                </div> */}
               </div>
-              <div className={classes.headerContent}>
-                { landingPageData.callToActionDescription}
-              </div>
-              {/* <div className={classes.headerButtonSection}>
-                <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
-                  <Button className={classes.buttonText} bgColor="neonBlue" color="white">
-                    {landingPageData.callToActionButtonText}
-                  </Button>
-                </Link>
-              </div> */}
             </div>
           </div>
         </Grid>
@@ -182,19 +227,19 @@ const LandingView = ({ classes }) => (
 );
 const styles = () => ({
   page: {
-    marginTop: '-53px',
+    marginTop: '0px',
   },
   heroImage: {
     width: '100%',
-    height: '900px',
+    height: '670px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: '100% 100%',
     backgroundImage: `url(${landingPageData.landingPageHero.img})`,
   },
   texture: {
     backgroundSize: 'cover',
-    background: '#096761',
     padding: '120px 0 80px 0',
+    backgroundImage: `url(${landingPageData.landingTileBackground.img})`,
   },
   container: {
     fontFamily: 'Raleway, sans-serif',
@@ -217,29 +262,146 @@ const styles = () => ({
     letterSpacing: '0.8px',
   },
   headerTitle: {
-    paddingTop: '94px',
     fontFamily: 'Poppins, Inter, Raleway, sans-serif',
     fontSize: '45px',
     fontWeight: '600',
     lineHeight: '45px',
     color: '#009485',
+    textAlign: 'center',
+    whiteSpace: 'pre-line',
   },
   paddingLeft50: {
     paddingLeft: '50px',
   },
   headerContent: {
-    color: '#000000',
-    fontFamily: 'Lato, Raleway',
-    fontSize: '16px',
+    color: '#0C534C',
+    fontFamily: 'Inter',
+    fontSize: '22px',
     fontWeight: '500',
-    lineHeight: '27px',
-    marginTop: '16px',
-    marginBottom: '26px',
+    lineHeight: '28px',
+    textAlign: 'center',
+    whiteSpace: 'pre-line',
+    paddingTop: '14px',
   },
   headerLink: {
     textDecoration: 'none',
   },
-
+  statsBubbleContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '669px',
+    paddingTop: '33px',
+  },
+  statsBubbleText: {
+    fontFamily: 'Poppins',
+    fontWeight: '600',
+    fontSize: '15px',
+    lineHeight: '20px',
+    letterSpacing: '2%',
+    color: '#004358',
+    textTransform: 'uppercase',
+  },
+  statsBubbleDiagnoses: {
+    width: '195px',
+    height: '195px',
+    borderRadius: '50%',
+    border: 'solid 3px #8E8E8E',
+    boxShadow: '0px 4px 15px 10px rgba(142, 142, 142, 0.30)',
+    marginRight: '42px',
+    '&:hover': {
+      border: 'solid 3px #24b0ff',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    '&:hover $statsBubbleDiagnosesNumber': {
+      visibility: 'visible',
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center', 
+  },
+  statsBubbleParticipants: {
+    width: '195px',
+    height: '195px',
+    borderRadius: '50%',
+    border: 'solid 3px #8E8E8E',
+    boxShadow: '0px 4px 15px 10px rgba(142, 142, 142, 0.30)',
+    marginRight: '42px',
+    '&:hover': {
+      border: 'solid 3px #21aa79',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    '&:hover $statsBubbleParticipantsNumber': {
+      visibility: 'visible',
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center', 
+  },
+  statsBubbleStudies: {
+    width: '195px',
+    height: '195px',
+    borderRadius: '50%',
+    border: 'solid 3px #8E8E8E',
+    boxShadow: '0px 4px 15px 10px rgba(142, 142, 142, 0.30)',
+    '&:hover': {
+      border: 'solid 3px #ffbe18',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    '&:hover $statsBubbleStudiesNumber': {
+      visibility: 'visible',
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center', 
+  },
+  statsBubbleDiagnosesNumber: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '28px',
+    lineHeight: '40px',
+    letterSpacing: '2%',
+    align: 'center',
+    color: '#007dd9',
+    visibility: 'hidden',
+  },
+  statsBubbleParticipantsNumber: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '28px',
+    lineHeight: '40px',
+    letterSpacing: '2%',
+    align: 'center',
+    color: '#21aa79',
+    visibility: 'hidden',
+  },
+  statsBubbleStudiesNumber: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '28px',
+    lineHeight: '40px',
+    letterSpacing: '2%',
+    align: 'center',
+    color: '#ffbe18',
+    visibility: 'hidden',
+  },
+  statsBubbleDiagnosesIcon: {
+    width: '41px',
+    height: '41px',
+    marginTop: '13px',
+  },
+  statsBubbleParticipantsIcon: {
+    width: '34px',
+    height: '43px',
+    marginTop: '11px',
+  },
+  statsBubbleStudiesIcon: {
+    width: '36px',
+    height: '38px',
+    marginTop: '16px',
+  },
   iconAbout: {
     height: '17px',
     width: '9px',
@@ -253,21 +415,22 @@ const styles = () => ({
   },
 
   aboutImage: {
-    width: '300px',
-    height: '249px',
+    width: '100%',
+    height: '100%'
   },
   aboutImageSection: {
     height: '249px',
+    width: '296px',
   },
   DCWords: {
     height: '200px',
-    background: '#3E61DE',
+    background: '#334a9b',
     color: '#FFFFFF',
     fontFamily: 'Poppins',
     fontSize: '28px',
-    lineHeight: '28px',
+    lineHeight: '33px',
     fontWeight: '500',    
-    padding: '26px 26px 26px 26px',
+    padding: '20px 28px 28px 24px',
   },
   landingContainer: {
     alignItems: 'center',
@@ -280,6 +443,7 @@ const styles = () => ({
   about: {
     width: '300px',
     backgroundColor: 'white',
+    border: 'solid 2px #096761',
   },
   image: {
     width: '293px',
@@ -288,13 +452,13 @@ const styles = () => ({
   aboutContent: {
     background: 'white',
     minHeight: '372px',
-    width: '300px',
-    padding: '30px 30px 32px 30px',
+    width: '296px',
+    padding: '25px 35px 0px 24px',
     color: '#000000',
-    fontFamily: 'Nunito',
+    fontFamily: 'Inter',
     fontSize: '16px',
-    fontWeight: '500',
-    lineHeight: '22px',
+    fontWeight: '400',
+    lineHeight: '24px',
   },
   aboutButtonSection: {
     background: 'white',
@@ -310,7 +474,7 @@ const styles = () => ({
     width: '48px',
   },
   aboutButtonRight: {
-    background: '#CB864C',
+    background: '#844715',
     float: 'left',
     height: '45px',
     width: '132px',
@@ -337,26 +501,27 @@ const styles = () => ({
     minHeight: '138px',
   },
   contentHeader: {
-    color: '#033D6F',
-    fontFamily: 'Raleway, Lato',
+    color: '#343434',
+    fontFamily: 'Poppins',
     fontSize: '28px',
-    fontWeight: 'bold',
-    lineHeight: '27px',
-    padding: '10px 0',
+    fontWeight: '500',
+    lineHeight: '32px',
+    padding: '18px 0 10px 0',
   },
   contentContainer: {
-    width: '215px',
-    color: '#010101',
-    fontFamily: 'Poppins, Nunito',
+    width: '245px',
+    color: '#000',
+    fontFamily: 'Inter',
     fontSize: '16px',
-    lineHeight: '22px',
-    paddingLeft: '2px',
-    paddingBottom: '10px',
+    fontWeight: '400',
+    lineHeight: '24px',
   },
 
   program: {
     float: 'left',
-    padding: '0 10px 6.8px 0px',
+    margin: '0 10px 6.8px 0px',
+    border: 'solid 2px #096761',
+
   },
   programImg: {
     background: '#fff',
@@ -364,11 +529,12 @@ const styles = () => ({
   },
   studies: {
     float: 'left',
+    border: 'solid 2px #096761',
   },
 
   contentRightBottom: {
     float: 'left',
-    width: '597px',
+    width: '603px',
     background: '#fff',
     backgroundImage: `url(${landingPageData.tile4.img})`,
     backgroundRepeat: 'no-repeat',
@@ -380,15 +546,15 @@ const styles = () => ({
     paddingTop: '70px',
   },
   mountainMeadowButtonSection: {
-    height: '46px',
-    width: '176px',
-    backgroundColor: '#0E8662',
+    height: '44px',
+    width: '184px',
+    backgroundColor: '#335aab',
     marginTop: '20px',
 
   },
   blueButton: {
     height: '45px',
-    background: '#1365C6',
+    background: '#096761',
     color: '#FFFFFF',
     fontFamily: 'Raleway',
     fontSize: '12px',
@@ -462,30 +628,25 @@ const styles = () => ({
     paddingLeft: '2px',
   },
   heroTextContainer: {
-    position: 'absolute',
-    width: '400px',
+    position: 'relative',
+    width: '669px',
     margin: 'auto',
-    top: '200px',
-    right: 0,
-    '@media (min-width: 900px)': {
-      width: '906px',
-    },
+    left: '382px',
   },
   heroTextWrapper: {
-    width: '580px',
-    textAlign: 'center',
+    paddingTop: '91px',
   },
   buttonText: {
     padding: '12px 30px',
     height: '40px',
   },
   landingContainerInner: {
-    width: '940px',
+    width: '955px',
     display: 'flex',
     justifyContent: 'center',
-    background: '#3A8581',
-    paddingTop: '18px',
-    paddingBottom: '18px',
+    background: '#e2fff6',
+    paddingTop: '15px',
+    paddingBottom: '17px',
   },
 });
 export default withStyles(styles, { withTheme: true })(LandingView);
