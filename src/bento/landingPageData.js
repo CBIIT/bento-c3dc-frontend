@@ -8,6 +8,8 @@ import landingPageHeroImage from '../assets/landing/Landingpage_Image.svg'
 import landingTile1 from '../assets/landing/landingTile1.png'
 import landingTile2 from '../assets/landing/landingTile2.png'
 import landingTile3 from '../assets/landing/landingTile3.png'
+import landingTile4 from '../assets/landing/landingTile4.png'
+
 import landingTileBackground from '../assets/landing/LandingTileBackground.png'
 
 import diagnosesIcon from '../assets/landing/DiagnosesIcon.svg'
@@ -85,7 +87,7 @@ export const landingPageData = {
   },
   tile4: {
     alt: '',
-    img: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/png/landing_tileCases.png',
+    img: landingTile4,
     titleText: 'C3DC Data',
     descriptionText: 'Explore C3DC data, construct your cohort, and export it for analysis alongside other data types.',
     callToActionText: 'Explore Data',

@@ -534,7 +534,7 @@ const styles = () => ({
 
   contentRightBottom: {
     float: 'left',
-    width: '603px',
+    width: '604px',
     background: '#fff',
     backgroundImage: `url(${landingPageData.tile4.img})`,
     backgroundRepeat: 'no-repeat',
@@ -542,14 +542,14 @@ const styles = () => ({
   },
   cases: {
     height: '436px',
-    paddingLeft: '340px',
+    paddingLeft: '390px',
     paddingTop: '70px',
   },
   mountainMeadowButtonSection: {
     height: '44px',
     width: '184px',
     backgroundColor: '#335aab',
-    marginTop: '20px',
+    marginTop: '32px',
 
   },
   blueButton: {
@@ -577,20 +577,19 @@ const styles = () => ({
     textTransform: 'uppercase',
   },
   mountainMeadowContentHeader: {
-    color: '#033D6F',
-    fontFamily: 'Poppins, Lato',
+    color: '#ffffff',
+    fontFamily: 'Poppins',
     fontSize: '28px',
-    fontWeight: 'bold',
+    fontWeight: '500',
     lineHeight: '32px',
     padding: '15px 0',
   },
   mountainMeadowContent: {
-    height: '143px',
-    width: '230px',
-    color: '#010101',
-    fontFamily: 'Nunito',
-    fontSize: '15px',
-    lineHeight: '22px',
+    width: '197px',
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    fontSize: '16px',
+    lineHeight: '24px',
   },
   mountainMeadowIcon: {
     width: '20px',
