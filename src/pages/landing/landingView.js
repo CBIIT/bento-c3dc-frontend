@@ -16,65 +16,67 @@ const LandingView = ({ classes }) => (
       <div className={classes.hero}>
         <Grid container spacing={16} direction="row">
           <div className={classes.heroImage}>
-            <div className={classes.heroTextContainer}>
-              <div className={classes.heroTextWrapper}>
-                <div className={classes.headerTitle}>
-                  { landingPageData.callToActionTitle }
-                </div>
-                <div className={classes.headerContent}>
-                  { landingPageData.callToActionDescription}
-                </div>
-                <div className={classes.statsBubbleContainer}>
-                  <div className={classes.statsBubbleDiagnoses}>
-                    <div className={classes.statsBubbleDiagnosesNumber}>
-                      100
+            <div className={classes.heroFrame}>
+              <div className={classes.heroTextContainer}>
+                <div className={classes.heroTextWrapper}>
+                  <div className={classes.headerTitle}>
+                    { landingPageData.callToActionTitle }
+                  </div>
+                  <div className={classes.headerContent}>
+                    { landingPageData.callToActionDescription}
+                  </div>
+                  <div className={classes.statsBubbleContainer}>
+                    <div className={classes.statsBubbleDiagnoses}>
+                      <div className={classes.statsBubbleDiagnosesNumber}>
+                        100
+                      </div>
+                      <div className={classes.statsBubbleText}>
+                        Diagnoses
+                      </div>
+                      <div className={classes.statsBubbleDiagnosesIcon}>
+                        <img 
+                          src={landingPageData.landingPageStatsIcons.diagnosesIcon} 
+                          alt={landingPageData.landingPageStatsIcons.diagnosesIconAlt} 
+                        />
+                      </div>
                     </div>
-                    <div className={classes.statsBubbleText}>
-                      Diagnoses
+                    <div className={classes.statsBubbleParticipants}>
+                      <div className={classes.statsBubbleParticipantsNumber}>
+                        200
+                      </div>
+                      <div className={classes.statsBubbleText}>
+                        Participants
+                      </div>
+                      <div className={classes.statsBubbleParticipantsIcon}>
+                        <img
+                          src={landingPageData.landingPageStatsIcons.participantsIcon}
+                          alt={landingPageData.landingPageStatsIcons.participantsIconAlt}
+                        />
+                      </div>
                     </div>
-                    <div className={classes.statsBubbleDiagnosesIcon}>
-                      <img 
-                        src={landingPageData.landingPageStatsIcons.diagnosesIcon} 
-                        alt={landingPageData.landingPageStatsIcons.diagnosesIconAlt} 
-                      />
+                    <div className={classes.statsBubbleStudies}>
+                      <div className={classes.statsBubbleStudiesNumber}>
+                        300
+                      </div>
+                      <div className={classes.statsBubbleText}>
+                        Studies
+                      </div>
+                      <div className={classes.statsBubbleStudiesIcon}>
+                        <img
+                          src={landingPageData.landingPageStatsIcons.studiesIcon}
+                          alt={landingPageData.landingPageStatsIcons.studiesIconAlt}
+                        />
+                      </div>
                     </div>
                   </div>
-                  <div className={classes.statsBubbleParticipants}>
-                    <div className={classes.statsBubbleParticipantsNumber}>
-                      200
-                    </div>
-                    <div className={classes.statsBubbleText}>
-                      Participants
-                    </div>
-                    <div className={classes.statsBubbleParticipantsIcon}>
-                      <img
-                        src={landingPageData.landingPageStatsIcons.participantsIcon}
-                        alt={landingPageData.landingPageStatsIcons.participantsIconAlt}
-                      />
-                    </div>
-                  </div>
-                  <div className={classes.statsBubbleStudies}>
-                    <div className={classes.statsBubbleStudiesNumber}>
-                      300
-                    </div>
-                    <div className={classes.statsBubbleText}>
-                      Studies
-                    </div>
-                    <div className={classes.statsBubbleStudiesIcon}>
-                      <img
-                        src={landingPageData.landingPageStatsIcons.studiesIcon}
-                        alt={landingPageData.landingPageStatsIcons.studiesIconAlt}
-                      />
-                    </div>
-                  </div>
+                  {/* <div className={classes.headerButtonSection}>
+                    <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
+                      <Button className={classes.buttonText} bgColor="neonBlue" color="white">
+                        {landingPageData.callToActionButtonText}
+                      </Button>
+                    </Link>
+                  </div> */}
                 </div>
-                {/* <div className={classes.headerButtonSection}>
-                  <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
-                    <Button className={classes.buttonText} bgColor="neonBlue" color="white">
-                      {landingPageData.callToActionButtonText}
-                    </Button>
-                  </Link>
-                </div> */}
               </div>
             </div>
           </div>
@@ -231,10 +233,21 @@ const styles = () => ({
   },
   heroImage: {
     width: '100%',
+    maxWidth: '100%',
     height: '670px',
     backgroundRepeat: 'no-repeat',
-    backgroundSize: '100% 100%',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
     backgroundImage: `url(${landingPageData.landingPageHero.img})`,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  heroFrame: {
+    height: '614px',
+    width: '1440px',
+    border: 'solid 3.25px #f7fbfd',
+    borderRadius: '12px'
   },
   texture: {
     backgroundSize: 'cover',
@@ -630,10 +643,10 @@ const styles = () => ({
     position: 'relative',
     width: '669px',
     margin: 'auto',
-    left: '382px',
+    left: '321px',
   },
   heroTextWrapper: {
-    paddingTop: '91px',
+    paddingTop: '68px',
   },
   buttonText: {
     padding: '12px 30px',
