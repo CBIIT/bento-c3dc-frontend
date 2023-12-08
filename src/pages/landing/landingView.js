@@ -79,6 +79,15 @@ const LandingView = ({ classes }) => (
                 </div>
               </div>
             </div>
+            <div className={classes.heartbeartAnimation}>
+              <div className={classes.heartbeatPulse}>
+                  <img
+                    src={landingPageData.heartbeatAnimation.pulse}
+                    className={classes.heartbeatPulseImage}
+                    alt={landingPageData.heartbeatAnimation.alt}
+                    />
+              </div>
+            </div>
           </div>
         </Grid>
       </div>
@@ -228,6 +237,49 @@ const LandingView = ({ classes }) => (
   </div>
 );
 const styles = () => ({
+  "@keyframes heartbeatPulse": {
+    "0%": {
+      clipPath: "inset(0px 100% 0px 0px)" 
+    },
+    "6.25%": {
+      clipPath: "inset(0px 92% 0px 0px)" 
+    },
+    "18.75%": {
+      clipPath: "inset(0px 88% 0px 0px)" 
+    },
+    "31.25%": {
+      clipPath: "inset(0px 82% 0px 0px)" 
+    },
+    "37.5%": {
+      clipPath: "inset(0px 53% 0px 0px)" 
+    },
+    "50%": {
+      clipPath: "inset(0px 49% 0px 0px)" 
+    },
+    "62.5%": {
+      clipPath: "inset(0px 43% 0px 0px)" 
+    },
+    "68.75%": {
+      clipPath: "inset(0px 15% 0px 0px)" 
+    },
+    "81.25%": {
+      clipPath: "inset(0px 11.5% 0px 0px)" 
+    },
+    "93.75%": {
+      clipPath: "inset(0px 5% 0px 0px)" 
+    },
+    "100%": {
+      clipPath: "inset(0px 0% 0px 0px)" 
+    },
+  },
+  heartbeatPulse:{
+    '--svg-width': '618px',
+    '--svg-height': '67px',
+    position: 'absolute',
+    left: '50.3%',
+    top: '690px',
+    animation: '4s $heartbeatPulse infinite linear',
+  },
   page: {
     marginTop: '0px',
   },
