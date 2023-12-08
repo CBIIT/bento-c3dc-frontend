@@ -4,13 +4,11 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-// import StatsView from './components/statsView';
-import { Button } from '../../components/Wrappers/Wrappers';
 import { landingPageData } from '../../bento/landingPageData';
 import icon from '../../assets/landing/LP_ReadMore.svg';
 import iconAbout from '../../assets/landing/LP_About_Fullarticle.Arrow.svg';
 
-const LandingView = ({ classes }) => (
+const LandingView = ({ classes, statsData }) => (
   <div className={classes.page}>
     <div className={classes.container}>
       <div className={classes.hero}>
@@ -28,7 +26,7 @@ const LandingView = ({ classes }) => (
                   <div className={classes.statsBubbleContainer}>
                     <div className={classes.statsBubbleDiagnoses}>
                       <div className={classes.statsBubbleDiagnosesNumber}>
-                        100
+                        {statsData.numberOfDiagnoses}
                       </div>
                       <div className={classes.statsBubbleText}>
                         Diagnoses
@@ -42,7 +40,7 @@ const LandingView = ({ classes }) => (
                     </div>
                     <div className={classes.statsBubbleParticipants}>
                       <div className={classes.statsBubbleParticipantsNumber}>
-                        200
+                        {statsData.numberOfParticipants}
                       </div>
                       <div className={classes.statsBubbleText}>
                         Participants
@@ -56,7 +54,7 @@ const LandingView = ({ classes }) => (
                     </div>
                     <div className={classes.statsBubbleStudies}>
                       <div className={classes.statsBubbleStudiesNumber}>
-                        300
+                        {statsData.numberOfStudies}
                       </div>
                       <div className={classes.statsBubbleText}>
                         Studies

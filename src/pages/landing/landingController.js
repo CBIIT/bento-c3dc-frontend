@@ -1,7 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { useSelector } from 'react-redux';
 import LandingView from './landingView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import { GET_LANDING_PAGE_DATA_QUERY } from '../../bento/landingPageData';
