@@ -78,17 +78,17 @@ const LandingView = ({ classes, statsData }) => (
               </div>
             </div>
             <div className={classes.heartbeartAnimation}>
-              {/*<div className={classes.heartbeatInitial}>
-                <img
-                    src={landingPageData.heartbeatAnimation.initialHeartline}
-                    className={classes.heartbeatInitialImage}
-                    alt={landingPageData.heartbeatAnimation.alt}
-                    />
-                </div>*/}
               <div className={classes.heartbeatPulse}>
                   <img
                     src={landingPageData.heartbeatAnimation.heartlineFull}
                     className={classes.heartbeatPulseImage}
+                    alt={landingPageData.heartbeatAnimation.alt}
+                    />
+              </div>
+              <div className={classes.heartlineTracker}>
+                  <img
+                    src={landingPageData.heartbeatAnimation.tracker}
+                    className={classes.heartlineTrackerImage}
                     alt={landingPageData.heartbeatAnimation.alt}
                     />
               </div>
@@ -252,38 +252,30 @@ const styles = () => ({
     "39.67%": { //peak
       clipPath: "inset(0px 45% 0px 0px)" 
     },
-    "47%": { //drop
+    "47%": { //drop -3
       clipPath: "inset(0px 42.7% 0px 0px)" 
     },
-    "51.56%": { //left
+    "51.56%": { //left -4
       clipPath: "inset(0px 30.3% 0px 0px)" 
     },
-    "58.89%": { //peak
+    "58.89%": { //peak -5
       clipPath: "inset(0px 28.4% 0px 0px)" 
     },
-    "66.22%": { //drop
+    "66.22%": { //drop -6
       clipPath: "inset(0px 26.1% 0px 0px)" 
     },
-    "70.78%": { //left
+    "70.78%": { //left -7
       clipPath: "inset(0px 14.5% 0px 0px)" 
     },
-    "78.11%": { //peak
+    "78.11%": { //peak -8
       clipPath: "inset(0px 12.6% 0px 0px)" 
     },
-    "95.44%": { //drop
+    "85.44%": { //drop -9 
       clipPath: "inset(0px 10.3% 0px 0px)" 
     },
     "88%": {
       clipPath: "inset(0px 1.7% 0px 0px)",
       opacity: '1'
-    },
-    "94%": {
-      clipPath: "inset(0px 1.7% 0px 0px)",
-      opacity: '.1'
-    },
-    "97%": {
-      clipPath: "inset(0px 1.7% 0px 0px)",
-      opacity: '0'
     },
     "100%": {
       clipPath: "inset(0px 1.7% 0px 0px)",
@@ -299,21 +291,76 @@ const styles = () => ({
     top: '690px',
     animation: '6s $heartbeatPulse infinite linear',
   },
-  "@keyframes heartbeatInitial": {
+  "@keyframes heartlineTracking": {
     "0%": {
-      transform: 'scaleX(0)',
+      top: '745px',
+      left: '50%',
+      marginLeft: "-726px", 
     },
-    "16.67%": {
-      transform: 'scaleX(1)',
+    "32.33%": { //left
+      top: '745px',
+      left: '50%',
+      marginLeft: "48px",  
+    },
+    "39.67%": { //peak
+      top: '685px',
+      left: '50%',
+      marginLeft: "80px", 
+    },
+    "47%": { //drop
+      top: '745px',
+      left: '50%',
+      marginLeft: "110px",  
+    },
+    "51.56%": { //left
+      top: '745px',
+      left: '50%',
+      marginLeft: "292px",
+    },
+    "58.89%": { //peak
+      top: '685px',
+      left: '50%',
+      marginLeft: "322px", 
+    },
+    "66.22%": { //drop
+      top: '745px',
+      left: '50%',
+      marginLeft: "352px", 
+    },
+    "70.78%": { //left
+      top: '745px',
+      left: '50%',
+      marginLeft: "524px", 
+    },
+    "78.11%": { //peak
+      top: '685px',
+      left: '50%',
+      marginLeft: "555px", 
+    },
+    "85.44%": { //drop
+      top: '745px',
+      left: '50%',
+      marginLeft: "586px", 
+    },
+    "88%": {
+      top: '745px',
+      left: '50%',
+      marginLeft: "711px", 
+      opacity: '1'
+    },
+    "100%": {
+      top: '745px',
+      left: '50%',
+      marginLeft: "711px", 
+      opacity: '0'
     },
   },
-  heartbeatInitialImage:{
+  heartlineTracker:{
     position: 'absolute',
+    top: '745px',
     left: '50%',
-    top: '690px',
-    transformOrigin: "0 0",
-    marginLeft: '-720px',
-    animation: '6s $heartbeatInitial infinite linear backwards'
+    marginLeft: "-726px",
+    animation: '6s $heartlineTracking infinite linear'
   },
   page: {
     marginTop: '0px',
