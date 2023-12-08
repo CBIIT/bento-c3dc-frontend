@@ -241,32 +241,38 @@ const styles = () => ({
     "0%": {
       clipPath: "inset(0px 100% 0px 0px)" 
     },
-    "6.25%": {
+    "16.67%": {
+      clipPath: "inset(0px 100% 0px 0px)" 
+    },
+    "20.83%": {
       clipPath: "inset(0px 92% 0px 0px)" 
     },
-    "18.75%": {
+    "29.16%": {
       clipPath: "inset(0px 88% 0px 0px)" 
     },
-    "31.25%": {
+    "37.5%": {
       clipPath: "inset(0px 82% 0px 0px)" 
     },
-    "37.5%": {
+    "41.67%": {
       clipPath: "inset(0px 53% 0px 0px)" 
     },
     "50%": {
       clipPath: "inset(0px 49% 0px 0px)" 
     },
-    "62.5%": {
+    "58.33%": {
       clipPath: "inset(0px 43% 0px 0px)" 
     },
-    "68.75%": {
+    "62.5%": {
       clipPath: "inset(0px 15% 0px 0px)" 
     },
-    "81.25%": {
+    "70.83%": {
       clipPath: "inset(0px 11.5% 0px 0px)" 
     },
-    "93.75%": {
+    "79.17%": {
       clipPath: "inset(0px 5% 0px 0px)" 
+    },
+    "83.33%": {
+      clipPath: "inset(0px 0% 0px 0px)" 
     },
     "100%": {
       clipPath: "inset(0px 0% 0px 0px)" 
@@ -278,7 +284,7 @@ const styles = () => ({
     position: 'absolute',
     left: '50.3%',
     top: '690px',
-    animation: '4s $heartbeatPulse infinite linear',
+    animation: '6s $heartbeatPulse infinite linear backwards',
   },
   page: {
     marginTop: '0px',
@@ -366,6 +372,22 @@ const styles = () => ({
     color: '#004358',
     textTransform: 'uppercase',
   },
+  "@keyframes diagnosesHighlight": {
+    "29.16%": {
+      border: 'solid 3px #8E8E8E',
+    },
+    "37.5%": {
+      border: 'solid 3px #24b0ff',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "49.5%": {
+      border: 'solid 3px #24b0ff',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "50%": {
+      border: 'solid 3px #8E8E8E',
+    },
+  },
   statsBubbleDiagnoses: {
     width: '195px',
     height: '195px',
@@ -384,6 +406,23 @@ const styles = () => ({
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center', 
+    animation: '6s $diagnosesHighlight infinite cubic-bezier(0,1.12,0,.97)',
+  },
+  "@keyframes participantsHighlight": {
+    "50%": {
+      border: 'solid 3px #8E8E8E',
+    },
+    "58.33%": {
+      border: 'solid 3px #21aa79',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "70.34%": {
+      border: 'solid 3px #21aa79',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "70.84%": {
+      border: 'solid 3px #8E8E8E',
+    },
   },
   statsBubbleParticipants: {
     width: '195px',
@@ -402,7 +441,24 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center', 
+    justifyContent: 'center',
+    animation: '6s $participantsHighlight infinite cubic-bezier(0,1.12,0,.97)', 
+  },
+  "@keyframes studiesHighlight": {
+    "70.83%": {
+      border: 'solid 3px #8E8E8E',
+    },
+    "79.17%": {
+      border: 'solid 3px #ffbe18',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "91.17%": {
+      border: 'solid 3px #ffbe18',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "91.67%": {
+      border: 'solid 3px #8E8E8E',
+    },
   },
   statsBubbleStudies: {
     width: '195px',
@@ -420,7 +476,19 @@ const styles = () => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center', 
+    justifyContent: 'center',
+    animation: '6s $studiesHighlight infinite cubic-bezier(0,1.12,0,.97)',  
+  },
+  "@keyframes diagnosesNumberHighlight": {
+    "29.16%": {
+      visibility: 'hidden',
+    },
+    "37.5%": {
+      visibility: 'visible',
+    },
+    "50%": {
+      visibility: 'hidden',
+    },
   },
   statsBubbleDiagnosesNumber: {
     fontFamily: 'Poppins',
@@ -431,6 +499,18 @@ const styles = () => ({
     align: 'center',
     color: '#007dd9',
     visibility: 'hidden',
+    animation: '6s $diagnosesNumberHighlight infinite linear', 
+  },
+  "@keyframes participantsNumberHighlight": {
+    "50%": {
+      visibility: 'hidden',
+    },
+    "58.33%": {
+      visibility: 'visible',
+    },
+    "70.84%": {
+      visibility: 'hidden',
+    },
   },
   statsBubbleParticipantsNumber: {
     fontFamily: 'Poppins',
@@ -441,6 +521,18 @@ const styles = () => ({
     align: 'center',
     color: '#21aa79',
     visibility: 'hidden',
+    animation: '6s $participantsNumberHighlight infinite linear', 
+  },
+  "@keyframes studiesNumberHighlight": {
+    "70.83%": {
+      visibility: 'hidden',
+    },
+    "79.17%": {
+      visibility: 'visible',
+    },
+    "91.67%": {
+      visibility: 'hidden',
+    },
   },
   statsBubbleStudiesNumber: {
     fontFamily: 'Poppins',
@@ -451,6 +543,7 @@ const styles = () => ({
     align: 'center',
     color: '#ffbe18',
     visibility: 'hidden',
+    animation: '6s $studiesNumberHighlight infinite linear', 
   },
   statsBubbleDiagnosesIcon: {
     width: '41px',
