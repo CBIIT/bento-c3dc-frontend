@@ -15,6 +15,7 @@ import landingTileBackground from '../assets/landing/LandingTileBackground.png'
 import heartline from '../assets/landing/animation/heartline.svg'
 import heartlineTracker from '../assets/landing/animation/heartlineTracker.svg'
 import pulse from '../assets/landing/animation/pulse.svg'
+import heartlineFull from '../assets/landing/animation/heartline_full.svg'
 
 import diagnosesIcon from '../assets/landing/DiagnosesIcon.svg'
 import participantsIcon from '../assets/landing/ParticipantsIcon.svg'
@@ -38,6 +39,7 @@ export const landingPageData = {
     tracker: heartlineTracker,
     pulse: pulse,
     alt: 'Heartbeat Animation',
+    heartlineFull: heartlineFull,
   },
   landingPageStatsIcons: {
     diagnosesIcon: diagnosesIcon,

@@ -80,9 +80,16 @@ const LandingView = ({ classes }) => (
               </div>
             </div>
             <div className={classes.heartbeartAnimation}>
+              {/*<div className={classes.heartbeatInitial}>
+                <img
+                    src={landingPageData.heartbeatAnimation.initialHeartline}
+                    className={classes.heartbeatInitialImage}
+                    alt={landingPageData.heartbeatAnimation.alt}
+                    />
+                </div>*/}
               <div className={classes.heartbeatPulse}>
                   <img
-                    src={landingPageData.heartbeatAnimation.pulse}
+                    src={landingPageData.heartbeatAnimation.heartlineFull}
                     className={classes.heartbeatPulseImage}
                     alt={landingPageData.heartbeatAnimation.alt}
                     />
@@ -241,50 +248,74 @@ const styles = () => ({
     "0%": {
       clipPath: "inset(0px 100% 0px 0px)" 
     },
-    "16.67%": {
-      clipPath: "inset(0px 100% 0px 0px)" 
+    "32.33%": { //left
+      clipPath: "inset(0px 46.9% 0px 0px)" 
     },
-    "20.83%": {
-      clipPath: "inset(0px 92% 0px 0px)" 
+    "39.67%": { //peak
+      clipPath: "inset(0px 45% 0px 0px)" 
     },
-    "29.16%": {
-      clipPath: "inset(0px 88% 0px 0px)" 
+    "47%": { //drop
+      clipPath: "inset(0px 42.7% 0px 0px)" 
     },
-    "37.5%": {
-      clipPath: "inset(0px 82% 0px 0px)" 
+    "51.56%": { //left
+      clipPath: "inset(0px 30.3% 0px 0px)" 
     },
-    "41.67%": {
-      clipPath: "inset(0px 53% 0px 0px)" 
+    "58.89%": { //peak
+      clipPath: "inset(0px 28.4% 0px 0px)" 
     },
-    "50%": {
-      clipPath: "inset(0px 49% 0px 0px)" 
+    "66.22%": { //drop
+      clipPath: "inset(0px 26.1% 0px 0px)" 
     },
-    "58.33%": {
-      clipPath: "inset(0px 43% 0px 0px)" 
+    "70.78%": { //left
+      clipPath: "inset(0px 14.5% 0px 0px)" 
     },
-    "62.5%": {
-      clipPath: "inset(0px 15% 0px 0px)" 
+    "78.11%": { //peak
+      clipPath: "inset(0px 12.6% 0px 0px)" 
     },
-    "70.83%": {
-      clipPath: "inset(0px 11.5% 0px 0px)" 
+    "95.44%": { //drop
+      clipPath: "inset(0px 10.3% 0px 0px)" 
     },
-    "79.17%": {
-      clipPath: "inset(0px 5% 0px 0px)" 
+    "88%": {
+      clipPath: "inset(0px 1.7% 0px 0px)",
+      opacity: '1'
     },
-    "83.33%": {
-      clipPath: "inset(0px 0% 0px 0px)" 
+    "94%": {
+      clipPath: "inset(0px 1.7% 0px 0px)",
+      opacity: '.1'
+    },
+    "97%": {
+      clipPath: "inset(0px 1.7% 0px 0px)",
+      opacity: '0'
     },
     "100%": {
-      clipPath: "inset(0px 0% 0px 0px)" 
+      clipPath: "inset(0px 1.7% 0px 0px)",
+      opacity: '0'
     },
   },
   heartbeatPulse:{
     '--svg-width': '618px',
     '--svg-height': '67px',
     position: 'absolute',
-    left: '50.3%',
+    left: '50%',
+    marginLeft: '-720px',
     top: '690px',
-    animation: '6s $heartbeatPulse infinite linear backwards',
+    animation: '6s $heartbeatPulse infinite linear',
+  },
+  "@keyframes heartbeatInitial": {
+    "0%": {
+      transform: 'scaleX(0)',
+    },
+    "16.67%": {
+      transform: 'scaleX(1)',
+    },
+  },
+  heartbeatInitialImage:{
+    position: 'absolute',
+    left: '50%',
+    top: '690px',
+    transformOrigin: "0 0",
+    marginLeft: '-720px',
+    animation: '6s $heartbeatInitial infinite linear backwards'
   },
   page: {
     marginTop: '0px',
@@ -373,19 +404,21 @@ const styles = () => ({
     textTransform: 'uppercase',
   },
   "@keyframes diagnosesHighlight": {
-    "29.16%": {
+    "39.67%": {
       border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
     },
-    "37.5%": {
+    "47%": {
       border: 'solid 3px #24b0ff',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    "49.5%": {
+    "58.39%%": {
       border: 'solid 3px #24b0ff',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    "50%": {
+    "58.89%": {
       border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
     },
   },
   statsBubbleDiagnoses: {
@@ -409,19 +442,21 @@ const styles = () => ({
     animation: '6s $diagnosesHighlight infinite cubic-bezier(0,1.12,0,.97)',
   },
   "@keyframes participantsHighlight": {
-    "50%": {
+    "58.89%": {
       border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
     },
-    "58.33%": {
+    "66.22%": {
       border: 'solid 3px #21aa79',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    "70.34%": {
+    "77.61%": {
       border: 'solid 3px #21aa79',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    "70.84%": {
+    "78.11%": {
       border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
     },
   },
   statsBubbleParticipants: {
@@ -445,19 +480,21 @@ const styles = () => ({
     animation: '6s $participantsHighlight infinite cubic-bezier(0,1.12,0,.97)', 
   },
   "@keyframes studiesHighlight": {
-    "70.83%": {
+    "78.11%": {
       border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
     },
-    "79.17%": {
+    "95.44%": {
       border: 'solid 3px #ffbe18',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    "91.17%": {
+    "96.83%": {
       border: 'solid 3px #ffbe18',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    "91.67%": {
+    "97.33%": {
       border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
     },
   },
   statsBubbleStudies: {
@@ -480,13 +517,13 @@ const styles = () => ({
     animation: '6s $studiesHighlight infinite cubic-bezier(0,1.12,0,.97)',  
   },
   "@keyframes diagnosesNumberHighlight": {
-    "29.16%": {
+    "39.67%": {
       visibility: 'hidden',
     },
-    "37.5%": {
+    "47%": {
       visibility: 'visible',
     },
-    "50%": {
+    "58.89%": {
       visibility: 'hidden',
     },
   },
@@ -502,13 +539,13 @@ const styles = () => ({
     animation: '6s $diagnosesNumberHighlight infinite linear', 
   },
   "@keyframes participantsNumberHighlight": {
-    "50%": {
+    "58.89%": {
       visibility: 'hidden',
     },
-    "58.33%": {
+    "66.22%": {
       visibility: 'visible',
     },
-    "70.84%": {
+    "78.11%": {
       visibility: 'hidden',
     },
   },
@@ -524,13 +561,13 @@ const styles = () => ({
     animation: '6s $participantsNumberHighlight infinite linear', 
   },
   "@keyframes studiesNumberHighlight": {
-    "70.83%": {
+    "78.11%": {
       visibility: 'hidden',
     },
-    "79.17%": {
+    "95.44%": {
       visibility: 'visible',
     },
-    "91.67%": {
+    "97.33%": {
       visibility: 'hidden',
     },
   },
