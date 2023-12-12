@@ -101,7 +101,9 @@ const Header = () => {
           </div>
 
           <div className='bannerRight'>
+            {/*
             <span className='bannerButton'>Español</span>
+            */}
           </div>
         </div>
       </USGovBanner>
