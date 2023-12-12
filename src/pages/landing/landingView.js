@@ -452,7 +452,7 @@ const styles = () => ({
     display: 'flex',
     justifyContent: 'center',
     width: '669px',
-    paddingTop: '40px',
+    paddingTop: '33px',
   },
   statsBubbleText: {
     fontFamily: 'Poppins',
