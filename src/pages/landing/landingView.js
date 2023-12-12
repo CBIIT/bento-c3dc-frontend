@@ -791,7 +791,7 @@ const styles = () => ({
     fontSize: '28px',
     fontWeight: '500',
     lineHeight: '32px',
-    padding: '18px 0 10px 0',
+    padding: '14px 0 6px 0',
   },
   contentContainer: {
     width: '245px',

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
-  Tooltip,
+  //Tooltip,
   Box,
 } from '@material-ui/core';
 import styled from 'styled-components';
@@ -98,7 +98,7 @@ const CartContainer = styled.div`
 `;
 
 const Cart = (props) => {
-  const { length: numberOfCases } = props.filesId;
+  //const { length: numberOfCases } = props.filesId;
   
   useEffect(() => {
   }, []);

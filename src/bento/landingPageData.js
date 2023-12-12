@@ -73,7 +73,7 @@ export const landingPageData = {
     alt: '',
     img: landingTile1,
     titleText: 'About the Childhood Cancer Clinical Data Commons',
-    descriptionText: 'C3DC is a database that houses childhood cancer demographics and phenotypic clinical data. These data have been harmonized to a standard set of common data elements (CDEs). C3DC empowers researchers to search for participant-level data to create synthetic cohorts and export data for analysis.',
+    descriptionText: 'The Childhood Cancer Clinical Data Commons (C3DC) is a database that houses childhood cancer demographics and phenotypic clinical data. These data have been harmonized to a standard set of common data elements (CDEs). C3DC empowers researchers to search for participant-level data to create synthetic cohorts and export data for analysis.',
     callToActionText: 'READ MORE',
     callToActionLink: '/explore', // This links to the "About" static page.
   },
@@ -81,7 +81,7 @@ export const landingPageData = {
     alt: '',
     img: landingTile2,
     titleText: 'Data Model',
-    descriptionText: 'Navigate the C3DC model to gain understanding and access specific information.',
+    descriptionText: 'Review components, gain a deeper understanding, or specifics of harmonization.',
     callToActionText: 'Explore Data Model',
     callToActionLink: '/programs', // This links to the Programs Listing Page.
   },
@@ -89,7 +89,7 @@ export const landingPageData = {
     alt: '',
     img: landingTile3,
     titleText: 'Announcements',
-    descriptionText: 'Available: Data from TARGET Neuroblastoma study and MCI',
+    descriptionText: 'Harmonized demographic and phenotypic data from the TARGET Neuroblastoma study and MCI.',
     callToActionText: 'Learn More',
     callToActionLink: '/resources', // Link to the "Resources" Static Page
   },
