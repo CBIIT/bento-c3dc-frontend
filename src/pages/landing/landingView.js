@@ -25,8 +25,13 @@ const LandingView = ({ classes, statsData }) => (
                   </div>
                   <div className={classes.statsBubbleContainer}>
                     <div className={classes.statsBubbleDiagnoses}>
-                      <div className={classes.statsBubbleDiagnosesNumber}>
-                        {statsData.numberOfDiagnoses}
+                      <div className={classes.statsBubbleDiagnosesCount}>
+                        <div className={classes.statsBubbleDiagnosesNumber}>
+                          {statsData.numberOfDiagnoses.num}
+                        </div>
+                        <div className={classes.statsBubbleDiagnosesMagnitude}>
+                          {statsData.numberOfDiagnoses.char}
+                        </div>
                       </div>
                       <div className={classes.statsBubbleText}>
                         Diagnoses
@@ -39,8 +44,13 @@ const LandingView = ({ classes, statsData }) => (
                       </div>
                     </div>
                     <div className={classes.statsBubbleParticipants}>
-                      <div className={classes.statsBubbleParticipantsNumber}>
-                        {statsData.numberOfParticipants}
+                      <div className={classes.statsBubbleParticipantsCount}> 
+                        <div className={classes.statsBubbleParticipantsNumber}>
+                          {statsData.numberOfParticipants.num}
+                        </div>
+                        <div className={classes.statsBubbleParticipantsMagnitude}>
+                          {statsData.numberOfParticipants.char}
+                        </div>
                       </div>
                       <div className={classes.statsBubbleText}>
                         Participants
@@ -53,8 +63,13 @@ const LandingView = ({ classes, statsData }) => (
                       </div>
                     </div>
                     <div className={classes.statsBubbleStudies}>
-                      <div className={classes.statsBubbleStudiesNumber}>
-                        {statsData.numberOfStudies}
+                      <div className={classes.statsBubbleStudiesCount}>
+                        <div className={classes.statsBubbleStudiesNumber}>
+                          {statsData.numberOfStudies.num}
+                        </div>
+                        <div className={classes.statsBubbleStudiesMagnitude}>
+                          {statsData.numberOfStudies.char}
+                        </div>
                       </div>
                       <div className={classes.statsBubbleText}>
                         Studies
@@ -437,7 +452,7 @@ const styles = () => ({
     display: 'flex',
     justifyContent: 'center',
     width: '669px',
-    paddingTop: '33px',
+    paddingTop: '40px',
   },
   statsBubbleText: {
     fontFamily: 'Poppins',
@@ -477,7 +492,7 @@ const styles = () => ({
       border: 'solid 3px #24b0ff',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    '&:hover $statsBubbleDiagnosesNumber': {
+    '&:hover $statsBubbleDiagnosesCount': {
       visibility: 'visible',
     },
     display: 'flex',
@@ -515,7 +530,7 @@ const styles = () => ({
       border: 'solid 3px #21aa79',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    '&:hover $statsBubbleParticipantsNumber': {
+    '&:hover $statsBubbleParticipantsCount': {
       visibility: 'visible',
     },
     display: 'flex',
@@ -552,7 +567,7 @@ const styles = () => ({
       border: 'solid 3px #ffbe18',
       backgroundColor: 'rgba(255, 255, 255, 0.4)',
     },
-    '&:hover $statsBubbleStudiesNumber': {
+    '&:hover $statsBubbleStudiesCount': {
       visibility: 'visible',
     },
     display: 'flex',
@@ -572,16 +587,25 @@ const styles = () => ({
       visibility: 'hidden',
     },
   },
-  statsBubbleDiagnosesNumber: {
+  statsBubbleDiagnosesCount: {
     fontFamily: 'Poppins',
     fontWeight: '700',
-    fontSize: '28px',
     lineHeight: '40px',
     letterSpacing: '2%',
     align: 'center',
     color: '#007dd9',
     visibility: 'hidden',
     animation: '6s $diagnosesNumberHighlight infinite linear', 
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  statsBubbleDiagnosesNumber: {
+    fontSize: '42px',
+  },
+  statsBubbleDiagnosesMagnitude: {
+    fontSize: '28px',
+    marginLeft: '5px',
+    marginBottom:'-5px',
   },
   "@keyframes participantsNumberHighlight": {
     "58.89%": {
@@ -594,7 +618,7 @@ const styles = () => ({
       visibility: 'hidden',
     },
   },
-  statsBubbleParticipantsNumber: {
+  statsBubbleParticipantsCount: {
     fontFamily: 'Poppins',
     fontWeight: '700',
     fontSize: '28px',
@@ -604,6 +628,17 @@ const styles = () => ({
     color: '#21aa79',
     visibility: 'hidden',
     animation: '6s $participantsNumberHighlight infinite linear', 
+    display: 'flex',
+    alignItems: 'flex-end',
+
+  },
+  statsBubbleParticipantsNumber: {
+    fontSize: '42px',
+  },
+  statsBubbleParticipantsMagnitude: {
+    fontSize: '28px',
+    marginLeft: '5px',
+    marginBottom:'-5px',
   },
   "@keyframes studiesNumberHighlight": {
     "78.11%": {
@@ -616,7 +651,7 @@ const styles = () => ({
       visibility: 'hidden',
     },
   },
-  statsBubbleStudiesNumber: {
+  statsBubbleStudiesCount: {
     fontFamily: 'Poppins',
     fontWeight: '700',
     fontSize: '28px',
@@ -626,6 +661,16 @@ const styles = () => ({
     color: '#ffbe18',
     visibility: 'hidden',
     animation: '6s $studiesNumberHighlight infinite linear', 
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  statsBubbleStudiesNumber: {
+    fontSize: '42px',
+  },
+  statsBubbleStudiesMagnitude: {
+    fontSize: '28px',
+    marginLeft: '5px',
+    marginBottom:'-5px',
   },
   statsBubbleDiagnosesIcon: {
     width: '41px',
