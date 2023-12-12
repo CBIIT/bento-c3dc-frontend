@@ -45,16 +45,16 @@ export const navMobileList = [
   //     link: '/news',
   //     className: 'navMobileItem',
   // },
-  // {
-  //     name: 'About',
-  //     link: '/about',
-  //     className: 'navMobileItem',
-  // },
+  {
+       name: 'About',
+       link: '/about',
+       className: 'navMobileItem',
+  },/*
   {
     name: 'My File',
     link: '/fileCentricCart',
     className: 'cart',
-},
+  },*/
 ];
 
 export const navbarSublists = {

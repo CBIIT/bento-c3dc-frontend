@@ -113,6 +113,7 @@ const Cart = (props) => {
                 to={navBarCartData.cartLink}
               >
                 {navBarCartData.cartLabel}
+                {/*
                 <Tooltip title="Files" placement="bottom-end">
                   <span className="badge">
                   <div className='myFilesText'>MY FILES</div>
@@ -139,6 +140,7 @@ const Cart = (props) => {
                     )}
                   </span>
                 </Tooltip>
+                    */}
               </NavLink>
           </Box>
         )

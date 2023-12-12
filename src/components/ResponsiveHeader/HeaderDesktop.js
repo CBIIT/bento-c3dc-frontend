@@ -49,8 +49,8 @@ const USGovBanner = styled.div`
     }
 
     img {
-      height: 15px;
-      width: 23px;
+      height: 11px;
+      width: 16px;
     }
 
     .bannerLeft {
