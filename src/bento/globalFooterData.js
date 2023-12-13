@@ -22,7 +22,7 @@ export default {
       title: 'About',
       items: [
         {
-          text: 'About CCDI Hub',
+          text: 'About C3DC Hub',
           link: '/about',
         },
         {
@@ -30,8 +30,25 @@ export default {
           link: 'https://www.cancer.gov/research/areas/childhood/childhood-cancer-data-initiative',
         },
         {
-          text: 'Contact CCDI Hub',
-          link: 'mailto:NCIChildhoodCancerDataInitiative@mail.nih.gov',
+          text: 'Contact C3DC',
+          link: '',//'mailto:NCIChildhoodCancerDataInitiative@mail.nih.gov',
+        },
+      ],
+    },
+    {
+      title: 'Resources',
+      items: [
+        {
+          text: 'C3DC Data Model',
+          link: 'https://github.com/CBIIT/c3dc-model',
+        },
+        {
+          text: 'GraphQL',
+          link: '/',
+        },
+        {
+          text: 'Bento',
+          link: '/',
         },
       ],
     },

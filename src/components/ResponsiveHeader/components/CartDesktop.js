@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
-  Tooltip,
+  //Tooltip,
   Box,
 } from '@material-ui/core';
 import styled from 'styled-components';
@@ -98,7 +98,7 @@ const CartContainer = styled.div`
 `;
 
 const Cart = (props) => {
-  const { length: numberOfCases } = props.filesId;
+  //const { length: numberOfCases } = props.filesId;
   
   useEffect(() => {
   }, []);
@@ -113,9 +113,10 @@ const Cart = (props) => {
                 to={navBarCartData.cartLink}
               >
                 {navBarCartData.cartLabel}
+                {/*
                 <Tooltip title="Files" placement="bottom-end">
                   <span className="badge">
-                    <div className='myFilesText'>MY FILES</div>
+                  <div className='myFilesText'>MY FILES</div>
                     <img
                       className="cartIcon"
                       src={navBarCartData.cartIcon}
@@ -139,6 +140,7 @@ const Cart = (props) => {
                     )}
                   </span>
                 </Tooltip>
+                    */}
               </NavLink>
           </Box>
         )

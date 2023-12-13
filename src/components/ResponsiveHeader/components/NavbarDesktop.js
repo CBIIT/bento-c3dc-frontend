@@ -53,8 +53,8 @@ const LiSection = styled.li`
     display: block;
     color: #585C65;
     font-family: poppins;
-    font-size: 17px;
-    font-weight: 700;
+    font-size: 16.64px;
+    font-weight: 600;
     line-height: 40px;
     letter-spacing: normal;
     text-decoration: none;
