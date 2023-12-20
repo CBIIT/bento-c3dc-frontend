@@ -75,7 +75,7 @@ export const landingPageData = {
     titleText: 'About the Childhood Cancer Clinical Data Commons',
     descriptionText: 'The Childhood Cancer Clinical Data Commons (C3DC) is a database that houses childhood cancer demographics and phenotypic clinical data. These data have been harmonized to a standard set of common data elements (CDEs). C3DC empowers researchers to search for participant-level data to create synthetic cohorts and export data for analysis.',
     callToActionText: 'READ MORE',
-    callToActionLink: '/explore', // This links to the "About" static page.
+    callToActionLink: '/about', // This links to the "About" static page.
   },
   tile2: {
     alt: '',
@@ -83,15 +83,15 @@ export const landingPageData = {
     titleText: 'Data Model',
     descriptionText: 'Review components, gain a deeper understanding, or specifics of harmonization.',
     callToActionText: 'Explore Data Model',
-    callToActionLink: '/programs', // This links to the Programs Listing Page.
+    callToActionLink: 'https://github.com/CBIIT/c3dc-model', // This links to the Data Model GitHub Page.
   },
   tile3: {
     alt: '',
     img: landingTile3,
     titleText: 'Announcements',
-    descriptionText: 'Harmonized demographic and phenotypic data from the TARGET Neuroblastoma study and MCI.',
+    descriptionText: 'Harmonized demographic and phenotypic data from the TARGET Neuroblastoma study and Molecular Characterization Initiative.',
     callToActionText: 'Learn More',
-    callToActionLink: '/resources', // Link to the "Resources" Static Page
+    callToActionLink: '', // Link to the "Resources" Static Page
   },
   tile4: {
     alt: '',
@@ -99,7 +99,7 @@ export const landingPageData = {
     titleText: 'C3DC Data',
     descriptionText: 'Explore C3DC data, construct your cohort, and export it for analysis alongside other data types.',
     callToActionText: 'Explore Data',
-    callToActionLink: '/explore', // This links to the cases dashboard.
+    callToActionLink: '/explore', // This links to the explore dashboard.
   },
 };
 

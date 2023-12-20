@@ -22,7 +22,7 @@ export default {
       title: 'About',
       items: [
         {
-          text: 'About C3DC Hub',
+          text: 'About',
           link: '/about',
         },
         {
@@ -31,7 +31,7 @@ export default {
         },
         {
           text: 'Contact C3DC',
-          link: '',//'mailto:NCIChildhoodCancerDataInitiative@mail.nih.gov',
+          link: 'mailto:NCIChildhoodCancerDataInitiative@mail.nih.gov',
         },
       ],
     },
@@ -41,14 +41,14 @@ export default {
         {
           text: 'C3DC Data Model',
           link: 'https://github.com/CBIIT/c3dc-model',
-        },
+        },/*
         {
           text: 'GraphQL',
           link: '/',
-        },
+        },*/
         {
           text: 'Bento',
-          link: '/',
+          link: 'https://cbiit.github.io/bento-docs/master/index.html',
         },
       ],
     },

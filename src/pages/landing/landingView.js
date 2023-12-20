@@ -198,7 +198,7 @@ const LandingView = ({ classes, statsData }) => (
                       id="tile3_image"
                     />
                   </div>
-                  <div className={classes.content}>
+                  <div className={classes.tile3Content}>
                     <div className={classes.contentHeader} id="tile3_title">
                       {landingPageData.tile3.titleText}
                     </div>
@@ -206,7 +206,7 @@ const LandingView = ({ classes, statsData }) => (
                       {landingPageData.tile3.descriptionText}
                     </div>
 
-                  </div>
+                  </div>{/*
                   <div className={classes.blueButton}>
                     <div className={classes.blueButtonLeft}>
                       <img className={classes.icon} src={icon} alt="CTDC about " />
@@ -220,7 +220,7 @@ const LandingView = ({ classes, statsData }) => (
                         {landingPageData.tile3.callToActionText}
                       </Link>
                     </div>
-                  </div>
+                  </div>*/}
                 </div>
 
               </div>
@@ -779,6 +779,15 @@ const styles = () => ({
   content: {
     width: '100%',
     height: '155px',
+    overflowY: 'auto',
+    background: '#fff',
+    paddingLeft: '30px',
+    paddingTop: '5px',
+    minHeight: '138px',
+  },
+  tile3Content: {
+    width: '100%',
+    height: '200px',
     overflowY: 'auto',
     background: '#fff',
     paddingLeft: '30px',
