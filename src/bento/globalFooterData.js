@@ -22,7 +22,7 @@ export default {
       title: 'About',
       items: [
         {
-          text: 'About',
+          text: 'About C3DC',
           link: '/about',
         },
         {
@@ -30,7 +30,7 @@ export default {
           link: 'https://www.cancer.gov/research/areas/childhood/childhood-cancer-data-initiative',
         },
         {
-          text: 'Contact C3DC',
+          text: 'Contact CCDI',
           link: 'mailto:NCIChildhoodCancerDataInitiative@mail.nih.gov',
         },
       ],
