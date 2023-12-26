@@ -27,9 +27,11 @@ const Inventory = ({
         <div className={classes.rightContent}>
           <div className={classes.widgetsContainer}>
             <QueryBarView data={dashData} />
+            {/*
             <WidgetView
               data={dashData}
             />
+            */}
             <TabsView
               dashboardStats={dashData}
               activeFilters={activeFilters}
