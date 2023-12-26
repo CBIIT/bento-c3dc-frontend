@@ -35,8 +35,8 @@ const getDashData = (states) => {
   useEffect(() => {
     const controller = new AbortController();
     getData(activeFilters).then((result) => {
-      if (result.searchParticipants) {
-        setDashData(result.searchParticipants);
+      if (result.getParticipants) {
+        setDashData(result.getParticipants);
       }
     });
     return () => controller.abort();

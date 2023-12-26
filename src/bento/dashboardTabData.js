@@ -109,183 +109,185 @@ export const tabIndex = [
     selectedColor: '#C92EC7',
   },
 ];
-
+//NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
-query search (          
-    $participant_ids: [String],
-    $gender: [String] ,
-    $race: [String] ,
-    $ethnicity: [String] ,
-    $age_at_diagnosis: [Int] ,
-    $diagnosis_anatomic_site: [String] ,
-    $disease_phase: [String] ,
-    $diagnosis_icd_o: [String] ,
-    $vital_status: [String] ,
-    $sample_anatomic_site: [String] ,
-    $participant_age_at_collection: [Int] ,
-    $sample_tumor_status: [String] ,
-    $tumor_classification: [String] ,
-    $assay_method: [String],
-    $file_type: [String],
-    $phs_accession: [String],
-    $grant_id: [String],
-    $institution: [String],
-    $study_acronym: [String],
-    $study_short_title: [String],
-    $library_selection: [String],
-    $library_source: [String],
-    $library_strategy: [String],
-){
-    searchParticipants (          
-        participant_ids: $participant_ids,
-        gender: $gender,
-        race: $race,
-        ethnicity: $ethnicity,
-        age_at_diagnosis: $age_at_diagnosis,
-        diagnosis_anatomic_site: $diagnosis_anatomic_site,
-        disease_phase: $disease_phase,
-        diagnosis_icd_o: $diagnosis_icd_o,
-        vital_status: $vital_status,
-        sample_anatomic_site: $sample_anatomic_site,
-        participant_age_at_collection: $participant_age_at_collection,
-        sample_tumor_status: $sample_tumor_status,
-        tumor_classification: $tumor_classification,
-        assay_method: $assay_method,
-        file_type: $file_type,
-        phs_accession: $phs_accession,       
-        grant_id: $grant_id,
-        institution: $institution,
-        study_acronym: $study_acronym,
-        study_short_title: $study_short_title,
-        library_selection: $library_selection,
-        library_source: $library_source,
-        library_strategy: $library_strategy,
-    ) {
-        numberOfDiagnosis
-        numberOfFiles
-        numberOfParticipants
-        numberOfSamples
-        numberOfStudies
-        participantsFileCount
-        diagnosisFileCount
-        samplesFileCount
-        studiesFileCount
-        filesFileCount
-        participantCountByDiagnosis {
-            group
-            subjects
-        }
-        participantCountByDiagnosisAge {
-            group
-            subjects
-        }
-        participantCountByEthnicity {
-            group
-            subjects
-        }
-        participantCountByGender {
-            group
-            subjects
-        }
-        participantCountByRace {
-            group
-            subjects
-        }
-        participantCountByStudy {
-            group
-            subjects
-        }
-        filterParticipantCountByAcronym {
-            group
-            subjects
-        }
-        filterParticipantCountByAssayMethod{
-            group
-            subjects
-        }
-        filterParticipantCountByDiagnosisAnatomicSite{
-            group
-            subjects
-        }
-        filterParticipantCountByDiseasePhase{
-            group
-            subjects
-        }
-        filterParticipantCountByEthnicity{
-            group
-            subjects
-        }
-        filterParticipantCountByFileType{
-            group
-            subjects
-        }
-        filterParticipantCountByGender{
-            group
-            subjects
-        }
-        filterParticipantCountByGrantID{
-            group
-            subjects
-        }
-        filterParticipantCountByICDO{
-            group
-            subjects
-        }
-        filterParticipantCountByInstitution{
-            group
-            subjects
-        }
-        filterParticipantCountByLibrarySelection{
-            group
-            subjects
-        }
-        filterParticipantCountByLibrarySource{
-            group
-            subjects
-        }
-        filterParticipantCountByLibraryStrategy{
-            group
-            subjects
-        }
-        filterParticipantCountByPHSAccession{
-            group
-            subjects
-        }
-        filterParticipantCountByRace{
-          group
-          subjects
-        }
-        filterParticipantCountBySampleAnatomicSite{
-          group
-          subjects
-        }
-        filterParticipantCountByStudyTitle{
-          group
-          subjects
-        }
-        filterParticipantCountByTumorClassification{
-          group
-          subjects
-        }
-        filterParticipantCountByTumorStatus{
-          group
-          subjects
-        }
-        filterParticipantCountByVitalStatus{
-          group
-          subjects
-        }
-        filterParticipantCountByDiagnosisAge{
-            lowerBound
-            upperBound
-            subjects
-        }
-        filterParticipantCountBySampleAge{
-          lowerBound
-          upperBound
-          subjects
-      }
-    }
+query search(
+  # Demographics
+  $participant_ids: [String],
+  $ethnicity: [String],
+  $race: [String],
+  $sex_at_birth: [String],
+
+  # Diagnoses
+  $age_at_diagnosis: [Int],
+  $anatomic_site: [String],
+  $diagnosis_classification: [String],
+  $diagnosis_classification_system: [String],
+  $diagnosis_verification_status: [String],
+  $diagnosis_basis: [String],
+  $disease_phase: [String],
+
+  # Studies
+  $phs_accession: [String],
+  $study_acronym: [String],
+  $study_short_title: [String],
+
+  # Survivals
+  $age_at_last_known_survival_status: [Int],
+  $first_event: [String],
+  $last_known_survival_status: [String]
+) {
+getParticipants(
+  # Demographics
+  participant_ids: $participant_ids,
+  ethnicity: $ethnicity,
+  race: $race,
+  sex_at_birth: $sex_at_birth,
+
+  # Diagnoses
+  age_at_diagnosis: $age_at_diagnosis,
+  anatomic_site: $anatomic_site,
+  diagnosis_classification: $diagnosis_classification,
+  diagnosis_classification_system: $diagnosis_classification_system,
+  diagnosis_verification_status: $diagnosis_verification_status,
+  diagnosis_basis: $diagnosis_basis,
+  disease_phase: $disease_phase,
+  
+  # Studies
+  phs_accession: $phs_accession,
+  study_acronym: $study_acronym,
+  study_short_title: $study_short_title,
+
+  # Survivals
+  age_at_last_known_survival_status: $age_at_last_known_survival_status,
+  first_event: $first_event,
+  last_known_survival_status: $last_known_survival_status
+) {
+  numberOfParticipants
+
+  # Widget counts
+  participantCountByEthnicity {
+    group
+    subjects
+    __typename
+  }
+  participantCountByRace {
+    group
+    subjects
+    __typename
+  }
+  participantCountBySexAtBirth {
+    group
+    subjects
+    __typename
+  }
+  participantCountByAgeAtLastKnownSurvivalStatus {
+    group
+    subjects
+    __typename
+  }
+  participantCountByFirstEvent {
+    group
+    subjects
+    __typename
+  }
+  participantCountByLastKnownSurvivalStatus {
+    group
+    subjects
+    __typename
+  }
+
+  # Demographic filter counts
+  filterParticipantCountByEthnicity {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByRace {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountBySexAtBirth {
+    group
+    subjects
+    __typename
+  }
+
+  # Diagnosis filter counts
+  filterParticipantCountByAgeAtDiagnosis {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByAnatomicSite {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosisClassification {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosisClassificationSystem {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosisVerificationStatus {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosisBasis {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiseasePhase {
+    group
+    subjects
+    __typename
+  }
+
+  # Study filter counts
+  filterParticipantCountByPhsAccession {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByStudyAcronym {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByStudyShortTitle {
+    group
+    subjects
+    __typename
+  }
+
+  # Survival filter counts
+  filterParticipantCountByAgeAtLastKnownSurvivalStatus {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByFirstEvent {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByLastKnownSurvivalStatus {
+    group
+    subjects
+    __typename
+  }
+  __typename
+}
 }
 `;
 
