@@ -164,6 +164,8 @@ getParticipants(
   last_known_survival_status: $last_known_survival_status
 ) {
   numberOfParticipants
+  numberOfDiagnoses
+  numberOfStudies
 
   # Widget counts
   participantCountByEthnicity {
