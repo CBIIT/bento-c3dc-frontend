@@ -68,10 +68,10 @@ export default () => ({
     flexShrink: '0',
     fontFamily: 'Poppins',
     fontWeight: 400,
-    lineHeight: '18px',
+    lineHeight: '24px',
     marginLeft: '5px',
-    textTransform: 'uppercase',
     letterSpacing: '-0.02em',
+    textTransform: 'none',
   },
   dropDownIconSubSection: {
     marginLeft: '0px',

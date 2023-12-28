@@ -155,22 +155,16 @@ const theme = {
       root: {
         height: '8px',
         '&.divider0': {
-          backgroundColor: '#4D889E',
+          backgroundColor: '#006A8F',
         },
         '&.divider1': {
-          backgroundColor: '#974599',
+          backgroundColor: '#E39520',
         },
         '&.divider2': {
-          backgroundColor: '#E9B34A',
+          backgroundColor: '#35B899',
         },
         '&.divider3': {
-          backgroundColor: '#CD5C4E',
-        },
-        '&.divider4': {
-          backgroundColor: '#1F6BBF',
-        },
-        '&.divider5': {
-          backgroundColor: '#60C4A1',
+          backgroundColor: '#9664C7',
         },
       },
     },
