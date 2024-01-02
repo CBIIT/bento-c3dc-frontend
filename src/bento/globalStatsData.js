@@ -57,7 +57,7 @@ export const globalStatsData = [
   {
     statTitle: 'Diagnoses',
     type: 'field',
-    statAPI: 'numberOfParticipants',
+    statAPI: 'numberOfDiagnoses',
     statIconSrc: diagnosisLogo,
     statIconAlt: 'A teddy bear representing Diagnosis'
   },
@@ -71,7 +71,7 @@ export const globalStatsData = [
   {
     statTitle: 'Studies',
     type: 'field',
-    statAPI: 'numberOfParticipants',
+    statAPI: 'numberOfStudies',
     statIconSrc: studiesLogo,
     statIconAlt: 'A teddy bear representing Studies'
   },

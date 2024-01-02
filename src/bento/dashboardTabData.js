@@ -110,8 +110,7 @@ export const tabIndex = [
   },
 ];
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
-export const DASHBOARD_QUERY_NEW = gql`
-query search(
+export const DASHBOARD_QUERY_NEW = gql`query search(
   # Demographics
   $participant_ids: [String],
   $ethnicity: [String],
@@ -164,6 +163,8 @@ getParticipants(
   last_known_survival_status: $last_known_survival_status
 ) {
   numberOfParticipants
+  numberOfDiagnoses
+  numberOfStudies
 
   # Widget counts
   participantCountByEthnicity {
@@ -289,6 +290,7 @@ getParticipants(
   __typename
 }
 }
+
 `;
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
