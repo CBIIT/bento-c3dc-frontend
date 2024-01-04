@@ -440,73 +440,77 @@ query sampleOverview(
 
 export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
 query participantOverview(
-    $participant_ids: [String],
-    $gender: [String] ,
-    $race: [String] ,
-    $ethnicity: [String] ,
-    $age_at_diagnosis: [Int] ,
-    $diagnosis_anatomic_site: [String] ,
-    $disease_phase: [String] ,
-    $diagnosis_icd_o: [String] ,
-    $vital_status: [String] ,
-    $sample_anatomic_site: [String] ,
-    $participant_age_at_collection: [Int] ,
-    $sample_tumor_status: [String] ,
-    $tumor_classification: [String] ,
-    $assay_method: [String],
-    $file_type: [String],
-    $phs_accession: [String],
-    $grant_id: [String],
-    $institution: [String],
-    $study_acronym: [String],
-    $study_short_title: [String],
-    $library_selection: [String],
-    $library_source: [String],
-    $library_strategy: [String],
-    $first: Int, 
-    $offset: Int, 
-    $order_by: String,
-    $sort_direction: String ){
-    participantOverview(
-        participant_ids: $participant_ids,
-        gender: $gender,
-        race: $race,
-        ethnicity: $ethnicity,
-        age_at_diagnosis: $age_at_diagnosis,
-        diagnosis_anatomic_site: $diagnosis_anatomic_site,
-        disease_phase: $disease_phase,
-        diagnosis_icd_o: $diagnosis_icd_o,
-        vital_status: $vital_status,
-        sample_anatomic_site: $sample_anatomic_site,
-        participant_age_at_collection: $participant_age_at_collection,
-        sample_tumor_status: $sample_tumor_status,
-        tumor_classification: $tumor_classification,
-        assay_method: $assay_method,
-        file_type: $file_type,
-        phs_accession: $phs_accession,       
-        grant_id: $grant_id,
-        institution: $institution,
-        study_acronym: $study_acronym,
-        study_short_title: $study_short_title,
-        library_selection: $library_selection,
-        library_source: $library_source,
-        library_strategy: $library_strategy,
-        first: $first, 
-        offset: $offset, 
-        order_by: $order_by,
-        sort_direction: $sort_direction
-    ) {
-        id
-        participant_id
-        phs_accession
-        study_id
-        race
-        gender
-        ethnicity
-        alternate_participant_id
-    }
-}
-`;
+  # Demographics
+ $participant_ids: [String],
+ $ethnicity: [String],
+ $race: [String],
+ $sex_at_birth: [String],
+
+ # Diagnoses
+ $age_at_diagnosis: [Int],
+ $anatomic_site: [String],
+ $diagnosis_classification: [String],
+ $diagnosis_classification_system: [String],
+ $diagnosis_verification_status: [String],
+ $diagnosis_basis: [String],
+ $disease_phase: [String],
+
+ # Studies
+ $phs_accession: [String],
+ $study_acronym: [String],
+ $study_short_title: [String],
+
+ # Survivals
+ $age_at_last_known_survival_status: [Int],
+ $first_event: [String],
+ $last_known_survival_status: [String]
+
+ # Table config
+ $first: Int,
+ $offset: Int,
+ $order_by: String,
+ $sort_direction: String
+) {
+ participantOverview(
+     # Demographics
+     participant_ids: $participant_ids,
+     ethnicity: $ethnicity,
+     race: $race,
+     sex_at_birth: $sex_at_birth,
+
+     # Diagnoses
+     age_at_diagnosis: $age_at_diagnosis,
+     anatomic_site: $anatomic_site,
+     diagnosis_classification: $diagnosis_classification,
+     diagnosis_classification_system: $diagnosis_classification_system,
+     diagnosis_verification_status: $diagnosis_verification_status,
+     diagnosis_basis: $diagnosis_basis,
+     disease_phase: $disease_phase,
+     
+     # Studies
+     phs_accession: $phs_accession,
+     study_acronym: $study_acronym,
+     study_short_title: $study_short_title,
+
+     # Survivals
+     age_at_last_known_survival_status: $age_at_last_known_survival_status,
+     first_event: $first_event,
+     last_known_survival_status: $last_known_survival_status
+
+     # Table config
+     first: $first,
+     offset: $offset,
+     order_by: $order_by,
+     sort_direction: $sort_direction
+ ) {
+     participant_id
+     ethnicity
+     race
+     sex_at_birth
+     phs_accession
+     __typename
+ }
+}`;
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
 query diagnosisOverview(
@@ -1058,7 +1062,7 @@ export const tabContainers = [
     paginationAPIField: 'participantOverview',
     count: 'numberOfParticipants',
     fileCount: 'participantsFileCount',
-    dataKey: 'id',
+    dataKey: 'participant_id',
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
     buttonText: 'Add Selected Files',
@@ -1086,21 +1090,21 @@ export const tabContainers = [
       // },
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'study_id',
-        header: 'Study ID',
+        dataField: 'phs_accession',
+        header: 'Study accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'gender',
-        header: 'Gender',
+        dataField: 'sex_at_birth',
+        header: 'Sex at birth',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1118,14 +1122,7 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'alternate_participant_id',
-        header: 'Alternate ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
+      }
     ],
     id: 'participant_tab',
     tableID: 'participant_tab_table',
