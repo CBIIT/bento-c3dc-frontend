@@ -71,7 +71,7 @@ export default () => ({
     lineHeight: '24px',
     marginLeft: '5px',
     letterSpacing: '-0.02em',
-    textTransform: 'none',
+    textTransform: 'uppercase',
   },
   dropDownIconSubSection: {
     marginLeft: '0px',
@@ -200,10 +200,10 @@ export default () => ({
     // marginBottom: 6,
   },
   searchResultDetailText: {
-    color: '#5E3F14',
-    fontFamily: 'Open Sans',
+    color: '#435C60',
+    fontFamily: 'Nunito',
     fontSize: 11,
-    fontWeight: '400',
+    fontWeight: '500',
     fontStyle: 'normal',
   }
 });
