@@ -44,107 +44,44 @@ const theme = {
     MuiListItem: {
       root: {
         '&.demographicsCheckedEven': {
-          backgroundColor: '#CBDFE0',
+          backgroundColor: '#B5DDE5',
         },
         '&.demographicsCheckedOdd': {
-          backgroundColor: '#E4ECE9',
+          backgroundColor: '#A5C2C8',
         },
         '&.diagnosisCheckedEven': {
-          backgroundColor: '#C8A4C840',
+          backgroundColor: '#FFF2DF',
         },
         '&.diagnosisCheckedOdd': {
-          backgroundColor: '#E1C9E140',
+          backgroundColor: '#F0DCBE',
         },
-        '&.samplesCheckedEven': {
-          backgroundColor: '#D9C5A040',
+        '&.survivalCheckedEven': {
+          backgroundColor: '#C2FFF1',
         },
-        '&.samplesCheckedOdd': {
-          backgroundColor: '#F0DFBD40',
-        },
-        '&.datacategoryCheckedEven': {
-          backgroundColor: '#E1B4AD40',
-        },
-        '&.datacategoryCheckedOdd': {
-          backgroundColor: '#F8D7D240',
+        '&.survivalCheckedOdd': {
+          backgroundColor: '#BCE1D8',
         },
         '&.studyCheckedEven': {
-          backgroundColor: '#9FBCDD40',
+          backgroundColor: '#E8DBF5',
         },
         '&.studyCheckedOdd': {
-          backgroundColor: '#CEDEF040',
-        },
-        '&.libraryCheckedEven': {
-          backgroundColor: '#95C6B340',
-        },
-        '&.libraryCheckedOdd': {
-          backgroundColor: '#DDEAE540',
+          backgroundColor: '#D3BFE8',
         },
       },
     },
-    MuiSvgIcon: {
+    MuiListItemText: {
       root: {
-        '&.demographicsCheckedIcon': {
-          color: '#6D5F5B',
-        },
-        '&.diagnosisCheckedIcon': {
-          color: '#6D5F5B',
-        },
-        '&.samplesCheckedIcon': {
-          color: '#6D5F5B',
-        },
-        '&.datacategoryCheckedIcon': {
-          color: '#6D5F5B',
-        },
-        '&.studyCheckedIcon': {
-          color: '#6D5F5B',
-        },
-        '&.libraryCheckedIcon': {
-          color: '#6D5F5B',
-        },
+        //flex: 'none',
+        //paddingRight: '3px',
       },
     },
     MuiTypography: {
-      root: {
-        '&.demographicsSubjects': {
-          color: '#357288',
-          fontSize: '12px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-          fontWeight: '600',
-        },
-        '&.diagnosisSubjects': {
-          color: '#7D267E',
-          fontSize: '12px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-          fontWeight: '600',
-        },
-        '&.samplesSubjects': {
-          color: '#897E67',
-          fontSize: '12px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-          fontWeight: '600',
-        },
-        '&.datacategorySubjects': {
-          color: '#A85348',
-          fontSize: '12px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-          fontWeight: '600',
-        },
-        '&.studySubjects': {
-          color: '#24568E',
-          fontSize: '12px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-        },
-        '&.librarySubjects': {
-          color: '#14835C',
-          fontSize: '12px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-        },
+      body1: {
+        color: '#000000',
+        fontFamily: 'Nunito',
+        fontWeight: '300',
+        fontSize: '14px !important',
+        lineHeight: '19.1px',
       },
     },
     MuiDivider: {
