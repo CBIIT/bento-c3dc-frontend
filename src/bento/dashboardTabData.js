@@ -438,7 +438,8 @@ query sampleOverview(
 }
 `;
 
-export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`query participantOverview(
+export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
+query participantOverview(
   # Demographics
  $participant_ids: [String],
  $ethnicity: [String],
