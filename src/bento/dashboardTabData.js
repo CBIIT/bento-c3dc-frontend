@@ -110,7 +110,8 @@ export const tabIndex = [
   },
 ];
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
-export const DASHBOARD_QUERY_NEW = gql`query search(
+export const DASHBOARD_QUERY_NEW = gql`
+query search(
   # Demographics
   $participant_ids: [String],
   $ethnicity: [String],
