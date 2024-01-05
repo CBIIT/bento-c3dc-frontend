@@ -168,7 +168,7 @@ const BentoFacetFilter = ({
             {sectionLabel[name] !== undefined ? sectionLabel[name] : name}
             {hasSearch && (
               <div className={classes.findCaseButton} onClick={toggleSearch}>
-                <img src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/FacetLocalFindSearchIcon.svg" className={classes.findCaseIcon} alt="search" />
+                <img src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/c3dc/images/icons/svgs/C3DCFacetLocalFindSearchIcon.svg" className={classes.findCaseIcon} alt="search" />
               </div>
             )}
           </div>

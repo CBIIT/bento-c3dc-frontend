@@ -31,7 +31,7 @@ export default () => ({
     },
   },
   floatRight: {
-    margin: '7px 0px 7px 6px',
+    margin: '17px 11px 14px 20px',
   },
   resetText: {
     marginTop: '0px',
@@ -68,10 +68,10 @@ export default () => ({
     flexShrink: '0',
     fontFamily: 'Poppins',
     fontWeight: 400,
-    lineHeight: '18px',
+    lineHeight: '24px',
     marginLeft: '5px',
-    textTransform: 'uppercase',
     letterSpacing: '-0.02em',
+    textTransform: 'uppercase',
   },
   dropDownIconSubSection: {
     marginLeft: '0px',
@@ -122,27 +122,19 @@ export default () => ({
     marginRight: '0px',
   },
   activeFacetDemographics: {
-    color: '#357288',
+    color: '#006A8F',
     fontWeight: 600,
   },
   activeFacetDiagnosis: {
-    color: '#8C3F8D',
+    color: '#794900',
     fontWeight: 600,
   },
-  activeFacetSamples: {
-    color: '#907642',
-    fontWeight: 600,
-  },
-  activeFacetDatacategory: {
-    color: '#A85348',
+  activeFacetSurvival: {
+    color: '#008566',
     fontWeight: 600,
   },
   activeFacetStudy: {
-    color: '#1F6BBF',
-    fontWeight: 600,
-  },
-  activeFacetLibrary: {
-    color: '#14A773',
+    color: '#6B2DA7',
     fontWeight: 600,
   },
   searchContainer: {
@@ -152,11 +144,11 @@ export default () => ({
   },
   findCaseButton: {
     // marginLeft: '105px',
-    backgroundColor: '#4D889E',
+    backgroundColor: '#fff',
     boxSizing: 'border-box',
-    height: 30,
-    width: 40,
-    border: '1.25px solid #4D889E',
+    height: 35,
+    width: 37,
+    border: '1px solid #435C60',
     cursor: 'pointer',
     borderRadius: 11,
     display: 'flex',
@@ -167,6 +159,7 @@ export default () => ({
   findCaseIcon: {
     width: 17,
     height: 17,
+    fill: '#ff0000',
   },
   uploadButton: {
     boxSizing: 'border-box',
@@ -207,10 +200,10 @@ export default () => ({
     // marginBottom: 6,
   },
   searchResultDetailText: {
-    color: '#5E3F14',
-    fontFamily: 'Open Sans',
+    color: '#435C60',
+    fontFamily: 'Nunito',
     fontSize: 11,
-    fontWeight: '400',
+    fontWeight: '500',
     fontStyle: 'normal',
   }
 });
