@@ -4,6 +4,7 @@ export default () => ({
     borderRadius: '8px',
     color: '#646464',
     fontFamily: 'Nunito',
+    fontWeight: '500',
     fontSize: 9,
     '& fieldset': {
       borderWidth: '1px !important',
@@ -205,5 +206,42 @@ export default () => ({
     fontSize: 11,
     fontWeight: '500',
     fontStyle: 'normal',
-  }
+  },
+  paper: {
+    border: '1.25px solid #003F74',
+    backgroundColor: '#717171',
+    color: '#fff',
+    borderRadius: 10,
+    fontFamily: 'Lato',
+    fontSize: 12,
+    fontWeight: 500,
+    boxShadow: '0 0 0 2px rgba(0, 63, 116, 0.36)',
+    '& ::-webkit-scrollbar': {
+      width: '0.6em',
+      height: '1em',
+    },
+    '& ::-webkit-scrollbar-track': {
+      '-webkit-box-shadow': 'none',
+      borderRadius: '0px',
+      backgroundColor: 'transparent',
+    },
+    '& ::-webkit-scrollbar-thumb': {
+      backgroundColor: '#000',
+      borderRadius: '0px',
+    },
+  },
+  listbox: {
+    height: 223,
+    paddingTop: '0px',
+    '& li': {
+      borderBottom: '1px solid #fff',
+      '&:nth-last-child(1)': {
+        borderBottom: 'none'
+      }
+    },
+    '& :hover': {
+      color: 'white',
+      backgroundColor: '#003F74;'
+    }
+  },
 });
