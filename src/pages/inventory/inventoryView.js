@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import styles from './inventoryStyle';
 import BentoFacetFilter from './sideBar/BentoFacetFilter';
-import WidgetView from './widget/WidgetView';
+// import WidgetView from './widget/WidgetView';
 import StatsView from '../../components/Stats/StatsView';
 import TabsView from './tabs/TabsView';
 import QueryBarView from './filterQueryBar/QueryBarView';
