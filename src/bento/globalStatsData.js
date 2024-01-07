@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 import studiesLogo from '../assets/stats/Studies_Logo.svg';
 import participantsLogo from '../assets/stats/Participants_Logo.svg';
-import samplesLogo from '../assets/stats/Samples_Logo.svg';
-import fileLogo from '../assets/stats/Files_Logo.svg';
+import diagnosisLogo from '../assets/stats/Diagnosis_Logo.svg';
+
 
 export const statsStyling = {
   global: {
     horizontalStyle: false,
     statTitleFirst: false,
     height: '56px',
-    background: '#29B3BC',
+    background: '#A7DBD6',
     top: '0',
     position: 'relative',
   },
@@ -55,11 +55,11 @@ export const statsStyling = {
 export const globalStatsData = [
   // A maximum of 6 stats are allowed
   {
-    statTitle: 'Studies',
+    statTitle: 'Diagnoses',
     type: 'field',
-    statAPI: 'numberOfStudies',
-    statIconSrc: studiesLogo,
-    statIconAlt: 'An open notebook representing studies',
+    statAPI: 'numberOfDiagnoses',
+    statIconSrc: diagnosisLogo,
+    statIconAlt: 'A teddy bear representing Diagnosis'
   },
   {
     statTitle: 'Participants',
@@ -69,26 +69,21 @@ export const globalStatsData = [
     statIconAlt: 'A teddy bear representing participants'
   },
   {
-    statTitle: 'Samples',
+    statTitle: 'Studies',
     type: 'field',
-    statAPI: 'numberOfSamples',
-    statIconSrc: samplesLogo,
-    statIconAlt: 'A test tube holder with three test tubes in the holder representing samples'
-  },
-  {
-    statTitle: 'Files',
-    type: 'field',
-    statAPI: 'numberOfFiles',
-    statIconSrc: fileLogo,
-    statIconAlt: 'An open file drawer representing files'
+    statAPI: 'numberOfStudies',
+    statIconSrc: studiesLogo,
+    statIconAlt: 'A teddy bear representing Studies'
   },
 ];
 
 // --------------- GraphQL query - Retrieve stats details --------------
-export const GET_GLOBAL_STATS_DATA_QUERY = gql`{
-  numberOfFiles
-  numberOfParticipants
-  numberOfSamples
-  numberOfStudies
+export const GET_GLOBAL_STATS_DATA_QUERY = gql`
+{
+  numberOfDiagnoses,
+  numberOfParticipants,
+  numberOfReferenceFiles,
+  numberOfStudies,
+  numberOfSurvivals
   }
   `;

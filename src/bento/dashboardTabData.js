@@ -291,6 +291,7 @@ getParticipants(
   __typename
 }
 }
+
 `;
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
