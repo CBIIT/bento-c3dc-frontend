@@ -19,7 +19,8 @@ export const layoutConfig = [{
 * Configuration display component based on index
 * CAUTION: provide position of table component
 */
-export const wrapperConfig = [{
+export const wrapperConfig = [
+  /*{
   container: 'buttons',
   size: 'xl',
   clsName: 'container_header',
@@ -44,12 +45,13 @@ export const wrapperConfig = [{
       conditional: true,
       alertMessage,
     }],
-},
+},*/
 {
   container: 'paginatedTable',
   paginatedTable: true,
 },
-{
+/*{
+  
   container: 'buttons',
   size: 'xl',
   clsName: 'container_footer',
@@ -74,7 +76,7 @@ export const wrapperConfig = [{
       conditional: true,
       alertMessage,
     }],
-},
+  },*/
 ];
 
 
