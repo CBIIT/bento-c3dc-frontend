@@ -36,7 +36,7 @@ const Inventory = ({
               dashboardStats={dashData}
               activeFilters={activeFilters}
             />
-            <div className={classes.goToCartLink}><NavLink to='/fileCentricCart'>Go to cart &#62;</NavLink></div>
+            {/*<div className={classes.goToCartLink}><NavLink to='/fileCentricCart'>Go to cart &#62;</NavLink></div>*/}
           </div>
         </div>
       </div>
