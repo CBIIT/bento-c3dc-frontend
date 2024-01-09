@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+//import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import styles from './inventoryStyle';
 import BentoFacetFilter from './sideBar/BentoFacetFilter';
