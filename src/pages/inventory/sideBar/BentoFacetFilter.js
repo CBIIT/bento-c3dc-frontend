@@ -161,6 +161,10 @@ const BentoFacetFilter = ({
       setExpanded(!expanded);
     };
 
+    let searchConfig = {
+      title: 'Participants',
+    }
+
     return (
       <>
         <CustomExpansionPanelSummary onClick={collapseHandler} id={section}>
@@ -178,6 +182,7 @@ const BentoFacetFilter = ({
               SearchBox={SearchBox}
               UploadModal={UploadModal}
               hidden={!expanded || !showSearch}
+              config = {searchConfig}
             />
           )}
         </CustomExpansionPanelSummary>
