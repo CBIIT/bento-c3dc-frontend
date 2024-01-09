@@ -21,7 +21,7 @@ import {
   SearchView, SearchBoxGenerator, UploadModalGenerator,
 } from '@bento-core/local-find';
 import store from '../../../store';
-import styles from './BentoFacetFilterStyle';
+import styles, { uploadModalStyles } from './BentoFacetFilterStyle';
 import { FacetFilter, ClearAllFiltersBtn } from '@bento-core/facet-filter';
 import { facetsConfig, facetSectionVariables, resetIcon, sectionLabel } from '../../../bento/dashTemplate';
 import FacetFilterThemeProvider from './FilterThemeConfig';
@@ -92,6 +92,22 @@ const { UploadModal } = UploadModalGenerator({
       }
     },
   },
+  config: {
+    title: 'Upload Participants Set',
+    inputPlaceholder: 'e.g. C3DC-PARTICIPANT-101025, C3DC-PARTICIPANT-101026, C3DC-PARTICIPANT-101027',
+    inputTooltip: 'Enter valid Participant IDs.',
+    uploadTooltip: 'Select a file from your computer.',
+    accept: '.csv,.txt',
+    maxSearchTerms: 1000,
+    matchedId: 'participant_id',
+    matchedLabel : 'Submitted Participant ID',
+    associateId: 'phs_accession',
+    associateLabel: 'Unique Participant ID',
+    projectName: 'C3DC',
+    caseIds: 'Participant IDs',
+  },
+
+  customStyles : uploadModalStyles,
 });
 
 const BentoFacetFilter = ({
