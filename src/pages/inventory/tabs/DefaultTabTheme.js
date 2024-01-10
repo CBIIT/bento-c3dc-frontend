@@ -32,10 +32,10 @@ export const customTheme = {
           color: '#000000',
           borderTop: '6px solid #07679C',
         },
-        '&.samples': {
-          background: '#B3D6EA',
+        '&.survival': {
+          background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #07679C',
+          borderTop: '6px solid #7ED1BE',
         },
         '&.files': {
           background: '#B3D6EA',
@@ -61,7 +61,7 @@ export const customTheme = {
         fontSize: '16px',
         fontWeight: '300',
       },
-      '& span.samples_count': {
+      '& span.survival_count': {
         marginLeft: '5px',
         fontSize: '16px',
         fontWeight: '300',
