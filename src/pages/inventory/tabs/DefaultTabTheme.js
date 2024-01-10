@@ -31,7 +31,7 @@ export const customTheme = {
         '&.participants': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #3388A6',
+          borderTop: '6px solid #006A8F',
         },
         '&.samples': {
           background: '#B3D6EA',
