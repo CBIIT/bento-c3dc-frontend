@@ -31,14 +31,9 @@ export const customTheme = {
         '&.participants': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #07679C',
+          borderTop: '6px solid #3388A6',
         },
         '&.samples': {
-          background: '#B3D6EA',
-          color: '#000000',
-          borderTop: '6px solid #07679C',
-        },
-        '&.files': {
           background: '#B3D6EA',
           color: '#000000',
           borderTop: '6px solid #07679C',
@@ -63,11 +58,6 @@ export const customTheme = {
         fontWeight: '300',
       },
       '& span.samples_count': {
-        marginLeft: '5px',
-        fontSize: '16px',
-        fontWeight: '300',
-      },
-      '& span.files_count': {
         marginLeft: '5px',
         fontSize: '16px',
         fontWeight: '300',
