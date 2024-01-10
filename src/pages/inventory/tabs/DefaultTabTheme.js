@@ -35,7 +35,7 @@ export const customTheme = {
         '&.survival': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #7ED1BE',
+          borderTop: '6px solid #35B899',
         },
         '&.files': {
           background: '#B3D6EA',
