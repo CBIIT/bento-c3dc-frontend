@@ -18,7 +18,7 @@ export const customTheme = {
       lineHeight: '19px',
       letterSpacing: '0.25px',
       marginRight: '10px',
-      fontSize: '18px',
+      fontSize: '17px',
       width: '203px',
       textTransform: 'none',
       fontFamily: 'Poppins',
@@ -27,8 +27,9 @@ export const customTheme = {
       },
       '&.Mui-selected': {
         fontWeight: '500',
+        fontSize: '18px',
         '&.participants': {
-          background: '#B3D6EA',
+          background: '#FFFFFF',
           color: '#000000',
           borderTop: '6px solid #07679C',
         },
