@@ -50,7 +50,7 @@ export const customTheme = {
         '&.studies': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #BC9CDB',
+          borderTop: '6px solid #9664C7',
         },
         '&.MuiTypography-body1': {
           color: 'red',
