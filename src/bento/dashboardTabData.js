@@ -41,74 +41,6 @@ export const externalLinkIcon = {
   alt: 'External link icon',
 };
 
-
-// --------------- Tabs Header Data configuration --------------
-export const tabs = [
-  {
-    id: 'participant_tab',
-    title: 'Participants',
-    dataField: 'dataParticipant',
-    count: 'numberOfParticipants',
-  },
-  {
-    id: 'diagnosis_tab',
-    title: 'Diagnosis',
-    dataField: 'dataDiagnosis',
-    count: 'numberOfDiagnosis',
-  },
-  {
-    id: 'study_tab',
-    title: 'Studies',
-    dataField: 'dataStudy',
-    count: 'numberOfStudies',
-  },
-  {
-    id: 'sample_tab',
-    title: 'Samples',
-    dataField: 'dataSample',
-    count: 'numberOfSamples',
-  },
-  {
-    id: 'file_tab',
-    title: 'Files',
-    dataField: 'dataFile',
-    count: 'numberOfFiles',
-  },
-];
-
-// --------------- Tabs Header Style configuration --------------
-export const tabIndex = [
-  {
-    title: 'Participants',
-    primaryColor: '#D6F2EA',
-    secondaryColor: '#FFDFB8',
-    selectedColor: '#10A075',
-  },
-  {
-    title: 'Samples',
-    primaryColor: '#CFEDF9',
-    secondaryColor: '#C9F1F1',
-    selectedColor: '#0DAFEC',
-  },
-  {
-    title: 'Files',
-    primaryColor: '#F7D7F7',
-    secondaryColor: '#86D6F0',
-    selectedColor: '#C92EC7',
-  },
-  {
-    title: 'Diagnosis',
-    primaryColor: '#F7D7F7',
-    secondaryColor: '#86D6F0',
-    selectedColor: '#C92EC7',
-  },
-  {
-    title: 'Studies',
-    primaryColor: '#F7D7F7',
-    secondaryColor: '#86D6F0',
-    selectedColor: '#C92EC7',
-  },
-];
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
@@ -1072,12 +1004,12 @@ export const tabContainers = [
       pagination: true,
       manageViewColumns: false,
     },
-    columns: [
+    columns: [/*
       {
         cellType: cellTypes.CHECKBOX,
         display: true,
         role: cellTypes.CHECKBOX,
-      },
+      },*/
       // {
       //   dataField: 'participant_id',
       //   header: 'Participant ID',
@@ -1091,21 +1023,21 @@ export const tabContainers = [
       // },
       {
         dataField: 'participant_id',
-        header: 'Participant id',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: 'phs_accession',
-        header: 'Study accession',
+        header: 'Study Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: 'sex_at_birth',
-        header: 'Sex at birth',
+        header: 'Sex at Birth',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1129,7 +1061,7 @@ export const tabContainers = [
     tableID: 'participant_tab_table',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
     tabIndex: '0',
-    downloadFileName: 'CCDI Inventory Participants Download',
+    downloadFileName: 'C3DC Inventory Participants Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1473,115 +1405,6 @@ export const tabContainers = [
     addAllFilesResponseKeys: ['sampleOverview', 'files'],
     addAllFileQuery: GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART,
     addSelectedFilesQuery: GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
-  },
-  {
-    name: 'Files',
-    dataField: 'dataFile',
-    api: GET_FILES_OVERVIEW_QUERY,
-    paginationAPIField: 'fileOverview',
-    defaultSortField: 'file_name',
-    defaultSortDirection: 'asc',
-    count: 'numberOfFiles',
-    fileCount: 'filesFileCount',
-    dataKey: 'id',
-    tableID: 'file_tab_table',
-    extendedViewConfig: {
-      pagination: true,
-      manageViewColumns: false,
-    },
-    columns: [
-      {
-        cellType: cellTypes.CHECKBOX,
-        display: true,
-        role: cellTypes.CHECKBOX,
-      },
-      {
-        dataField: 'file_name',
-        header: 'File Name',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_category',
-        header: 'File Category',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_description',
-        header: 'File Description',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_type',
-        header: 'File Type',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_size',
-        header: 'File Size',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-        dataFormatType: dataFormatTypes.FORMAT_BYTES,
-        cellType: cellTypes.FORMAT_DATA,
-      },
-      {
-        dataField: 'study_id',
-        header: 'Study ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'participant_id',
-        header: 'Participant ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'sample_id',
-        header: 'Sample ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'guid',
-        header: 'GUID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'md5sum',
-        header: 'MD5sum',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-    ],
-    id: 'file_tab',
-    tableID: 'file_tab_table',
-    tabIndex: '2',
-    selectableRows: true,
-    tableDownloadCSV: customFilesTabDownloadCSV,
-    downloadFileName: 'CCDI Inventory Files Download',
-    tableMsg: {
-      noMatch: 'No Matching Records Found',
-    },
-    addFilesRequestVariableKey: 'file_ids',
-    addFilesResponseKeys: ['fileIDsFromList'],
-    addAllFilesResponseKeys: ['fileOverview', 'files'],
-    addAllFileQuery: GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART,
-    addSelectedFilesQuery: GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL,
   },
 ];
 
