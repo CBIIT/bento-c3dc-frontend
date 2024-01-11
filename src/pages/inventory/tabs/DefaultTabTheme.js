@@ -44,9 +44,9 @@ export const customTheme = {
           borderTop: '6px solid #07679C',
         },
         '&.studies': {
-          background: '#B3D6EA',
+          background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #07679C',
+          borderTop: '6px solid #9664C7',
         },
         '&.MuiTypography-body1': {
           color: 'red',
