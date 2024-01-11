@@ -32,20 +32,15 @@ export const customTheme = {
           color: '#000000',
           borderTop: '6px solid #07679C',
         },
-        '&.survival': {
-          background: '#FFFFFF',
-          color: '#000000',
-          borderTop: '6px solid #35B899',
-        },
-        '&.files': {
-          background: '#B3D6EA',
-          color: '#000000',
-          borderTop: '6px solid #07679C',
-        },
         '&.diagnosis': {
           background: '#B3D6EA',
           color: '#000000',
           borderTop: '6px solid #07679C',
+        },
+        '&.survival': {
+          background: '#FFFFFF',
+          color: '#000000',
+          borderTop: '6px solid #35B899',
         },
         '&.studies': {
           background: '#B3D6EA',
@@ -61,17 +56,12 @@ export const customTheme = {
         fontSize: '16px',
         fontWeight: '300',
       },
-      '& span.survival_count': {
-        marginLeft: '5px',
-        fontSize: '16px',
-        fontWeight: '300',
-      },
-      '& span.files_count': {
-        marginLeft: '5px',
-        fontSize: '16px',
-        fontWeight: '300',
-      },
       '& span.diagnosis_count': {
+        marginLeft: '5px',
+        fontSize: '16px',
+        fontWeight: '300',
+      },
+      '& span.survival_count': {
         marginLeft: '5px',
         fontSize: '16px',
         fontWeight: '300',
