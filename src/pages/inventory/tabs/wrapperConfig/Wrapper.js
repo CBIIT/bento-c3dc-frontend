@@ -1,11 +1,13 @@
 import {
   btnTypes,
-  types,
+  //types,
 } from '@bento-core/paginated-table';
+/*
 import {
   tooltipContentAddAll, tooltipContent,
 } from '../../../../bento/dashboardTabData';
 import { alertMessage } from '../../../../bento/fileCentricCartWorkflowData';
+*/
 
 export const layoutConfig = [{
   container: 'buttons',
