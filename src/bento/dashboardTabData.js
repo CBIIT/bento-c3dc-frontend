@@ -41,74 +41,6 @@ export const externalLinkIcon = {
   alt: 'External link icon',
 };
 
-
-// --------------- Tabs Header Data configuration --------------
-export const tabs = [
-  {
-    id: 'participant_tab',
-    title: 'Participants',
-    dataField: 'dataParticipant',
-    count: 'numberOfParticipants',
-  },
-  {
-    id: 'diagnosis_tab',
-    title: 'Diagnosis',
-    dataField: 'dataDiagnosis',
-    count: 'numberOfDiagnosis',
-  },
-  {
-    id: 'study_tab',
-    title: 'Studies',
-    dataField: 'dataStudy',
-    count: 'numberOfStudies',
-  },
-  {
-    id: 'sample_tab',
-    title: 'Samples',
-    dataField: 'dataSample',
-    count: 'numberOfSamples',
-  },
-  {
-    id: 'file_tab',
-    title: 'Files',
-    dataField: 'dataFile',
-    count: 'numberOfFiles',
-  },
-];
-
-// --------------- Tabs Header Style configuration --------------
-export const tabIndex = [
-  {
-    title: 'Participants',
-    primaryColor: '#D6F2EA',
-    secondaryColor: '#FFDFB8',
-    selectedColor: '#10A075',
-  },
-  {
-    title: 'Samples',
-    primaryColor: '#CFEDF9',
-    secondaryColor: '#C9F1F1',
-    selectedColor: '#0DAFEC',
-  },
-  {
-    title: 'Files',
-    primaryColor: '#F7D7F7',
-    secondaryColor: '#86D6F0',
-    selectedColor: '#C92EC7',
-  },
-  {
-    title: 'Diagnosis',
-    primaryColor: '#F7D7F7',
-    secondaryColor: '#86D6F0',
-    selectedColor: '#C92EC7',
-  },
-  {
-    title: 'Studies',
-    primaryColor: '#F7D7F7',
-    secondaryColor: '#86D6F0',
-    selectedColor: '#C92EC7',
-  },
-];
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
@@ -525,148 +457,160 @@ query participantOverview(
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
 query diagnosisOverview(
-    $participant_ids: [String],
-    $gender: [String] ,
-    $race: [String] ,
-    $ethnicity: [String] ,
-    $age_at_diagnosis: [Int] ,
-    $diagnosis_anatomic_site: [String] ,
-    $disease_phase: [String] ,
-    $diagnosis_icd_o: [String] ,
-    $vital_status: [String] ,
-    $sample_anatomic_site: [String] ,
-    $participant_age_at_collection: [Int] ,
-    $sample_tumor_status: [String] ,
-    $tumor_classification: [String] ,
-    $assay_method: [String],
-    $file_type: [String],
-    $phs_accession: [String],
-    $grant_id: [String],
-    $institution: [String],
-    $study_acronym: [String],
-    $study_short_title: [String],
-    $library_selection: [String],
-    $library_source: [String],
-    $library_strategy: [String],
-    $first: Int, 
-    $offset: Int, 
-    $order_by: String,
-    $sort_direction: String ){
-      diagnosisOverview(
-        participant_ids: $participant_ids,
-        gender: $gender,
-        race: $race,
-        ethnicity: $ethnicity,
-        age_at_diagnosis: $age_at_diagnosis,
-        diagnosis_anatomic_site: $diagnosis_anatomic_site,
-        disease_phase: $disease_phase,
-        diagnosis_icd_o: $diagnosis_icd_o,
-        vital_status: $vital_status,
-        sample_anatomic_site: $sample_anatomic_site,
-        participant_age_at_collection: $participant_age_at_collection,
-        sample_tumor_status: $sample_tumor_status,
-        tumor_classification: $tumor_classification,
-        assay_method: $assay_method,
-        file_type: $file_type,
-        phs_accession: $phs_accession,       
-        grant_id: $grant_id,
-        institution: $institution,
-        study_acronym: $study_acronym,
-        study_short_title: $study_short_title,
-        library_selection: $library_selection,
-        library_source: $library_source,
-        library_strategy: $library_strategy,
-        first: $first, 
-        offset: $offset, 
-        order_by: $order_by,
-        sort_direction: $sort_direction
-    ) {
-        id
-        diagnosis_id
-        participant_id
-        phs_accession
-        diagnosis_icd_o
-        disease_phase
-        anatomic_site
-        age_at_diagnosis
-        vital_status
-        study_id
-    }
+  # Demographics
+  $participant_ids: [String],
+  $ethnicity: [String],
+  $race: [String],
+  $sex_at_birth: [String],
+
+  # Diagnoses
+  $age_at_diagnosis: [Int],
+  $anatomic_site: [String],
+  $diagnosis_classification: [String],
+  $diagnosis_classification_system: [String],
+  $diagnosis_verification_status: [String],
+  $diagnosis_basis: [String],
+  $disease_phase: [String],
+
+  # Studies
+  $phs_accession: [String],
+  $study_acronym: [String],
+  $study_short_title: [String],
+
+  # Survivals
+  $age_at_last_known_survival_status: [Int],
+  $first_event: [String],
+  $last_known_survival_status: [String]
+
+  # Table config
+  $first: Int,
+  $offset: Int,
+  $order_by: String,
+  $sort_direction: String
+) {
+  diagnosisOverview(
+      # Demographics
+      participant_ids: $participant_ids,
+      ethnicity: $ethnicity,
+      race: $race,
+      sex_at_birth: $sex_at_birth,
+
+      # Diagnoses
+      age_at_diagnosis: $age_at_diagnosis,
+      anatomic_site: $anatomic_site,
+      diagnosis_classification: $diagnosis_classification,
+      diagnosis_classification_system: $diagnosis_classification_system,
+      diagnosis_verification_status: $diagnosis_verification_status,
+      diagnosis_basis: $diagnosis_basis,
+      disease_phase: $disease_phase,
+      
+      # Studies
+      phs_accession: $phs_accession,
+      study_acronym: $study_acronym,
+      study_short_title: $study_short_title,
+
+      # Survivals
+      age_at_last_known_survival_status: $age_at_last_known_survival_status,
+      first_event: $first_event,
+      last_known_survival_status: $last_known_survival_status
+
+      # Table config
+      first: $first,
+      offset: $offset,
+      order_by: $order_by,
+      sort_direction: $sort_direction
+  ) {
+      # Demographics
+      participant_id
+
+      # Diagnosis
+      age_at_diagnosis
+      anatomic_site
+      diagnosis_basis
+      diagnosis_classification
+      diagnosis_classification_system
+      diagnosis_verification_status
+      disease_phase
+      tumor_classification
+
+      # Study
+      phs_accession
+      __typename
+  }
 }
 `;
 
 export const GET_STUDY_OVERVIEW_QUERY = gql`
 query studyOverview(
-    $participant_ids: [String],
-    $gender: [String] ,
-    $race: [String] ,
-    $ethnicity: [String] ,
-    $age_at_diagnosis: [Int] ,
-    $diagnosis_anatomic_site: [String] ,
-    $disease_phase: [String] ,
-    $diagnosis_icd_o: [String] ,
-    $vital_status: [String] ,
-    $sample_anatomic_site: [String] ,
-    $participant_age_at_collection: [Int] ,
-    $sample_tumor_status: [String] ,
-    $tumor_classification: [String] ,
-    $assay_method: [String],
-    $file_type: [String],
-    $phs_accession: [String],
-    $grant_id: [String],
-    $institution: [String],
-    $study_acronym: [String],
-    $study_short_title: [String],
-    $library_selection: [String],
-    $library_source: [String],
-    $library_strategy: [String],
-    $first: Int, 
-    $offset: Int, 
-    $order_by: String,
-    $sort_direction: String ){
-    studyOverview(
-        participant_ids: $participant_ids,
-        gender: $gender,
-        race: $race,
-        ethnicity: $ethnicity,
-        age_at_diagnosis: $age_at_diagnosis,
-        diagnosis_anatomic_site: $diagnosis_anatomic_site,
-        disease_phase: $disease_phase,
-        diagnosis_icd_o: $diagnosis_icd_o,
-        vital_status: $vital_status,
-        sample_anatomic_site: $sample_anatomic_site,
-        participant_age_at_collection: $participant_age_at_collection,
-        sample_tumor_status: $sample_tumor_status,
-        tumor_classification: $tumor_classification,
-        assay_method: $assay_method,
-        file_type: $file_type,
-        phs_accession: $phs_accession,       
-        grant_id: $grant_id,
-        institution: $institution,
-        study_acronym: $study_acronym,
-        study_short_title: $study_short_title,
-        library_selection: $library_selection,
-        library_source: $library_source,
-        library_strategy: $library_strategy,
-        first: $first, 
-        offset: $offset, 
-        order_by: $order_by,
-        sort_direction: $sort_direction
-    ) {
-        id
-        study_id
-        pubmed_id
-        grant_id
-        phs_accession
-        study_short_title
-        personnel_name
-        diagnosis
-        anatomic_site
-        num_of_participants
-        num_of_samples
-        num_of_files
-        file_type
-    }
+  # Demographics
+  $participant_ids: [String],
+  $ethnicity: [String],
+  $race: [String],
+  $sex_at_birth: [String],
+
+  # Diagnoses
+  $age_at_diagnosis: [Int],
+  $anatomic_site: [String],
+  $diagnosis_classification: [String],
+  $diagnosis_classification_system: [String],
+  $diagnosis_verification_status: [String],
+  $diagnosis_basis: [String],
+  $disease_phase: [String],
+
+  # Studies
+  $phs_accession: [String],
+  $study_acronym: [String],
+  $study_short_title: [String],
+
+  # Survivals
+  $age_at_last_known_survival_status: [Int],
+  $first_event: [String],
+  $last_known_survival_status: [String]
+
+  # Table config
+  $first: Int,
+  $offset: Int,
+  $order_by: String,
+  $sort_direction: String
+) {
+  studyOverview(
+      # Demographics
+      participant_ids: $participant_ids,
+      ethnicity: $ethnicity,
+      race: $race,
+      sex_at_birth: $sex_at_birth,
+
+      # Diagnoses
+      age_at_diagnosis: $age_at_diagnosis,
+      anatomic_site: $anatomic_site,
+      diagnosis_classification: $diagnosis_classification,
+      diagnosis_classification_system: $diagnosis_classification_system,
+      diagnosis_verification_status: $diagnosis_verification_status,
+      diagnosis_basis: $diagnosis_basis,
+      disease_phase: $disease_phase,
+      
+      # Studies
+      phs_accession: $phs_accession,
+      study_acronym: $study_acronym,
+      study_short_title: $study_short_title,
+
+      # Survivals
+      age_at_last_known_survival_status: $age_at_last_known_survival_status,
+      first_event: $first_event,
+      last_known_survival_status: $last_known_survival_status
+
+      # Table config
+      first: $first,
+      offset: $offset,
+      order_by: $order_by,
+      sort_direction: $sort_direction
+  ) {
+      # Study
+      phs_accession
+      study_acronym
+      study_short_title
+      __typename
+  }
 }
 `;
 
@@ -1082,12 +1026,12 @@ export const tabContainers = [
       pagination: true,
       manageViewColumns: false,
     },
-    columns: [
+    columns: [/*
       {
         cellType: cellTypes.CHECKBOX,
         display: true,
         role: cellTypes.CHECKBOX,
-      },
+      },*/
       // {
       //   dataField: 'participant_id',
       //   header: 'Participant ID',
@@ -1101,21 +1045,21 @@ export const tabContainers = [
       // },
       {
         dataField: 'participant_id',
-        header: 'Participant id',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: 'phs_accession',
-        header: 'Study accession',
+        header: 'Study Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: 'sex_at_birth',
-        header: 'Sex at birth',
+        header: 'Sex at Birth',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1139,7 +1083,7 @@ export const tabContainers = [
     tableID: 'participant_tab_table',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
     tabIndex: '0',
-    downloadFileName: 'CCDI Inventory Participants Download',
+    downloadFileName: 'C3DC Inventory Participants Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1156,7 +1100,7 @@ export const tabContainers = [
     paginationAPIField: 'diagnosisOverview',
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
-    count: 'numberOfDiagnosis',
+    count: 'numberOfDiagnoses',
     fileCount: 'diagnosisFileCount',
     dataKey: 'id',
     tableID: 'diagnosis_tab_table',
@@ -1164,36 +1108,29 @@ export const tabContainers = [
       pagination: true,
       manageViewColumns: false,
     },
-    columns: [
+    columns: [/*
       {
         cellType: cellTypes.CHECKBOX,
         display: true,
         role: cellTypes.CHECKBOX,
-      },
+      },*/
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'study_id',
-        header: 'Study ID',
+        dataField: 'phs_accession',
+        header: 'Study Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'diagnosis_icd_o',
-        header: 'Diagnosis (ICD-O)',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'disease_phase',
-        header: 'Disease Phase',
+        dataField: 'age_at_diagnosis',
+        header: 'Age at Diagnosis (days)',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1206,34 +1143,54 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'age_at_diagnosis',
-        header: 'Age at Diagnosis (days)',
+        dataField: 'diagnosis_classification',
+        header: 'Diagnosis Classification',
         display: true,
         tooltipText: 'sort',
-        cellType: cellTypes.CUSTOM_ELEM,
-        cellStyle: cellStyles.TRANSFORM,
-        dataFormatter: (dt) => {
-          if (dt === -999) {
-            return 'Not Reported';
-          }
-          return dt.toString();
-        },
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'vital_status',
-        header: 'Vital Status',
+        dataField: 'diagnosis_classification_system',
+        header: 'Diagnosis Classification System',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
+      {
+        dataField: 'diagnosis_verification_status',
+        header: 'Diagnosis Verification Status',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'diagnosis_basis',
+        header: 'Diagnosis Basis',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'disease_phase',
+        header: 'Disease Phase',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_classification',
+        header: 'Tumor Classification',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      
     ],
     id: 'diagnosis_tab',
     tableID: 'diagnosis_tab_table',
     tabIndex: '3',
-    selectableRows: true,
     tableDownloadCSV: customDiagnosisTabDownloadCSV,
-    downloadFileName: 'CCDI Inventory Diagnosis Download',
+    downloadFileName: 'C3DC Inventory Diagnosis Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1258,11 +1215,18 @@ export const tabContainers = [
       pagination: true,
       manageViewColumns: false,
     },
-    columns: [
+    columns: [/*
       {
         cellType: cellTypes.CHECKBOX,
         display: true,
         role: cellTypes.CHECKBOX,
+      },*/
+      {
+        dataField: 'phs_accession',
+        header: 'Study Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
       },
       {
         dataField: 'study_short_title',
@@ -1272,92 +1236,21 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'study_id',
-        header: 'Study ID',
+        dataField: 'study_acronym',
+        header: 'Acronym',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      {
-        dataField: 'diagnosis',
-        header: 'Diagnosis (Top 5)',
-        downloadHeader: 'Diagnosis',
-        display: true,
-        sortable: false,
-        headerType: cellTypes.CUSTOM_ELEM,
-        cellType: cellTypes.CUSTOM_ELEM,
-        cellStyle: cellStyles.EXPAND,
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'anatomic_site',
-        header: 'Diagnosis Anatomic Site (Top 5)',
-        downloadHeader: 'Diagnosis Anatomic Site',
-        display: true,
-        sortable: false,
-        cellType: cellTypes.CUSTOM_ELEM,
-        cellStyle: cellStyles.EXPAND,
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'num_of_participants',
-        header: 'Number of Participants',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'num_of_samples',
-        header: 'Number of Samples',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'num_of_files',
-        header: 'Number of Files',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_type',
-        header: 'File Type (Top 5)',
-        downloadHeader: 'File Type',
-        display: true,
-        sortable: false,
-        cellType: cellTypes.CUSTOM_ELEM,
-        cellStyle: cellStyles.EXPAND,
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'pubmed_id',
-        header: 'PubMed ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'personnel_name',
-        header: 'Principal Investigator(s)',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'grant_id',
-        header: 'Grant ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
+      
+     
     ],
     id: 'study_tab',
     tableID: 'study_tab_table',
     tabIndex: '4',
     selectableRows: true,
     tableDownloadCSV: customStudyTabDownloadCSV,
-    downloadFileName: 'CCDI Inventory Studies Download',
+    downloadFileName: 'C3DC Inventory Studies Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1454,115 +1347,6 @@ export const tabContainers = [
     //addAllFilesResponseKeys: ['survivalOverview', 'files'],
     //addAllFileQuery: GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART,
     //addSelectedFilesQuery: GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
-  },
-  {
-    name: 'Files',
-    dataField: 'dataFile',
-    api: GET_FILES_OVERVIEW_QUERY,
-    paginationAPIField: 'fileOverview',
-    defaultSortField: 'file_name',
-    defaultSortDirection: 'asc',
-    count: 'numberOfFiles',
-    fileCount: 'filesFileCount',
-    dataKey: 'id',
-    tableID: 'file_tab_table',
-    extendedViewConfig: {
-      pagination: true,
-      manageViewColumns: false,
-    },
-    columns: [
-      {
-        cellType: cellTypes.CHECKBOX,
-        display: true,
-        role: cellTypes.CHECKBOX,
-      },
-      {
-        dataField: 'file_name',
-        header: 'File Name',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_category',
-        header: 'File Category',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_description',
-        header: 'File Description',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_type',
-        header: 'File Type',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'file_size',
-        header: 'File Size',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-        dataFormatType: dataFormatTypes.FORMAT_BYTES,
-        cellType: cellTypes.FORMAT_DATA,
-      },
-      {
-        dataField: 'study_id',
-        header: 'Study ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'participant_id',
-        header: 'Participant ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'sample_id',
-        header: 'Sample ID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'guid',
-        header: 'GUID',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'md5sum',
-        header: 'MD5sum',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-    ],
-    id: 'file_tab',
-    tableID: 'file_tab_table',
-    tabIndex: '2',
-    selectableRows: true,
-    tableDownloadCSV: customFilesTabDownloadCSV,
-    downloadFileName: 'CCDI Inventory Files Download',
-    tableMsg: {
-      noMatch: 'No Matching Records Found',
-    },
-    addFilesRequestVariableKey: 'file_ids',
-    addFilesResponseKeys: ['fileIDsFromList'],
-    addAllFilesResponseKeys: ['fileOverview', 'files'],
-    addAllFileQuery: GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART,
-    addSelectedFilesQuery: GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL,
   },
 ];
 

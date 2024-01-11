@@ -18,7 +18,7 @@ export const customTheme = {
       lineHeight: '19px',
       letterSpacing: '0.25px',
       marginRight: '10px',
-      fontSize: '18px',
+      fontSize: '17px',
       width: '203px',
       textTransform: 'none',
       fontFamily: 'Poppins',
@@ -27,15 +27,16 @@ export const customTheme = {
       },
       '&.Mui-selected': {
         fontWeight: '500',
+        fontSize: '18px',
         '&.participants': {
-          background: '#B3D6EA',
+          background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #07679C',
+          borderTop: '6px solid #006A8F',
         },
         '&.diagnosis': {
-          background: '#B3D6EA',
+          background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #07679C',
+          borderTop: '6px solid #E39520',
         },
         '&.survival': {
           background: '#FFFFFF',
@@ -43,9 +44,9 @@ export const customTheme = {
           borderTop: '6px solid #35B899',
         },
         '&.studies': {
-          background: '#B3D6EA',
+          background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #07679C',
+          borderTop: '6px solid #9664C7',
         },
         '&.MuiTypography-body1': {
           color: 'red',
