@@ -12,7 +12,7 @@ export const tblHeader = {
   },
   MuiTableSortLabel: {
     root: {
-      color: '#0F253A',
+      color: '#0F253A !important',
       position: 'relative',
       fontSize: '15px',
       fontFamily: 'Open Sans',
@@ -35,6 +35,17 @@ export const tblHeader = {
 };
 
 const tblBody = {
+  MuiTableRow: {
+    root: {
+      height: '40px',
+      '&:nth-child(odd)': {
+        background: '#FFFFFF',
+      },
+      '&:nth-child(even)': {
+        background: '#F4F4F4',
+      },
+    },
+  },
   MuiTableCell: {
     root: {
       minHeight: '45px',
@@ -49,7 +60,7 @@ const tblBody = {
     body: {
       fontFamily: 'Open Sans',
       fontSize: '14px',
-      color: '#24415C',
+      color: '#343434',
       '& p': {
         fontFamily: 'Open Sans',
         fontSize: '14px',
@@ -144,7 +155,7 @@ export const extendedView = {
         marginLeft: 'auto',
       },
       caption: {
-        textTransform: 'none',
+        textTransform: 'uppercase',
         fontFamily: 'Open Sans',
         fontSize: '14px',
       },
@@ -232,7 +243,7 @@ export const tblPgn = {
       minHeight: '40px',
     },
     caption: {
-      textTransform: 'none',
+      textTransform: 'uppercase',
       fontFamily: 'Open Sans',
       fontSize: '14px',
     },
