@@ -1435,7 +1435,7 @@ export const tabContainers = [
       },
       {
         dataField: 'first_event',
-        header: 'First event',
+        header: 'First Event',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
