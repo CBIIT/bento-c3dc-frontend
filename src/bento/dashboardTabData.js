@@ -447,73 +447,86 @@ query participantOverview(
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
 query diagnosisOverview(
-    $participant_ids: [String],
-    $gender: [String] ,
-    $race: [String] ,
-    $ethnicity: [String] ,
-    $age_at_diagnosis: [Int] ,
-    $diagnosis_anatomic_site: [String] ,
-    $disease_phase: [String] ,
-    $diagnosis_icd_o: [String] ,
-    $vital_status: [String] ,
-    $sample_anatomic_site: [String] ,
-    $participant_age_at_collection: [Int] ,
-    $sample_tumor_status: [String] ,
-    $tumor_classification: [String] ,
-    $assay_method: [String],
-    $file_type: [String],
-    $phs_accession: [String],
-    $grant_id: [String],
-    $institution: [String],
-    $study_acronym: [String],
-    $study_short_title: [String],
-    $library_selection: [String],
-    $library_source: [String],
-    $library_strategy: [String],
-    $first: Int, 
-    $offset: Int, 
-    $order_by: String,
-    $sort_direction: String ){
-      diagnosisOverview(
-        participant_ids: $participant_ids,
-        gender: $gender,
-        race: $race,
-        ethnicity: $ethnicity,
-        age_at_diagnosis: $age_at_diagnosis,
-        diagnosis_anatomic_site: $diagnosis_anatomic_site,
-        disease_phase: $disease_phase,
-        diagnosis_icd_o: $diagnosis_icd_o,
-        vital_status: $vital_status,
-        sample_anatomic_site: $sample_anatomic_site,
-        participant_age_at_collection: $participant_age_at_collection,
-        sample_tumor_status: $sample_tumor_status,
-        tumor_classification: $tumor_classification,
-        assay_method: $assay_method,
-        file_type: $file_type,
-        phs_accession: $phs_accession,       
-        grant_id: $grant_id,
-        institution: $institution,
-        study_acronym: $study_acronym,
-        study_short_title: $study_short_title,
-        library_selection: $library_selection,
-        library_source: $library_source,
-        library_strategy: $library_strategy,
-        first: $first, 
-        offset: $offset, 
-        order_by: $order_by,
-        sort_direction: $sort_direction
-    ) {
-        id
-        diagnosis_id
-        participant_id
-        phs_accession
-        diagnosis_icd_o
-        disease_phase
-        anatomic_site
-        age_at_diagnosis
-        vital_status
-        study_id
-    }
+  # Demographics
+  $participant_ids: [String],
+  $ethnicity: [String],
+  $race: [String],
+  $sex_at_birth: [String],
+
+  # Diagnoses
+  $age_at_diagnosis: [Int],
+  $anatomic_site: [String],
+  $diagnosis_classification: [String],
+  $diagnosis_classification_system: [String],
+  $diagnosis_verification_status: [String],
+  $diagnosis_basis: [String],
+  $disease_phase: [String],
+
+  # Studies
+  $phs_accession: [String],
+  $study_acronym: [String],
+  $study_short_title: [String],
+
+  # Survivals
+  $age_at_last_known_survival_status: [Int],
+  $first_event: [String],
+  $last_known_survival_status: [String]
+
+  # Table config
+  $first: Int,
+  $offset: Int,
+  $order_by: String,
+  $sort_direction: String
+) {
+  diagnosisOverview(
+      # Demographics
+      participant_ids: $participant_ids,
+      ethnicity: $ethnicity,
+      race: $race,
+      sex_at_birth: $sex_at_birth,
+
+      # Diagnoses
+      age_at_diagnosis: $age_at_diagnosis,
+      anatomic_site: $anatomic_site,
+      diagnosis_classification: $diagnosis_classification,
+      diagnosis_classification_system: $diagnosis_classification_system,
+      diagnosis_verification_status: $diagnosis_verification_status,
+      diagnosis_basis: $diagnosis_basis,
+      disease_phase: $disease_phase,
+      
+      # Studies
+      phs_accession: $phs_accession,
+      study_acronym: $study_acronym,
+      study_short_title: $study_short_title,
+
+      # Survivals
+      age_at_last_known_survival_status: $age_at_last_known_survival_status,
+      first_event: $first_event,
+      last_known_survival_status: $last_known_survival_status
+
+      # Table config
+      first: $first,
+      offset: $offset,
+      order_by: $order_by,
+      sort_direction: $sort_direction
+  ) {
+      # Demographics
+      participant_id
+
+      # Diagnosis
+      age_at_diagnosis
+      anatomic_site
+      diagnosis_basis
+      diagnosis_classification
+      diagnosis_classification_system
+      diagnosis_verification_status
+      disease_phase
+      tumor_classification
+
+      # Study
+      phs_accession
+      __typename
+  }
 }
 `;
 
@@ -1078,7 +1091,7 @@ export const tabContainers = [
     paginationAPIField: 'diagnosisOverview',
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
-    count: 'numberOfDiagnosis',
+    count: 'numberOfDiagnoses',
     fileCount: 'diagnosisFileCount',
     dataKey: 'id',
     tableID: 'diagnosis_tab_table',
@@ -1086,36 +1099,29 @@ export const tabContainers = [
       pagination: true,
       manageViewColumns: false,
     },
-    columns: [
+    columns: [/*
       {
         cellType: cellTypes.CHECKBOX,
         display: true,
         role: cellTypes.CHECKBOX,
-      },
+      },*/
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'study_id',
-        header: 'Study ID',
+        dataField: 'phs_accession',
+        header: 'Study Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'diagnosis_icd_o',
-        header: 'Diagnosis (ICD-O)',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'disease_phase',
-        header: 'Disease Phase',
+        dataField: 'age_at_diagnosis',
+        header: 'Age at Diagnosis (days)',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1128,34 +1134,54 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'age_at_diagnosis',
-        header: 'Age at Diagnosis (days)',
+        dataField: 'diagnosis_classification',
+        header: 'Diagnosis Classification',
         display: true,
         tooltipText: 'sort',
-        cellType: cellTypes.CUSTOM_ELEM,
-        cellStyle: cellStyles.TRANSFORM,
-        dataFormatter: (dt) => {
-          if (dt === -999) {
-            return 'Not Reported';
-          }
-          return dt.toString();
-        },
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'vital_status',
-        header: 'Vital Status',
+        dataField: 'diagnosis_classification_system',
+        header: 'Diagnosis Classification System',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
+      {
+        dataField: 'diagnosis_verification_status',
+        header: 'Diagnosis Verification Status',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'diagnosis_basis',
+        header: 'Diagnosis Basis',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'disease_phase',
+        header: 'Disease Phase',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_classification',
+        header: 'Tumor Classification',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      
     ],
     id: 'diagnosis_tab',
     tableID: 'diagnosis_tab_table',
     tabIndex: '3',
-    selectableRows: true,
     tableDownloadCSV: customDiagnosisTabDownloadCSV,
-    downloadFileName: 'CCDI Inventory Diagnosis Download',
+    downloadFileName: 'C3DC Inventory Diagnosis Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },

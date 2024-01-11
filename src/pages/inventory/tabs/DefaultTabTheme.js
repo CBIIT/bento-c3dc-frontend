@@ -33,12 +33,12 @@ export const customTheme = {
           color: '#000000',
           borderTop: '6px solid #006A8F',
         },
-        '&.samples': {
-          background: '#B3D6EA',
-          color: '#000000',
-          borderTop: '6px solid #07679C',
-        },
         '&.diagnosis': {
+          background: '#FFFFFF',
+          color: '#000000',
+          borderTop: '6px solid #E39520',
+        },
+        '&.samples': {
           background: '#B3D6EA',
           color: '#000000',
           borderTop: '6px solid #07679C',
@@ -57,12 +57,12 @@ export const customTheme = {
         fontSize: '16px',
         fontWeight: '300',
       },
-      '& span.samples_count': {
+      '& span.diagnosis_count': {
         marginLeft: '5px',
         fontSize: '16px',
         fontWeight: '300',
       },
-      '& span.diagnosis_count': {
+      '& span.samples_count': {
         marginLeft: '5px',
         fontSize: '16px',
         fontWeight: '300',
