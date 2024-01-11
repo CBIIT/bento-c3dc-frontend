@@ -1202,66 +1202,6 @@ export const tabContainers = [
     addSelectedFilesQuery: GET_ALL_FILEIDS_DIAGNOSISTAB_FOR_SELECT_ALL,
   },
   {
-    name: 'Studies',
-    dataField: 'dataStudy',
-    api: GET_STUDY_OVERVIEW_QUERY,
-    paginationAPIField: 'studyOverview',
-    defaultSortField: 'study_short_title',
-    defaultSortDirection: 'asc',
-    count: 'numberOfStudies',
-    fileCount: 'studiesFileCount',
-    dataKey: 'id',
-    tableID: 'study_tab_table',
-    extendedViewConfig: {
-      pagination: true,
-      manageViewColumns: false,
-    },
-    columns: [/*
-      {
-        cellType: cellTypes.CHECKBOX,
-        display: true,
-        role: cellTypes.CHECKBOX,
-      },*/
-      {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'study_short_title',
-        header: 'Study Short Title',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'study_acronym',
-        header: 'Acronym',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      
-     
-    ],
-    id: 'study_tab',
-    tableID: 'study_tab_table',
-    tabIndex: '4',
-    selectableRows: true,
-    tableDownloadCSV: customStudyTabDownloadCSV,
-    downloadFileName: 'C3DC Inventory Studies Download',
-    tableMsg: {
-      noMatch: 'No Matching Records Found',
-    },
-    addFilesRequestVariableKey: 'study_ids',
-    addFilesResponseKeys: ['fileIDsFromList'],
-    addAllFilesResponseKeys: ['studyOverview', 'files'],
-    addAllFileQuery: GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART,
-    addSelectedFilesQuery: GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL,
-  },
-  {
     name: 'Survival',
     dataField: 'dataSurvival',
     api: GET_SURVIVAL_OVERVIEW_QUERY,
@@ -1348,6 +1288,66 @@ export const tabContainers = [
     //addAllFilesResponseKeys: ['survivalOverview', 'files'],
     //addAllFileQuery: GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART,
     //addSelectedFilesQuery: GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
+  },
+  {
+    name: 'Studies',
+    dataField: 'dataStudy',
+    api: GET_STUDY_OVERVIEW_QUERY,
+    paginationAPIField: 'studyOverview',
+    defaultSortField: 'study_short_title',
+    defaultSortDirection: 'asc',
+    count: 'numberOfStudies',
+    fileCount: 'studiesFileCount',
+    dataKey: 'id',
+    tableID: 'study_tab_table',
+    extendedViewConfig: {
+      pagination: true,
+      manageViewColumns: false,
+    },
+    columns: [/*
+      {
+        cellType: cellTypes.CHECKBOX,
+        display: true,
+        role: cellTypes.CHECKBOX,
+      },*/
+      {
+        dataField: 'phs_accession',
+        header: 'Study Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'study_short_title',
+        header: 'Study Short Title',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'study_acronym',
+        header: 'Acronym',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      
+     
+    ],
+    id: 'study_tab',
+    tableID: 'study_tab_table',
+    tabIndex: '4',
+    selectableRows: true,
+    tableDownloadCSV: customStudyTabDownloadCSV,
+    downloadFileName: 'C3DC Inventory Studies Download',
+    tableMsg: {
+      noMatch: 'No Matching Records Found',
+    },
+    addFilesRequestVariableKey: 'study_ids',
+    addFilesResponseKeys: ['fileIDsFromList'],
+    addAllFilesResponseKeys: ['studyOverview', 'files'],
+    addAllFileQuery: GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART,
+    addSelectedFilesQuery: GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL,
   },
 ];
 
