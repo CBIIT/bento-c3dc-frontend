@@ -84,13 +84,12 @@ const WidgetView = ({
               <Grid key={index} item lg={4} md={6} sm={12} xs={12}>
                 <Widget
                   header={(
-                    <Typography size="md" weight="normal" family="Nunito" color="lochmara">
+                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center',width:'80%'}} color="lochmara">
                       {widget.title}
                     </Typography>
                   )}
                   bodyClass={classes.fullHeightBody}
-                  className={classes.card}
-                  bottomDivider
+                  className={classes.card}                 
                   customBackGround
                   data={dataset}
                   chartType={widget.type}
@@ -100,6 +99,7 @@ const WidgetView = ({
                   width={widget.width}
                   height={widget.height}
                 />
+              
               </Grid>
             );
           })}
