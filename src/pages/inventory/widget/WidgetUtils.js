@@ -37,10 +37,8 @@ export function formatWidgetData(data, custodianConfig) {
     const {
       type, dataName, title, sliceTitle
     } = widget;
-    console.log("alertD "+ JSON.stringify(data));
-    const dataset = type === 'sunburst'
-      ? transformInitialDataForSunburst(data[dataName], title, sliceTitle, 'children', COLORS_LEVEL_1, COLORS_LEVEL_2)
-      : removeEmptySubjectsFromDonutData(data[dataName]);
+   
+    const dataset = removeEmptySubjectsFromDonutData(data[dataName]);
 
     return { ...acc, [dataName]: dataset };
   }, {});
