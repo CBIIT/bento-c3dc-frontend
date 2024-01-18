@@ -116,17 +116,17 @@ getParticipants(
     subjects
     __typename
   }
-  participantCountByAgeAtLastKnownSurvivalStatus {
+  participantCountByAgeAtDiagnosis {
     group
     subjects
     __typename
   }
-  participantCountByFirstEvent {
+  participantCountByAnatomicSite {
     group
     subjects
     __typename
   }
-  participantCountByLastKnownSurvivalStatus {
+  participantCountByDiagnosisClassification {
     group
     subjects
     __typename
@@ -224,7 +224,6 @@ getParticipants(
   __typename
 }
 }
-
 `;
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
