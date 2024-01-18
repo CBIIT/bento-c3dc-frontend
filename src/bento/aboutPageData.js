@@ -56,7 +56,7 @@ export const aboutData = {
     "<a className='sectionTitle'>GDC </a> <a className='aboutLink' href='https://portal.gdc.cancer.gov/' target='_blank' rel='noopener noreferrer'>https://portal.gdc.cancer.gov/</a><br/>" +
     "The GDC Data Portal is a robust data-driven platform that allows cancer researchers and bioinformaticians to search and download cancer data for analysis." ,
   tenthParagraph:
-    "<a className='sectionTitle'>CaDSR </a> <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/Home.jsp' target='_blank' rel='noopener noreferrer'>https://cadsr.cancer.gov/onedata/Home.jsp</a><br/>" +
+    "<a className='sectionTitle'>caDSR </a> <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/Home.jsp' target='_blank' rel='noopener noreferrer'>https://cadsr.cancer.gov/onedata/Home.jsp</a><br/>" +
     "The Cancer Data Standards Repository is one of the largest CDE registries developed by the National Cancer Institute (NCI) and contains over 60,000 CDEs covering many aspects of cancer research. " ,
   lastParagraph:
     "The CCDI welcomes input from the community to enhance usability. " +
