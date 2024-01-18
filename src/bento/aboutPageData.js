@@ -22,7 +22,7 @@ export const aboutData = {
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
     "The pilot phase contains harmonized data from:" +
     "<ul className='itemList'>" +
-    "  <li>CCDI’s Molecular Characterization Initiative</li>" +
+    "  <li>CCDI’s Molecular Characterization Initiative (MCI)</li>" +
     "  <li>TARGET Neuroblastoma</li>" +
     "</ul>" +
     "<a className='listAlightment'> See <a className='aboutLink' href='https://github.com/chicagopcdc/c3dc_etl' target='_blank' rel='noopener noreferrer'>GitHub Repository</a>.</a><br/>" +
