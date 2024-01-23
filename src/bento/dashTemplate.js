@@ -430,7 +430,7 @@ export const widgetConfig = [
     type: 'bar',
     title: 'AGE AT DIAGNOSIS',
     dataName: 'participantCountByAgeAtDiagnosis',
-    width: 400,
+    width: '100%',
     height: 210,
 
   },
