@@ -8,7 +8,7 @@ export const aboutData = {
   secondParagraph:
     "<a className='sectionTitle'>Childhood Cancer Clinical Data Commons</a><br/>" +
     "The Childhood Cancer Clinical Data Commons (C3DC) is an open-access web application that serves as the primary source for deidentified, individual-level harmonized data that describes the demographic and phenotypic characteristics of participants. " +
-    "This harmonization process uses a standard data dictionary consisting of Common Data Elements (CDEs), C3DC employs a common data model to facilitate cohort analyses and correlative analytics with data in other datatype-specific commons. " +
+    "This harmonization process uses a standard <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/dmdirect/NIH/NCI/CO/CDEDD?filter=Administered%20Item%20%28Data%20Element%20CO%29.CDEDD%20Classification.P_ITEM_ID_VER=12119072v1' target='_blank' rel='noopener noreferrer'>data dictionary</a> consisting of Common Data Elements (CDEs), C3DC employs a common data model to facilitate cohort analyses and correlative analytics with data in other datatype-specific commons. " +
     "The data model has been deposited in " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>GitHub</a>.",
   thirdParagraph:
@@ -22,7 +22,7 @@ export const aboutData = {
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
     "The pilot phase contains harmonized data from:" +
     "<ul className='itemList'>" +
-    "  <li>CCDI’s Molecular Characterization Initiative</li>" +
+    "  <li>CCDI’s Molecular Characterization Initiative (MCI)</li>" +
     "  <li>TARGET Neuroblastoma</li>" +
     "</ul>" +
     "<a className='listAlightment'> See <a className='aboutLink' href='https://github.com/chicagopcdc/c3dc_etl' target='_blank' rel='noopener noreferrer'>GitHub Repository</a>.</a><br/>" +
