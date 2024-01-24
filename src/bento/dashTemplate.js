@@ -394,50 +394,44 @@ export const SUNBURST_COLORS_LEVEL_2 = [
 // datatable_level2_colors: string[]
 // sliceTitle: string (optional)
 export const widgetConfig = [
-  // {
-  //   type: 'sunburst',
-  //   title: 'Programs and Arms',
-  //   dataName: 'armsByPrograms',
-  //   datatable_level1_field: 'program',
-  //   datatable_level1_colors: SUNBURST_COLORS_LEVEL_1,
-  //   datatable_level2_field: 'arm',
-  //   datatable_level2_colors: SUNBURST_COLORS_LEVEL_2,
-  // },
   {
     type: 'donut',
-    title: 'Study',
-    dataName: 'participantCountByStudy',
+    title: 'RACE',
+    dataName: 'participantCountByRace',
     sliceTitle: 'Participants',
+    chartTitleAlignment: 'center'
   },
   {
     type: 'donut',
-    title: 'Diagnosis (ICD-O)',
-    dataName: 'participantCountByDiagnosis',
+    title: 'ETHNICITY',
+    dataName: 'participantCountByEthnicity',
     sliceTitle: 'Participants',
   },
   {
     type: 'bar',
-    title: 'Age at Diagnosis (years)',
-    dataName: 'participantCountByDiagnosisAge',
+    title: 'SEX AT BIRTH',
+    dataName: 'participantCountBySexAtBirth',
     width: '100%',
     height: 210,
   },
   {
     type: 'donut',
-    title: 'Race',
-    dataName: 'participantCountByRace',
+    title: 'DIAGNOSIS',
+    dataName: 'filterParticipantCountByDiagnosisClassification',
     sliceTitle: 'Participants',
   },
   {
     type: 'donut',
-    title: 'Gender',
-    dataName: 'participantCountByGender',
+    title: 'ANATOMIC SITES',
+    dataName: 'filterParticipantCountByAnatomicSite',
     sliceTitle: 'Participants',
   },
   {
-    type: 'donut',
-    title: 'Ethnicity',
-    dataName: 'participantCountByEthnicity',
-    sliceTitle: 'Participants',
+    type: 'bar',
+    title: 'AGE AT DIAGNOSIS',
+    dataName: 'participantCountByAgeAtDiagnosis',
+    width: '100%',
+    height: 210,
+
   },
 ];
