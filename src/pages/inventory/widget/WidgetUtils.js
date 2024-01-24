@@ -23,6 +23,7 @@ const COLORS_LEVEL_2 = [
 const removeEmptySubjectsFromDonutData = (data) => data.filter((item) => item.subjects !== 0);
 
 
+// eslint-disable-next-line no-unused-vars
 const transformInitialDataForSunburst = (data, level1 = 'program', level2 = 'arm', level1Children = 'children', level1Colors = COLORS_LEVEL_1, level2Colors = COLORS_LEVEL_2) => {
   const output = {};
   output.key = uuid();
@@ -45,10 +46,13 @@ const transformInitialDataForSunburst = (data, level1 = 'program', level2 = 'arm
 export function formatWidgetData(data, custodianConfig) {
   const formatted = custodianConfig.reduce((acc, widget) => {
     const {
-      type, dataName, title, sliceTitle
+      type, dataName, datatable_level1_field, datatable_level2_field,
+      datatable_level1_colors, datatable_level2_colors,
     } = widget;
    
-    const dataset = removeEmptySubjectsFromDonutData(data[dataName]);
+    const dataset = type === 'sunburst'
+      ? transformInitialDataForSunburst(data[dataName], datatable_level1_field, datatable_level2_field, 'children', datatable_level1_colors, datatable_level2_colors)
+      : removeEmptySubjectsFromDonutData(data[dataName]);
 
     return { ...acc, [dataName]: dataset };
   }, {});
