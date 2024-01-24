@@ -48,7 +48,7 @@ const styles = (theme) => ({
   },
   widgetInner: {
     marginTop: '-8px',
-    borderBottom: '6px solid #E2E7EC',
+   // borderBottom: '6px solid red',
   },
   widgetsCollapse: {
     background: theme.palette.widgetBackground.main,

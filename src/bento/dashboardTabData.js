@@ -100,37 +100,37 @@ query search(
     numberOfStudies
     numberOfSurvivals
 
-    # Widget counts
-    participantCountByEthnicity {
-      group
-      subjects
-      __typename
-    }
-    participantCountByRace {
-      group
-      subjects
-      __typename
-    }
-    participantCountBySexAtBirth {
-      group
-      subjects
-      __typename
-    }
-    participantCountByAgeAtDiagnosis {
-      group
-      subjects
-      __typename
-    }
-    participantCountByAnatomicSite {
-      group
-      subjects
-      __typename
-    }
-    participantCountByDiagnosisClassification {
-      group
-      subjects
-      __typename
-    }
+  # Widget counts
+  participantCountByEthnicity {
+    group
+    subjects
+    __typename
+  }
+  participantCountByRace {
+    group
+    subjects
+    __typename
+  }
+  participantCountBySexAtBirth {
+    group
+    subjects
+    __typename
+  }
+  participantCountByAgeAtDiagnosis {
+    group
+    subjects
+    __typename
+  }
+  participantCountByAnatomicSite {
+    group
+    subjects
+    __typename
+  }
+  participantCountByDiagnosisClassification {
+    group
+    subjects
+    __typename
+  }
 
     # Demographic filter counts
     filterParticipantCountByEthnicity {
@@ -224,7 +224,6 @@ query search(
     __typename
   }
 }
-
 `;
 
 export const GET_FILES_OVERVIEW_QUERY = gql`

@@ -5,6 +5,7 @@ import styles from './inventoryStyle';
 import BentoFacetFilter from './sideBar/BentoFacetFilter';
 // import WidgetView from './widget/WidgetView';
 import StatsView from '../../components/Stats/StatsView';
+import WidgetView from './widget/WidgetView';
 import TabsView from './tabs/TabsView';
 import QueryBarView from './filterQueryBar/QueryBarView';
 
@@ -27,11 +28,11 @@ const Inventory = ({
         <div className={classes.rightContent}>
           <div className={classes.widgetsContainer}>
             <QueryBarView data={dashData} />
-            {/*
+           
             <WidgetView
               data={dashData}
             />
-            */}
+            
             <TabsView
               dashboardStats={dashData}
               activeFilters={activeFilters}
