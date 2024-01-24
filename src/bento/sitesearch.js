@@ -9,7 +9,11 @@ export const programListingIcon = {
 };
 
 export const SEARCH_PAGE_RESULT_ABOUT_PUBLIC = gql`
-    query publicGlobalSearch($input: String, $first: Int, $offset: Int){
+    query publicGlobalSearch(
+        $input: String, 
+        $first: Int, 
+        $offset: Int
+        ){
         globalSearch(
             input: $input
             first: $first
@@ -25,7 +29,11 @@ export const SEARCH_PAGE_RESULT_ABOUT_PUBLIC = gql`
     }`;
 
 export const SEARCH_PAGE_RESULTS_PUBLIC = gql`
-    query publicGlobalSearch($input: String, $first: Int, $offset: Int){
+    query publicGlobalSearch(
+        $input: String,
+        $first: Int, 
+        $offset: Int
+        ){
         globalSearch(
             input: $input
             first: $first
