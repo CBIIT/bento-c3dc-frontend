@@ -53,6 +53,7 @@ export function formatWidgetData(data, custodianConfig) {
     const dataset = type === 'sunburst'
       ? transformInitialDataForSunburst(data[dataName], datatable_level1_field, datatable_level2_field, 'children', datatable_level1_colors, datatable_level2_colors)
       : removeEmptySubjectsFromDonutData(data[dataName]);
+      
     return { ...acc, [dataName]: dataset };
   }, {});
 
