@@ -34,6 +34,11 @@ const WidgetView = ({
         textOverflowLength: 20,
         textColor: theme.palette.widgetBackground.contrastText,
       },
+      functions:{
+        // TODO: Make change in Widget package to rprovide option to configure active index. 
+        // Using getLastIndex to show first index as data set us sorted decending. 
+        getLastIndex: (dataset) => ((dataset.length !== undefined) ? 0 : 0),
+      }
     },
     SunburstConfig: {
       styles: {

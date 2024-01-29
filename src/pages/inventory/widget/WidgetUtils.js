@@ -43,28 +43,18 @@ const transformInitialDataForSunburst = (data, level1 = 'program', level2 = 'arm
   return output;
 }
 
-// A compare function that compares the age property of two objects
-function compareBySubjectCount(a, b) {
-  const sortKey = "subjects";
-  return a[sortKey] - b[sortKey];
-}
 
 export function formatWidgetData(data, custodianConfig) {
   const formatted = custodianConfig.reduce((acc, widget) => {
     const {
       type, dataName, datatable_level1_field, datatable_level2_field,
-      datatable_level1_colors, datatable_level2_colors, sort = 'desc'
+      datatable_level1_colors, datatable_level2_colors,
     } = widget;
    
     const dataset = type === 'sunburst'
       ? transformInitialDataForSunburst(data[dataName], datatable_level1_field, datatable_level2_field, 'children', datatable_level1_colors, datatable_level2_colors)
       : removeEmptySubjectsFromDonutData(data[dataName]);
-
-      if(sort === "desc"){
-        dataset.sort(compareBySubjectCount);
-      }
       
-
     return { ...acc, [dataName]: dataset };
   }, {});
 

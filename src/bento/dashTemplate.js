@@ -413,7 +413,6 @@ export const widgetConfig = [
     dataName: 'participantCountBySexAtBirth',
     width: '100%',
     height: 210,
-    sort: 'asc',
   },
   {
     type: 'donut',
@@ -433,6 +432,5 @@ export const widgetConfig = [
     dataName: 'participantCountByAgeAtDiagnosis',
     width: '100%',
     height: 210,
-    sort: 'asc',
   },
 ];
