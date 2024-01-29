@@ -432,6 +432,5 @@ export const widgetConfig = [
     dataName: 'participantCountByAgeAtDiagnosis',
     width: '100%',
     height: 210,
-
   },
 ];
