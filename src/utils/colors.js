@@ -18,7 +18,7 @@ const COLORS_EVEN = [
 // ];
 
 const colors = {
-  odd: COLORS_EVEN,
+  odd: COLORS_EVEN.reverse(),
   even: COLORS_EVEN,
 };
 
