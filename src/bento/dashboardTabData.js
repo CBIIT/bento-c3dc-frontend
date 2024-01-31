@@ -1045,6 +1045,11 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: false,
+      download: true,
+      downloadButtonConfig: {
+        title: 'DOWNLOAD DATA',
+        cloudIcon: true,
+      },
     },
     columns: [
       {
@@ -1117,6 +1122,11 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: false,
+      download: true,
+      downloadButtonConfig: {
+        title: 'DOWNLOAD DATA',
+        cloudIcon: true,
+      },
     },
     columns: [
       {
@@ -1275,6 +1285,11 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: false,
+      download: true,
+      downloadButtonConfig: {
+        title: 'DOWNLOAD DATA',
+        cloudIcon: true,
+      },
     },
     saveButtonDefaultStyle: {
       color: '#fff',
@@ -1386,6 +1401,11 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: false,
+      download: true,
+      downloadButtonConfig: {
+        title: 'DOWNLOAD DATA',
+        cloudIcon: true,
+      },
     },
     columns: [
       {
