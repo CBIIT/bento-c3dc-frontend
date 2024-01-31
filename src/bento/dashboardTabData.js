@@ -1,8 +1,6 @@
-/* eslint-disable */
 import gql from 'graphql-tag';
-import { cellTypes, cellStyles } from '@bento-core/table';
-import { customParticipantsTabDownloadCSV, customFilesTabDownloadCSV, customSamplesTabDownloadCSV, customDiagnosisTabDownloadCSV, customStudyTabDownloadCSV } from './tableDownloadCSV';
-import { dataFormatTypes } from '@bento-core/table';
+import { cellTypes } from '@bento-core/table';
+import { customParticipantsTabDownloadCSV, customSamplesTabDownloadCSV, customDiagnosisTabDownloadCSV, customStudyTabDownloadCSV } from './tableDownloadCSV';
 import questionIcon from '../assets/icons/Question_Icon.svg';
 
 // --------------- Tooltip configuration --------------
@@ -16,7 +14,6 @@ export const tooltipContentAddAll = {
   Files: 'Click button to add all files associated with the filtered row(s).',
   arrow: true,
   styles: {
-    border: '#03A383 1px solid',
   }
 };
 
@@ -370,11 +367,15 @@ query survivalOverview(
 
       # Study
       phs_accession
+      study_id
 
       # Survival
+      age_at_event_free_survival_status
       age_at_last_known_survival_status
+      event_free_survival_status
       first_event
       last_known_survival_status
+      survival_id
 
       __typename
   }
@@ -451,6 +452,9 @@ query participantOverview(
      race
      sex_at_birth
      phs_accession
+
+     # Studies
+     study_id
      __typename
  }
 }`;
@@ -529,12 +533,20 @@ query diagnosisOverview(
       diagnosis_basis
       diagnosis_classification
       diagnosis_classification_system
+      diagnosis_comment
+      diagnosis_id
       diagnosis_verification_status
       disease_phase
+      toronto_childhood_cancer_staging
       tumor_classification
+      tumor_grade
+      tumor_stage_clinical_m
+      tumor_stage_clinical_n
+      tumor_stage_clinical_t
 
       # Study
       phs_accession
+      study_id
       __typename
   }
 }
@@ -605,10 +617,18 @@ query studyOverview(
       order_by: $order_by,
       sort_direction: $sort_direction
   ) {
-      # Study
+      # Studies
+      acl
+      consent
+      consent_number
+      external_url
       phs_accession
       study_acronym
+      study_description
+      study_id
+      study_name
       study_short_title
+
       __typename
   }
 }
@@ -1026,23 +1046,7 @@ export const tabContainers = [
       pagination: true,
       manageViewColumns: false,
     },
-    columns: [/*
-      {
-        cellType: cellTypes.CHECKBOX,
-        display: true,
-        role: cellTypes.CHECKBOX,
-      },*/
-      // {
-      //   dataField: 'participant_id',
-      //   header: 'Participant ID',
-      //   cellType: cellTypes.LINK,
-      //   linkAttr : {
-      //     rootPath: '/participant',
-      //     pathParams: ['participant_id'],
-      //   },
-      //   display: true,
-      //   tooltipText: 'sort',
-      // },
+    columns: [
       {
         dataField: 'participant_id',
         header: 'Participant Id',
@@ -1077,10 +1081,16 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'study_id',
+        header: 'Study ID',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
       }
     ],
     id: 'participant_tab',
-    tableID: 'participant_tab_table',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
     tabIndex: '0',
     downloadFileName: 'C3DC Inventory Participants Download',
@@ -1108,12 +1118,7 @@ export const tabContainers = [
       pagination: true,
       manageViewColumns: false,
     },
-    columns: [/*
-      {
-        cellType: cellTypes.CHECKBOX,
-        display: true,
-        role: cellTypes.CHECKBOX,
-      },*/
+    columns: [
       {
         dataField: 'participant_id',
         header: 'Participant Id',
@@ -1184,10 +1189,66 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
+      // Extra Hidden Columns
+      {
+        dataField: 'diagnosis_id',
+        header: 'Diagnosis ID',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'diagnosis_comment',
+        header: 'Diagnosis Comment',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'toronto_childhood_cancer_staging',
+        header: 'Toronto Childhood Cancer Staging',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_grade',
+        header: 'Tumor Grade',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_stage_clinical_t',
+        header: 'Tumor Stage Clinical T',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_stage_clinical_n',
+        header: 'Tumor Stage Clinical N',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_stage_clinical_m',
+        header: 'Tumor Stage Clinical M',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'study_id',
+        header: 'Study ID',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
       
     ],
     id: 'diagnosis_tab',
-    tableID: 'diagnosis_tab_table',
     tabIndex: '3',
     tableDownloadCSV: customDiagnosisTabDownloadCSV,
     downloadFileName: 'C3DC Inventory Diagnosis Download',
@@ -1233,11 +1294,6 @@ export const tabContainers = [
     },
 
     columns: [
-      // {
-      //   cellType: cellTypes.CHECKBOX,
-      //   display: true,
-      //   role: cellTypes.CHECKBOX,
-      // },
       {
         dataField: 'participant_id',
         header: 'Participant Id',
@@ -1273,9 +1329,37 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
+      // Extra Hidden Columns
+      {
+        dataField: "survival_id",
+        header: "Survival ID",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "event_free_survival_status",
+        header: "Event-Free Survival Status",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "age_at_event_free_survival_status",
+        header: "Age at Event-Free Survival Status",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "study_id",
+        header: "Study ID",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      }
     ],
     id: 'survival_tab',
-    tableID: 'survival_tab_table',
     tabIndex: '1',
     tableDownloadCSV: customSamplesTabDownloadCSV,
     downloadFileName: 'C3DC Inventory Survival Download',
@@ -1303,12 +1387,7 @@ export const tabContainers = [
       pagination: true,
       manageViewColumns: false,
     },
-    columns: [/*
-      {
-        cellType: cellTypes.CHECKBOX,
-        display: true,
-        role: cellTypes.CHECKBOX,
-      },*/
+    columns: [
       {
         dataField: 'phs_accession',
         header: 'Study Accession',
@@ -1330,11 +1409,60 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
+      // Extra Hidden Columns
+      {
+        dataField: "study_id",
+        header: "Study ID",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "acl",
+        header: "ACL",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "study_name",
+        header: "Study Name",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "study_description",
+        header: "Study Description",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "consent",
+        header: "Consent",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "consent_number",
+        header: "Consent Number",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: "external_url",
+        header: "External URL",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      }
       
      
     ],
     id: 'study_tab',
-    tableID: 'study_tab_table',
     tabIndex: '4',
     selectableRows: true,
     tableDownloadCSV: customStudyTabDownloadCSV,

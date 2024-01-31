@@ -53,7 +53,7 @@ const AboutContainer = styled.div`
 
 
   .upperImg {
-    margin-top: -27px;
+    margin-top: 30px;
     margin-bottom: 23px;
   }
 
