@@ -45,7 +45,7 @@ export async function getAllParticipantIds(participantIdsArray) {
     .query({
       query: GET_PARTICIPANT_IDS,
       variables: {
-        participant_ids: participantIdsArray,
+        participant_id: participantIdsArray,
       },
     })
     .then((result) => result.data.findParticipantIdsInList)

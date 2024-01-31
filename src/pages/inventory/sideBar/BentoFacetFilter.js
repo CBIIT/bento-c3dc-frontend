@@ -85,7 +85,7 @@ const { UploadModal } = UploadModalGenerator({
 
         // Combine the results and remove duplicates
         const unmatched = new Set(inputArray);
-        matched.forEach((obj) => unmatched.delete(obj.subject_id));
+        matched.forEach((obj) => unmatched.delete(obj.participant_id));
         return { matched, unmatched: [...unmatched] };
       } catch (e) {
         return { matched: [], unmatched: [] };
@@ -102,7 +102,7 @@ const { UploadModal } = UploadModalGenerator({
     matchedId: 'participant_id',
     matchedLabel : 'Submitted Participant ID',
     associateId: 'phs_accession',
-    associateLabel: 'Unique Participant ID',
+    associateLabel: '',
     projectName: 'C3DC',
     caseIds: 'Participant IDs',
   },
