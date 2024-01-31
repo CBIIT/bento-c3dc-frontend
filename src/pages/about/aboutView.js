@@ -111,6 +111,7 @@ const AboutView = () => {
               <div className='eigthParagraph sectionStart'>{ReactHtmlParser(aboutData.eigthParagraph)}</div>
               <div className='ninthParagraph sectionStart'>{ReactHtmlParser(aboutData.ninthParagraph)}</div>
               <div className='tenthParagraph sectionStart'>{ReactHtmlParser(aboutData.tenthParagraph)}</div>
+              <div className='eleventhParagraph sectionStart'>{ReactHtmlParser(aboutData.eleventhParagraph)}</div>
             </div>
           </div>
          

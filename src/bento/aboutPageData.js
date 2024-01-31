@@ -45,17 +45,21 @@ export const aboutData = {
   seventhTitle:
     "<a className='sectionTitle'>C3DC Resources</a>",
   seventhParagraph:
+    "<a className='sectionTitle'>C3DC Data Model</a><br/>" +
+    "The C3DC model is a conceptual and structural representation of the harmonized data from CCDI and other studies. Developed in collaboration with the PCDC at the University of Chicago, the C3DC data model will initially focus on a limited set of data elements to establish processes for data ingestion, harmonization and storage. <br/> " +
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>https://github.com/chicagopcdc/c3dc_etl</a>.",
+  eigthParagraph:
     "<a className='sectionTitle'>GitHub Harmonization Repository</a><br/>" +
     "The GitHub hosted, open source, repository where the harmonization scripts, translation files and other resources are located. <br/> " +
     "<a className='aboutLink' href='https://github.com/chicagopcdc/c3dc_etl' target='_blank' rel='noopener noreferrer'>https://github.com/chicagopcdc/c3dc_etl</a>.",
-  eigthParagraph:
+  ninthParagraph:
     "<a className='sectionTitle'>CCDI Hub </a> <a className='aboutLink' href='https://ccdi.cancer.gov/' target='_blank' rel='noopener noreferrer'>https://ccdi.cancer.gov/</a><br/>" +
     "The Childhood Cancer Data Initiative (CCDI) Hub is an entry point for researchers, data scientists, and citizen scientists looking to use and connect with CCDI-related data. " +
     "It provides information about available tools and applications that support the CCDI vision, along with descriptions of resources, each of which targets specific aspects of childhood cancer research.",
-  ninthParagraph:
+  tenthParagraph:
     "<a className='sectionTitle'>GDC </a> <a className='aboutLink' href='https://portal.gdc.cancer.gov/' target='_blank' rel='noopener noreferrer'>https://portal.gdc.cancer.gov/</a><br/>" +
     "The GDC Data Portal is a robust data-driven platform that allows cancer researchers and bioinformaticians to search and download cancer data for analysis." ,
-  tenthParagraph:
+  eleventhParagraph:
     "<a className='sectionTitle'>caDSR </a> <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/Home.jsp' target='_blank' rel='noopener noreferrer'>https://cadsr.cancer.gov/onedata/Home.jsp</a><br/>" +
     "The Cancer Data Standards Repository is one of the largest CDE registries developed by the National Cancer Institute (NCI) and contains over 60,000 CDEs covering many aspects of cancer research. " ,
   lastParagraph:
