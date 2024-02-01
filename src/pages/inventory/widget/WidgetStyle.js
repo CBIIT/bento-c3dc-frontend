@@ -24,6 +24,9 @@ const styles = (theme) => ({
   widgetsContainer: {
     background: theme.palette.widgetBackground.main,
   },
+  widgetTitle: {
+    fontSize: '20px',
+  },
   contentShift: {
     width: `calc(100vw - ${theme.custom.drawerWidth})`,
     marginLeft: theme.custom.drawerWidth,
