@@ -1098,7 +1098,7 @@ export const tabContainers = [
     id: 'participant_tab',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
     tabIndex: '0',
-    downloadFileName: 'C3DC Inventory Participants Download',
+    downloadFileName: 'C3DC Participants Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1261,7 +1261,7 @@ export const tabContainers = [
     id: 'diagnosis_tab',
     tabIndex: '3',
     tableDownloadCSV: customDiagnosisTabDownloadCSV,
-    downloadFileName: 'C3DC Inventory Diagnosis Download',
+    downloadFileName: 'C3DC Diagnosis Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1377,7 +1377,7 @@ export const tabContainers = [
     id: 'survival_tab',
     tabIndex: '1',
     tableDownloadCSV: customSamplesTabDownloadCSV,
-    downloadFileName: 'C3DC Inventory Survival Download',
+    downloadFileName: 'C3DC Survival Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1486,7 +1486,7 @@ export const tabContainers = [
     tabIndex: '4',
     selectableRows: true,
     tableDownloadCSV: customStudyTabDownloadCSV,
-    downloadFileName: 'C3DC Inventory Studies Download',
+    downloadFileName: 'C3DC Studies Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
