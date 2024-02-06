@@ -147,6 +147,7 @@ const LandingView = ({ classes, statsData }) => (
                     <Link
                       to={landingPageData.tile1.callToActionLink}
                       className={classes.aboutButton}
+                      reloadDocument={true}
                     >
                       {landingPageData.tile1.callToActionText}
                     </Link>
@@ -241,6 +242,7 @@ const LandingView = ({ classes, statsData }) => (
                       <Link
                         to={landingPageData.tile4.callToActionLink}
                         className={classes.mountainMeadowButton}
+                        reloadDocument={true}
                       >
                         {landingPageData.tile4.callToActionText}
                       </Link>
