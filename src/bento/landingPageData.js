@@ -89,7 +89,7 @@ export const landingPageData = {
     alt: '',
     img: landingTile3,
     titleText: 'Announcements',
-    descriptionText: 'Harmonized demographic and phenotypic data from the TARGET Neuroblastoma study and Molecular Characterization Initiative.',
+    descriptionText: 'Current release contains harmonized demographic and phenotypic data from the TARGET Neuroblastoma study and Molecular Characterization Initiative. Future releases will include additional CCDI-managed data.',
     callToActionText: 'Learn More',
     callToActionLink: '', // Link to the "Resources" Static Page
   },
