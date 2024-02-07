@@ -452,7 +452,7 @@ query participantOverview(
      race
      sex_at_birth
      phs_accession
-
+     alternate_participant_id
      # Studies
      study_id
      __typename
@@ -1067,13 +1067,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'sex_at_birth',
-        header: 'Sex at Birth',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'race',
         header: 'Race',
         display: true,
@@ -1084,6 +1077,20 @@ export const tabContainers = [
         dataField: 'ethnicity',
         header: 'Ethnicity',
         display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'sex_at_birth',
+        header: 'Sex at Birth',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'alternate_participant_id',
+        header: 'Alternate Participant ID',
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
