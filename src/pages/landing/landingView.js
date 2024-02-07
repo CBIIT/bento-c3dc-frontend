@@ -147,6 +147,7 @@ const LandingView = ({ classes, statsData }) => (
                     <Link
                       to={landingPageData.tile1.callToActionLink}
                       className={classes.aboutButton}
+                      reloadDocument={true}
                     >
                       {landingPageData.tile1.callToActionText}
                     </Link>
@@ -241,6 +242,7 @@ const LandingView = ({ classes, statsData }) => (
                       <Link
                         to={landingPageData.tile4.callToActionLink}
                         className={classes.mountainMeadowButton}
+                        reloadDocument={true}
                       >
                         {landingPageData.tile4.callToActionText}
                       </Link>
@@ -800,13 +802,13 @@ const styles = () => ({
     fontSize: '28px',
     fontWeight: '500',
     lineHeight: '32px',
-    padding: '14px 0 6px 0',
+    padding: '12px 0 6px 0',
   },
   contentContainer: {
     width: '245px',
     color: '#000',
     fontFamily: 'Inter',
-    fontSize: '16px',
+    fontSize: '12px',
     fontWeight: '400',
     lineHeight: '24px',
   },
