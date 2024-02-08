@@ -1206,7 +1206,6 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      // Extra Hidden Columns
       {
         dataField: 'toronto_childhood_cancer_staging',
         header: 'Toronto Childhood Cancer Staging',
