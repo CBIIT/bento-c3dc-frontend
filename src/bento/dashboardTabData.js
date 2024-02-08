@@ -1137,30 +1137,9 @@ export const tabContainers = [
     },
     columns: [
       {
-        dataField: 'participant_id',
-        header: 'Participant Id',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'age_at_diagnosis',
-        header: 'Age at Diagnosis (days)',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'anatomic_site',
-        header: 'Anatomic Site',
-        display: true,
+        dataField: 'diagnosis_id',
+        header: 'Diagnosis ID',
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1193,9 +1172,16 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
+        dataField: 'diagnosis_comment',
+        header: 'Diagnosis Comment',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: 'disease_phase',
         header: 'Disease Phase',
-        display: true,
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1206,18 +1192,17 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      // Extra Hidden Columns
       {
-        dataField: 'diagnosis_id',
-        header: 'Diagnosis ID',
-        display: false,
+        dataField: 'anatomic_site',
+        header: 'Anatomic Site',
+        display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'diagnosis_comment',
-        header: 'Diagnosis Comment',
-        display: false,
+        dataField: 'age_at_diagnosis',
+        header: 'Age at Diagnosis (days)',
+        display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1257,13 +1242,20 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
+        dataField: 'participant_id',
+        header: 'Participant Id',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: 'study_id',
         header: 'Study ID',
         display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      
+     
     ],
     id: 'diagnosis_tab',
     tabIndex: '3',
@@ -1314,21 +1306,15 @@ export const tabContainers = [
       opacity: 'unset',
       border: 'unset',
     },
-
+ 
+ 
     columns: [
       {
-        dataField: 'participant_id',
-        header: 'Participant Id',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
+        dataField: "survival_id",
+        header: "Survival ID",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
       },
       {
         dataField: 'last_known_survival_status',
@@ -1345,21 +1331,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'first_event',
-        header: 'First Event',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      // Extra Hidden Columns
-      {
-        dataField: "survival_id",
-        header: "Survival ID",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
-      },
-      {
         dataField: "event_free_survival_status",
         header: "Event-Free Survival Status",
         display: false,
@@ -1372,6 +1343,20 @@ export const tabContainers = [
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: 'first_event',
+        header: 'First Event',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'participant_id',
+        header: 'Participant Id',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
       },
       {
         dataField: "study_id",
@@ -1414,35 +1399,20 @@ export const tabContainers = [
         cloudIcon: true,
       },
     },
-    columns: [
-      {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'study_short_title',
-        header: 'Study Short Title',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'study_acronym',
-        header: 'Acronym',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      // Extra Hidden Columns
+    columns: [   
       {
         dataField: "study_id",
         header: "Study ID",
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: 'phs_accession',
+        header: 'Study Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
       },
       {
         dataField: "acl",
@@ -1457,6 +1427,20 @@ export const tabContainers = [
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: 'study_short_title',
+        header: 'Study Short Title',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'study_acronym',
+        header: 'Acronym',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
       },
       {
         dataField: "study_description",
@@ -1486,8 +1470,8 @@ export const tabContainers = [
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
       }
-      
      
+    
     ],
     id: 'study_tab',
     tabIndex: '4',
@@ -1503,6 +1487,8 @@ export const tabContainers = [
     addAllFileQuery: GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART,
     addSelectedFilesQuery: GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL,
   },
-];
+ ];
+ 
+ 
 
   
