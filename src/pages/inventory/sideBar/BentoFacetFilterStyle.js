@@ -353,6 +353,7 @@ export const uploadModalStyles = {
     paddingTop: '51px',
   },
   fileNameContainer: {
+    display: 'flex',
     alignItems: 'center',
     backgroundColor: '#ffffff',
     border: '1px solid #437BBE',
