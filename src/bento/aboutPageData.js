@@ -47,7 +47,7 @@ export const aboutData = {
   seventhParagraph:
     "<a className='sectionTitle'>C3DC Data Model</a><br/>" +
     "The C3DC model is a conceptual and structural representation of the harmonized data from CCDI and other studies. Developed in collaboration with the PCDC at the University of Chicago, the C3DC data model will initially focus on a limited set of data elements to establish processes for data ingestion, harmonization and storage. <br/> " +
-    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>https://github.com/chicagopcdc/c3dc_etl</a>.",
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>https://github.com/CBIIT/c3dc-model</a>.",
   eigthParagraph:
     "<a className='sectionTitle'>GitHub Harmonization Repository</a><br/>" +
     "The GitHub hosted, open source, repository where the harmonization scripts, translation files and other resources are located. <br/> " +
