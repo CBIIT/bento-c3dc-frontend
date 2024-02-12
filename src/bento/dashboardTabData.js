@@ -1384,7 +1384,7 @@ export const tabContainers = [
     dataField: 'dataStudy',
     api: GET_STUDY_OVERVIEW_QUERY,
     paginationAPIField: 'studyOverview',
-    defaultSortField: 'study_short_title',
+    defaultSortField: 'phs_accession',
     defaultSortDirection: 'asc',
     count: 'numberOfStudies',
     fileCount: 'studiesFileCount',
