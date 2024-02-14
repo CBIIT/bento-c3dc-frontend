@@ -1137,6 +1137,13 @@ export const tabContainers = [
     },
     columns: [
       {
+        dataField: 'participant_id',
+        header: 'Participant Id',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: 'diagnosis_id',
         header: 'Diagnosis ID',
         display: false,
@@ -1242,13 +1249,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'participant_id',
-        header: 'Participant Id',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'study_id',
         header: 'Study ID',
         display: false,
@@ -1310,6 +1310,13 @@ export const tabContainers = [
  
     columns: [
       {
+        dataField: 'participant_id',
+        header: 'Participant Id',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: "survival_id",
         header: "Survival ID",
         display: false,
@@ -1347,13 +1354,6 @@ export const tabContainers = [
       {
         dataField: 'first_event',
         header: 'First Event',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'participant_id',
-        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
