@@ -47,6 +47,7 @@ export const statsStyling = {
     lineHeight: '16px',
     textTransform: 'uppercase',
     margin: '0 0 0 13px',
+    width: '100%',
   },
 };
 
