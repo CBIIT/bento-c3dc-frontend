@@ -18,7 +18,7 @@ export const statsStyling = {
     padding: '0.1% 6% 2% 6%',
     borderRight: '1px solid #0B3556',
     '&:first-child': {
-      padding: '0.1% 6% 2% 6%',
+      padding: '0.1% 3% 2% 6%',
     },
     '&:last-child': {
       padding: '0.1% 6% 2% 6%',
@@ -56,7 +56,7 @@ export const statsStyling = {
 export const globalStatsData = [
   // A maximum of 6 stats are allowed
   {
-    statTitle: 'Diagnoses',
+    statTitle: 'Diagnosis Records',
     type: 'field',
     statAPI: 'numberOfDiagnoses',
     statIconSrc: diagnosisLogo,
