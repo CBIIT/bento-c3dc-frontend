@@ -34,7 +34,7 @@ const LandingView = ({ classes, statsData }) => (
                         </div>
                       </div>
                       <div className={classes.statsBubbleText}>
-                        Diagnoses
+                        Diagnosis Records
                       </div>
                       <div className={classes.statsBubbleDiagnosesIcon}>
                         <img 
