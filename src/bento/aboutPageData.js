@@ -64,7 +64,7 @@ export const aboutData = {
     "The Cancer Data Standards Repository is one of the largest CDE registries developed by the National Cancer Institute (NCI) and contains over 60,000 CDEs covering many aspects of cancer research. " ,
   twelfthParagraph:
     "For more information about the C3DC site, please refer to the "+
-    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases' target='_blank' rel='noopener noreferrer'>Release Notes</a> " +
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/README.md' target='_blank' rel='noopener noreferrer'>Release Notes</a> " +
     "and the " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>." ,
   lastParagraph:
