@@ -40,6 +40,11 @@ export const navMobileList = [
   //     link: '',
   //     className: 'navMobileItem clickable',
   // },
+  {
+    name: 'Data Model',
+    link: '/data_model',
+    className: 'navMobileItem',
+},
   // {
   //     name: 'News',
   //     link: '/news',
