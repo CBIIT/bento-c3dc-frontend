@@ -1424,7 +1424,7 @@ export const tabContainers = [
       },
       {
         dataField: 'study_acronym',
-        header: 'Acronym',
+        header: 'Study Acronym',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
