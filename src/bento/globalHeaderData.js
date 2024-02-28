@@ -1,8 +1,10 @@
+
 import Logo from '../assets/header/Portal_Logo.svg';
 import LogoSmall from '../assets/header/Portal_Logo_Small.svg';
 import searchbarIcon from '../assets/header/Search_Icon.svg';
 import cartLogo from '../assets/header/Cart_Logo.svg';
 import usFlagSmall from '../assets/header/us_flag_small.png';
+
 
 // globalHeaderLogo image 468x100
 // globalHeaderImage: image 2200x100
@@ -15,15 +17,17 @@ export const headerData = {
   globalHeaderSearchIconAltText: 'search Icon',
 };
 
+
 export const USGovBannerData = {
   logo: usFlagSmall,
 };
 
+
 export const navMobileList = [
   {
-      name: 'Home',
-      link: '/home',
-      className: 'navMobileItem',
+    name: 'Home',
+    link: '/home',
+    className: 'navMobileItem',
   },
   {
     name: 'Explore',
@@ -40,42 +44,43 @@ export const navMobileList = [
   //     link: '',
   //     className: 'navMobileItem clickable',
   // },
+  {
+    name: 'Data Model',
+    link: '/data_model',
+    className: 'navMobileItem',
+  },
   // {
   //     name: 'News',
   //     link: '/news',
   //     className: 'navMobileItem',
   // },
   {
-    name: 'Resources',
-    link: '',
-    className: 'navMobileItem clickable',
-  },
-  {
-       name: 'About',
-       link: '/about',
-       className: 'navMobileItem',
+    name: 'About',
+    link: '/about',
+    className: 'navMobileItem',
   },/*
-  {
-    name: 'My File',
-    link: '/fileCentricCart',
-    className: 'cart',
-  },*/
+ {
+   name: 'My File',
+   link: '/fileCentricCart',
+   className: 'cart',
+ },*/
 ];
+
 
 export const navbarSublists = {
   Applications: [
     {
-      name:'Applications',
+      name: 'Applications',
       link: '',
       className: 'navMobileSubTitle',
     },
     {
-      name:'Childhood Cancer Data Catalog',
+      name: 'Childhood Cancer Data Catalog',
       link: '/#ccdc',
       className: 'navMobileSubItem',
     },
     {
-      name:'Clinical Interpretation of Variants in Cancer',
+      name: 'Clinical Interpretation of Variants in Cancer',
       link: '/#civic',
       className: 'navMobileSubItem',
     },
@@ -90,44 +95,28 @@ export const navbarSublists = {
       className: 'navMobileSubItem',
     },
     {
-      name:'National Childhood Cancer Registry Explorer',
+      name: 'National Childhood Cancer Registry Explorer',
       link: '/#nccr',
       className: 'navMobileSubItem',
     }],
-    Resources: 
-    [
-      {
-        name:'Resources',
-        link: '/resources',
-        className: 'navMobileSubItem',
-      },
-      {
-        name:'C3DC Data Model',
-        link: '/resources#datamodel',
-        className: 'navMobileSubItem',
-      }, 
-      {
-        name:'GitHub Harmonization Repository',
-        link: '/resources#GHR',
-        className: 'navMobileSubItem',
-      },
-      {
-        name:'The Childhood Cancer Data Initiative (CCDI Hub)',
-        link: '/resources#CCDI',
-        className: 'navMobileSubItem',
-      }, 
-      {
-        name:'The GDC Data Portal',
-        link: '/resources#GDC',
-        className: 'navMobileSubItem',
-      },
-      {
-        name:'The Cancer Data Standards Repository',
-        link: '/resources#caDSR',
-        className: 'navMobileSubItem',
-      },
-    ],
+  "Other Resources": [
+    {
+      name: 'Other Resources',
+      link: '',
+      className: 'navMobileSubTitle',
+    },
+    {
+      name: 'Cancer Genomics Cloud',
+      link: '/#cgc',
+      className: 'navMobileSubItem',
+    },
+    {
+      name: 'Database of Genotypes and Phenotypes',
+      link: '/#dbgap',
+      className: 'navMobileSubItem',
+    }],
 };
+
 
 export const navBarCartData = {
   cartLabel: '',
