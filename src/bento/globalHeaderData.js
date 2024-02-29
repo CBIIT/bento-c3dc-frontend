@@ -103,28 +103,33 @@ export const navbarSublists = {
       },
       {
         name:'C3DC Data Model',
-        link: '/resources#datamodel',
+        link: 'https://github.com/CBIIT/c3dc-model',
         className: 'navMobileSubItem',
+        externalLink: true,
       }, 
       {
         name:'GitHub Harmonization Repository',
-        link: '/resources#GHR',
+        link: 'https://github.com/chicagopcdc/c3dc_etl',
         className: 'navMobileSubItem',
+        externalLink: true,
       },
       {
         name:'The Childhood Cancer Data Initiative (CCDI Hub)',
-        link: '/resources#CCDI',
+        link: 'https://ccdi.cancer.gov/',
         className: 'navMobileSubItem',
+        externalLink: true,
       }, 
       {
         name:'The GDC Data Portal',
-        link: '/resources#GDC',
+        link: 'https://portal.gdc.cancer.gov/',
         className: 'navMobileSubItem',
+        externalLink: true,
       },
       {
         name:'The Cancer Data Standards Repository',
-        link: '/resources#caDSR',
+        link: 'https://cadsr.cancer.gov/onedata/Home.jsp',
         className: 'navMobileSubItem',
+        externalLink: true,
       },
     ],
 };
