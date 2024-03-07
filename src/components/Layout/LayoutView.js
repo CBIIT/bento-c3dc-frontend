@@ -10,6 +10,7 @@ import Resources from '../../pages/resources/resourcesView';
 import Error from '../../pages/error/Error';
 import Search from '../../pages/search/searchView';
 import Inventory from '../../pages/inventory/inventoryController';
+import Studies from '../../pages/studies/studiesController';
 import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
 // import NewsDetail from '../../pages/news/newsDetailView';
@@ -22,6 +23,7 @@ const Layout = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/studies" element={<Studies />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/sitesearch" element={<Search />} />
