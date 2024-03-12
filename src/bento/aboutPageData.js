@@ -47,7 +47,7 @@ export const aboutData = {
   seventhParagraph:
     "<a className='sectionTitle'>C3DC Data Model</a><br/>" +
     "The C3DC model is a conceptual and structural representation of the harmonized data from CCDI and other studies. Developed in collaboration with the PCDC at the University of Chicago, the C3DC data model will initially focus on a limited set of data elements to establish processes for data ingestion, harmonization and storage. <br/> " +
-    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>https://github.com/chicagopcdc/c3dc_etl</a>.",
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>https://github.com/CBIIT/c3dc-model</a>.",
   eigthParagraph:
     "<a className='sectionTitle'>GitHub Harmonization Repository</a><br/>" +
     "The GitHub hosted, open source, repository where the harmonization scripts, translation files and other resources are located. <br/> " +
@@ -62,6 +62,11 @@ export const aboutData = {
   eleventhParagraph:
     "<a className='sectionTitle'>caDSR </a> <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/Home.jsp' target='_blank' rel='noopener noreferrer'>https://cadsr.cancer.gov/onedata/Home.jsp</a><br/>" +
     "The Cancer Data Standards Repository is one of the largest CDE registries developed by the National Cancer Institute (NCI) and contains over 60,000 CDEs covering many aspects of cancer research. " ,
+  twelfthParagraph:
+    "For more information about the C3DC site, please refer to the "+
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/README.md' target='_blank' rel='noopener noreferrer'>Release Notes</a> " +
+    "and the " +
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>." ,
   lastParagraph:
     "The CCDI welcomes input from the community to enhance usability. " +
     "Please send your feedback and comments to " +

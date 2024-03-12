@@ -417,13 +417,13 @@ export const widgetConfig = [
   {
     type: 'donut',
     title: 'Diagnosis (ICD-O)',
-    dataName: 'filterParticipantCountByDiagnosisClassification',
+    dataName: 'participantCountByDiagnosisClassification',
     sliceTitle: 'Participants',
   },
   {
     type: 'donut',
     title: 'Anatomic Site',
-    dataName: 'filterParticipantCountByAnatomicSite',
+    dataName: 'participantCountByAnatomicSite',
     sliceTitle: 'Participants',
   },
   {

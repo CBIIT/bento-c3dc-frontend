@@ -452,7 +452,7 @@ query participantOverview(
      race
      sex_at_birth
      phs_accession
-
+     alternate_participant_id
      # Studies
      study_id
      __typename
@@ -1067,13 +1067,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'sex_at_birth',
-        header: 'Sex at Birth',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'race',
         header: 'Race',
         display: true,
@@ -1088,6 +1081,20 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
+        dataField: 'sex_at_birth',
+        header: 'Sex at Birth',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'alternate_participant_id',
+        header: 'Alternate Participant ID',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: 'study_id',
         header: 'Study ID',
         display: false,
@@ -1098,7 +1105,7 @@ export const tabContainers = [
     id: 'participant_tab',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
     tabIndex: '0',
-    downloadFileName: 'C3DC Inventory Participants Download',
+    downloadFileName: 'C3DC Participants Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1137,23 +1144,9 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'age_at_diagnosis',
-        header: 'Age at Diagnosis (days)',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'anatomic_site',
-        header: 'Anatomic Site',
-        display: true,
+        dataField: 'diagnosis_id',
+        header: 'Diagnosis ID',
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1186,9 +1179,16 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
+        dataField: 'diagnosis_comment',
+        header: 'Diagnosis Comment',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: 'disease_phase',
         header: 'Disease Phase',
-        display: true,
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1199,18 +1199,17 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      // Extra Hidden Columns
       {
-        dataField: 'diagnosis_id',
-        header: 'Diagnosis ID',
-        display: false,
+        dataField: 'anatomic_site',
+        header: 'Anatomic Site',
+        display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'diagnosis_comment',
-        header: 'Diagnosis Comment',
-        display: false,
+        dataField: 'age_at_diagnosis',
+        header: 'Age at Diagnosis (days)',
+        display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1256,12 +1255,12 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      
+     
     ],
     id: 'diagnosis_tab',
     tabIndex: '3',
     tableDownloadCSV: customDiagnosisTabDownloadCSV,
-    downloadFileName: 'C3DC Inventory Diagnosis Download',
+    downloadFileName: 'C3DC Diagnosis Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1307,7 +1306,8 @@ export const tabContainers = [
       opacity: 'unset',
       border: 'unset',
     },
-
+ 
+ 
     columns: [
       {
         dataField: 'participant_id',
@@ -1317,11 +1317,11 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
+        dataField: "survival_id",
+        header: "Survival ID",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
       },
       {
         dataField: 'last_known_survival_status',
@@ -1338,21 +1338,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'first_event',
-        header: 'First Event',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      // Extra Hidden Columns
-      {
-        dataField: "survival_id",
-        header: "Survival ID",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
-      },
-      {
         dataField: "event_free_survival_status",
         header: "Event-Free Survival Status",
         display: false,
@@ -1367,6 +1352,13 @@ export const tabContainers = [
         role: "cellTypes.DISPLAY"
       },
       {
+        dataField: 'first_event',
+        header: 'First Event',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: "study_id",
         header: "Study ID",
         display: false,
@@ -1377,7 +1369,7 @@ export const tabContainers = [
     id: 'survival_tab',
     tabIndex: '1',
     tableDownloadCSV: customSamplesTabDownloadCSV,
-    downloadFileName: 'C3DC Inventory Survival Download',
+    downloadFileName: 'C3DC Survival Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1392,7 +1384,7 @@ export const tabContainers = [
     dataField: 'dataStudy',
     api: GET_STUDY_OVERVIEW_QUERY,
     paginationAPIField: 'studyOverview',
-    defaultSortField: 'study_short_title',
+    defaultSortField: 'phs_accession',
     defaultSortDirection: 'asc',
     count: 'numberOfStudies',
     fileCount: 'studiesFileCount',
@@ -1407,35 +1399,20 @@ export const tabContainers = [
         cloudIcon: true,
       },
     },
-    columns: [
-      {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'study_short_title',
-        header: 'Study Short Title',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'study_acronym',
-        header: 'Study Acronym',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      // Extra Hidden Columns
+    columns: [   
       {
         dataField: "study_id",
         header: "Study ID",
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: 'phs_accession',
+        header: 'Study Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
       },
       {
         dataField: "acl",
@@ -1450,6 +1427,20 @@ export const tabContainers = [
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
+      },
+      {
+        dataField: 'study_short_title',
+        header: 'Study Short Title',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'study_acronym',
+        header: 'Acronym',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
       },
       {
         dataField: "study_description",
@@ -1479,14 +1470,14 @@ export const tabContainers = [
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
       }
-      
      
+    
     ],
     id: 'study_tab',
     tabIndex: '4',
     selectableRows: true,
     tableDownloadCSV: customStudyTabDownloadCSV,
-    downloadFileName: 'C3DC Inventory Studies Download',
+    downloadFileName: 'C3DC Studies Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1496,6 +1487,8 @@ export const tabContainers = [
     addAllFileQuery: GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART,
     addSelectedFilesQuery: GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL,
   },
-];
+ ];
+ 
+ 
 
   

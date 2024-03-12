@@ -365,6 +365,8 @@ export const uploadModalStyles = {
     justifyContent: 'space-between',
     //vertically center the children
     position: 'relative',
+    overflow: 'hidden',
+    whiteSpace: 'nowrap',
   },
   fileName: {
     margin: 'unset',
@@ -372,6 +374,8 @@ export const uploadModalStyles = {
     fontSize: 15,
     fontFamily: 'Nunito',
     fontWeight: '500',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   refresh: {
     color: '#415153',

@@ -46,6 +46,7 @@ const AboutContainer = styled.div`
   }
   .aboutImages {
     width: 343px;
+    height: 100%;
     margin-left: 44px;
     display: flex;
     flex-direction: column;
@@ -114,7 +115,7 @@ const AboutView = () => {
               <div className='eleventhParagraph sectionStart'>{ReactHtmlParser(aboutData.eleventhParagraph)}</div>
             </div>
           </div>
-         
+          <div className='twelfthParagraph sectionStart imageMargin'>{ReactHtmlParser(aboutData.twelfthParagraph)}</div>
           <div className='lastParagraph sectionStart imageMargin'>{ReactHtmlParser(aboutData.lastParagraph)}</div>
         </div>
         <div className='aboutImages'>
