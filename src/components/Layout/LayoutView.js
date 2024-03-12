@@ -5,6 +5,7 @@ import Footer from '../ResponsiveFooter/';
 import Header from '../ResponsiveHeader/';
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutView';
+import Resources from '../../pages/resources/resourcesView';
 //import News from '../../pages/news/newsView';
 import Error from '../../pages/error/Error';
 import Search from '../../pages/search/searchView';
@@ -21,6 +22,7 @@ const Layout = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           {
           //<Route path="/news" element={<News />} />}
