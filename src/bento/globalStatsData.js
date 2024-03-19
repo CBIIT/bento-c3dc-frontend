@@ -57,7 +57,7 @@ export const statsStyling = {
 export const globalStatsData = [
   // A maximum of 6 stats are allowed
   {
-    statTitle: 'Diagnosis Records',
+    statTitle: 'Diagnoses',
     type: 'field',
     statAPI: 'numberOfDiagnoses',
     statIconSrc: diagnosisLogo,
