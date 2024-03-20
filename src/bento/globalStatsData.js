@@ -1,15 +1,15 @@
 import gql from 'graphql-tag';
 import studiesLogo from '../assets/stats/Studies_Logo.svg';
 import participantsLogo from '../assets/stats/Participants_Logo.svg';
-import samplesLogo from '../assets/stats/Samples_Logo.svg';
-import fileLogo from '../assets/stats/Files_Logo.svg';
+import diagnosisLogo from '../assets/stats/Diagnosis_Logo.svg';
+
 
 export const statsStyling = {
   global: {
     horizontalStyle: false,
     statTitleFirst: false,
     height: '56px',
-    background: '#29B3BC',
+    background: '#A7DBD6',
     top: '0',
     position: 'relative',
   },
@@ -18,7 +18,7 @@ export const statsStyling = {
     padding: '0.1% 6% 2% 6%',
     borderRight: '1px solid #0B3556',
     '&:first-child': {
-      padding: '0.1% 6% 2% 6%',
+      padding: '0.1% 3% 2% 6%',
     },
     '&:last-child': {
       padding: '0.1% 6% 2% 6%',
@@ -32,20 +32,22 @@ export const statsStyling = {
   },
   statCount: {
     color: '#003D3D',
-    fontFamily: 'Oswald',
-    fontSize: '20px',
+    fontFamily: 'Poppins',
+    fontSize: '22px',
+    fontWeight: '275',
     lineHeight: '17px',
     letterSpacing: '0.02em',
     margin: '4px 0 2px 13px',
   },
   statTitle: {
-    color: '#062D4F',
-    fontFamily: 'Nunito',
-    fontSize: '12px',
-    fontWeight: '700',
+    color: '#000000',
+    fontFamily: 'Poppins',
+    fontSize: '11px',
+    fontWeight: '500',
     lineHeight: '16px',
     textTransform: 'uppercase',
     margin: '0 0 0 13px',
+    width: '100%',
   },
 };
 
@@ -55,11 +57,11 @@ export const statsStyling = {
 export const globalStatsData = [
   // A maximum of 6 stats are allowed
   {
-    statTitle: 'Studies',
+    statTitle: 'Diagnosis Records',
     type: 'field',
-    statAPI: 'numberOfStudies',
-    statIconSrc: studiesLogo,
-    statIconAlt: 'An open notebook representing studies',
+    statAPI: 'numberOfDiagnoses',
+    statIconSrc: diagnosisLogo,
+    statIconAlt: 'A teddy bear representing Diagnosis'
   },
   {
     statTitle: 'Participants',
@@ -69,26 +71,21 @@ export const globalStatsData = [
     statIconAlt: 'A teddy bear representing participants'
   },
   {
-    statTitle: 'Samples',
+    statTitle: 'Studies',
     type: 'field',
-    statAPI: 'numberOfSamples',
-    statIconSrc: samplesLogo,
-    statIconAlt: 'A test tube holder with three test tubes in the holder representing samples'
-  },
-  {
-    statTitle: 'Files',
-    type: 'field',
-    statAPI: 'numberOfFiles',
-    statIconSrc: fileLogo,
-    statIconAlt: 'An open file drawer representing files'
+    statAPI: 'numberOfStudies',
+    statIconSrc: studiesLogo,
+    statIconAlt: 'A teddy bear representing Studies'
   },
 ];
 
 // --------------- GraphQL query - Retrieve stats details --------------
-export const GET_GLOBAL_STATS_DATA_QUERY = gql`{
-  numberOfFiles
-  numberOfParticipants
-  numberOfSamples
-  numberOfStudies
+export const GET_GLOBAL_STATS_DATA_QUERY = gql`
+{
+  numberOfDiagnoses,
+  numberOfParticipants,
+  numberOfReferenceFiles,
+  numberOfStudies,
+  numberOfSurvivals
   }
   `;

@@ -1,11 +1,13 @@
 import {
   btnTypes,
-  types,
+  //types,
 } from '@bento-core/paginated-table';
+/*
 import {
   tooltipContentAddAll, tooltipContent,
 } from '../../../../bento/dashboardTabData';
 import { alertMessage } from '../../../../bento/fileCentricCartWorkflowData';
+*/
 
 export const layoutConfig = [{
   container: 'buttons',
@@ -19,7 +21,8 @@ export const layoutConfig = [{
 * Configuration display component based on index
 * CAUTION: provide position of table component
 */
-export const wrapperConfig = [{
+export const wrapperConfig = [
+  /*{
   container: 'buttons',
   size: 'xl',
   clsName: 'container_header',
@@ -44,12 +47,13 @@ export const wrapperConfig = [{
       conditional: true,
       alertMessage,
     }],
-},
+},*/
 {
   container: 'paginatedTable',
   paginatedTable: true,
 },
-{
+/*{
+  
   container: 'buttons',
   size: 'xl',
   clsName: 'container_footer',
@@ -74,7 +78,7 @@ export const wrapperConfig = [{
       conditional: true,
       alertMessage,
     }],
-},
+  },*/
 ];
 
 

@@ -34,6 +34,11 @@ const WidgetView = ({
         textOverflowLength: 20,
         textColor: theme.palette.widgetBackground.contrastText,
       },
+      functions:{
+        // TODO: Make change in Widget package to rprovide option to configure active index. 
+        // Using getLastIndex to show first index as data set us sorted decending. 
+        getLastIndex: (dataset) => ((dataset.length !== undefined) ? 0 : 0),
+      }
     },
     SunburstConfig: {
       styles: {
@@ -82,15 +87,18 @@ const WidgetView = ({
             }
             return (
               <Grid key={index} item lg={4} md={6} sm={12} xs={12}>
+                {/* TODO: Cleaan below line if not needed. */}
+                {/* <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center',width:'92%'}} color="lochmara"></Typography> */}
                 <Widget
                   header={(
-                    <Typography size="md" weight="normal" family="Nunito" color="lochmara">
+                    
+                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'start',width:'92%'}} color="lochmara" className={classes.widgetTitle}>
                       {widget.title}
                     </Typography>
                   )}
                   bodyClass={classes.fullHeightBody}
                   className={classes.card}
-                  bottomDivider
+                  bottomDivider                 
                   customBackGround
                   data={dataset}
                   chartType={widget.type}
@@ -100,6 +108,7 @@ const WidgetView = ({
                   width={widget.width}
                   height={widget.height}
                 />
+              
               </Grid>
             );
           })}

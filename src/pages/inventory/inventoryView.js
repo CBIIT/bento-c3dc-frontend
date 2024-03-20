@@ -1,10 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+//import { NavLink } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
 import styles from './inventoryStyle';
 import BentoFacetFilter from './sideBar/BentoFacetFilter';
-import WidgetView from './widget/WidgetView';
+// import WidgetView from './widget/WidgetView';
 import StatsView from '../../components/Stats/StatsView';
+import WidgetView from './widget/WidgetView';
 import TabsView from './tabs/TabsView';
 import QueryBarView from './filterQueryBar/QueryBarView';
 
@@ -27,14 +28,16 @@ const Inventory = ({
         <div className={classes.rightContent}>
           <div className={classes.widgetsContainer}>
             <QueryBarView data={dashData} />
+           
             <WidgetView
               data={dashData}
             />
+            
             <TabsView
               dashboardStats={dashData}
               activeFilters={activeFilters}
             />
-            <div className={classes.goToCartLink}><NavLink to='/fileCentricCart'>Go to cart &#62;</NavLink></div>
+            {/*<div className={classes.goToCartLink}><NavLink to='/fileCentricCart'>Go to cart &#62;</NavLink></div>*/}
           </div>
         </div>
       </div>

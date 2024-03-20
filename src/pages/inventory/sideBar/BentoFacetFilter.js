@@ -21,7 +21,7 @@ import {
   SearchView, SearchBoxGenerator, UploadModalGenerator,
 } from '@bento-core/local-find';
 import store from '../../../store';
-import styles from './BentoFacetFilterStyle';
+import styles, { uploadModalStyles } from './BentoFacetFilterStyle';
 import { FacetFilter, ClearAllFiltersBtn } from '@bento-core/facet-filter';
 import { facetsConfig, facetSectionVariables, resetIcon, sectionLabel } from '../../../bento/dashTemplate';
 import FacetFilterThemeProvider from './FilterThemeConfig';
@@ -85,13 +85,29 @@ const { UploadModal } = UploadModalGenerator({
 
         // Combine the results and remove duplicates
         const unmatched = new Set(inputArray);
-        matched.forEach((obj) => unmatched.delete(obj.subject_id));
+        matched.forEach((obj) => unmatched.delete(obj.participant_id));
         return { matched, unmatched: [...unmatched] };
       } catch (e) {
         return { matched: [], unmatched: [] };
       }
     },
   },
+  config: {
+    title: 'Upload Participants Set',
+    inputPlaceholder: 'e.g. C3DC-PARTICIPANT-101025, C3DC-PARTICIPANT-101026, C3DC-PARTICIPANT-101027',
+    inputTooltip: 'Enter valid Participant IDs.',
+    uploadTooltip: 'Select a file from your computer.',
+    accept: '.csv,.txt',
+    maxSearchTerms: 1000,
+    matchedId: 'participant_id',
+    matchedLabel : 'Submitted Participant ID',
+    associateId: 'phs_accession',
+    associateLabel: '',
+    projectName: 'C3DC',
+    caseIds: 'Participant IDs',
+  },
+
+  customStyles : uploadModalStyles,
 });
 
 const BentoFacetFilter = ({
@@ -161,6 +177,10 @@ const BentoFacetFilter = ({
       setExpanded(!expanded);
     };
 
+    let searchConfig = {
+      title: 'Participants',
+    }
+
     return (
       <>
         <CustomExpansionPanelSummary onClick={collapseHandler} id={section}>
@@ -168,7 +188,7 @@ const BentoFacetFilter = ({
             {sectionLabel[name] !== undefined ? sectionLabel[name] : name}
             {hasSearch && (
               <div className={classes.findCaseButton} onClick={toggleSearch}>
-                <img src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/FacetLocalFindSearchIcon.svg" className={classes.findCaseIcon} alt="search" />
+                <img src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/c3dc/images/icons/svgs/C3DCFacetLocalFindSearchIcon.svg" className={classes.findCaseIcon} alt="search" />
               </div>
             )}
           </div>
@@ -178,6 +198,7 @@ const BentoFacetFilter = ({
               SearchBox={SearchBox}
               UploadModal={UploadModal}
               hidden={!expanded || !showSearch}
+              config = {searchConfig}
             />
           )}
         </CustomExpansionPanelSummary>

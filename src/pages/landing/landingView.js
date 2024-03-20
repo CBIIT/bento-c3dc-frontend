@@ -4,33 +4,109 @@ import {
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-// import StatsView from './components/statsView';
-import { Button } from '../../components/Wrappers/Wrappers';
 import { landingPageData } from '../../bento/landingPageData';
 import icon from '../../assets/landing/LP_ReadMore.svg';
 import iconAbout from '../../assets/landing/LP_About_Fullarticle.Arrow.svg';
 
-const LandingView = ({ classes }) => (
+const LandingView = ({ classes, statsData }) => (
   <div className={classes.page}>
     <div className={classes.container}>
       <div className={classes.hero}>
         <Grid container spacing={16} direction="row">
-          <div className={classes.heroImage} />
-          <div className={classes.heroTextContainer}>
-            <div className={classes.heroTextWrapper}>
-              <div className={classes.headerTitle}>
-                { landingPageData.callToActionTitle }
+          <div className={classes.heroImage}>
+            <div className={classes.heroFrame}>
+              <div className={classes.heroTextContainer}>
+                <div className={classes.heroTextWrapper}>
+                  <div className={classes.headerTitle}>
+                    { landingPageData.callToActionTitle }
+                  </div>
+                  <div className={classes.headerContent}>
+                    { landingPageData.callToActionDescription}
+                  </div>
+                  <div className={classes.statsBubbleContainer}>
+                    <div className={classes.statsBubbleDiagnoses}>
+                      <div className={classes.statsBubbleDiagnosesCount}>
+                        <div className={classes.statsBubbleDiagnosesNumber}>
+                          {statsData.numberOfDiagnoses.num}
+                        </div>
+                        <div className={classes.statsBubbleDiagnosesMagnitude}>
+                          {statsData.numberOfDiagnoses.char}
+                        </div>
+                      </div>
+                      <div className={classes.statsBubbleText}>
+                        Diagnosis Records
+                      </div>
+                      <div className={classes.statsBubbleDiagnosesIcon}>
+                        <img 
+                          src={landingPageData.landingPageStatsIcons.diagnosesIcon} 
+                          alt={landingPageData.landingPageStatsIcons.diagnosesIconAlt} 
+                        />
+                      </div>
+                    </div>
+                    <div className={classes.statsBubbleParticipants}>
+                      <div className={classes.statsBubbleParticipantsCount}> 
+                        <div className={classes.statsBubbleParticipantsNumber}>
+                          {statsData.numberOfParticipants.num}
+                        </div>
+                        <div className={classes.statsBubbleParticipantsMagnitude}>
+                          {statsData.numberOfParticipants.char}
+                        </div>
+                      </div>
+                      <div className={classes.statsBubbleText}>
+                        Participants
+                      </div>
+                      <div className={classes.statsBubbleParticipantsIcon}>
+                        <img
+                          src={landingPageData.landingPageStatsIcons.participantsIcon}
+                          alt={landingPageData.landingPageStatsIcons.participantsIconAlt}
+                        />
+                      </div>
+                    </div>
+                    <div className={classes.statsBubbleStudies}>
+                      <div className={classes.statsBubbleStudiesCount}>
+                        <div className={classes.statsBubbleStudiesNumber}>
+                          {statsData.numberOfStudies.num}
+                        </div>
+                        <div className={classes.statsBubbleStudiesMagnitude}>
+                          {statsData.numberOfStudies.char}
+                        </div>
+                      </div>
+                      <div className={classes.statsBubbleText}>
+                        Studies
+                      </div>
+                      <div className={classes.statsBubbleStudiesIcon}>
+                        <img
+                          src={landingPageData.landingPageStatsIcons.studiesIcon}
+                          alt={landingPageData.landingPageStatsIcons.studiesIconAlt}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {/* <div className={classes.headerButtonSection}>
+                    <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
+                      <Button className={classes.buttonText} bgColor="neonBlue" color="white">
+                        {landingPageData.callToActionButtonText}
+                      </Button>
+                    </Link>
+                  </div> */}
+                </div>
               </div>
-              <div className={classes.headerContent}>
-                { landingPageData.callToActionDescription}
+            </div>
+            <div className={classes.heartbeartAnimation}>
+              <div className={classes.heartbeatPulse}>
+                  <img
+                    src={landingPageData.heartbeatAnimation.heartlineFull}
+                    className={classes.heartbeatPulseImage}
+                    alt={landingPageData.heartbeatAnimation.alt}
+                    />
               </div>
-              {/* <div className={classes.headerButtonSection}>
-                <Link to={landingPageData.callToActionLink} className={classes.headerLink}>
-                  <Button className={classes.buttonText} bgColor="neonBlue" color="white">
-                    {landingPageData.callToActionButtonText}
-                  </Button>
-                </Link>
-              </div> */}
+              <div className={classes.heartlineTracker}>
+                  <img
+                    src={landingPageData.heartbeatAnimation.tracker}
+                    className={classes.heartlineTrackerImage}
+                    alt={landingPageData.heartbeatAnimation.alt}
+                    />
+              </div>
             </div>
           </div>
         </Grid>
@@ -71,6 +147,7 @@ const LandingView = ({ classes }) => (
                     <Link
                       to={landingPageData.tile1.callToActionLink}
                       className={classes.aboutButton}
+                      reloadDocument={true}
                     >
                       {landingPageData.tile1.callToActionText}
                     </Link>
@@ -122,7 +199,7 @@ const LandingView = ({ classes }) => (
                       id="tile3_image"
                     />
                   </div>
-                  <div className={classes.content}>
+                  <div className={classes.tile3Content}>
                     <div className={classes.contentHeader} id="tile3_title">
                       {landingPageData.tile3.titleText}
                     </div>
@@ -130,7 +207,7 @@ const LandingView = ({ classes }) => (
                       {landingPageData.tile3.descriptionText}
                     </div>
 
-                  </div>
+                  </div>{/*
                   <div className={classes.blueButton}>
                     <div className={classes.blueButtonLeft}>
                       <img className={classes.icon} src={icon} alt="CTDC about " />
@@ -144,7 +221,7 @@ const LandingView = ({ classes }) => (
                         {landingPageData.tile3.callToActionText}
                       </Link>
                     </div>
-                  </div>
+                  </div>*/}
                 </div>
 
               </div>
@@ -165,6 +242,7 @@ const LandingView = ({ classes }) => (
                       <Link
                         to={landingPageData.tile4.callToActionLink}
                         className={classes.mountainMeadowButton}
+                        reloadDocument={true}
                       >
                         {landingPageData.tile4.callToActionText}
                       </Link>
@@ -181,20 +259,151 @@ const LandingView = ({ classes }) => (
   </div>
 );
 const styles = () => ({
+  "@keyframes heartbeatPulse": {
+    "0%": {
+      clipPath: "inset(0px 100% 0px 0px)" 
+    },
+    "32.33%": { //left
+      clipPath: "inset(0px 46.9% 0px 0px)" 
+    },
+    "39.67%": { //peak
+      clipPath: "inset(0px 45% 0px 0px)" 
+    },
+    "47%": { //drop -3
+      clipPath: "inset(0px 42.7% 0px 0px)" 
+    },
+    "51.56%": { //left -4
+      clipPath: "inset(0px 30.3% 0px 0px)" 
+    },
+    "58.89%": { //peak -5
+      clipPath: "inset(0px 28.4% 0px 0px)" 
+    },
+    "66.22%": { //drop -6
+      clipPath: "inset(0px 26.1% 0px 0px)" 
+    },
+    "70.78%": { //left -7
+      clipPath: "inset(0px 14.5% 0px 0px)" 
+    },
+    "78.11%": { //peak -8
+      clipPath: "inset(0px 12.6% 0px 0px)" 
+    },
+    "85.44%": { //drop -9 
+      clipPath: "inset(0px 10.3% 0px 0px)" 
+    },
+    "88%": {
+      clipPath: "inset(0px 1.7% 0px 0px)",
+      opacity: '1'
+    },
+    "100%": {
+      clipPath: "inset(0px 1.7% 0px 0px)",
+      opacity: '0'
+    },
+  },
+  heartbeatPulse:{
+    '--svg-width': '618px',
+    '--svg-height': '67px',
+    position: 'absolute',
+    left: '50%',
+    marginLeft: '-720px',
+    top: '690px',
+    animation: '6s $heartbeatPulse infinite linear',
+  },
+  "@keyframes heartlineTracking": {
+    "0%": {
+      top: '745px',
+      left: '50%',
+      marginLeft: "-726px", 
+    },
+    "32.33%": { //left
+      top: '745px',
+      left: '50%',
+      marginLeft: "48px",  
+    },
+    "39.67%": { //peak
+      top: '685px',
+      left: '50%',
+      marginLeft: "80px", 
+    },
+    "47%": { //drop
+      top: '745px',
+      left: '50%',
+      marginLeft: "110px",  
+    },
+    "51.56%": { //left
+      top: '745px',
+      left: '50%',
+      marginLeft: "292px",
+    },
+    "58.89%": { //peak
+      top: '685px',
+      left: '50%',
+      marginLeft: "322px", 
+    },
+    "66.22%": { //drop
+      top: '745px',
+      left: '50%',
+      marginLeft: "352px", 
+    },
+    "70.78%": { //left
+      top: '745px',
+      left: '50%',
+      marginLeft: "524px", 
+    },
+    "78.11%": { //peak
+      top: '685px',
+      left: '50%',
+      marginLeft: "555px", 
+    },
+    "85.44%": { //drop
+      top: '745px',
+      left: '50%',
+      marginLeft: "586px", 
+    },
+    "88%": {
+      top: '745px',
+      left: '50%',
+      marginLeft: "711px", 
+      opacity: '1'
+    },
+    "100%": {
+      top: '745px',
+      left: '50%',
+      marginLeft: "711px", 
+      opacity: '0'
+    },
+  },
+  heartlineTracker:{
+    position: 'absolute',
+    top: '745px',
+    left: '50%',
+    marginLeft: "-726px",
+    animation: '6s $heartlineTracking infinite linear'
+  },
   page: {
-    marginTop: '-53px',
+    marginTop: '0px',
   },
   heroImage: {
     width: '100%',
-    height: '900px',
+    maxWidth: '100%',
+    height: '670px',
     backgroundRepeat: 'no-repeat',
-    backgroundSize: '100% 100%',
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
     backgroundImage: `url(${landingPageData.landingPageHero.img})`,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  heroFrame: {
+    height: '614px',
+    width: '1440px',
+    border: 'solid 3.25px #f7fbfd',
+    borderRadius: '12px'
   },
   texture: {
     backgroundSize: 'cover',
-    background: '#096761',
     padding: '120px 0 80px 0',
+    backgroundImage: `url(${landingPageData.landingTileBackground.img})`,
   },
   container: {
     fontFamily: 'Raleway, sans-serif',
@@ -217,29 +426,269 @@ const styles = () => ({
     letterSpacing: '0.8px',
   },
   headerTitle: {
-    paddingTop: '94px',
     fontFamily: 'Poppins, Inter, Raleway, sans-serif',
     fontSize: '45px',
     fontWeight: '600',
     lineHeight: '45px',
     color: '#009485',
+    textAlign: 'center',
+    whiteSpace: 'pre-line',
   },
   paddingLeft50: {
     paddingLeft: '50px',
   },
   headerContent: {
-    color: '#000000',
-    fontFamily: 'Lato, Raleway',
-    fontSize: '16px',
+    color: '#0C534C',
+    fontFamily: 'Inter',
+    fontSize: '22px',
     fontWeight: '500',
-    lineHeight: '27px',
-    marginTop: '16px',
-    marginBottom: '26px',
+    lineHeight: '28px',
+    textAlign: 'center',
+    whiteSpace: 'pre-line',
+    paddingTop: '14px',
   },
   headerLink: {
     textDecoration: 'none',
   },
+  statsBubbleContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    width: '669px',
+    paddingTop: '33px',
+  },
+  statsBubbleText: {
+    fontFamily: 'Poppins',
+    fontWeight: '600',
+    fontSize: '15px',
+    lineHeight: '20px',
+    letterSpacing: '2%',
+    color: '#004358',
+    textTransform: 'uppercase',
+  },
+  "@keyframes diagnosesHighlight": {
+    "39.67%": {
+      border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
+    },
+    "47%": {
+      border: 'solid 3px #24b0ff',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "58.39%%": {
+      border: 'solid 3px #24b0ff',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "58.89%": {
+      border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
+    },
+  },
+  statsBubbleDiagnoses: {
+    width: '195px',
+    height: '195px',
+    borderRadius: '50%',
+    border: 'solid 3px #8E8E8E',
+    boxShadow: '0px 4px 15px 10px rgba(142, 142, 142, 0.30)',
+    marginRight: '42px',
+    '&:hover': {
+      border: 'solid 3px #24b0ff',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    '&:hover $statsBubbleDiagnosesCount': {
+      visibility: 'visible',
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center', 
+    animation: '6s $diagnosesHighlight infinite cubic-bezier(0,1.12,0,.97)',
+  },
+  "@keyframes participantsHighlight": {
+    "58.89%": {
+      border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
+    },
+    "66.22%": {
+      border: 'solid 3px #21aa79',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "77.61%": {
+      border: 'solid 3px #21aa79',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "78.11%": {
+      border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
+    },
+  },
+  statsBubbleParticipants: {
+    width: '195px',
+    height: '195px',
+    borderRadius: '50%',
+    border: 'solid 3px #8E8E8E',
+    boxShadow: '0px 4px 15px 10px rgba(142, 142, 142, 0.30)',
+    marginRight: '42px',
+    '&:hover': {
+      border: 'solid 3px #21aa79',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    '&:hover $statsBubbleParticipantsCount': {
+      visibility: 'visible',
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    animation: '6s $participantsHighlight infinite cubic-bezier(0,1.12,0,.97)', 
+  },
+  "@keyframes studiesHighlight": {
+    "78.11%": {
+      border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
+    },
+    "95.44%": {
+      border: 'solid 3px #ffbe18',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "96.83%": {
+      border: 'solid 3px #ffbe18',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    "97.33%": {
+      border: 'solid 3px #8E8E8E',
+      backgroundColor: 'rgba(255, 255, 255, 0.0)',
+    },
+  },
+  statsBubbleStudies: {
+    width: '195px',
+    height: '195px',
+    borderRadius: '50%',
+    border: 'solid 3px #8E8E8E',
+    boxShadow: '0px 4px 15px 10px rgba(142, 142, 142, 0.30)',
+    '&:hover': {
+      border: 'solid 3px #ffbe18',
+      backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    '&:hover $statsBubbleStudiesCount': {
+      visibility: 'visible',
+    },
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    animation: '6s $studiesHighlight infinite cubic-bezier(0,1.12,0,.97)',  
+  },
+  "@keyframes diagnosesNumberHighlight": {
+    "39.67%": {
+      visibility: 'hidden',
+    },
+    "47%": {
+      visibility: 'visible',
+    },
+    "58.89%": {
+      visibility: 'hidden',
+    },
+  },
+  statsBubbleDiagnosesCount: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    lineHeight: '40px',
+    letterSpacing: '2%',
+    align: 'center',
+    color: '#007dd9',
+    visibility: 'hidden',
+    animation: '6s $diagnosesNumberHighlight infinite linear', 
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  statsBubbleDiagnosesNumber: {
+    fontSize: '42px',
+  },
+  statsBubbleDiagnosesMagnitude: {
+    fontSize: '28px',
+    marginLeft: '5px',
+    marginBottom:'-5px',
+  },
+  "@keyframes participantsNumberHighlight": {
+    "58.89%": {
+      visibility: 'hidden',
+    },
+    "66.22%": {
+      visibility: 'visible',
+    },
+    "78.11%": {
+      visibility: 'hidden',
+    },
+  },
+  statsBubbleParticipantsCount: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '28px',
+    lineHeight: '40px',
+    letterSpacing: '2%',
+    align: 'center',
+    color: '#21aa79',
+    visibility: 'hidden',
+    animation: '6s $participantsNumberHighlight infinite linear', 
+    display: 'flex',
+    alignItems: 'flex-end',
 
+  },
+  statsBubbleParticipantsNumber: {
+    fontSize: '42px',
+  },
+  statsBubbleParticipantsMagnitude: {
+    fontSize: '28px',
+    marginLeft: '5px',
+    marginBottom:'-5px',
+  },
+  "@keyframes studiesNumberHighlight": {
+    "78.11%": {
+      visibility: 'hidden',
+    },
+    "95.44%": {
+      visibility: 'visible',
+    },
+    "97.33%": {
+      visibility: 'hidden',
+    },
+  },
+  statsBubbleStudiesCount: {
+    fontFamily: 'Poppins',
+    fontWeight: '700',
+    fontSize: '28px',
+    lineHeight: '40px',
+    letterSpacing: '2%',
+    align: 'center',
+    color: '#ffbe18',
+    visibility: 'hidden',
+    animation: '6s $studiesNumberHighlight infinite linear', 
+    display: 'flex',
+    alignItems: 'flex-end',
+  },
+  statsBubbleStudiesNumber: {
+    fontSize: '42px',
+  },
+  statsBubbleStudiesMagnitude: {
+    fontSize: '28px',
+    marginLeft: '5px',
+    marginBottom:'-5px',
+  },
+  statsBubbleDiagnosesIcon: {
+    width: '41px',
+    height: '41px',
+    marginTop: '13px',
+  },
+  statsBubbleParticipantsIcon: {
+    width: '34px',
+    height: '43px',
+    marginTop: '11px',
+  },
+  statsBubbleStudiesIcon: {
+    width: '36px',
+    height: '38px',
+    marginTop: '16px',
+  },
   iconAbout: {
     height: '17px',
     width: '9px',
@@ -253,21 +702,22 @@ const styles = () => ({
   },
 
   aboutImage: {
-    width: '300px',
-    height: '249px',
+    width: '100%',
+    height: '100%'
   },
   aboutImageSection: {
     height: '249px',
+    width: '296px',
   },
   DCWords: {
     height: '200px',
-    background: '#3E61DE',
+    background: '#334a9b',
     color: '#FFFFFF',
     fontFamily: 'Poppins',
     fontSize: '28px',
-    lineHeight: '28px',
+    lineHeight: '33px',
     fontWeight: '500',    
-    padding: '26px 26px 26px 26px',
+    padding: '20px 28px 28px 24px',
   },
   landingContainer: {
     alignItems: 'center',
@@ -280,6 +730,7 @@ const styles = () => ({
   about: {
     width: '300px',
     backgroundColor: 'white',
+    border: 'solid 2px #096761',
   },
   image: {
     width: '293px',
@@ -288,13 +739,13 @@ const styles = () => ({
   aboutContent: {
     background: 'white',
     minHeight: '372px',
-    width: '300px',
-    padding: '30px 30px 32px 30px',
+    width: '296px',
+    padding: '25px 35px 0px 24px',
     color: '#000000',
-    fontFamily: 'Nunito',
+    fontFamily: 'Inter',
     fontSize: '16px',
-    fontWeight: '500',
-    lineHeight: '22px',
+    fontWeight: '400',
+    lineHeight: '24px',
   },
   aboutButtonSection: {
     background: 'white',
@@ -310,7 +761,7 @@ const styles = () => ({
     width: '48px',
   },
   aboutButtonRight: {
-    background: '#CB864C',
+    background: '#844715',
     float: 'left',
     height: '45px',
     width: '132px',
@@ -336,27 +787,37 @@ const styles = () => ({
     paddingTop: '5px',
     minHeight: '138px',
   },
+  tile3Content: {
+    width: '100%',
+    height: '200px',
+    overflowY: 'auto',
+    background: '#fff',
+    paddingLeft: '30px',
+    paddingTop: '5px',
+    minHeight: '138px',
+  },
   contentHeader: {
-    color: '#033D6F',
-    fontFamily: 'Raleway, Lato',
+    color: '#343434',
+    fontFamily: 'Poppins',
     fontSize: '28px',
-    fontWeight: 'bold',
-    lineHeight: '27px',
-    padding: '10px 0',
+    fontWeight: '500',
+    lineHeight: '32px',
+    padding: '12px 0 6px 0',
   },
   contentContainer: {
-    width: '215px',
-    color: '#010101',
-    fontFamily: 'Poppins, Nunito',
-    fontSize: '16px',
-    lineHeight: '22px',
-    paddingLeft: '2px',
-    paddingBottom: '10px',
+    width: '245px',
+    color: '#000',
+    fontFamily: 'Inter',
+    fontSize: '12px',
+    fontWeight: '400',
+    lineHeight: '24px',
   },
 
   program: {
     float: 'left',
-    padding: '0 10px 6.8px 0px',
+    margin: '0 10px 6.8px 0px',
+    border: 'solid 2px #096761',
+
   },
   programImg: {
     background: '#fff',
@@ -364,11 +825,12 @@ const styles = () => ({
   },
   studies: {
     float: 'left',
+    border: 'solid 2px #096761',
   },
 
   contentRightBottom: {
     float: 'left',
-    width: '597px',
+    width: '604px',
     background: '#fff',
     backgroundImage: `url(${landingPageData.tile4.img})`,
     backgroundRepeat: 'no-repeat',
@@ -376,19 +838,19 @@ const styles = () => ({
   },
   cases: {
     height: '436px',
-    paddingLeft: '340px',
+    paddingLeft: '390px',
     paddingTop: '70px',
   },
   mountainMeadowButtonSection: {
-    height: '46px',
-    width: '176px',
-    backgroundColor: '#0E8662',
-    marginTop: '20px',
+    height: '44px',
+    width: '184px',
+    backgroundColor: '#335aab',
+    marginTop: '32px',
 
   },
   blueButton: {
     height: '45px',
-    background: '#1365C6',
+    background: '#096761',
     color: '#FFFFFF',
     fontFamily: 'Raleway',
     fontSize: '12px',
@@ -411,20 +873,19 @@ const styles = () => ({
     textTransform: 'uppercase',
   },
   mountainMeadowContentHeader: {
-    color: '#033D6F',
-    fontFamily: 'Poppins, Lato',
+    color: '#ffffff',
+    fontFamily: 'Poppins',
     fontSize: '28px',
-    fontWeight: 'bold',
+    fontWeight: '500',
     lineHeight: '32px',
     padding: '15px 0',
   },
   mountainMeadowContent: {
-    height: '143px',
-    width: '230px',
-    color: '#010101',
-    fontFamily: 'Nunito',
-    fontSize: '15px',
-    lineHeight: '22px',
+    width: '197px',
+    color: '#ffffff',
+    fontFamily: 'Inter',
+    fontSize: '16px',
+    lineHeight: '24px',
   },
   mountainMeadowIcon: {
     width: '20px',
@@ -462,30 +923,25 @@ const styles = () => ({
     paddingLeft: '2px',
   },
   heroTextContainer: {
-    position: 'absolute',
-    width: '400px',
+    position: 'relative',
+    width: '669px',
     margin: 'auto',
-    top: '200px',
-    right: 0,
-    '@media (min-width: 900px)': {
-      width: '906px',
-    },
+    left: '321px',
   },
   heroTextWrapper: {
-    width: '580px',
-    textAlign: 'center',
+    paddingTop: '68px',
   },
   buttonText: {
     padding: '12px 30px',
     height: '40px',
   },
   landingContainerInner: {
-    width: '940px',
+    width: '955px',
     display: 'flex',
     justifyContent: 'center',
-    background: '#3A8581',
-    paddingTop: '18px',
-    paddingBottom: '18px',
+    background: '#e2fff6',
+    paddingTop: '15px',
+    paddingBottom: '17px',
   },
 });
 export default withStyles(styles, { withTheme: true })(LandingView);
