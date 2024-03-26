@@ -20,10 +20,20 @@ export const aboutData = {
     "</ul>",
   fourthParagraph:
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
-    "The pilot phase contains harmonized data from:" +
+    "This release contains harmonized data from:" +
     "<ul className='itemList'>" +
-    "  <li>CCDI’s Molecular Characterization Initiative (MCI)</li>" +
-    "  <li>TARGET Neuroblastoma</li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000467.v23.p8' >TARGET Neuroblastoma </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs001437.v2.p1' > Pediatric Preclinical Testing Consortium PPTC </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002430.v1.p1' > Genomic Analysis in Pediatric Malignancies </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002517.v2.p2'> Molecular Characterization: Pediatric Brain Tumors & other Cancers</a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002518.v1.p1' > OncoKids Cancer Panel: Pediatric Cancers </a> </li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002504.v1.p1' > Genomic Characterization: Juvenile Myelo Monocytic Leukemia </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002529.v1.p1' >  Comprehensive Genomic Sequencing: Pediatric Cancers </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002599.v1.p1' > Genomic Landscape: Acute Myeloid Leukemia </a> </li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002620.v1.p1'> Feasibility and Clinical Utility of whole Genome Profiling in Pediatric and Young Adult Cancers </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002790.v5.p1'> Molecular Characterization Initiative (MCI)</a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs003111.v1.p1' > Molecular Characterization during Clonal Evolution: High-risk Neuroblastoma </a></li>" +
+
     "</ul>" +
     "<a className='listAlightment'> See <a className='aboutLink' href='https://github.com/chicagopcdc/c3dc_etl' target='_blank' rel='noopener noreferrer'>GitHub Repository</a>.</a><br/>" +
     "As the project matures, new pediatric cancer data and additional functionality will be added to the C3DC.",

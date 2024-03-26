@@ -170,7 +170,7 @@ const LandingView = ({ classes, statsData }) => (
                     <div className={classes.contentHeader} id="tile2_title">
                       {landingPageData.tile2.titleText}
                     </div>
-                    <div className={classes.contentContainer} id="tile2_description">
+                    <div className={classes.contentContainer} id="tile2_description" style={{fontSize: 16}}>
                       {landingPageData.tile2.descriptionText}
                     </div>
 
@@ -203,7 +203,7 @@ const LandingView = ({ classes, statsData }) => (
                     <div className={classes.contentHeader} id="tile3_title">
                       {landingPageData.tile3.titleText}
                     </div>
-                    <div className={classes.contentContainer} id="tile3_description">
+                    <div className={classes.contentContainer} id="tile3_description" style={{fontSize: 16}}>
                       {landingPageData.tile3.descriptionText}
                     </div>
 
