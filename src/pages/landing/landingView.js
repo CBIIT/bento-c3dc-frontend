@@ -27,10 +27,10 @@ const LandingView = ({ classes, statsData }) => (
                     <div className={classes.statsBubbleDiagnoses}>
                       <div className={classes.statsBubbleDiagnosesCount}>
                         <div className={classes.statsBubbleDiagnosesNumber}>
-                          {statsData.numberOfDiagnoses.num}
+                          {statsData.numberOfDiseases.num}
                         </div>
                         <div className={classes.statsBubbleDiagnosesMagnitude}>
-                          {statsData.numberOfDiagnoses.char}
+                          {statsData.numberOfDiseases.char}
                         </div>
                       </div>
                       <div className={classes.statsBubbleText}>
