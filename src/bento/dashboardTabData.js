@@ -93,7 +93,7 @@ query search(
     last_known_survival_status: $last_known_survival_status
   ) {
     numberOfParticipants
-    numberOfDiagnoses
+    numberOfDiseases
     numberOfStudies
     numberOfSurvivals
 
@@ -1122,7 +1122,7 @@ export const tabContainers = [
     paginationAPIField: 'diagnosisOverview',
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
-    count: 'numberOfDiagnoses',
+    count: 'numberOfDiseases',
     fileCount: 'diagnosisFileCount',
     dataKey: 'id',
     tableID: 'diagnosis_tab_table',

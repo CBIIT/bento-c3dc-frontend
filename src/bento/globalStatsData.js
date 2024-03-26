@@ -59,7 +59,7 @@ export const globalStatsData = [
   {
     statTitle: 'Diagnosis Records',
     type: 'field',
-    statAPI: 'numberOfDiagnoses',
+    statAPI: 'numberOfDiseases',
     statIconSrc: diagnosisLogo,
     statIconAlt: 'A teddy bear representing Diagnosis'
   },
@@ -82,7 +82,7 @@ export const globalStatsData = [
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_GLOBAL_STATS_DATA_QUERY = gql`
 {
-  numberOfDiagnoses,
+  numberOfDiseases,
   numberOfParticipants,
   numberOfReferenceFiles,
   numberOfStudies,
