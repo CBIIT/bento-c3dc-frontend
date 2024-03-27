@@ -82,10 +82,20 @@ export const tblHeader = {
   export const tblPgn = {
     MuiTablePagination: {
       root: {
-        
+        // borderTop: '1px solid #8A7F7C',
+        marginLeft: 'auto',
       },
-      toolbar: {
-        minHeight: '45px',
+    caption: {
+        textTransform: 'uppercase',
+        fontFamily: 'Open Sans',
+        fontSize: '12px',
+      },
+    select: {
+        fontFamily: 'Open Sans',
+        fontSize: '12px',
+      },
+    toolbar: {
+        minHeight: '40px',
       },
     },
   };
@@ -196,11 +206,11 @@ export const tblHeader = {
             caption: {
                 textTransform: 'uppercase',
                 fontFamily: 'Open Sans',
-                fontSize: '14px',
+                fontSize: '12px',
             },
             select: {
                 fontFamily: 'Open Sans',
-                fontSize: '14px',
+                fontSize: '12px',
             },
             toolbar: {
                 minHeight: '40px',
