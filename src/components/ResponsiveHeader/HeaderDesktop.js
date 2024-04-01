@@ -1,12 +1,12 @@
 import React from 'react';
 import styled from 'styled-components';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams, useSearchParams } from 'react-router-dom';
 import Logo from '../ResponsiveHeader/components/LogoDesktop'
 import SearchBar from './components/SearchBarDesktop'
 import NavBar from './components/NavbarDesktop';
 import Cart from './components/CartDesktop';
 import { USGovBannerData } from '../../bento/globalHeaderData';
-
+import info from '../../assets/landing/info.jpeg';
 const HeaderBanner = styled.div`
   width: 100%;
 `;
@@ -36,7 +36,7 @@ const NavBarContainer = styled.div`
 `;
 const USGovBanner = styled.div`
   background-color: #f0f0f0;
-  height: 46px;
+  min-height: 46px;
   width: 100%;
   align-items: center;
     .USGovBannerInner {
@@ -59,6 +59,26 @@ const USGovBanner = styled.div`
         display: flex;
         align-items: center;
     }
+
+    .bannerLeftWarning {
+      width: 100%;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .bannerLeftWarning span {
+      font-size: 16px;
+      margin-left:28px;
+    } 
+
+    .bannerLeftWarning h3{
+      margin-left: 1px;
+      margin-bottom: 0px;
+      margin-top: 2px;
+    }
+
     .bannerText {
         font-family: 'Open Sans';
         font-size: 12px;
@@ -90,11 +110,29 @@ const USGovBanner = styled.div`
 
 const Header = () => {
   const path = useLocation().pathname;
+  const url = window.location;
+  const params = new URLSearchParams(window.location.search);
 
+  const showLaunchBanner = params.get('show_launch_banner');
   return (
     <>
       <USGovBanner>
-        <div className ='USGovBannerInner'>
+        {showLaunchBanner == "true" || showLaunchBanner?
+         <>
+          
+           <div className ='USGovBannerInner'>
+           <div className='bannerLeftWarning'>
+             <div style={{display: 'flex', flexDirection:'row'}}>
+             <img src={info} style={{width:20,height:20, borderRadius:150,marginRight:10}} />
+              <h3>Government Funding Lapse</h3>
+             </div>
+         
+             <span className='bannerText'>Because of a lapse in government funding, the information on this website may not be up to date, transactions submitted via the website may not be processed, and the agency may not be able to respond to inquiries until appropriations are enacted. The NIH Clinical Center (the research hospital of NIH) is open. For more details about its operating status, please visit  <a href="https://cc.nih.gov/">cc.nih.gov</a>. Updates regarding government operating status and resumption of normal operations can be found at <a href="https://opm.gov/">OPM.gov</a>.</span>
+           </div>
+   
+           
+         </div>
+         <div className ='USGovBannerInner'>
           <div className='bannerLeft'>
             <img src={USGovBannerData.logo} alt={"US Flag logo"}></img>
             <span className='bannerText'>An official website of the United States government</span>
@@ -106,6 +144,11 @@ const Header = () => {
             */}
           </div>
         </div>
+         </>
+        :
+     <div> </div>
+      }
+      
       </USGovBanner>
       <HeaderBanner role="banner">
         <HeaderContainer>
