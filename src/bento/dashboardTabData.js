@@ -52,7 +52,6 @@ query search(
     $anatomic_site: [String],
     $diagnosis_classification: [String],
     $diagnosis_classification_system: [String],
-    $diagnosis_verification_status: [String],
     $diagnosis_basis: [String],
     $disease_phase: [String],
 
@@ -78,7 +77,6 @@ query search(
     anatomic_site: $anatomic_site,
     diagnosis_classification: $diagnosis_classification,
     diagnosis_classification_system: $diagnosis_classification_system,
-    diagnosis_verification_status: $diagnosis_verification_status,
     diagnosis_basis: $diagnosis_basis,
     disease_phase: $disease_phase,
     
@@ -310,7 +308,6 @@ query survivalOverview(
   $anatomic_site: [String],
   $diagnosis_classification: [String],
   $diagnosis_classification_system: [String],
-  $diagnosis_verification_status: [String],
   $diagnosis_basis: [String],
   $disease_phase: [String],
 
@@ -342,7 +339,6 @@ query survivalOverview(
       anatomic_site: $anatomic_site,
       diagnosis_classification: $diagnosis_classification,
       diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_verification_status: $diagnosis_verification_status,
       diagnosis_basis: $diagnosis_basis,
       disease_phase: $disease_phase,
       
@@ -395,7 +391,6 @@ query participantOverview(
  $anatomic_site: [String],
  $diagnosis_classification: [String],
  $diagnosis_classification_system: [String],
- $diagnosis_verification_status: [String],
  $diagnosis_basis: [String],
  $disease_phase: [String],
 
@@ -427,7 +422,6 @@ query participantOverview(
      anatomic_site: $anatomic_site,
      diagnosis_classification: $diagnosis_classification,
      diagnosis_classification_system: $diagnosis_classification_system,
-     diagnosis_verification_status: $diagnosis_verification_status,
      diagnosis_basis: $diagnosis_basis,
      disease_phase: $disease_phase,
      
@@ -472,7 +466,6 @@ query diagnosisOverview(
   $anatomic_site: [String],
   $diagnosis_classification: [String],
   $diagnosis_classification_system: [String],
-  $diagnosis_verification_status: [String],
   $diagnosis_basis: [String],
   $disease_phase: [String],
 
@@ -504,7 +497,6 @@ query diagnosisOverview(
       anatomic_site: $anatomic_site,
       diagnosis_classification: $diagnosis_classification,
       diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_verification_status: $diagnosis_verification_status,
       diagnosis_basis: $diagnosis_basis,
       disease_phase: $disease_phase,
       
@@ -535,7 +527,6 @@ query diagnosisOverview(
       diagnosis_classification_system
       diagnosis_comment
       diagnosis_id
-      diagnosis_verification_status
       disease_phase
       toronto_childhood_cancer_staging
       tumor_classification
@@ -565,7 +556,6 @@ query studyOverview(
   $anatomic_site: [String],
   $diagnosis_classification: [String],
   $diagnosis_classification_system: [String],
-  $diagnosis_verification_status: [String],
   $diagnosis_basis: [String],
   $disease_phase: [String],
 
@@ -597,7 +587,6 @@ query studyOverview(
       anatomic_site: $anatomic_site,
       diagnosis_classification: $diagnosis_classification,
       diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_verification_status: $diagnosis_verification_status,
       diagnosis_basis: $diagnosis_basis,
       disease_phase: $disease_phase,
       
@@ -1160,13 +1149,6 @@ export const tabContainers = [
       {
         dataField: 'diagnosis_classification_system',
         header: 'Diagnosis Classification System',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'diagnosis_verification_status',
-        header: 'Diagnosis Verification Status',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
