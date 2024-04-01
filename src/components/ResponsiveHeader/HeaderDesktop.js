@@ -116,9 +116,9 @@ const Header = () => {
   const showLaunchBanner = params.get('show_launch_banner');
   return (
     <>
-      <USGovBanner>
-        {showLaunchBanner == "true" || showLaunchBanner?
-         <>
+     { 
+       showLaunchBanner == "true" || showLaunchBanner?
+       <USGovBanner>
           
            <div className ='USGovBannerInner'>
            <div className='bannerLeftWarning'>
@@ -144,12 +144,12 @@ const Header = () => {
             */}
           </div>
         </div>
-         </>
+        </USGovBanner>
         :
-     <div> </div>
+     <></>
       }
       
-      </USGovBanner>
+     
       <HeaderBanner role="banner">
         <HeaderContainer>
           <Logo />
