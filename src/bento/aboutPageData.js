@@ -20,7 +20,6 @@ export const aboutData = {
     "</ul>",
   fourthParagraph:
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
-    "The pilot phase contains harmonized data from:" +
     "This release contains harmonized data from:" +
     "<ul className='itemList'>" +
     "  <li>CCDI’s Molecular Characterization Initiative (MCI)</li>" +
