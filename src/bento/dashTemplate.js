@@ -416,7 +416,7 @@ export const widgetConfig = [
   },
   {
     type: 'donut',
-    title: 'Diagnosis (ICD-O)',
+    title: 'Diagnosis',
     dataName: 'participantCountByDiagnosis',
     sliceTitle: 'Participants',
   },
