@@ -22,8 +22,6 @@ export const aboutData = {
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
     "This release contains harmonized data from:" +
     "<ul className='itemList'>" +
-    "  <li>CCDI’s Molecular Characterization Initiative (MCI)</li>" +
-    "  <li>TARGET Neuroblastoma</li>" +
     "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000467.v23.p8' >TARGET Neuroblastoma </a></li>" +
     "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs001437.v2.p1' > Pediatric Preclinical Testing Consortium PPTC </a></li>" +
     "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002430.v1.p1' > Genomic Analysis in Pediatric Malignancies </a></li>" +
