@@ -11,7 +11,7 @@ import { table } from '../../bento/studiesData';
 //import Stats from '../../components/Stats/AllStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import { themeConfig } from './tableConfig/Theme';
-import studyListingBackground from '../../assets/studies/studyListingBackground.png';
+import studiesListingBackground from '../../assets/studies/studiesListingBackground.png';
 
 
 const initTblState = (initailState) => ({
@@ -139,10 +139,11 @@ const styles = (theme) => ({
     filter: 'drop-shadow(-3px 2px 6px rgba(27,28,28,0.29))',
   },
   tableContainer: {
-    backgroundImage: `url(${studyListingBackground})`,
+    backgroundImage: `url(${studiesListingBackground})`,
     backgroundSize: 'cover',
     width: '100%',
-    height: '679px',
+    minHeight: '600px',  
+    paddingBottom: '50px',
   },
   tableDiv: {
     padding: '25px 40px',
