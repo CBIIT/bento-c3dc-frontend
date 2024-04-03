@@ -1128,13 +1128,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'diagnosis_verification_status',
-        header: 'Diagnosis Verification Status',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'diagnosis_basis',
         header: 'Diagnosis Basis',
         display: true,
