@@ -1121,6 +1121,13 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
+        dataField: 'diagnosis_classification_system',
+        header: 'Diagnosis Classification System',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: 'diagnosis_basis',
         header: 'Diagnosis Basis',
         display: true,
