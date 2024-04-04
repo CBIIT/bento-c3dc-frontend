@@ -5,11 +5,11 @@ import Footer from '../ResponsiveFooter/';
 import Header from '../ResponsiveHeader/';
 import Home from '../../pages/landing/landingController';
 import About from '../../pages/about/aboutView';
-import News from '../../pages/news/newsView';
+//import News from '../../pages/news/newsView';
 import Error from '../../pages/error/Error';
 import Search from '../../pages/search/searchView';
 import Inventory from '../../pages/inventory/inventoryController';
-import Cart from '../../pages/cart/cartController';
+//import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
 import DataModel from "../../pages/DataModel/dataModel";
 // import NewsDetail from '../../pages/news/newsDetailView';
@@ -23,7 +23,10 @@ const Layout = () => {
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/news" element={<News />} />
+          {
+          //<Route path="/news" element={<News />} />}
+          //<Route path="/fileCentricCart" element={<Cart />} />
+          }
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
           <Route path="/fileCentricCart" element={<Cart />} />

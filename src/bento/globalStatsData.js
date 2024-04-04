@@ -18,7 +18,7 @@ export const statsStyling = {
     padding: '0.1% 6% 2% 6%',
     borderRight: '1px solid #0B3556',
     '&:first-child': {
-      padding: '0.1% 6% 2% 6%',
+      padding: '0.1% 3% 2% 6%',
     },
     '&:last-child': {
       padding: '0.1% 6% 2% 6%',
@@ -47,6 +47,7 @@ export const statsStyling = {
     lineHeight: '16px',
     textTransform: 'uppercase',
     margin: '0 0 0 13px',
+    width: '100%',
   },
 };
 
@@ -58,7 +59,7 @@ export const globalStatsData = [
   {
     statTitle: 'Diagnoses',
     type: 'field',
-    statAPI: 'numberOfDiagnoses',
+    statAPI: 'numberOfDiseases',
     statIconSrc: diagnosisLogo,
     statIconAlt: 'A teddy bear representing Diagnosis'
   },
@@ -81,7 +82,7 @@ export const globalStatsData = [
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_GLOBAL_STATS_DATA_QUERY = gql`
 {
-  numberOfDiagnoses,
+  numberOfDiseases,
   numberOfParticipants,
   numberOfReferenceFiles,
   numberOfStudies,
