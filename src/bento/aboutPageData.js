@@ -8,7 +8,7 @@ export const aboutData = {
   secondParagraph:
     "<a className='sectionTitle'>Childhood Cancer Clinical Data Commons</a><br/>" +
     "The Childhood Cancer Clinical Data Commons (C3DC) is an open-access web application that serves as the primary source for deidentified, individual-level harmonized data that describes the demographic and phenotypic characteristics of participants. " +
-    "This harmonization process uses a standard <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/dmdirect/NIH/NCI/CO/CDEDD?filter=Administered%20Item%20%28Data%20Element%20CO%29.CDEDD%20Classification.P_ITEM_ID_VER=12119072v1' target='_blank' rel='noopener noreferrer'>data dictionary</a> consisting of Common Data Elements (CDEs), C3DC employs a common data model to facilitate cohort analyses and correlative analytics with data in other datatype-specific commons. " +
+    "This harmonization process uses a standard <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/dmdirect/NIH/NCI/CO/CDEDD?filter=Administered%20Item%20%28Data%20Element%20CO%29.CDEDD%20Classification.P_ITEM_ID_VER=12119072v1' target='_blank' rel='noopener noreferrer'>data dictionary</a> consisting of Common Data Elements (CDEs), C3DC employs a common data model to facilitate cohort analyses and correlative analytics with data in other datatype-specific commons." +
     "The data model has been deposited in " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>GitHub</a>.",
   thirdParagraph:
@@ -20,10 +20,20 @@ export const aboutData = {
     "</ul>",
   fourthParagraph:
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
-    "The pilot phase contains harmonized data from:" +
+    "This release contains harmonized data from:" +
     "<ul className='itemList'>" +
-    "  <li>CCDI’s Molecular Characterization Initiative (MCI)</li>" +
-    "  <li>TARGET Neuroblastoma</li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs000467.v23.p8' >TARGET Neuroblastoma </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs001437.v2.p1' > Pediatric Preclinical Testing Consortium PPTC </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002430.v1.p1' > Genomic Analysis in Pediatric Malignancies </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002517.v2.p2'> Molecular Characterization: Pediatric Brain Tumors & other Cancers</a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002518.v1.p1' > OncoKids Cancer Panel: Pediatric Cancers </a> </li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002504.v1.p1' > Genomic Characterization: Juvenile Myelo Monocytic Leukemia </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002529.v1.p1' >  Comprehensive Genomic Sequencing: Pediatric Cancers </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002599.v1.p1' > Genomic Landscape: Acute Myeloid Leukemia </a> </li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002620.v1.p1'> Feasibility and Clinical Utility of whole Genome Profiling in Pediatric and Young Adult Cancers </a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs002790.v5.p1'> Molecular Characterization Initiative (MCI)</a></li>" +
+    "  <li> <a  className='aboutLink' target='_blank' href='https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=phs003111.v1.p1' > Molecular Characterization during Clonal Evolution: High-risk Neuroblastoma </a></li>" +
+
     "</ul>" +
     "<a className='listAlightment'> See <a className='aboutLink' href='https://github.com/chicagopcdc/c3dc_etl' target='_blank' rel='noopener noreferrer'>GitHub Repository</a>.</a><br/>" +
     "As the project matures, new pediatric cancer data and additional functionality will be added to the C3DC.",
@@ -33,7 +43,7 @@ export const aboutData = {
     "unites multiple childhood cancer studies and drives the search experience. " +
     "Initially, the C3DC database model will focus on a limited set of data elements, such as participant diagnosis, to establish processes for data intake harmonization, data modeling, and storage. " +
     "The C3DC model is developed collaboratively with contributions from Data for the Common Good at University of Chicago, Frederick National Laboratory, and NCI’s Semantics Infrastructure, Cancer Research Data Commons, and National Cancer Childhood Registry team members. " +
-    "The resulting model will collectively establish the standard terms for pediatric cancer and will serve as guidance to researchers. ",
+    "The resulting model will collectively establish the standard terms for pediatric cancer and will serve as guidance to researchers. ",
   sixthParagraph:
     "NCI encourages researchers to use common data elements (CDEs) to enhance data accuracy, consistency, and interoperability across diverse areas of health research. " +
     "CDEs are pieces of data captured in multiple data sets across different studies. " +
@@ -47,7 +57,7 @@ export const aboutData = {
   seventhParagraph:
     "<a className='sectionTitle'>C3DC Data Model</a><br/>" +
     "The C3DC model is a conceptual and structural representation of the harmonized data from CCDI and other studies. Developed in collaboration with the PCDC at the University of Chicago, the C3DC data model will initially focus on a limited set of data elements to establish processes for data ingestion, harmonization and storage. <br/> " +
-    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>https://github.com/chicagopcdc/c3dc_etl</a>.",
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>https://github.com/CBIIT/c3dc-model</a>.",
   eigthParagraph:
     "<a className='sectionTitle'>GitHub Harmonization Repository</a><br/>" +
     "The GitHub hosted, open source, repository where the harmonization scripts, translation files and other resources are located. <br/> " +
@@ -62,6 +72,11 @@ export const aboutData = {
   eleventhParagraph:
     "<a className='sectionTitle'>caDSR </a> <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/Home.jsp' target='_blank' rel='noopener noreferrer'>https://cadsr.cancer.gov/onedata/Home.jsp</a><br/>" +
     "The Cancer Data Standards Repository is one of the largest CDE registries developed by the National Cancer Institute (NCI) and contains over 60,000 CDEs covering many aspects of cancer research. " ,
+  twelfthParagraph:
+    "For more information about the C3DC site, please refer to the "+
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/README.md' target='_blank' rel='noopener noreferrer'>Release Notes</a> " +
+    "and the " +
+    "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>." ,
   lastParagraph:
     "The CCDI welcomes input from the community to enhance usability. " +
     "Please send your feedback and comments to " +
