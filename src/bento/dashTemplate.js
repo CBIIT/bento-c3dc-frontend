@@ -245,11 +245,11 @@ export const facetsConfig = [
    sort_type: sortType.ALPHABET,
     show: true,
    },
-  {
+   {
     section: DIAGNOSIS,
-    label: 'Diagnosis Classification',
+    label: 'Diagnosis Classification System',
     apiPath: '',
-    apiForFiltering: 'filterParticipantCountByDiagnosisSystem',
+    apiForFiltering: 'filterParticipantCountByDiagnosisClassificationSystem',
     datafield: 'diagnosis_classification_system',
     field: GROUP,
     type: InputTypes.CHECKBOX,
