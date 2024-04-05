@@ -1383,33 +1383,18 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'study_short_title',
-        header: 'Study Short Title',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'study_acronym',
         header: 'Acronym',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      // Extra Hidden Columns
       {
         dataField: "study_id",
         header: "Study ID",
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
-      },
-      {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
       },
       {
         dataField: "acl",
