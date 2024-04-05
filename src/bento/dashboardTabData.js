@@ -1041,13 +1041,6 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      // {
-      //   dataField: 'phs_accession',
-      //   header: 'Study Accession',
-      //   display: true,
-      //   tooltipText: 'sort',
-      //   role: cellTypes.DISPLAY,
-      // },
       {
         dataField: 'race',
         header: 'Race',
@@ -1069,13 +1062,6 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      // {
-      //   dataField: 'alternate_participant_id',
-      //   header: 'Alternate Participant ID',
-      //   display: false,
-      //   tooltipText: 'sort',
-      //   role: cellTypes.DISPLAY,
-      // },
       {
         dataField: 'study_id',
         header: 'Study ID',
@@ -1348,11 +1334,6 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
-    //addFilesRequestVariableKey: 'sample_ids',
-    //addFilesResponseKeys: ['fileIDsFromList'],
-    //addAllFilesResponseKeys: ['survivalOverview', 'files'],
-    //addAllFileQuery: GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART,
-    //addSelectedFilesQuery: GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
   },
   {
     name: 'Studies',
