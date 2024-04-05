@@ -359,17 +359,19 @@ query survivalOverview(
       participant_id
 
       # Study
-      phs_accession
+      study_id
 
       # Survival
+      age_at_event_free_survival_status
       age_at_last_known_survival_status
+      event_free_survival_status
       first_event
       last_known_survival_status
+      survival_id
 
       __typename
   }
-}
-`;
+}`;
 
 export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
 query participantOverview(
@@ -434,11 +436,15 @@ query participantOverview(
       order_by: $order_by,
       sort_direction: $sort_direction
   ) {
-      participant_id
+      # Participants
       ethnicity
+      participant_id
       race
       sex_at_birth
-      phs_accession
+
+      # Studies
+      study_id
+
       __typename
   }
 }`;
@@ -506,24 +512,31 @@ query diagnosisOverview(
       order_by: $order_by,
       sort_direction: $sort_direction
   ) {
-      # Demographics
-      participant_id
-
       # Diagnosis
       age_at_diagnosis
       anatomic_site
       diagnosis_basis
       diagnosis
       diagnosis_classification_system
+      diagnosis_comment
+      diagnosis_id
       disease_phase
+      toronto_childhood_cancer_staging
       tumor_classification
+      tumor_grade
+      tumor_stage_clinical_m
+      tumor_stage_clinical_n
+      tumor_stage_clinical_t
+
+      # Participants
+      participant_id
 
       # Study
-      phs_accession
+      study_id
+
       __typename
   }
-}
-`;
+}`;
 
 export const GET_STUDY_OVERVIEW_QUERY = gql`
 query studyOverview(
@@ -588,14 +601,20 @@ query studyOverview(
       order_by: $order_by,
       sort_direction: $sort_direction
   ) {
-      # Study
+      # Studies
+      acl
+      consent
+      consent_number
+      external_url
       phs_accession
       study_acronym
+      study_description
+      study_id
       study_short_title
+
       __typename
   }
-}
-`;
+}`;
 
 export const GET_ALL_FILEIDS_PARTICIPANTSTAB_FOR_SELECT_ALL = gql`
 query search (          
@@ -1022,13 +1041,13 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
+      // {
+      //   dataField: 'phs_accession',
+      //   header: 'Study Accession',
+      //   display: true,
+      //   tooltipText: 'sort',
+      //   role: cellTypes.DISPLAY,
+      // },
       {
         dataField: 'race',
         header: 'Race',
@@ -1050,13 +1069,13 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
-      {
-        dataField: 'alternate_participant_id',
-        header: 'Alternate Participant ID',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
+      // {
+      //   dataField: 'alternate_participant_id',
+      //   header: 'Alternate Participant ID',
+      //   display: false,
+      //   tooltipText: 'sort',
+      //   role: cellTypes.DISPLAY,
+      // },
       {
         dataField: 'study_id',
         header: 'Study ID',
@@ -1355,7 +1374,29 @@ export const tabContainers = [
         cloudIcon: true,
       },
     },
-    columns: [   
+    columns: [
+      {
+        dataField: 'phs_accession',
+        header: 'Study Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'study_short_title',
+        header: 'Study Short Title',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'study_acronym',
+        header: 'Acronym',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      // Extra Hidden Columns
       {
         dataField: "study_id",
         header: "Study ID",
@@ -1373,13 +1414,6 @@ export const tabContainers = [
       {
         dataField: "acl",
         header: "ACL",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
-      },
-      {
-        dataField: "study_name",
-        header: "Study Name",
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
