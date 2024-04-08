@@ -51,6 +51,11 @@ export const navMobileList = [
   //     className: 'navMobileItem',
   // },
   {
+    name: 'Resources',
+    link: '',
+    className: 'navMobileItem clickable',
+  },
+  {
        name: 'About',
        link: '/about',
        className: 'navMobileItem',
@@ -63,53 +68,75 @@ export const navMobileList = [
 ];
 
 export const navbarSublists = {
-Applications: [
-  {
-    name:'Applications',
-    link: '',
-    className: 'navMobileSubTitle',
-  },
-  {
-    name:'Childhood Cancer Data Catalog',
-    link: '/#ccdc',
-    className: 'navMobileSubItem',
-  },
-  {
-    name:'Clinical Interpretation of Variants in Cancer',
-    link: '/#civic',
-    className: 'navMobileSubItem',
-  },
-  {
-    name: 'Molecular Characterization Initiative for Childhood Cancers',
-    link: '/#mci',
-    className: 'navMobileSubItem',
-  },
-  {
-    name: 'Molecular Targets Platform',
-    link: '/#mtp',
-    className: 'navMobileSubItem',
-  },
-  {
-    name:'National Childhood Cancer Registry Explorer',
-    link: '/#nccr',
-    className: 'navMobileSubItem',
-  }],
-"Other Resources": [
-  {
-    name:'Other Resources',
-    link: '',
-    className: 'navMobileSubTitle',
-  },
-  {
-    name:'Cancer Genomics Cloud',
-    link: '/#cgc',
-    className: 'navMobileSubItem',
-  }, 
-  {
-    name:'Database of Genotypes and Phenotypes',
-    link: '/#dbgap',
-    className: 'navMobileSubItem',
-  }],
+  Applications: [
+    {
+      name:'Applications',
+      link: '',
+      className: 'navMobileSubTitle',
+    },
+    {
+      name:'Childhood Cancer Data Catalog',
+      link: '/#ccdc',
+      className: 'navMobileSubItem',
+    },
+    {
+      name:'Clinical Interpretation of Variants in Cancer',
+      link: '/#civic',
+      className: 'navMobileSubItem',
+    },
+    {
+      name: 'Molecular Characterization Initiative for Childhood Cancers',
+      link: '/#mci',
+      className: 'navMobileSubItem',
+    },
+    {
+      name: 'Molecular Targets Platform',
+      link: '/#mtp',
+      className: 'navMobileSubItem',
+    },
+    {
+      name:'National Childhood Cancer Registry Explorer',
+      link: '/#nccr',
+      className: 'navMobileSubItem',
+    }],
+    Resources: 
+    [
+      {
+        name:'Resources',
+        link: '/resources',
+        className: 'navMobileSubItem',
+      },
+      {
+        name:'C3DC Data Model',
+        link: 'https://github.com/CBIIT/c3dc-model',
+        className: 'navMobileSubItem',
+        externalLink: true,
+      }, 
+      {
+        name:'GitHub Harmonization Repository',
+        link: 'https://github.com/chicagopcdc/c3dc_etl',
+        className: 'navMobileSubItem',
+        externalLink: true,
+      },
+      {
+        name:'The Childhood Cancer Data Initiative (CCDI Hub)',
+        link: 'https://ccdi.cancer.gov/',
+        className: 'navMobileSubItem',
+        externalLink: true,
+      }, 
+      {
+        name:'The GDC Data Portal',
+        link: 'https://portal.gdc.cancer.gov/',
+        className: 'navMobileSubItem',
+        externalLink: true,
+      },
+      {
+        name:'The Cancer Data Standards Repository',
+        link: 'https://cadsr.cancer.gov/onedata/Home.jsp',
+        className: 'navMobileSubItem',
+        externalLink: true,
+      },
+    ],
 };
 
 export const navBarCartData = {
