@@ -10,6 +10,7 @@ import Resources from '../../pages/resources/resourcesView';
 import Error from '../../pages/error/Error';
 import Search from '../../pages/search/searchView';
 import Inventory from '../../pages/inventory/inventoryController';
+import Studies from '../../pages/studies/studiesController';
 //import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
 import DataModel from "../../pages/DataModel/dataModel";
@@ -23,11 +24,12 @@ const Layout = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/studies" element={<Studies />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
-          <Route path="/fileCentricCart" element={<Cart />} />
+          {/*<Route path="/fileCentricCart" element={<Cart />} />*/}
           <Route path="/data_model" element={<DataModel />} />
           <Route path="*" element={<Error />} />
         </Routes>

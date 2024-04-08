@@ -1,28 +1,19 @@
 import gql from 'graphql-tag';
-
-// --------------- Icons configuration --------------
-// Ideal size for programListingIcon is 100x100 px
-// Ideal size for externalLinkIcon is 16x16 px
-const studyListingIcon = {
-  src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
-  alt: 'Bento program logo',
-};
-
-const externalLinkIcon = {
-  src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/externalLinkIcon.svg',
-  alt: 'External link icon',
-};
+import { cellTypes } from '@bento-core/table';
 
 // --------------- Table configuration --------------
 const table = {
   // Set 'display' to false to hide the table entirely
+  name: 'studies',
   display: true,
+  dataKey: 'study_name',
+  tableID: 'studies_table',
   // Table title
-  title: 'Studies',
+  title: 'C3DC Studies',
   // Field name for table data, need to be updated only when using a different GraphQL query
-  dataField: 'studyInfo',
+  dataField: 'studiesListing',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'study_acronym',
+  defaultSortField: 'phs_accession',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Set 'selectableRows' to true to show the row selection
@@ -30,61 +21,49 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'study_acronym',
-      header: 'Study Code',
-      link: '/study/{study_id}',
-      display: true
+      dataField: 'phs_accession',
+      header: 'Study Accession',
+      tooltipText: 'Sort by Study Accession',
+      cellType: cellTypes.LINK,
+      linkAttr: {
+        rootPath: '/study',
+        pathParams: ['phs_accession']
+      },
+      display: true,
     },
     {
-      dataField: 'study_id',
-      header: 'Study ID',
-    },
-    {
-      dataField: 'study_name',
+      dataField: 'study_short_title',
       header: 'Study Name',
+      tooltipText: 'Sort by Study Name',
+      display: true,
     },
     {
-      dataField: 'start_date',
-      header: 'Start Date',
+      dataField: 'num_participants',
+      header: 'Participants Count',
+      tooltipText: 'Sort by Participants Count',
+      display: true,
     },
     {
-      dataField: 'end_date',
-      header: 'End Date',
-    },
-    {
-      dataField: 'pubmed_id',
-      header: 'PubMed ID',
-      link: 'https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}',
-    },
-    {
-      dataField: 'num_studies',
-      header: 'Number of Arms',
-    },
-    {
-      dataField: 'num_subjects',
-      header: 'Associated Cases',
+      dataField: 'num_diseases',
+      header: 'Diagnosis Count',
+      tooltipText: 'Sort by Diagnosis Count',
+      display: true,
     },
   ],
 };
 
-// --------------- GraphQL query - Retrieve study info --------------
+// --------------- GraphQL query - Retrieve program info --------------
 const GET_STUDIES_DATA_QUERY = gql`{
-  studyInfo {
-    study_acronym
-    study_id
-    study_name
-    start_date
-    end_date
-    pubmed_id
-    num_studies
-    num_subjects
-    }
+  studiesListing  {
+    phs_accession
+    study_short_title
+    num_participants
+    num_diseases
   }
+}
  `;
 
 export {
-  studyListingIcon,
-  externalLinkIcon,
   table,
   GET_STUDIES_DATA_QUERY,
 };
