@@ -62,8 +62,8 @@ export const navMobileList = [
   },
   {
        name: 'About',
-       link: '/about',
-       className: 'navMobileItem',
+       link: '',
+       className: 'navMobileItem clickable',
   },/*
   {
     name: 'My File',
@@ -142,6 +142,25 @@ export const navbarSublists = {
         externalLink: true,
       },
     ],
+    About:
+    [
+      {
+        name: 'About',
+        link: '/about',
+        className: 'navMobileSubItem',
+      },
+      {
+        name: 'Latest Release',
+        link: '/pdfReader?type=latestRelease',
+        className: 'navMobileSubItem',
+      },
+      {
+        name: 'User Guide',
+        link: '/pdfReader?type=userGuid',
+        className: 'navMobileSubItem',
+      },
+   
+    ]
 };
 
 export const navBarCartData = {

@@ -73,12 +73,17 @@ export const aboutData = {
     "<a className='sectionTitle'>caDSR </a> <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/Home.jsp' target='_blank' rel='noopener noreferrer'>https://cadsr.cancer.gov/onedata/Home.jsp</a><br/>" +
     "The Cancer Data Standards Repository is one of the largest CDE registries developed by the National Cancer Institute (NCI) and contains over 60,000 CDEs covering many aspects of cancer research. " ,
   twelfthParagraph:
-    "For more information about the C3DC site, please refer to the "+
+    "For more information about the C3DC site, please refer to the <br> "+
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/README.md' target='_blank' rel='noopener noreferrer'>Release Notes</a> " +
     "and the " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>." ,
   lastParagraph:
-    "The CCDI welcomes input from the community to enhance usability. " +
+    "The CCDI welcomes input from the community to enhance usability. <br> " +
     "Please send your feedback and comments to " +
     "<a className='aboutLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>.",
 };
+
+export const pdfList = {
+  latestRelease: "https://s29.q4cdn.com/175625835/files/doc_downloads/test.pdf",
+  userGuid: "https://s29.q4cdn.com/175625835/files/doc_downloads/test.pdf"
+}
