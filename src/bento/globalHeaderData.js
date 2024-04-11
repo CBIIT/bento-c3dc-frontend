@@ -41,6 +41,11 @@ export const navMobileList = [
   //     className: 'navMobileItem clickable',
   // },
   {
+    name: 'Studies',
+    link: '/studies',
+    className: 'navMobileItem',
+  },
+  {
     name: 'Data Model',
     link: '/data_model',
     className: 'navMobileItem',
@@ -50,11 +55,7 @@ export const navMobileList = [
   //     link: '/news',
   //     className: 'navMobileItem',
   // },
-  {
-    name: 'Studies',
-    link: '/studies',
-    className: 'navMobileItem',
-  },
+ 
   {
     name: 'Resources',
     link: '',
