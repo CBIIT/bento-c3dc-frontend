@@ -100,7 +100,7 @@ const DataModel = () => {
           <div className='introParagraph'>{ReactHtmlParser(dataModelData.introParagraph)}</div>
           <div className='secondParagraph sectionStart'> {ReactHtmlParser(dataModelData.secondParagraph)}</div>
 
-          <img style={{ marginTop: 60 }} src={dataModel} alt="data model image" />
+          <img style={{ marginTop: 60 }} src={dataModel} alt="data model " />
 
         </div>
         <div className='dataModelImages'>

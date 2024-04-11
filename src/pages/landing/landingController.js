@@ -3,10 +3,10 @@ import { useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import LandingView from './landingView';
 import { Typography } from '../../components/Wrappers/Wrappers';
-import { GET_LANDING_PAGE_DATA_QUERY } from '../../bento/landingPageData';
+import { GLOBAL_STATS_BAR_QUERY } from '../../bento/landingPageData';
 
 const landingController = () => {
-  const { loading, error, data } = useQuery(GET_LANDING_PAGE_DATA_QUERY, {
+  const { loading, error, data } = useQuery(GLOBAL_STATS_BAR_QUERY, {
     fetchPolicy: 'no-cache',
   });
 
