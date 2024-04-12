@@ -1364,13 +1364,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'study_acronym',
-        header: 'Acronym',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: "study_id",
         header: "Study ID",
         display: false,
