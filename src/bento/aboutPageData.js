@@ -78,12 +78,12 @@ export const aboutData = {
     "and the " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>." ,
   lastParagraph:
-    "The CCDI welcomes input from the community to enhance usability. <br> " +
-    "Please send your feedback and comments to " +
+    "The CCDI welcomes input from the community to enhance usability. " +
+    "Please send your <br> feedback and comments to " +
     "<a className='aboutLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>.",
 };
 
 export const pdfList = {
-  latestRelease: "https://s29.q4cdn.com/175625835/files/doc_downloads/test.pdf",
-  userGuid: "https://s29.q4cdn.com/175625835/files/doc_downloads/test.pdf"
+  latestRelease: "http://github.com/CBIIT/c3dc-releases/blob/Release-2/README.md",
+  userGuide: "http://github.com/CBIIT/c3dc-releases/blob/Release-2/User_Guide.md"
 }

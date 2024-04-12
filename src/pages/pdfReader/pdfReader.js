@@ -18,6 +18,7 @@ export default function PdfReader() {
     };
 
     const [pdfUrl,setPdfUrl] = useState("");
+    
     useEffect(()=>{
         const searchParams = new URLSearchParams(window.location.search);
         const pdurl = searchParams.get('type');

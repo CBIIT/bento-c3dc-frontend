@@ -156,7 +156,7 @@ export const navbarSublists = {
       },
       {
         name: 'User Guide',
-        link: '/pdfReader?type=userGuid',
+        link: '/pdfReader?type=userGuide',
         className: 'navMobileSubItem',
       },
    
