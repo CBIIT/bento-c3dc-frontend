@@ -8,7 +8,7 @@ import {
   TableView,
 } from '@bento-core/paginated-table';
 import { table } from '../../bento/studiesData';
-//import Stats from '../../components/Stats/AllStatsController';
+import Stats from '../../components/Stats/GlobalStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import { themeConfig } from './tableConfig/Theme';
 import studiesListingBackground from '../../assets/studies/studiesListingBackground.png';
@@ -42,7 +42,7 @@ const Studies = ({ classes, data }) => {
   return (
     <>
       {
-        //<Stats />
+        <Stats />
         }
       <div className={classes.tableContainer}>
         <div className={classes.container}>
