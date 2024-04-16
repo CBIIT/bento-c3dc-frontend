@@ -1090,7 +1090,7 @@ export const tabContainers = [
     paginationAPIField: 'diagnosisOverview',
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
-    count: 'numberOfDiseases',
+    count: 'numberOfDiagnoses',
     fileCount: 'diagnosisFileCount',
     dataKey: 'id',
     tableID: 'diagnosis_tab_table',
