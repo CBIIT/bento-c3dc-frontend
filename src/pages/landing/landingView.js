@@ -157,8 +157,8 @@ const LandingView = ({ classes, statsData }) => (
             </div>
             <div className={classes.contentRight}>
               <div className={classes.contentRightTop}>
-                <div className={classes.program}>
-                  <div className={classes.programImg}>
+                <div className={classes.study}>
+                  <div className={classes.studyImg}>
                     <img
                       className={classes.image}
                       src={landingPageData.tile2.img}
@@ -191,7 +191,7 @@ const LandingView = ({ classes, statsData }) => (
                   </div>
                 </div>
                 <div className={classes.studies}>
-                  <div className={classes.programImg}>
+                  <div className={classes.studyImg}>
                     <img
                       className={classes.image}
                       src={landingPageData.tile3.img}
@@ -813,13 +813,13 @@ const styles = () => ({
     lineHeight: '24px',
   },
 
-  program: {
+  study: {
     float: 'left',
     margin: '0 10px 6.8px 0px',
     border: 'solid 2px #096761',
 
   },
-  programImg: {
+  studyImg: {
     background: '#fff',
     height: '249px',
   },
