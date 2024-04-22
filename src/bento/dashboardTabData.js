@@ -1114,7 +1114,7 @@ export const tabContainers = [
       {
         dataField: 'diagnosis_id',
         header: 'Diagnosis ID',
-        display: false,
+        display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
