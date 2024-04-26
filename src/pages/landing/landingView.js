@@ -184,6 +184,8 @@ const LandingView = ({ classes, statsData }) => (
                       <Link
                         to={landingPageData.tile2.callToActionLink}
                         className={classes.blueButton}
+                        target="_blank" 
+                        rel="noopener noreferrer"
                       >
                         {landingPageData.tile2.callToActionText}
                       </Link>
