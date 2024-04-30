@@ -33,12 +33,12 @@ export const customTheme = {
           color: '#000000',
           borderTop: '6px solid #006A8F',
         },
-        '&.diagnosis': {
+        '&.diagnosis_records': {
           background: '#FFFFFF',
           color: '#000000',
           borderTop: '6px solid #E39520',
         },
-        '&.survival': {
+        '&.survival_records': {
           background: '#FFFFFF',
           color: '#000000',
           borderTop: '6px solid #35B899',
@@ -57,12 +57,12 @@ export const customTheme = {
         fontSize: '16px',
         fontWeight: '300',
       },
-      '& span.diagnosis_count': {
+      '& span.diagnosis_records_count': {
         marginLeft: '5px',
         fontSize: '16px',
         fontWeight: '300',
       },
-      '& span.survival_count': {
+      '& span.survival_records_count': {
         marginLeft: '5px',
         fontSize: '16px',
         fontWeight: '300',
