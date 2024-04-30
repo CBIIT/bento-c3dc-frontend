@@ -845,7 +845,7 @@ const styles = () => ({
     height: '44px',
     width: '184px',
     backgroundColor: '#335aab',
-    marginTop: '32px',
+    marginTop: '60px',
 
   },
   blueButton: {
