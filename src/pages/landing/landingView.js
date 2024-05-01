@@ -264,31 +264,31 @@ const styles = () => ({
       clipPath: "inset(0px 100% 0px 0px)" 
     },
     "32.33%": { //left
-      clipPath: "inset(0px 46.9% 0px 0px)" 
+      clipPath: "inset(0px 47.1% 0px 0px)" 
     },
     "39.67%": { //peak
-      clipPath: "inset(0px 45% 0px 0px)" 
+      clipPath: "inset(0px 45.2% 0px 0px)" 
     },
     "47%": { //drop -3
-      clipPath: "inset(0px 42.7% 0px 0px)" 
+      clipPath: "inset(0px 43% 0px 0px)" 
     },
     "51.56%": { //left -4
-      clipPath: "inset(0px 30.3% 0px 0px)" 
+      clipPath: "inset(0px 31.0% 0px 0px)" 
     },
     "58.89%": { //peak -5
-      clipPath: "inset(0px 28.4% 0px 0px)" 
+      clipPath: "inset(0px 29.0% 0px 0px)" 
     },
     "66.22%": { //drop -6
-      clipPath: "inset(0px 26.1% 0px 0px)" 
+      clipPath: "inset(0px 26.8% 0px 0px)" 
     },
     "70.78%": { //left -7
-      clipPath: "inset(0px 14.5% 0px 0px)" 
+      clipPath: "inset(0px 14.8% 0px 0px)" 
     },
     "78.11%": { //peak -8
-      clipPath: "inset(0px 12.6% 0px 0px)" 
+      clipPath: "inset(0px 12.9% 0px 0px)" 
     },
     "85.44%": { //drop -9 
-      clipPath: "inset(0px 10.3% 0px 0px)" 
+      clipPath: "inset(0px 10.7% 0px 0px)" 
     },
     "88%": {
       clipPath: "inset(0px 1.7% 0px 0px)",
@@ -317,47 +317,47 @@ const styles = () => ({
     "32.33%": { //left
       top: '745px',
       left: '50%',
-      marginLeft: "48px",  
+      marginLeft: "47px",  
     },
     "39.67%": { //peak
       top: '685px',
       left: '50%',
-      marginLeft: "80px", 
+      marginLeft: "77px", 
     },
     "47%": { //drop
       top: '745px',
       left: '50%',
-      marginLeft: "110px",  
+      marginLeft: "107px",  
     },
     "51.56%": { //left
       top: '745px',
       left: '50%',
-      marginLeft: "292px",
+      marginLeft: "284px",
     },
     "58.89%": { //peak
       top: '685px',
       left: '50%',
-      marginLeft: "322px", 
+      marginLeft: "314px", 
     },
     "66.22%": { //drop
       top: '745px',
       left: '50%',
-      marginLeft: "352px", 
+      marginLeft: "344px", 
     },
     "70.78%": { //left
       top: '745px',
       left: '50%',
-      marginLeft: "524px", 
+      marginLeft: "520px", 
     },
     "78.11%": { //peak
       top: '685px',
       left: '50%',
-      marginLeft: "555px", 
+      marginLeft: "550px", 
     },
     "85.44%": { //drop
       top: '745px',
       left: '50%',
-      marginLeft: "586px", 
+      marginLeft: "580px", 
     },
     "88%": {
       top: '745px',

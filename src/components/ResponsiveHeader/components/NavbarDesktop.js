@@ -312,17 +312,25 @@ const NavBar = () => {
       </NavContainer>
       <Dropdown ref={dropdownSelection} style={clickedTitle === '' ? dropdownInvisibleStyle : null}>
         <DropdownContainer>
-            <div className="dropdownList">
-              {
-                clickedTitle !== "" ? navbarSublists[clickedTitle].map((dropItem, idx) => {
-                  const dropkey = `drop_${idx}`;
-                  return (
-                    dropItem.link && <a href={dropItem.link} className="dropdownItem" key={dropkey} onClick={() => setClickedTitle("")}>{dropItem.name}</a>
-                  )
-                })
-                :null
-              }
-            </div>
+          <div className="dropdownList">
+            {clickedTitle !== "" ? navbarSublists[clickedTitle].map((dropItem, idx) => {
+              const dropkey = `drop_${idx}`;
+              return (
+                dropItem.link && (
+                  <a
+                    href={dropItem.link}
+                    className="dropdownItem"
+                    key={dropkey}
+                    onClick={() => setClickedTitle("")}
+                    target={dropItem.externalLink ? "_blank" : "_self"} // Set target attribute based on externalLink
+                    rel='noopener noreferrer'
+                  >
+                    {dropItem.name}
+                  </a>
+                )
+              );
+            }) : null}
+          </div>
         </DropdownContainer>
       </Dropdown>
     </Nav>
