@@ -102,6 +102,7 @@ const AboutView = () => {
           <div className='introParagraph'>{ReactHtmlParser(aboutData.introParagraph)}</div>
           <div className='secondParagraph sectionStart'> {ReactHtmlParser(aboutData.secondParagraph)}</div>
           <div className='thirdParagraph sectionStart'>{ReactHtmlParser(aboutData.thirdParagraph)}</div>
+          <div className='twelfthParagraph sectionStart imageMargin'>{ReactHtmlParser(aboutData.twelfthParagraph)}</div>
           <div className='indent imageMargin'>
             <div className='fourthParagraph sectionStart'>{ReactHtmlParser(aboutData.fourthParagraph)}</div>
             <div className='fifthParagraph sectionStart'>{ReactHtmlParser(aboutData.fifthParagraph)}</div>
@@ -115,7 +116,7 @@ const AboutView = () => {
               <div className='eleventhParagraph sectionStart'>{ReactHtmlParser(aboutData.eleventhParagraph)}</div>
             </div>
           </div>
-          <div className='twelfthParagraph sectionStart imageMargin'>{ReactHtmlParser(aboutData.twelfthParagraph)}</div>
+          
           <div className='lastParagraph sectionStart imageMargin'>{ReactHtmlParser(aboutData.lastParagraph)}</div>
         </div>
         <div className='aboutImages'>

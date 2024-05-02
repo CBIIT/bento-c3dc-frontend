@@ -41,61 +41,60 @@ export const externalLinkIcon = {
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
-    # Demographics
-    $participant_ids: [String],
-    $ethnicity: [String],
-    $race: [String],
-    $sex_at_birth: [String],
+  # Demographics
+  $participant_ids: [String],
+  $ethnicity: [String],
+  $race: [String],
+  $sex_at_birth: [String],
 
-    # Diagnoses
-    $age_at_diagnosis: [Int],
-    $anatomic_site: [String],
-    $diagnosis_classification: [String],
-    $diagnosis_classification_system: [String],
-    $diagnosis_verification_status: [String],
-    $diagnosis_basis: [String],
-    $disease_phase: [String],
+  # Diagnoses
+  $age_at_diagnosis: [Int],
+  $anatomic_site: [String],
+  $diagnosis: [String],
+  $diagnosis_classification_system: [String],
+  $diagnosis_basis: [String],
+  $disease_phase: [String],
 
-    # Studies
-    $phs_accession: [String],
-    $study_acronym: [String],
-    $study_short_title: [String],
+  # Studies
+  $phs_accession: [String],
+  $study_acronym: [String],
+  $study_short_title: [String],
 
-    # Survivals
-    $age_at_last_known_survival_status: [Int],
-    $first_event: [String],
-    $last_known_survival_status: [String]
+  # Survivals
+  $age_at_last_known_survival_status: [Int],
+  $first_event: [String],
+  $last_known_survival_status: [String]
 ) {
-  getParticipants(
-    # Demographics
-    participant_ids: $participant_ids,
-    ethnicity: $ethnicity,
-    race: $race,
-    sex_at_birth: $sex_at_birth,
+getParticipants(
+  # Demographics
+  participant_ids: $participant_ids,
+  ethnicity: $ethnicity,
+  race: $race,
+  sex_at_birth: $sex_at_birth,
 
-    # Diagnoses
-    age_at_diagnosis: $age_at_diagnosis,
-    anatomic_site: $anatomic_site,
-    diagnosis_classification: $diagnosis_classification,
-    diagnosis_classification_system: $diagnosis_classification_system,
-    diagnosis_verification_status: $diagnosis_verification_status,
-    diagnosis_basis: $diagnosis_basis,
-    disease_phase: $disease_phase,
-    
-    # Studies
-    phs_accession: $phs_accession,
-    study_acronym: $study_acronym,
-    study_short_title: $study_short_title,
+  # Diagnoses
+  age_at_diagnosis: $age_at_diagnosis,
+  anatomic_site: $anatomic_site,
+  diagnosis: $diagnosis,
+  diagnosis_classification_system: $diagnosis_classification_system,
+  diagnosis_basis: $diagnosis_basis,
+  disease_phase: $disease_phase,
+  
+  # Studies
+  phs_accession: $phs_accession,
+  study_acronym: $study_acronym,
+  study_short_title: $study_short_title,
 
-    # Survivals
-    age_at_last_known_survival_status: $age_at_last_known_survival_status,
-    first_event: $first_event,
-    last_known_survival_status: $last_known_survival_status
-  ) {
-    numberOfParticipants
-    numberOfDiagnoses
-    numberOfStudies
-    numberOfSurvivals
+  # Survivals
+  age_at_last_known_survival_status: $age_at_last_known_survival_status,
+  first_event: $first_event,
+  last_known_survival_status: $last_known_survival_status
+) {
+  numberOfParticipants
+  numberOfDiagnoses
+  numberOfDiseases
+  numberOfStudies
+  numberOfSurvivals
 
   # Widget counts
   participantCountByEthnicity {
@@ -123,104 +122,100 @@ query search(
     subjects
     __typename
   }
-  participantCountByDiagnosisClassification {
+  participantCountByDiagnosis {
     group
     subjects
     __typename
   }
 
-    # Demographic filter counts
-    filterParticipantCountByEthnicity {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByRace {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountBySexAtBirth {
-      group
-      subjects
-      __typename
-    }
-
-    # Diagnosis filter counts
-    filterParticipantCountByAgeAtDiagnosis {
-      lowerBound
-      upperBound
-      subjects
-      __typename
-    }
-    filterParticipantCountByAnatomicSite {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiagnosisClassification {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiagnosisClassificationSystem {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiagnosisVerificationStatus {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiagnosisBasis {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiseasePhase {
-      group
-      subjects
-      __typename
-    }
-
-    # Study filter counts
-    filterParticipantCountByPhsAccession {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByStudyAcronym {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByStudyShortTitle {
-      group
-      subjects
-      __typename
-    }
-
-    # Survival filter counts
-    filterParticipantCountByAgeAtLastKnownSurvivalStatus {
-      lowerBound
-      upperBound
-      subjects
-      __typename
-    }
-    filterParticipantCountByFirstEvent {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByLastKnownSurvivalStatus {
-      group
-      subjects
-      __typename
-    }
+  # Demographic filter counts
+  filterParticipantCountByEthnicity {
+    group
+    subjects
     __typename
   }
+  filterParticipantCountByRace {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountBySexAtBirth {
+    group
+    subjects
+    __typename
+  }
+
+  # Diagnosis filter counts
+  filterParticipantCountByAgeAtDiagnosis {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByAnatomicSite {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosis {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosisClassificationSystem {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosisBasis {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiseasePhase {
+    group
+    subjects
+    __typename
+  }
+
+  # Study filter counts
+  filterParticipantCountByPhsAccession {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByStudyAcronym {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByStudyShortTitle {
+    group
+    subjects
+    __typename
+  }
+
+  # Survival filter counts
+  filterParticipantCountByAgeAtLastKnownSurvivalStatus {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByFirstEvent {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByLastKnownSurvivalStatus {
+    group
+    subjects
+    __typename
+  }
+  __typename
 }
+}
+
 `;
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
@@ -308,9 +303,8 @@ query survivalOverview(
   # Diagnoses
   $age_at_diagnosis: [Int],
   $anatomic_site: [String],
-  $diagnosis_classification: [String],
+  $diagnosis: [String],
   $diagnosis_classification_system: [String],
-  $diagnosis_verification_status: [String],
   $diagnosis_basis: [String],
   $disease_phase: [String],
 
@@ -340,9 +334,8 @@ query survivalOverview(
       # Diagnoses
       age_at_diagnosis: $age_at_diagnosis,
       anatomic_site: $anatomic_site,
-      diagnosis_classification: $diagnosis_classification,
+      diagnosis: $diagnosis,
       diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_verification_status: $diagnosis_verification_status,
       diagnosis_basis: $diagnosis_basis,
       disease_phase: $disease_phase,
       
@@ -366,7 +359,6 @@ query survivalOverview(
       participant_id
 
       # Study
-      phs_accession
       study_id
 
       # Survival
@@ -379,84 +371,82 @@ query survivalOverview(
 
       __typename
   }
-}
-`;
+}`;
 
 export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
 query participantOverview(
   # Demographics
- $participant_ids: [String],
- $ethnicity: [String],
- $race: [String],
- $sex_at_birth: [String],
+  $participant_ids: [String],
+  $ethnicity: [String],
+  $race: [String],
+  $sex_at_birth: [String],
 
- # Diagnoses
- $age_at_diagnosis: [Int],
- $anatomic_site: [String],
- $diagnosis_classification: [String],
- $diagnosis_classification_system: [String],
- $diagnosis_verification_status: [String],
- $diagnosis_basis: [String],
- $disease_phase: [String],
+  # Diagnoses
+  $age_at_diagnosis: [Int],
+  $anatomic_site: [String],
+  $diagnosis: [String],
+  $diagnosis_classification_system: [String],
+  $diagnosis_basis: [String],
+  $disease_phase: [String],
 
- # Studies
- $phs_accession: [String],
- $study_acronym: [String],
- $study_short_title: [String],
+  # Studies
+  $phs_accession: [String],
+  $study_acronym: [String],
+  $study_short_title: [String],
 
- # Survivals
- $age_at_last_known_survival_status: [Int],
- $first_event: [String],
- $last_known_survival_status: [String]
+  # Survivals
+  $age_at_last_known_survival_status: [Int],
+  $first_event: [String],
+  $last_known_survival_status: [String]
 
- # Table config
- $first: Int,
- $offset: Int,
- $order_by: String,
- $sort_direction: String
+  # Table config
+  $first: Int,
+  $offset: Int,
+  $order_by: String,
+  $sort_direction: String
 ) {
- participantOverview(
-     # Demographics
-     participant_ids: $participant_ids,
-     ethnicity: $ethnicity,
-     race: $race,
-     sex_at_birth: $sex_at_birth,
+  participantOverview(
+      # Demographics
+      participant_ids: $participant_ids,
+      ethnicity: $ethnicity,
+      race: $race,
+      sex_at_birth: $sex_at_birth,
 
-     # Diagnoses
-     age_at_diagnosis: $age_at_diagnosis,
-     anatomic_site: $anatomic_site,
-     diagnosis_classification: $diagnosis_classification,
-     diagnosis_classification_system: $diagnosis_classification_system,
-     diagnosis_verification_status: $diagnosis_verification_status,
-     diagnosis_basis: $diagnosis_basis,
-     disease_phase: $disease_phase,
-     
-     # Studies
-     phs_accession: $phs_accession,
-     study_acronym: $study_acronym,
-     study_short_title: $study_short_title,
+      # Diagnoses
+      age_at_diagnosis: $age_at_diagnosis,
+      anatomic_site: $anatomic_site,
+      diagnosis: $diagnosis,
+      diagnosis_classification_system: $diagnosis_classification_system,
+      diagnosis_basis: $diagnosis_basis,
+      disease_phase: $disease_phase,
+      
+      # Studies
+      phs_accession: $phs_accession,
+      study_acronym: $study_acronym,
+      study_short_title: $study_short_title,
 
-     # Survivals
-     age_at_last_known_survival_status: $age_at_last_known_survival_status,
-     first_event: $first_event,
-     last_known_survival_status: $last_known_survival_status
+      # Survivals
+      age_at_last_known_survival_status: $age_at_last_known_survival_status,
+      first_event: $first_event,
+      last_known_survival_status: $last_known_survival_status
 
-     # Table config
-     first: $first,
-     offset: $offset,
-     order_by: $order_by,
-     sort_direction: $sort_direction
- ) {
-     participant_id
-     ethnicity
-     race
-     sex_at_birth
-     phs_accession
-     alternate_participant_id
-     # Studies
-     study_id
-     __typename
- }
+      # Table config
+      first: $first,
+      offset: $offset,
+      order_by: $order_by,
+      sort_direction: $sort_direction
+  ) {
+      # Participants
+      ethnicity
+      participant_id
+      race
+      sex_at_birth
+
+      # Studies
+      study_id
+
+      __typename
+  }
 }`;
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
@@ -470,9 +460,8 @@ query diagnosisOverview(
   # Diagnoses
   $age_at_diagnosis: [Int],
   $anatomic_site: [String],
-  $diagnosis_classification: [String],
+  $diagnosis: [String],
   $diagnosis_classification_system: [String],
-  $diagnosis_verification_status: [String],
   $diagnosis_basis: [String],
   $disease_phase: [String],
 
@@ -502,9 +491,8 @@ query diagnosisOverview(
       # Diagnoses
       age_at_diagnosis: $age_at_diagnosis,
       anatomic_site: $anatomic_site,
-      diagnosis_classification: $diagnosis_classification,
+      diagnosis: $diagnosis,
       diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_verification_status: $diagnosis_verification_status,
       diagnosis_basis: $diagnosis_basis,
       disease_phase: $disease_phase,
       
@@ -524,18 +512,14 @@ query diagnosisOverview(
       order_by: $order_by,
       sort_direction: $sort_direction
   ) {
-      # Demographics
-      participant_id
-
       # Diagnosis
       age_at_diagnosis
       anatomic_site
       diagnosis_basis
-      diagnosis_classification
+      diagnosis
       diagnosis_classification_system
       diagnosis_comment
       diagnosis_id
-      diagnosis_verification_status
       disease_phase
       toronto_childhood_cancer_staging
       tumor_classification
@@ -544,13 +528,15 @@ query diagnosisOverview(
       tumor_stage_clinical_n
       tumor_stage_clinical_t
 
+      # Participants
+      participant_id
+
       # Study
-      phs_accession
       study_id
+
       __typename
   }
-}
-`;
+}`;
 
 export const GET_STUDY_OVERVIEW_QUERY = gql`
 query studyOverview(
@@ -563,9 +549,8 @@ query studyOverview(
   # Diagnoses
   $age_at_diagnosis: [Int],
   $anatomic_site: [String],
-  $diagnosis_classification: [String],
+  $diagnosis: [String],
   $diagnosis_classification_system: [String],
-  $diagnosis_verification_status: [String],
   $diagnosis_basis: [String],
   $disease_phase: [String],
 
@@ -595,9 +580,8 @@ query studyOverview(
       # Diagnoses
       age_at_diagnosis: $age_at_diagnosis,
       anatomic_site: $anatomic_site,
-      diagnosis_classification: $diagnosis_classification,
+      diagnosis: $diagnosis,
       diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_verification_status: $diagnosis_verification_status,
       diagnosis_basis: $diagnosis_basis,
       disease_phase: $disease_phase,
       
@@ -626,13 +610,11 @@ query studyOverview(
       study_acronym
       study_description
       study_id
-      study_name
       study_short_title
 
       __typename
   }
-}
-`;
+}`;
 
 export const GET_ALL_FILEIDS_PARTICIPANTSTAB_FOR_SELECT_ALL = gql`
 query search (          
@@ -1060,13 +1042,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'phs_accession',
-        header: 'Study Accession',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'race',
         header: 'Race',
         display: true,
@@ -1084,13 +1059,6 @@ export const tabContainers = [
         dataField: 'sex_at_birth',
         header: 'Sex at Birth',
         display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'alternate_participant_id',
-        header: 'Alternate Participant ID',
-        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1151,8 +1119,8 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'diagnosis_classification',
-        header: 'Diagnosis Classification',
+        dataField: 'diagnosis',
+        header: 'Diagnosis',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1160,13 +1128,6 @@ export const tabContainers = [
       {
         dataField: 'diagnosis_classification_system',
         header: 'Diagnosis Classification System',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'diagnosis_verification_status',
-        header: 'Diagnosis Verification Status',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1373,11 +1334,6 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
-    //addFilesRequestVariableKey: 'sample_ids',
-    //addFilesResponseKeys: ['fileIDsFromList'],
-    //addAllFilesResponseKeys: ['survivalOverview', 'files'],
-    //addAllFileQuery: GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART,
-    //addSelectedFilesQuery: GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL,
   },
   {
     name: 'Studies',
@@ -1399,14 +1355,7 @@ export const tabContainers = [
         cloudIcon: true,
       },
     },
-    columns: [   
-      {
-        dataField: "study_id",
-        header: "Study ID",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
-      },
+    columns: [
       {
         dataField: 'phs_accession',
         header: 'Study Accession',
@@ -1415,15 +1364,15 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: "acl",
-        header: "ACL",
+        dataField: "study_id",
+        header: "Study ID",
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
       },
       {
-        dataField: "study_name",
-        header: "Study Name",
+        dataField: "acl",
+        header: "ACL",
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"

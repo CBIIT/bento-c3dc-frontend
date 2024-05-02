@@ -57,9 +57,9 @@ export const statsStyling = {
 export const globalStatsData = [
   // A maximum of 6 stats are allowed
   {
-    statTitle: 'Diagnosis Records',
+    statTitle: 'Diagnoses',
     type: 'field',
-    statAPI: 'numberOfDiagnoses',
+    statAPI: 'numberOfDiseases',
     statIconSrc: diagnosisLogo,
     statIconAlt: 'A teddy bear representing Diagnosis'
   },
@@ -82,7 +82,7 @@ export const globalStatsData = [
 // --------------- GraphQL query - Retrieve stats details --------------
 export const GET_GLOBAL_STATS_DATA_QUERY = gql`
 {
-  numberOfDiagnoses,
+  numberOfDiseases,
   numberOfParticipants,
   numberOfReferenceFiles,
   numberOfStudies,
