@@ -844,9 +844,9 @@ const styles = () => ({
   mountainMeadowButtonSection: {
     height: '44px',
     width: '184px',
-    backgroundColor: '#335aab',
     marginTop: '32px',
-
+    backgroundColor: 'transparent',
+    border: '1px white solid',
   },
   blueButton: {
     height: '45px',
