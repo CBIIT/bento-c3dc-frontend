@@ -75,7 +75,7 @@ export const landingPageData = {
     alt: '',
     img: landingTile2,
     titleText: 'Data Model',
-    descriptionText: 'Review components, gain a deeper understanding, or specifics of harmonization.',
+    descriptionText: 'Review components to gain a deeper understanding of the specifics of harmonization.',
     callToActionText: 'Explore Data Model',
     callToActionLink: 'https://github.com/CBIIT/c3dc-model', // This links to the Data Model GitHub Page.
   },
@@ -91,7 +91,7 @@ export const landingPageData = {
     alt: '',
     img: landingTile4,
     titleText: 'C3DC Data',
-    descriptionText: 'Explore C3DC data, construct your cohort, and export it for analysis alongside other data types.',
+    descriptionText: 'Explore and export C3DC data for analysis alongside other data types.',
     callToActionText: 'Explore Data',
     callToActionLink: '/explore', // This links to the explore dashboard.
   },

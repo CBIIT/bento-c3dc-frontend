@@ -184,6 +184,8 @@ const LandingView = ({ classes, statsData }) => (
                       <Link
                         to={landingPageData.tile2.callToActionLink}
                         className={classes.blueButton}
+                        target="_blank" 
+                        rel="noopener noreferrer"
                       >
                         {landingPageData.tile2.callToActionText}
                       </Link>
@@ -844,9 +846,9 @@ const styles = () => ({
   mountainMeadowButtonSection: {
     height: '44px',
     width: '184px',
-    backgroundColor: '#335aab',
     marginTop: '32px',
-
+    backgroundColor: 'transparent',
+    border: '1px white solid',
   },
   blueButton: {
     height: '45px',
