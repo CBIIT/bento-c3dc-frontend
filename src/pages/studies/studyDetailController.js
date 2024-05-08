@@ -1,30 +1,34 @@
-import React from 'react';
-import { useQuery } from '@apollo/client';
+import React, { useEffect, useState } from 'react';
+import {  useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import StudyView from './studyDetailView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import { GET_STUDY_DETAIL_DATA_QUERY } from '../../bento/studyDetailData';
 import StudyDetailView from './studyDetailView';
+import { useParams } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const StudyDetailContainer = ({ match }) => {
-  /*
+
+
+
+const studyDetailContainer = () => {
+  const {studyId} = useParams();
   const { loading, error, data } = useQuery(GET_STUDY_DETAIL_DATA_QUERY, {
-    variables: { program_id: match.params.studyId },
+    variables: { ["study_id"]: studyId },
   });
-
+ 
   if (loading) return <CircularProgress />;
-  if (error || !data || data.studyDetail.study_id !== match.params.id) 
-
-  if(false){
+  if (error || !data || !data.studyDetails ) {
     return (
-      <Typography variant="headline" color="error" size="sm">
+      <Typography variant="h5" color="error" size="sm">
         {error ? `An error has occurred in loading stats component: ${error}` : 'Recieved wrong data'}
       </Typography>
     );
-  } 
+  }
 
-*/
-  return <StudyDetailView data={null} />;
+  return (
+    <StudyDetailView data={data} />
+  );
 };
 
-export default StudyDetailContainer;
+export default studyDetailContainer;

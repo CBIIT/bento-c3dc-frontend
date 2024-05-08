@@ -27,7 +27,7 @@ const Layout = () => {
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/studies" element={<Studies />} />
-          <Route path="/studyDetail/:studyId" element={<StudyDetailContainer />} />
+          <Route path="/studies/study/:studyId" element={<StudyDetailContainer />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/sitesearch" element={<Search />} />

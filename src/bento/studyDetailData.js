@@ -175,13 +175,13 @@ const table = {
 const GET_STUDY_DETAIL_DATA_QUERY = gql`
 query studyDetails($study_id: String) {
   studyDetails(study_id: $study_id) {
-      num_anatomic_sites
-      num_diseases
-      num_participants
-      num_survivals
       phs_accession
       study_description
-
+      num_participants
+      num_diseases
+      num_anatomic_sites
+      num_survivals
+      
       __typename
   }
 }`

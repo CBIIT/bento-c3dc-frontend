@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  CircularProgress,
   Grid,
   withStyles,
 } from '@material-ui/core';
@@ -11,22 +12,23 @@ import globalData from '../../bento/siteWideConfig';
 import {
   pageTitle, table, externalLinkIcon,
   programDetailIcon, breadCrumb, aggregateCount,
-  pageSubTitle, leftPanel, rightPanel,
+  pageSubTitle, leftPanel, rightPanel, GET_STUDY_DETAIL_DATA_QUERY,
 } from '../../bento/studyDetailData';
 import StatsView from '../../components/Stats/StatsView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 //import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
 import colors from '../../utils/colors';
 import { WidgetGenerator } from '@bento-core/widgets';
+import { useQuery } from '@apollo/client';
 
 const StudyDetailView = ({ classes, data, theme }) => {
-  //const programData = data.programDetail;
 
- 
+ /*
   const [studyD, setProgramData] = useState(
     {"data":{"studyDetails":{"phs_accession":"phs000467","study_description":"There are ~214 fully characterized patient cases with neuroblastoma (all tumor/normal pairs, 10 with relapse sample as well) that will make up the TARGET NBL dataset, along with some cell lines and xenografts. The dataset includes 24 4S cases as well. Each fully characterized case has gene expression, tumor and paired normal copy number analyses, methylation and comprehensive next-generation sequencing to include whole genome and/or whole exome sequencing. A majority of these cases will also have mRNA-seq and methylation data available as well. There are additionally a large number of cases, both low and high risk, with partial molecular characterization to include some next generation and targeted Sanger sequencing making this a large and informative genomic dataset.","num_participants":1119,"num_diseases":3,"num_anatomic_sites":48,"num_survivals":1119,"__typename":"StudyDetailsResult"}}}
   );
-    const studyData = studyD.data;
+  */
+    const studyData = data;
      
 
   const updatedAttributesData = [
