@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 const studyDetailContainer = () => {
   const {studyId} = useParams();
   const { loading, error, data } = useQuery(GET_STUDY_DETAIL_DATA_QUERY, {
-    variables: { ["study_id"]: studyId },
+    variables: { ["study_id"]: "phs002430" },
   });
  
   if (loading) return <CircularProgress />;

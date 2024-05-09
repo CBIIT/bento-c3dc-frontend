@@ -6,7 +6,7 @@ import {
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import openBook from "../../assets/resources/openBook.svg";
-
+import next from "../../assets/resources/next.svg";
 import clsx from 'clsx';
 import globalData from '../../bento/siteWideConfig';
 import {
@@ -20,7 +20,7 @@ import { Typography } from '../../components/Wrappers/Wrappers';
 import colors from '../../utils/colors';
 import { WidgetGenerator } from '@bento-core/widgets';
 import { useQuery } from '@apollo/client';
-
+import "./scrollBarConfig.css";
 const StudyDetailView = ({ classes, data, theme }) => {
 
  /*
@@ -56,10 +56,14 @@ const StudyDetailView = ({ classes, data, theme }) => {
     <div className={classes.whiteSpaceTop}>
 
     </div>
-    <span style={{marginLeft:"7%",fontSize:16}}>
-      <span style={{color:'#005EA2',fontSize: 16, marginTop: 10}}>
-    {"Home > study"}    </span>
-  {`Study Code   ${studyData.studyDetails.phs_accession}  `} </span>
+    <div className={classes.headerNavText}>
+      <Link className={classes.navLink} to="/home">Home</Link>
+      <img src={next} width={25} height={43}  />
+      <Link className={classes.navLink} to="/studies">Studies</Link>
+      <img src={next} width={25} height={43}  />
+      <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.phs_accession } `}</p>
+    </div>
+    
       <div className={classes.container}>
       <h1 style={{margin:0, marginLeft:'6%', color:'#0D3A3F',marginTop:10,fontWeight: 0}}>C3DC Studies</h1>
       
@@ -100,7 +104,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
 
           <Grid container spacing={5} >
             <Grid item lg={7} sm={6} xs={12}  container>
-              <Grid container spacing={4} direction="row" className={classes.detailContainerLeft}>
+              <Grid container spacing={4} direction="row" className={"detailContainerLeft"}>
                
                 {updatedAttributesData.slice(0, 6).map((attribute, index) => (
                   <Grid item xs={12}>
@@ -191,7 +195,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                                     {attribute.label}
                                   </span>
                                   <div>
-                                    <span style={{color:'black'}} id={`program_detail_left_section_description_${index + 1}`}>
+                                    <span className={classes.studyDescriptionClass} id={`program_detail_left_section_description_${index + 1}`}>
                                       {' '}
                                       {studyData.studyDetails[attribute.dataField]}
                                       {' '}
@@ -312,6 +316,37 @@ const styles = (theme) => ({
     color: '#000',
     background: '#f3f3f3',
   },
+  headerNavText:{
+    display:'flex',
+    flexDirection:'row',
+    justifyContent:'flex-start',
+    height:50,
+    width: 500,
+    marginLeft: 40
+  },
+  navLink:{
+    fontSize:19,
+    fontFamily: 'public Sans',
+    fontWeight: 400,
+    color:'#005EA2',
+    textDecoration: 'underline',
+  
+    margin: 5
+  },
+  studyDescriptionClass: {
+    color: "#343434",
+    fontWeight: 400,
+    fontSize: 19,
+    overFlowY: 'scroll',
+    fontFamily: "inter",
+  },
+  navInfo: {
+    fontSize: 19,
+    fontFamily: 'public Sans',
+    fontWeight: 400,
+    color: '#000',
+    margin: 6
+  },
   header: {
     paddingLeft: '21px',
     paddingRight: '35px',
@@ -382,7 +417,7 @@ overflow:'hidden'
     fontFamily: theme.custom.fontFamilyRaleway,
     textTransform: 'uppercase',
     letterSpacing: '0.023em',
-    fontSize: '14px',
+    fontSize: '14px'
 
   },
   headerMSubTitle: {
@@ -468,14 +503,17 @@ overflow:'hidden'
   },
   detailContainerLeft: {
     display: 'block',
-    padding: '5px  20px 5px 0px !important',
+    padding: '5px  20px 105px 0px !important',
     minHeight: '500px',
-    maxHeight: '800px',
-    overflowY: 'auto',
+    maxHeight: '400px',
     overflowX: 'hidden',
     width: '103.9%',
-      margin: '20px'
+      margin: '20px',
+     overflowY: 'scroll',
+     borderRight: '#81A6BA 1px solid',
+    
   },
+
   borderRight: {
     borderRight: '#81a6b9 1px solid',
   },
@@ -487,7 +525,6 @@ overflow:'hidden'
     overflowX: 'hidden',
     height: '350px',
     width: '105%',
-    borderLeft: '1px solid #81A6BA',
     borderRight: '1px solid #81A6BA',
     marginLeft: '-26px',
     marginTop: '70px',

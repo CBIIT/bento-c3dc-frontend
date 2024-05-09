@@ -14,7 +14,7 @@ import Studies from '../../pages/studies/studiesController';
 //import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
 import DataModel from "../../pages/DataModel/dataModel";
-import StudyDetailContainer from "../../pages/studies/studyDetailController";
+import StudyDetail from "../../pages/studies/studyDetailController";
 
 // import NewsDetail from '../../pages/news/newsDetailView';
 
@@ -27,7 +27,8 @@ const Layout = () => {
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/studies" element={<Studies />} />
-          <Route path="/studies/study/:studyId" element={<StudyDetailContainer />} />
+          <Route path="/studies/study/:studyId" element={<StudyDetail />} />
+          <Route path="/:studyId" element={<StudyDetail />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/sitesearch" element={<Search />} />
