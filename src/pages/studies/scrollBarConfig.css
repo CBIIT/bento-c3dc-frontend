@@ -1,5 +1,3 @@
-
-
 .detailContainerLeft::-webkit-scrollbar {
     width: 7px;
 }
@@ -8,17 +6,14 @@
     background: #0095A2
 }
 
-.detailContainerLeft::-webkit-scrollbar-thub:hover {
-    background: red
-}
 
 .detailContainerLeft {
     display: block;
-    padding: 5px  20px 105px 0px !important;
+    padding: 15px 20px 105px 70px !important;
     min-height: 300px;
-    max-height: 400px;
+    max-height: 500px;
     width: 103.9%;
-      margin: '20px';
-     overflow-y: scroll;
-     border-right: #81A6BA 1px solid;
+    margin: 20px;
+    overflow-y: scroll;
+    border-right: #81A6BA 1px solid;
 }

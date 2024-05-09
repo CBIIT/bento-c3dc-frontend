@@ -1,35 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  CircularProgress,
+ 
   Grid,
   withStyles,
 } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import openBook from "../../assets/resources/openBook.svg";
 import next from "../../assets/resources/next.svg";
-import clsx from 'clsx';
-import globalData from '../../bento/siteWideConfig';
 import {
-  pageTitle, table, externalLinkIcon,
-  programDetailIcon, breadCrumb, aggregateCount,
-  pageSubTitle, leftPanel, rightPanel, GET_STUDY_DETAIL_DATA_QUERY,
+  rightPanel
 } from '../../bento/studyDetailData';
-import StatsView from '../../components/Stats/StatsView';
-import { Typography } from '../../components/Wrappers/Wrappers';
-//import CustomBreadcrumb from '../../components/Breadcrumb/BreadcrumbView';
-import colors from '../../utils/colors';
-import { WidgetGenerator } from '@bento-core/widgets';
-import { useQuery } from '@apollo/client';
+
 import "./scrollBarConfig.css";
 const StudyDetailView = ({ classes, data, theme }) => {
 
- /*
-  const [studyD, setProgramData] = useState(
-    {"data":{"studyDetails":{"phs_accession":"phs000467","study_description":"There are ~214 fully characterized patient cases with neuroblastoma (all tumor/normal pairs, 10 with relapse sample as well) that will make up the TARGET NBL dataset, along with some cell lines and xenografts. The dataset includes 24 4S cases as well. Each fully characterized case has gene expression, tumor and paired normal copy number analyses, methylation and comprehensive next-generation sequencing to include whole genome and/or whole exome sequencing. A majority of these cases will also have mRNA-seq and methylation data available as well. There are additionally a large number of cases, both low and high risk, with partial molecular characterization to include some next generation and targeted Sanger sequencing making this a large and informative genomic dataset.","num_participants":1119,"num_diseases":3,"num_anatomic_sites":48,"num_survivals":1119,"__typename":"StudyDetailsResult"}}}
-  );
-  */
-    const studyData = data;
-     
+  const studyData = data;
+
 
   const updatedAttributesData = [
     {
@@ -40,170 +26,168 @@ const StudyDetailView = ({ classes, data, theme }) => {
       dataField: "study_description"
     },
   ];
-  
- 
-  
+
   const externalLinkIcon = {
     src: "external-link-icon.png",
     alt: "External Link Icon"
   };
-  
+
 
   return (
     <>
-    {//  <StatsView data={stat} />
-    }
-    <div className={classes.whiteSpaceTop}>
+      {//  <StatsView data={stat} />
+      }
+      <div className={classes.whiteSpaceTop}>
 
-    </div>
-    <div className={classes.headerNavText}>
-      <Link className={classes.navLink} to="/home">Home</Link>
-      <img src={next} width={25} height={43}  />
-      <Link className={classes.navLink} to="/studies">Studies</Link>
-      <img src={next} width={25} height={43}  />
-      <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.phs_accession } `}</p>
-    </div>
-    
+      </div>
+      <div className={classes.headerNavText}>
+        <Link className={classes.navLink} to="/home">Home</Link>
+        <img src={next} width={25} height={43} />
+        <Link className={classes.navLink} to="/studies">Studies</Link>
+        <img src={next} width={25} height={43} />
+        <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.phs_accession} `}</p>
+      </div>
+
       <div className={classes.container}>
-      <h1 style={{margin:0, marginLeft:'6%', color:'#0D3A3F',marginTop:10,fontWeight: 0}}>C3DC Studies</h1>
-      
+        <h1 className={classes.headerTitleStyle}>C3DC Studies</h1>
+
         <div className={classes.header}>
-         
+
           <div className={classes.headerTitle}>
-            <div className={classes.headerMainTitle} id="program_detail_title">
-             
-              <span style={{color:'white',alignSelf:'flex-start',fontWeight:'normal',marginTop:10}}>
+            <div className={classes.headerMainTitle}>
+
+              <span style={{ color: 'white', alignSelf: 'flex-start', fontWeight: 'normal', marginTop: 10 }}>
                 {'Study Code: '}
-               <span style ={{fontWeight:'bold'}}>
-               {studyData.studyDetails.phs_accession}
-               </span>
-            
-             </span>
-             <img src={openBook} style={{width:50,height:50,color:'white',margin:20,marginTop: 0}} />
-            
+                <span style={{ fontWeight: 'bold' }}>
+                  {studyData.studyDetails.phs_accession}
+                </span>
+
+              </span>
+              <img src={openBook} style={{ width: 50, height: 50, color: 'white', margin: 20, marginTop: 0 }} />
+
             </div>
-           
+
           </div>
-       
+
           <div className={classes.headerTitle}>
             <div className={classes.headerMainTitle} id="program_detail_title">
-              <span style={{color:'white',alignSelf:'flex-start',fontWeight:"normal"}}>
+              <span style={{ color: 'white', alignSelf: 'flex-start', fontWeight: "normal" }}>
                 {'Participants in this Study: '}
-               <span style ={{fontWeight:'bold'}}>
-               {studyData.studyDetails.num_participants}
-               </span>
-              
+                <span style={{ fontWeight: 'bold' }}>
+                  {studyData.studyDetails.num_participants}
+                </span>
+
               </span>
             </div>
-           
+
           </div>
-         
+
         </div>
 
         <div className={classes.detailContainer}>
 
           <Grid container spacing={5} >
-            <Grid item lg={7} sm={6} xs={12}  container>
+            <Grid item lg={7} sm={6} xs={12} container>
               <Grid container spacing={4} direction="row" className={"detailContainerLeft"}>
-               
+
                 {updatedAttributesData.slice(0, 6).map((attribute, index) => (
                   <Grid item xs={12}>
                     {
                       index == 0 &&
-                      <h1 style={{color:'#0B536A'}}>Overview</h1>
+                      <h1 style={{ color: '#0B536A' }}>Overview</h1>
                     }
                     <div>
                       {
-                      attribute.internalLink
-                        ? (
-                          <div>
-                            <span className={classes.detailContainerHeader}>{attribute.label}</span>
-                            <div>
-                              <span className={classes.content}>
-                                {' '}
-                                <Link
-                                  className={classes.link}
-                                  to={`${attribute.actualLink}${studyData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
-                                >
-                                  {studyData[attribute.dataField]}
-                                </Link>
-                                {' '}
-                              </span>
-                            </div>
-                          </div>
-                        )
-                        : attribute.externalLink
+                        attribute.internalLink
                           ? (
                             <div>
-                              <span
-                                className={classes.detailContainerHeader}
-                              >
-                                {attribute.label}
-                              </span>
+                              <span className={classes.detailContainerHeader}>{attribute.label}</span>
                               <div>
                                 <span className={classes.content}>
                                   {' '}
-                                  <a
-                                    href={`${attribute.actualLink}${studyData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                                  <Link
                                     className={classes.link}
+                                    to={`${attribute.actualLink}${studyData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
                                   >
                                     {studyData[attribute.dataField]}
-                                  </a>
-                                  <img
-                                    src={externalLinkIcon.src}
-                                    alt={externalLinkIcon.alt}
-                                    className={classes.externalLinkIcon}
-                                  />
+                                  </Link>
                                   {' '}
                                 </span>
                               </div>
                             </div>
                           )
-                          : attribute.internalLinkToLabel
+                          : attribute.externalLink
                             ? (
                               <div>
                                 <span
-                                  className={classes.detailContainerHeaderLink}
+                                  className={classes.detailContainerHeader}
                                 >
-                                  <a href={`${studyData[attribute.dataField]}`} rel="noopener noreferrer">{attribute.label}</a>
+                                  {attribute.label}
                                 </span>
-                              </div>
-                            )
-                            : attribute.externalLinkToLabel
-                              ? (
                                 <div>
-                                  <span
-                                    className={classes.detailContainerHeaderLink}
-                                  >
-                                    <a href={`${studyData[attribute.dataField]}`} target="_blank" rel="noopener noreferrer">{attribute.label}</a>
+                                  <span className={classes.content}>
+                                    {' '}
+                                    <a
+                                      href={`${attribute.actualLink}${studyData[updatedAttributesData[attribute.actualLinkId].dataField]}`}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className={classes.link}
+                                    >
+                                      {studyData[attribute.dataField]}
+                                    </a>
                                     <img
                                       src={externalLinkIcon.src}
                                       alt={externalLinkIcon.alt}
                                       className={classes.externalLinkIcon}
                                     />
+                                    {' '}
                                   </span>
                                 </div>
-                              )
-                              : (
+                              </div>
+                            )
+                            : attribute.internalLinkToLabel
+                              ? (
                                 <div>
                                   <span
-                                    className={classes.detailContainerHeader}
-                                    id={`program_detail_left_section_title_${index + 1}`}
+                                    className={classes.detailContainerHeaderLink}
                                   >
-                                    {attribute.label}
+                                    <a href={`${studyData[attribute.dataField]}`} rel="noopener noreferrer">{attribute.label}</a>
                                   </span>
-                                  <div>
-                                    <span className={classes.studyDescriptionClass} id={`program_detail_left_section_description_${index + 1}`}>
-                                      {' '}
-                                      {studyData.studyDetails[attribute.dataField]}
-                                      {' '}
-                                    </span>
-                                  </div>
                                 </div>
                               )
-}
+                              : attribute.externalLinkToLabel
+                                ? (
+                                  <div>
+                                    <span
+                                      className={classes.detailContainerHeaderLink}
+                                    >
+                                      <a href={`${studyData[attribute.dataField]}`} target="_blank" rel="noopener noreferrer">{attribute.label}</a>
+                                      <img
+                                        src={externalLinkIcon.src}
+                                        alt={externalLinkIcon.alt}
+                                        className={classes.externalLinkIcon}
+                                      />
+                                    </span>
+                                  </div>
+                                )
+                                : (
+                                  <div>
+                                    <span
+                                      className={classes.detailContainerHeader}
+
+                                    >
+                                      {attribute.label}
+                                    </span>
+                                    <div>
+                                      <span className={classes.studyDescriptionClass} >
+                                        {' '}
+                                        {studyData.studyDetails[attribute.dataField]}
+                                        {' '}
+                                      </span>
+                                    </div>
+                                  </div>
+                                )
+                      }
                     </div>
                   </Grid>
                 ))}
@@ -217,21 +201,21 @@ const StudyDetailView = ({ classes, data, theme }) => {
               sm={6}
               xs={12}
             >
-              <div   className={classes.detailContainerRight}>
-              
+              <div className={classes.detailContainerRight}>
 
-                {  rightPanel.files.map((panel)=>   (
-                  <Grid item xs={12} style={{height:100,height:60,margin:5}}>
+
+                {rightPanel.files.map((panel) => (
+                  <Grid item xs={12} style={{ height: 100, height: 60, margin: 5 }}>
                     <div className={classes.fileContainer}>
                       <span
                         className={classes.detailContainerHeader}
                       >
                         {panel.label}
                       </span>
-                     
-                        <div  style={{color:'gray',fontSize:20}} >
-                         {studyData.studyDetails[panel.dataField]}
-                       
+
+                      <div style={{ color: 'gray', fontSize: 20 }} >
+                        {studyData.studyDetails[panel.dataField]}
+
                       </div>
                     </div>
                   </Grid>
@@ -242,9 +226,9 @@ const StudyDetailView = ({ classes, data, theme }) => {
           </Grid>
         </div>
       </div>
-   <div className={classes.whiteSpace}> 
+      <div className={classes.whiteSpace}>
 
-   </div>
+      </div>
     </>
   );
 };
@@ -288,9 +272,9 @@ const styles = (theme) => ({
   container: {
     paddingTop: '10px',
     fontFamily: theme.custom.fontFamily,
-    height:"400px",
+    height: "400px",
     background: '#fff',
-    width:'120%',
+    width: '120%',
     margin: 0,
     paddingBottom: '16px',
   },
@@ -298,7 +282,7 @@ const styles = (theme) => ({
     fontSize: '15px',
     fontFamily: theme.custom.fontFamily,
     lineHeight: '14px',
-    color:'black'
+    color: 'black'
   },
   warning: {
     color: theme.palette.warning.main,
@@ -316,27 +300,27 @@ const styles = (theme) => ({
     color: '#000',
     background: '#f3f3f3',
   },
-  headerNavText:{
-    display:'flex',
-    flexDirection:'row',
-    justifyContent:'flex-start',
-    height:50,
+  headerNavText: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    height: 50,
     width: 500,
     marginLeft: 40
   },
-  navLink:{
-    fontSize:19,
+  navLink: {
+    fontSize: 19,
     fontFamily: 'public Sans',
     fontWeight: 400,
-    color:'#005EA2',
+    color: '#005EA2',
     textDecoration: 'underline',
-  
+
     margin: 5
   },
   studyDescriptionClass: {
     color: "#343434",
     fontWeight: 400,
-    fontSize: 19,
+    fontSize: 16,
     overFlowY: 'scroll',
     fontFamily: "inter",
   },
@@ -346,6 +330,14 @@ const styles = (theme) => ({
     fontWeight: 400,
     color: '#000',
     margin: 6
+  },
+  headerTitleStyle: {
+    margin: 0,
+    color: '#0D3A3F',
+    marginLeft: '4.5%',
+    marginTop: 10,
+    fontWeight: 400,
+    fontFamily: 'Poppins'
   },
   header: {
     paddingLeft: '21px',
@@ -363,7 +355,7 @@ const styles = (theme) => ({
     margin: 'auto',
     float: 'left',
     marginLeft: '85px',
-  
+
   },
   headerMainTitle: {
     '& > span': {
@@ -381,14 +373,14 @@ const styles = (theme) => ({
     fontSize: '26px',
     lineHeight: '24px',
     paddingLeft: '0px',
-textAlign: 'center',
-alignItem: 'center',
-justifyContent:'center',
-maxHeight: 50,
-display:'flex',
-flexDirection: 'row',
+    textAlign: 'center',
+    alignItem: 'center',
+    justifyContent: 'center',
+    maxHeight: 50,
+    display: 'flex',
+    flexDirection: 'row',
 
-overflow:'hidden'
+    overflow: 'hidden'
   },
   headerSubTitleCate: {
     color: '#00B0BD',
@@ -404,11 +396,11 @@ overflow:'hidden'
     whiteSpace: 'nowrap',
     paddingRight: '200px',
   },
-  whiteSpace:{
+  whiteSpace: {
     height: '180px',
-    backgroundColor:'white'
+    backgroundColor: 'white'
   },
-  whiteSpaceTop:{
+  whiteSpaceTop: {
     height: '5px',
   },
   headerSubTitleContent: {
@@ -508,10 +500,10 @@ overflow:'hidden'
     maxHeight: '400px',
     overflowX: 'hidden',
     width: '103.9%',
-      margin: '20px',
-     overflowY: 'scroll',
-     borderRight: '#81A6BA 1px solid',
-    
+    margin: '20px',
+    overflowY: 'scroll',
+    borderRight: '#81A6BA 1px solid',
+
   },
 
   borderRight: {
