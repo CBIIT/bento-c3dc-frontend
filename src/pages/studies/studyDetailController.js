@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {  useQuery } from '@apollo/client';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import StudyView from './studyDetailView';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import { GET_STUDY_DETAIL_DATA_QUERY } from '../../bento/studyDetailData';
 import StudyDetailView from './studyDetailView';
 import { useParams } from 'react-router-dom';
-import { connect } from 'react-redux';
-
-
-
 
 const studyDetailContainer = () => {
   const {studyId} = useParams();

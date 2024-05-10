@@ -42,9 +42,9 @@ const StudyDetailView = ({ classes, data, theme }) => {
       </div>
       <div className={classes.headerNavText}>
         <Link className={classes.navLink} to="/home">Home</Link>
-        <img src={next} width={25} height={43} />
+        <img src={next} width={25} height={43} alt='greater than symbol'/>
         <Link className={classes.navLink} to="/studies">Studies</Link>
-        <img src={next} width={25} height={43} />
+        <img src={next} width={25} height={43} alt='greater than symbol'/>
         <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.phs_accession} `}</p>
       </div>
 
@@ -63,7 +63,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                 </span>
 
               </span>
-              <img src={openBook} style={{ width: 50, height: 50, color: 'white', margin: 20, marginTop: 0 }} />
+              <img src={openBook} style={{ width: 50, height: 50, color: 'white', margin: 20, marginTop: 0 }} alt='open book icon'/>
 
             </div>
 
@@ -93,8 +93,8 @@ const StudyDetailView = ({ classes, data, theme }) => {
                 {updatedAttributesData.slice(0, 6).map((attribute, index) => (
                   <Grid item xs={12}>
                     {
-                      index == 0 &&
-                      <h1 style={{ color: '#0B536A' }}>Overview</h1>
+                      index === 0 &&
+                      <span className={classes.contentTitle}>Overview</span>
                     }
                     <div>
                       {
@@ -205,7 +205,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
 
 
                 {rightPanel.files.map((panel) => (
-                  <Grid item xs={12} style={{ height: 100, height: 60, margin: 5 }}>
+                  <Grid item xs={12} style={{ height: 80, margin: 5, gap: 2 }}>
                     <div className={classes.fileContainer}>
                       <span
                         className={classes.detailContainerHeader}
@@ -213,7 +213,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                         {panel.label}
                       </span>
 
-                      <div style={{ color: 'gray', fontSize: 20 }} >
+                      <div className={classes.studyDescriptionClass} >
                         {studyData.studyDetails[panel.dataField]}
 
                       </div>
@@ -278,7 +278,13 @@ const styles = (theme) => ({
     margin: 0,
     paddingBottom: '16px',
   },
-  content: {
+  contentTitle:{
+     color: '#0B536A' ,
+     fontSize: 28,
+     fontWeight: 500,
+     fontFamily: 'Poppins'
+  },
+    content: {
     fontSize: '15px',
     fontFamily: theme.custom.fontFamily,
     lineHeight: '14px',
@@ -314,7 +320,6 @@ const styles = (theme) => ({
     fontWeight: 400,
     color: '#005EA2',
     textDecoration: 'underline',
-
     margin: 5
   },
   studyDescriptionClass: {
@@ -334,7 +339,7 @@ const styles = (theme) => ({
   headerTitleStyle: {
     margin: 0,
     color: '#0D3A3F',
-    marginLeft: '4.5%',
+    marginLeft: '6.5rem',
     marginTop: 10,
     fontWeight: 400,
     fontFamily: 'Poppins'
