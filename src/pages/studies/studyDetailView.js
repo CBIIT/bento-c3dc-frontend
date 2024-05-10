@@ -71,9 +71,9 @@ const StudyDetailView = ({ classes, data, theme }) => {
 
           <div className={classes.headerTitle}>
             <div className={classes.headerMainTitle} id="program_detail_title">
-              <span style={{ color: 'white', alignSelf: 'flex-start', fontWeight: "normal" }}>
+              <span style={{ color: '#71DBEA', alignSelf: 'flex-start', fontWeight: "normal" }}>
                 {'Participants in this Study: '}
-                <span style={{ fontWeight: 'bold' }}>
+                <span style={{ fontWeight: 'bold' , color: "white", fontFamily: 'Poppins'}}>
                   {studyData.studyDetails.num_participants}
                 </span>
 
@@ -93,8 +93,12 @@ const StudyDetailView = ({ classes, data, theme }) => {
                 {updatedAttributesData.slice(0, 6).map((attribute, index) => (
                   <Grid item xs={12}>
                     {
-                      index === 0 &&
+                      index === 0 && 
+                      <> 
                       <span className={classes.contentTitle}>Overview</span>
+                      <div className={classes.descriptionGap}>
+                        </div>
+                      </>
                     }
                     <div>
                       {
@@ -178,6 +182,8 @@ const StudyDetailView = ({ classes, data, theme }) => {
                                     >
                                       {attribute.label}
                                     </span>
+                                    <div className={classes.studyGap}>
+                                      </div>
                                     <div>
                                       <span className={classes.studyDescriptionClass} >
                                         {' '}
@@ -205,7 +211,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
 
 
                 {rightPanel.files.map((panel) => (
-                  <Grid item xs={12} style={{ height: 80, margin: 5, gap: 2 }}>
+                  <Grid item xs={12} style={{ height: 65, margin: 5, gap: 35 }}>
                     <div className={classes.fileContainer}>
                       <span
                         className={classes.detailContainerHeader}
@@ -282,7 +288,7 @@ const styles = (theme) => ({
      color: '#0B536A' ,
      fontSize: 28,
      fontWeight: 500,
-     fontFamily: 'Poppins'
+     fontFamily: 'Poppins',
   },
     content: {
     fontSize: '15px',
@@ -329,9 +335,15 @@ const styles = (theme) => ({
     overFlowY: 'scroll',
     fontFamily: "inter",
   },
+  studyGap:{
+    height: 7
+  },
+  descriptionGap:{
+    height: 20
+  },
   navInfo: {
     fontSize: 19,
-    fontFamily: 'public Sans',
+    fontFamily: 'Poppins',
     fontWeight: 400,
     color: '#000',
     margin: 6
@@ -482,7 +494,7 @@ const styles = (theme) => ({
   },
   detailContainerHeader: {
     textTransform: 'uppercase',
-    fontFamily: 'Lato',
+    fontFamily: 'poppins',
     fontSize: '17px',
     letterSpacing: '0.025em',
     color: '#0095A2',
