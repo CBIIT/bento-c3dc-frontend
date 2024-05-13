@@ -1362,6 +1362,10 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
+        linkAttr : {
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+        },
+        cellType: cellTypes.CUSTOM_ELEM,
       },
       {
         dataField: "study_id",
@@ -1386,7 +1390,7 @@ export const tabContainers = [
       },
       {
         dataField: 'study_acronym',
-        header: 'Acronym',
+        header: 'Study Acronym',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
