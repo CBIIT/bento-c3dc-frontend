@@ -26,7 +26,7 @@ const table = {
       tooltipText: 'Sort by Study Accession',
       cellType: cellTypes.LINK,
       linkAttr: {
-        rootPath: '',
+        rootPath: '/study',
         pathParams: ['phs_accession']
       },
       display: true,

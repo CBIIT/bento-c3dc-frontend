@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 const studyDetailContainer = () => {
   const {studyId} = useParams();
   const { loading, error, data } = useQuery(GET_STUDY_DETAIL_DATA_QUERY, {
-    variables: { ["study_id"]: studyId },
+    variables: { "study_id": studyId },
   });
  
   if (loading) return <CircularProgress />;
