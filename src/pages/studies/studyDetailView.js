@@ -329,7 +329,7 @@ const styles = (theme) => ({
   },
   navLink: {
     fontSize: 16,
-    fontFamily: 'public Sans',
+    fontFamily: 'Public Sans',
     fontWeight: 400,
     color: '#005EA2',
     textDecoration: 'underline',
