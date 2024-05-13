@@ -56,22 +56,22 @@ const StudyDetailView = ({ classes, data, theme }) => {
           <div className={classes.headerTitle}>
             <div className={classes.headerMainTitle}>
 
-              <span style={{ color: 'white', alignSelf: 'flex-start', fontWeight: 'normal', marginTop: 10 }}>
+              <span className={classes.headerSubStyle}>
                 {'Study Code: '}
                 <span style={{ fontWeight: 'bold' }}>
                   {studyData.studyDetails.phs_accession}
                 </span>
 
               </span>
-              <img src={openBook} style={{ width: 50, height: 50, color: 'white', margin: 20, marginTop: 0 }} alt='open book icon'/>
+              <img src={openBook} style={{ width: 41, height: 29, color: 'white', margin: 20, marginTop: 15,  }} alt='open book icon'/>
 
             </div>
 
           </div>
 
           <div className={classes.headerTitle}>
-            <div className={classes.headerMainTitle} id="program_detail_title">
-              <span style={{ color: '#71DBEA', alignSelf: 'flex-start', fontWeight: "normal" }}>
+            <div className={classes.headerMainTitle} >
+              <span style={{ color: '#71DBEA', alignSelf: 'center', position: 'absolute', right: 60, fontWeight: "normal",fontSize: 19, marginTop: 10 }}>
                 {'Participants in this Study: '}
                 <span style={{ fontWeight: 'bold' , color: "white", fontFamily: 'Poppins'}}>
                   {studyData.studyDetails.num_participants}
@@ -243,6 +243,13 @@ const styles = (theme) => ({
   firstColumn: {
     maxWidth: '45%',
   },
+  headerSubStyle: {
+    color: 'white',
+    alignSelf: 'center',
+    fontWeight: 'normal',
+    marginTop: 10,
+    marginLeft: 0
+  },
   secondColumn: {
     maxWidth: '30%',
   },
@@ -321,7 +328,7 @@ const styles = (theme) => ({
     marginLeft: 40
   },
   navLink: {
-    fontSize: 19,
+    fontSize: 16,
     fontFamily: 'public Sans',
     fontWeight: 400,
     color: '#005EA2',
@@ -342,8 +349,8 @@ const styles = (theme) => ({
     height: 20
   },
   navInfo: {
-    fontSize: 19,
-    fontFamily: 'Poppins',
+    fontSize: 16,
+    fontFamily: 'Public Sans',
     fontWeight: 400,
     color: '#000',
     margin: 6
@@ -351,10 +358,11 @@ const styles = (theme) => ({
   headerTitleStyle: {
     margin: 0,
     color: '#0D3A3F',
-    marginLeft: '6.5rem',
+    marginLeft: '2.5rem',
     marginTop: 10,
     fontWeight: 400,
-    fontFamily: 'Poppins'
+    fontFamily: 'Poppins',
+    fontSize: 35
   },
   header: {
     paddingLeft: '21px',
@@ -367,11 +375,16 @@ const styles = (theme) => ({
     flexDirection: 'row',
     justifycontent: 'space-between',
     alignItem: 'center'
+    
   },
   headerTitle: {
-    margin: 'auto',
-    float: 'left',
-    marginLeft: '85px',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItem: 'space-between',
+    background:'transparent',
+    width: '100%',
+    margin: 0
 
   },
   headerMainTitle: {
@@ -387,17 +400,17 @@ const styles = (theme) => ({
     fontFamily: 'Lato',
     letterSpacing: '0.025em',
     color: '#274FA5 ',
-    fontSize: '26px',
+    fontSize: '35px',
     lineHeight: '24px',
     paddingLeft: '0px',
     textAlign: 'center',
-    alignItem: 'center',
-    justifyContent: 'center',
+    alignItem: 'space-between',
+    justifyContent: 'space-between',
     maxHeight: 50,
     display: 'flex',
     flexDirection: 'row',
-
-    overflow: 'hidden'
+    
+    marginLeft: '1.4rem',
   },
   headerSubTitleCate: {
     color: '#00B0BD',
@@ -426,11 +439,12 @@ const styles = (theme) => ({
     fontFamily: theme.custom.fontFamilyRaleway,
     textTransform: 'uppercase',
     letterSpacing: '0.023em',
-    fontSize: '14px'
+    fontSize: '14px',
 
   },
   headerMSubTitle: {
     paddingTop: '3px',
+    
   },
   breadCrumb: {
     color: '#00B0BD',
@@ -654,9 +668,12 @@ const styles = (theme) => ({
     width: '160px',
   },
   externalLinkIcon: {
-    width: '16px',
-    verticalAlign: 'sub',
+    width: '10px',
+    verticalAlign: 'center',
     marginLeft: '4px',
+    marginTop: '20px',
+    alignSelf: 'center',
+    backgroundColor: '#71DBEA'
   },
 });
 
