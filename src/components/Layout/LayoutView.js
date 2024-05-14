@@ -14,7 +14,7 @@ import Studies from '../../pages/studies/studiesController';
 //import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
 import DataModel from "../../pages/DataModel/dataModel";
-import StudyDetail from "../../pages/studies/studyDetailController";
+import StudyDetail from "../../pages/studyDetail/studyDetailController";
 
 // import NewsDetail from '../../pages/news/newsDetailView';
 

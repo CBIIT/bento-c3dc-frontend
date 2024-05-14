@@ -510,6 +510,7 @@ const styles = (theme) => ({
     textTransform: 'uppercase',
     fontFamily: 'poppins',
     fontSize: '17px',
+    fontWeight: '500',
     letterSpacing: '0.025em',
     color: '#0095A2',
   },
