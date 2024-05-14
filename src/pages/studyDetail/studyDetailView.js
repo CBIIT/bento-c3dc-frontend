@@ -7,6 +7,7 @@ import {
 import { Link } from 'react-router-dom';
 import openBook from "../../assets/resources/openBook.svg";
 import next from "../../assets/resources/next.svg";
+import Stats from '../../components/Stats/StatsView';
 import {
   rightPanel
 } from '../../bento/studyDetailData';
@@ -15,6 +16,11 @@ import "./scrollBarConfig.css";
 const StudyDetailView = ({ classes, data, theme }) => {
 
   const studyData = data;
+  const statsData = {
+    numberOfDiseases: data.studyDetails.num_diseases,
+    numberOfParticipants: data.studyDetails.num_participants,
+    numberOfStudies: 1,
+  };
 
 
   const updatedAttributesData = [
@@ -35,8 +41,8 @@ const StudyDetailView = ({ classes, data, theme }) => {
 
   return (
     <>
-      {//  <StatsView data={stat} />
-      }
+      <Stats data={statsData} />
+      
       <div className={classes.whiteSpaceTop}>
 
       </div>
