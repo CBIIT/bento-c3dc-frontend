@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles, CssBaseline } from '@material-ui/core';
-import { Route, Routes, } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Footer from '../ResponsiveFooter/';
 import Header from '../ResponsiveHeader/';
 import Home from '../../pages/landing/landingController';
@@ -14,6 +14,8 @@ import Studies from '../../pages/studies/studiesController';
 //import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
 import DataModel from "../../pages/DataModel/dataModel";
+import StudyDetail from "../../pages/studies/studyDetailController";
+
 // import NewsDetail from '../../pages/news/newsDetailView';
 
 const Layout = () => {
@@ -25,6 +27,7 @@ const Layout = () => {
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/studies" element={<Studies />} />
+          <Route path="/study/:studyId" element={<StudyDetail />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/sitesearch" element={<Search />} />
