@@ -14,7 +14,8 @@ import Studies from '../../pages/studies/studiesController';
 //import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
 import DataModel from "../../pages/DataModel/dataModel";
-import StudyDetail from "../../pages/studies/studyDetailController";
+import PdfReader from "../../pages/pdfReader/pdfReader";
+import StudyDetail from "../../pages/studyDetail/studyDetailController";
 
 // import NewsDetail from '../../pages/news/newsDetailView';
 
@@ -32,6 +33,7 @@ const Layout = () => {
           <Route path="/about" element={<About />} />
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
+          <Route path="/pdfReader" element={<PdfReader />} />
           {/*<Route path="/fileCentricCart" element={<Cart />} />*/}
           <Route path="/data_model" element={<DataModel />} />
           <Route path="*" element={<Error />} />

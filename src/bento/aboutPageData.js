@@ -1,3 +1,6 @@
+import userGuide from '../assets/about/C3DC User Guide v3.pdf';
+import latestRelease from '../assets/about/C3DC_Release_Notes_v3.pdf';
+
 export const aboutData = {
   introParagraph:
     "<a className='sectionTitle'>Childhood Cancer Data Initiative</a><br/>" +
@@ -80,6 +83,12 @@ export const aboutData = {
     ": Whether you are new or aiming to expand your knowledge about C3DC, </br> our user guide is your resource.",
   lastParagraph:
     "The CCDI welcomes input from the community to enhance usability. " +
-    "Please send your feedback and comments to " +
+    "Please send your <br> feedback and comments to " +
     "<a className='aboutLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>.",
 };
+
+
+export const pdfList = {
+  latestRelease: latestRelease,
+   userGuide: userGuide
+}
