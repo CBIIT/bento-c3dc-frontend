@@ -91,7 +91,7 @@ const rightPanel = {
     },
     {
       dataField: 'num_diseases',
-      label: 'DIGNOSIS',
+      label: 'DIAGNOSES',
       display: true,
     },
     {
