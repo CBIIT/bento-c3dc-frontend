@@ -75,32 +75,29 @@ export const landingPageData = {
     alt: '',
     img: landingTile2,
     titleText: 'Data Model',
-    descriptionText: 'Review components, gain a deeper understanding, or specifics of harmonization.',
+    descriptionText: 'Review components to gain a deeper understanding of the specifics of harmonization.',
     callToActionText: 'Explore Data Model',
     callToActionLink: 'https://github.com/CBIIT/c3dc-model', // This links to the Data Model GitHub Page.
   },
   tile3: {
     alt: '',
     img: landingTile3,
-    titleText: 'Announcements',
-    descriptionText: 'Current release contains harmonized demographic and phenotypic data from the TARGET Neuroblastoma study and Molecular Characterization Initiative. Future releases will include additional CCDI-managed data.',
     titleText: 'New Datasets',
     descriptionText: 'Our latest release contains harmonized demographic and phenotypic data from nine additional CCDI datasets.',
     callToActionText: 'Learn More',
-    callToActionLink: '', // Link to the "Resources" Static Page
     callToActionLink: '', //Link to the "Resources" Static Page
   },
   tile4: {
     alt: '',
     img: landingTile4,
     titleText: 'C3DC Data',
-    descriptionText: 'Explore C3DC data, construct your cohort, and export it for analysis alongside other data types.',
+    descriptionText: 'Explore and export C3DC data for analysis alongside other data types.',
     callToActionText: 'Explore Data',
     callToActionLink: '/explore', // This links to the explore dashboard.
   },
 };
 // --------------- GraphQL query - Retrieve Landing page data --------------
-export const GET_LANDING_PAGE_DATA_QUERY = gql`{
+export const GLOBAL_STATS_BAR_QUERY = gql`{
   numberOfDiseases,
   numberOfParticipants,
   numberOfReferenceFiles,
