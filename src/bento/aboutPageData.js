@@ -1,3 +1,6 @@
+import userGuide from '../assets/about/C3DC User Guide v3.pdf';
+import latestRelease from '../assets/about/C3DC_Release_Notes_v3.pdf';
+
 export const aboutData = {
   introParagraph:
     "<a className='sectionTitle'>Childhood Cancer Data Initiative</a><br/>" +
@@ -83,7 +86,8 @@ export const aboutData = {
     "<a className='aboutLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>.",
 };
 
+
 export const pdfList = {
-  latestRelease: "http://github.com/CBIIT/c3dc-releases/blob/Release-2/README.md",
-  userGuide: "http://github.com/CBIIT/c3dc-releases/blob/Release-2/User_Guide.md"
+  latestRelease: latestRelease,
+   userGuide: userGuide
 }
