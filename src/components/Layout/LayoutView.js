@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles, CssBaseline } from '@material-ui/core';
-import { Route, Routes, } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Footer from '../ResponsiveFooter/';
 import Header from '../ResponsiveHeader/';
 import Home from '../../pages/landing/landingController';
@@ -14,6 +14,9 @@ import Studies from '../../pages/studies/studiesController';
 //import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
 import DataModel from "../../pages/DataModel/dataModel";
+import PdfReader from "../../pages/pdfReader/pdfReader";
+import StudyDetail from "../../pages/studyDetail/studyDetailController";
+
 // import NewsDetail from '../../pages/news/newsDetailView';
 
 const Layout = () => {
@@ -25,10 +28,12 @@ const Layout = () => {
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/studies" element={<Studies />} />
+          <Route path="/:studyId" element={<StudyDetail />} />          
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
+          <Route path="/pdfReader" element={<PdfReader />} />
           {/*<Route path="/fileCentricCart" element={<Cart />} />*/}
           <Route path="/data_model" element={<DataModel />} />
           <Route path="*" element={<Error />} />

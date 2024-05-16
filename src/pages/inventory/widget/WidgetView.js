@@ -31,7 +31,7 @@ const WidgetView = ({
       colors,
       styles: {
         cellPadding: 2,
-        textOverflowLength: 20,
+        textOverflowLength: 15,
         textColor: theme.palette.widgetBackground.contrastText,
       },
       functions:{
