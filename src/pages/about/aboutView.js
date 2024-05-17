@@ -102,8 +102,6 @@ const AboutView = () => {
           <div className='introParagraph'>{ReactHtmlParser(aboutData.introParagraph)}</div>
           <div className='secondParagraph sectionStart'> {ReactHtmlParser(aboutData.secondParagraph)}</div>
           <div className='thirdParagraph sectionStart'>{ReactHtmlParser(aboutData.thirdParagraph)}</div>
-       
-          <div className='twelfthParagraph sectionStart imageMargin'>{ReactHtmlParser(aboutData.twelfthParagraph)}</div>
           <div className='lastParagraph sectionStart imageMargin'>{ReactHtmlParser(aboutData.lastParagraph)}</div>
         </div>
         <div className='aboutImages'>
