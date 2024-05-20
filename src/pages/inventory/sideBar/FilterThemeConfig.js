@@ -56,13 +56,13 @@ const theme = {
           backgroundColor: '#F0DCBE',
         },
         '&.survivalCheckedEven': {
-          backgroundColor: '#C2FFF1',
+          backgroundColor: '#E6FFF9',
         },
         '&.survivalCheckedOdd': {
           backgroundColor: '#BCE1D8',
         },
         '&.studyCheckedEven': {
-          backgroundColor: '#E8DBF5',
+          backgroundColor: '#F6F0FB',
         },
         '&.studyCheckedOdd': {
           backgroundColor: '#D3BFE8',

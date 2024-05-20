@@ -28,6 +28,7 @@ import FacetFilterThemeProvider from './FilterThemeConfig';
 import {
   getAllParticipantIds, getAllIds,
 } from './BentoFilterUtils';
+import { toUpper } from 'lodash';
 
 const CustomExpansionPanelSummary = withStyles({
   root: {
