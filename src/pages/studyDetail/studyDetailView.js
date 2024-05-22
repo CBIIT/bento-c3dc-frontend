@@ -63,9 +63,12 @@ const StudyDetailView = ({ classes, data, theme }) => {
             <div className={classes.headerMainTitle}>
 
               <span className={classes.headerSubStyle}>
-                {'Study Code: '}
-                <span style={{ fontWeight: 'bold' }}>
+                {'Study Accession: '}
+                <span>
+                  <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.phs_accession}`} target='_blank' >
                   {studyData.studyDetails.phs_accession}
+                  </a>
+                  
                 </span>
 
               </span>
@@ -332,6 +335,12 @@ const styles = (theme) => ({
     height: 50,
     width: 500,
     marginLeft: 40
+  },
+  studyIdUrl:{
+    fontWeight: 'bold',
+    textDecoration: 'none',
+    color: 'white',
+
   },
   navLink: {
     fontSize: 16,
