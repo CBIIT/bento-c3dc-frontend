@@ -340,7 +340,7 @@ const styles = (theme) => ({
   studyIdUrl:{
     fontWeight: 'bold',
     color: 'white',
-    textTransform: 'uppercase'
+    
   },
   navLink: {
     fontSize: 16,
