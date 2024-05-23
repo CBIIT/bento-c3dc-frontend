@@ -13,6 +13,7 @@ import {
 } from '../../bento/studyDetailData';
 
 import "./scrollBarConfig.css";
+import { upperCase } from 'lodash';
 const StudyDetailView = ({ classes, data, theme }) => {
 
   const studyData = data;
@@ -338,9 +339,8 @@ const styles = (theme) => ({
   },
   studyIdUrl:{
     fontWeight: 'bold',
-    textDecoration: 'none',
     color: 'white',
-
+    textTransform: 'uppercase'
   },
   navLink: {
     fontSize: 16,
