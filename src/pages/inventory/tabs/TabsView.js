@@ -21,6 +21,7 @@ const Tabs = (props) => {
     count: `(${props.dashboardStats[tab.count]})`,
     display: [tab.name, props.dashboardStats[tab.count]],
     clsName: `${tab.name}`.toLowerCase().replace(' ', '_'),
+    tooltipStyles: {border: '1px solid #2D5380', arrowBorder: '1px solid #598AC5'}
   }));
 
   return (
