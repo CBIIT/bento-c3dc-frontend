@@ -1024,6 +1024,7 @@ export const tabContainers = [
     defaultSortDirection: 'asc',
     buttonText: 'Add Selected Files',
     tableID: 'participant_tab_table',
+    hasToolTip: true,
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: false,
