@@ -17,6 +17,7 @@ const Tabs = (props) => {
   const getTabs = (tabs) => tabs.map((tab) => ({
     ...tab,
     name: tab.name,
+    hasToolTip: true,
     toolTipText: tab.toolTipText,
     count: `(${props.dashboardStats[tab.count]})`,
     display: [tab.name, props.dashboardStats[tab.count]],
