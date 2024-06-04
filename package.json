@@ -11,7 +11,7 @@
     "@bento-core/query-bar": "1.0.0-c3dc.1",
     "@bento-core/paginated-table": "^1.0.0-c3dc.4",
     "@bento-core/stats-bar": "1.0.1-ccdihub.2",
-    "@bento-core/tab": "^1.0.0",
+    "@bento-core/tab": "1.0.0-c3dc.0",
     "@bento-core/table": "^1.0.0-c3dc.4",
     "@bento-core/tool-tip": "^1.0.0",
     "@bento-core/widgets": "1.0.0-c3dc.0",
