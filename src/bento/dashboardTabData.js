@@ -1022,6 +1022,7 @@ export const tabContainers = [
     dataKey: 'participant_id',
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
+    toolTipText: 'Count of Participant Record',
     buttonText: 'Add Selected Files',
     tableID: 'participant_tab_table',
     hasToolTip: true,
@@ -1093,6 +1094,7 @@ export const tabContainers = [
     defaultSortDirection: 'asc',
     count: 'numberOfDiagnoses',
     fileCount: 'diagnosisFileCount',
+    toolTipText: 'Count of Diagnosis Record',
     dataKey: 'id',
     tableID: 'diagnosis_tab_table',
     extendedViewConfig: {
@@ -1242,6 +1244,7 @@ export const tabContainers = [
     dataKey: 'id',
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
+    toolTipText: 'Count of Survival Record',
     tableID: 'survival_tab_table',
     extendedViewConfig: {
       pagination: true,
@@ -1345,6 +1348,7 @@ export const tabContainers = [
     defaultSortDirection: 'asc',
     count: 'numberOfStudies',
     fileCount: 'studiesFileCount',
+    toolTipText: 'Count of Study Record',
     dataKey: 'id',
     tableID: 'study_tab_table',
     extendedViewConfig: {
