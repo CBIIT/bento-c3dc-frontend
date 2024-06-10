@@ -13,7 +13,6 @@ import {
 } from '../../bento/studyDetailData';
 
 import "./scrollBarConfig.css";
-import { upperCase } from 'lodash';
 const StudyDetailView = ({ classes, data, theme }) => {
 
   const studyData = data;
@@ -66,7 +65,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
               <span className={classes.headerSubStyle}>
                 {'Study Accession: '}
                 <span>
-                  <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.phs_accession}`} target='_blank' >
+                  <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.phs_accession}`} target='_blank' rel="noreferrer">
                   {studyData.studyDetails.phs_accession}
                   </a>
                   
