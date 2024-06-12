@@ -1322,11 +1322,11 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'age_at_last_known_survival_status',
+     dataField: 'age_at_last_known_survival_status',
         header: 'Age at Last Known Survival Status',
         display: true,
         tooltipText: 'sort',
-        role: cellTypes.COMMA,
+        role: cellTypes.DISPLAY,
         cellType: cellTypes.COMMA
       },
       {
