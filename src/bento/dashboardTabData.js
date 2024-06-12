@@ -360,6 +360,7 @@ query survivalOverview(
 
       # Study
       study_id
+      phs_accession
 
       # Survival
       age_at_event_free_survival_status
@@ -443,6 +444,7 @@ query participantOverview(
       sex_at_birth
 
       # Studies
+      phs_accession
       study_id
 
       __typename
@@ -533,6 +535,7 @@ query diagnosisOverview(
 
       # Study
       study_id
+      phs_accession
 
       __typename
   }
@@ -1070,7 +1073,18 @@ export const tabContainers = [
         display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-      }
+      },
+      {
+        dataField: 'phs_accession',
+        header: 'Study Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+        linkAttr : {
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+        },
+        cellType: cellTypes.CUSTOM_ELEM,
+      },
     ],
     id: 'participant_tab',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
@@ -1220,6 +1234,17 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
+      {
+        dataField: 'phs_accession',
+        header: 'Study Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+        linkAttr : {
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+        },
+        cellType: cellTypes.CUSTOM_ELEM,
+      },
      
     ],
     id: 'diagnosis_tab',
@@ -1332,7 +1357,18 @@ export const tabContainers = [
         display: false,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
-      }
+      },
+      {
+        dataField: 'phs_accession',
+        header: 'Study Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+        linkAttr : {
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+        },
+        cellType: cellTypes.CUSTOM_ELEM,
+      },
     ],
     id: 'survival_tab',
     tabIndex: '1',

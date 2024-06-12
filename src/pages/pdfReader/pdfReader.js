@@ -30,7 +30,7 @@ export default function PdfReader() {
 
     return (
         <div style={containerStyle}>
-            <iframe style={iframeStyle} src={pdfUrl} frameBorder="0"></iframe>
+            <iframe style={iframeStyle} src={pdfUrl} frameBorder="0" title="C3DC Release Notes PDF"></iframe>
         </div>
     );
 }
