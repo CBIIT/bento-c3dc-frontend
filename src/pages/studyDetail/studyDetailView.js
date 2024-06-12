@@ -4,17 +4,20 @@ import {
   Grid,
   withStyles,
 } from '@material-ui/core';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import openBook from "../../assets/resources/openBook.svg";
 import next from "../../assets/resources/next.svg";
 import Stats from '../../components/Stats/StatsView';
 import {
   rightPanel
 } from '../../bento/studyDetailData';
-
+import { toggleCheckBox } from '@bento-core/facet-filter';
 import "./scrollBarConfig.css";
 import { upperCase } from 'lodash';
+import { useDispatch } from 'react-redux';
 const StudyDetailView = ({ classes, data, theme }) => {
+const dispatch = useDispatch();
+const navigate = useNavigate();
 
   const studyData = data;
   const statsData = {
@@ -83,7 +86,17 @@ const StudyDetailView = ({ classes, data, theme }) => {
             <div className={classes.headerMainTitle} >
               <span style={{ color: '#71DBEA', alignSelf: 'center', position: 'absolute', right: 60, fontWeight: "normal",fontSize: 19, marginTop: 10 }}>
                 {'Participants in this Study: '}
-                <span style={{ fontWeight: 'bold' , color: "white", fontFamily: 'Poppins'}}>
+                <span onClick={()=>{
+                  
+                  const toggleCheckBoxItem = {
+                    name: studyData.studyDetails.phs_accession,
+                    datafield: 'phs_accession',
+                    isChecked: true,
+                  }
+                  dispatch(toggleCheckBox(toggleCheckBoxItem));
+                  navigate('/explore')
+                 
+      }} style={{ fontWeight: 'bold' , color: "white", fontFamily: 'Poppins'}}>
                   {studyData.studyDetails.num_participants}
                 </span>
 
@@ -340,7 +353,6 @@ const styles = (theme) => ({
   studyIdUrl:{
     fontWeight: 'bold',
     color: 'white',
-    
   },
   navLink: {
     fontSize: 16,
