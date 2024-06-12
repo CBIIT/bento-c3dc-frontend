@@ -83,7 +83,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
               <span style={{ color: '#71DBEA', alignSelf: 'center', position: 'absolute', right: 60, fontWeight: "normal",fontSize: 19, marginTop: 10 }}>
                 {'Participants in this Study: '}
                 <span style={{ fontWeight: 'bold' , color: "white", fontFamily: 'Poppins'}}>
-                  {studyData.studyDetails.num_participants}
+                  {studyData.studyDetails.num_participants.toLocaleString()}
                 </span>
 
               </span>
@@ -229,7 +229,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                       </span>
 
                       <div className={classes.studyDescriptionClass} >
-                        {studyData.studyDetails[panel.dataField]}
+                        {studyData.studyDetails[panel.dataField].toLocaleString()}
 
                       </div>
                     </div>

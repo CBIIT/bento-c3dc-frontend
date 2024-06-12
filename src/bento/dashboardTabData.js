@@ -1028,6 +1028,7 @@ export const tabContainers = [
     toolTipText: 'Count of Participant Record',
     buttonText: 'Add Selected Files',
     tableID: 'participant_tab_table',
+    hasToolTip: true,
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: false,
@@ -1188,7 +1189,8 @@ export const tabContainers = [
         header: 'Age at Diagnosis (days)',
         display: true,
         tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
+        role: cellTypes.COMMA,
+        cellType: cellTypes.COMMA,
       },
       {
         dataField: 'toronto_childhood_cancer_staging',
@@ -1324,7 +1326,8 @@ export const tabContainers = [
         header: 'Age at Last Known Survival Status',
         display: true,
         tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
+        role: cellTypes.COMMA,
+        cellType: cellTypes.COMMA
       },
       {
         dataField: "event_free_survival_status",
@@ -1338,7 +1341,8 @@ export const tabContainers = [
         header: "Age at Event-Free Survival Status",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.COMMA,
+        cellType: cellTypes.COMMA
       },
       {
         dataField: 'first_event',

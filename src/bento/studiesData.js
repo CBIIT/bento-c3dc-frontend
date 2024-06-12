@@ -42,6 +42,8 @@ const table = {
       header: 'Participants Count',
       tooltipText: 'Sort by Participants Count',
       display: true,
+      role: cellTypes.COMMA,
+        cellType: cellTypes.COMMA,
     },
     {
       dataField: 'num_diseases',
