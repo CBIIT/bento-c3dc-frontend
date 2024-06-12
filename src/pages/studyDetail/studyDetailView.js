@@ -660,7 +660,8 @@ const styles = (theme) => ({
   linkOut: {
     textDecoration: 'underline', 
     borderBottom: 1, 
-    borderBottomColor: 'white'
+    borderBottomColor: 'white',
+    cursor: 'pointer'
   },
   fileIcon: {
     '& img': {
