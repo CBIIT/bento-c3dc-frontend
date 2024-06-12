@@ -1,6 +1,6 @@
 import React from 'react';
 import {
- 
+
   Grid,
   withStyles,
 } from '@material-ui/core';
@@ -16,8 +16,8 @@ import "./scrollBarConfig.css";
 import { upperCase } from 'lodash';
 import { useDispatch } from 'react-redux';
 const StudyDetailView = ({ classes, data, theme }) => {
-const dispatch = useDispatch();
-const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const studyData = data;
   const statsData = {
@@ -46,15 +46,15 @@ const navigate = useNavigate();
   return (
     <>
       <Stats data={statsData} />
-      
+
       <div className={classes.whiteSpaceTop}>
 
       </div>
       <div className={classes.headerNavText}>
         <Link className={classes.navLink} to="/home">Home</Link>
-        <img src={next} width={25} height={43} alt='greater than symbol'/>
+        <img src={next} width={25} height={43} alt='greater than symbol' />
         <Link className={classes.navLink} to="/studies">Studies</Link>
-        <img src={next} width={25} height={43} alt='greater than symbol'/>
+        <img src={next} width={25} height={43} alt='greater than symbol' />
         <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.phs_accession} `}</p>
       </div>
 
@@ -70,13 +70,13 @@ const navigate = useNavigate();
                 {'Study Accession: '}
                 <span>
                   <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.phs_accession}`} target='_blank' >
-                  {studyData.studyDetails.phs_accession}
+                    {studyData.studyDetails.phs_accession}
                   </a>
-                  
+
                 </span>
 
               </span>
-              <img src={openBook} style={{ width: 41, height: 29, color: 'white', margin: 20, marginTop: 15,  }} alt='open book icon'/>
+              <img src={openBook} style={{ width: 41, height: 29, color: 'white', margin: 20, marginTop: 15, }} alt='open book icon' />
 
             </div>
 
@@ -84,10 +84,10 @@ const navigate = useNavigate();
 
           <div className={classes.headerTitle}>
             <div className={classes.headerMainTitle} >
-              <span style={{ color: '#71DBEA', alignSelf: 'center', position: 'absolute', right: 60, fontWeight: "normal",fontSize: 19, marginTop: 10 }}>
+              <span style={{ color: '#71DBEA', alignSelf: 'center', position: 'absolute', right: 60, fontWeight: "normal", fontSize: 19, marginTop: 10 }}>
                 {'Participants in this Study: '}
-                <span onClick={()=>{
-                  
+                <span className={classes.linkOut} onClick={() => {
+
                   const toggleCheckBoxItem = {
                     name: studyData.studyDetails.phs_accession,
                     datafield: 'phs_accession',
@@ -95,8 +95,8 @@ const navigate = useNavigate();
                   }
                   dispatch(toggleCheckBox(toggleCheckBoxItem));
                   navigate('/explore')
-                 
-      }} style={{ fontWeight: 'bold' , color: "white", fontFamily: 'Poppins'}}>
+
+                }} style={{ fontWeight: 'bold', color: "white", fontFamily: 'Poppins' }}>
                   {studyData.studyDetails.num_participants}
                 </span>
 
@@ -116,10 +116,10 @@ const navigate = useNavigate();
                 {updatedAttributesData.slice(0, 6).map((attribute, index) => (
                   <Grid item xs={12}>
                     {
-                      index === 0 && 
-                      <> 
-                      <span className={classes.contentTitle}>Overview</span>
-                      <div className={classes.descriptionGap}>
+                      index === 0 &&
+                      <>
+                        <span className={classes.contentTitle}>Overview</span>
+                        <div className={classes.descriptionGap}>
                         </div>
                       </>
                     }
@@ -206,7 +206,7 @@ const navigate = useNavigate();
                                       {attribute.label}
                                     </span>
                                     <div className={classes.studyGap}>
-                                      </div>
+                                    </div>
                                     <div>
                                       <span className={classes.studyDescriptionClass} >
                                         {' '}
@@ -314,13 +314,13 @@ const styles = (theme) => ({
     margin: 0,
     paddingBottom: '16px',
   },
-  contentTitle:{
-     color: '#0B536A' ,
-     fontSize: 28,
-     fontWeight: 500,
-     fontFamily: 'Poppins',
+  contentTitle: {
+    color: '#0B536A',
+    fontSize: 28,
+    fontWeight: 500,
+    fontFamily: 'Poppins',
   },
-    content: {
+  content: {
     fontSize: '15px',
     fontFamily: theme.custom.fontFamily,
     lineHeight: '14px',
@@ -350,7 +350,7 @@ const styles = (theme) => ({
     width: 500,
     marginLeft: 40
   },
-  studyIdUrl:{
+  studyIdUrl: {
     fontWeight: 'bold',
     color: 'white',
   },
@@ -369,10 +369,10 @@ const styles = (theme) => ({
     overFlowY: 'scroll',
     fontFamily: "inter",
   },
-  studyGap:{
+  studyGap: {
     height: 7
   },
-  descriptionGap:{
+  descriptionGap: {
     height: 20
   },
   navInfo: {
@@ -402,14 +402,14 @@ const styles = (theme) => ({
     flexDirection: 'row',
     justifycontent: 'space-between',
     alignItem: 'center'
-    
+
   },
   headerTitle: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItem: 'space-between',
-    background:'transparent',
+    background: 'transparent',
     width: '100%',
     margin: 0
 
@@ -436,7 +436,7 @@ const styles = (theme) => ({
     maxHeight: 50,
     display: 'flex',
     flexDirection: 'row',
-    
+
     marginLeft: '1.4rem',
   },
   headerSubTitleCate: {
@@ -471,7 +471,7 @@ const styles = (theme) => ({
   },
   headerMSubTitle: {
     paddingTop: '3px',
-    
+
   },
   breadCrumb: {
     color: '#00B0BD',
@@ -656,6 +656,11 @@ const styles = (theme) => ({
     paddingLeft: '48px',
     marginLeft: '36%',
     marginTop: '25px',
+  },
+  linkOut: {
+    textDecoration: 'underline', 
+    borderBottom: 1, 
+    borderBottomColor: 'white'
   },
   fileIcon: {
     '& img': {

@@ -6,7 +6,7 @@
 /* eslint-disable vars-on-top */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable arrow-body-style */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AccordionSummary,
   Button,
@@ -238,6 +238,10 @@ const BentoFacetFilter = ({
     );
   };
 
+  if (activeFilters['phs_accession']) {
+    facetSectionVariables['Study'].isExpanded = true;
+  }
+  
   return (
     <div>
       <FacetFilterThemeProvider>
