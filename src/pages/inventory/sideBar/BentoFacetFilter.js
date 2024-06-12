@@ -242,6 +242,28 @@ const BentoFacetFilter = ({
     facetSectionVariables['Study'].isExpanded = true;
   }
   
+  function updateSubjects(obj) {
+    if (Array.isArray(obj)) {
+      
+        return obj.map(item => updateSubjects(item));
+    } else if (typeof obj === 'object' && obj !== null) {
+        let newObj = {};
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                if (key === 'subjects') {
+                    
+                    newObj[key] = obj[key].toLocaleString();
+                } else {
+                    
+                    newObj[key] = updateSubjects(obj[key]);
+
+                }
+            }
+        }
+        return newObj;
+    }
+    return obj;
+}
   return (
     <div>
       <FacetFilterThemeProvider>
@@ -250,7 +272,7 @@ const BentoFacetFilter = ({
           activeFilters={activeFilters}
         />
         <FacetFilter
-          data={searchData}
+          data={updateSubjects(searchData)}
           facetSectionConfig={facetSectionVariables}
           facetsConfig={facetsConfig}
           CustomFacetSection={CustomFacetSection}

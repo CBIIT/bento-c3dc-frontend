@@ -69,8 +69,8 @@ const StudyDetailView = ({ classes, data, theme }) => {
               <span className={classes.headerSubStyle}>
                 {'Study Accession: '}
                 <span>
-                  <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.phs_accession}`} target='_blank' >
-                    {studyData.studyDetails.phs_accession}
+                  <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.phs_accession}`} target='_blank' rel="noreferrer">
+                  {studyData.studyDetails.phs_accession}
                   </a>
 
                 </span>
@@ -243,7 +243,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                       </span>
 
                       <div className={classes.studyDescriptionClass} >
-                        {studyData.studyDetails[panel.dataField]}
+                        {studyData.studyDetails[panel.dataField].toLocaleString()}
 
                       </div>
                     </div>
