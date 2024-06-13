@@ -97,7 +97,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                   navigate('/explore')
 
                 }} style={{ fontWeight: 'bold', color: "white", fontFamily: 'Poppins' }}>
-                  {studyData.studyDetails.num_participants}
+                  {studyData.studyDetails.num_participants.toLocaleString()}
                 </span>
 
               </span>
