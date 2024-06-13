@@ -13,7 +13,7 @@ const table = {
   // Field name for table data, need to be updated only when using a different GraphQL query
   dataField: 'studiesListing',
   // Value must be one of the 'field' in columns
-  defaultSortField: 'phs_accession',
+  defaultSortField: 'dbgap_accession',
   // 'asc' or 'desc'
   defaultSortDirection: 'asc',
   // Set 'selectableRows' to true to show the row selection
@@ -21,18 +21,18 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'phs_accession',
+      dataField: 'dbgap_accession',
       header: 'Study Accession',
       tooltipText: 'Sort by Study Accession',
       cellType: cellTypes.LINK,
       linkAttr: {
         rootPath: '',
-        pathParams: ['phs_accession']
+        pathParams: ['dbgap_accession']
       },
       display: true,
     },
     {
-      dataField: 'study_short_title',
+      dataField: 'study_name',
       header: 'Study Name',
       tooltipText: 'Sort by Study Name',
       display: true,
@@ -57,8 +57,8 @@ const table = {
 // --------------- GraphQL query - Retrieve program info --------------
 const GET_STUDIES_DATA_QUERY = gql`{
   studiesListing  {
-    phs_accession
-    study_short_title
+    dbgap_accession
+    study_name
     num_participants
     num_diseases
   }

@@ -13,7 +13,6 @@ import {
 } from '../../bento/studyDetailData';
 import { toggleCheckBox } from '@bento-core/facet-filter';
 import "./scrollBarConfig.css";
-import { upperCase } from 'lodash';
 import { useDispatch } from 'react-redux';
 const StudyDetailView = ({ classes, data, theme }) => {
   const dispatch = useDispatch();
@@ -54,8 +53,8 @@ const StudyDetailView = ({ classes, data, theme }) => {
         <Link className={classes.navLink} to="/home">Home</Link>
         <img src={next} width={25} height={43} alt='greater than symbol' />
         <Link className={classes.navLink} to="/studies">Studies</Link>
-        <img src={next} width={25} height={43} alt='greater than symbol' />
-        <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.phs_accession} `}</p>
+        <img src={next} width={25} height={43} alt='greater than symbol'/>
+        <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.dbgap_accession} `}</p>
       </div>
 
       <div className={classes.container}>
@@ -69,8 +68,8 @@ const StudyDetailView = ({ classes, data, theme }) => {
               <span className={classes.headerSubStyle}>
                 {'Study Accession: '}
                 <span>
-                  <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.phs_accession}`} target='_blank' rel="noreferrer">
-                  {studyData.studyDetails.phs_accession}
+                  <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.dbgap_accession}`} target='_blank' rel="noreferrer">
+                  {studyData.studyDetails.dbgap_accession}
                   </a>
 
                 </span>

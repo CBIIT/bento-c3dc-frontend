@@ -102,7 +102,7 @@ const { UploadModal } = UploadModalGenerator({
     maxSearchTerms: 1000,
     matchedId: 'participant_id',
     matchedLabel : 'Submitted Participant ID',
-    associateId: 'phs_accession',
+    associateId: 'dbgap_accession',
     associateLabel: '',
     projectName: 'C3DC',
     caseIds: 'Participant IDs',
