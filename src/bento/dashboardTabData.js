@@ -56,9 +56,9 @@ query search(
   $disease_phase: [String],
 
   # Studies
-  $phs_accession: [String],
+  $dbgap_accession: [String],
   $study_acronym: [String],
-  $study_short_title: [String],
+  $study_name: [String],
 
   # Survivals
   $age_at_last_known_survival_status: [Int],
@@ -81,9 +81,9 @@ getParticipants(
   disease_phase: $disease_phase,
   
   # Studies
-  phs_accession: $phs_accession,
+  dbgap_accession: $dbgap_accession,
   study_acronym: $study_acronym,
-  study_short_title: $study_short_title,
+  study_name: $study_name,
 
   # Survivals
   age_at_last_known_survival_status: $age_at_last_known_survival_status,
@@ -179,7 +179,7 @@ getParticipants(
   }
 
   # Study filter counts
-  filterParticipantCountByPhsAccession {
+  filterParticipantCountByDbgapAccession {
     group
     subjects
     __typename
@@ -189,7 +189,7 @@ getParticipants(
     subjects
     __typename
   }
-  filterParticipantCountByStudyShortTitle {
+  filterParticipantCountByStudyName {
     group
     subjects
     __typename
@@ -235,11 +235,11 @@ query fileOverview(
     $tumor_classification: [String] ,
     $assay_method: [String],
     $file_type: [String],
-    $phs_accession: [String],
+    $dbgap_accession: [String],
     $grant_id: [String],
     $institution: [String],
     $study_acronym: [String],
-    $study_short_title: [String],
+    $study_name: [String],
     $library_selection: [String],
     $library_source: [String],
     $library_strategy: [String],
@@ -263,11 +263,11 @@ query fileOverview(
         tumor_classification: $tumor_classification,
         assay_method: $assay_method,
         file_type: $file_type,
-        phs_accession: $phs_accession,       
+        dbgap_accession: $dbgap_accession,       
         grant_id: $grant_id,
         institution: $institution,
         study_acronym: $study_acronym,
-        study_short_title: $study_short_title,
+        study_name: $study_name,
         library_selection: $library_selection,
         library_source: $library_source,
         library_strategy: $library_strategy,
@@ -309,9 +309,9 @@ query survivalOverview(
   $disease_phase: [String],
 
   # Studies
-  $phs_accession: [String],
+  $dbgap_accession: [String],
   $study_acronym: [String],
-  $study_short_title: [String],
+  $study_name: [String],
 
   # Survivals
   $age_at_last_known_survival_status: [Int],
@@ -340,9 +340,9 @@ query survivalOverview(
       disease_phase: $disease_phase,
       
       # Studies
-      phs_accession: $phs_accession,
+      dbgap_accession: $dbgap_accession,
       study_acronym: $study_acronym,
-      study_short_title: $study_short_title,
+      study_name: $study_name,
 
       # Survivals
       age_at_last_known_survival_status: $age_at_last_known_survival_status,
@@ -360,7 +360,7 @@ query survivalOverview(
 
       # Study
       study_id
-      phs_accession
+      dbgap_accession
 
       # Survival
       age_at_event_free_survival_status
@@ -391,9 +391,9 @@ query participantOverview(
   $disease_phase: [String],
 
   # Studies
-  $phs_accession: [String],
+  $dbgap_accession: [String],
   $study_acronym: [String],
-  $study_short_title: [String],
+  $study_name: [String],
 
   # Survivals
   $age_at_last_known_survival_status: [Int],
@@ -422,9 +422,9 @@ query participantOverview(
       disease_phase: $disease_phase,
       
       # Studies
-      phs_accession: $phs_accession,
+      dbgap_accession: $dbgap_accession,
       study_acronym: $study_acronym,
-      study_short_title: $study_short_title,
+      study_name: $study_name,
 
       # Survivals
       age_at_last_known_survival_status: $age_at_last_known_survival_status,
@@ -444,7 +444,7 @@ query participantOverview(
       sex_at_birth
 
       # Studies
-      phs_accession
+      dbgap_accession
       study_id
 
       __typename
@@ -468,9 +468,9 @@ query diagnosisOverview(
   $disease_phase: [String],
 
   # Studies
-  $phs_accession: [String],
+  $dbgap_accession: [String],
   $study_acronym: [String],
-  $study_short_title: [String],
+  $study_name: [String],
 
   # Survivals
   $age_at_last_known_survival_status: [Int],
@@ -499,9 +499,9 @@ query diagnosisOverview(
       disease_phase: $disease_phase,
       
       # Studies
-      phs_accession: $phs_accession,
+      dbgap_accession: $dbgap_accession,
       study_acronym: $study_acronym,
-      study_short_title: $study_short_title,
+      study_name: $study_name,
 
       # Survivals
       age_at_last_known_survival_status: $age_at_last_known_survival_status,
@@ -535,7 +535,7 @@ query diagnosisOverview(
 
       # Study
       study_id
-      phs_accession
+      dbgap_accession
 
       __typename
   }
@@ -558,9 +558,9 @@ query studyOverview(
   $disease_phase: [String],
 
   # Studies
-  $phs_accession: [String],
+  $dbgap_accession: [String],
   $study_acronym: [String],
-  $study_short_title: [String],
+  $study_name: [String],
 
   # Survivals
   $age_at_last_known_survival_status: [Int],
@@ -589,9 +589,9 @@ query studyOverview(
       disease_phase: $disease_phase,
       
       # Studies
-      phs_accession: $phs_accession,
+      dbgap_accession: $dbgap_accession,
       study_acronym: $study_acronym,
-      study_short_title: $study_short_title,
+      study_name: $study_name,
 
       # Survivals
       age_at_last_known_survival_status: $age_at_last_known_survival_status,
@@ -609,11 +609,11 @@ query studyOverview(
       consent
       consent_number
       external_url
-      phs_accession
+      dbgap_accession
       study_acronym
       study_description
       study_id
-      study_short_title
+      study_name
 
       __typename
   }
@@ -685,11 +685,11 @@ query participantsAddAllToCart(
     $tumor_classification: [String] ,
     $assay_method: [String],
     $file_type: [String],
-    $phs_accession: [String],
+    $dbgap_accession: [String],
     $grant_id: [String],
     $institution: [String],
     $study_acronym: [String],
-    $study_short_title: [String],
+    $study_name: [String],
     $library_selection: [String],
     $library_source: [String],
     $library_strategy: [String],
@@ -714,11 +714,11 @@ query participantsAddAllToCart(
       tumor_classification: $tumor_classification,
       assay_method: $assay_method,
       file_type: $file_type,
-      phs_accession: $phs_accession,       
+      dbgap_accession: $dbgap_accession,       
       grant_id: $grant_id,
       institution: $institution,
       study_acronym: $study_acronym,
-      study_short_title: $study_short_title,
+      study_name: $study_name,
       library_selection: $library_selection,
       library_source: $library_source,
       library_strategy: $library_strategy,
@@ -749,11 +749,11 @@ export const GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART = gql`
       $tumor_classification: [String] ,
       $assay_method: [String],
       $file_type: [String],
-      $phs_accession: [String],
+      $dbgap_accession: [String],
       $grant_id: [String],
       $institution: [String],
       $study_acronym: [String],
-      $study_short_title: [String],
+      $study_name: [String],
       $library_selection: [String],
       $library_source: [String],
       $library_strategy: [String],
@@ -777,11 +777,11 @@ export const GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART = gql`
           tumor_classification: $tumor_classification,
           assay_method: $assay_method,
           file_type: $file_type,
-          phs_accession: $phs_accession,       
+          dbgap_accession: $dbgap_accession,       
           grant_id: $grant_id,
           institution: $institution,
           study_acronym: $study_acronym,
-          study_short_title: $study_short_title,
+          study_name: $study_name,
           library_selection: $library_selection,
           library_source: $library_source,
           library_strategy: $library_strategy,
@@ -812,11 +812,11 @@ query fileAddAllToCart(
   $tumor_classification: [String] ,
   $assay_method: [String],
   $file_type: [String],
-  $phs_accession: [String],
+  $dbgap_accession: [String],
   $grant_id: [String],
   $institution: [String],
   $study_acronym: [String],
-  $study_short_title: [String],
+  $study_name: [String],
   $library_selection: [String],
   $library_source: [String],
   $library_strategy: [String],
@@ -841,11 +841,11 @@ query fileAddAllToCart(
       tumor_classification: $tumor_classification,
       assay_method: $assay_method,
       file_type: $file_type,
-      phs_accession: $phs_accession,       
+      dbgap_accession: $dbgap_accession,       
       grant_id: $grant_id,
       institution: $institution,
       study_acronym: $study_acronym,
-      study_short_title: $study_short_title,
+      study_name: $study_name,
       library_selection: $library_selection,
       library_source: $library_source,
       library_strategy: $library_strategy,
@@ -876,11 +876,11 @@ query diagnosisAddAllToCart(
   $tumor_classification: [String] ,
   $assay_method: [String],
   $file_type: [String],
-  $phs_accession: [String],
+  $dbgap_accession: [String],
   $grant_id: [String],
   $institution: [String],
   $study_acronym: [String],
-  $study_short_title: [String],
+  $study_name: [String],
   $library_selection: [String],
   $library_source: [String],
   $library_strategy: [String],
@@ -904,11 +904,11 @@ query diagnosisAddAllToCart(
       tumor_classification: $tumor_classification,
       assay_method: $assay_method,
       file_type: $file_type,
-      phs_accession: $phs_accession,       
+      dbgap_accession: $dbgap_accession,       
       grant_id: $grant_id,
       institution: $institution,
       study_acronym: $study_acronym,
-      study_short_title: $study_short_title,
+      study_name: $study_name,
       library_selection: $library_selection,
       library_source: $library_source,
       library_strategy: $library_strategy,
@@ -939,11 +939,11 @@ query studyAddAllToCart(
   $tumor_classification: [String] ,
   $assay_method: [String],
   $file_type: [String],
-  $phs_accession: [String],
+  $dbgap_accession: [String],
   $grant_id: [String],
   $institution: [String],
   $study_acronym: [String],
-  $study_short_title: [String],
+  $study_name: [String],
   $library_selection: [String],
   $library_source: [String],
   $library_strategy: [String],
@@ -967,11 +967,11 @@ query studyAddAllToCart(
       tumor_classification: $tumor_classification,
       assay_method: $assay_method,
       file_type: $file_type,
-      phs_accession: $phs_accession,       
+      dbgap_accession: $dbgap_accession,       
       grant_id: $grant_id,
       institution: $institution,
       study_acronym: $study_acronym,
-      study_short_title: $study_short_title,
+      study_name: $study_name,
       library_selection: $library_selection,
       library_source: $library_source,
       library_strategy: $library_strategy,
@@ -1075,7 +1075,7 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'phs_accession',
+        dataField: 'dbgap_accession',
         header: 'Study Accession',
         display: true,
         tooltipText: 'sort',
@@ -1235,7 +1235,7 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'phs_accession',
+        dataField: 'dbgap_accession',
         header: 'Study Accession',
         display: true,
         tooltipText: 'sort',
@@ -1359,7 +1359,7 @@ export const tabContainers = [
         role: "cellTypes.DISPLAY"
       },
       {
-        dataField: 'phs_accession',
+        dataField: 'dbgap_accession',
         header: 'Study Accession',
         display: true,
         tooltipText: 'sort',
@@ -1383,7 +1383,7 @@ export const tabContainers = [
     dataField: 'dataStudy',
     api: GET_STUDY_OVERVIEW_QUERY,
     paginationAPIField: 'studyOverview',
-    defaultSortField: 'phs_accession',
+    defaultSortField: 'dbgap_accession',
     defaultSortDirection: 'asc',
     count: 'numberOfStudies',
     fileCount: 'studiesFileCount',
@@ -1401,7 +1401,7 @@ export const tabContainers = [
     },
     columns: [
       {
-        dataField: 'phs_accession',
+        dataField: 'dbgap_accession',
         header: 'Study Accession',
         display: true,
         tooltipText: 'sort',
@@ -1426,7 +1426,7 @@ export const tabContainers = [
         role: "cellTypes.DISPLAY"
       },
       {
-        dataField: 'study_short_title',
+        dataField: 'study_name',
         header: 'Study Short Title',
         display: true,
         tooltipText: 'sort',
