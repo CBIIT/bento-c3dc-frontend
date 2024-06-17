@@ -136,13 +136,13 @@ export const table = {
     },
     {
       dataField: 'study_name',
-      header: 'Study Short Title',
+      header: 'Study Name',
       display: true,
       tooltipText: 'sort',
     },
     {
       dataField: 'dbgap_accession',
-      header: 'Study Accession',
+      header: 'DBGAP ACCESSION',
       display: true,
       tooltipText: 'sort',
     },
