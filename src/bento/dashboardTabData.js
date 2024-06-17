@@ -1076,7 +1076,7 @@ export const tabContainers = [
       },
       {
         dataField: 'dbgap_accession',
-        header: 'Study Accession',
+        header: 'Dbgap Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1236,7 +1236,7 @@ export const tabContainers = [
       },
       {
         dataField: 'dbgap_accession',
-        header: 'Study Accession',
+        header: 'Dbgap Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1360,7 +1360,7 @@ export const tabContainers = [
       },
       {
         dataField: 'dbgap_accession',
-        header: 'Study Accession',
+        header: 'Dbgap Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1402,7 +1402,7 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'dbgap_accession',
-        header: 'Study Accession',
+        header: 'Dbgap Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1427,7 +1427,7 @@ export const tabContainers = [
       },
       {
         dataField: 'study_name',
-        header: 'Study Short Title',
+        header: 'Study Name',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,

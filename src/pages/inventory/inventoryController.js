@@ -46,7 +46,7 @@ const getDashData = (states) => {
 
 const InventoryController = ((props) => {
   const { dashData, activeFilters } = getDashData(props);
-
+console.log("ActiveFilter: ", activeFilters);
   if (!dashData) {
     return (<div style={{"height": "1200px","paddingTop": "10px"}}><div style={{"margin": "auto","display": "flex","maxWidth": "1800px"}}><CircularProgress /></div></div>);
   }

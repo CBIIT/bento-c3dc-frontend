@@ -238,7 +238,7 @@ const BentoFacetFilter = ({
     );
   };
 
-  if (activeFilters['phs_accession']) {
+  if (activeFilters['dbgap_accession']) {
     facetSectionVariables['Study'].isExpanded = true;
   }
   

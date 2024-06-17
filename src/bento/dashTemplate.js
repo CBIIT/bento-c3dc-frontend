@@ -330,7 +330,7 @@ export const facetsConfig = [
   },
   {
     section: STUDY,
-    label: 'Study Accession',
+    label: 'DBGAP ACCESSION',
     apiPath: '',
     apiForFiltering: 'filterParticipantCountByDbgapAccession',
     datafield: 'dbgap_accession',
@@ -341,7 +341,7 @@ export const facetsConfig = [
   },
   {
     section: STUDY,
-    label: 'Study Short Title',
+    label: 'Study Name',
     apiPath: '',
     apiForFiltering: 'filterParticipantCountByStudyName',
     datafield: 'study_name',

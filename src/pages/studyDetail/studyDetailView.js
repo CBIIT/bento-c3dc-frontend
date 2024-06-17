@@ -66,7 +66,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
             <div className={classes.headerMainTitle}>
 
               <span className={classes.headerSubStyle}>
-                {'Study Accession: '}
+                {'DBGAP ACCESSION: '}
                 <span>
                   <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.dbgap_accession}`} target='_blank' rel="noreferrer">
                   {studyData.studyDetails.dbgap_accession}
@@ -88,8 +88,8 @@ const StudyDetailView = ({ classes, data, theme }) => {
                 <span className={classes.linkOut} onClick={() => {
 
                   const toggleCheckBoxItem = {
-                    name: studyData.studyDetails.phs_accession,
-                    datafield: 'phs_accession',
+                    name: studyData.studyDetails.dbgap_accession,
+                    datafield: 'dbgap_accession',
                     isChecked: true,
                   }
                   dispatch(toggleCheckBox(toggleCheckBoxItem));
