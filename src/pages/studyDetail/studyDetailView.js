@@ -53,7 +53,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
         <Link className={classes.navLink} to="/home">Home</Link>
         <img src={next} width={25} height={43} alt='greater than symbol' />
         <Link className={classes.navLink} to="/studies">Studies</Link>
-        <img src={next} width={25} height={43} alt='greater than symbol'/>
+        <img src={next} width={25} height={43} alt='greater than symbol' />
         <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.dbgap_accession} `}</p>
       </div>
 
@@ -69,7 +69,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                 {'DBGAP ACCESSION: '}
                 <span>
                   <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.dbgap_accession}`} target='_blank' rel="noreferrer">
-                  {studyData.studyDetails.dbgap_accession}
+                    {studyData.studyDetails.dbgap_accession}
                   </a>
 
                 </span>
@@ -207,10 +207,11 @@ const StudyDetailView = ({ classes, data, theme }) => {
                                     <div className={classes.studyGap}>
                                     </div>
                                     <div>
-                                      <span className={classes.studyDescriptionClass} >
-                                        {' '}
-                                        {studyData.studyDetails[attribute.dataField]}
-                                        {' '}
+                                      <span className={classes.studyDescriptionClass}
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            studyData.studyDetails[attribute.dataField]
+                                        }}>
                                       </span>
                                     </div>
                                   </div>
@@ -657,8 +658,8 @@ const styles = (theme) => ({
     marginTop: '25px',
   },
   linkOut: {
-    textDecoration: 'underline', 
-    borderBottom: 1, 
+    textDecoration: 'underline',
+    borderBottom: 1,
     borderBottomColor: 'white',
     cursor: 'pointer'
   },
