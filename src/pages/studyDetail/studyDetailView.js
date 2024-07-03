@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
 
   Grid,
@@ -8,16 +8,21 @@ import { Link, useNavigate } from 'react-router-dom';
 import openBook from "../../assets/resources/openBook.svg";
 import next from "../../assets/resources/next.svg";
 import Stats from '../../components/Stats/StatsView';
+import CloudDownload from "../../assets/studies/cloud_download.svg";
 import {
-  rightPanel
+  openDoubleLink,
+  rightPanel,
+  studyDetailDownloadLinks
 } from '../../bento/studyDetailData';
 import { toggleCheckBox } from '@bento-core/facet-filter';
 import "./scrollBarConfig.css";
 import { useDispatch } from 'react-redux';
+import Alert from '@material-ui/lab/Alert';
 const StudyDetailView = ({ classes, data, theme }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [error,setError] = useState(false);
+  const [errorMessage,setErrorMessage] = useState("Something Went Wrong");
   const studyData = data;
   const statsData = {
     numberOfDiseases: data.studyDetails.num_diseases,
@@ -53,7 +58,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
         <Link className={classes.navLink} to="/home">Home</Link>
         <img src={next} width={25} height={43} alt='greater than symbol' />
         <Link className={classes.navLink} to="/studies">Studies</Link>
-        <img src={next} width={25} height={43} alt='greater than symbol'/>
+        <img src={next} width={25} height={43} alt='greater than symbol' />
         <p className={classes.navInfo}>{`Study Code ${studyData.studyDetails.dbgap_accession} `}</p>
       </div>
 
@@ -69,7 +74,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                 {'DBGAP ACCESSION: '}
                 <span>
                   <a className={classes.studyIdUrl} href={`https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=${studyData.studyDetails.dbgap_accession}`} target='_blank' rel="noreferrer">
-                  {studyData.studyDetails.dbgap_accession}
+                    {studyData.studyDetails.dbgap_accession}
                   </a>
 
                 </span>
@@ -219,7 +224,31 @@ const StudyDetailView = ({ classes, data, theme }) => {
                     </div>
                   </Grid>
                 ))}
+                {studyDetailDownloadLinks[studyData.studyDetails.dbgap_accession] &&
+                  <div className={classes.downloadSection}>
+                    <p style={{ fontWeight: 'bold', margin: 0, marginRight: 15 }}> Data Files: </p>
+                    <div className={classes.downloadSectionLinks}>
 
+
+
+                      {
+                        Object.keys(studyDetailDownloadLinks[studyData.studyDetails.dbgap_accession]).map((innerKey) =>
+                        (
+                          <span  onClick={()=>{
+                            openDoubleLink(studyDetailDownloadLinks[studyData.studyDetails.dbgap_accession][innerKey],(errorMessage) => {
+                              setErrorMessage(errorMessage);
+                              setError(true); 
+                            })
+                          }} className={classes.LinkStyle} >
+                            {innerKey}
+                          </span>
+                        )
+                        )
+                      }
+
+                    </div>
+                  </div>
+                }
               </Grid>
             </Grid>
 
@@ -257,6 +286,9 @@ const StudyDetailView = ({ classes, data, theme }) => {
       <div className={classes.whiteSpace}>
 
       </div>
+      {error &&
+      <Alert severity="error">{errorMessage}</Alert>
+      }
     </>
   );
 };
@@ -373,6 +405,26 @@ const styles = (theme) => ({
   },
   descriptionGap: {
     height: 20
+  },
+  LinkStyle: {
+    color: "#3156a0",
+    fontFamily: "Inter",
+    cursor: 'pointer',
+    fontWeight: 400,
+    paddingRight: 30,
+    background: `url(${CloudDownload}) right center no-repeat`
+  },
+  downloadSection: {
+    display: 'flex',
+    flexDirection: 'row',
+    margin: 20,
+    alignItems: 'flex-start'
+  },
+  downloadSectionLinks: {
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'hidden',
+    textDecoration: 'underline',
   },
   navInfo: {
     fontSize: 16,
@@ -657,8 +709,8 @@ const styles = (theme) => ({
     marginTop: '25px',
   },
   linkOut: {
-    textDecoration: 'underline', 
-    borderBottom: 1, 
+    textDecoration: 'underline',
+    borderBottom: 1,
     borderBottomColor: 'white',
     cursor: 'pointer'
   },
