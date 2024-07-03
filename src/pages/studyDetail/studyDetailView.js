@@ -212,10 +212,11 @@ const StudyDetailView = ({ classes, data, theme }) => {
                                     <div className={classes.studyGap}>
                                     </div>
                                     <div>
-                                      <span className={classes.studyDescriptionClass} >
-                                        {' '}
-                                        {studyData.studyDetails[attribute.dataField]}
-                                        {' '}
+                                      <span className={classes.studyDescriptionClass}
+                                        dangerouslySetInnerHTML={{
+                                          __html:
+                                            studyData.studyDetails[attribute.dataField]
+                                        }}>
                                       </span>
                                     </div>
                                   </div>
