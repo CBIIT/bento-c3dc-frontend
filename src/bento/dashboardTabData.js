@@ -1076,7 +1076,7 @@ export const tabContainers = [
       },
       {
         dataField: 'dbgap_accession',
-        header: 'Dbgap Accession',
+        header: 'dbGaP Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1236,7 +1236,7 @@ export const tabContainers = [
       },
       {
         dataField: 'dbgap_accession',
-        header: 'Dbgap Accession',
+        header: 'dbGaP Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1360,7 +1360,7 @@ export const tabContainers = [
       },
       {
         dataField: 'dbgap_accession',
-        header: 'Dbgap Accession',
+        header: 'dbGaP Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1402,7 +1402,7 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'dbgap_accession',
-        header: 'Dbgap Accession',
+        header: 'dbGaP Accession',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,

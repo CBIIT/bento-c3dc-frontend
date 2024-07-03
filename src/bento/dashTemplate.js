@@ -330,7 +330,7 @@ export const facetsConfig = [
   },
   {
     section: STUDY,
-    label: 'DBGAP ACCESSION',
+    label: 'dbGaP ACCESSION',
     apiPath: '',
     apiForFiltering: 'filterParticipantCountByDbgapAccession',
     datafield: 'dbgap_accession',

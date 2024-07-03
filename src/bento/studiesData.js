@@ -22,8 +22,8 @@ const table = {
   columns: [
     {
       dataField: 'dbgap_accession',
-      header: 'Dbgap Accession',
-      tooltipText: 'Sort by DBGAP ACCESSION',
+      header: 'dbGaP Accession',
+      tooltipText: 'Sort by dbGaP ACCESSION',
       cellType: cellTypes.LINK,
       linkAttr: {
         rootPath: '',
