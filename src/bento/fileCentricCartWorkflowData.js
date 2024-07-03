@@ -142,7 +142,7 @@ export const table = {
     },
     {
       dataField: 'dbgap_accession',
-      header: 'DBGAP ACCESSION',
+      header: 'dbGaP ACCESSION',
       display: true,
       tooltipText: 'sort',
     },
