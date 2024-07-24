@@ -350,17 +350,6 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
-  {
-    section: STUDY,
-    label: 'Acronym',
-    apiPath: '',
-    apiForFiltering: 'filterParticipantCountByStudyAcronym',
-    datafield: 'study_acronym',
-    field: GROUP,
-    type: InputTypes.CHECKBOX,
-    sort_type: sortType.ALPHABET,
-    show: true,
-  },
 ];
 
 // --------------- Dashboard Widgets configuration --------------
