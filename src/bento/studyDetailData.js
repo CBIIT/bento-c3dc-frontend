@@ -1,5 +1,5 @@
 import gql from 'graphql-tag';
-
+/*
 // --------------- Page title configuration --------------
 const pageTitle = {
   label: 'Program :',
@@ -26,6 +26,7 @@ const aggregateCount = {
 // --------------- Icons configuration --------------
 // Ideal size for programDetailIcon is 107x107 px
 // Ideal size for externalLinkIcon is 16x16 px
+
 const programDetailIcon = {
   src: 'https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/programIcon.svg',
   alt: 'Bento program logo',
@@ -67,6 +68,7 @@ const leftPanel = {
     },
   ],
 };
+*/
 
 // --------------- Right Pannel configuration --------------
 // Ideal size for fileIconSrc is 66x53 px
@@ -101,7 +103,7 @@ const rightPanel = {
     },
   ],
 };
-
+/*
 // --------------- Table configuration --------------
 const table = {
   // Set 'display' to false to hide the table entirely
@@ -140,37 +142,7 @@ const table = {
       header: 'Associated Cases',
     },
   ],
-};
-
-// --------------- GraphQL query - Retrieve program details --------------
-// const GET_PROGRAM_DETAIL_DATA_QUERY = gql`
-// query programDetail($program_id: String!) {
-//   programDetail(program_id: $program_id) {
-//     program_acronym
-//     program_id
-//     program_name
-//     program_full_description
-//     institution_name
-//     program_external_url
-//     num_subjects
-//     num_files
-//     num_samples
-//     num_lab_procedures
-//     disease_subtypes
-//     diagnoses {
-//       group
-//       subjects
-//     }
-//     studies { 
-//       study_name
-//       study_type
-//       study_acronym
-//       study_info
-//       study_full_description
-//       num_subjects
-//     }
-//   }
-// }`;
+};*/
 
 const GET_STUDY_DETAIL_DATA_QUERY = gql`
 query studyDetails($study_id: String) {
@@ -203,17 +175,17 @@ const studyDetailDownloadLinks = {
 
 
 export {
-  pageTitle,
-  pageSubTitle,
-  aggregateCount,
-  programDetailIcon,
-  leftPanel,
+  //pageTitle,
+  //pageSubTitle,
+  //aggregateCount,
+  //programDetailIcon,
+  //leftPanel,
   rightPanel,
-  externalLinkIcon,
-  breadCrumb,
+  //externalLinkIcon,
+  //breadCrumb,
   // GET_PROGRAM_DETAIL_DATA_QUERY,
   GET_STUDY_DETAIL_DATA_QUERY,
-  table,
+  //table,
   studyDetailDownloadLinks
 
 };
