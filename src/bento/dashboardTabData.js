@@ -57,7 +57,6 @@ query search(
 
   # Studies
   $dbgap_accession: [String],
-  $study_acronym: [String],
   $study_name: [String],
 
   # Survivals
@@ -82,7 +81,6 @@ getParticipants(
   
   # Studies
   dbgap_accession: $dbgap_accession,
-  study_acronym: $study_acronym,
   study_name: $study_name,
 
   # Survivals
@@ -184,11 +182,6 @@ getParticipants(
     subjects
     __typename
   }
-  filterParticipantCountByStudyAcronym {
-    group
-    subjects
-    __typename
-  }
   filterParticipantCountByStudyName {
     group
     subjects
@@ -238,7 +231,6 @@ query fileOverview(
     $dbgap_accession: [String],
     $grant_id: [String],
     $institution: [String],
-    $study_acronym: [String],
     $study_name: [String],
     $library_selection: [String],
     $library_source: [String],
@@ -266,7 +258,6 @@ query fileOverview(
         dbgap_accession: $dbgap_accession,       
         grant_id: $grant_id,
         institution: $institution,
-        study_acronym: $study_acronym,
         study_name: $study_name,
         library_selection: $library_selection,
         library_source: $library_source,
@@ -310,7 +301,6 @@ query survivalOverview(
 
   # Studies
   $dbgap_accession: [String],
-  $study_acronym: [String],
   $study_name: [String],
 
   # Survivals
@@ -341,7 +331,6 @@ query survivalOverview(
       
       # Studies
       dbgap_accession: $dbgap_accession,
-      study_acronym: $study_acronym,
       study_name: $study_name,
 
       # Survivals
@@ -392,7 +381,6 @@ query participantOverview(
 
   # Studies
   $dbgap_accession: [String],
-  $study_acronym: [String],
   $study_name: [String],
 
   # Survivals
@@ -423,7 +411,6 @@ query participantOverview(
       
       # Studies
       dbgap_accession: $dbgap_accession,
-      study_acronym: $study_acronym,
       study_name: $study_name,
 
       # Survivals
@@ -469,7 +456,6 @@ query diagnosisOverview(
 
   # Studies
   $dbgap_accession: [String],
-  $study_acronym: [String],
   $study_name: [String],
 
   # Survivals
@@ -500,7 +486,6 @@ query diagnosisOverview(
       
       # Studies
       dbgap_accession: $dbgap_accession,
-      study_acronym: $study_acronym,
       study_name: $study_name,
 
       # Survivals
@@ -559,7 +544,6 @@ query studyOverview(
 
   # Studies
   $dbgap_accession: [String],
-  $study_acronym: [String],
   $study_name: [String],
 
   # Survivals
@@ -590,7 +574,6 @@ query studyOverview(
       
       # Studies
       dbgap_accession: $dbgap_accession,
-      study_acronym: $study_acronym,
       study_name: $study_name,
 
       # Survivals
@@ -610,7 +593,6 @@ query studyOverview(
       consent_number
       external_url
       dbgap_accession
-      study_acronym
       study_description
       study_id
       study_name
@@ -688,7 +670,6 @@ query participantsAddAllToCart(
     $dbgap_accession: [String],
     $grant_id: [String],
     $institution: [String],
-    $study_acronym: [String],
     $study_name: [String],
     $library_selection: [String],
     $library_source: [String],
@@ -717,7 +698,6 @@ query participantsAddAllToCart(
       dbgap_accession: $dbgap_accession,       
       grant_id: $grant_id,
       institution: $institution,
-      study_acronym: $study_acronym,
       study_name: $study_name,
       library_selection: $library_selection,
       library_source: $library_source,
@@ -752,7 +732,6 @@ export const GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART = gql`
       $dbgap_accession: [String],
       $grant_id: [String],
       $institution: [String],
-      $study_acronym: [String],
       $study_name: [String],
       $library_selection: [String],
       $library_source: [String],
@@ -780,7 +759,6 @@ export const GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART = gql`
           dbgap_accession: $dbgap_accession,       
           grant_id: $grant_id,
           institution: $institution,
-          study_acronym: $study_acronym,
           study_name: $study_name,
           library_selection: $library_selection,
           library_source: $library_source,
@@ -815,7 +793,6 @@ query fileAddAllToCart(
   $dbgap_accession: [String],
   $grant_id: [String],
   $institution: [String],
-  $study_acronym: [String],
   $study_name: [String],
   $library_selection: [String],
   $library_source: [String],
@@ -844,7 +821,6 @@ query fileAddAllToCart(
       dbgap_accession: $dbgap_accession,       
       grant_id: $grant_id,
       institution: $institution,
-      study_acronym: $study_acronym,
       study_name: $study_name,
       library_selection: $library_selection,
       library_source: $library_source,
@@ -879,7 +855,6 @@ query diagnosisAddAllToCart(
   $dbgap_accession: [String],
   $grant_id: [String],
   $institution: [String],
-  $study_acronym: [String],
   $study_name: [String],
   $library_selection: [String],
   $library_source: [String],
@@ -907,7 +882,6 @@ query diagnosisAddAllToCart(
       dbgap_accession: $dbgap_accession,       
       grant_id: $grant_id,
       institution: $institution,
-      study_acronym: $study_acronym,
       study_name: $study_name,
       library_selection: $library_selection,
       library_source: $library_source,
@@ -942,7 +916,6 @@ query studyAddAllToCart(
   $dbgap_accession: [String],
   $grant_id: [String],
   $institution: [String],
-  $study_acronym: [String],
   $study_name: [String],
   $library_selection: [String],
   $library_source: [String],
@@ -970,7 +943,6 @@ query studyAddAllToCart(
       dbgap_accession: $dbgap_accession,       
       grant_id: $grant_id,
       institution: $institution,
-      study_acronym: $study_acronym,
       study_name: $study_name,
       library_selection: $library_selection,
       library_source: $library_source,
@@ -1400,13 +1372,6 @@ export const tabContainers = [
       {
         dataField: 'study_name',
         header: 'Study Name',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'study_acronym',
-        header: 'Study Acronym',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
