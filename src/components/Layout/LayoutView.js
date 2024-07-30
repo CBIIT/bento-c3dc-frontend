@@ -16,6 +16,7 @@ import ScrollButton from '../ScrollButton/ScrollButtonView';
 import DataModel from "../../pages/DataModel/dataModel";
 import PdfReader from "../../pages/pdfReader/pdfReader";
 import StudyDetail from "../../pages/studyDetail/studyDetailController";
+import OverlayWindow from "../OverlayWindow/OverlayWindow";
 
 // import NewsDetail from '../../pages/news/newsDetailView';
 
@@ -24,6 +25,7 @@ const Layout = () => {
     <>
       <CssBaseline />
         <Header />
+        <OverlayWindow />
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
