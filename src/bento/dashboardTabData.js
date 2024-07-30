@@ -1040,13 +1040,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'study_id',
-        header: 'Study ID',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
@@ -1200,13 +1193,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'study_id',
-        header: 'Study ID',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
@@ -1324,13 +1310,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: "study_id",
-        header: "Study ID",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
-      },
-      {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
@@ -1382,13 +1361,6 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
-      },
-      {
-        dataField: "study_id",
-        header: "Study ID",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
       },
       {
         dataField: "acl",
