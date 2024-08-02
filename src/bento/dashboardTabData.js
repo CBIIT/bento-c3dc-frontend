@@ -348,7 +348,6 @@ query survivalOverview(
       participant_id
 
       # Study
-      study_id
       dbgap_accession
 
       # Survival
@@ -432,7 +431,6 @@ query participantOverview(
 
       # Studies
       dbgap_accession
-      study_id
 
       __typename
   }
@@ -519,7 +517,6 @@ query diagnosisOverview(
       participant_id
 
       # Study
-      study_id
       dbgap_accession
 
       __typename
