@@ -8,6 +8,8 @@ const DIAGNOSIS = 'Diagnosis';
 const STUDY = 'Study';
 const SURVIVAL = 'Survival';
 const GROUP = 'group';
+const TREATMENT = 'Treatment';
+const TREATMENTRESPONSE = 'Treatmentresponse';
 
 // --------------- Facet resetIcon link configuration --------------
 // Ideal size for resetIcon is 16x16 px
@@ -20,7 +22,7 @@ export const resetIcon = {
 };
 
 export const sectionLabel = {
-  Datacategory: "Data Category",
+  Treatmentresponse: "Treatment Response",
 };
 
 // --------------- Dashboard Sidebar Sections styling --------------
@@ -36,6 +38,12 @@ export const facetSectionVariables = {
     isExpanded: false,
   },
   Survival: {
+    isExpanded: false,
+  },
+  Treatment: {
+    isExpanded: false,
+  },
+  Treatmentresponse: {
     isExpanded: false,
   },
 };
@@ -350,6 +358,113 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
+  {
+    section: TREATMENT,
+    label: 'Age at Treatment Start',
+    apiPath: 'filterParticipantCountByAgeAtTreatmentStart',
+    apiForFiltering: 'filterParticipantCountByAgeAtTreatmentStart',
+    datafield: 'age_at_treatment_start',
+    ApiLowerBoundName: 'lowerBound',
+    ApiUpperBoundName: 'upperBound',
+    show: true,
+    slider: true,
+    type: InputTypes.SLIDER,
+    sort_type: 'none',
+    minLowerBound: 0,
+    maxUpperBound: 100,
+    quantifier: 'Days',
+    style: sliderStyles,
+  },
+  {
+    section: TREATMENT,
+    label: 'Age at Treatment End',
+    apiPath: 'filterParticipantCountByAgeAtTreatmentEnd',
+    apiForFiltering: 'filterParticipantCountByAgeAtTreatmentEnd',
+    datafield: 'age_at_treatment_end',
+    ApiLowerBoundName: 'lowerBound',
+    ApiUpperBoundName: 'upperBound',
+    show: true,
+    slider: true,
+    type: InputTypes.SLIDER,
+    sort_type: 'none',
+    minLowerBound: 0,
+    maxUpperBound: 100,
+    quantifier: 'Days',
+    style: sliderStyles,
+  },
+  {
+    section: TREATMENT,
+    label: 'Treatment Type',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByTreatmentType',
+    datafield: 'treatment_type',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: TREATMENT,
+    label: 'Treatment Agent',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByTreatmentAgent',
+    datafield: 'treatment_agent',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: TREATMENTRESPONSE,
+    label: 'Response',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByResponse',
+    datafield: 'response',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: TREATMENTRESPONSE,
+    label: 'Age at Response',
+    apiPath: 'filterParticipantCountByAgeAtResponse',
+    apiForFiltering: 'filterParticipantCountByAgeAtResponse',
+    datafield: 'age_at_response',
+    ApiLowerBoundName: 'lowerBound',
+    ApiUpperBoundName: 'upperBound',
+    show: true,
+    slider: true,
+    type: InputTypes.SLIDER,
+    sort_type: 'none',
+    minLowerBound: 0,
+    maxUpperBound: 100,
+    quantifier: 'Days',
+    style: sliderStyles,
+  },
+  {
+    section: TREATMENTRESPONSE,
+    label: 'Response Category',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByResponseCategory',
+    datafield: 'response_category',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: TREATMENTRESPONSE,
+    label: 'Response System',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByResponseSystem',
+    datafield: 'response_system',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+
 ];
 
 // --------------- Dashboard Widgets configuration --------------

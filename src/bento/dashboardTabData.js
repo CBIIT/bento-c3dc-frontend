@@ -88,124 +88,172 @@ getParticipants(
   first_event: $first_event,
   last_known_survival_status: $last_known_survival_status
 ) {
-  numberOfParticipants
-  numberOfDiagnoses
-  numberOfDiseases
-  numberOfStudies
-  numberOfSurvivals
+    numberOfParticipants
+    numberOfDiagnoses
+    numberOfDiseases
+    numberOfStudies
+    numberOfSurvivals
 
-  # Widget counts
-  participantCountByEthnicity {
-    group
-    subjects
-    __typename
-  }
-  participantCountByRace {
-    group
-    subjects
-    __typename
-  }
-  participantCountBySexAtBirth {
-    group
-    subjects
-    __typename
-  }
-  participantCountByAgeAtDiagnosis {
-    group
-    subjects
-    __typename
-  }
-  participantCountByAnatomicSite {
-    group
-    subjects
-    __typename
-  }
-  participantCountByDiagnosis {
-    group
-    subjects
-    __typename
-  }
+    # Widget counts
+    participantCountByEthnicity {
+      group
+      subjects
+      __typename
+    }
+    participantCountByRace {
+      group
+      subjects
+      __typename
+    }
+    participantCountBySexAtBirth {
+      group
+      subjects
+      __typename
+    }
+    participantCountByAgeAtDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    participantCountByAnatomicSite {
+      group
+      subjects
+      __typename
+    }
+    participantCountByDiagnosis {
+      group
+      subjects
+      __typename
+    }
 
-  # Demographic filter counts
-  filterParticipantCountByEthnicity {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByRace {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountBySexAtBirth {
-    group
-    subjects
-    __typename
-  }
+    # Demographic filter counts
+    filterParticipantCountByEthnicity {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByRace {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountBySexAtBirth {
+      group
+      subjects
+      __typename
+    }
 
-  # Diagnosis filter counts
-  filterParticipantCountByAgeAtDiagnosis {
-    lowerBound
-    upperBound
-    subjects
-    __typename
-  }
-  filterParticipantCountByAnatomicSite {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByDiagnosis {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByDiagnosisClassificationSystem {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByDiagnosisBasis {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByDiseasePhase {
-    group
-    subjects
-    __typename
-  }
+    # Diagnosis filter counts
+    filterParticipantCountByAgeAtDiagnosis {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByAnatomicSite {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosisClassificationSystem {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosisBasis {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiseasePhase {
+      group
+      subjects
+      __typename
+    }
 
-  # Study filter counts
-  filterParticipantCountByDbgapAccession {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByStudyName {
-    group
-    subjects
-    __typename
-  }
+    # Study filter counts
+    filterParticipantCountByDbgapAccession {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByStudyName {
+      group
+      subjects
+      __typename
+    }
 
-  # Survival filter counts
-  filterParticipantCountByAgeAtLastKnownSurvivalStatus {
-    lowerBound
-    upperBound
-    subjects
+    # Survival filter counts
+    filterParticipantCountByAgeAtLastKnownSurvivalStatus {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByFirstEvent {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByLastKnownSurvivalStatus {
+      group
+      subjects
+      __typename
+    }
+
+    # Treatment filter counts
+    filterParticipantCountByAgeAtTreatmentStart {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByAgeAtTreatmentEnd {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByTreatmentType {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByTreatmentAgent {
+      group
+      subjects
+      __typename
+    }
+
+    # Treatment Response filter counts
+    filterParticipantCountByResponse {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByAgeAtResponse {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByResponseCategory {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByResponseSystem {
+      group
+      subjects
+      __typename
+    }
+
     __typename
-  }
-  filterParticipantCountByFirstEvent {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByLastKnownSurvivalStatus {
-    group
-    subjects
-    __typename
-  }
-  __typename
 }
 }
 

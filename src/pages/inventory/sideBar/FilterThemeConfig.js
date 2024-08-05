@@ -67,6 +67,18 @@ const theme = {
         '&.studyCheckedOdd': {
           backgroundColor: '#D3BFE8',
         },
+        '&.treatmentCheckedEven': {
+          backgroundColor: '#E9F5F3',
+        },
+        '&.treatmentCheckedOdd': {
+          backgroundColor: '#E0ECEA',
+        },
+        '&.treatmentresponseCheckedEven': {
+          backgroundColor: '#FFF6F3',
+        },
+        '&.treatmentresponseCheckedOdd': {
+          backgroundColor: '#FFEDE7',
+        },
       },
     },
     MuiListItemText: {
@@ -102,6 +114,12 @@ const theme = {
         },
         '&.divider3': {
           backgroundColor: '#9664C7',
+        },
+        '&.divider4': {
+          backgroundColor: '#006B57',
+        },
+        '&.divider5': {
+          backgroundColor: '#862405',
         },
       },
     },

@@ -95,6 +95,7 @@ export  const customStyles = {
     localFindBackground: {
       backgroundColor: '#E4ECE9',
     },
+    /*
     facetSectionCases: {
       color: '#7AA6B6',
     },
@@ -106,31 +107,52 @@ export  const customStyles = {
     },
     facetSectionFilesBackground: {
       backgroundColor: '#F5C3F1',
-    },
+    },*/
     facetSectionDemographics: {
       color: '#006A8F',
     },
     facetSectionDemographicsBackground: {
       backgroundColor: '#E2F1F5',
-      border: '1px solid #646464',
+      border: '2px solid #646464',
     },
     facetSectionDiagnosis: {
       color: '#794900',
     },
     facetSectionDiagnosisBackground: {
       backgroundColor: '#FFF2DF',
-      border: '1px solid #646464',
+      border: '2px solid #646464',
+    },
+    facetSectionSurvival: {
+      color: '#008566',
     },
     facetSectionSurvivalBackground: {
-      border: '1px solid #646464',
-      textTransform: 'uppercase',
-      padding: '3px 6px 3px 6px',
-      borderRadius: 4,
-      fontSize: 12,
-      fontWeight: 600,
-      cursor: 'pointer',
       backgroundColor: '#E6FFF9',
+      border: '2px solid #646464',
     },
+    facetSectionStudy: {
+      color: '#501166',
+    },
+    facetSectionStudyBackground: {
+      backgroundColor: '#F6F0FB',
+      border: '2px solid #646464',
+    },
+    facetSectionTreatment: {
+      color: '#00614F',
+    },
+    facetSectionTreatmentBackground: {
+      backgroundColor: '##E0ECEA',
+      border: '2px solid #646464',
+    },
+    facetSectionTreatmentresponse: {
+      color: '#862405',
+    },
+    facetSectionTreatmentresponseBackground: {
+      backgroundColor: '#FFEDE7',
+      border: '2px solid #646464',
+    },
+    
+
+    /*
     facetSectionSamples: {
       color: '#907642',
     },
@@ -145,19 +167,13 @@ export  const customStyles = {
       backgroundColor: '#F8D7D240',
       border: '1px solid #646464',
     },
-    facetSectionStudy: {
-      color: '#501166',
-    },
-    facetSectionStudyBackground: {
-      backgroundColor: '#F6F0FB',
-      border: '1px solid #646464',
-    },
+
     facetSectionLibrary: {
       color: '#14A773',
     },
     facetSectionLibraryBackground: {
       backgroundColor: '#DDEAE540',
       border: '1px solid #646464',
-    },
+    },*/
   }
   
