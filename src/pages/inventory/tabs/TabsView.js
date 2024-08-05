@@ -19,9 +19,9 @@ const Tabs = (props) => {
     name: tab.name,
     hasToolTip: true,
     toolTipText: tab.toolTipText,
-    count: `(${props.dashboardStats[tab.count].toLocaleString()})`,
-    display: [tab.name, props.dashboardStats[tab.count].toLocaleString()],
-    clsName: `${tab.name}`.toLowerCase().replace(' ', '_'),
+    count: tab.count != "none" ? `(${props.dashboardStats[tab.count].toLocaleString()})` : "(NAN)",
+    display: tab.count != "none" ?  [tab.name, props.dashboardStats[tab.count].toLocaleString()] :"NAN",
+    clsName:  `${tab.name}`.toLowerCase().replace(' ', '_') ,
     tooltipStyles: {border: '1px solid #2D5380', arrowBorder: '1px solid #598AC5'}
   }));
 
