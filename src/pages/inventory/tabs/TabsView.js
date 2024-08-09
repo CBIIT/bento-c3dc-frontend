@@ -5,7 +5,7 @@ import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
 
 const Tabs = (props) => {
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = tabContainers.length > 0 ? useState(1) : useState(0);
   const handleTabChange = (event, value) => {
     setCurrentTab(value);
   };
