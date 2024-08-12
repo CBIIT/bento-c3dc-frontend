@@ -689,7 +689,7 @@ query treatmentOverview(
         age_at_treatment_end
         treatment_type
         treatment_agent
-
+        dbgap_accession
         __typename
     }
 }`;
@@ -790,7 +790,7 @@ treatmentResponseOverview(
     age_at_response
     response_category
     response_system
-
+dbgap_accession
     __typename
 }}`;
 
@@ -1563,7 +1563,7 @@ export const tabContainers = [
               role: "cellTypes.DISPLAY"
           },
           {
-              ddataField: 'dbgap_accession',
+              dataField: 'dbgap_accession',
               header: 'dbGaP Accession',
               display: true,
               tooltipText: 'sort',
@@ -1647,14 +1647,14 @@ export const tabContainers = [
               role: "cellTypes.DISPLAY"
           },
           {
-              dataField: "response_systme",
+              dataField: "response_system",
               header: "Response System",
               display: true,
               tooltipText: "sort",
               role: "cellTypes.DISPLAY"
           },
           {
-              ddataField: 'dbgap_accession',
+              dataField: 'dbgap_accession',
               header: 'dbGaP Accession',
               display: true,
               tooltipText: 'sort',
