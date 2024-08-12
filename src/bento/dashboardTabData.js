@@ -119,7 +119,8 @@ getParticipants(
     numberOfDiseases
     numberOfStudies
     numberOfSurvivals
-
+    numberOfTreatments
+    numberOfTreatmentResponses
 
     # Widget counts
     participantCountByEthnicity {
