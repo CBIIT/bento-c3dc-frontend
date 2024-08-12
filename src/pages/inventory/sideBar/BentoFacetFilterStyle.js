@@ -122,20 +122,28 @@ export default () => ({
     fontSize: '14px',
     marginRight: '0px',
   },
-  activeFacetDemographics: {
+  activeFacetStudy: {
     color: '#006A8F',
     fontWeight: 600,
   },
-  activeFacetDiagnosis: {
+  activeFacetDemographics: {
     color: '#794900',
     fontWeight: 600,
   },
-  activeFacetSurvival: {
+  activeFacetDiagnosis: {
     color: '#008566',
     fontWeight: 600,
   },
-  activeFacetStudy: {
+  activeFacetTreatment: {
     color: '#6B2DA7',
+    fontWeight: 600,
+  },
+  activeFacetTreatmentresponse: {
+    color: '#006B57',
+    fontWeight: 600,
+  },
+  activeFacetSurvival: {
+    color: '#862405',
     fontWeight: 600,
   },
   searchContainer: {

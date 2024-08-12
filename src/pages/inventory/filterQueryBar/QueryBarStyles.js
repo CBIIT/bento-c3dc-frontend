@@ -108,45 +108,45 @@ export  const customStyles = {
     facetSectionFilesBackground: {
       backgroundColor: '#F5C3F1',
     },*/
-    facetSectionDemographics: {
+    facetSectionStudy: {
       color: '#006A8F',
     },
-    facetSectionDemographicsBackground: {
+    facetSectionStudyBackground: {
       backgroundColor: '#E2F1F5',
       border: '2px solid #646464',
     },
-    facetSectionDiagnosis: {
+    facetSectionDemographics: {
       color: '#794900',
     },
-    facetSectionDiagnosisBackground: {
+    facetSectionDemographicsBackground: {
       backgroundColor: '#FFF2DF',
       border: '2px solid #646464',
     },
-    facetSectionSurvival: {
+    facetSectionDiagnosis: {
       color: '#008566',
     },
-    facetSectionSurvivalBackground: {
+    facetSectionDiagnosisBackground: {
       backgroundColor: '#E6FFF9',
       border: '2px solid #646464',
     },
-    facetSectionStudy: {
+    facetSectionTreatment: {
       color: '#501166',
     },
-    facetSectionStudyBackground: {
+    facetSectionTreatmentBackground: {
       backgroundColor: '#F6F0FB',
       border: '2px solid #646464',
     },
-    facetSectionTreatment: {
+    facetSectionTreatmentresponse: {
       color: '#00614F',
     },
-    facetSectionTreatmentBackground: {
+    facetSectionTreatmentresponseBackground: {
       backgroundColor: '##E0ECEA',
       border: '2px solid #646464',
     },
-    facetSectionTreatmentresponse: {
+    facetSectionSurvival: {
       color: '#862405',
     },
-    facetSectionTreatmentresponseBackground: {
+    facetSectionSurvivalBackground: {
       backgroundColor: '#FFEDE7',
       border: '2px solid #646464',
     },
