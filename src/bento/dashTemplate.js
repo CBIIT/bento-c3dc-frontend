@@ -496,12 +496,6 @@ export const widgetConfig = [
     chartTitleAlignment: 'center'
   },
   {
-    type: 'donut',
-    title: 'Ethnicity',
-    dataName: 'participantCountByEthnicity',
-    sliceTitle: 'Participants',
-  },
-  {
     type: 'bar',
     title: 'Sex at Birth',
     dataName: 'participantCountBySexAtBirth',

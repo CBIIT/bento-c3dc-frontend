@@ -13,7 +13,7 @@ query participantOverViewPaged($participant_ids: [String], $offset: Int = 0, $fi
 
 export const customParticipantsTabDownloadCSV = {
   keysToInclude: ['participant_id', 'dbgap_accession', 'race', 'gender'],
-  header: ['Participant ID', 'dbGaP ACCESSION', 'Race', 'Gender', 'Ethnicity'],
+  header: ['Participant ID', 'dbGaP ACCESSION', 'Race', 'Gender'],
   query: GET_PARTICIPANTS_TAB,
   apiVariable: 'participantOverView',
   fileName: 'tableDownload',
