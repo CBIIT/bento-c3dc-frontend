@@ -226,17 +226,6 @@ export const facetsConfig = [
     show: true,
   },
   {
-    section: DEMOGRAPHICS,
-    label: 'Ethnicity',
-    apiPath: 'participantCountByEthnicity',
-    apiForFiltering: 'filterParticipantCountByEthnicity',
-    datafield: 'ethnicity',
-    field: GROUP,
-    type: InputTypes.CHECKBOX,
-    sort_type: sortType.ALPHABET,
-    show: true,
-  },
-  {
     section: DIAGNOSIS,
     label: 'Age at Diagnosis (days)',
     apiPath: 'filterParticipantCountByAgeAtDiagnosis',

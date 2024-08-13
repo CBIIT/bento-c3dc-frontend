@@ -7,13 +7,12 @@ query participantOverViewPaged($participant_ids: [String], $offset: Int = 0, $fi
     dbgap_accession
     race
     gender
-    ethnicity
   }
 }
 `;
 
 export const customParticipantsTabDownloadCSV = {
-  keysToInclude: ['participant_id', 'dbgap_accession', 'race', 'gender', 'ethnicity'],
+  keysToInclude: ['participant_id', 'dbgap_accession', 'race', 'gender'],
   header: ['Participant ID', 'dbGaP ACCESSION', 'Race', 'Gender', 'Ethnicity'],
   query: GET_PARTICIPANTS_TAB,
   apiVariable: 'participantOverView',
