@@ -39,8 +39,6 @@ export const externalLinkIcon = {
 };
 
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
-    //numberOfTreatments
-    //numberOfTreatmentResponses
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
     # Demographics
