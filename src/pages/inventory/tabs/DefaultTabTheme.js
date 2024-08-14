@@ -31,32 +31,32 @@ export const customTheme = {
         '&.participants': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #006A8F',
+          borderTop: '6px solid #E39520',
         },
         '&.diagnosis': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #E39520',
+          borderTop: '6px solid #35B899',
         },
         '&.survival': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #35B899',
+          borderTop: '6px solid #862405',
         },
         '&.studies': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #9664C7',
+          borderTop: '6px solid #006A8F',
         },
         '&.treatment': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #00614F',
+          borderTop: '6px solid #9664C7',
         },
         '&.treatment_response': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #862405',
+          borderTop: '6px solid #006B57',
         },
         },
         '&.MuiTypography-body1': {

@@ -43,65 +43,85 @@ export const DASHBOARD_QUERY_NEW = gql`
 query search(
   # Demographics
   $participant_ids: [String],
-  $ethnicity: [String],
   $race: [String],
   $sex_at_birth: [String],
 
-  # Diagnoses
-  $age_at_diagnosis: [Int],
-  $anatomic_site: [String],
-  $diagnosis: [String],
-  $diagnosis_classification_system: [String],
-  $diagnosis_basis: [String],
-  $disease_phase: [String],
+    # Diagnoses
+    $age_at_diagnosis: [Int],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
 
-  # Studies
-  $dbgap_accession: [String],
-  $study_name: [String],
+    # Studies
+    $dbgap_accession: [String],
+    $study_name: [String],
 
-  # Survivals
-  $age_at_last_known_survival_status: [Int],
-  $first_event: [String],
-  $last_known_survival_status: [String]
+    # Survivals
+    $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
+    # Treatments
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
+    # Treatment Responses
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String]
 ) {
 getParticipants(
   # Demographics
   participant_ids: $participant_ids,
-  ethnicity: $ethnicity,
   race: $race,
   sex_at_birth: $sex_at_birth,
 
-  # Diagnoses
-  age_at_diagnosis: $age_at_diagnosis,
-  anatomic_site: $anatomic_site,
-  diagnosis: $diagnosis,
-  diagnosis_classification_system: $diagnosis_classification_system,
-  diagnosis_basis: $diagnosis_basis,
-  disease_phase: $disease_phase,
-  
-  # Studies
-  dbgap_accession: $dbgap_accession,
-  study_name: $study_name,
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-  # Survivals
-  age_at_last_known_survival_status: $age_at_last_known_survival_status,
-  first_event: $first_event,
-  last_known_survival_status: $last_known_survival_status
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
+
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
+
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system
 ) {
-  numberOfParticipants
-  numberOfDiagnoses
-  numberOfDiseases
-  numberOfStudies
-  numberOfSurvivals
-  numberOfTreatments
-  numberOfTreatmentResponses
+    numberOfParticipants
+    numberOfDiagnoses
+    numberOfDiseases
+    numberOfStudies
+    numberOfSurvivals
+    numberOfTreatments
+    numberOfTreatmentResponses
 
   # Widget counts
-  participantCountByEthnicity {
-    group
-    subjects
-    __typename
-  }
+ 
   participantCountByRace {
     group
     subjects
@@ -128,12 +148,7 @@ getParticipants(
     __typename
   }
 
-  # Demographic filter counts
-  filterParticipantCountByEthnicity {
-    group
-    subjects
-    __typename
-  }
+
   filterParticipantCountByRace {
     group
     subjects
@@ -145,72 +160,129 @@ getParticipants(
     __typename
   }
 
-  # Diagnosis filter counts
-  filterParticipantCountByAgeAtDiagnosis {
-    lowerBound
-    upperBound
-    subjects
-    __typename
-  }
-  filterParticipantCountByAnatomicSite {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByDiagnosis {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByDiagnosisClassificationSystem {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByDiagnosisBasis {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByDiseasePhase {
+    # Diagnosis filter counts
+    filterParticipantCountByAgeAtDiagnosis {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByAnatomicSite {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosisClassificationSystem {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosisBasis {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiseasePhase {
+      group
+      subjects
+      __typename
+    }
+
+    # Study filter counts
+    filterParticipantCountByDbgapAccession {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByStudyName {
+      group
+      subjects
+      __typename
+    }
+
+    # Survival filter counts
+    filterParticipantCountByAgeAtLastKnownSurvivalStatus {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByCauseOfDeath {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByFirstEvent {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByLastKnownSurvivalStatus {
+      group
+      subjects
+      __typename
+    }
+  
+ filterParticipantCountByCauseOfDeath {
     group
     subjects
     __typename
   }
 
-  # Study filter counts
-  filterParticipantCountByDbgapAccession {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByStudyName {
-    group
-    subjects
-    __typename
-  }
+    # Treatment filter counts
+    filterParticipantCountByAgeAtTreatmentStart {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByAgeAtTreatmentEnd {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByTreatmentType {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByTreatmentAgent {
+      group
+      subjects
+      __typename
+    }
 
-  # Survival filter counts
-  filterParticipantCountByAgeAtLastKnownSurvivalStatus {
-    lowerBound
-    upperBound
-    subjects
-    __typename
-  }
-  filterParticipantCountByFirstEvent {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountByLastKnownSurvivalStatus {
-    group
-    subjects
-    __typename
-  }
-  __typename
-}
-}
+    # Treatment Response filter counts
+    filterParticipantCountByResponse {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByAgeAtResponse {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByResponseCategory {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByResponseSystem {
+      group
+      subjects
+      __typename
+    }
 
+    __typename
+}}
 `;
 
 export const GET_FILES_OVERVIEW_QUERY = gql`
@@ -218,7 +290,6 @@ query fileOverview(
     $participant_ids: [String],
     $gender: [String] ,
     $race: [String] ,
-    $ethnicity: [String] ,
     $age_at_diagnosis: [Int] ,
     $diagnosis_anatomic_site: [String] ,
     $disease_phase: [String] ,
@@ -245,7 +316,6 @@ query fileOverview(
         participant_ids: $participant_ids,
         gender: $gender,
         race: $race,
-        ethnicity: $ethnicity,
         age_at_diagnosis: $age_at_diagnosis,
         diagnosis_anatomic_site: $diagnosis_anatomic_site,
         disease_phase: $disease_phase,
@@ -285,140 +355,184 @@ query fileOverview(
 }
 `;
 
-export const GET_SURVIVAL_OVERVIEW_QUERY = gql`
-query survivalOverview(
-  # Demographics
-  $participant_ids: [String],
-  $ethnicity: [String],
-  $race: [String],
-  $sex_at_birth: [String],
+export const GET_SURVIVAL_OVERVIEW_QUERY = gql
+  `query survivalOverview(
+    # Demographics
+    $participant_ids: [String],
+    $race: [String],
+    $sex_at_birth: [String],
 
-  # Diagnoses
-  $age_at_diagnosis: [Int],
-  $anatomic_site: [String],
-  $diagnosis: [String],
-  $diagnosis_classification_system: [String],
-  $diagnosis_basis: [String],
-  $disease_phase: [String],
+    # Diagnoses
+    $age_at_diagnosis: [Int],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
 
-  # Studies
-  $dbgap_accession: [String],
-  $study_name: [String],
+    # Studies
+    $dbgap_accession: [String],
+    $study_name: [String],
 
-  # Survivals
-  $age_at_last_known_survival_status: [Int],
-  $first_event: [String],
-  $last_known_survival_status: [String]
+    # Survivals
+    $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
 
-  # Table config
-  $first: Int,
-  $offset: Int,
-  $order_by: String,
-  $sort_direction: String
+    # Treatments
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
+    # Treatment Responses
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String],
+
+    # Table config
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
+    $sort_direction: String
+    # Table config
 ) {
-  survivalOverview(
-      # Demographics
-      participant_ids: $participant_ids,
-      ethnicity: $ethnicity,
-      race: $race,
-      sex_at_birth: $sex_at_birth,
+survivalOverview(
+    # Demographics
+    participant_ids: $participant_ids,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis,
-      anatomic_site: $anatomic_site,
-      diagnosis: $diagnosis,
-      diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_basis: $diagnosis_basis,
-      disease_phase: $disease_phase,
-      
-      # Studies
-      dbgap_accession: $dbgap_accession,
-      study_name: $study_name,
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status,
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status,
-      first_event: $first_event,
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Table config
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-  ) {
-      # Participant
-      participant_id
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system,
+   
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+) {
+    # Participant
+    participant_id
 
-      # Study
-      study_id
-      dbgap_accession
-
-      # Survival
-      age_at_event_free_survival_status
-      age_at_last_known_survival_status
-      event_free_survival_status
-      first_event
-      last_known_survival_status
-      survival_id
-
-      __typename
-  }
-}`;
+    # Study
+    dbgap_accession
+    # Survival
+    age_at_last_known_survival_status
+    cause_of_death
+    first_event
+    last_known_survival_status
+    __typename
+}}
+`;
 
 export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
 query participantOverview(
   # Demographics
   $participant_ids: [String],
-  $ethnicity: [String],
   $race: [String],
   $sex_at_birth: [String],
+ 
 
-  # Diagnoses
-  $age_at_diagnosis: [Int],
-  $anatomic_site: [String],
-  $diagnosis: [String],
-  $diagnosis_classification_system: [String],
-  $diagnosis_basis: [String],
-  $disease_phase: [String],
+    # Diagnoses
+    $age_at_diagnosis: [Int],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
 
-  # Studies
-  $dbgap_accession: [String],
-  $study_name: [String],
+    # Studies
+    $dbgap_accession: [String],
+    $study_name: [String],
 
-  # Survivals
-  $age_at_last_known_survival_status: [Int],
-  $first_event: [String],
-  $last_known_survival_status: [String]
+    # Survivals
+    $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
 
-  # Table config
-  $first: Int,
-  $offset: Int,
-  $order_by: String,
-  $sort_direction: String
+    # Treatments
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
+    # Treatment Responses
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String],
+
+    # Table config
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
+    $sort_direction: String
 ) {
   participantOverview(
       # Demographics
       participant_ids: $participant_ids,
-      ethnicity: $ethnicity,
       race: $race,
       sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis,
-      anatomic_site: $anatomic_site,
-      diagnosis: $diagnosis,
-      diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_basis: $diagnosis_basis,
-      disease_phase: $disease_phase,
-      
-      # Studies
-      dbgap_accession: $dbgap_accession,
-      study_name: $study_name,
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status,
-      first_event: $first_event,
-      last_known_survival_status: $last_known_survival_status
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status,
+
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
+
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system,
 
       # Table config
       first: $first,
@@ -427,7 +541,6 @@ query participantOverview(
       sort_direction: $sort_direction
   ) {
       # Participants
-      ethnicity
       participant_id
       race
       sex_at_birth
@@ -444,144 +557,184 @@ export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
 query diagnosisOverview(
   # Demographics
   $participant_ids: [String],
-  $ethnicity: [String],
   $race: [String],
   $sex_at_birth: [String],
 
-  # Diagnoses
-  $age_at_diagnosis: [Int],
-  $anatomic_site: [String],
-  $diagnosis: [String],
-  $diagnosis_classification_system: [String],
-  $diagnosis_basis: [String],
-  $disease_phase: [String],
+    # Diagnoses
+    $age_at_diagnosis: [Int],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
 
-  # Studies
-  $dbgap_accession: [String],
-  $study_name: [String],
+    # Studies
+    $dbgap_accession: [String],
+    $study_name: [String],
 
-  # Survivals
-  $age_at_last_known_survival_status: [Int],
-  $first_event: [String],
-  $last_known_survival_status: [String]
+    # Survivals
+    $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
 
-  # Table config
-  $first: Int,
-  $offset: Int,
-  $order_by: String,
-  $sort_direction: String
+    # Treatments
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
+    # Treatment Responses
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String],
+
+    # Table config
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
+    $sort_direction: String
 ) {
   diagnosisOverview(
       # Demographics
       participant_ids: $participant_ids,
-      ethnicity: $ethnicity,
       race: $race,
       sex_at_birth: $sex_at_birth,
-
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis,
-      anatomic_site: $anatomic_site,
-      diagnosis: $diagnosis,
-      diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_basis: $diagnosis_basis,
-      disease_phase: $disease_phase,
       
-      # Studies
-      dbgap_accession: $dbgap_accession,
-      study_name: $study_name,
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status,
-      first_event: $first_event,
-      last_known_survival_status: $last_known_survival_status
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Table config
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-  ) {
-      # Diagnosis
-      age_at_diagnosis
-      anatomic_site
-      diagnosis_basis
-      diagnosis
-      diagnosis_classification_system
-      diagnosis_comment
-      diagnosis_id
-      disease_phase
-      toronto_childhood_cancer_staging
-      tumor_classification
-      tumor_grade
-      tumor_stage_clinical_m
-      tumor_stage_clinical_n
-      tumor_stage_clinical_t
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Participants
-      participant_id
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Study
-      study_id
-      dbgap_accession
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system,
 
-      __typename
-  }
-}`;
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+) {
+    # Demographics
+    participant_id
+
+    # Diagnosis
+    age_at_diagnosis
+    anatomic_site
+    diagnosis_basis
+    diagnosis
+    diagnosis_classification_system
+    disease_phase
+    tumor_classification
+
+    # Study
+    dbgap_accession
+    __typename
+}}
+`;
 
 export const GET_STUDY_OVERVIEW_QUERY = gql`
 query studyOverview(
   # Demographics
   $participant_ids: [String],
-  $ethnicity: [String],
   $race: [String],
   $sex_at_birth: [String],
 
-  # Diagnoses
-  $age_at_diagnosis: [Int],
-  $anatomic_site: [String],
-  $diagnosis: [String],
-  $diagnosis_classification_system: [String],
-  $diagnosis_basis: [String],
-  $disease_phase: [String],
+    # Diagnoses
+    $age_at_diagnosis: [Int],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
 
-  # Studies
-  $dbgap_accession: [String],
-  $study_name: [String],
+    # Studies
+    $dbgap_accession: [String],
+    $study_name: [String],
 
-  # Survivals
-  $age_at_last_known_survival_status: [Int],
-  $first_event: [String],
-  $last_known_survival_status: [String]
+    # Survivals
+    $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
 
-  # Table config
-  $first: Int,
-  $offset: Int,
-  $order_by: String,
-  $sort_direction: String
+    # Treatments
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
+    # Treatment Responses
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String],
+
+    # Table config
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
+    $sort_direction: String
 ) {
   studyOverview(
       # Demographics
       participant_ids: $participant_ids,
-      ethnicity: $ethnicity,
       race: $race,
       sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis,
-      anatomic_site: $anatomic_site,
-      diagnosis: $diagnosis,
-      diagnosis_classification_system: $diagnosis_classification_system,
-      diagnosis_basis: $diagnosis_basis,
-      disease_phase: $disease_phase,
-      
-      # Studies
-      dbgap_accession: $dbgap_accession,
-      study_name: $study_name,
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status,
-      first_event: $first_event,
-      last_known_survival_status: $last_known_survival_status
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
+
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
+
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system,
 
       # Table config
       first: $first,
@@ -590,7 +743,6 @@ query studyOverview(
       sort_direction: $sort_direction
   ) {
       # Studies
-      acl
       consent
       consent_number
       external_url
@@ -991,7 +1143,6 @@ export const GET_TREATMENT_OVERVIEW_QUERY = gql`
 query treatmentOverview(
     # Demographics
     $participant_ids: [String],
-    $ethnicity: [String],
     $race: [String],
     $sex_at_birth: [String],
 
@@ -1005,13 +1156,25 @@ query treatmentOverview(
 
     # Studies
     $dbgap_accession: [String],
-    $study_acronym: [String],
     $study_name: [String],
 
     # Survivals
     $age_at_last_known_survival_status: [Int],
     $first_event: [String],
-    $last_known_survival_status: [String]
+    $last_known_survival_status: [String],
+    $cause_of_death: [String],
+
+  # Treatments
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
+    # Treatment Responses
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String],
 
     # Table config
     $first: Int,
@@ -1022,7 +1185,6 @@ query treatmentOverview(
     treatmentOverview(
         # Demographics
         participant_ids: $participant_ids,
-        ethnicity: $ethnicity,
         race: $race,
         sex_at_birth: $sex_at_birth,
 
@@ -1036,13 +1198,27 @@ query treatmentOverview(
         
         # Studies
         dbgap_accession: $dbgap_accession,
-        study_acronym: $study_acronym,
         study_name: $study_name,
 
         # Survivals
         age_at_last_known_survival_status: $age_at_last_known_survival_status,
         first_event: $first_event,
-        last_known_survival_status: $last_known_survival_status
+        last_known_survival_status: $last_known_survival_status,
+        cause_of_death: $cause_of_death,
+
+
+         # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
+
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system,
+
 
         # Table config
         first: $first,
@@ -1067,7 +1243,6 @@ export const GET_TREATMENT_RESPONSE_OVERVIEW_QUERY = gql`
 query treatmentResponseOverview(
     # Demographics
     $participant_ids: [String],
-    $ethnicity: [String],
     $race: [String],
     $sex_at_birth: [String],
 
@@ -1087,6 +1262,7 @@ query treatmentResponseOverview(
     $age_at_last_known_survival_status: [Int],
     $first_event: [String],
     $last_known_survival_status: [String],
+    $cause_of_death: [String],
 
     # Treatments
     $age_at_treatment_start: [Int],
@@ -1109,7 +1285,6 @@ query treatmentResponseOverview(
 treatmentResponseOverview(
     # Demographics
     participant_ids: $participant_ids,
-    ethnicity: $ethnicity,
     race: $race,
     sex_at_birth: $sex_at_birth,
 
@@ -1128,7 +1303,8 @@ treatmentResponseOverview(
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
     first_event: $first_event,
-    last_known_survival_status: $last_known_survival_status
+    last_known_survival_status: $last_known_survival_status,
+    cause_of_death: $cause_of_death,
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
@@ -1297,13 +1473,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-        dataField: 'ethnicity',
-        header: 'Ethnicity',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
         dataField: 'sex_at_birth',
         header: 'Sex at Birth',
         display: true,
@@ -1317,10 +1486,12 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
-          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+          linkAttr: {
+            rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+          },
+          cellType: cellTypes.CUSTOM_ELEM,
         },
-        cellType: cellTypes.CUSTOM_ELEM,
-      },
+      }
     ],
     id: 'participant_tab',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
@@ -1329,11 +1500,6 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
-    addFilesRequestVariableKey: 'participant_ids',
-    addFilesResponseKeys: ['fileIDsFromList'],
-    addAllFilesResponseKeys: ['participantOverview', 'files'],
-    addAllFileQuery: GET_ALL_FILEIDS_FROM_PARTICIPANTSTAB_FOR_ADD_ALL_CART,
-    addSelectedFilesQuery: GET_ALL_FILEIDS_PARTICIPANTSTAB_FOR_SELECT_ALL,
   },
   {
     name: 'Diagnosis',
@@ -1475,6 +1641,7 @@ export const tabContainers = [
         cellType: cellTypes.CUSTOM_ELEM,
       },
 
+
     ],
     id: 'diagnosis_tab',
     tabIndex: '3',
@@ -1483,11 +1650,13 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
+    /*
     addFilesRequestVariableKey: 'diagnosis_ids',
     addFilesResponseKeys: ['fileIDsFromList'],
     addAllFilesResponseKeys: ['diagnosisOverview', 'files'],
     addAllFileQuery: GET_ALL_FILEIDS_FROM_DIAGNOSISTAB_FOR_ADD_ALL_CART,
     addSelectedFilesQuery: GET_ALL_FILEIDS_DIAGNOSISTAB_FOR_SELECT_ALL,
+    */
   },
   {
     name: 'Treatment',
@@ -1707,6 +1876,8 @@ export const tabContainers = [
     },
 
 
+
+
     columns: [
       {
         dataField: 'participant_id',
@@ -1770,6 +1941,13 @@ export const tabContainers = [
         },
         cellType: cellTypes.CUSTOM_ELEM,
       },
+      {
+        dataField: 'cause_of_death',
+        header: 'Cause Of Death',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      }
     ],
     id: 'survival_tab',
     tabIndex: '1',
