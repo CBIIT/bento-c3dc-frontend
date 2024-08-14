@@ -364,17 +364,7 @@ export const GET_SURVIVAL_OVERVIEW_QUERY = gql
     $diagnosis_classification_system: [String],
     $diagnosis_basis: [String],
     $disease_phase: [String],
-    # Diagnoses
-    $age_at_diagnosis: [Int],
-    $anatomic_site: [String],
-    $diagnosis: [String],
-    $diagnosis_classification_system: [String],
-    $diagnosis_basis: [String],
-    $disease_phase: [String],
 
-    # Studies
-    $dbgap_accession: [String],
-    $study_name: [String],
     # Studies
     $dbgap_accession: [String],
     $study_name: [String],
@@ -403,10 +393,6 @@ export const GET_SURVIVAL_OVERVIEW_QUERY = gql
     $order_by: String,
     $sort_direction: String
     # Table config
-    $first: Int,
-    $offset: Int,
-    $order_by: String,
-    $sort_direction: String
 ) {
 survivalOverview(
     # Demographics
@@ -425,18 +411,6 @@ survivalOverview(
     # Studies
     dbgap_accession: $dbgap_accession,
     study_name: $study_name,
-    # Diagnoses
-    age_at_diagnosis: $age_at_diagnosis,
-    anatomic_site: $anatomic_site,
-    diagnosis: $diagnosis,
-    diagnosis_classification_system: $diagnosis_classification_system,
-    diagnosis_basis: $diagnosis_basis,
-    disease_phase: $disease_phase,
-    
-    # Studies
-    dbgap_accession: $dbgap_accession,
-    study_name: $study_name,
-
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
     first_event: $first_event,
