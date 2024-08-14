@@ -41,10 +41,10 @@ export const externalLinkIcon = {
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
-    # Demographics
-    $participant_ids: [String],
-    $race: [String],
-    $sex_at_birth: [String],
+  # Demographics
+  $participant_ids: [String],
+  $race: [String],
+  $sex_at_birth: [String],
 
     # Diagnoses
     $age_at_diagnosis: [Int],
@@ -77,10 +77,10 @@ query search(
     $response_system: [String]
 ) {
 getParticipants(
-    # Demographics
-    participant_ids: $participant_ids,
-    race: $race,
-    sex_at_birth: $sex_at_birth,
+  # Demographics
+  participant_ids: $participant_ids,
+  race: $race,
+  sex_at_birth: $sex_at_birth,
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -120,44 +120,45 @@ getParticipants(
     numberOfTreatments
     numberOfTreatmentResponses
 
-    # Widget counts
-    participantCountByRace {
-      group
-      subjects
-      __typename
-    }
-    participantCountBySexAtBirth {
-      group
-      subjects
-      __typename
-    }
-    participantCountByAgeAtDiagnosis {
-      group
-      subjects
-      __typename
-    }
-    participantCountByAnatomicSite {
-      group
-      subjects
-      __typename
-    }
-    participantCountByDiagnosis {
-      group
-      subjects
-      __typename
-    }
+  # Widget counts
+ 
+  participantCountByRace {
+    group
+    subjects
+    __typename
+  }
+  participantCountBySexAtBirth {
+    group
+    subjects
+    __typename
+  }
+  participantCountByAgeAtDiagnosis {
+    group
+    subjects
+    __typename
+  }
+  participantCountByAnatomicSite {
+    group
+    subjects
+    __typename
+  }
+  participantCountByDiagnosis {
+    group
+    subjects
+    __typename
+  }
 
-    # Demographic filter counts
-    filterParticipantCountByRace {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountBySexAtBirth {
-      group
-      subjects
-      __typename
-    }
+
+  filterParticipantCountByRace {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountBySexAtBirth {
+    group
+    subjects
+    __typename
+  }
 
     # Diagnosis filter counts
     filterParticipantCountByAgeAtDiagnosis {
@@ -226,6 +227,12 @@ getParticipants(
       subjects
       __typename
     }
+  
+ filterParticipantCountByCauseOfDeath {
+    group
+    subjects
+    __typename
+  }
 
     # Treatment filter counts
     filterParticipantCountByAgeAtTreatmentStart {
@@ -276,10 +283,80 @@ getParticipants(
 
     __typename
 }}
-`
+`;
 
-export const GET_SURVIVAL_OVERVIEW_QUERY = gql`
-query survivalOverview(
+export const GET_FILES_OVERVIEW_QUERY = gql`
+query fileOverview(
+    $participant_ids: [String],
+    $gender: [String] ,
+    $race: [String] ,
+    $age_at_diagnosis: [Int] ,
+    $diagnosis_anatomic_site: [String] ,
+    $disease_phase: [String] ,
+    $diagnosis_icd_o: [String] ,
+    $vital_status: [String] ,
+    $sample_anatomic_site: [String] ,
+    $participant_age_at_collection: [Int] ,
+    $sample_tumor_status: [String] ,
+    $tumor_classification: [String] ,
+    $assay_method: [String],
+    $file_type: [String],
+    $dbgap_accession: [String],
+    $grant_id: [String],
+    $institution: [String],
+    $study_name: [String],
+    $library_selection: [String],
+    $library_source: [String],
+    $library_strategy: [String],
+    $first: Int, 
+    $offset: Int, 
+    $order_by: String,
+    $sort_direction: String ){
+    fileOverview(
+        participant_ids: $participant_ids,
+        gender: $gender,
+        race: $race,
+        age_at_diagnosis: $age_at_diagnosis,
+        diagnosis_anatomic_site: $diagnosis_anatomic_site,
+        disease_phase: $disease_phase,
+        diagnosis_icd_o: $diagnosis_icd_o,
+        vital_status: $vital_status,
+        sample_anatomic_site: $sample_anatomic_site,
+        participant_age_at_collection: $participant_age_at_collection,
+        sample_tumor_status: $sample_tumor_status,
+        tumor_classification: $tumor_classification,
+        assay_method: $assay_method,
+        file_type: $file_type,
+        dbgap_accession: $dbgap_accession,       
+        grant_id: $grant_id,
+        institution: $institution,
+        study_name: $study_name,
+        library_selection: $library_selection,
+        library_source: $library_source,
+        library_strategy: $library_strategy,
+        first: $first, 
+        offset: $offset, 
+        order_by: $order_by,
+        sort_direction: $sort_direction
+    ){
+        id
+        file_name
+        file_category
+        file_description
+        file_type
+        file_size
+        study_id
+        participant_id
+        sample_id
+        file_id
+        guid
+        md5sum
+    }
+}
+`;
+
+export const GET_SURVIVAL_OVERVIEW_QUERY = gql
+  `query survivalOverview(
     # Demographics
     $participant_ids: [String],
     $race: [String],
@@ -320,6 +397,7 @@ query survivalOverview(
     $offset: Int,
     $order_by: String,
     $sort_direction: String
+    # Table config
 ) {
 survivalOverview(
     # Demographics
@@ -338,12 +416,11 @@ survivalOverview(
     # Studies
     dbgap_accession: $dbgap_accession,
     study_name: $study_name,
-
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
     cause_of_death: $cause_of_death,
     first_event: $first_event,
-    last_known_survival_status: $last_known_survival_status
+    last_known_survival_status: $last_known_survival_status,
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
@@ -356,7 +433,7 @@ survivalOverview(
     age_at_response: $age_at_response,
     response_category: $response_category,
     response_system: $response_system,
-
+   
     # Table config
     first: $first,
     offset: $offset,
@@ -368,23 +445,22 @@ survivalOverview(
 
     # Study
     dbgap_accession
-
     # Survival
     age_at_last_known_survival_status
     cause_of_death
     first_event
     last_known_survival_status
-
     __typename
 }}
 `;
 
 export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
 query participantOverview(
-    # Demographics
-    $participant_ids: [String],
-    $race: [String],
-    $sex_at_birth: [String],
+  # Demographics
+  $participant_ids: [String],
+  $race: [String],
+  $sex_at_birth: [String],
+ 
 
     # Diagnoses
     $age_at_diagnosis: [Int],
@@ -422,11 +498,11 @@ query participantOverview(
     $order_by: String,
     $sort_direction: String
 ) {
-participantOverview(
-    # Demographics
-    participant_ids: $participant_ids,
-    race: $race,
-    sex_at_birth: $sex_at_birth,
+  participantOverview(
+      # Demographics
+      participant_ids: $participant_ids,
+      race: $race,
+      sex_at_birth: $sex_at_birth,
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -444,7 +520,7 @@ participantOverview(
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
     cause_of_death: $cause_of_death,
     first_event: $first_event,
-    last_known_survival_status: $last_known_survival_status
+    last_known_survival_status: $last_known_survival_status,
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
@@ -458,26 +534,31 @@ participantOverview(
     response_category: $response_category,
     response_system: $response_system,
 
-    # Table config
-    first: $first,
-    offset: $offset,
-    order_by: $order_by,
-    sort_direction: $sort_direction
-) {
-    participant_id
-    race
-    sex_at_birth
-    dbgap_accession
-    __typename
-}}
-`;
+      # Table config
+      first: $first,
+      offset: $offset,
+      order_by: $order_by,
+      sort_direction: $sort_direction
+  ) {
+      # Participants
+      participant_id
+      race
+      sex_at_birth
+
+      # Studies
+      dbgap_accession
+      study_id
+
+      __typename
+  }
+}`;
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
 query diagnosisOverview(
-    # Demographics
-    $participant_ids: [String],
-    $race: [String],
-    $sex_at_birth: [String],
+  # Demographics
+  $participant_ids: [String],
+  $race: [String],
+  $sex_at_birth: [String],
 
     # Diagnoses
     $age_at_diagnosis: [Int],
@@ -515,11 +596,12 @@ query diagnosisOverview(
     $order_by: String,
     $sort_direction: String
 ) {
-diagnosisOverview(
-    # Demographics
-    participant_ids: $participant_ids,
-    race: $race,
-    sex_at_birth: $sex_at_birth,
+  diagnosisOverview(
+      # Demographics
+      participant_ids: $participant_ids,
+      race: $race,
+      sex_at_birth: $sex_at_birth,
+      
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -577,10 +659,10 @@ diagnosisOverview(
 
 export const GET_STUDY_OVERVIEW_QUERY = gql`
 query studyOverview(
-    # Demographics
-    $participant_ids: [String],
-    $race: [String],
-    $sex_at_birth: [String],
+  # Demographics
+  $participant_ids: [String],
+  $race: [String],
+  $sex_at_birth: [String],
 
     # Diagnoses
     $age_at_diagnosis: [Int],
@@ -618,11 +700,11 @@ query studyOverview(
     $order_by: String,
     $sort_direction: String
 ) {
-studyOverview(
-    # Demographics
-    participant_ids: $participant_ids,
-    race: $race,
-    sex_at_birth: $sex_at_birth,
+  studyOverview(
+      # Demographics
+      participant_ids: $participant_ids,
+      race: $race,
+      sex_at_birth: $sex_at_birth,
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -654,233 +736,24 @@ studyOverview(
     response_category: $response_category,
     response_system: $response_system,
 
-    # Table config
-    first: $first,
-    offset: $offset,
-    order_by: $order_by,
-    sort_direction: $sort_direction
-) {
-    # Study
-    dbgap_accession
-    study_name
-    __typename
-}}
-`;
-
-/*
-export const GET_ALL_FILEIDS_PARTICIPANTSTAB_FOR_SELECT_ALL = gql`
-query search (          
-  $participant_ids: [String],
-){
-  fileIDsFromList (          
-      participant_ids: $participant_ids,
-  ) 
-}
-  `;
-
-export const GET_ALL_FILEIDS_DIAGNOSISTAB_FOR_SELECT_ALL = gql`
-query search (          
-  $diagnosis_ids: [String] 
-){
-  fileIDsFromList (          
-      diagnosis_ids: $diagnosis_ids
-  ) 
-}
-  `;
-export const GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL = gql`
-query search (          
-  $study_ids: [String] 
-){
-  fileIDsFromList (          
-      study_ids: $study_ids
-  ) 
-}
-  `;
-
-export const GET_ALL_FILEIDS_FROM_PARTICIPANTSTAB_FOR_ADD_ALL_CART = gql`
-query participantsAddAllToCart(
-    $participant_ids: [String],
-    $gender: [String] ,
-    $race: [String] ,
-    $ethnicity: [String] ,
-    $age_at_diagnosis: [Int] ,
-    $diagnosis_anatomic_site: [String] ,
-    $disease_phase: [String] ,
-    $diagnosis_icd_o: [String] ,
-    $vital_status: [String] ,
-    $sample_anatomic_site: [String] ,
-    $participant_age_at_collection: [Int] ,
-    $sample_tumor_status: [String] ,
-    $tumor_classification: [String] ,
-    $assay_method: [String],
-    $file_type: [String],
-    $dbgap_accession: [String],
-    $grant_id: [String],
-    $institution: [String],
-    $study_name: [String],
-    $library_selection: [String],
-    $library_source: [String],
-    $library_strategy: [String],
-    $first: Int,
-    $offset: Int= 0, 
-    $order_by: String = "file_id",
-    $sort_direction: String = "asc" 
-  ){
-    participantOverview(
-      participant_ids: $participant_ids,
-      gender: $gender,
-      race: $race,
-      ethnicity: $ethnicity,
-      age_at_diagnosis: $age_at_diagnosis,
-      diagnosis_anatomic_site: $diagnosis_anatomic_site,
-      disease_phase: $disease_phase,
-      diagnosis_icd_o: $diagnosis_icd_o,
-      vital_status: $vital_status,
-      sample_anatomic_site: $sample_anatomic_site,
-      participant_age_at_collection: $participant_age_at_collection,
-      sample_tumor_status: $sample_tumor_status,
-      tumor_classification: $tumor_classification,
-      assay_method: $assay_method,
-      file_type: $file_type,
-      dbgap_accession: $dbgap_accession,       
-      grant_id: $grant_id,
-      institution: $institution,
-      study_name: $study_name,
-      library_selection: $library_selection,
-      library_source: $library_source,
-      library_strategy: $library_strategy,
+      # Table config
       first: $first,
       offset: $offset,
       order_by: $order_by,
       sort_direction: $sort_direction
-      ) {
-      files
-  }
-}
-    `;
+  ) {
+      # Studies
+      consent
+      consent_number
+      external_url
+      dbgap_accession
+      study_description
+      study_id
+      study_name
 
-export const GET_ALL_FILEIDS_FROM_DIAGNOSISTAB_FOR_ADD_ALL_CART = gql`
-query diagnosisAddAllToCart(
-  $participant_ids: [String],
-  $gender: [String] ,
-  $race: [String] ,
-  $ethnicity: [String] ,
-  $age_at_diagnosis: [Int] ,
-  $diagnosis_anatomic_site: [String] ,
-  $disease_phase: [String] ,
-  $diagnosis_icd_o: [String] ,
-  $vital_status: [String] ,
-  $sample_anatomic_site: [String] ,
-  $participant_age_at_collection: [Int] ,
-  $sample_tumor_status: [String] ,
-  $tumor_classification: [String] ,
-  $assay_method: [String],
-  $file_type: [String],
-  $dbgap_accession: [String],
-  $grant_id: [String],
-  $institution: [String],
-  $study_name: [String],
-  $library_selection: [String],
-  $library_source: [String],
-  $library_strategy: [String],
-  $first: Int,
-  $offset: Int= 0, 
-  $order_by: String = "file_id",
-  $sort_direction: String = "asc" ){
-  diagnosisOverview(
-      participant_ids: $participant_ids,
-      gender: $gender,
-      race: $race,
-      ethnicity: $ethnicity,
-      age_at_diagnosis: $age_at_diagnosis,
-      diagnosis_anatomic_site: $diagnosis_anatomic_site,
-      disease_phase: $disease_phase,
-      diagnosis_icd_o: $diagnosis_icd_o,
-      vital_status: $vital_status,
-      sample_anatomic_site: $sample_anatomic_site,
-      participant_age_at_collection: $participant_age_at_collection,
-      sample_tumor_status: $sample_tumor_status,
-      tumor_classification: $tumor_classification,
-      assay_method: $assay_method,
-      file_type: $file_type,
-      dbgap_accession: $dbgap_accession,       
-      grant_id: $grant_id,
-      institution: $institution,
-      study_name: $study_name,
-      library_selection: $library_selection,
-      library_source: $library_source,
-      library_strategy: $library_strategy,
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-      ) {
-      files
+      __typename
   }
-}
-    `;
-
-export const GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART = gql`
-query studyAddAllToCart(
-  $participant_ids: [String],
-  $gender: [String] ,
-  $race: [String] ,
-  $ethnicity: [String] ,
-  $age_at_diagnosis: [Int] ,
-  $diagnosis_anatomic_site: [String] ,
-  $disease_phase: [String] ,
-  $diagnosis_icd_o: [String] ,
-  $vital_status: [String] ,
-  $sample_anatomic_site: [String] ,
-  $participant_age_at_collection: [Int] ,
-  $sample_tumor_status: [String] ,
-  $tumor_classification: [String] ,
-  $assay_method: [String],
-  $file_type: [String],
-  $dbgap_accession: [String],
-  $grant_id: [String],
-  $institution: [String],
-  $study_name: [String],
-  $library_selection: [String],
-  $library_source: [String],
-  $library_strategy: [String],
-  $first: Int,
-  $offset: Int= 0, 
-  $order_by: String = "file_id",
-  $sort_direction: String = "asc" ){
-  studyOverview(
-      participant_ids: $participant_ids,
-      gender: $gender,
-      race: $race,
-      ethnicity: $ethnicity,
-      age_at_diagnosis: $age_at_diagnosis,
-      diagnosis_anatomic_site: $diagnosis_anatomic_site,
-      disease_phase: $disease_phase,
-      diagnosis_icd_o: $diagnosis_icd_o,
-      vital_status: $vital_status,
-      sample_anatomic_site: $sample_anatomic_site,
-      participant_age_at_collection: $participant_age_at_collection,
-      sample_tumor_status: $sample_tumor_status,
-      tumor_classification: $tumor_classification,
-      assay_method: $assay_method,
-      file_type: $file_type,
-      dbgap_accession: $dbgap_accession,       
-      grant_id: $grant_id,
-      institution: $institution,
-      study_name: $study_name,
-      library_selection: $library_selection,
-      library_source: $library_source,
-      library_strategy: $library_strategy,
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-      ) {
-      files
-  }
-}
-    `;
-*/
+}`;
 
 // --------------- GraphQL query - Retrieve files tab details --------------
 export const GET_FILES_NAME_QUERY = gql`
@@ -963,7 +836,7 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-        linkAttr : {
+        linkAttr: {
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
@@ -1118,12 +991,12 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-        linkAttr : {
+        linkAttr: {
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
       },
-     
+
     ],
     id: 'diagnosis_tab',
     tabIndex: '3',
@@ -1177,8 +1050,8 @@ export const tabContainers = [
       opacity: 'unset',
       border: 'unset',
     },
- 
- 
+
+
     columns: [
       {
         dataField: 'participant_id',
@@ -1202,7 +1075,7 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
-     dataField: 'age_at_last_known_survival_status',
+        dataField: 'age_at_last_known_survival_status',
         header: 'Age at Last Known Survival Status',
         display: true,
         tooltipText: 'sort',
@@ -1237,11 +1110,18 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-        linkAttr : {
+        linkAttr: {
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
       },
+      {
+        dataField: 'cause_of_death',
+        header: 'Cause Of Death',
+        display: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      }
     ],
     id: 'survival_tab',
     tabIndex: '1',
@@ -1279,17 +1159,10 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-        linkAttr : {
+        linkAttr: {
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
-      },
-      {
-        dataField: "acl",
-        header: "ACL",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
       },
       {
         dataField: 'study_name',
@@ -1326,8 +1199,8 @@ export const tabContainers = [
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
       }
-     
-    
+
+
     ],
     id: 'study_tab',
     tabIndex: '4',
@@ -1345,8 +1218,7 @@ export const tabContainers = [
     addSelectedFilesQuery: GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL,
     */
   },
- ];
- 
- 
+];
 
-  
+
+

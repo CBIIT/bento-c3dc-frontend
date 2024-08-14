@@ -445,6 +445,17 @@ export const facetsConfig = [
   },
   {
     section: SURVIVAL,
+    label: 'Cause Of Death',
+    apiPath: 'participantCountByCauseOfDeath',
+    apiForFiltering: 'filterParticipantCountByCauseOfDeath',
+    datafield: 'cause_of_death',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: SURVIVAL,
     label: 'First Event',
     apiPath: 'participantCountByFirstEvent',
     apiForFiltering: 'filterParticipantCountByFirstEvent',
