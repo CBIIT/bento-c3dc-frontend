@@ -39,8 +39,6 @@ export const externalLinkIcon = {
 };
 
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
-    //numberOfTreatments
-    //numberOfTreatmentResponses
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
   # Demographics
@@ -62,6 +60,7 @@ query search(
 
     # Survivals
     $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
     $first_event: [String],
     $last_known_survival_status: [String],
 
@@ -97,6 +96,7 @@ getParticipants(
 
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
     first_event: $first_event,
     last_known_survival_status: $last_known_survival_status
 
@@ -209,6 +209,11 @@ getParticipants(
     filterParticipantCountByAgeAtLastKnownSurvivalStatus {
       lowerBound
       upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByCauseOfDeath {
+      group
       subjects
       __typename
     }
@@ -371,9 +376,9 @@ export const GET_SURVIVAL_OVERVIEW_QUERY = gql
 
     # Survivals
     $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
     $first_event: [String],
     $last_known_survival_status: [String],
-    $cause_of_death: [String],
 
     # Treatments
     $age_at_treatment_start: [Int],
@@ -413,9 +418,9 @@ survivalOverview(
     study_name: $study_name,
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
     first_event: $first_event,
     last_known_survival_status: $last_known_survival_status,
-    cause_of_death: $cause_of_death,
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
@@ -442,11 +447,12 @@ survivalOverview(
     dbgap_accession
     # Survival
     age_at_last_known_survival_status
+    cause_of_death
     first_event
     last_known_survival_status
-    cause_of_death
     __typename
-}}`;
+}}
+`;
 
 export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
 query participantOverview(
@@ -470,9 +476,9 @@ query participantOverview(
 
     # Survivals
     $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
     $first_event: [String],
     $last_known_survival_status: [String],
-   $cause_of_death: [String],,
 
     # Treatments
     $age_at_treatment_start: [Int],
@@ -512,9 +518,9 @@ query participantOverview(
 
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
     first_event: $first_event,
     last_known_survival_status: $last_known_survival_status,
-      cause_of_death: $cause_of_death,
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
@@ -568,6 +574,7 @@ query diagnosisOverview(
 
     # Survivals
     $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
     $first_event: [String],
     $last_known_survival_status: [String],
 
@@ -582,7 +589,6 @@ query diagnosisOverview(
     $age_at_response: [Int],
     $response_category: [String],
     $response_system: [String],
-  $cause_of_death: [String],
 
     # Table config
     $first: Int,
@@ -611,9 +617,9 @@ query diagnosisOverview(
 
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
     first_event: $first_event,
     last_known_survival_status: $last_known_survival_status
-      cause_of_death: $cause_of_death,
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
@@ -648,7 +654,8 @@ query diagnosisOverview(
     # Study
     dbgap_accession
     __typename
-}}`;
+}}
+`;
 
 export const GET_STUDY_OVERVIEW_QUERY = gql`
 query studyOverview(
@@ -671,9 +678,9 @@ query studyOverview(
 
     # Survivals
     $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
     $first_event: [String],
     $last_known_survival_status: [String],
-  $cause_of_death: [String],,
 
     # Treatments
     $age_at_treatment_start: [Int],
@@ -713,9 +720,9 @@ query studyOverview(
 
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
     first_event: $first_event,
     last_known_survival_status: $last_known_survival_status
-      cause_of_death: $cause_of_death,
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
@@ -748,32 +755,13 @@ query studyOverview(
   }
 }`;
 
+/*
 export const GET_ALL_FILEIDS_PARTICIPANTSTAB_FOR_SELECT_ALL = gql`
 query search (          
   $participant_ids: [String],
 ){
   fileIDsFromList (          
       participant_ids: $participant_ids,
-  ) 
-}
-  `;
-
-export const GET_ALL_FILEIDS_SAMPLESTAB_FOR_SELECT_ALL = gql`
-query search (          
-  $sample_ids: [String],
-){
-  fileIDsFromList (          
-    sample_ids: $sample_ids,
-  ) 
-}
-  `;
-
-export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
-query search (          
-  $file_ids: [String] 
-){
-  fileIDsFromList (          
-      file_ids: $file_ids
   ) 
 }
   `;
@@ -974,7 +962,7 @@ query fileAddAllToCart(
     files
   }
 }
-            `;
+    `;
 
 export const GET_ALL_FILEIDS_FROM_DIAGNOSISTAB_FOR_ADD_ALL_CART = gql`
 query diagnosisAddAllToCart(
@@ -1093,6 +1081,7 @@ query studyAddAllToCart(
   }
 }
     `;
+*/
 
 // --------------- GraphQL query - Retrieve files tab details --------------
 export const GET_FILES_NAME_QUERY = gql`
@@ -1188,11 +1177,13 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
+    /*
     addFilesRequestVariableKey: 'participant_ids',
     addFilesResponseKeys: ['fileIDsFromList'],
     addAllFilesResponseKeys: ['participantOverview', 'files'],
     addAllFileQuery: GET_ALL_FILEIDS_FROM_PARTICIPANTSTAB_FOR_ADD_ALL_CART,
     addSelectedFilesQuery: GET_ALL_FILEIDS_PARTICIPANTSTAB_FOR_SELECT_ALL,
+    */
   },
   {
     name: 'Diagnosis',
@@ -1342,11 +1333,13 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
+    /*
     addFilesRequestVariableKey: 'diagnosis_ids',
     addFilesResponseKeys: ['fileIDsFromList'],
     addAllFilesResponseKeys: ['diagnosisOverview', 'files'],
     addAllFileQuery: GET_ALL_FILEIDS_FROM_DIAGNOSISTAB_FOR_ADD_ALL_CART,
     addSelectedFilesQuery: GET_ALL_FILEIDS_DIAGNOSISTAB_FOR_SELECT_ALL,
+    */
   },
   {
     name: 'Survival',
@@ -1545,11 +1538,13 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
+    /*
     addFilesRequestVariableKey: 'study_ids',
     addFilesResponseKeys: ['fileIDsFromList'],
     addAllFilesResponseKeys: ['studyOverview', 'files'],
     addAllFileQuery: GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART,
     addSelectedFilesQuery: GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL,
+    */
   },
 ];
 
