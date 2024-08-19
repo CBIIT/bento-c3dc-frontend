@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import header from '../../assets/announcment/header.svg';
-import ReactHtmlParser from 'html-react-parser';
-import { AnnouncementPage } from '../../bento/announcmentPageData';
+import { announcementPageData } from '../../bento/announcmentPageData';
 import cardImg from '../../assets/announcment/card1Image.svg';
 
 const AnnouncmentContainer = styled.div`
   margin: 0 auto;
-
   .announcmentHeader {
     font-family: Poppins;
     font-weight: 500;
@@ -40,60 +38,7 @@ const AnnouncmentContainer = styled.div`
     align-items: center;
     background-width: 100%;
     padding-bottom: 100px;
-  }
-  .announcmentText {
-    font-family: Inter;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    width: 680px;
-    margin-top: 67px;
-    margin-left: 44px;
-
-  }
-  .announcmentImages {
-    width: 343px;
-    height: 100%;
-    margin-left: 44px;
-    display: flex;
-    flex-direction: column;
-  }
-
-
-  .upperImg {
-    margin-top: 30px;
-    margin-bottom: 23px;
-  }
-
-  .announcmentLink {
-    color: #3156a0;
-    font-family: Inter;
-    font-weight: 400;
-    line-height: 24px;
-    padding-right: 20px;
-    text-underline-offset: 4px;
-  }
-  .indent {
-    padding-left: 40px;
-  }
-  .doubleIndent {
-    padding-left: 40px;
-  }
-  .itemList {
-    margin: 0;
-  }
-  .listAlightment {
-    padding-left: 27px;
-  }
-  .sectionTitle{
-    font-weight: bold;
-  }
-  .sectionStart {
-    margin-top: 16px;
-  }
-  .imageMargin {
-    margin-right: -387px;
-  }
+  } 
 .options {
     display: flex;
     flex-direction: row;
@@ -101,13 +46,12 @@ const AnnouncmentContainer = styled.div`
     justify-content: center;
     align-items: center;
 }
-
 .option {
-margin: 10px;
-font-size: 16px;
-font-style: Open Sans;  
-font-weight: 600;
-cursor: pointer;
+    margin: 10px;
+    font-size: 16px;
+    font-style: Open Sans;  
+    font-weight: 600;
+    cursor: pointer;
 }
 .option-selected {
     border-bottom: 3px #07645C solid;
@@ -117,7 +61,6 @@ cursor: pointer;
     font-style: Open Sans;  
     font-weight: 600;
 }
-
 .announcmentCard { 
     border: 2px #9FBEB5 solid;
     width: 70%;
@@ -126,7 +69,6 @@ cursor: pointer;
     padding: 25px 30px 25px 30px;
     margin-top: 30px;
 }
-
 .announcmentCard .title{
     color: #00838F;
     font-size: 30px;
@@ -138,20 +80,19 @@ cursor: pointer;
     text-align: left;
     margin-bottom: 10px;
 }
-    .sectionOne {
+.sectionOne {
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-between;
         margin-bottom: 30px;
     }
-
-    .sectionOne-first {
-    display: flex;
-    flex-direction: column;
-    width: 65%;
-    }
-    .announcmentContent{
+.sectionOne-first {
+      display: flex;
+      flex-direction: column;
+      width: 65%;
+  }
+.announcmentContent{
       font-family: Inter;
       font-size: 16px;
       font-weight: 400;
@@ -159,7 +100,6 @@ cursor: pointer;
       text-align: left;
       margin-top: 10px;
     }
-
   .announcmentButton{
     font-family: Poppins;
     font-size: 12px;
@@ -183,24 +123,20 @@ cursor: pointer;
     padding: 20px 0;
     font-size: 14px;
   }
-
   .resultsPerPage {
     display: flex;
     align-items: center;
-  }
-
+}
   .resultsPerPage select {
     margin-left: 10px;
     padding: 5px;
     font-size: 14px;
   }
-
   .pageNavigation {
     display: flex;
     align-items: center;
     margin-left: 10px;
   }
-
   .pageNavigation span, .pageNavigation .arrow {
     margin: 0px;
     cursor: pointer;
@@ -210,49 +146,44 @@ cursor: pointer;
   .pageNavigation .arrow {
     font-size: 16px;
     font-weight: bold;
-      border: 1px #045B80 solid;
-     border-top: 1px #045B80 solid;
-
-     border-bottom: 1px #045B80 solid;
-      padding: 3px;
-      width: 28px;
-display: flex;
-      justify-content: center;
-      height: 32px;
+    border: 1px #045B80 solid;
+    border-top: 1px #045B80 solid;
+    border-bottom: 1px #045B80 solid;
+    padding: 3px;
+    width: 28px;
+    display: flex;
+    justify-content: center;
+    height: 32px;
 
   }
-
   .pageNavigation .selected {
     font-weight: bold;
     text-decoration: underline;
-     border: 0.3px #045B80 solid;
-     border-top: 1px #045B80 solid;
-     border-bottom: 1px #045B80 solid;
-      padding: 3px;
-      margin: 0px;
+    border: 0.3px #045B80 solid;
+    border-top: 1px #045B80 solid;
+    border-bottom: 1px #045B80 solid;
+    padding: 3px;
+    margin: 0px;
     font-size: 16px;
-      width: 28px;
-      height: 32px;
-  display: flex;
-      justify-content: center;
+    width: 28px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
   }
-    .pageNumbers{
-       border: 0.3px #045B80 solid;
-     border-top: 1px #045B80 solid;
-     border-bottom: 1px #045B80 solid;
+  .pageNumbers{
+      border: 0.3px #045B80 solid;
+      border-top: 1px #045B80 solid;
+      border-bottom: 1px #045B80 solid;
       padding: 3px;
       width: 28px;
       display: flex;
       justify-content: center;
       height: 32px;
-
       margin: 0px;
-    font-size: 16px;
-
+      font-size: 16px;
     }
-
   .resultsPerPage{
-  margin: 15px;
+      margin: 15px;
   }
 `;
 
@@ -262,7 +193,7 @@ const AnnouncmentPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(10);
 
-  const totalResults = AnnouncementPage.length;
+  const totalResults = announcementPageData.length;
   const totalPages = Math.ceil(totalResults / resultsPerPage);
 
   const startIdx = (currentPage - 1) * resultsPerPage;
@@ -290,7 +221,7 @@ const AnnouncmentPage = () => {
       </div>
       <div className='announcmentBody'>
         {
-          AnnouncementPage.slice(startIdx, endIdx).map((content, idx) => (
+          announcementPageData.slice(startIdx, endIdx).map((content, idx) => (
             (selectedOption == 0 || content.type == selectedOption) &&
             <div key={idx} className='announcmentCard'>
               <div className="sectionOne">

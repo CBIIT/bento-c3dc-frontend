@@ -1,4 +1,4 @@
-export const AnnouncementPage = [
+export const announcementPageData = [
         {
             title: "Application Update: Lorem ipsum odor amet consectetuer adipiscing elit",
             timestamp: "JULY 24, 2024",
