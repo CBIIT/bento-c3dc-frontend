@@ -5,7 +5,7 @@ import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
 
 const Tabs = (props) => {
-  const [currentTab, setCurrentTab] = useState(0);
+  const [currentTab, setCurrentTab] = tabContainers.length > 0 ? useState(1) : useState(0);
   const handleTabChange = (event, value) => {
     setCurrentTab(value);
   };
@@ -19,9 +19,9 @@ const Tabs = (props) => {
     name: tab.name,
     hasToolTip: true,
     toolTipText: tab.toolTipText,
-    count: `(${props.dashboardStats[tab.count].toLocaleString()})`,
-    display: [tab.name, props.dashboardStats[tab.count].toLocaleString()],
-    clsName: `${tab.name}`.toLowerCase().replace(' ', '_'),
+    count: tab.count !== "none" ? `(${props.dashboardStats[tab.count].toLocaleString()})` : "(NA)",
+    display: tab.count !== "none" ?  [tab.name, props.dashboardStats[tab.count].toLocaleString()] :"NA",
+    clsName:  `${tab.name}`.toLowerCase().replace(' ', '_') ,
     tooltipStyles: {border: '1px solid #2D5380', arrowBorder: '1px solid #598AC5'}
   }));
 
