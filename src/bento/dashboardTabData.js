@@ -355,8 +355,8 @@ query fileOverview(
 }
 `;
 
-export const GET_SURVIVAL_OVERVIEW_QUERY = gql
-  `query survivalOverview(
+export const GET_SURVIVAL_OVERVIEW_QUERY = gql`
+  query survivalOverview(
     # Demographics
     $participant_ids: [String],
     $race: [String],
