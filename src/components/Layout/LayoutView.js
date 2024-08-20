@@ -37,7 +37,6 @@ const Layout = () => {
           <Route path="/explore" element={<Inventory />} />
           <Route path="/release_notes" element={<PdfReader />} />
           <Route path="/user_guide" element={<PdfReader />} />
-          {/*<Route path="/fileCentricCart" element={<Cart />} />*/}
           <Route path="/data_model" element={<DataModel />} />
           <Route path="*" element={<Error />} />
         </Routes>
