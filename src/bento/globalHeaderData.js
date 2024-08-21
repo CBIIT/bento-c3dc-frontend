@@ -151,8 +151,8 @@ export const navbarSublists = {
         className: 'navMobileSubItem',
       },
       {
-        name: 'Announcment',
-        link: '/announcment',
+        name: 'Announcement',
+        link: '/announcement',
         className: 'navMobileSubItem',
       },
       {

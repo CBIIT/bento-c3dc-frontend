@@ -17,7 +17,7 @@ import DataModel from "../../pages/DataModel/dataModel";
 import PdfReader from "../../pages/pdfReader/pdfReader";
 import StudyDetail from "../../pages/studyDetail/studyDetailController";
 import OverlayWindow from "../OverlayWindow/OverlayWindow";
-import AnnouncmentPage from "../../pages/announcment/announcmentPage";
+import AnnouncementPage from "../../pages/announcement/announcementPage";
 
 // import NewsDetail from '../../pages/news/newsDetailView';
 
@@ -34,7 +34,7 @@ const Layout = () => {
           <Route path="/:studyId" element={<StudyDetail />} />          
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
-          <Route path="/announcment" element={<AnnouncmentPage />} />
+          <Route path="/announcement" element={<AnnouncementPage />} />
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
           <Route path="/pdfReader" element={<PdfReader />} />
