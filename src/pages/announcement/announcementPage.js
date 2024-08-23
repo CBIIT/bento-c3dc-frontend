@@ -81,6 +81,10 @@ const AnnouncementContainer = styled.div`
     padding: 25px 30px 25px 30px;
     margin-top: 30px;
 }
+.announcementCard:hover{
+  border: 4px solid #65C6BA;
+}
+
 .announcementCard .title{
     color: #00838F;
     font-size: 30px;
@@ -198,9 +202,7 @@ const AnnouncementContainer = styled.div`
   .resultsPerPage{
       margin: 15px;
   }
-      .odd{
-      border: 4px solid #65C6BA;
-      }
+     
 `;
 
 const AnnouncementPage = () => {
@@ -255,7 +257,7 @@ const AnnouncementPage = () => {
 
             return (
               (selectedOption == 0 || content.type == selectedOption) &&
-              <div key={idx} className={idx % 2 == 0 ? 'announcementCard' : 'announcementCard odd'}>
+              <div key={idx} className={'announcementCard'}>
                 <div className="sectionOne">
                   <div className='sectionOne-first'>
                     <span className="title">{isExpanded ? content.title : content.title.substring(0, 100)}</span>
@@ -294,10 +296,10 @@ const AnnouncementPage = () => {
           <div className="resultsPerPage">
             <span>Result Per Page:</span>
             <select value={resultsPerPage} onChange={(e) => { setResultsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
+              <option value={10}>10</option>
               <option value={25}>25</option>
               <option value={50}>50</option>
               <option value={100}>100</option>
-              <option value={250}>250</option>
             </select>
           </div>
           <div>
