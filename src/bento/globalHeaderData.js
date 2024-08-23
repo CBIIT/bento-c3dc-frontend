@@ -156,7 +156,7 @@ export const navbarSublists = {
         className: 'navMobileSubItem',
       },
       {
-        name: 'Latest Release',
+        name: 'Release Notes',
         link: '/release_notes',
         className: 'navMobileSubItem',
       },
