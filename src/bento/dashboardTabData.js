@@ -1462,7 +1462,7 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1527,14 +1527,14 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: 'diagnosis_id',
-        header: 'Diagnosis ID',
+        header: 'Diagnosis Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1684,14 +1684,14 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: "treatment_id",
-        header: "Treatment ID",
+        header: "Treatment Id",
         display: true,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
@@ -1775,14 +1775,14 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: "treatment_response_id",
-        header: "Treatment Response ID",
+        header: "Treatment Response Id",
         display: true,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
@@ -1883,14 +1883,14 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: "survival_id",
-        header: "Survival ID",
+        header: "Survival Id",
         display: true,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
