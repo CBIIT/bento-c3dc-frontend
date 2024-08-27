@@ -209,7 +209,7 @@ const LandingView = ({ classes, statsData }) => (
                       {landingPageData.tile3.descriptionText}
                     </div>
 
-                  </div>{/*
+                  </div>
                   <div className={classes.blueButton}>
                     <div className={classes.blueButtonLeft}>
                       <img className={classes.icon} src={icon} alt="CTDC about " />
@@ -223,7 +223,7 @@ const LandingView = ({ classes, statsData }) => (
                         {landingPageData.tile3.callToActionText}
                       </Link>
                     </div>
-                  </div>*/}
+                  </div>
                 </div>
 
               </div>
@@ -791,7 +791,7 @@ const styles = () => ({
   },
   tile3Content: {
     width: '100%',
-    height: '200px',
+    height: '155px',
     overflowY: 'auto',
     background: '#fff',
     paddingLeft: '30px',
@@ -872,7 +872,7 @@ const styles = () => ({
     fontFamily: 'Lato',
     fontSize: '14px',
     color: '#fff',
-    textTransform: 'uppercase',
+    textTransform: 'uppercase'
   },
   mountainMeadowContentHeader: {
     color: '#ffffff',

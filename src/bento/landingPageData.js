@@ -82,10 +82,10 @@ export const landingPageData = {
   tile3: {
     alt: '',
     img: landingTile3,
-    titleText: 'New Datasets',
+    titleText: 'Announcement',
     descriptionText: 'Our latest release contains harmonized demographic and phenotypic data from nine additional CCDI datasets.',
-    callToActionText: 'Learn More',
-    callToActionLink: '', //Link to the "Resources" Static Page
+    callToActionText: 'EXPLORE ANNOUNCEMENTS',
+    callToActionLink: 'https://clinicalcommons-dev.ccdi.cancer.gov/announcement', //Link to the "Announcement" Static Page
   },
   tile4: {
     alt: '',
