@@ -1734,7 +1734,7 @@ export const tabContainers = [
     tabIndex: '4',
     selectableRows: true,
     tableDownloadCSV: customStudyTabDownloadCSV,
-    downloadFileName: 'C3DC Studies Download',
+    downloadFileName: 'C3DC Treatment Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1824,7 +1824,7 @@ export const tabContainers = [
     tabIndex: '4',
     selectableRows: true,
     tableDownloadCSV: customStudyTabDownloadCSV,
-    downloadFileName: 'C3DC Studies Download',
+    downloadFileName: 'C3DC Treatment Response Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
