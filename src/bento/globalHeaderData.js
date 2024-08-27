@@ -151,13 +151,18 @@ export const navbarSublists = {
         className: 'navMobileSubItem',
       },
       {
-        name: 'Latest Release',
-        link: '/pdfReader?type=latestRelease',
+        name: 'Announcements',
+        link: '/announcement',
+        className: 'navMobileSubItem',
+      },
+      {
+        name: 'Release Notes',
+        link: '/release_notes',
         className: 'navMobileSubItem',
       },
       {
         name: 'User Guide',
-        link: '/pdfReader?type=userGuide',
+        link: '/user_guide',
         className: 'navMobileSubItem',
       },
    

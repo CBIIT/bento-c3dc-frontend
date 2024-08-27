@@ -36,6 +36,7 @@ const initTblState = (initailState) => ({
   extendedViewConfig: {
     pagination: true,
   },
+  showDownloadIcon: false,
 })
 
 const Studies = ({ classes, data }) => {

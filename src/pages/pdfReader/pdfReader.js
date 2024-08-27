@@ -20,10 +20,9 @@ export default function PdfReader() {
     const [pdfUrl,setPdfUrl] = useState("");
     
     useEffect(()=>{
-        const searchParams = new URLSearchParams(window.location.search);
-        const pdurl = searchParams.get('type');
+        const pathname = new URL(window.location.href).pathname.substring(1).replace("/","");
     
-        const pdfUrl1 = pdurl ? pdfList[pdurl] : '';
+        const pdfUrl1 = pathname ? pdfList[pathname] : '';
         setPdfUrl(pdfUrl1);
     },[])
    
