@@ -1376,13 +1376,6 @@ export const tabContainers = [
         cellType: cellTypes.CUSTOM_ELEM,
       },
       {
-        dataField: "acl",
-        header: "ACL",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
-      },
-      {
         dataField: 'study_name',
         header: 'Study Name',
         display: true,
