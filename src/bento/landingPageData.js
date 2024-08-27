@@ -85,7 +85,7 @@ export const landingPageData = {
     titleText: 'Announcement',
     descriptionText: 'Our latest release contains harmonized demographic and phenotypic data from nine additional CCDI datasets.',
     callToActionText: 'EXPLORE ANNOUNCEMENTS',
-    callToActionLink: 'https://clinicalcommons-dev.ccdi.cancer.gov/', //Link to the "Announcement" Static Page
+    callToActionLink: 'https://clinicalcommons-dev.ccdi.cancer.gov/announcement', //Link to the "Announcement" Static Page
   },
   tile4: {
     alt: '',
