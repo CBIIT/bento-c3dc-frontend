@@ -41,10 +41,10 @@ export const externalLinkIcon = {
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
-  # Demographics
-  $participant_ids: [String],
-  $race: [String],
-  $sex_at_birth: [String],
+    # Demographics
+    $participant_ids: [String],
+    $race: [String],
+    $sex_at_birth: [String],
 
     # Diagnoses
     $age_at_diagnosis: [Int],
@@ -77,10 +77,10 @@ query search(
     $response_system: [String]
 ) {
 getParticipants(
-  # Demographics
-  participant_ids: $participant_ids,
-  race: $race,
-  sex_at_birth: $sex_at_birth,
+    # Demographics
+    participant_ids: $participant_ids,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -120,45 +120,49 @@ getParticipants(
     numberOfTreatments
     numberOfTreatmentResponses
 
-  # Widget counts
- 
-  participantCountByRace {
-    group
-    subjects
-    __typename
-  }
-  participantCountBySexAtBirth {
-    group
-    subjects
-    __typename
-  }
-  participantCountByAgeAtDiagnosis {
-    group
-    subjects
-    __typename
-  }
-  participantCountByAnatomicSite {
-    group
-    subjects
-    __typename
-  }
-  participantCountByDiagnosis {
-    group
-    subjects
-    __typename
-  }
+    # Widget counts
+    participantCountByRace {
+      group
+      subjects
+      __typename
+    }
+    participantCountBySexAtBirth {
+      group
+      subjects
+      __typename
+    }
+    participantCountByAgeAtDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    participantCountByAnatomicSite {
+      group
+      subjects
+      __typename
+    }
+    participantCountByDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    participantCountByTreatmentType {
+      group
+      subjects
+      __typename
+    }
 
-
-  filterParticipantCountByRace {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountBySexAtBirth {
-    group
-    subjects
-    __typename
-  }
+    # Demographic filter counts
+    filterParticipantCountByRace {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountBySexAtBirth {
+      group
+      subjects
+      __typename
+    }
 
     # Diagnosis filter counts
     filterParticipantCountByAgeAtDiagnosis {
@@ -227,12 +231,6 @@ getParticipants(
       subjects
       __typename
     }
-  
- filterParticipantCountByCauseOfDeath {
-    group
-    subjects
-    __typename
-  }
 
     # Treatment filter counts
     filterParticipantCountByAgeAtTreatmentStart {
@@ -1376,13 +1374,6 @@ export const tabContainers = [
         cellType: cellTypes.CUSTOM_ELEM,
       },
       {
-        dataField: "acl",
-        header: "ACL",
-        display: false,
-        tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
-      },
-      {
         dataField: 'study_name',
         header: 'Study Name',
         display: true,
@@ -1665,7 +1656,7 @@ export const tabContainers = [
     dataField: 'dataTreatment',
     api: GET_TREATMENT_OVERVIEW_QUERY,
     paginationAPIField: 'treatmentOverview',
-    defaultSortField: 'treatment_id',
+    defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
     count: 'numberOfTreatments',
     fileCount: 'treatmentFileCount',
@@ -1741,7 +1732,7 @@ export const tabContainers = [
     tabIndex: '4',
     selectableRows: true,
     tableDownloadCSV: customStudyTabDownloadCSV,
-    downloadFileName: 'C3DC Studies Download',
+    downloadFileName: 'C3DC Treatment Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
@@ -1756,7 +1747,7 @@ export const tabContainers = [
     dataField: 'dataTreatmentResponse',
     api: GET_TREATMENT_RESPONSE_OVERVIEW_QUERY,
     paginationAPIField: 'treatmentResponseOverview',
-    defaultSortField: 'treatment_response_id',
+    defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
     count: 'numberOfTreatmentResponses',
     fileCount: 'treatmentResponseFileCount',
@@ -1831,7 +1822,7 @@ export const tabContainers = [
     tabIndex: '4',
     selectableRows: true,
     tableDownloadCSV: customStudyTabDownloadCSV,
-    downloadFileName: 'C3DC Studies Download',
+    downloadFileName: 'C3DC Treatment Response Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
