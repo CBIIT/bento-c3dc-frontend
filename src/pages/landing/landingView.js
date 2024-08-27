@@ -7,7 +7,6 @@ import { Link } from 'react-router-dom';
 import { landingPageData } from '../../bento/landingPageData';
 import icon from '../../assets/landing/LP_ReadMore.svg';
 import iconAbout from '../../assets/landing/LP_About_Fullarticle.Arrow.svg';
-import { red } from '@material-ui/core/colors';
 
 const LandingView = ({ classes, statsData }) => (
   <div className={classes.page}>
