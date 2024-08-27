@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import header from '../../assets/announcement/header.svg';
 import { announcementPageData } from '../../bento/announcementPageData';
@@ -80,9 +80,13 @@ const AnnouncementContainer = styled.div`
     border-radius: 20px;
     padding: 25px 30px 25px 30px;
     margin-top: 30px;
+      box-sizing: border-box;
+
 }
 .announcementCard:hover{
-  border: 4px solid #65C6BA;
+  border: 2px solid #65C6BA;
+  box-shadow: 0 0 0 2px #65C6BA;
+
 }
 
 .announcementCard .title{
@@ -211,6 +215,11 @@ const AnnouncementPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [expandedIndices, setExpandedIndices] = useState([]);
+  const [totalResultCount, setTotalResultCount] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const [startIndex, setStartIndex] = useState(0);
+  const [endIndex, setEndIndex] = useState(0);
+  const [finalAnnouncementPageData, setFinalAnnouncementPageData] = useState(announcementPageData);
   const navigator = useNavigate();
   const toggleExpand = (index) => {
     setExpandedIndices(prev =>
@@ -218,14 +227,40 @@ const AnnouncementPage = () => {
     );
   };
 
-  const totalResults = announcementPageData.length;
-  const totalPages = Math.ceil(totalResults / resultsPerPage);
+  useEffect(() => {
 
-  const startIdx = (currentPage - 1) * resultsPerPage;
-  const endIdx = Math.min(startIdx + resultsPerPage, totalResults);
+    let filteredAnnouncementPageData = [];
+    if (selectedOption === 0) {
+      filteredAnnouncementPageData = announcementPageData;
+    } else {
+      filteredAnnouncementPageData = announcementPageData.filter((a) => a.type === selectedOption);
+    }
+    setFinalAnnouncementPageData(filteredAnnouncementPageData);
+    calculatePageInfo(filteredAnnouncementPageData);
+
+  }, [selectedOption])
+
+
+  useEffect(() => {
+    calculatePageInfo(announcementPageData);
+  }, [])
+
+
+  const calculatePageInfo = (announcementPageData) => {
+    const totalResults = announcementPageData.length;
+    const totalPages = Math.ceil(totalResults / resultsPerPage);
+
+    const startIdx = (currentPage - 1) * resultsPerPage;
+    const endIdx = Math.min(startIdx + resultsPerPage, totalResults);
+
+    setTotalResultCount(totalResults);
+    setTotalPage(totalPages);
+    setStartIndex(startIdx);
+    setEndIndex(endIdx);
+  }
 
   const handlePageChange = (page) => {
-    if (page > 0 && page <= totalPages) {
+    if (page > 0 && page <= totalPage) {
       setCurrentPage(page);
     }
   };
@@ -252,11 +287,11 @@ const AnnouncementPage = () => {
       </div>
       <div className='announcementBody'>
         {
-          announcementPageData.slice(startIdx, endIdx).map((content, idx) => {
+          finalAnnouncementPageData.slice(startIndex, endIndex).map((content, idx) => {
             const isExpanded = expandedIndices.includes(idx);
 
             return (
-              (selectedOption == 0 || content.type == selectedOption) &&
+              (selectedOption === 0 || content.type === selectedOption) &&
               <div key={idx} className={'announcementCard'}>
                 <div className="sectionOne">
                   <div className='sectionOne-first'>
@@ -277,7 +312,7 @@ const AnnouncementPage = () => {
                 }
 
                 {
-                  content.type == 2 &&
+                  content.type === 2 &&
                   <span
                     onClick={() => {
                       navigator("/release_notes/detail")
@@ -303,11 +338,11 @@ const AnnouncementPage = () => {
             </select>
           </div>
           <div>
-            Showing {startIdx + 1}-{endIdx} of {totalResults}
+            Showing {startIndex + 1}-{endIndex} of {totalResultCount}
           </div>
           <div className="pageNavigation">
             <span className="arrow" onClick={() => handlePageChange(currentPage - 1)}>&lt;</span>
-            {Array.from({ length: totalPages }, (_, idx) => (
+            {Array.from({ length: totalPage }, (_, idx) => (
               <span key={idx} className={currentPage === idx + 1 ? 'selected' : 'pageNumbers'} onClick={() => handlePageChange(idx + 1)}>
                 {idx + 1}
               </span>
