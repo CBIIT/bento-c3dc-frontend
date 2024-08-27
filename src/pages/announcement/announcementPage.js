@@ -280,7 +280,7 @@ const AnnouncementPage = () => {
                   content.type == 2 &&
                   <span
                     onClick={() => {
-                      navigator("/release_notes")
+                      navigator("/release_notes/detail")
                     }}
                     className='announcementButton'>
                     Latest Release
