@@ -41,10 +41,10 @@ export const externalLinkIcon = {
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
-  # Demographics
-  $participant_ids: [String],
-  $race: [String],
-  $sex_at_birth: [String],
+    # Demographics
+    $participant_ids: [String],
+    $race: [String],
+    $sex_at_birth: [String],
 
     # Diagnoses
     $age_at_diagnosis: [Int],
@@ -77,10 +77,10 @@ query search(
     $response_system: [String]
 ) {
 getParticipants(
-  # Demographics
-  participant_ids: $participant_ids,
-  race: $race,
-  sex_at_birth: $sex_at_birth,
+    # Demographics
+    participant_ids: $participant_ids,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -120,45 +120,49 @@ getParticipants(
     numberOfTreatments
     numberOfTreatmentResponses
 
-  # Widget counts
- 
-  participantCountByRace {
-    group
-    subjects
-    __typename
-  }
-  participantCountBySexAtBirth {
-    group
-    subjects
-    __typename
-  }
-  participantCountByAgeAtDiagnosis {
-    group
-    subjects
-    __typename
-  }
-  participantCountByAnatomicSite {
-    group
-    subjects
-    __typename
-  }
-  participantCountByDiagnosis {
-    group
-    subjects
-    __typename
-  }
+    # Widget counts
+    participantCountByRace {
+      group
+      subjects
+      __typename
+    }
+    participantCountBySexAtBirth {
+      group
+      subjects
+      __typename
+    }
+    participantCountByAgeAtDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    participantCountByAnatomicSite {
+      group
+      subjects
+      __typename
+    }
+    participantCountByDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    participantCountByTreatmentType {
+      group
+      subjects
+      __typename
+    }
 
-
-  filterParticipantCountByRace {
-    group
-    subjects
-    __typename
-  }
-  filterParticipantCountBySexAtBirth {
-    group
-    subjects
-    __typename
-  }
+    # Demographic filter counts
+    filterParticipantCountByRace {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountBySexAtBirth {
+      group
+      subjects
+      __typename
+    }
 
     # Diagnosis filter counts
     filterParticipantCountByAgeAtDiagnosis {
@@ -227,12 +231,6 @@ getParticipants(
       subjects
       __typename
     }
-  
- filterParticipantCountByCauseOfDeath {
-    group
-    subjects
-    __typename
-  }
 
     # Treatment filter counts
     filterParticipantCountByAgeAtTreatmentStart {
