@@ -532,4 +532,10 @@ export const widgetConfig = [
     width: '100%',
     height: 210,
   },
+  {
+    type: 'donut',
+    title: 'Treatment Type',
+    dataName: 'participantCountByTreatmentType',
+    sliceTitle: 'Participants',
+  },
 ];

@@ -52,6 +52,7 @@ const TabView = (props) => {
     ...initailState,
     title: config.name,
     query: config.api,
+    downloadButtonTooltipText: "Download data in CSV or JSON format",
     paginationAPIField: config.paginationAPIField,
     dataKey: config.dataKey,
     columns: configColumn(config.columns),
