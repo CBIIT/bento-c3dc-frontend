@@ -444,6 +444,7 @@ survivalOverview(
     # Study
     dbgap_accession
     # Survival
+    survival_id
     age_at_last_known_survival_status
     cause_of_death
     first_event
@@ -648,7 +649,8 @@ query diagnosisOverview(
     diagnosis_classification_system
     disease_phase
     tumor_classification
-
+    diagnosis_id
+    
     # Study
     dbgap_accession
     __typename
@@ -1408,8 +1410,6 @@ export const tabContainers = [
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
       }
-
-
     ],
     id: 'study_tab',
     tabIndex: '4',
@@ -1525,8 +1525,8 @@ export const tabContainers = [
       },
       {
         dataField: 'diagnosis_id',
-        header: 'Diagnosis ID',
-        display: false,
+        header: 'Diagnosis Id',
+        display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1675,14 +1675,14 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: "treatment_id",
-        header: "Treatment ID",
+        header: "Treatment Id",
         display: true,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
@@ -1766,14 +1766,14 @@ export const tabContainers = [
     columns: [
       {
         dataField: 'participant_id',
-        header: 'Participant ID',
+        header: 'Participant Id',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: "treatment_response_id",
-        header: "Treatment Response ID",
+        header: "Treatment Response Id",
         display: true,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
@@ -1787,7 +1787,7 @@ export const tabContainers = [
       },
       {
         dataField: 'age_at_response',
-        header: 'Age At Response',
+        header: 'Age at Response',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1881,8 +1881,8 @@ export const tabContainers = [
       },
       {
         dataField: "survival_id",
-        header: "Survival ID",
-        display: false,
+        header: "Survival Id",
+        display: true,
         tooltipText: "sort",
         role: "cellTypes.DISPLAY"
       },
@@ -1924,6 +1924,13 @@ export const tabContainers = [
         role: cellTypes.DISPLAY,
       },
       {
+        dataField: 'cause_of_death',
+        header: 'Cause of Death',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
@@ -1933,14 +1940,8 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
-      },
-      {
-        dataField: 'cause_of_death',
-        header: 'Cause Of Death',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
       }
+      
     ],
     id: 'survival_tab',
     tabIndex: '1',
