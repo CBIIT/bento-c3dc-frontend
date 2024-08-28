@@ -152,7 +152,7 @@ export const navbarSublists = {
       },
       {
         name: 'Announcements',
-        link: '/announcement',
+        link: '/announcements',
         className: 'navMobileSubItem',
       },
       {
