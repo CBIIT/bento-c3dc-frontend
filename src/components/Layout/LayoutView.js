@@ -34,7 +34,7 @@ const Layout = () => {
           <Route path="/:studyId" element={<StudyDetail />} />          
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
-          <Route path="/announcement" element={<AnnouncementPage />} />
+          <Route path="/announcements" element={<AnnouncementPage />} />
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
           <Route path="/release_notes" element={<PdfReader />} />
