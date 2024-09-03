@@ -1419,13 +1419,13 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
-    /*
-    addFilesRequestVariableKey: 'study_ids',
-    addFilesResponseKeys: ['fileIDsFromList'],
-    addAllFilesResponseKeys: ['studyOverview', 'files'],
-    addAllFileQuery: GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART,
-    addSelectedFilesQuery: GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL,
-    */
+    
+    // addFilesRequestVariableKey: 'study_ids',
+    // addFilesResponseKeys: ['fileIDsFromList'],
+    // addAllFilesResponseKeys: ['studyOverview', 'files'],
+    // addAllFileQuery: GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART,
+    // addSelectedFilesQuery: GET_ALL_FILEIDS_STUDYISTAB_FOR_SELECT_ALL,
+    
   },
   {
     name: 'Participants',
@@ -1590,7 +1590,7 @@ export const tabContainers = [
       {
         dataField: 'toronto_childhood_cancer_staging',
         header: 'Toronto Childhood Cancer Staging',
-        display: false,
+        display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
