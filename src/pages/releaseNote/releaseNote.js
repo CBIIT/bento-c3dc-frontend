@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import header from '../../assets/announcement/header.svg';
+import header from '../../assets/releaseNotes/headerImage.svg';
 import { defaultVersion, releaseNotePageData, versionList } from '../../bento/releaseNotePageData';
-import { ArrowBackOutlined, ArrowDropUp, ArrowRight, ArrowUpward, ArrowUpwardSharp } from '@material-ui/icons';
+import { ArrowDropUp, ArrowRight } from '@material-ui/icons';
 import exportIcon from '../../assets/about/Export_Icon.svg';
-//import header from '../../assets/announcement/header.svg';
 
 
 const ReleaseNoteContainer = styled.div`
@@ -60,7 +59,7 @@ const ReleaseNoteContainer = styled.div`
    overflow-y: scroll;
    }
 .releaseNoteSection {
-   width: 706px;
+   width: 708px;
    height: 719px;
    border: 2px #9FBEB5 solid;
    border-radius: 20px;
@@ -84,10 +83,6 @@ font-weight: 700;
 line-height: 23.2px;
 text-align: left;
 }
-
-
-
-
 
 
 
@@ -263,32 +258,30 @@ margin-bottom: 2px;
 
 
 
- function ReleaseNotePage() {
+function ReleaseNotePage() {
   const [list_versions, setListVersions] = useState(releaseNotePageData);
   const [selectedVersion, setSelectedVersion] = useState(defaultVersion);
- 
- 
+
+
   const handelYearSelection = index => {
     let versions = list_versions.map((res, i) => {
       if (i === index) {
         res.is_open = !res.is_open;
-      } else if (i !== index) {
-        // res.is_open = false;
       }
       return res;
     });
- 
- 
+
+
     setListVersions(versions);
   };
- 
- 
- 
- 
-  const handelCheckbox = (yearIndex,versionIndex,version) => {
+
+
+
+
+  const handelCheckbox = (yearIndex, versionIndex, version) => {
     let versions = list_versions.map((res, i) => {
       if (i === yearIndex) {
-        
+
         res.versions.map((version, index) => {
           if (index === versionIndex) {
             version.selected = !version.selected;
@@ -297,7 +290,7 @@ margin-bottom: 2px;
           }
           return version;
         });
-      }else{
+      } else {
         res.versions.map((version, index) => {
           version.selected = false;
           return version;
@@ -308,68 +301,68 @@ margin-bottom: 2px;
     setListVersions(versions);
     setSelectedVersion(version);
   }
- 
- 
- 
- 
+
+
+
+
   return (
     <ReleaseNoteContainer>
       <div className='releaseNoteHeader'>
         <div className='releaseNoteHeaderText'>Release Notes</div>
       </div>
- 
- 
+
+
       <div className='releaseNoteBody'>
         <div>
-        <div className='versionSelector'>
-          <div className='yearsectionTitle'>{'RELEASE NOTES'}</div>
-          {list_versions.map((release, yearIndex) => {
-            return (
-              <>
-                <button
-                  onClick={() => {
-                    handelYearSelection(yearIndex);
-                  }}
-                  className='year'
-                >
-                  { release.is_open? <ArrowDropUp /> : <ArrowRight />}
-                   {release.Year}{' '}
-                </button>
-                <div className='version_list'>
-                  {release.is_open &&
-                    release.versions.map((versions, versionIndex) => {
-                      return (
-                        <button className='version'>
-                          <div>
-                            <input
-                              onChange={() => {
-                                handelCheckbox(yearIndex, versionIndex, versions.Version);
-                              }}
-                              checked={versions.selected}
-                              className='checkbox'
-                              type='checkbox'
-                              name=''
-                            />
-                            {versions.Version}
-                          </div>
-                          <span className='date'>{versions.date}</span>
-                        </button>
-                      );
-                    })}
-                </div>
-              </>
-            );
-          })}
+          <div className='versionSelector'>
+            <div className='yearsectionTitle'>{'RELEASE NOTES'}</div>
+            {list_versions.map((release, yearIndex) => {
+              return (
+                <>
+                  <button
+                    onClick={() => {
+                      handelYearSelection(yearIndex);
+                    }}
+                    className='year'
+                  >
+                    {release.is_open ? <ArrowDropUp /> : <ArrowRight />}
+                    {release.Year}{' '}
+                  </button>
+                  <div className='version_list'>
+                    {release.is_open &&
+                      release.versions.map((versions, versionIndex) => {
+                        return (
+                          <button className='version'>
+                            <div>
+                              <input
+                                onChange={() => {
+                                  handelCheckbox(yearIndex, versionIndex, versions.Version);
+                                }}
+                                checked={versions.selected}
+                                className='checkbox'
+                                type='checkbox'
+                                name=''
+                              />
+                              {versions.Version}
+                            </div>
+                            <span className='date'>{versions.date}</span>
+                          </button>
+                        );
+                      })}
+                  </div>
+                </>
+              );
+            })}
+          </div>
+
         </div>
-        <span className="linkOutText">Software Release Notes</span>
-        </div>
- 
+
         <div className='releaseNoteSection' dangerouslySetInnerHTML={{ __html: versionList[selectedVersion] }} >
-    
+
         </div>
-     </div>
+      </div>
     </ReleaseNoteContainer>
   );
- }
- 
+}
+
 export default ReleaseNotePage;
