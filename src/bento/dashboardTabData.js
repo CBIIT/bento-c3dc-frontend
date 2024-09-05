@@ -354,7 +354,7 @@ query fileOverview(
 `;
 
 export const GET_SURVIVAL_OVERVIEW_QUERY = gql`
-  query survivalOverview(
+query survivalOverview(
     # Demographics
     $participant_ids: [String],
     $race: [String],
@@ -395,7 +395,6 @@ export const GET_SURVIVAL_OVERVIEW_QUERY = gql`
     $offset: Int,
     $order_by: String,
     $sort_direction: String
-    # Table config
 ) {
 survivalOverview(
     # Demographics
@@ -414,6 +413,7 @@ survivalOverview(
     # Studies
     dbgap_accession: $dbgap_accession,
     study_name: $study_name,
+
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
     cause_of_death: $cause_of_death,
@@ -431,7 +431,7 @@ survivalOverview(
     age_at_response: $age_at_response,
     response_category: $response_category,
     response_system: $response_system,
-   
+
     # Table config
     first: $first,
     offset: $offset,
@@ -443,12 +443,14 @@ survivalOverview(
 
     # Study
     dbgap_accession
+
     # Survival
     survival_id
     age_at_last_known_survival_status
     cause_of_death
     first_event
     last_known_survival_status
+
     __typename
 }}
 `;
@@ -554,10 +556,10 @@ query participantOverview(
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
 query diagnosisOverview(
-  # Demographics
-  $participant_ids: [String],
-  $race: [String],
-  $sex_at_birth: [String],
+    # Demographics
+    $participant_ids: [String],
+    $race: [String],
+    $sex_at_birth: [String],
 
     # Diagnoses
     $age_at_diagnosis: [Int],
@@ -595,12 +597,11 @@ query diagnosisOverview(
     $order_by: String,
     $sort_direction: String
 ) {
-  diagnosisOverview(
-      # Demographics
-      participant_ids: $participant_ids,
-      race: $race,
-      sex_at_birth: $sex_at_birth,
-      
+diagnosisOverview(
+    # Demographics
+    participant_ids: $participant_ids,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -642,15 +643,21 @@ query diagnosisOverview(
     participant_id
 
     # Diagnosis
+    diagnosis_id
     age_at_diagnosis
     anatomic_site
     diagnosis_basis
     diagnosis
+    diagnosis_comment
     diagnosis_classification_system
     disease_phase
     tumor_classification
-    diagnosis_id
-    
+    toronto_childhood_cancer_staging
+    tumor_grade
+    tumor_stage_clinical_t
+    tumor_stage_clinical_n
+    tumor_stage_clinical_m
+
     # Study
     dbgap_accession
     __typename
