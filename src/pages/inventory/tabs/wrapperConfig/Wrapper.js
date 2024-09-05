@@ -1,13 +1,27 @@
 import {
   btnTypes,
-  //types,
+  types,
 } from '@bento-core/paginated-table';
-/*
+import React, { useState } from 'react';
 import {
   tooltipContentAddAll, tooltipContent,
 } from '../../../../bento/dashboardTabData';
 import { alertMessage } from '../../../../bento/fileCentricCartWorkflowData';
-*/
+import { Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
+import { customTheme } from './Theme';
+import { CustomDropDown } from './CustomDropDown';
+
+
+
+
+const options = [
+  "cohrot 2020 232323",
+  "cohrot 2020 1293",
+  "cohrot 2020 3425",
+  "cohrot 2020 9923",
+
+
+]
 
 export const layoutConfig = [{
   container: 'buttons',
@@ -22,13 +36,13 @@ export const layoutConfig = [{
 * CAUTION: provide position of table component
 */
 export const wrapperConfig = [
-  /*{
+  {
   container: 'buttons',
   size: 'xl',
   clsName: 'container_header',
   items: [
     {
-      title: 'ADD ALL FILTERED FILES',
+      title: 'Create Cohort',
       clsName: 'add_all_button',
       type: types.BUTTON,
       role: btnTypes.ADD_ALL_FILES,
@@ -38,7 +52,23 @@ export const wrapperConfig = [
       alertMessage,
     },
     {
-      title: 'ADD SELECTED FILES',
+      title: 'Add Participants to Existing Cohort',
+      clsName: 'add_selected_button',
+      type: types.CUSTOM_ELEM,
+      role: btnTypes.ADD_SELECTED_FILES,
+      btnType: btnTypes.ADD_SELECTED_FILES,
+      tooltipCofig: tooltipContent,
+      conditional: true,
+      CustomViewElem: ()=> {
+
+        return(
+
+          <CustomDropDown options={options} />
+         )
+      }
+    },
+    {
+      title: 'View All Cohorts',
       clsName: 'add_selected_button',
       type: types.BUTTON,
       role: btnTypes.ADD_SELECTED_FILES,
@@ -47,38 +77,19 @@ export const wrapperConfig = [
       conditional: true,
       alertMessage,
     }],
-},*/
+},
 {
   container: 'paginatedTable',
   paginatedTable: true,
 },
-/*{
+{
   
   container: 'buttons',
   size: 'xl',
   clsName: 'container_footer',
   items: [
-    {
-      title: 'ADD ALL FILTERED FILES',
-      clsName: 'add_all_button',
-      type: types.BUTTON,
-      role: btnTypes.ADD_ALL_FILES,
-      btnType: btnTypes.ADD_ALL_FILES,
-      tooltipCofig: tooltipContentAddAll,
-      conditional: false,
-      alertMessage,
-    },
-    {
-      title: 'ADD SELECTED FILES',
-      clsName: 'add_selected_button',
-      type: types.BUTTON,
-      role: btnTypes.ADD_SELECTED_FILES,
-      btnType: btnTypes.ADD_SELECTED_FILES,
-      tooltipCofig: tooltipContent,
-      conditional: true,
-      alertMessage,
-    }],
-  },*/
+    ],
+  },
 ];
 
 
