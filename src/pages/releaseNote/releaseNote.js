@@ -4,7 +4,7 @@ import header from '../../assets/releaseNotes/headerImage.svg';
 import { defaultVersion, releaseNotePageData, versionList } from '../../bento/releaseNotePageData';
 import { ArrowDropUp, ArrowRight } from '@material-ui/icons';
 import exportIcon from '../../assets/about/Export_Icon.svg';
-
+import "./scrollBarConfig.css";
 
 const ReleaseNoteContainer = styled.div`
  margin: 0 auto;
