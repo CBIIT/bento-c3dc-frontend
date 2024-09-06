@@ -1597,7 +1597,7 @@ export const tabContainers = [
       {
         dataField: 'toronto_childhood_cancer_staging',
         header: 'Toronto Childhood Cancer Staging',
-        display: true,
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
