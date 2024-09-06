@@ -5,11 +5,10 @@ export const releaseNotePageData = [
         Year: '2024',
         is_open: true,
         versions: [
-            { Version: 'Data Release 4.0', date: ' October 30, 2024', selected: true },
-            { Version: 'Data Release 3.0', date: 'July 31, 2024', selected: false },
+            { Version: 'Data Release 4.0', date: 'Oct 30, 2024', selected: true },
+            { Version: 'Data Release 3.0', date: 'Jul 31, 2024', selected: false },
             { Version: 'Data Release 2.0', date: 'May 1, 2024', selected: false },
-            { Version: 'Data Release 1.0', date: 'March 8, 2024', selected: false },
-
+            { Version: 'Data Release 1.0', date: 'Mar 8, 2024', selected: false },
         ],
     },
 ];
