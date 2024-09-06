@@ -1,0 +1,15 @@
+.releaseNoteSection::-webkit-scrollbar {
+    width: 6px;
+}
+
+.releaseNoteSection::-webkit-scrollbar-thumb {
+    background: #003F74;
+}
+
+.optionContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+.optionContainer::-webkit-scrollbar-thumb {
+    background: #003F74;
+}
