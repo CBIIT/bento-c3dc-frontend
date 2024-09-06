@@ -283,76 +283,6 @@ getParticipants(
 }}
 `;
 
-export const GET_FILES_OVERVIEW_QUERY = gql`
-query fileOverview(
-    $participant_ids: [String],
-    $gender: [String] ,
-    $race: [String] ,
-    $age_at_diagnosis: [Int] ,
-    $diagnosis_anatomic_site: [String] ,
-    $disease_phase: [String] ,
-    $diagnosis_icd_o: [String] ,
-    $vital_status: [String] ,
-    $sample_anatomic_site: [String] ,
-    $participant_age_at_collection: [Int] ,
-    $sample_tumor_status: [String] ,
-    $tumor_classification: [String] ,
-    $assay_method: [String],
-    $file_type: [String],
-    $dbgap_accession: [String],
-    $grant_id: [String],
-    $institution: [String],
-    $study_name: [String],
-    $library_selection: [String],
-    $library_source: [String],
-    $library_strategy: [String],
-    $first: Int, 
-    $offset: Int, 
-    $order_by: String,
-    $sort_direction: String ){
-    fileOverview(
-        participant_ids: $participant_ids,
-        gender: $gender,
-        race: $race,
-        age_at_diagnosis: $age_at_diagnosis,
-        diagnosis_anatomic_site: $diagnosis_anatomic_site,
-        disease_phase: $disease_phase,
-        diagnosis_icd_o: $diagnosis_icd_o,
-        vital_status: $vital_status,
-        sample_anatomic_site: $sample_anatomic_site,
-        participant_age_at_collection: $participant_age_at_collection,
-        sample_tumor_status: $sample_tumor_status,
-        tumor_classification: $tumor_classification,
-        assay_method: $assay_method,
-        file_type: $file_type,
-        dbgap_accession: $dbgap_accession,       
-        grant_id: $grant_id,
-        institution: $institution,
-        study_name: $study_name,
-        library_selection: $library_selection,
-        library_source: $library_source,
-        library_strategy: $library_strategy,
-        first: $first, 
-        offset: $offset, 
-        order_by: $order_by,
-        sort_direction: $sort_direction
-    ){
-        id
-        file_name
-        file_category
-        file_description
-        file_type
-        file_size
-        study_id
-        participant_id
-        sample_id
-        file_id
-        guid
-        md5sum
-    }
-}
-`;
-
 export const GET_SURVIVAL_OVERVIEW_QUERY = gql`
 query survivalOverview(
     # Demographics
@@ -443,6 +373,7 @@ survivalOverview(
 
     # Study
     dbgap_accession
+    study_id
 
     # Survival
     survival_id
@@ -500,10 +431,10 @@ query participantOverview(
     $sort_direction: String
 ) {
   participantOverview(
-      # Demographics
-      participant_ids: $participant_ids,
-      race: $race,
-      sex_at_birth: $sex_at_birth,
+    # Demographics
+    participant_ids: $participant_ids,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -535,11 +466,11 @@ query participantOverview(
     response_category: $response_category,
     response_system: $response_system,
 
-      # Table config
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
   ) {
       # Participants
       participant_id
@@ -660,16 +591,18 @@ diagnosisOverview(
 
     # Study
     dbgap_accession
+    study_id
+
     __typename
 }}
 `;
 
 export const GET_STUDY_OVERVIEW_QUERY = gql`
 query studyOverview(
-  # Demographics
-  $participant_ids: [String],
-  $race: [String],
-  $sex_at_birth: [String],
+    # Demographics
+    $participant_ids: [String],
+    $race: [String],
+    $sex_at_birth: [String],
 
     # Diagnoses
     $age_at_diagnosis: [Int],
@@ -708,10 +641,10 @@ query studyOverview(
     $sort_direction: String
 ) {
   studyOverview(
-      # Demographics
-      participant_ids: $participant_ids,
-      race: $race,
-      sex_at_birth: $sex_at_birth,
+    # Demographics
+    participant_ids: $participant_ids,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
     # Diagnoses
     age_at_diagnosis: $age_at_diagnosis,
@@ -743,11 +676,11 @@ query studyOverview(
     response_category: $response_category,
     response_system: $response_system,
 
-      # Table config
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
   ) {
       # Studies
       consent
@@ -778,16 +711,6 @@ query search (
 ){
   fileIDsFromList (          
     sample_ids: $sample_ids,
-  ) 
-}
-  `;
-
-export const GET_ALL_FILEIDS_FILESTAB_FOR_SELECT_ALL = gql`
-query search (          
-  $file_ids: [String] 
-){
-  fileIDsFromList (          
-      file_ids: $file_ids
   ) 
 }
   `;
@@ -1243,6 +1166,7 @@ query treatmentOverview(
         treatment_type
         treatment_agent
         dbgap_accession
+        study_id
         __typename
     }
 }`;
@@ -1336,6 +1260,7 @@ treatmentResponseOverview(
 
     # Study
     dbgap_accession
+    study_id
 
     # Treatment Response
     treatment_response_id
@@ -1343,7 +1268,7 @@ treatmentResponseOverview(
     age_at_response
     response_category
     response_system
-dbgap_accession
+    dbgap_accession
     __typename
 }}`;
 
@@ -1371,6 +1296,13 @@ export const tabContainers = [
       },
     },
     columns: [
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
       {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
@@ -1491,7 +1423,15 @@ export const tabContainers = [
           },
           cellType: cellTypes.CUSTOM_ELEM,
         },
-      }
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
     ],
     id: 'participant_tab',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
@@ -1639,6 +1579,14 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
       },
 
 
@@ -1732,6 +1680,14 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
       },
 
     ],
@@ -1823,6 +1779,14 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
       },
     ],
     id: 'treatment_response_tab',
@@ -1874,10 +1838,6 @@ export const tabContainers = [
       opacity: 'unset',
       border: 'unset',
     },
-
-
-
-
     columns: [
       {
         dataField: 'participant_id',
@@ -1947,7 +1907,15 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
-      }
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
       
     ],
     id: 'survival_tab',
