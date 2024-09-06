@@ -23,7 +23,6 @@ const ReleaseNoteContainer = styled.div`
    color: #FFFFFF;
    text-align: center;
    margin-top: 0px;
-  
    background-repeat: no-repeat;
    background-position: center;
    background-size: 100%;
@@ -35,28 +34,42 @@ const ReleaseNoteContainer = styled.div`
    align-items: center;
    padding: 0px;
    }
+
  .releaseNoteBody {
    display: flex;
    justify-content: center;
    gap: 30px;
    margin-top: 40px;
-   background-size: cover;  /* Ensures the background image covers the entire container */
-   background-repeat: no-repeat;  /* Disable repeating */
-   background-position: center;  /* Center the image */
+   background-size: cover; 
+   background-repeat: no-repeat;
+   background-position: center;  
    flex-direction: row;
    align-items: flex-start;
    background-width: 100%;
    padding-bottom: 100px;
    height: 800px;
  }
+   .optionContainer{
+   overflow-y: scroll;
+   height: 240px;
+   }
 .versionSelector {
    width: 303px;
    height: 314px;
    border: 2px #4D7874 solid;
    border-radius: 20px;
-   background-color: white;  
+   background-color: white; 
    overflow:hidden;
+   }
+   .optionContaine{
    overflow-y: scroll;
+   }
+
+   .releaseNoteSectionContainer{
+      width: 708px;
+      height: 719px;
+      border-radius: 20px;
+      overflow-y: scroll;
    }
 .releaseNoteSection {
    width: 708px;
@@ -69,13 +82,15 @@ const ReleaseNoteContainer = styled.div`
    padding: 25px;
    padding-top: 15px;
    overflow-y: scroll;
-font-family: Nunito;
-font-size: 16px;
-font-weight: 400;
-line-height: 23.2px;
-text-align: left;
+    font-family: Nunito;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 23.2px;
+    text-align: left;
+    color: #00000;
 
 }
+
 .second-title {
 font-family: Nunito;
 font-size: 16px;
@@ -84,12 +99,10 @@ line-height: 23.2px;
 text-align: left;
 }
 
-
-
 .releaseNoteSection .title{
    color: #00838F;
    font-size: 30px;
-   font-weight: 900;
+   font-weight: 500;
    font-family: Poppins;
    font-size: 28px;
    line-height: 32px;
@@ -98,16 +111,15 @@ text-align: left;
    margin-bottom: 10px;
 }
 
-
  .date{
-
-font-family: Nunito;
-font-size: 11px;
-font-weight: 600;
-line-height: 15px;
-letter-spacing: 0.03em;
-text-align: right;
-color: #000;
+  font-family: Nunito;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 15px;
+  letter-spacing: 0.03em;
+  text-align: right;
+  color: #000;
+  text-transform: Uppercase;
 }
 
  .releaseLink {
@@ -128,11 +140,13 @@ color: #000;
        justify-content: space-between;
        margin-bottom: 30px;
    }
+
 .sectionOne-first {
      display: flex;
      flex-direction: column;
      width: 65%;
  }
+
 .releaseNoteContent{
      font-family: Inter;
      font-size: 16px;
@@ -141,6 +155,7 @@ color: #000;
      text-align: left;
      margin-top: 10px;
    }
+
  .releaseNoteButton{
    font-family: Poppins;
    font-size: 12px;
@@ -154,6 +169,7 @@ color: #000;
    margin: 10px;
    margin-top: 40px;
 }
+
 .releaseNotePagination {
    display: flex;
    flex-direction: row;
@@ -165,9 +181,9 @@ color: #000;
    padding: 20px 0;
    font-size: 14px;
  }
+
  .versionSelector .yearsectionTitle{
    width: 100%;
-   
    position: relative;
    height: 51px;
    background: #F4F4F4;
@@ -179,8 +195,8 @@ color: #000;
     font-size: 15px;
     font-weight: 600;
     text-align: left;
-
  }
+
 .versionSelector .year{
  width: 100%;
  height: 40px;
@@ -199,8 +215,8 @@ font-weight: 600;
 line-height: 24px;
 letter-spacing: -0.02em;
 text-align: left;
-
 }
+
  .version{
    width: 100%;
    height: 28px;
@@ -253,17 +269,14 @@ margin-bottom: 2px;
    margin: 10px;
  }
 
-
 `;
-
 
 
 function ReleaseNotePage() {
   const [list_versions, setListVersions] = useState(releaseNotePageData);
   const [selectedVersion, setSelectedVersion] = useState(defaultVersion);
 
-
-  const handelYearSelection = index => {
+  const handleYearSelection = index => {
     let versions = list_versions.map((res, i) => {
       if (i === index) {
         res.is_open = !res.is_open;
@@ -271,14 +284,10 @@ function ReleaseNotePage() {
       return res;
     });
 
-
     setListVersions(versions);
   };
 
-
-
-
-  const handelCheckbox = (yearIndex, versionIndex, version) => {
+  const handleClick = (yearIndex, versionIndex, version) => {
     let versions = list_versions.map((res, i) => {
       if (i === yearIndex) {
 
@@ -302,63 +311,54 @@ function ReleaseNotePage() {
     setSelectedVersion(version);
   }
 
-
-
-
   return (
     <ReleaseNoteContainer>
       <div className='releaseNoteHeader'>
-        <div className='releaseNoteHeaderText'>Release Notes</div>
+        <div className='releaseNoteHeaderText'>Data Update</div>
       </div>
-
-
       <div className='releaseNoteBody'>
         <div>
           <div className='versionSelector'>
-            <div className='yearsectionTitle'>{'RELEASE NOTES'}</div>
-            {list_versions.map((release, yearIndex) => {
-              return (
-                <>
-                  <button
-                    onClick={() => {
-                      handelYearSelection(yearIndex);
-                    }}
-                    className='year'
-                  >
-                    {release.is_open ? <ArrowDropUp /> : <ArrowRight />}
-                    {release.Year}{' '}
-                  </button>
-                  <div className='version_list'>
-                    {release.is_open &&
-                      release.versions.map((versions, versionIndex) => {
-                        return (
-                          <button className='version'>
-                            <div>
-                              <input
-                                onChange={() => {
-                                  handelCheckbox(yearIndex, versionIndex, versions.Version);
-                                }}
-                                checked={versions.selected}
-                                className='checkbox'
-                                type='checkbox'
-                                name=''
-                              />
-                              {versions.Version}
-                            </div>
-                            <span className='date'>{versions.date}</span>
-                          </button>
-                        );
-                      })}
-                  </div>
-                </>
-              );
-            })}
+            <div className='yearsectionTitle'>{'RELEASE VERSIONS'}</div>
+            <div className="optionContainer">
+              {list_versions.map((release, yearIndex) => {
+                return (
+                  <>
+                    <button
+                      onClick={() => {
+                        handleYearSelection(yearIndex);
+                      }}
+                      className='year'
+                    >
+                      {release.is_open ? <ArrowDropUp /> : <ArrowRight />}
+                      {release.Year}{' '}
+                    </button>
+                    <div className='version_list'>
+                      {release.is_open &&
+                        release.versions.map((versions, versionIndex) => {
+                          return (
+                            <button onClick={() => {
+                              handleClick(yearIndex, versionIndex, versions.Version);
+                            }} className='version'>
+                              <div>
+
+                                {versions.Version}
+                              </div>
+                              <span className='date'>{versions.date}</span>
+                            </button>
+                          );
+                        })}
+                    </div>
+                  </>
+                );
+              })}
+            </div>
           </div>
 
         </div>
-
-        <div className='releaseNoteSection' dangerouslySetInnerHTML={{ __html: versionList[selectedVersion] }} >
-
+        <div className="releaseNoteSectionContainer">
+          <div className='releaseNoteSection' dangerouslySetInnerHTML={{ __html: versionList[selectedVersion] }} >
+          </div>
         </div>
       </div>
     </ReleaseNoteContainer>
