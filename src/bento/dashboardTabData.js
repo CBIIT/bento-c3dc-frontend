@@ -1667,7 +1667,7 @@ export const tabContainers = [
     defaultSortDirection: 'asc',
     count: 'numberOfTreatments',
     fileCount: 'treatmentFileCount',
-    dataKey: 'id',
+    dataKey: 'participant_id',
     tableID: 'treatment_tab_table',
     toolTipText: 'Count of Treatment Record',
     extendedViewConfig: {
@@ -1680,6 +1680,11 @@ export const tabContainers = [
       },
     },
     columns: [
+      {
+        cellType: cellTypes.CHECKBOX,
+        display: true,
+        role: cellTypes.CHECKBOX,
+      },
       {
         dataField: 'participant_id',
         header: 'Participant Id',

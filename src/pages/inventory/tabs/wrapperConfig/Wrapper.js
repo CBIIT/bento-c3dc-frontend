@@ -59,11 +59,11 @@ export const wrapperConfig = [
       btnType: btnTypes.ADD_SELECTED_FILES,
       tooltipCofig: tooltipContent,
       conditional: true,
-      CustomViewElem: ()=> {
+      CustomViewElem: ({callBack})=> {
 
         return(
 
-          <CustomDropDown options={options} />
+          <CustomDropDown options={options} callBack={callBack} />
          )
       }
     },

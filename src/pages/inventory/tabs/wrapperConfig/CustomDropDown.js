@@ -1,5 +1,5 @@
 import { ArrowDownward, ArrowDropDownOutlined, ArrowUpwardRounded } from '@material-ui/icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const DropdownContainer = styled.div`
@@ -90,13 +90,17 @@ const DropdownItem = styled.li`
   }
 `;
 
-export const CustomDropDown = ({options}) => {
+export const CustomDropDown = ({options,callBack}) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
-
+  
+  let listOfChcekdItems = callBack();
+ 
   const handleSelect = (value) => {
+    
+    console.log("kkkkkkk: ", listOfChcekdItems);
     setSelectedValue(value);
     setIsOpen(false);
   };
