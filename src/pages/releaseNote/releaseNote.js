@@ -5,6 +5,7 @@ import { defaultVersion, releaseNotePageData, versionList } from '../../bento/re
 import { ArrowDropUp, ArrowRight } from '@material-ui/icons';
 import exportIcon from '../../assets/about/Export_Icon.svg';
 import "./scrollBarConfig.css";
+import CustomBreadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 
 const ReleaseNoteContainer = styled.div`
  margin: 0 auto;
@@ -276,6 +277,21 @@ function ReleaseNotePage() {
   const [list_versions, setListVersions] = useState(releaseNotePageData);
   const [selectedVersion, setSelectedVersion] = useState(defaultVersion);
 
+  const breadCrumbJson = [{
+    name: 'Home',
+    to: '/',
+    isALink: true,
+  }, {
+    name: 'C3DC Announcements',
+    to: '/announcements',
+    isALink: true,
+  }, {
+    name: 'Data Update',
+    to: '/data_update',
+    isALink: false,
+  } 
+];
+
   const handleYearSelection = index => {
     let versions = list_versions.map((res, i) => {
       if (i === index) {
@@ -312,6 +328,9 @@ function ReleaseNotePage() {
   }
 
   return (
+    <>
+    <CustomBreadcrumb data={breadCrumbJson} />
+        
     <ReleaseNoteContainer>
       <div className='releaseNoteHeader'>
         <div className='releaseNoteHeaderText'>Data Update</div>
@@ -362,6 +381,7 @@ function ReleaseNotePage() {
         </div>
       </div>
     </ReleaseNoteContainer>
+    </>
   );
 }
 
