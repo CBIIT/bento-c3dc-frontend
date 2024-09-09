@@ -1325,6 +1325,13 @@ export const tabContainers = [
     },
     columns: [
       {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
+      {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
@@ -1444,7 +1451,15 @@ export const tabContainers = [
           },
           cellType: cellTypes.CUSTOM_ELEM,
         },
-      }
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
     ],
     id: 'participant_tab',
     tableDownloadCSV: customParticipantsTabDownloadCSV,
@@ -1592,6 +1607,14 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
       },
 
 
@@ -1685,6 +1708,14 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
       },
 
     ],
@@ -1776,6 +1807,14 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
       },
     ],
     id: 'treatment_response_tab',
@@ -1827,10 +1866,6 @@ export const tabContainers = [
       opacity: 'unset',
       border: 'unset',
     },
-
-
-
-
     columns: [
       {
         dataField: 'participant_id',
@@ -1900,7 +1935,15 @@ export const tabContainers = [
           rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
-      }
+        doNotDownload: true,
+      },
+      {
+        dataField: "study_id",
+        header: "Study Id",
+        display: false,
+        tooltipText: "sort",
+        role: "cellTypes.DISPLAY"
+      },
       
     ],
     id: 'survival_tab',
@@ -1912,6 +1955,3 @@ export const tabContainers = [
     },
   }
 ];
-
-
-
