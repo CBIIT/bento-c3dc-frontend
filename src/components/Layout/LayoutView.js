@@ -41,6 +41,7 @@ const Layout = () => {
           <Route path="/user_guide" element={<PdfReader />} />
           <Route path="/data_model" element={<DataModel />} />
           <Route path="/release_notes" element={<ReleaseNotePage />} />
+          <Route path="/release_notes_pdf" element={<PdfReader />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
