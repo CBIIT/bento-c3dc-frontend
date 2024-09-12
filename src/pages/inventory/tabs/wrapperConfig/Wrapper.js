@@ -4,23 +4,19 @@ import {
 } from '@bento-core/paginated-table';
 import React, { useState } from 'react';
 import {
-  tooltipContentAddAll, tooltipContent,
+  tooltipContentAddToNewCohort,
+  tooltipContentAddToExistingCohort,
+  tooltipContentListAll,
 } from '../../../../bento/dashboardTabData';
 import { alertMessage } from '../../../../bento/fileCentricCartWorkflowData';
-import { Button, FormControl, InputLabel, MenuItem, Select } from '@material-ui/core';
-import { customTheme } from './Theme';
 import { CustomDropDown } from './CustomDropDown';
-
-
-
+import { CustomButton } from './customButton';
 
 const options = [
   "cohrot 2020 232323",
   "cohrot 2020 1293",
   "cohrot 2020 3425",
   "cohrot 2020 9923",
-
-
 ]
 
 export const layoutConfig = [{
@@ -37,57 +33,69 @@ export const layoutConfig = [{
 */
 export const wrapperConfig = [
   {
-  container: 'buttons',
-  size: 'xl',
-  clsName: 'container_header',
-  items: [
-    {
-      title: 'Create Cohort',
-      clsName: 'add_all_button',
-      type: types.BUTTON,
-      role: btnTypes.ADD_ALL_FILES,
-      btnType: btnTypes.ADD_ALL_FILES,
-      tooltipCofig: tooltipContentAddAll,
-      conditional: false,
-      alertMessage,
-    },
-    {
-      title: 'Add Participants to Existing Cohort',
-      clsName: 'add_selected_button',
-      type: types.CUSTOM_ELEM,
-      role: btnTypes.ADD_SELECTED_FILES,
-      btnType: btnTypes.ADD_SELECTED_FILES,
-      tooltipCofig: tooltipContent,
-      conditional: true,
-      CustomViewElem: ({callBack})=> {
+    container: 'buttons',
+    size: 'xl',
+    clsName: 'container_header',
+    items: [
+      {
+        title: 'Create Cohort',
+        clsName: 'add_selected_button',
+        type: types.CUSTOM_ELEM,
+        role: btnTypes.ADD_SELECTED_FILES,
+        btnType: btnTypes.ADD_SELECTED_FILES,
+        tooltipCofig: tooltipContentAddToNewCohort,
+        conditional: false,
+        CustomViewElem: ({ callBack }) => {
+          return (
+            <CustomButton label={"CREATE COHORT "} callBack={callBack} />
+          )
+        },
+        alertMessage,
+      },
+      {
+        title: 'Add Participants to Existing Cohort',
+        clsName: 'add_selected_button',
+        type: types.CUSTOM_ELEM,
+        role: btnTypes.ADD_SELECTED_FILES,
+        btnType: btnTypes.ADD_SELECTED_FILES,
+        section: 'addToExisting',
+        tooltipCofig: tooltipContentAddToExistingCohort,
+        conditional: true,
+        CustomViewElem: ({ callBack }) => {
 
-        return(
+          return (
 
-          <CustomDropDown options={options} callBack={callBack} />
-         )
-      }
-    },
-    {
-      title: 'View All Cohorts',
-      clsName: 'add_selected_button',
-      type: types.BUTTON,
-      role: btnTypes.ADD_SELECTED_FILES,
-      btnType: btnTypes.ADD_SELECTED_FILES,
-      tooltipCofig: tooltipContent,
-      conditional: true,
-      alertMessage,
-    }],
-},
-{
-  container: 'paginatedTable',
-  paginatedTable: true,
-},
-{
-  
-  container: 'buttons',
-  size: 'xl',
-  clsName: 'container_footer',
-  items: [
+            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} callBack={callBack} />
+          )
+        }
+      },
+      {
+        title: 'View All Cohorts',
+        clsName: 'add_selected_button',
+        type: types.CUSTOM_ELEM,
+        role: btnTypes.ADD_SELECTED_FILES,
+        btnType: btnTypes.ADD_SELECTED_FILES,
+        tooltipCofig: tooltipContentListAll,
+        conditional: true,
+        CustomViewElem: ({ callBack }) => {
+
+          return (
+
+            <CustomDropDown isHidden={true} label={"VIEW ALL COHOROTS(" + options.length + ")"} backgroundColor={"#935824"} borderColor={"#C79673"} options={options} callBack={callBack} />
+          )
+        },
+        alertMessage,
+      }],
+  },
+  {
+    container: 'paginatedTable',
+    paginatedTable: true,
+  },
+  {
+    container: 'buttons',
+    size: 'xl',
+    clsName: 'container_footer',
+    items: [
     ],
   },
 ];

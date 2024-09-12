@@ -4,18 +4,48 @@ import { customParticipantsTabDownloadCSV, customSamplesTabDownloadCSV, customDi
 import questionIcon from '../assets/icons/Question_Icon.svg';
 
 // --------------- Tooltip configuration --------------
-export const tooltipContentAddAll = {
+
+export const tooltipContentAddToNewCohort = {
+    icon: questionIcon,
+    alt: 'tooltipIcon',
+    Participants: 'Participant ID selected from the table will be added to a new cohort',
+    Diagnosis: 'Participant ID selected from the table will be added to a new cohort',
+    Studies: 'Participant ID selected from the table will be added to a new cohort',
+    Treatment: 'Participant ID selected from the table will be added to a new cohort',
+    Survival: 'Participant ID selected from the table will be added to a new cohort',
+    "Treatment Response": 'Participant ID selected from the table will be added to a new cohort',
+    arrow: true,
+    styles: {
+    }
+}
+
+export const tooltipContentAddToExistingCohort = {
   icon: questionIcon,
   alt: 'tooltipIcon',
-  Participants: 'Click button to add all files associated with the filtered row(s).',
-  Diagnosis: 'Click button to add all files associated with the filtered row(s).',
-  Studies: 'Click button to add all files associated with the filtered row(s).',
-  Samples: 'Click button to add all files associated with the filtered row(s).',
-  Files: 'Click button to add all files associated with the filtered row(s).',
+  Participants: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
+  Diagnosis: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
+  Studies: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
+  Survival: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
+  Treatment: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
+  "Treatment Response": 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
   arrow: true,
   styles: {
   }
-};
+}
+
+export const tooltipContentListAll = {
+  icon: questionIcon,
+  alt: 'tooltipIcon',
+  Participants: 'Open modal to see full list of cohorts',
+  Diagnosis: 'Open modal to see full list of cohorts',
+  Studies: 'Open modal to see full list of cohorts',
+  Treatment: 'Open modal to see full list of cohorts',
+  Survival: 'Open modal to see full list of cohorts',
+  "Treatment Response": 'Open modal to see full list of cohorts',
+  arrow: true,
+  styles: {
+  }
+}
 
 export const tooltipContent = {
   icon: questionIcon,
@@ -25,6 +55,7 @@ export const tooltipContent = {
   Studies: 'Click button to add files associated with the selected row(s).',
   Samples: 'Click button to add files associated with the selected row(s).',
   Files: 'Click button to add files associated with the selected row(s).',
+  addToExisting: "test",
   arrow: true,
   styles: {
     border: '#03A383 1px solid',
@@ -440,6 +471,7 @@ survivalOverview(
 ) {
     # Participant
     participant_id
+    participant_pk
 
     # Study
     dbgap_accession
@@ -641,6 +673,7 @@ diagnosisOverview(
 ) {
     # Demographics
     participant_id
+    participant_pk
 
     # Diagnosis
     diagnosis_id
@@ -1235,6 +1268,8 @@ query treatmentOverview(
     ) {
         # Participant
         participant_id
+        participant_pk
+        
 
         # Treatment
         treatment_id
@@ -1333,6 +1368,7 @@ treatmentResponseOverview(
 ) {
     # Participant
     participant_id
+    participant_pk
 
     # Study
     dbgap_accession
@@ -1459,6 +1495,11 @@ export const tabContainers = [
     },
     columns: [
       {
+        cellType: cellTypes.CHECKBOX,
+        display: true,
+        role: cellTypes.CHECKBOX,
+      },
+      {
         dataField: 'participant_id',
         header: 'Participant Id',
         display: true,
@@ -1511,7 +1552,7 @@ export const tabContainers = [
     count: 'numberOfDiagnoses',
     fileCount: 'diagnosisFileCount',
     toolTipText: 'Count of Diagnosis Record',
-    dataKey: 'id',
+    dataKey: 'participant_pk',
     tableID: 'diagnosis_tab_table',
     extendedViewConfig: {
       pagination: true,
@@ -1523,6 +1564,11 @@ export const tabContainers = [
       },
     },
     columns: [
+      {
+        cellType: cellTypes.CHECKBOX,
+        display: true,
+        role: cellTypes.CHECKBOX,
+      },
       {
         dataField: 'participant_id',
         header: 'Participant Id',
@@ -1667,7 +1713,7 @@ export const tabContainers = [
     defaultSortDirection: 'asc',
     count: 'numberOfTreatments',
     fileCount: 'treatmentFileCount',
-    dataKey: 'participant_id',
+    dataKey: 'participant_pk',
     tableID: 'treatment_tab_table',
     toolTipText: 'Count of Treatment Record',
     extendedViewConfig: {
@@ -1763,7 +1809,7 @@ export const tabContainers = [
     defaultSortDirection: 'asc',
     count: 'numberOfTreatmentResponses',
     fileCount: 'treatmentResponseFileCount',
-    dataKey: 'id',
+    dataKey: 'participant_pk',
     tableID: 'treatment_response_tab_table',
     toolTipText: 'Count of Treatment Response Record',
     extendedViewConfig: {
@@ -1776,6 +1822,11 @@ export const tabContainers = [
       },
     },
     columns: [
+      {
+        cellType: cellTypes.CHECKBOX,
+        display: true,
+        role: cellTypes.CHECKBOX,
+      },
       {
         dataField: 'participant_id',
         header: 'Participant Id',
@@ -1849,7 +1900,7 @@ export const tabContainers = [
     count: 'numberOfSurvivals',
     fileCount: 'samplesFileCount',
     paginationAPIField: 'survivalOverview',
-    dataKey: 'id',
+    dataKey: 'participant_pk',
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
     toolTipText: 'Count of Survival Record',
@@ -1884,6 +1935,11 @@ export const tabContainers = [
 
 
     columns: [
+      {
+        cellType: cellTypes.CHECKBOX,
+        display: true,
+        role: cellTypes.CHECKBOX,
+      },
       {
         dataField: 'participant_id',
         header: 'Participant Id',

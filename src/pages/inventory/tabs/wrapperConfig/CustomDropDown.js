@@ -1,4 +1,4 @@
-import { ArrowDownward, ArrowDropDownOutlined, ArrowUpwardRounded } from '@material-ui/icons';
+import { ArrowDownward, ArrowDropDownOutlined, ArrowUpwardRounded, KeyboardArrowDownOutlined } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -8,44 +8,53 @@ const DropdownContainer = styled.div`
   display: inline-block;
   width: 200px;
   margin-left: 20px;
+  margin-bottom: 10px;
+  top: ${(props) => (props.isHidden ? '-6px' : '-6px')};
 `;
 
 const DropdownHeader = styled.div`
-  font-size: 18px;
+  font-size: 12px;
   font-family: 'Poppins';
   color: white;
   min-width: 189px;
+  max-height: 41px;
   min-height: 41px;
   max-width: 189px;
-
   border-radius: 5px 5px 0 0;
   border-radius: ${(props) => (props.isOpen ? '5px 5px 0 0' : '5px')};
-  background: #0B4E75;
+  background:  ${(props) => (props.backgroundColor)};
+  border: 1.25px solid ${(props) => ( props.borderColor )};
   cursor: pointer;
   font-weight: 600;
   text-align: left;
   line-height: 1;
   display: flex;
   overflow: hidden;
-  font-size: 17px;
+  font-size: 12px;
+  display: flex;
   align-items: center;
   justify-content: center;
   text-overflow: ellipsis;
   
-.title{
-    align-self: center;
-    justify-content: space-evenly;
-    width: 90%;
-    display: flex;
-    margin-left: 30px;
-    font-size: 16px;
-}
-  
+
 `;
+
+const Title = styled.div`
+paddingLeft: 20px;
+    align-self: center;
+    justify-content: center;
+    align-self: center;
+    width: 70%;
+    display: flex;
+    font-size: 12px;
+    overflow: hidden;
+`
+
 
 const Arrow = styled.span`
   transition: transform 0.3s;
   transform: ${(props) => (props.isOpen ? 'rotate(180deg)' : 'rotate(0)')};
+   display: ${(props) => (props.isHidden ? ' none' : ' block)')};
 `;
 
 const DropdownList = styled.ul`
@@ -90,39 +99,37 @@ const DropdownItem = styled.li`
   }
 `;
 
-export const CustomDropDown = ({options,callBack}) => {
+export const CustomDropDown = ({ options, callBack, label, isHidden, backgroundColor, borderColor }) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
-  
-  let listOfChcekdItems = callBack();
- 
+  let listOfCheckedItems= callBack();
+
   const handleSelect = (value) => {
-    
-    console.log("kkkkkkk: ", listOfChcekdItems);
+    console.log("Participant_ids: ", listOfCheckedItems);
+    console.log("Cohort Name: ", value);
     setSelectedValue(value);
     setIsOpen(false);
   };
 
   return (
-    <DropdownContainer>
-      <DropdownHeader isOpen={isOpen}  onClick={toggleDropdown}>
-       <span className='title'> {selectedValue ? `  ${selectedValue}` : 'Add To Existing Cohort'}
-        <Arrow isOpen={isOpen}>
-        <ArrowDropDownOutlined />
+    <DropdownContainer isHidden={isHidden}>
+      <DropdownHeader isOpen={isOpen} backgroundColor={backgroundColor} borderColor={borderColor} onClick={toggleDropdown}>
+        <Title> {label} </Title>
+        <Arrow isOpen={isOpen} isHidden={isHidden}>
+          <KeyboardArrowDownOutlined />
 
         </Arrow>
-        </span> 
+
       </DropdownHeader>
       {isOpen && (
         <DropdownList>
-            {options.map((option,index)=>{
-return (
-    <DropdownItem  onClick={() => handleSelect(option)}>{option}</DropdownItem>
-        
-)
-            })}
+          {options.map((option, index) => {
+            return (
+              <DropdownItem onClick={() => { handleSelect(option) }}>{option}</DropdownItem>
+            )
+          })}
         </DropdownList>
       )}
     </DropdownContainer>
