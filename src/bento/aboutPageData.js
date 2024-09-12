@@ -89,6 +89,6 @@ export const aboutData = {
 
 
 export const pdfList = {
-  release_notes: latestRelease,
+  release_notes_pdf: latestRelease,
   user_guide: userGuide
 }

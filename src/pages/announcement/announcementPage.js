@@ -132,6 +132,7 @@ const AnnouncementContainer = styled.div`
     border-radius: 10px;
     margin: 10px;
     margin-top: 40px;
+    cursor: pointer;
 }
 .announcementPagination {
     display: flex;
@@ -315,7 +316,7 @@ const AnnouncementPage = () => {
                   content.type === 2 &&
                   <span
                     onClick={() => {
-                      navigator("/release_notes/detail")
+                      navigator("/release_notes_pdf")
                     }}
                     className='announcementButton'>
                     Latest Release
