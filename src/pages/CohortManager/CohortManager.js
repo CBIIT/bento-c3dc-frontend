@@ -8,7 +8,6 @@ const CohortManager = (props) => {
   // Local state for inputs
   const [cohortId, setCohortId] = useState('');
   const [participantId, setParticipantId] = useState('');
-  const [newParticipants, setNewParticipants] = useState([]);
   const [selectedCohort, setSelectedCohort] = useState('');
 
   const handleCreateCohort = () => {
