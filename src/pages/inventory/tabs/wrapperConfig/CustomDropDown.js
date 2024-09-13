@@ -1,5 +1,7 @@
+import { TableContext } from '@bento-core/paginated-table';
 import { ArrowDownward, ArrowDropDownOutlined, ArrowUpwardRounded, KeyboardArrowDownOutlined } from '@material-ui/icons';
-import React, { useEffect, useState } from 'react';
+import { call } from 'file-loader';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
 
 const DropdownContainer = styled.div`
@@ -102,16 +104,31 @@ const DropdownItem = styled.li`
 export const CustomDropDown = ({ options, callBack, label, isHidden, backgroundColor, borderColor }) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
+  const tableContext = useContext(TableContext);
 
   const toggleDropdown = () => setIsOpen(!isOpen);
+  const GetCheckedItems = () => {
+    const tableContext = useContext(TableContext);
+    const { context } = tableContext;
+    const {
+      hiddenSelectedRows = [],
+    } = context;
+    return hiddenSelectedRows;
+  };
   let listOfCheckedItems= callBack();
 
   const handleSelect = (value) => {
-    console.log("Participant_ids: ", listOfCheckedItems);
+    const { context } = tableContext;
+    const {
+      hiddenSelectedRows = [],
+    } = context;
+    console.log("Participant_ids: ", hiddenSelectedRows);
     console.log("Cohort Name: ", value);
     setSelectedValue(value);
     setIsOpen(false);
   };
+
+  
 
   return (
     <DropdownContainer isHidden={isHidden}>

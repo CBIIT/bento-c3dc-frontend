@@ -1713,7 +1713,7 @@ export const tabContainers = [
     defaultSortDirection: 'asc',
     count: 'numberOfTreatments',
     fileCount: 'treatmentFileCount',
-    dataKey: 'participant_pk',
+    dataKey: 'treatment_id',
     tableID: 'treatment_tab_table',
     toolTipText: 'Count of Treatment Record',
     extendedViewConfig: {
@@ -1809,7 +1809,7 @@ export const tabContainers = [
     defaultSortDirection: 'asc',
     count: 'numberOfTreatmentResponses',
     fileCount: 'treatmentResponseFileCount',
-    dataKey: 'participant_pk',
+    dataKey: 'treatment_response_id',
     tableID: 'treatment_response_tab_table',
     toolTipText: 'Count of Treatment Response Record',
     extendedViewConfig: {

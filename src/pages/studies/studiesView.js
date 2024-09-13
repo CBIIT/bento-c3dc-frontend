@@ -19,6 +19,7 @@ const initTblState = (initailState) => ({
   title: table.name,
   columns: table.columns,
   selectedRows: [],
+  hiddenSelectedRows: [],
   tableMsg: table.tableMsg,
   sortBy: table.defaultSortField,
   sortOrder: table.defaultSortDirection,
