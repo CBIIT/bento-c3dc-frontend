@@ -1,6 +1,7 @@
 // CohortContext.js
 import React, { createContext, useReducer } from 'react';
 import { reducer, initialState } from './store/reducer';
+import logger from 'use-reducer-logger';
 
 
 const loggingMiddleware = (reducer) => {
@@ -23,7 +24,7 @@ export const CohortProvider = ({ children }) => {
     return savedState ? JSON.parse(savedState) : initialState;
   };
 
-  const [state, dispatch] = useReducer(loggingMiddleware(reducer), loadState());
+  const [state, dispatch] = useReducer(logger(reducer), loadState());
 
   return (
     <CohortContext.Provider value={{ state, dispatch }}>
