@@ -3,17 +3,6 @@ import React, { createContext, useReducer } from 'react';
 import { reducer, initialState } from './store/reducer';
 import logger from 'use-reducer-logger';
 
-
-const loggingMiddleware = (reducer) => {
-  return (state, action) => {
-    console.log('Action:', action);
-    console.log('Previous State:', state);
-    const newState = reducer(state, action);
-    console.log('New State:', newState);
-    return newState;
-  };
-};
-
 // Create the context
 export const CohortContext = createContext();
 
