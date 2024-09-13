@@ -5,6 +5,8 @@ import { CircularProgress } from '@material-ui/core';
 import { getFilters } from '@bento-core/facet-filter';
 import InventoryView from './inventoryView';
 import { DASHBOARD_QUERY_NEW } from '../../bento/dashboardTabData';
+import { CohortProvider } from '../../components/CohortSelector/CohortContext';
+
 
 const getDashData = (states) => {
   const {
@@ -52,11 +54,13 @@ console.log("ActiveFilter: ", activeFilters);
   }
 
   return (
+    <CohortProvider>
     <InventoryView
       {...props}
       dashData={dashData}
       activeFilters={activeFilters}
     />
+    </CohortProvider>
   );
 });
 
