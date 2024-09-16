@@ -44,6 +44,6 @@ export default (theme) => ({
     gap: '37px',
     width: '100%',
     height: '100%',
-    overflow: 'auto',
+    //overflow: 'auto',
   },
 });

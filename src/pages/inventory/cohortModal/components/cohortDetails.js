@@ -20,6 +20,49 @@ const CohortDetails = (props) => {
         ? config.datePrefix
         : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
 
+    const tempList = [
+        {
+            participantId: '1562165123652165216521',
+            dbgap_accession: 'phs0000001',
+            pkey: 1,
+        },
+        {
+            participantId: 2,
+            dbgap_accession: 'phs0000001',
+            pkey: 2,
+        },
+        {
+            participantId: 3,
+            dbgap_accession: 'phs0000001',
+            pkey: 3,
+        },
+        {
+            participantId: 1,
+            dbgap_accession: 'phs0000002',
+            pkey: 4,
+        },
+        {
+            participantId: 2,
+            dbgap_accession: 'phs0000002',
+            pkey: 5,
+        },
+        {
+            participantId: 3,
+            dbgap_accession: 'phs0000003',
+            pkey: 6,
+        },
+        {
+            participantId: 1,
+            dbgap_accession: 'phs0000003',
+            pkey: 7,
+        },
+        {
+            participantId: 2,
+            dbgap_accession: 'phs0000003',
+            pkey: 8,
+        },
+    ];
+
     return (
         <div className={classes.cohortDetailsSection}>
             <div className={classes.cohortDetails}>
@@ -63,8 +106,45 @@ const CohortDetails = (props) => {
                             />
                         </span>
                     </div>
-                    <div>
+                    <div className={classes.participantTableSection}>
+                        <div className={classes.participantTableHeader}>
+                            <div>Participant ID</div>
+                            <div>dbGaP Accession</div>
+                            <div className={classes.removeHeader}>
+                                <span className={classes.removeLabel}>Remove</span>
+                                <img
+                                    src={TrashCanIconRed}
+                                    alt="delete cohort icon"
+                                    className={classes.redTrashCan}
+                                />
+                            </div>
+                        </div>
+                        <div className={classes.tableBody}>
 
+                        {/*
+                        tempList.map((participant) => (
+                            <div key={participant.pkey} className={classes.tableRow}>
+                                <span>{participant.participantId}</span>
+                                </div>
+                            ))
+                            */}
+                        
+                         
+                        
+                            {tempList.map((participant) => (
+                                <div key={participant.pkey} className={classes.tableRow}>
+                                    <div>{participant.participantId}</div>
+                                    <div>{participant.dbgap_accession}</div>
+                                    <div className={classes.removeParticipant}>
+                                        <img
+                                            src={TrashCanIconBlue}
+                                            alt="delete participant icon"
+                                            className={classes.blueTrashCan}
+                                        />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -91,15 +171,19 @@ const styles = () => ({
         flexBasis: '0%',
         minWidth: '275px',
         minHeight: '435px',
+        maxHeight: '718px',
         alignItems: 'normal',
+        overflow: 'hidden',
     },
     cohortDetails: {
+        display: 'flex',
+        flexDirection: 'column',
         //width: '521px',
         //height: '718px',
         border: '1px solid #3388A6',
         borderRadius: '10px',
         width: '100%',
-        height: '100%',
+        flexGrow: 1,
         overflow: 'hidden',
     },
     cohortHeading: {
@@ -142,17 +226,20 @@ const styles = () => ({
         fontSize: '13px',
         fontWeight: '400',
         lineHeight: '18px',
+        overflow: 'elipsis',
+        maxHeight: '100px',
         color: '#343434',
         padding: '10px 25px 16px 23px',
+        flex: '1',
     },
     participantViewer: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         backgroundColor: '#F1F3F4',
-        height: '100%',
         width: '100%',
         borderRadius: '8px',
+        flex: '1',
     },
     participantSearchBarSection: {
         display: 'flex',
@@ -167,7 +254,6 @@ const styles = () => ({
         '&:focus-within': {
             border: '1px solid #007BFF',
         },
-        
     },
     participantSearchBar: {
         width: '100%',
@@ -176,7 +262,6 @@ const styles = () => ({
         borderRadius: '8px',
         margin: '0px',
         padding: '0px',
-        position: 'relative',
         outline: 'none',
         paddingLeft: '17px',
         fontFamily: 'Poppins',
@@ -184,8 +269,7 @@ const styles = () => ({
         fontWeight: '400',
         lineHeight: '26px',
         color: '#5D7B87',
-
-        '&::placeholder': { 
+        '&::placeholder': {
             color: '#5D7B87',
             fontWeight: '300',
         },
@@ -202,7 +286,97 @@ const styles = () => ({
             cursor: 'pointer',
         },
     },
-
+    participantTableSection: {
+        width: '92%',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        backgroundColor: '#FFFFFF',
+        borderRadius: '8px',
+        overflow: 'hidden',
+    },
+    redTrashCan: {
+        height: '18px',
+        paddingTop: '2px',
+        '&:hover': {
+            cursor: 'pointer',
+        },
+        //position: 'absolute',
+        right: '18px',
+    },
+    blueTrashCan: {
+        height: '20px',
+        paddingTop: '2px',
+        '&:hover': {
+            cursor: 'pointer',
+        },
+    },
+    removeParticipant: {
+        //right align the trash can icon
+        textAlign: 'right',
+        paddingRight: '17px',
+    },
+    /*participantTableHeader: {
+        backgroundColor: '#FFFFFF',
+        borderTop: '2px solid #8A7F7C',
+        borderBottom: '1px solid #909090',
+        width: '100%',
+        height: '42px',
+        display: 'flex',
+        flexDirection: 'row',
+        flex: '1',
+        //select the th elements
+        '& div': {
+            flex: '1',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',             // Centers both elements vertically
+            //paddingRight: '',
+        },
+    },*/
+    participantTableHeader: {
+        display: 'flex',
+        backgroundColor: '#FFFFFF',
+        borderBottom: '1px solid #909090',
+        padding: '10px',
+        '& div': {
+            flex: 1,
+            fontWeight: 600,
+            textAlign: 'center',
+        },
+    },
+    removeLabel: {
+        paddingRight: '20px',
+    },
+    removeHeader: {
+        display: 'flex',
+        justifyContent: 'space-between',  // Aligns "Remove" text to the left and icon to the right
+        alignItems: 'center',             // Centers both elements vertically
+        paddingRight: '10px',
+    },
+    tableBody: {
+        overflowY: 'auto',
+        height: '100%',
+        //backgroundColor: 'yellow',
+    },
+    tableRow: {
+        display: 'flex',
+        flexDirection: 'row',
+        backgroundColor: '#F1F3F4',
+        borderBottom: '1px solid #8A7F7C',
+        width: '100%',
+        height: '42px',
+        '& div': {
+            flex: '1',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',             // Centers both elements vertically
+            paddingRight: '10px',
+            '& div': {
+                flex: '1',
+            },
+        },
+    },
     cohortLastUpdated: {
         width: '100%',
         fontSize: 10,
