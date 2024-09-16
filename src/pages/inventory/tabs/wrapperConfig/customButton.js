@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { TableContext } from '@bento-core/paginated-table';
+import React, { useContext, useState } from 'react';
 import styled from 'styled-components';
 
 const ButtonContainer = styled.div`
@@ -42,20 +43,22 @@ const ButtonStyled = styled.button`
   }
 `;
 
-export const CustomButton = ({ label, callBack }) => {
-  const [selectedValue, setSelectedValue] = useState('');
+export const CustomButton = ({ label}) => {
 
+  const tableContext = useContext(TableContext);
+  
   const handleClick = () => {
-    let response = callBack();
-    console.log("Callback response: ", response);
-
-    setSelectedValue(response || label);
+    const { context } = tableContext;
+    const {
+      hiddenSelectedRows = [],
+    } = context;
+   
   };
 
   return (
     <ButtonContainer>
       <ButtonStyled onClick={handleClick}>
-        <span className="title">{selectedValue ? `  ${selectedValue}` : label}</span>
+        <span className="title">{label}</span>
       </ButtonStyled>
     </ButtonContainer>
   );

@@ -45,9 +45,9 @@ export const wrapperConfig = [
         btnType: btnTypes.ADD_SELECTED_FILES,
         tooltipCofig: tooltipContentAddToNewCohort,
         conditional: false,
-        CustomViewElem: ({ callBack }) => {
+        CustomViewElem: () => {
           return (
-            <CustomButton label={"CREATE COHORT "} callBack={callBack} />
+            <CustomButton label={"CREATE COHORT"} />
           )
         },
         alertMessage,
@@ -61,11 +61,10 @@ export const wrapperConfig = [
         section: 'addToExisting',
         tooltipCofig: tooltipContentAddToExistingCohort,
         conditional: true,
-        CustomViewElem: ({ callBack }) => {
+        CustomViewElem: () => {
 
           return (
-
-            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} callBack={callBack} />
+            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} />
           )
         }
       },
@@ -77,11 +76,10 @@ export const wrapperConfig = [
         btnType: btnTypes.ADD_SELECTED_FILES,
         tooltipCofig: tooltipContentListAll,
         conditional: true,
-        CustomViewElem: ({ callBack }) => {
+        CustomViewElem: () => {
 
           return (
-
-            <CustomDropDown isHidden={true} label={"VIEW ALL COHOROTS(" + options.length + ")"} backgroundColor={"#935824"} borderColor={"#C79673"} options={options} callBack={callBack} />
+            <CustomDropDown isHidden={true} label={"VIEW ALL COHOROTS(" + options.length + ")"} backgroundColor={"#935824"} borderColor={"#C79673"} options={options} />
           )
         },
         alertMessage,
