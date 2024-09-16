@@ -9,8 +9,8 @@ export default (theme) => ({
     justifyContent: 'center',
   },
   paper: {
-    width: '36.875%',
-    height: '60.764%',
+    width: '45%',
+    height: '70%',
     minWidth: '437.5px',
     minHeight: '472px',
     maxHeight: '875px',
@@ -44,5 +44,6 @@ export default (theme) => ({
     gap: '37px',
     width: '100%',
     height: '100%',
+    overflow: 'auto',
   },
 });

@@ -15,6 +15,9 @@ export const DEFAULT_CONFIG_COHORTMODAL = {
         listHeading: 'COHORTS',
         listItemPrefix: 'Cohort ID:',
       },
+      cohortDetails: {
+        datePrefix: 'Last Updated:',
+      },
     },
   
     // Helper functions used by the component

@@ -91,6 +91,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                             />
                             <CohortDetails 
                                 classes={cohortDetailsClasses}
+                                config={config.cohortDetails}
                             />
                         </div>
                     </div>

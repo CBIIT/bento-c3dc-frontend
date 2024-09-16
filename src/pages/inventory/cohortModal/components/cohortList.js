@@ -41,7 +41,25 @@ const CohortList = (props) => {
         },
         {
             cohortId: 5,
-        }
+        },
+        {
+            cohortId: 321231231231,
+        },
+        {
+            cohortId: 4,
+        },
+        {
+            cohortId: 5,
+        },
+        {
+            cohortId: 321231231231,
+        },
+        {
+            cohortId: 4,
+        },
+        {
+            cohortId: 5,
+        },
     ];
 
     useEffect(() => {
@@ -65,7 +83,7 @@ const CohortList = (props) => {
                 <span>
                     <img
                         src={TrashCanIconGray}
-                        alt="close icon"
+                        alt="delete all cohorts icon"
                         className={classes.grayTrashCan}
                     />
                 </span>
@@ -89,7 +107,7 @@ const CohortList = (props) => {
                             <span>
                                 <img
                                     src={TrashCanIconWhite}
-                                    alt="close icon"
+                                    alt="delete cohort icon"
                                     className={classes.whiteTrashCan}
                                 />
                             </span>
@@ -109,11 +127,14 @@ const CohortList = (props) => {
 const styles = () => ({
     cohortListSection: {
         //width: '303px',
-        //height: '456px',
-        width: '32.097%',
-        height: '55.272%',
+        maxHeight: '456px',
+        //width: '35%',
+        //height: '55.272%',
         minWidth: '200px',
-        //minHeight: '228px',  
+        minHeight: '228px',
+        flexGrow: 33,
+        flexBasis: '0%',
+        alignItems: 'normal',
         border: '2px solid #4D7874',
         borderRadius: '10px',
         display: 'flex',
@@ -136,9 +157,12 @@ const styles = () => ({
     grayTrashCan: {
         height: 20,
         paddingTop: 2,
+        '&:hover': {
+            cursor: 'pointer',
+        },
     },
     cohortListing: {
-        height: '100vh',
+        height: '100%',
         overflowY: 'auto',
         backgroundColor: '#CAD1D3',
         // Custom scrollbar styles
@@ -179,6 +203,9 @@ const styles = () => ({
     },
     whiteTrashCan: {
         width: 14,
+        '&:hover': {
+            cursor: 'pointer',
+        },
     },
 });
 
