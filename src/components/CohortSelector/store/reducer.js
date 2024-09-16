@@ -8,7 +8,6 @@ const createNewCohort = (state, payload) => {
 
     // Check if cohortId already exists in the state
     if (state[cohortId]) {
-        console.log(`Cohort with ID ${cohortId} already exists!`);
         return state; // Return the existing state as no changes are made
     }
 
@@ -18,7 +17,6 @@ const createNewCohort = (state, payload) => {
         [cohortId]: participants,
     };
 
-    console.log(`Cohort with ID ${cohortId} created successfully!`);
     return newState; // Return the updated state
 };
 
@@ -27,7 +25,6 @@ const addParticipantsToCohort = (state, payload) => {
   
     // Check if the cohortId exists
     if (!state[cohortId]) {
-      console.log(`Cohort with ID ${cohortId} does not exist!`);
       return state; // Return the existing state if cohort is not found
     }
   
@@ -40,8 +37,7 @@ const addParticipantsToCohort = (state, payload) => {
       ...state,
       [cohortId]: updatedParticipants,
     };
-  
-    console.log(`Participants added to Cohort with ID ${cohortId} successfully!`);
+
     return newState; // Return updated state
   };
 
@@ -50,7 +46,6 @@ const removeParticipantsFromCohort = (state, payload) => {
 
     // Check if the cohort exists in the state
     if (!state[cohortId]) {
-    console.log(`Cohort with ID ${cohortId} does not exist!`);
     return state; // Return the existing state as no changes are made
     }
 
@@ -65,7 +60,6 @@ const removeParticipantsFromCohort = (state, payload) => {
     [cohortId]: updatedParticipants,
     };
 
-    console.log(`Participants deleted from cohort with ID ${cohortId} successfully!`);
     return newState; // Return updated state
 };
 
@@ -74,14 +68,11 @@ const deleteCohort = (state, payload) => {
   
     // Check if the cohort exists in the state
     if (!state[cohortId]) {
-      console.log(`Cohort with ID ${cohortId} does not exist!`);
       return state; // Return the existing state as no changes are made
     }
   
     // Create a new state without the specified cohort
     const { [cohortId]: removedCohort, ...newState } = state;
-  
-    console.log(`Cohort with ID ${cohortId} deleted successfully!`);
     return newState; // Return updated state
   };
   
