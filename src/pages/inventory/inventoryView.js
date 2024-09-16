@@ -8,7 +8,6 @@ import StatsView from '../../components/Stats/StatsView';
 import WidgetView from './widget/WidgetView';
 import TabsView from './tabs/TabsView';
 import QueryBarView from './filterQueryBar/QueryBarView';
-import CohortManager from '../CohortManager/CohortManager';
 
 const Inventory = ({
   classes,
@@ -27,7 +26,6 @@ const Inventory = ({
           />
         </div>
         <div className={classes.rightContent}>
-          <CohortManager></CohortManager>
           <div className={classes.widgetsContainer}>
             <QueryBarView data={dashData} />
            
