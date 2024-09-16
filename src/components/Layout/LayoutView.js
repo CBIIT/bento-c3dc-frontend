@@ -18,6 +18,7 @@ import PdfReader from "../../pages/pdfReader/pdfReader";
 import StudyDetail from "../../pages/studyDetail/studyDetailController";
 import OverlayWindow from "../OverlayWindow/OverlayWindow";
 import AnnouncementPage from "../../pages/announcement/announcementPage";
+import ReleaseNotePage from "../../pages/releaseNote/releaseNote";
 
 // import NewsDetail from '../../pages/news/newsDetailView';
 
@@ -37,9 +38,10 @@ const Layout = () => {
           <Route path="/announcements" element={<AnnouncementPage />} />
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
-          <Route path="/release_notes" element={<PdfReader />} />
           <Route path="/user_guide" element={<PdfReader />} />
           <Route path="/data_model" element={<DataModel />} />
+          <Route path="/release_notes" element={<ReleaseNotePage />} />
+          <Route path="/release_notes_pdf" element={<PdfReader />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
