@@ -1,8 +1,9 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { withStyles } from '@material-ui/core';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DEFAULT_CONFIG from '../config';
+import DeleteConfirmationModal from './deleteConfirmationModal';
 
 /**
  * A list of cohorts to select from and manage.
@@ -23,8 +24,14 @@ const CohortList = (props) => {
     const listItemPrefix = config && config.listItemPrefix && typeof config.listItemPrefix === 'string'
         ? config.listItemPrefix
         : DEFAULT_CONFIG.config.cohortList.listItemPrefix;
-    
+
     const scrollContainerRef = useRef(null);
+
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
+    const {
+        DeleteConfirmation: deleteConfirmationClasses
+    } = classes;
 
     let tempList = [
         {
@@ -73,50 +80,59 @@ const CohortList = (props) => {
             }
         }
     }, [selectedIndex]);
-    
+
     return (
-        <div className={classes.cohortListSection}>
-            <div className={classes.cohortListHeading}>
-                <span>
-                    {listHeading} ({tempList.length})
-                </span>
-                <span>
-                    <img
-                        src={TrashCanIconGray}
-                        alt="delete all cohorts icon"
-                        className={classes.grayTrashCan}
-                    />
-                </span>
+        <>
+            <DeleteConfirmationModal
+                classes={deleteConfirmationClasses}
+                open={showDeleteConfirmation}
+                setOpen={setShowDeleteConfirmation}
+                handleDelete={() => console.log('Delete cohort')}
+            />
+            <div className={classes.cohortListSection}>
+                <div className={classes.cohortListHeading}>
+                    <span>
+                        {listHeading} ({tempList.length})
+                    </span>
+                    <span>
+                        <img
+                            src={TrashCanIconGray}
+                            alt="delete all cohorts icon"
+                            className={classes.grayTrashCan}
+                            onClick={() => setShowDeleteConfirmation(true)}
+                        />
+                    </span>
 
-            </div>
-            <div 
-                className={classes.cohortListing}
-                ref={scrollContainerRef}
-            >
-                {tempList.map((cohort, index) => {
-                    const isSelected = selectedIndex === index;
-                    return (
-                        <div 
-                            key={cohort.cohortId} 
-                            className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
-                            onClick={() => setSelectedIndex(index)}
-                        >
-                            <span>
-                                {listItemPrefix} {cohort.cohortId}
-                            </span>
-                            <span>
-                                <img
-                                    src={TrashCanIconWhite}
-                                    alt="delete cohort icon"
-                                    className={classes.whiteTrashCan}
-                                />
-                            </span>
-                        </div>
-                    );
-                })}
+                </div>
+                <div
+                    className={classes.cohortListing}
+                    ref={scrollContainerRef}
+                >
+                    {tempList.map((cohort, index) => {
+                        const isSelected = selectedIndex === index;
+                        return (
+                            <div
+                                key={cohort.cohortId}
+                                className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
+                                onClick={() => setSelectedIndex(index)}
+                            >
+                                <span>
+                                    {listItemPrefix} {cohort.cohortId}
+                                </span>
+                                <span>
+                                    <img
+                                        src={TrashCanIconWhite}
+                                        alt="delete cohort icon"
+                                        className={classes.whiteTrashCan}
+                                    />
+                                </span>
+                            </div>
+                        );
+                    })}
 
+                </div>
             </div>
-        </div>
+        </>
     );
 };
 
@@ -199,7 +215,7 @@ const styles = () => ({
         },
     },
     selectedCohort: {
-        backgroundColor: '#3A555E', 
+        backgroundColor: '#3A555E',
     },
     whiteTrashCan: {
         width: 14,
