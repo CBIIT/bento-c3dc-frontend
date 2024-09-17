@@ -44,7 +44,7 @@ const CohortList = (props) => {
         },
         {
             cohortId: 321231231231,
-        },/*
+        },
         {
             cohortId: 4,
         },
@@ -59,7 +59,7 @@ const CohortList = (props) => {
         },
         {
             cohortId: 5,
-        },*/
+        },
     ];
 
     useEffect(() => {
