@@ -64,6 +64,7 @@ const DropdownList = styled.ul`
   min-width: 189px;
   max-width: 189px;
   left: 0;
+  scrollbar-color: #003F74 #003F74;
   right: 0;
   background-color: #2A6E93;
   list-style: none;
@@ -71,6 +72,7 @@ const DropdownList = styled.ul`
   padding: 0;
   border-radius: 0 0 5px 5px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border:  1px #73A9C7 solid;
   z-index: 1;
   overflow-y: scroll;
   max-height: 200px;
@@ -105,7 +107,15 @@ export const CustomDropDown = ({ options,label, isHidden, backgroundColor, borde
   
   const [isOpen, setIsOpen] = useState(false);
   const tableContext = useContext(TableContext);
+  const [isActive,setIsActive] = useState(false);
 
+  useEffect(() => {
+    const { context } = tableContext;
+    const {
+      hiddenSelectedRows = [],
+    } = context;
+    setIsActive(hiddenSelectedRows.length > 0);
+  },[tableContext])
   const toggleDropdown = () => setIsOpen(!isOpen);
  
   const handleSelect = (value) => {
@@ -121,7 +131,7 @@ export const CustomDropDown = ({ options,label, isHidden, backgroundColor, borde
 
   return (
     <DropdownContainer isHidden={isHidden}>
-      <DropdownHeader isOpen={isOpen} backgroundColor={backgroundColor} borderColor={borderColor} onClick={toggleDropdown}>
+      <DropdownHeader isOpen={isOpen} backgroundColor={isActive? backgroundColor : 'lightGray'} borderColor={borderColor} onClick={toggleDropdown}>
         <Title> {label} </Title>
         <Arrow isOpen={isOpen} isHidden={isHidden}>
           <KeyboardArrowDownOutlined />
@@ -138,6 +148,9 @@ export const CustomDropDown = ({ options,label, isHidden, backgroundColor, borde
           })}
         </DropdownList>
       )}
+      {/* {selectedCohrot && 
+      <CohortComponent  selectedCohrot={selectedChor} />
+      } */}
     </DropdownContainer>
   );
 };

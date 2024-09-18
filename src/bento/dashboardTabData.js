@@ -16,6 +16,7 @@ export const tooltipContentAddToNewCohort = {
     "Treatment Response": 'Participant ID selected from the table will be added to a new cohort',
     arrow: true,
     styles: {
+      border: '1px red solid'
     }
 }
 
@@ -1784,7 +1785,7 @@ export const tabContainers = [
     count: 'numberOfTreatmentResponses',
     fileCount: 'treatmentResponseFileCount',
     dataKey: 'treatment_response_id',
-    hiddenDataKey: 'participant_id',
+    hiddenDataKey: ['participant_id', 'participant_pk', 'dbGap_Accession'],
     tableID: 'treatment_response_tab_table',
     toolTipText: 'Count of Treatment Response Record',
     extendedViewConfig: {

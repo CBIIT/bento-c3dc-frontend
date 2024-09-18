@@ -13,15 +13,23 @@ import { CustomDropDown } from './CustomDropDown';
 import { CustomButton } from './customButton';
 
 const options = [
-  "cohrot 2020 232323",
-  "cohrot 2020 1293",
-  "cohrot 2020 3425",
-  "cohrot 2020 9923",
+  "COHORT ID: 232323",
+  "COHORT ID: 232323",
+  "COHORT ID: 342527",
+  "COHORT ID: 992329",
+  "COHORT ID: 232323",
+  "COHORT ID: 129329",
+  "COHORT ID: 342598",
+  "COHORT ID: 992399",
+  "COHORT ID: 232323",
+  "COHORT ID: 129387",
+  "COHORT ID: 342524",
+  "COHORT ID: 992326",
 ]
 
 export const layoutConfig = [{
   container: 'buttons',
-  size: 'xl',
+  size: 'xxl',
   clsName: 'container_header',
   items: [
   ],
@@ -41,13 +49,13 @@ export const wrapperConfig = [
         title: 'Create Cohort',
         clsName: 'add_selected_button',
         type: types.CUSTOM_ELEM,
-        role: btnTypes.ADD_SELECTED_FILES,
-        btnType: btnTypes.ADD_SELECTED_FILES,
+        role: btnTypes.CUSTOM_ELEM,
+        btnType: btnTypes.CUSTOM_ELEM,
         tooltipCofig: tooltipContentAddToNewCohort,
         conditional: false,
         CustomViewElem: () => {
           return (
-            <CustomButton label={"CREATE COHORT"} />
+            <CustomButton label={"CREATE COHORT"} backgroundColor={"#375C67"} type={"CREATE"} hoverColor={"#37"} />
           )
         },
         alertMessage,
@@ -56,8 +64,8 @@ export const wrapperConfig = [
         title: 'Add Participants to Existing Cohort',
         clsName: 'add_selected_button',
         type: types.CUSTOM_ELEM,
-        role: btnTypes.ADD_SELECTED_FILES,
-        btnType: btnTypes.ADD_SELECTED_FILES,
+        role: btnTypes.CUSTOM_ELEM,
+        btnType: btnTypes.CUSTOM_ELEM,
         section: 'addToExisting',
         tooltipCofig: tooltipContentAddToExistingCohort,
         conditional: true,
@@ -72,14 +80,14 @@ export const wrapperConfig = [
         title: 'View All Cohorts',
         clsName: 'add_selected_button',
         type: types.CUSTOM_ELEM,
-        role: btnTypes.ADD_SELECTED_FILES,
-        btnType: btnTypes.ADD_SELECTED_FILES,
+        role: btnTypes.CUSTOM_ELEM,
+        btnType: btnTypes.CUSTOM_ELEM,
         tooltipCofig: tooltipContentListAll,
         conditional: true,
         CustomViewElem: () => {
-
+          
           return (
-            <CustomDropDown isHidden={true} label={"VIEW ALL COHOROTS(" + options.length + ")"} backgroundColor={"#935824"} borderColor={"#C79673"} options={options} />
+            <CustomButton label={"VIEW ALL COHORTS(" + options.length + ")"} cohortsAvailable={options.length > 0} backgroundColor={"#935824"} hoverColor={"#704015"} type={"VIEW"}/>
           )
         },
         alertMessage,
