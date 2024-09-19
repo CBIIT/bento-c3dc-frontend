@@ -19,6 +19,7 @@ import StudyDetail from "../../pages/studyDetail/studyDetailController";
 import OverlayWindow from "../OverlayWindow/OverlayWindow";
 import AnnouncementPage from "../../pages/announcement/announcementPage";
 import ReleaseNotePage from "../../pages/releaseNote/releaseNote";
+import CohortManager from "../../pages/CohortManager/CohortManagerController";
 
 // import NewsDetail from '../../pages/news/newsDetailView';
 
@@ -42,6 +43,7 @@ const Layout = () => {
           <Route path="/data_model" element={<DataModel />} />
           <Route path="/release_notes" element={<ReleaseNotePage />} />
           <Route path="/release_notes_pdf" element={<PdfReader />} />
+          <Route path="/cohort_Manager" element={<CohortManager />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
