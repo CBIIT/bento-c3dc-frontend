@@ -1,5 +1,5 @@
-import { TableContext } from '@bento-core/paginated-table';
-import React, { useContext, useEffect, useState } from 'react';
+import { onRowSeclect, TableContext } from '@bento-core/paginated-table';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import styled from 'styled-components';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
 import NotificationView from '../../../../components/Notifications/NotifactionView';
@@ -27,6 +27,7 @@ const ButtonStyled = styled.button`
   font-weight: 600;
   text-align: center;
   line-height: 1;
+  opacity: ${(props) => props.isActive ? "1": "0.4"}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -49,6 +50,7 @@ const ButtonStyled = styled.button`
 export const CustomButton = ({ label, backgroundColor,type,hoverColor,cohortsAvailable }) => {
 
   const tableContext = useContext(TableContext);
+  
   const { Notification } = useGlobal();
   const [isActive,setIsActive] = useState(false);
 
@@ -67,19 +69,21 @@ export const CustomButton = ({ label, backgroundColor,type,hoverColor,cohortsAva
     }
    
   },[tableContext])
-
+  
   
   const handleClick = () => {
     const { context } = tableContext;
     const {
       hiddenSelectedRows = [],
     } = context;
+    
+    
     triggerNotification(hiddenSelectedRows.length);
   };
 
   return (
     <ButtonContainer>
-      <ButtonStyled backgroundColor={isActive? backgroundColor : "lightgray" } onClick={handleClick} hoverColor={hoverColor}>
+      <ButtonStyled isActive={isActive} backgroundColor={backgroundColor} onClick={handleClick} hoverColor={hoverColor}>
         <span className="title">{label}</span>
       </ButtonStyled>
     </ButtonContainer>

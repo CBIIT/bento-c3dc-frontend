@@ -55,7 +55,7 @@ const TabView = (props) => {
     downloadButtonTooltipText: "Download data in CSV or JSON format",
     paginationAPIField: config.paginationAPIField,
     dataKey: config.dataKey,
-    hiddenDataKey: config.hiddenDataKey,
+    hiddenDataKeys: config.hiddenDataKeys,
     columns: configColumn(config.columns),
     count: dashboardStats[config.count],
     selectedRows: [],

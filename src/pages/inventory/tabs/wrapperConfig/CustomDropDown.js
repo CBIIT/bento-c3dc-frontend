@@ -26,6 +26,7 @@ const DropdownHeader = styled.div`
   border-radius: ${(props) => (props.isOpen ? '5px 5px 0 0' : '5px')};
   background:  ${(props) => (props.backgroundColor)};
   border: 1.25px solid ${(props) => ( props.borderColor )};
+  opacity: ${(props) => (props.isActive? "1" : "0.4")}
   cursor: pointer;
   font-weight: 600;
   text-align: left;
@@ -131,7 +132,7 @@ export const CustomDropDown = ({ options,label, isHidden, backgroundColor, borde
 
   return (
     <DropdownContainer isHidden={isHidden}>
-      <DropdownHeader isOpen={isOpen} backgroundColor={isActive? backgroundColor : 'lightGray'} borderColor={borderColor} onClick={toggleDropdown}>
+      <DropdownHeader isOpen={isOpen} isActive={isActive} backgroundColor={ backgroundColor } borderColor={borderColor} onClick={toggleDropdown}>
         <Title> {label} </Title>
         <Arrow isOpen={isOpen} isHidden={isHidden}>
           <KeyboardArrowDownOutlined />

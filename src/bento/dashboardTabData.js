@@ -1680,7 +1680,7 @@ export const tabContainers = [
     count: 'numberOfTreatments',
     fileCount: 'treatmentFileCount',
     dataKey: 'treatment_id',
-    hiddenDataKey: 'participant_pk',
+    hiddenDataKeys: ['participant_pk'],
     tableID: 'treatment_tab_table',
     toolTipText: 'Count of Treatment Record',
     extendedViewConfig: {
@@ -1785,7 +1785,7 @@ export const tabContainers = [
     count: 'numberOfTreatmentResponses',
     fileCount: 'treatmentResponseFileCount',
     dataKey: 'treatment_response_id',
-    hiddenDataKey: ['participant_id', 'participant_pk', 'dbGap_Accession'],
+    hiddenDataKeys: ['participant_id', 'participant_pk', 'dbGap_Accession'],
     tableID: 'treatment_response_tab_table',
     toolTipText: 'Count of Treatment Response Record',
     extendedViewConfig: {
