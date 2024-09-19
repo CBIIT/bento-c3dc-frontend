@@ -176,6 +176,9 @@ const mutateSingleCohort = (state, payload) => {
   // Check if cohortName is different from cohortId
   if (cohortName && cohortName !== cohortId) {
     // Create a new entry with the new cohort ID
+    if (state[cohortName]) {
+      throw new Error(`Cohort with Name ${cohortName} already exists, please choose a different name`);
+    }
     newCohort.cohortId = cohortName;
     newState[cohortName] = newCohort;
     // Delete the old entry

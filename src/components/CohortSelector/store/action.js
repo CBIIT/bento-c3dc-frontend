@@ -4,8 +4,6 @@ export const actionTypes = {
   DELETE_SINGLE_COHORT: 'DELETE_SINGLE_COHORT',
   DELETE_ALL_COHORT: 'DELETE_ALL_COHORT',
   ADD_PARTICIPANTS_TO_COHORT: 'ADD_PARTICIPANTS_TO_COHORT',
-  DELETE_PARTICIPANTS_FROM_COHORT: 'DELETE_PARTICIPANTS_FROM_COHORT',
-  
 };
 
 // Cohort actions.
@@ -73,22 +71,4 @@ export const onDeleteAllCohort = (success, error) => ({
 export const onAddParticipantsToCohort = (cohortId, participants, success, error) => ({
   type: actionTypes.ADD_PARTICIPANTS_TO_COHORT,
   payload: { cohortId, participants,success, error },
-});
-
-/**
- * Action to delete participants from a cohort.
- * @param {string} cohortId - The ID of the cohort.
- * @param {Array} participants - The participants to delete from the cohort.
- * 
- * participants = [participant]
- * Each participant object should follow this template:
- * {
- *   participantId: string,
- *   participantName: string,
- *   participantEmail: string,
- * }
- */
-export const onDeleteParticipantsFromCohort = (cohortId, participants, success, error) => ({
-  type: actionTypes.DELETE_PARTICIPANTS_FROM_COHORT,
-  payload: { cohortId, participants, success, error },
 });
