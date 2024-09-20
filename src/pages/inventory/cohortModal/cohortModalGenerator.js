@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { CohortContext } from '../../../components/CohortSelector/CohortContext.js';
 import {
     Modal, Button, Typography,
     TextareaAutosize, IconButton, withStyles,
@@ -20,7 +21,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         config, functions,
     } = uiConfig;
 
-    const [selectedIndex, setSelectedIndex] = useState(0); // Default to the first entry
+    const { state, dispatch } = useContext(CohortContext);
+    const [selectedCohort, setSelectedCohort] = useState(Object.keys(state)[0]); // Default to the first entry
     
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
@@ -86,8 +88,9 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                             <CohortList 
                                 classes={cohortListClasses}
                                 config={config.cohortList}
-                                selectedIndex={selectedIndex}
-                                setSelectedIndex={setSelectedIndex}
+                                selectedCohort={selectedCohort}
+                                setSelectedCohort={setSelectedCohort}
+                                closeParentModal={closeModalWrapper}
                             />
                             <CohortDetails 
                                 classes={cohortDetailsClasses}

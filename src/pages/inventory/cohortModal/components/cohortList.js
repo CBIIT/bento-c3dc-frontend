@@ -1,7 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
+import { CohortContext } from '../../../../components/CohortSelector/CohortContext.js';
+import { 
+    onDeleteSingleCohort, 
+    onDeleteAllCohort, 
+  } from '../../../../components/CohortSelector/store/action.js'; 
 import DEFAULT_CONFIG from '../config';
 import DeleteConfirmationModal from './deleteConfirmationModal';
 
@@ -13,9 +18,12 @@ const CohortList = (props) => {
     const {
         classes,
         config,
-        selectedIndex,
-        setSelectedIndex,
+        selectedCohort,
+        setSelectedCohort,
+        closeParentModal,
     } = props;
+
+    const { state, dispatch } = useContext(CohortContext);
 
     const listHeading = config && config.listHeading && typeof config.listHeading === 'string'
         ? config.listHeading
@@ -27,51 +35,33 @@ const CohortList = (props) => {
 
     const scrollContainerRef = useRef(null);
 
+    const handleDeleteCohort = (cohortId) => {
+        dispatch(onDeleteSingleCohort(
+          cohortId
+        ));
+    };
+
+    const handleDeleteAllCohorts = () => {
+        dispatch(onDeleteAllCohort());
+    };
+
+    if (Object.keys(state).length === 0) {
+        closeParentModal();
+    }
+    
+    if (!state[selectedCohort]) {
+        setSelectedCohort(Object.keys(state)[0]);
+    }
+
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
 
     const {
         DeleteConfirmation: deleteConfirmationClasses
     } = classes;
 
-    let tempList = [
-        {
-            cohortId: 1,
-        },
-        {
-            cohortId: 2,
-        },
-        {
-            cohortId: 321231231231,
-        },
-        {
-            cohortId: 4,
-        },
-        {
-            cohortId: 5,
-        },
-        {
-            cohortId: 321231231231,
-        },
-        {
-            cohortId: 4,
-        },
-        {
-            cohortId: 5,
-        },
-        {
-            cohortId: 321231231231,
-        },
-        {
-            cohortId: 4,
-        },
-        {
-            cohortId: 5,
-        },
-    ];
-
     useEffect(() => {
         if (scrollContainerRef.current) {
-            const selectedItem = scrollContainerRef.current.children[selectedIndex];
+            const selectedItem = scrollContainerRef.current.children[Object.keys(state).indexOf(selectedCohort)];
             if (selectedItem) {
                 selectedItem.scrollIntoView({
                     behavior: 'instant',
@@ -79,7 +69,7 @@ const CohortList = (props) => {
                 });
             }
         }
-    }, [selectedIndex]);
+    }, [selectedCohort]);
 
     return (
         <>
@@ -87,12 +77,12 @@ const CohortList = (props) => {
                 classes={deleteConfirmationClasses}
                 open={showDeleteConfirmation}
                 setOpen={setShowDeleteConfirmation}
-                handleDelete={() => console.log('Delete cohort')}
+                handleDelete={() => handleDeleteAllCohorts()}
             />
             <div className={classes.cohortListSection}>
                 <div className={classes.cohortListHeading}>
                     <span>
-                        {listHeading} ({tempList.length})
+                        {listHeading} ({Object.keys(state).length})
                     </span>
                     <span>
                         <img
@@ -108,28 +98,32 @@ const CohortList = (props) => {
                     className={classes.cohortListing}
                     ref={scrollContainerRef}
                 >
-                    {tempList.map((cohort, index) => {
-                        const isSelected = selectedIndex === index;
+                    {Object.keys(state).map((cohort) => {
+                        const isSelected = selectedCohort === state[cohort].cohortId;
                         return (
                             <div
-                                key={cohort.cohortId}
+                                key={state[cohort].cohortId}
                                 className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
-                                onClick={() => setSelectedIndex(index)}
+                                onClick={() => {
+                                    setSelectedCohort(state[cohort].cohortId)}}
                             >
                                 <span>
-                                    {listItemPrefix} {cohort.cohortId}
+                                    {listItemPrefix} {state[cohort].cohortId}
                                 </span>
                                 <span>
                                     <img
                                         src={TrashCanIconWhite}
                                         alt="delete cohort icon"
                                         className={classes.whiteTrashCan}
+                                        onClick={(e) => { 
+                                            e.stopPropagation();
+                                            handleDeleteCohort(state[cohort].cohortId)
+                                        }}
                                     />
                                 </span>
                             </div>
                         );
                     })}
-
                 </div>
             </div>
         </>

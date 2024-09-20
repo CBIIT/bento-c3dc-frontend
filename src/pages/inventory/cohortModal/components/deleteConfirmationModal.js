@@ -6,6 +6,7 @@ const DeleteConfirmationModal = (props) => {
         classes,
         open,
         setOpen,
+        handleDelete,
     } = props;
 
     return (
@@ -28,6 +29,7 @@ const DeleteConfirmationModal = (props) => {
                         </button>
                         <button
                             className={classes.confirmButton}
+                            onClick={() => handleDelete()}
                         >
                             Confirm
                         </button>
@@ -85,13 +87,22 @@ const styles = () => ({
             borderRadius: '5px',
             border: '1.5px solid #FFFFFF',
             color: '#FFFFFF',
+            '&:hover': {
+                cursor: 'pointer',
+            },
         },
     },
     cancelButton: {
         backgroundColor: '#4F5D69',
+        '&:hover': {
+            backgroundColor: '#374149',
+        },
     },
     confirmButton: {
         backgroundColor: '#0C534C',
+        '&:hover': {
+            backgroundColor: '#003B35',
+        },
     },
 
 });
