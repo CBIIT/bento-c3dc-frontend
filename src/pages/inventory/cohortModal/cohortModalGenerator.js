@@ -1,9 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { CohortContext } from '../../../components/CohortSelector/CohortContext.js';
+import { 
+    onDeleteSingleCohort, 
+    onDeleteAllCohort, 
+  } from '../../../components/CohortSelector/store/action.js'; 
 import {
     Modal, Button, Typography,
     TextareaAutosize, IconButton, withStyles,
-  } from '@material-ui/core';
+} from '@material-ui/core';
 import DEFAULT_STYLES from './styles';
 import DEFAULT_CONFIG from './config';
 import CohortList from './components/cohortList';
@@ -22,8 +26,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     } = uiConfig;
 
     const { state, dispatch } = useContext(CohortContext);
-    const [selectedCohort, setSelectedCohort] = useState(Object.keys(state)[0]); // Default to the first entry
-    
+    const [selectedCohort, setSelectedCohort] = useState(null); // Default to the first entry
+
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
         : DEFAULT_CONFIG.functions.modalClosed;
@@ -48,6 +52,16 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         }))
     */
 
+    const handleDeleteCohort = (cohortId) => {
+        dispatch(onDeleteSingleCohort(
+            cohortId
+        ));
+    };
+
+    const handleDeleteAllCohorts = () => {
+        dispatch(onDeleteAllCohort());
+    };
+
     return {
         CohortModal: withStyles(DEFAULT_STYLES, { withTheme: true })((props) => {
             const {
@@ -64,7 +78,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                 if (props.onCloseModal) {
                     props.onCloseModal();
                 }
-              };
+            };
 
             return (
                 <Modal
@@ -78,21 +92,24 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                             <span>{modalTitle}</span>
                             <span className={classes.closeIcon} onClick={closeModalWrapper}>
                                 <img
-                                src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/LocalFindCaseDeleteIcon.svg"
-                                alt="close icon"
-                                className={classes.closeRoot}
+                                    src="https://raw.githubusercontent.com/CBIIT/datacommons-assets/main/bento/images/icons/svgs/LocalFindCaseDeleteIcon.svg"
+                                    alt="close icon"
+                                    className={classes.closeRoot}
                                 />
                             </span>
                         </h1>
                         <div className={classes.modalContainer}>
-                            <CohortList 
+                            <CohortList
                                 classes={cohortListClasses}
                                 config={config.cohortList}
                                 selectedCohort={selectedCohort}
                                 setSelectedCohort={setSelectedCohort}
                                 closeParentModal={closeModalWrapper}
+                                handleDeleteCohort={handleDeleteCohort}
+                                handleDeleteAllCohorts={handleDeleteAllCohorts}
+                                state={state}
                             />
-                            <CohortDetails 
+                            <CohortDetails
                                 classes={cohortDetailsClasses}
                                 config={config.cohortDetails}
                             />

@@ -1,12 +1,7 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { withStyles } from '@material-ui/core';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
-import { CohortContext } from '../../../../components/CohortSelector/CohortContext.js';
-import { 
-    onDeleteSingleCohort, 
-    onDeleteAllCohort, 
-  } from '../../../../components/CohortSelector/store/action.js'; 
 import DEFAULT_CONFIG from '../config';
 import DeleteConfirmationModal from './deleteConfirmationModal';
 
@@ -21,9 +16,10 @@ const CohortList = (props) => {
         selectedCohort,
         setSelectedCohort,
         closeParentModal,
+        handleDeleteCohort,
+        handleDeleteAllCohorts,
+        state,
     } = props;
-
-    const { state, dispatch } = useContext(CohortContext);
 
     const listHeading = config && config.listHeading && typeof config.listHeading === 'string'
         ? config.listHeading
@@ -35,22 +31,16 @@ const CohortList = (props) => {
 
     const scrollContainerRef = useRef(null);
 
-    const handleDeleteCohort = (cohortId) => {
-        dispatch(onDeleteSingleCohort(
-          cohortId
-        ));
-    };
-
-    const handleDeleteAllCohorts = () => {
-        dispatch(onDeleteAllCohort());
-    };
+    const cohortOrderedList = Object.keys(state).sort((a, b) => {
+        return new Date(state[b].lastUpdated) - new Date(state[a].lastUpdated);
+    });
 
     if (Object.keys(state).length === 0) {
         closeParentModal();
     }
     
     if (!state[selectedCohort]) {
-        setSelectedCohort(Object.keys(state)[0]);
+        setSelectedCohort(cohortOrderedList[0]);
     }
 
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -61,7 +51,7 @@ const CohortList = (props) => {
 
     useEffect(() => {
         if (scrollContainerRef.current) {
-            const selectedItem = scrollContainerRef.current.children[Object.keys(state).indexOf(selectedCohort)];
+            const selectedItem = scrollContainerRef.current.children[cohortOrderedList.indexOf(selectedCohort)];
             if (selectedItem) {
                 selectedItem.scrollIntoView({
                     behavior: 'instant',
@@ -98,7 +88,7 @@ const CohortList = (props) => {
                     className={classes.cohortListing}
                     ref={scrollContainerRef}
                 >
-                    {Object.keys(state).map((cohort) => {
+                    {cohortOrderedList.map((cohort) => {
                         const isSelected = selectedCohort === state[cohort].cohortId;
                         return (
                             <div
