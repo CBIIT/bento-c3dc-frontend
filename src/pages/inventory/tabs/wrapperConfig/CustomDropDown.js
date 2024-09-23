@@ -118,7 +118,7 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
     const {
       hiddenSelectedRows = [],
     } = context;
-    setIsActive(hiddenSelectedRows.length > 0);
+    setIsActive(hiddenSelectedRows.length > 0 && options.length > 0);
   }, [tableContext])
   const toggleDropdown = () => isActive && setIsOpen(!isOpen);
 
