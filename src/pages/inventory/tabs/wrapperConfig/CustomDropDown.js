@@ -1,8 +1,11 @@
-import { TableContext } from '@bento-core/paginated-table';
-import { ArrowDownward, ArrowDropDownOutlined, ArrowUpwardRounded, KeyboardArrowDownOutlined } from '@material-ui/icons';
-import { call } from 'file-loader';
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import { onRowSeclect, TableContext } from '@bento-core/paginated-table';
+import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/Actions';
+import { KeyboardArrowDownOutlined } from '@material-ui/icons';
+import React, { useContext, useEffect,useState } from 'react';
 import styled from 'styled-components';
+import { onAddParticipantsToCohort } from '../../../../components/CohortSelector/store/action';
+import { CohortContext } from '../../../../components/CohortSelector/CohortContext';
+import { useGlobal } from '../../../../components/Global/GlobalProvider';
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -25,8 +28,8 @@ const DropdownHeader = styled.div`
   border-radius: 5px 5px 0 0;
   border-radius: ${(props) => (props.isOpen ? '5px 5px 0 0' : '5px')};
   background:  ${(props) => (props.backgroundColor)};
-  border: 1.25px solid ${(props) => ( props.borderColor )};
-  opacity: ${(props) => (props.isActive? "1" : "0.4")}
+  border: 1.25px solid ${(props) => (props.borderColor)};
+  opacity: ${(props) => (props.isActive ? "1" : "0.4")}
   cursor: pointer;
   font-weight: 600;
   text-align: left;
@@ -104,11 +107,11 @@ const DropdownItem = styled.li`
   }
 `;
 
-export const CustomDropDown = ({ options,label, isHidden, backgroundColor, borderColor }) => {
-  
+export const CustomDropDown = ({ options, label, isHidden, backgroundColor, borderColor }) => {
+
   const [isOpen, setIsOpen] = useState(false);
   const tableContext = useContext(TableContext);
-  const [isActive,setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   useEffect(() => {
     const { context } = tableContext;
@@ -116,23 +119,51 @@ export const CustomDropDown = ({ options,label, isHidden, backgroundColor, borde
       hiddenSelectedRows = [],
     } = context;
     setIsActive(hiddenSelectedRows.length > 0);
-  },[tableContext])
-  const toggleDropdown = () => setIsOpen(!isOpen);
- 
-  const handleSelect = (value) => {
+  }, [tableContext])
+  const toggleDropdown = () => isActive && setIsOpen(!isOpen);
+
+  const clearSelection = () => {
     const { context } = tableContext;
     const {
-      hiddenSelectedRows = [],
+      dispatch
     } = context;
-    
-    setIsOpen(false);
-  };
 
-  
+    dispatch(onRowSeclect([]));
+    dispatch(onRowSelectHidden([]));
+
+  }
+  const { Notification } = useGlobal();
+
+  const triggerNotification = (count) => {
+    if (count > 1) {
+      Notification.show(" " + count + ' Participants added ', 5000,);
+    } else {
+      Notification.show(" " + count + ' Participant added ', 5000,);
+    }
+
+  };
+  const { dispatch } = useContext(CohortContext);
+
+  const handleSelect = (value) => {
+    if (isActive) {
+      const { context } = tableContext;
+      const {
+        hiddenSelectedRows = [],
+      } = context;
+      setIsOpen(false);
+      clearSelection();
+      dispatch(onAddParticipantsToCohort(
+        value,
+        hiddenSelectedRows,
+        triggerNotification(hiddenSelectedRows.length)
+      ));
+
+    }
+  };
 
   return (
     <DropdownContainer isHidden={isHidden}>
-      <DropdownHeader isOpen={isOpen} isActive={isActive} backgroundColor={ backgroundColor } borderColor={borderColor} onClick={toggleDropdown}>
+      <DropdownHeader isOpen={isOpen} isActive={isActive} backgroundColor={backgroundColor} borderColor={borderColor} onClick={toggleDropdown}>
         <Title> {label} </Title>
         <Arrow isOpen={isOpen} isHidden={isHidden}>
           <KeyboardArrowDownOutlined />
@@ -149,9 +180,6 @@ export const CustomDropDown = ({ options,label, isHidden, backgroundColor, borde
           })}
         </DropdownList>
       )}
-      {/* {selectedCohrot && 
-      <CohortComponent  selectedCohrot={selectedChor} />
-      } */}
     </DropdownContainer>
   );
 };

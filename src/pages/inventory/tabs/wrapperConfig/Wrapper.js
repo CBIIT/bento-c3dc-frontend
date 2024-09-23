@@ -2,7 +2,7 @@ import {
   btnTypes,
   types,
 } from '@bento-core/paginated-table';
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import {
   tooltipContentAddToNewCohort,
   tooltipContentAddToExistingCohort,
@@ -11,21 +11,12 @@ import {
 import { alertMessage } from '../../../../bento/fileCentricCartWorkflowData';
 import { CustomDropDown } from './CustomDropDown';
 import { CustomButton } from './customButton';
+import { CohortContext } from '../../../../components/CohortSelector/CohortContext';
 
-const options = [
-  "COHORT ID: 232323",
-  "COHORT ID: 232323",
-  "COHORT ID: 342527",
-  "COHORT ID: 992329",
-  "COHORT ID: 232323",
-  "COHORT ID: 129329",
-  "COHORT ID: 342598",
-  "COHORT ID: 992399",
-  "COHORT ID: 232323",
-  "COHORT ID: 129387",
-  "COHORT ID: 342524",
-  "COHORT ID: 992326",
-]
+const GetOptions = () => {
+  const { state } = useContext(CohortContext);
+  return Object.keys(state);
+}
 
 export const layoutConfig = [{
   container: 'buttons',
@@ -55,7 +46,7 @@ export const wrapperConfig = [
         conditional: false,
         CustomViewElem: () => {
           return (
-            <CustomButton label={"CREATE COHORT"} backgroundColor={"#375C67"} type={"CREATE"} hoverColor={"#37"} />
+            <CustomButton borderColor={"#73C7BE"} label={"CREATE COHORT"} backgroundColor={"#375C67"} type={"CREATE"} hoverColor={"#375C67"} />
           )
         },
         alertMessage,
@@ -70,7 +61,7 @@ export const wrapperConfig = [
         tooltipCofig: tooltipContentAddToExistingCohort,
         conditional: true,
         CustomViewElem: () => {
-
+          let options = GetOptions();
           return (
             <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} />
           )
@@ -85,9 +76,9 @@ export const wrapperConfig = [
         tooltipCofig: tooltipContentListAll,
         conditional: true,
         CustomViewElem: () => {
-          
+          let options = GetOptions();
           return (
-            <CustomButton label={"VIEW ALL COHORTS(" + options.length + ")"} cohortsAvailable={options.length > 0} backgroundColor={"#935824"} hoverColor={"#704015"} type={"VIEW"}/>
+            <CustomButton borderColor={"#C79673"} label={"VIEW ALL COHORTS(" + options.length + ")"} cohortsAvailable={options.length > 0} backgroundColor={"#935824"} hoverColor={"#704015"} type={"VIEW"} />
           )
         },
         alertMessage,
@@ -106,21 +97,11 @@ export const wrapperConfig = [
   },
 ];
 
-
-/**
-* 1. addFileQuery - query to addAll files or add selected files on cart
-* 2. responseKeys - provided respose key for addFileQuery
-*/
 export const configWrapper = (tab, configs) => {
   const wrpConfig = configs.map((container) => ({
     ...container,
-    items: (!container.paginatedTable) ? container.items.map((item) => ({
+    items: (!container.paginatedTable) && (tab.name !== "Studies") ? container.items.map((item) => ({
       ...item,
-      addFileQuery: (item.role === btnTypes.ADD_ALL_FILES)
-        ? tab.addAllFileQuery : tab.addSelectedFilesQuery,
-      dataKey: tab.addFilesRequestVariableKey,
-      responseKeys: (item.role === btnTypes.ADD_ALL_FILES)
-        ? tab.addAllFilesResponseKeys : tab.addFilesResponseKeys,
     })) : [],
   }));
   return wrpConfig;

@@ -56,7 +56,6 @@ export const tooltipContent = {
   Studies: 'Click button to add files associated with the selected row(s).',
   Samples: 'Click button to add files associated with the selected row(s).',
   Files: 'Click button to add files associated with the selected row(s).',
-  addToExisting: "test",
   arrow: true,
   styles: {
     border: '#03A383 1px solid',
@@ -1428,6 +1427,7 @@ export const tabContainers = [
     count: 'numberOfParticipants',
     fileCount: 'participantsFileCount',
     dataKey: 'participant_id',
+    hiddenDataKeys: ['participant_id', 'participant_pk', 'dbgap_accession'],
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
     toolTipText: 'Count of Participant Record',
@@ -1511,6 +1511,7 @@ export const tabContainers = [
     fileCount: 'diagnosisFileCount',
     toolTipText: 'Count of Diagnosis Record',
     dataKey: 'participant_pk',
+    hiddenDataKeys: ['participant_id', 'participant_pk', 'dbgap_accession'],
     tableID: 'diagnosis_tab_table',
     extendedViewConfig: {
       pagination: true,
@@ -1680,7 +1681,7 @@ export const tabContainers = [
     count: 'numberOfTreatments',
     fileCount: 'treatmentFileCount',
     dataKey: 'treatment_id',
-    hiddenDataKeys: ['participant_pk'],
+    hiddenDataKeys: ['participant_id', 'participant_pk', 'dbgap_accession'],
     tableID: 'treatment_tab_table',
     toolTipText: 'Count of Treatment Record',
     extendedViewConfig: {
@@ -1785,7 +1786,7 @@ export const tabContainers = [
     count: 'numberOfTreatmentResponses',
     fileCount: 'treatmentResponseFileCount',
     dataKey: 'treatment_response_id',
-    hiddenDataKeys: ['participant_id', 'participant_pk', 'dbGap_Accession'],
+    hiddenDataKeys: ['participant_id', 'participant_pk', 'dbgap_accession'],
     tableID: 'treatment_response_tab_table',
     toolTipText: 'Count of Treatment Response Record',
     extendedViewConfig: {
@@ -1885,6 +1886,7 @@ export const tabContainers = [
     fileCount: 'samplesFileCount',
     paginationAPIField: 'survivalOverview',
     dataKey: 'participant_pk',
+    hiddenDataKeys: ['participant_id', 'participant_pk', 'dbgap_accession'],
     defaultSortField: 'participant_id',
     defaultSortDirection: 'asc',
     toolTipText: 'Count of Survival Record',

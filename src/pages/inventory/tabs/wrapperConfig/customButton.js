@@ -1,9 +1,10 @@
 import { onRowSeclect, TableContext } from '@bento-core/paginated-table';
-import React, { useContext, useEffect, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
-import NotificationView from '../../../../components/Notifications/NotifactionView';
-import NotificationFunctions from '../../../../components/Notifications/NotificationFunctions';
+import { onCreateNewCohort } from '../../../../components/CohortSelector/store/action';
+import { CohortContext } from '../../../../components/CohortSelector/CohortContext';
+import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/Actions';
 
 const ButtonContainer = styled.div`
   position: relative;
@@ -21,13 +22,13 @@ const ButtonStyled = styled.button`
   min-height: 41px;
   max-width: 189px;
   border-radius: 5px;
-  border: 1.25px #73C7BE solid;
-  background: ${(props) => (props.backgroundColor )};
+  border: 1.25px ${(props) => (props.borderColor)} solid;
+  background: ${(props) => (props.backgroundColor)};
   cursor: pointer;
   font-weight: 600;
   text-align: center;
   line-height: 1;
-  opacity: ${(props) => props.isActive ? "1": "0.4"}
+  opacity: ${(props) => props.isActive ? "1" : "0.4"}
   display: flex;
   justify-content: center;
   align-items: center;
@@ -47,43 +48,70 @@ const ButtonStyled = styled.button`
   }
 `;
 
-export const CustomButton = ({ label, backgroundColor,type,hoverColor,cohortsAvailable }) => {
+export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohortsAvailable, borderColor }) => {
 
   const tableContext = useContext(TableContext);
-  
+  const { dispatch } = useContext(CohortContext);
   const { Notification } = useGlobal();
-  const [isActive,setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(false);
 
   const triggerNotification = (count) => {
-    Notification.show(" " + count + ' Participants added ', 5000,); 
+    if (count > 1) {
+      Notification.show(" " + count + ' Participants added ', 5000,);
+    } else {
+      Notification.show(" " + count + ' Participant added ', 5000,);
+    }
+
   };
+
   useEffect(() => {
-    if(type == "VIEW"){
+    if (type === "VIEW") {
       setIsActive(cohortsAvailable);
-    }else{
+    } else {
       const { context } = tableContext;
       const {
         hiddenSelectedRows = [],
       } = context;
       setIsActive(hiddenSelectedRows.length > 0);
     }
-   
-  },[tableContext])
-  
-  
-  const handleClick = () => {
+
+  }, [tableContext])
+
+  const clearSelection = () => {
     const { context } = tableContext;
     const {
-      hiddenSelectedRows = [],
+      dispatch
     } = context;
-    
-    
-    triggerNotification(hiddenSelectedRows.length);
+
+    dispatch(onRowSeclect([]));
+    dispatch(onRowSelectHidden([]));
+  }
+
+  const handleClick = () => {
+    if (isActive) {
+      if (type === "VIEW") {
+
+      } else {
+        const { context } = tableContext;
+        const {
+          hiddenSelectedRows = []
+        } = context;
+        clearSelection();
+        dispatch(onCreateNewCohort(
+          "",
+          "",
+          hiddenSelectedRows,
+          () => triggerNotification(hiddenSelectedRows.length),
+          (error) => alert("Something Went Wrong")
+        ));
+      }
+
+    }
   };
 
   return (
     <ButtonContainer>
-      <ButtonStyled isActive={isActive} backgroundColor={backgroundColor} onClick={handleClick} hoverColor={hoverColor}>
+      <ButtonStyled borderColor={borderColor} isActive={isActive} backgroundColor={backgroundColor} onClick={handleClick} hoverColor={hoverColor}>
         <span className="title">{label}</span>
       </ButtonStyled>
     </ButtonContainer>
