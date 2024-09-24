@@ -38,7 +38,7 @@ const CohortList = (props) => {
     if (Object.keys(state).length === 0) {
         closeParentModal();
     }
-    
+
     if (!state[selectedCohort]) {
         setSelectedCohort(cohortOrderedList[0]);
     }
@@ -59,7 +59,16 @@ const CohortList = (props) => {
                 });
             }
         }
-    }, [selectedCohort]);
+    }, []);
+
+    const [isScrollbarActive, setIsScrollbarActive] = useState(false); // State to check if scrollbar is active
+
+    useEffect(() => {
+        if (scrollContainerRef.current) {
+            const { scrollHeight, clientHeight } = scrollContainerRef.current;
+            setIsScrollbarActive(scrollHeight > clientHeight); // Check if scrollbar is active
+        }
+    }, []); 
 
     return (
         <>
@@ -78,7 +87,7 @@ const CohortList = (props) => {
                         <img
                             src={TrashCanIconGray}
                             alt="delete all cohorts icon"
-                            className={classes.grayTrashCan}
+                            className={classes.grayTrashCan + (isScrollbarActive ? ' ' + classes.grayTrashCanScrollPadding : '')}
                             onClick={() => setShowDeleteConfirmation(true)}
                         />
                     </span>
@@ -95,7 +104,8 @@ const CohortList = (props) => {
                                 key={state[cohort].cohortId}
                                 className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
                                 onClick={() => {
-                                    setSelectedCohort(state[cohort].cohortId)}}
+                                    setSelectedCohort(state[cohort].cohortId)
+                                }}
                             >
                                 <span>
                                     {listItemPrefix} {state[cohort].cohortId}
@@ -105,7 +115,7 @@ const CohortList = (props) => {
                                         src={TrashCanIconWhite}
                                         alt="delete cohort icon"
                                         className={classes.whiteTrashCan}
-                                        onClick={(e) => { 
+                                        onClick={(e) => {
                                             e.stopPropagation();
                                             handleDeleteCohort(state[cohort].cohortId)
                                         }}
@@ -150,7 +160,7 @@ const styles = () => ({
         alignItems: 'center',
         color: '#000000',
         lineHeight: '26px',
-        padding: '13px 20px 8px 12px',
+        padding: '13px 20px 8px 26px',
         borderBottom: '1px solid #5C5C5C',
 
     },
@@ -160,6 +170,9 @@ const styles = () => ({
         '&:hover': {
             cursor: 'pointer',
         },
+    },
+    grayTrashCanScrollPadding: {
+        paddingRight: '6px;', //matches scrollbar width
     },
     cohortListing: {
         height: '100%',

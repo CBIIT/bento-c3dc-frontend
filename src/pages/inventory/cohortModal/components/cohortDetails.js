@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import DEFAULT_CONFIG from '../config';
 import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
@@ -21,7 +21,6 @@ const CohortDetails = (props) => {
         handleSaveCohort,
     } = props;
 
-    console.log('find-me active: ', activeCohort);
     if (!activeCohort) {
         return null;
     }
@@ -34,6 +33,36 @@ const CohortDetails = (props) => {
     const [localParticipants, setLocalParticipants] = useState(JSON.parse(JSON.stringify(activeCohort.participants)));
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
+    const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
+    const [isScrollbarActive, setIsScrollbarActive] = useState(false); // State to check if scrollbar is active
+
+    const scrollContainerRef = useRef(null);
+    const dropdownRef = useRef(null);
+
+
+    useEffect(() => {
+        if (scrollContainerRef.current) {
+            const { scrollHeight, clientHeight } = scrollContainerRef.current;
+            setIsScrollbarActive(scrollHeight > clientHeight); // Check if scrollbar is active
+        }
+    }, []);
+
+    useEffect(() => {
+        if (showDownloadDropdown) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showDownloadDropdown]);
+
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setShowDownloadDropdown(false); // Close the dropdown when clicking outside
+        }
+    };
 
     const handleEditName = () => {
         setIsEditingName(true);
@@ -51,6 +80,10 @@ const CohortDetails = (props) => {
         setIsEditingDescription(false);
     };
 
+    const handleDownloadDropdown = () => {
+        setShowDownloadDropdown(!showDownloadDropdown);
+    };
+
     const handleSort = (column) => {
         if (selectedColumn[0] === column) {
             setSelectedColumn([column, selectedColumn[1] === 'ascending' ? 'descending' : 'ascending']);
@@ -58,15 +91,20 @@ const CohortDetails = (props) => {
             setSelectedColumn([column, 'ascending']);
         }
     };
+
     const handleDeleteParticipant = (participant_pk) => {
         setLocalParticipants((prevParticipants) =>
             prevParticipants.filter(participant => participant.participant_pk !== participant_pk)
         );
     };
 
+    const handleDeleteAllParticipants = () => {
+        setLocalParticipants([]);
+    };
+
     const handleInput = (e) => {
         const target = e.target;
-        target.style.height = `${Math.min(target.scrollHeight, 90)}px`; 
+        target.style.height = `${Math.min(target.scrollHeight, 90)}px`;
     };
 
     let localCohort = {
@@ -92,9 +130,6 @@ const CohortDetails = (props) => {
     const filteredParticipants = searchText !== '' ? localCohort.participants.filter(participant =>
         participant.participant_id.includes(searchText)
     ) : localCohort.participants;
-
-
-    console.log('find-me local: ', localCohort);
 
     const datePrefix = config && config.datePrefix && typeof config.datePrefix === 'string'
         ? config.datePrefix
@@ -140,8 +175,8 @@ const CohortDetails = (props) => {
                         value={localCohortDescription}
                         onBlur={handleSaveDescription}
                         onChange={(e) => setLocalCohortDescription(e.target.value)}
-                        onInput={handleInput} 
-                        rows={1} 
+                        onInput={handleInput}
+                        rows={1}
                         placeholder="Enter cohort description..."
                         autoFocus
                     />
@@ -172,7 +207,7 @@ const CohortDetails = (props) => {
                     </span>
                 </div>
                 <div className={classes.participantTableSection}>
-                    <div className={classes.participantTableHeader}>
+                    <div className={classes.participantTableHeader + (isScrollbarActive ? ' ' + classes.participantTableHeaderScrollPadding : '')}>
                         <div
                             onClick={() => handleSort('participant_id')}
                             className={classes.headerColumn}
@@ -202,10 +237,14 @@ const CohortDetails = (props) => {
                                 src={TrashCanIconRed}
                                 alt="delete cohort icon"
                                 className={classes.redTrashCan}
+                                onClick={handleDeleteAllParticipants}
                             />
                         </div>
                     </div>
-                    <div className={classes.tableBody}>
+                    <div
+                        className={classes.tableBody}
+                        ref={scrollContainerRef}
+                    >
                         {filteredParticipants.length > 0 ? filteredParticipants.map((participant) => (
                             <div key={participant.participant_pk} className={classes.tableRow}>
                                 <div>{participant.participant_id}</div>
@@ -233,22 +272,30 @@ const CohortDetails = (props) => {
                     <Button variant="contained" className={classes.saveButton} onClick={() => handleSaveCohort(localCohort)}>
                         Save Changes
                     </Button>
-                    <Button variant="contained" className={classes.downloadButton} >
-                        <div className={classes.downloadButtonText}>
-                            <span>
-                                Download
-                            </span>
-                            <span>
-                                Selected Cohorts
-                            </span>
-                        </div>
+                    <div className={classes.dropdownSection} ref={dropdownRef}>
+                        <Button
+                            variant="contained"
+                            className={showDownloadDropdown ? classes.downloadButtonOpened : classes.downloadButton}
+                            onClick={handleDownloadDropdown}
+                        >
+                            <div className={classes.downloadButtonText}>
+                                <span>Download</span>
+                                <span>Selected Cohorts</span>
+                            </div>
+                            <img
+                                src={ExpandMoreIcon}
+                                alt="expand download icon"
+                                className={`${classes.expandMoreIcon} ${showDownloadDropdown ? classes.rotatedIcon : ''}`}
+                            />
+                        </Button>
+                        {showDownloadDropdown && (
+                            <div className={classes.dropdownMenu}>
+                                <div className={classes.dropdownItem + ' ' + classes.firstDropdownItem}>Manifest CSV</div>
+                                <div className={classes.dropdownItem}>Manifest JSON</div>
+                            </div>
+                        )}
+                    </div>
 
-                        <img
-                            src={ExpandMoreIcon}
-                            alt="expand download icon"
-                            className={classes.expandMoreIcon}
-                        />
-                    </Button>
                 </div>
                 <span className={classes.cohortLastUpdated}>
                     {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
@@ -280,7 +327,6 @@ const styles = () => ({
         maxHeight: '718px',
         border: '1px solid #3388A6',
         borderRadius: '10px',
-        overflow: 'hidden',
     },
 
     cohortHeading: {
@@ -344,7 +390,7 @@ const styles = () => ({
         maxHeight: '100px',
         color: '#343434',
         padding: '10px 25px 16px 23px',
-        
+
     },
     editingCohortDescription: {
         fontFamily: 'Open Sans',
@@ -371,8 +417,11 @@ const styles = () => ({
         alignItems: 'center',
         backgroundColor: '#F1F3F4',
         width: '100%',
-        borderRadius: '8px',
         height: '100%',
+        borderTopLeftRadius: '8px',
+        borderTopRightRadius: '8px',
+        borderBottomLeftRadius: '10px',
+        borderBottomRightRadius: '10px',
     },
     participantSearchBarSection: {
         display: 'flex',
@@ -424,6 +473,7 @@ const styles = () => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'start',
+        paddingLeft: '25px',
     },
     sortingIcon: {
         height: '14px',
@@ -458,7 +508,7 @@ const styles = () => ({
         '&:hover': {
             cursor: 'pointer',
         },
-        paddingRight: '10px',
+        paddingRight: '15px',
     },
     blueTrashCan: {
         height: '20px',
@@ -471,17 +521,15 @@ const styles = () => ({
         //right align the trash can icon
         textAlign: 'right',
         justifyContent: 'end !important',
-        paddingRight: '8px !important',
+        paddingRight: '15px !important',
         width: '100px',
-        flexGrow: '0 !important',
-        flexShrink: '0 !important',
-        flexBasis: '100px !important',
+        flex: '0 0 95px !important',
     },
     participantTableHeader: {
         display: 'flex',
         backgroundColor: '#FFFFFF',
         borderBottom: '1px solid #909090',
-        padding: '10px 20px',
+        padding: '10px 0px',
         '& div': {
             flexBasis: '0',
             flexGrow: 1,
@@ -489,23 +537,25 @@ const styles = () => ({
             textAlign: 'left',
         },
     },
+    participantTableHeaderScrollPadding: {
+        paddingRight: '6px;', //matches scrollbar width
+    },
     removeLabel: {
         paddingRight: '10px',
     },
     removeHeader: {
         display: 'flex',
-        justifyContent: 'end',  // Aligns "Remove" text to the left and icon to the right
-        alignItems: 'center',             // Centers both elements vertically
+        justifyContent: 'end',
+        alignItems: 'center',
         width: '100px',
-        flexGrow: '0 !important',
-        color: '#A61401'
+        color: '#A61401',
+        flex: '0 0 95px !important',
     },
     tableBody: {
         overflowY: 'auto',
-        //height: '100%',
         flexBasis: '336px',
-        flexGrow: '0',
-        flexShrink: '1',
+        display: 'flex',
+        flexDirection: 'column',
         backgroundColor: '#F1F3F4',
         '&::-webkit-scrollbar': {
             width: '6px', // Width of the scrollbar
@@ -528,7 +578,6 @@ const styles = () => ({
         display: 'flex',
         flexDirection: 'row',
         backgroundColor: '#F1F3F4',
-        padding: '0px 20px',
         width: '100%',
         minHeight: '42px',
         '& div': {
@@ -538,10 +587,10 @@ const styles = () => ({
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'start',
-            padding: '0px 10px',
             wordWrap: 'break-word',
             wordBreak: 'break-all',
             whiteSpace: 'normal',
+            paddingLeft: '25px',
         },
         '&:nth-child(odd)': {
             backgroundColor: '#D9DFE6',
@@ -564,17 +613,18 @@ const styles = () => ({
             fontWeight: '600',
             lineHeight: '16px',
             color: '#FFFFFF',
-            borderRadius: '5px',
-
-
         },
     },
     cancelButton: {
         backgroundColor: '#4F5D69',
         border: '1.25px solid #CACACA',
         width: '137px',
+        borderRadius: '5px',
+        boxShadow: 'none',
+
         '&:hover': {
             backgroundColor: '#374149',
+            boxShadow: 'none',
         },
 
     },
@@ -582,9 +632,12 @@ const styles = () => ({
         backgroundColor: '#2A6E93',
         border: '1.25px solid #73A9C7',
         width: '137px',
-        //on hover do an overlay effect
+        borderRadius: '5px',
+        boxShadow: 'none',
+
         '&:hover': {
             backgroundColor: '#1d4d67',
+            boxShadow: 'none',
         },
 
     },
@@ -592,11 +645,33 @@ const styles = () => ({
         backgroundColor: '#0C534C',
         border: '1.25px solid #73A9C7',
         width: '189px',
+        borderRadius: '5px',
         display: 'flex',
         justifyContent: 'space-between',
         lineHeight: '13px !important',
+        boxShadow: 'none',
+
         '&:hover': {
             backgroundColor: '#003B35',
+            boxShadow: 'none',
+        },
+    },
+    downloadButtonOpened: {
+        backgroundColor: '#0C534C',
+        border: '1.25px solid #73A9C7',
+        width: '189px',
+        borderTopLeftRadius: '5px',
+        borderTopRightRadius: '5px',
+        borderBottomLeftRadius: '0px',
+        borderBottomRightRadius: '0px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        lineHeight: '13px !important',
+        zIndex: '1',
+        boxShadow: 'none',
+        '&:hover': {
+            backgroundColor: '#003B35',
+            boxShadow: 'none',
         },
     },
     downloadButtonText: {
@@ -604,8 +679,35 @@ const styles = () => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'start !important',
-
-
+    },
+    dropdownSection: {
+        position: 'relative',
+    },
+    dropdownMenu: {
+        position: 'absolute',
+        top: '39.5px',
+        width: '189px',
+        backgroundColor: '#EFF2F6',
+        border: '1px solid #0C534C',
+        borderBottomLeftRadius: '5px',
+        borderBottomRightRadius: '5px',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+        fontFamily: 'Poppins',
+        fontSize: '12px',
+        lineHeight: '16px',
+        fontWeight: '500',
+        '& div': {
+            padding: '13.2px 21px',
+            '&:hover': {
+                backgroundColor: '#CCD5E1',
+                cursor: 'pointer',
+            },
+        },
+    },
+    firstDropdownItem: {
+        borderBottom: '1px solid #0C534C',
     },
     cohortLastUpdated: {
         width: '100%',
