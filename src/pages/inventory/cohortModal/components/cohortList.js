@@ -127,7 +127,7 @@ const CohortList = (props) => {
 const styles = () => ({
     cohortListSection: {
         //width: '303px',
-        maxHeight: '456px',
+        maxHeight: '466px',
         //width: '35%',
         //height: '55.272%',
         minWidth: '200px',

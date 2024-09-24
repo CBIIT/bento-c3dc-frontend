@@ -9,7 +9,7 @@ export default (theme) => ({
     justifyContent: 'center',
   },
   paper: {
-    width: 'auto',
+    width: '100%',
     height: 'auto',
     minWidth: '437.5px',
     minHeight: '472px',
@@ -37,6 +37,9 @@ export default (theme) => ({
   closeRoot: {
     height: 13,
     marginBottom: 2,
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
   modalContainer: {
     display: 'flex',

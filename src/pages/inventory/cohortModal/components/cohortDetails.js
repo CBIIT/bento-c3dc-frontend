@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import DEFAULT_CONFIG from '../config';
 import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
@@ -6,6 +6,7 @@ import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
 import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
+import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
 
 /**
  * A list of cohorts to select from and manage.
@@ -15,70 +16,63 @@ const CohortDetails = (props) => {
     const {
         classes,
         config,
+        activeCohort,
+        closeModal,
+        handleSaveCohort,
     } = props;
+
+    console.log('find-me active: ', activeCohort);
+    if (!activeCohort) {
+        return null;
+    }
+
+    const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
+
+    const handleSort = (column) => {
+        if (selectedColumn[0] === column) {
+            setSelectedColumn([column, selectedColumn[1] === 'ascending' ? 'descending' : 'ascending']);
+        } else {
+            setSelectedColumn([column, 'ascending']);
+        }
+    };
+
+    let localCohort = {
+        cohortName: activeCohort.cohortName,
+        cohortId: activeCohort.cohortId,
+        cohortDescription: activeCohort.cohortDescription,
+        participants: JSON.parse(JSON.stringify(activeCohort.participants)),
+    }
+    /*
+    localCohort.participants.push({
+        participant_pk: "1",
+        participant_id: '123',
+        dbgap_accession: '1234',
+    });
+*/
+
+    localCohort.participants.sort((a, b) => {
+        // Dynamic sorting by selectedColumn
+        const primaryComparison = selectedColumn[1] === 'ascending'
+            ? a[selectedColumn[0]].localeCompare(b[selectedColumn[0]])
+            : b[selectedColumn[0]].localeCompare(a[selectedColumn[0]]);
+
+        if (primaryComparison !== 0) return primaryComparison;
+
+        // Tiebreaker based on another column, assume dbgap_accession for example
+        const secondaryComparison = a.dbgap_accession.localeCompare(b.dbgap_accession);
+        if (secondaryComparison !== 0) return secondaryComparison;
+
+        // Final tiebreaker based on participant_pk
+        return a.participant_pk.localeCompare(b.participant_pk);
+    });
+
+
+
+    console.log('find-me local: ', localCohort);
 
     const datePrefix = config && config.datePrefix && typeof config.datePrefix === 'string'
         ? config.datePrefix
         : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
-
-    const tempList = [
-        {
-            participantId: '1562165123652165216521',
-            dbgap_accession: 'phs0000001',
-            pkey: 1,
-        },
-        {
-            participantId: 2,
-            dbgap_accession: 'phs0000001',
-            pkey: 2,
-        },
-        {
-            participantId: 3,
-            dbgap_accession: 'phs0000001',
-            pkey: 3,
-        },
-        {
-            participantId: 1,
-            dbgap_accession: 'phs0000002',
-            pkey: 4,
-        },
-        {
-            participantId: 2,
-            dbgap_accession: 'phs0000002',
-            pkey: 5,
-        },
-        {
-            participantId: 3,
-            dbgap_accession: 'phs0000003',
-            pkey: 6,
-        },
-        {
-            participantId: 1,
-            dbgap_accession: 'phs0000003',
-            pkey: 7,
-        },
-        {
-            participantId: 2,
-            dbgap_accession: 'phs0000003',
-            pkey: 8,
-        },
-        {
-            participantId: 3,
-            dbgap_accession: 'phs0000003',
-            pkey: 6,
-        },
-        {
-            participantId: 1,
-            dbgap_accession: 'phs0000003',
-            pkey: 7,
-        },
-        {
-            participantId: 2,
-            dbgap_accession: 'phs0000003',
-            pkey: 8,
-        },
-
-    ];
 
     return (
         <div className={classes.cohortDetailsSection}>
@@ -88,7 +82,7 @@ const CohortDetails = (props) => {
                         Cohort ID:
                     </span>
                     <span className={classes.cohortTitle}>
-                        &nbsp;{'Lorem123124134134'}
+                        &nbsp;{activeCohort.cohortName}
                         <img
                             src={EditIcon}
                             alt="edit cohort name icon"
@@ -97,11 +91,11 @@ const CohortDetails = (props) => {
                     </span>
                 </span>
                 <span className={classes.cohortItemCounts}>
-                    PARTICIPANT IDs (4)
+                    PARTICIPANT IDs ({activeCohort.participants.length})
                 </span>
             </div>
             <div className={classes.cohortDescription}>
-                Lorem ipsum odor amet, consectetuer adipiscing elit. Augue viverra elem en tum interdum taciti nam ac integer pellentesque himenaeos. Augue viverra elem en tum interdum taciti nam ac integer pellentesque himenaeos.
+                {activeCohort.cohortDescription}
                 <img
                     src={EditIcon}
                     alt="edit cohort description icon"
@@ -124,8 +118,29 @@ const CohortDetails = (props) => {
                 </div>
                 <div className={classes.participantTableSection}>
                     <div className={classes.participantTableHeader}>
-                        <div>Participant ID</div>
-                        <div>dbGaP Accession</div>
+                        <div
+                            onClick={() => handleSort('participant_id')}
+                            className={classes.headerColumn}
+
+                        >
+                            <span >Participant ID</span>
+                            <img
+                                src={SortingIcon}
+                                alt="sort by participant id icon"
+                                className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'participant_id' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
+                            />
+                        </div>
+                        <div
+                            onClick={() => handleSort('dbgap_accession')}
+                            className={classes.headerColumn}
+                        >
+                            <span >dbGaP Accession</span>
+                            <img
+                                src={SortingIcon}
+                                alt="sort by participant id icon"
+                                className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'dbgap_accession' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
+                            />
+                        </div>
                         <div className={classes.removeHeader}>
                             <span className={classes.removeLabel}>Remove</span>
                             <img
@@ -136,9 +151,9 @@ const CohortDetails = (props) => {
                         </div>
                     </div>
                     <div className={classes.tableBody}>
-                        {tempList.map((participant) => (
-                            <div key={participant.pkey} className={classes.tableRow}>
-                                <div>{participant.participantId}</div>
+                        {localCohort.participants.length > 0 ? localCohort.participants.map((participant) => (
+                            <div key={participant.participant_pk} className={classes.tableRow}>
+                                <div>{participant.participant_id}</div>
                                 <div>{participant.dbgap_accession}</div>
                                 <div className={classes.removeParticipant}>
                                     <img
@@ -148,14 +163,18 @@ const CohortDetails = (props) => {
                                     />
                                 </div>
                             </div>
-                        ))}
+                        )):
+                        <div className={classes.emptyTable}>
+                            No Data
+                        </div>
+                        }
                     </div>
                 </div>
                 <div className={classes.cohortButtonSection}>
-                    <Button variant="contained" className={classes.cancelButton}>
+                    <Button variant="contained" className={classes.cancelButton} onClick={closeModal}>
                         Cancel
                     </Button>
-                    <Button variant="contained" className={classes.saveButton}>
+                    <Button variant="contained" className={classes.saveButton} onClick={() => handleSaveCohort(localCohort)}>
                         Save Changes
                     </Button>
                     <Button variant="contained" className={classes.downloadButton} >
@@ -176,7 +195,7 @@ const CohortDetails = (props) => {
                     </Button>
                 </div>
                 <span className={classes.cohortLastUpdated}>
-                    {datePrefix} 6/4/2024
+                    {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
                 </span>
             </div>
         </div>
@@ -197,7 +216,7 @@ const styles = () => ({
         //width: '55%',
         //width: '55.191%',
         //height: '87.030%',
-        //maxWidth: '521px',
+        maxWidth: '521px',
         height: '50%',
         minHeight: '435px',
         width: '100%',
@@ -306,6 +325,30 @@ const styles = () => ({
             cursor: 'pointer',
         },
     },
+    headerColumn: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'start',
+    },
+    sortingIcon: {
+        height: '14px',
+        paddingLeft: '6px',
+        '&:hover': {
+            cursor: 'pointer',
+        },
+        //not visible by default
+        visibility: 'hidden',
+
+    },
+    selectedColumn: {
+        visibility: 'visible',
+    },
+    descendingColumn: {
+        transform: 'rotate(180deg)',
+        paddingLeft: '0px',
+        paddingRight: '6px',
+    },
     participantTableSection: {
         width: '92%',
         height: '75%',
@@ -380,6 +423,13 @@ const styles = () => ({
             backgroundColor: '#003F74', // Thumb color
         },
     },
+    emptyTable: {
+        height: '100%',
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     tableRow: {
         display: 'flex',
         flexDirection: 'row',
@@ -392,7 +442,7 @@ const styles = () => ({
             flexGrow: 1,
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'center',             
+            alignItems: 'center',
             justifyContent: 'start',
             padding: '0px 10px',
             wordWrap: 'break-word',
@@ -421,7 +471,7 @@ const styles = () => ({
             lineHeight: '16px',
             color: '#FFFFFF',
             borderRadius: '5px',
-            
+
 
         },
     },
@@ -461,7 +511,7 @@ const styles = () => ({
         justifyContent: 'center',
         alignItems: 'start !important',
 
-        
+
     },
     cohortLastUpdated: {
         width: '100%',

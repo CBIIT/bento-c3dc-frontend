@@ -3,6 +3,7 @@ import { CohortContext } from '../../../components/CohortSelector/CohortContext.
 import { 
     onDeleteSingleCohort, 
     onDeleteAllCohort, 
+    onMutateSingleCohort,
   } from '../../../components/CohortSelector/store/action.js'; 
 import {
     Modal, Button, Typography,
@@ -61,6 +62,17 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     const handleDeleteAllCohorts = () => {
         dispatch(onDeleteAllCohort());
     };
+    // Handle saving updates to cohort
+    const handleSaveCohort = (localCohort) => {
+        if (!localCohort.cohortId) return;
+        dispatch(onMutateSingleCohort(
+        localCohort.cohortId, 
+        { 
+            cohortName: localCohort.cohortName, 
+            cohortDescription: localCohort.cohortDescription,
+            participants: localCohort.participants 
+        }));
+    };
 
     return {
         CohortModal: withStyles(DEFAULT_STYLES, { withTheme: true })((props) => {
@@ -112,6 +124,9 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                             <CohortDetails
                                 classes={cohortDetailsClasses}
                                 config={config.cohortDetails}
+                                activeCohort={state[selectedCohort]}
+                                closeModal={closeModalWrapper}
+                                handleSaveCohort={handleSaveCohort}
                             />
                         </div>
                     </div>
