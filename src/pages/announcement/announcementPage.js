@@ -76,7 +76,7 @@ const AnnouncementContainer = styled.div`
 .announcementCard { 
     border: 2px #9FBEB5 solid;
     width: 1046px;
-    min-height: 357px;
+    min-height: 300px;
     border-radius: 20px;
     padding: 25px 30px 25px 30px;
     margin-top: 30px;
@@ -91,7 +91,6 @@ const AnnouncementContainer = styled.div`
 
 .announcementCard .title{
     color: #00838F;
-    font-size: 30px;
     font-weight: 500;
     font-family: Poppins;
     font-size: 28px;
@@ -114,11 +113,12 @@ const AnnouncementContainer = styled.div`
   }
 .announcementContent{
       font-family: Inter;
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 400;
       line-height: 24px;
       text-align: left;
       margin-top: 10px;
+      width: 120%;
     }
   .announcementButton{
     font-family: Poppins;
@@ -178,6 +178,14 @@ const AnnouncementContainer = styled.div`
     height: 32px;
 
   }
+
+  .timestamp{
+      font-family: Inter;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 24px;
+      text-align: left;
+  }
   .pageNavigation .selected {
     font-weight: bold;
     text-decoration: underline;
@@ -212,7 +220,7 @@ const AnnouncementContainer = styled.div`
 
 const AnnouncementPage = () => {
   const [selectedOption, setSelectedOption] = useState(0);
-  const [options] = useState(["All", "Application Update", "Data Update"]);
+  const [options] = useState(["All", "Data Update","Application Update"]);
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [expandedIndices, setExpandedIndices] = useState([]);
@@ -297,29 +305,22 @@ const AnnouncementPage = () => {
                 <div className="sectionOne">
                   <div className='sectionOne-first'>
                     <span className="title">{isExpanded ? content.title : content.title.substring(0, 100)}</span>
-                    <span>{content.timestamp}</span>
-                    <span className="announcementContent">
-                      {isExpanded ? content.verbiage : content.verbiage.substring(0, 550)}
-                    </span>
+                    <span className="timestamp">{content.timestamp}</span>
+                    <span className="announcementContent" dangerouslySetInnerHTML={{__html: content.verbiage}} />
+                    
                   </div>
-                  <img src={content.image} width={159} height={139} alt={content.alt} />
+                  <img src={content.image} width={197} height={172} alt={content.alt} />
                 </div>
-                {(content.verbiage.length > 550 || content.title.length > 100) &&
-                  <span
-                    onClick={() => toggleExpand(idx)}
-                    className='announcementButton'>
-                    {isExpanded ? "Condense" : "Expand"}
-                  </span>
-                }
+            
 
                 {
-                  content.type === 2 &&
+                  content.is_release_notes &&
                   <span
                     onClick={() => {
-                      navigator("/release_notes_pdf")
+                      navigator("/release_notes")
                     }}
                     className='announcementButton'>
-                    Latest Release
+                    Read More
                   </span>
 
                 }

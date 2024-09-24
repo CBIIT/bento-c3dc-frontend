@@ -83,7 +83,7 @@ export const landingPageData = {
     alt: '',
     img: landingTile3,
     titleText: 'Announcements',
-    descriptionText: 'Our latest release contains harmonized demographic and phenotypic data from nine additional CCDI datasets.',
+    descriptionText: 'The latest updates for both datasets and the application are now available. Stay current with the latest enhancements and improvements.',
     callToActionText: 'EXPLORE ANNOUNCEMENTS',
     callToActionLink: '/announcements', //Link to the "Announcement" Static Page
   },

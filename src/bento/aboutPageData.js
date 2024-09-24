@@ -1,5 +1,5 @@
-import userGuide from '../assets/about/C3DC_User_Guide_v5.pdf';
-import latestRelease from '../assets/about/C3DC_Release_Notes-V4.pdf';
+import userGuide from '../assets/releaseNotes/C3DC_User_Guide_v5.pdf';
+import latestRelease from '../assets/releaseNotes/C3DC_Release_Notes-V4.pdf';
 
 export const aboutData = {
   introParagraph:
