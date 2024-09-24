@@ -37,7 +37,7 @@ export default (theme) => ({
   alert: {
     position: 'absolute',
     width: '20%',
-    height: '50px',
+    height: 'auto',
     top: '6%',
     left: '40%',
   },

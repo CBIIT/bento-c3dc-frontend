@@ -29,6 +29,28 @@ const CohortDetails = (props) => {
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
     const [searchText, setSearchText] = useState('');
 
+    const [localCohortName, setLocalCohortName] = useState(activeCohort.cohortName);
+    const [localCohortDescription, setLocalCohortDescription] = useState(activeCohort.cohortDescription);
+    const [localParticipants, setLocalParticipants] = useState(JSON.parse(JSON.stringify(activeCohort.participants)));
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [isEditingDescription, setIsEditingDescription] = useState(false);
+
+    const handleEditName = () => {
+        setIsEditingName(true);
+    };
+
+    const handleEditDescription = (e) => {
+        setIsEditingDescription(true);
+    };
+
+    const handleSaveName = () => {
+        setIsEditingName(false);
+    };
+
+    const handleSaveDescription = () => {
+        setIsEditingDescription(false);
+    };
+
     const handleSort = (column) => {
         if (selectedColumn[0] === column) {
             setSelectedColumn([column, selectedColumn[1] === 'ascending' ? 'descending' : 'ascending']);
@@ -36,39 +58,39 @@ const CohortDetails = (props) => {
             setSelectedColumn([column, 'ascending']);
         }
     };
+    const handleDeleteParticipant = (participant_pk) => {
+        setLocalParticipants((prevParticipants) =>
+            prevParticipants.filter(participant => participant.participant_pk !== participant_pk)
+        );
+    };
+
+    const handleInput = (e) => {
+        const target = e.target;
+        target.style.height = `${Math.min(target.scrollHeight, 90)}px`; 
+    };
 
     let localCohort = {
-        cohortName: activeCohort.cohortName,
+        cohortName: localCohortName,
         cohortId: activeCohort.cohortId,
-        cohortDescription: activeCohort.cohortDescription,
-        participants: JSON.parse(JSON.stringify(activeCohort.participants)),
+        cohortDescription: localCohortDescription,
+        participants: localParticipants,
     }
-    /*
-    localCohort.participants.push({
-        participant_pk: "1",
-        participant_id: '123',
-        dbgap_accession: '1234',
-    });
-*/
 
     localCohort.participants.sort((a, b) => {
-        // Dynamic sorting by selectedColumn
         const primaryComparison = selectedColumn[1] === 'ascending'
             ? a[selectedColumn[0]].localeCompare(b[selectedColumn[0]])
             : b[selectedColumn[0]].localeCompare(a[selectedColumn[0]]);
 
         if (primaryComparison !== 0) return primaryComparison;
 
-        // Tiebreaker based on another column, assume dbgap_accession for example
         const secondaryComparison = a.dbgap_accession.localeCompare(b.dbgap_accession);
         if (secondaryComparison !== 0) return secondaryComparison;
 
-        // Final tiebreaker based on participant_pk
         return a.participant_pk.localeCompare(b.participant_pk);
     });
 
     const filteredParticipants = searchText !== '' ? localCohort.participants.filter(participant =>
-        participant.participant_id.includes(searchText)  // Change to match your filtering criteria
+        participant.participant_id.includes(searchText)
     ) : localCohort.participants;
 
 
@@ -86,11 +108,24 @@ const CohortDetails = (props) => {
                         Cohort ID:
                     </span>
                     <span className={classes.cohortTitle}>
-                        &nbsp;{activeCohort.cohortName}
+                        &nbsp;
+                        {isEditingName ? (
+                            <input
+                                className={classes.editingCohortName}
+                                type="text"
+                                value={localCohortName}
+                                onBlur={handleSaveName}
+                                onChange={(e) => setLocalCohortName(e.target.value)}
+                                autoFocus
+                            />
+                        ) : (
+                            <span>{localCohortName}</span>
+                        )}
                         <img
                             src={EditIcon}
                             alt="edit cohort name icon"
                             className={classes.editIcon}
+                            onClick={handleEditName}
                         />
                     </span>
                 </span>
@@ -99,11 +134,25 @@ const CohortDetails = (props) => {
                 </span>
             </div>
             <div className={classes.cohortDescription}>
-                {activeCohort.cohortDescription}
+                {isEditingDescription ? (
+                    <textarea
+                        className={classes.editingCohortDescription}
+                        value={localCohortDescription}
+                        onBlur={handleSaveDescription}
+                        onChange={(e) => setLocalCohortDescription(e.target.value)}
+                        onInput={handleInput} 
+                        rows={1} 
+                        placeholder="Enter cohort description..."
+                        autoFocus
+                    />
+                ) : (
+                    <span>{localCohortDescription}</span>
+                )}
                 <img
                     src={EditIcon}
                     alt="edit cohort description icon"
                     className={classes.editIcon}
+                    onClick={handleEditDescription}
                 />
             </div>
             <div className={classes.participantViewer}>
@@ -166,6 +215,7 @@ const CohortDetails = (props) => {
                                         src={TrashCanIconBlue}
                                         alt="delete participant icon"
                                         className={classes.blueTrashCan}
+                                        onClick={() => handleDeleteParticipant(participant.participant_pk)}
                                     />
                                 </div>
                             </div>
@@ -254,6 +304,24 @@ const styles = () => ({
         letterspacing: '-0.5%',
         color: '#3A555E',
     },
+    editingCohortName: {
+        fontFamily: 'Poppins',
+        fontSize: '18px',
+        fontWeight: '500',
+        lineHeight: '20px',
+        letterspacing: '-0.5%',
+        color: '#3A555E',
+        height: '25px',
+        padding: '0px',
+        margin: '0px',
+        outline: 'none',
+        border: '1px solid #8B98AF',
+        '&:focus-within': {
+            padding: '0px',
+            margin: '0px',
+        },
+        boxSize: 'border-box',
+    },
     editIcon: {
         height: '13px',
         paddingLeft: '8px',
@@ -276,6 +344,26 @@ const styles = () => ({
         maxHeight: '100px',
         color: '#343434',
         padding: '10px 25px 16px 23px',
+        
+    },
+    editingCohortDescription: {
+        fontFamily: 'Open Sans',
+        fontSize: '13px',
+        fontWeight: '400',
+        lineHeight: '20px',
+        maxHeight: '45px',
+        color: '#343434',
+        padding: '0px',
+        margin: '0px',
+        border: '1px solid #8B98AF',
+        outline: 'none',
+        width: '90%',
+        resize: 'none',
+        '&:focus-within': {
+            padding: '0px',
+            margin: '0px',
+        },
+        boxSize: 'border-box !important',
     },
     participantViewer: {
         display: 'flex',
