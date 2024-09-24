@@ -4,6 +4,7 @@ import { tabContainers } from '../../../bento/dashboardTabData';
 import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
 
+
 const Tabs = (props) => {
   const [currentTab, setCurrentTab] = tabContainers.length > 0 ? useState(1) : useState(0);
   const handleTabChange = (event, value) => {
@@ -36,7 +37,7 @@ const Tabs = (props) => {
       {
         tabContainers.map((tab, index) => (
           <>
-            <div hidden={currentTab !== index}>
+            <div hidden={currentTab !== index}>           
               <TabPanel
                 {...props}
                 tab={tab}
