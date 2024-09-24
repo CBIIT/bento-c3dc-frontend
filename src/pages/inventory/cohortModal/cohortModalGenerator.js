@@ -1,10 +1,10 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { CohortContext } from '../../../components/CohortSelector/CohortContext.js';
-import { 
-    onDeleteSingleCohort, 
-    onDeleteAllCohort, 
+import {
+    onDeleteSingleCohort,
+    onDeleteAllCohort,
     onMutateSingleCohort,
-  } from '../../../components/CohortSelector/store/action.js'; 
+} from '../../../components/CohortSelector/store/action.js';
 import {
     Modal, Button, Typography,
     TextareaAutosize, IconButton, withStyles,
@@ -13,6 +13,7 @@ import DEFAULT_STYLES from './styles';
 import DEFAULT_CONFIG from './config';
 import CohortList from './components/cohortList';
 import CohortDetails from './components/cohortDetails';
+import Alert from '@material-ui/lab/Alert';
 
 /**
  * Generator function to create cohortModal component with custom configuration
@@ -28,6 +29,17 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
 
     const { state, dispatch } = useContext(CohortContext);
     const [selectedCohort, setSelectedCohort] = useState(null); // Default to the first entry
+    const [alert, setAlert] = useState({ type: '', message: '' });
+    useEffect(() => {
+        if (alert.message) {
+            const timer = setTimeout(() => {
+                setAlert({ type: '', message: '' }); // Clear the alert after 3 seconds
+            }, 2500);
+
+            // Cleanup timer on component unmount
+            return () => clearTimeout(timer);
+        }
+    }, [alert]);
 
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
@@ -66,12 +78,15 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     const handleSaveCohort = (localCohort) => {
         if (!localCohort.cohortId) return;
         dispatch(onMutateSingleCohort(
-        localCohort.cohortId, 
-        { 
-            cohortName: localCohort.cohortName, 
-            cohortDescription: localCohort.cohortDescription,
-            participants: localCohort.participants 
-        }));
+            localCohort.cohortId,
+            {
+                cohortName: localCohort.cohortName,
+                cohortDescription: localCohort.cohortDescription,
+                participants: localCohort.participants
+            },
+            () => setAlert({ type: 'success', message: 'Cohort updated successfully!' }),
+            (error) => setAlert({ type: 'error', message: `Failed to update cohort: ${error.message}` })
+        ));
     };
 
     return {
@@ -109,6 +124,11 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     className={classes.closeRoot}
                                 />
                             </span>
+                            {alert.message && (
+                                <Alert severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
+                                    {alert.message}
+                                </Alert>
+                            )}
                         </h1>
                         <div className={classes.modalContainer}>
                             <CohortList

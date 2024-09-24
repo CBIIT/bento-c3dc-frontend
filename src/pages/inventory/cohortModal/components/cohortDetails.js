@@ -27,6 +27,7 @@ const CohortDetails = (props) => {
     }
 
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
+    const [searchText, setSearchText] = useState('');
 
     const handleSort = (column) => {
         if (selectedColumn[0] === column) {
@@ -66,6 +67,9 @@ const CohortDetails = (props) => {
         return a.participant_pk.localeCompare(b.participant_pk);
     });
 
+    const filteredParticipants = searchText !== '' ? localCohort.participants.filter(participant =>
+        participant.participant_id.includes(searchText)  // Change to match your filtering criteria
+    ) : localCohort.participants;
 
 
     console.log('find-me local: ', localCohort);
@@ -108,6 +112,8 @@ const CohortDetails = (props) => {
                         type="text"
                         placeholder="Search Participant ID here"
                         className={classes.participantSearchBar}
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
                     />
                     <span className={classes.searchIcon}>
                         <img
@@ -123,7 +129,7 @@ const CohortDetails = (props) => {
                             className={classes.headerColumn}
 
                         >
-                            <span >Participant ID</span>
+                            <span >Participant Id</span>
                             <img
                                 src={SortingIcon}
                                 alt="sort by participant id icon"
@@ -151,7 +157,7 @@ const CohortDetails = (props) => {
                         </div>
                     </div>
                     <div className={classes.tableBody}>
-                        {localCohort.participants.length > 0 ? localCohort.participants.map((participant) => (
+                        {filteredParticipants.length > 0 ? filteredParticipants.map((participant) => (
                             <div key={participant.participant_pk} className={classes.tableRow}>
                                 <div>{participant.participant_id}</div>
                                 <div>{participant.dbgap_accession}</div>
@@ -163,10 +169,10 @@ const CohortDetails = (props) => {
                                     />
                                 </div>
                             </div>
-                        )):
-                        <div className={classes.emptyTable}>
-                            No Data
-                        </div>
+                        )) :
+                            <div className={classes.emptyTable}>
+                                {localCohort.participants.length === 0 ? 'No Data' : 'No matching Participant Id'}
+                            </div>
                         }
                     </div>
                 </div>

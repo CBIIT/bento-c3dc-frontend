@@ -34,6 +34,13 @@ export default (theme) => ({
     alignItems: 'center',
     fontWeight: '400',
   },
+  alert: {
+    position: 'absolute',
+    width: '20%',
+    height: '50px',
+    top: '6%',
+    left: '40%',
+  },
   closeRoot: {
     height: 13,
     marginBottom: 2,
