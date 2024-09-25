@@ -88,8 +88,8 @@ const createNewCohort = (state, payload) => {
   }
 
   const newState = {
-    [cohortId]: newCohort,
     ...state,
+    [cohortId]: newCohort,
   };
 
   return newState;

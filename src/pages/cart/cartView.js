@@ -23,6 +23,7 @@ const CartView = (props) => {
     dataKey: config.dataKey,
     columns: configColumn({ columns: config.columns, ...props }),
     selectedRows: [],
+    hiddenSelectedRows: [],
     tableMsg: config.tableMsg,
     paginationAPIField: config.paginationAPIField,
     sortBy: config.defaultSortField,

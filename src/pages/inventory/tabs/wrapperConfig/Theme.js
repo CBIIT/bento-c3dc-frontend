@@ -8,6 +8,7 @@ export const customTheme = {
       },
       '&.container_header': {
         textAlign: 'right',
+        top: '40px',
       },
       '&.container_footer': {
         paddingTop: '10px',
@@ -30,14 +31,15 @@ export const customTheme = {
       padding: '10px 16px',
     },
     root: {
-      color: '#fff',
-      fontSize: '12px',
-      marginTop: '6px',
-      fontFamily: 'Poppins',
-      fontWeight: '600',
+      width: '189px',
+      height: '41px',
+      padding: '12px 30px 12px 30px',
+      gap: '10px',
       borderRadius: '5px',
-      marginBottom: '10px',
-      textTransform: 'uppercase',
+      border: '1.25px 0px 0px 0px',
+      opacity: '0px',
+      color: '#fff',
+      marginTop: '5px',
       '&.add_all_button': {
         marginRight: '6px',
         // width: '120px',
