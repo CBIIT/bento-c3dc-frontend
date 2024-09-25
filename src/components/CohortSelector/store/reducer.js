@@ -102,8 +102,15 @@ const addParticipantsToCohort = (state, payload) => {
     throw new Error(`Cohort with ID ${cohortId} does not exist`);
   }
 
+  // Get existing participant PKs
+  const existingParticipantPks = new Set(state[cohortId].participants.map(p => p.participant_pk));
+
+  // Filter out participants with duplicate PKs
+  const newParticipants = participants.filter(p => !existingParticipantPks.has(p.participant_pk));
+
   const updatedParticipants = [
-    ...new Set([...state[cohortId].participants, ...participants])
+    ...state[cohortId].participants,
+    ...newParticipants
   ];
 
   const newCohort = {
