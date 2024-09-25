@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { CohortProvider } from '../../components/CohortSelector/CohortContext';
+import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
 import CohortManager from './CohortManager';
 
 const CohortManagerController = ((props) => {
   return (
-    <CohortProvider>
+    <CohortStateProvider>
         <CohortManager {...props} />
-    </CohortProvider>
+    </CohortStateProvider>
   );
 });
 

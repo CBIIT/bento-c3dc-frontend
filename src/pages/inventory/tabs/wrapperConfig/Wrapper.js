@@ -11,10 +11,10 @@ import {
 import { alertMessage } from '../../../../bento/fileCentricCartWorkflowData';
 import { CustomDropDown } from './CustomDropDown';
 import { CustomButton } from './customButton';
-import { CohortContext } from '../../../../components/CohortSelector/CohortContext';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 
 const GetOptions = () => {
-  const { state } = useContext(CohortContext);
+  const { state } = useContext(CohortStateContext);
   return Object.keys(state);
 }
 
