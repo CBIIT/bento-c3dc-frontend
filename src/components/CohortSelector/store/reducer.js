@@ -39,6 +39,7 @@ const isValidCohort = (cohort) => {
     return false;
   }
 
+  // eslint-disable-next-line no-unused-vars
   for (const participant of cohort.participants) {
     if (!isValidParticipant(participant)) {
       return false;

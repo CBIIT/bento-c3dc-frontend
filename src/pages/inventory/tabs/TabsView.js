@@ -4,12 +4,17 @@ import { tabContainers } from '../../../bento/dashboardTabData';
 import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
 
+import { Button } from '@material-ui/core';
+import CohortModalGenerator from '../cohortModal/cohortModalGenerator';
+
 
 const Tabs = (props) => {
   const [currentTab, setCurrentTab] = tabContainers.length > 0 ? useState(1) : useState(0);
   const handleTabChange = (event, value) => {
     setCurrentTab(value);
   };
+
+  const [showCohortModal, setShowCohortModal] = useState(false);
 
   /**
   * 1. change <name> to <display> as array item
@@ -26,8 +31,21 @@ const Tabs = (props) => {
     tooltipStyles: {border: '1px solid #2D5380', arrowBorder: '1px solid #598AC5'}
   }));
 
+  const { CohortModal } = CohortModalGenerator();
+
   return (
     <>
+      <Button
+        variant='contained'
+        disableElevation
+        onClick={() => setShowCohortModal(true)}>
+          Show Modal
+
+      </Button>
+      <CohortModal
+        open={showCohortModal}
+        onCloseModal={() => setShowCohortModal(false)}
+        />
       <BentoTabs
         tabItems={getTabs(tabContainers)}
         currentTab={currentTab}
