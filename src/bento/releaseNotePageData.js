@@ -27,6 +27,12 @@ export const versionList = {
         <li>Participants: 267</li>
         <li>Diagnoses: 28</li>
     </ul>
+     UCSF Database for the Advancement of JMML - Integration of Metadata with "Omic" Data 
+    <ul class="study-details">
+        <li>dbGaP Accession: phs002504</li>
+        <li>Participants: 195</li>
+        <li>Diagnoses: 1</li>
+    </ul>
 
     Molecular Characterization across Pediatric Brain Tumors and Other Solid and Hematologic Malignancies for Research, Diagnostic, and Precision Medicine
     <ul class="study-details">
