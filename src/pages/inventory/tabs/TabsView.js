@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import TabPanel from './TabPanel';
 import { tabContainers } from '../../../bento/dashboardTabData';
 import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
-
-import { Button } from '@material-ui/core';
 import CohortModalGenerator from '../cohortModal/cohortModalGenerator';
+import { CohortModalContext } from '../cohortModal/CohortModalContext';
 
 
 const Tabs = (props) => {
@@ -14,7 +13,7 @@ const Tabs = (props) => {
     setCurrentTab(value);
   };
 
-  const [showCohortModal, setShowCohortModal] = useState(false);
+  const { showCohortModal, setShowCohortModal} = useContext(CohortModalContext);
 
   /**
   * 1. change <name> to <display> as array item
@@ -35,13 +34,6 @@ const Tabs = (props) => {
 
   return (
     <>
-      <Button
-        variant='contained'
-        disableElevation
-        onClick={() => setShowCohortModal(true)}>
-          Show Modal
-
-      </Button>
       <CohortModal
         open={showCohortModal}
         onCloseModal={() => setShowCohortModal(false)}

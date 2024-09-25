@@ -1,10 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { CohortContext } from '../../../components/CohortSelector/CohortContext.js';
+import { CohortStateContext } from '../../../components/CohortSelectorState/CohortStateContext.js';
 import {
     onDeleteSingleCohort,
     onDeleteAllCohort,
     onMutateSingleCohort,
-} from '../../../components/CohortSelector/store/action.js';
+} from '../../../components/CohortSelectorState/store/action.js';
 import {
     Modal, withStyles,
 } from '@material-ui/core';
@@ -29,7 +29,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         config, functions,
     } = uiConfig;
 
-    const { state, dispatch } = useContext(CohortContext);
+    const { state, dispatch } = useContext(CohortStateContext);
     const [selectedCohort, setSelectedCohort] = useState(null); // Default to the first entry
     const [alert, setAlert] = useState({ type: '', message: '' });
     useEffect(() => {

@@ -4,10 +4,10 @@ import { reducer, initialState } from './store/reducer';
 import logger from 'use-reducer-logger';
 
 // Create the context
-export const CohortContext = createContext();
+export const CohortStateContext = createContext();
 
 // Create the provider component
-export const CohortProvider = ({ children }) => {
+export const CohortStateProvider = ({ children }) => {
   const loadState = () => {
     const savedState = localStorage.getItem('cohortState');
     return savedState ? JSON.parse(savedState) : initialState;
@@ -16,8 +16,8 @@ export const CohortProvider = ({ children }) => {
   const [state, dispatch] = useReducer(logger(reducer), loadState());
 
   return (
-    <CohortContext.Provider value={{ state, dispatch }}>
+    <CohortStateContext.Provider value={{ state, dispatch }}>
       {children}
-    </CohortContext.Provider>
+    </CohortStateContext.Provider>
   );
 };

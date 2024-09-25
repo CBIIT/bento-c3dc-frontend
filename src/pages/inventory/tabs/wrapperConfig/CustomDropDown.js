@@ -3,8 +3,8 @@ import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import React, { useContext, useEffect,useState } from 'react';
 import styled from 'styled-components';
-import { onAddParticipantsToCohort } from '../../../../components/CohortSelector/store/action';
-import { CohortContext } from '../../../../components/CohortSelector/CohortContext';
+import { onAddParticipantsToCohort } from '../../../../components/CohortSelectorState/store/action';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
 
 const DropdownContainer = styled.div`
@@ -142,7 +142,7 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
     }
 
   };
-  const { dispatch } = useContext(CohortContext);
+  const { dispatch } = useContext(CohortStateContext);
 
   const handleSelect = (value) => {
     if (isActive) {

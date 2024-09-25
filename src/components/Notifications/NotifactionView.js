@@ -67,7 +67,7 @@ const NotificationView = () => {
         onClose={handleClose}
       >
         <Alert severity="success" icon={false} className={classes.alertStyles}>
-          <img src={SuccessOutlined} />
+          <img src={SuccessOutlined} alt="" />
           {message}
         </Alert>
       </Snackbar>
