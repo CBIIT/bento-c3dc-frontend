@@ -5,7 +5,7 @@ export const releaseNotePageData = [
         Year: '2024',
         is_open: true,
         versions: [
-            { Version: 'Data Release 4.0', date: 'Oct 30, 2024', selected: true },
+            { Version: 'Data Release 4.0', date: 'Nov 7, 2024', selected: true },
             { Version: 'Data Release 3.0', date: 'Jul 31, 2024', selected: false },
             { Version: 'Data Release 2.0', date: 'May 1, 2024', selected: false },
             { Version: 'Data Release 1.0', date: 'Mar 8, 2024', selected: false },
@@ -17,43 +17,56 @@ export const defaultVersion = "Data Release 4.0";
 export const versionList = {
     'Data Release 4.0': `
      <span class='title'>Data Release 4.0</span>
-         <p class='descriptionDate'>October 30, 2024</p>
+         <p class='descriptionDate'>November 7, 2024</p>
    
     <span class='second-title'>Studies Overview</span>
     <br>
     Pediatric Preclinical Testing Consortium (PPTC)
     <ul class="study-details">
         <li>dbGaP Accession: phs001437</li>
-        <li>Participants:</li>
-        <li>Diagnoses:</li>
+        <li>Participants: 267</li>
+        <li>Diagnoses: 28</li>
+    </ul>
+     UCSF Database for the Advancement of JMML - Integration of Metadata with "Omic" Data 
+    <ul class="study-details">
+        <li>dbGaP Accession: phs002504</li>
+        <li>Participants: 195</li>
+        <li>Diagnoses: 1</li>
     </ul>
 
     Molecular Characterization across Pediatric Brain Tumors and Other Solid and Hematologic Malignancies for Research, Diagnostic, and Precision Medicine
     <ul class="study-details">
         <li>dbGaP Accession: phs002517</li>
-        <li>Participants:</li>
-        <li>Diagnoses:</li>
+        <li>Participants: 3,876</li>
+        <li>Diagnoses: 65</li>
     </ul>
 
     Molecular Characterization Initiative
     <ul class="study-details">
         <li>dbGaP Accession: phs002790</li>
-        <li>Participants:</li>
-        <li>Diagnoses:</li>
+        <li>Participants: 3,558</li>
+        <li>Diagnoses: 217</li>
     </ul>
 
     Identification and Targeting of Treatment Resistant Progenitor Populations in T-cell Acute Lymphoblastic Leukemia
     <ul class="study-details">
         <li>dbGaP Accession: phs003432</li>
         <li>Participants: 43</li>
-        <li>Diagnoses:</li>
+        <li>Diagnoses: 1</li>
     </ul>
 
     Single-Cell Atlas of NF1 Nerve Sheath Tumors
     <ul class="study-details">
         <li>dbGaP Accession: phs003519</li>
         <li>Participants: 29</li>
-        <li>Diagnoses:</li>
+        <li>Diagnoses: 1</li>
+    </ul>
+    
+    TARGET: Kidney, Clear Cell Sarcoma of the Kidney (CCSK) 
+    <ul class="study-details">
+        <li>dbGaP Accession: phs000466</li>
+        <li>Participants: 13</li>
+        <li>Diagnoses: 1</li>
     </ul>
     `,
 
