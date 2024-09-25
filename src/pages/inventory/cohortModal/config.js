@@ -17,6 +17,8 @@ export const DEFAULT_CONFIG_COHORTMODAL = {
       },
       cohortDetails: {
         datePrefix: 'Last Updated:',
+        cohortHeaderLabel: 'Cohort ID:',
+        cohortCountsLabel: 'PARTICIPANTS IDs',
       },
     },
   

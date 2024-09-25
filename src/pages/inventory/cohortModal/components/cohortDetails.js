@@ -19,6 +19,8 @@ const CohortDetails = (props) => {
         activeCohort,
         closeModal,
         handleSaveCohort,
+        downloadCohortManifest,
+        downloadCohortMetadata,
     } = props;
 
     if (!activeCohort) {
@@ -134,13 +136,21 @@ const CohortDetails = (props) => {
     const datePrefix = config && config.datePrefix && typeof config.datePrefix === 'string'
         ? config.datePrefix
         : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
+    
+    const cohortHeaderLabel = config && config.cohortHeaderLabel && typeof config.cohortHeaderLabel === 'string'
+        ? config.cohortHeaderLabel
+        : DEFAULT_CONFIG.config.cohortDetails.cohortHeaderLabel;
+    
+    const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
+        ? config.cohortCountsLabel
+        : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
     return (
         <div className={classes.cohortDetailsSection}>
             <div className={classes.cohortHeading}>
                 <span className={classes.cohortHeader}>
                     <span className={classes.cohortLabel}>
-                        Cohort ID:
+                        {cohortHeaderLabel}
                     </span>
                     <span className={classes.cohortTitle}>
                         &nbsp;
@@ -165,7 +175,7 @@ const CohortDetails = (props) => {
                     </span>
                 </span>
                 <span className={classes.cohortItemCounts}>
-                    PARTICIPANT IDs ({activeCohort.participants.length})
+                    {cohortCountsLabel} ({activeCohort.participants.length})
                 </span>
             </div>
             <div className={classes.cohortDescription}>
@@ -290,8 +300,18 @@ const CohortDetails = (props) => {
                         </Button>
                         {showDownloadDropdown && (
                             <div className={classes.dropdownMenu}>
-                                <div className={classes.dropdownItem + ' ' + classes.firstDropdownItem}>Manifest CSV</div>
-                                <div className={classes.dropdownItem}>Manifest JSON</div>
+                                <div
+                                    className={classes.dropdownItem + ' ' + classes.firstDropdownItem}
+                                    onClick={downloadCohortManifest}
+                                >
+                                    Manifest CSV
+                                </div>
+                                <div
+                                    className={classes.dropdownItem}
+                                    onClick={downloadCohortMetadata}
+                                >
+                                    Manifest JSON
+                                </div>
                             </div>
                         )}
                     </div>

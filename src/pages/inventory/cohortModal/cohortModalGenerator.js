@@ -6,14 +6,16 @@ import {
     onMutateSingleCohort,
 } from '../../../components/CohortSelector/store/action.js';
 import {
-    Modal, Button, Typography,
-    TextareaAutosize, IconButton, withStyles,
+    Modal, withStyles,
 } from '@material-ui/core';
 import DEFAULT_STYLES from './styles';
 import DEFAULT_CONFIG from './config';
 import CohortList from './components/cohortList';
 import CohortDetails from './components/cohortDetails';
 import Alert from '@material-ui/lab/Alert';
+import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../bento/dashboardTabData.js';
+import client from '../../../utils/graphqlClient.js'
+import { arrayToCSVDownload, objectToJsonDownload } from './utils.js';
 
 /**
  * Generator function to create cohortModal component with custom configuration
@@ -49,21 +51,23 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         ? config.title
         : DEFAULT_CONFIG.config.title;
 
-    /**
-     * Boilerplate for state management
-     * 
+    const downloadCohortManifest = async () => {
+        const participantPKs = state[selectedCohort].participants.map(item => item.participant_pk);
+        const { data } = await client.query({
+            query: GET_COHORT_MANIFEST_QUERY,
+            variables: { "participant_pks": participantPKs },
+        });
+        arrayToCSVDownload(data['diagnosisOverview'], selectedCohort);
+    };
 
-    const stateProps = (state) => ({
-        metadata: state.localFind.uploadMetadata,
-    });
-        
-    const dispatchProps = (dispatch) => ({
-        onApplySearch: (data) => dispatch(updateUploadData(data)),
-        updateMetadata: (data) => dispatch(updateUploadMetadata(data)),
-    });
-    CohortModal: withStyles(DEFAULT_STYLES, { withTheme: true })(connect(stateProps, dispatchProps)((props) => {
-        }))
-    */
+    const downloadCohortMetadata = async () => {
+        const participantPKs = state[selectedCohort].participants.map(item => item.participant_pk);
+        const { data } = await client.query({
+            query: GET_COHORT_METADATA_QUERY,
+            variables: { "participant_pks": participantPKs },
+        });
+        objectToJsonDownload(data['cohortMetadata'], selectedCohort);
+    };
 
     const handleDeleteCohort = (cohortId) => {
         dispatch(onDeleteSingleCohort(
@@ -147,6 +151,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                 activeCohort={state[selectedCohort]}
                                 closeModal={closeModalWrapper}
                                 handleSaveCohort={handleSaveCohort}
+                                downloadCohortManifest={downloadCohortManifest}
+                                downloadCohortMetadata={downloadCohortMetadata}
                             />
                         </div>
                     </div>
