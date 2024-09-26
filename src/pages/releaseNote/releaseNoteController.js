@@ -9,25 +9,15 @@ export default function ReleaseNoteController() {
         async function resolve() {
             try {
                 const finalContent = await fetchReleaseNoteContent();
-                console.log("Fetched content:", finalContent); 
                 setContent(finalContent);
             } catch (error) {
-                console.error("Error fetching content:", error);
-                setContent(null); 
+                setContent(null);
             }
         }
         resolve();
     }, [])
-        
-    console.log("Content before passing to ReleaseNotePage:", content);
-
-
-            return (
-                content ? <ReleaseNotePage contents={content} /> : <div>Loading...</div>
-            );
-        
-   
     
-
-
+    return (
+        content ? <ReleaseNotePage contents={content} /> : <div>Loading...</div>
+    );
 }
