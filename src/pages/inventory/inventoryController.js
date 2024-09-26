@@ -5,7 +5,8 @@ import { CircularProgress } from '@material-ui/core';
 import { getFilters } from '@bento-core/facet-filter';
 import InventoryView from './inventoryView';
 import { DASHBOARD_QUERY_NEW } from '../../bento/dashboardTabData';
-import { CohortProvider } from '../../components/CohortSelector/CohortContext';
+import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
+import { CohortModalProvider } from './cohortModal/CohortModalContext';
 
 
 const getDashData = (states) => {
@@ -53,13 +54,15 @@ const InventoryController = ((props) => {
   }
 
   return (
-    <CohortProvider>
-    <InventoryView
-      {...props}
-      dashData={dashData}
-      activeFilters={activeFilters}
-    />
-    </CohortProvider>
+    <CohortStateProvider>
+      <CohortModalProvider>
+        <InventoryView
+          {...props}
+          dashData={dashData}
+          activeFilters={activeFilters}
+        />
+      </CohortModalProvider>
+    </CohortStateProvider>
   );
 });
 

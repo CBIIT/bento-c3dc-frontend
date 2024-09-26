@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, withStyles } from '@material-ui/core';
+import { withStyles } from '@material-ui/core';
 import { 
   TableContextProvider,
   TableView,
@@ -55,9 +55,11 @@ const TabView = (props) => {
     downloadButtonTooltipText: "Download data in CSV or JSON format",
     paginationAPIField: config.paginationAPIField,
     dataKey: config.dataKey,
+    hiddenDataKeys: config.hiddenDataKeys,
     columns: configColumn(config.columns),
     count: dashboardStats[config.count],
     selectedRows: [],
+    hiddenSelectedRows: [],
     enableRowSelection: config.enableRowSelection,
     tableMsg: config.tableMsg,
     sortBy: config.defaultSortField,
@@ -78,8 +80,7 @@ const TabView = (props) => {
         activeFilters={activeFilters}
         fileCount={dashboardStats['numberOfFiles']}
       >
-        <Grid container>
-          <Grid item xs={12} id={config.tableID}>
+        
             <TableView
               initState={initTblState}
               themeConfig={themeConfig}
@@ -87,8 +88,8 @@ const TabView = (props) => {
               totalRowCount={dashboardStats[config.count]}
               activeTab={activeTab}
             />
-          </Grid>
-        </Grid>
+          
+      
       </Wrapper>
     </TableContextProvider>
   );
