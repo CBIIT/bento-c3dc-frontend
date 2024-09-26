@@ -21,12 +21,6 @@ export const versionList = {
    
     <span class='second-title'>Studies Overview</span>
     <br>
-    Pediatric Preclinical Testing Consortium (PPTC)
-    <ul class="study-details">
-        <li>dbGaP Accession: phs001437</li>
-        <li>Participants:</li>
-        <li>Diagnoses:</li>
-    </ul>
 
     Molecular Characterization across Pediatric Brain Tumors and Other Solid and Hematologic Malignancies for Research, Diagnostic, and Precision Medicine
     <ul class="study-details">

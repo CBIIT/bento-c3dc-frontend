@@ -15,7 +15,7 @@ export const announcementPageData = [
         "type": 1,
         "is_release_notes": true,
         "alt": "An animated laptop surrounded by animated objects, including a server, gears, and a magnifying glass.",
-        "verbiage": "In this release, we've introduced new harmonized datasets to the C3DC Explore page, including the phs003432, phs003519, and phs000466 datasets. Additionally, we have made updates to existing datasets, specifically phs001437, phs002517, and phs002790. These updates include significant improvements to both the datasets and their respective metadata templates. All other data has been updated based on the most recent version of data model. For more detailed information about these changes and to review the full list of updates, please refer to our data release update"
+        "verbiage": "This release includes three new harmonized data sets (phs003432, phs003519, and phs000466) and updates to existing data sets (phs002517, and phs002790) on the C3DC Explore page. All the data have been aligned to the most recent version of the data model. For more detailed information about these changes and to review the full list of updates, please refer to our data release update"
     },
     {
         "title": "Data Model Update",
