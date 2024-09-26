@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import header from '../../assets/releaseNotes/headerImage.svg';
-import { defaultVersion, releaseNotePageData, versionList } from '../../bento/releaseNotePageData';
 import { ArrowDropUp, ArrowRight } from '@material-ui/icons';
 import exportIcon from '../../assets/about/Export_Icon.svg';
 import "./scrollBarConfig.css";
@@ -272,10 +271,10 @@ margin-bottom: 2px;
 
 `;
 
-
-function ReleaseNotePage() {
-  const [list_versions, setListVersions] = useState(releaseNotePageData);
-  const [selectedVersion, setSelectedVersion] = useState(defaultVersion);
+function ReleaseNotePage({ contents }) {
+  const [selectedVersion, setSelectedVersion] = useState(0);
+  const [selectedYear, setSelectedYear] = useState(0);
+  const [releaseNoteContent, setreleaseNoteContent] = useState(contents);
 
   const breadCrumbJson = [{
     name: 'Home',
@@ -289,98 +288,101 @@ function ReleaseNotePage() {
     name: 'Data Update',
     to: '/data_update',
     isALink: false,
-  } 
-];
+  }
+  ];
 
   const handleYearSelection = index => {
-    let versions = list_versions.map((res, i) => {
+    let versions = releaseNoteContent.map((res, i) => {
       if (i === index) {
         res.is_open = !res.is_open;
       }
       return res;
     });
 
-    setListVersions(versions);
+    setreleaseNoteContent(versions);
   };
 
-  const handleClick = (yearIndex, versionIndex, version) => {
-    let versions = list_versions.map((res, i) => {
-      if (i === yearIndex) {
+  const shortDate = (date) =>{
+    return date.slice(0, 3) + " " + date.split(" ")[1] + " " + date.split(" ")[2];
+  }
 
-        res.versions.map((version, index) => {
-          if (index === versionIndex) {
-            version.selected = !version.selected;
-          } else {
-            version.selected = false;
-          }
-          return version;
-        });
-      } else {
-        res.versions.map((version, index) => {
-          version.selected = false;
-          return version;
-        });
-      }
-      return res;
-    });
-    setListVersions(versions);
-    setSelectedVersion(version);
+  const handleClick = (yearIndex, versionIndex) => {
+
+    setSelectedVersion(versionIndex);
+    setSelectedYear(yearIndex);
   }
 
   return (
     <>
-    <CustomBreadcrumb data={breadCrumbJson} />
-        
-    <ReleaseNoteContainer>
-      <div className='releaseNoteHeader'>
-        <div className='releaseNoteHeaderText'>Data Update</div>
-      </div>
-      <div className='releaseNoteBody'>
-        <div>
-          <div className='versionSelector'>
-            <div className='yearsectionTitle'>{'RELEASE VERSIONS'}</div>
-            <div className="optionContainer">
-              {list_versions.map((release, yearIndex) => {
-                return (
-                  <>
-                    <button
-                      onClick={() => {
-                        handleYearSelection(yearIndex);
-                      }}
-                      className='year'
-                    >
-                      {release.is_open ? <ArrowDropUp /> : <ArrowRight />}
-                      {release.Year}{' '}
-                    </button>
-                    <div className='version_list'>
-                      {release.is_open &&
-                        release.versions.map((versions, versionIndex) => {
-                          return (
-                            <button onClick={() => {
-                              handleClick(yearIndex, versionIndex, versions.Version);
-                            }} className='version'>
-                              <div>
+      <CustomBreadcrumb data={breadCrumbJson} />
 
-                                {versions.Version}
-                              </div>
-                              <span className='date'>{versions.date}</span>
-                            </button>
-                          );
-                        })}
-                    </div>
-                  </>
-                );
-              })}
+      <ReleaseNoteContainer>
+        <div className='releaseNoteHeader'>
+          <div className='releaseNoteHeaderText'>Data Update</div>
+        </div>
+        <div className='releaseNoteBody'>
+          <div>
+            <div className='versionSelector'>
+              <div className='yearsectionTitle'>{'RELEASE VERSIONS'}</div>
+              <div className="optionContainer">
+                {releaseNoteContent && releaseNoteContent.map((release, yearIndex) => {
+                  return (
+                    <>
+                      <button
+                        onClick={() => {
+                          handleYearSelection(yearIndex);
+                        }}
+                        className='year'
+                      >
+                        {release.is_open ? <ArrowDropUp /> : <ArrowRight />}
+                        {release.Year}{' '}
+                      </button>
+                      <div className='version_list'>
+                        {release.is_open &&
+                          releaseNoteContent && releaseNoteContent[yearIndex].versions.map((versions, versionIndex) => {
+                            return (
+                              <button onClick={() => {
+                                handleClick(yearIndex, versionIndex);
+                              }} className='version'>
+                                <div>
+
+                                  {versions.heading}
+                                </div>
+                                <span className='date'>{shortDate(versions.releaseDate)}</span>
+                              </button>
+                            );
+                          })}
+                      </div>
+                    </>
+                  );
+                })}
+              </div>
+            </div>
+
+          </div>
+          <div className="releaseNoteSectionContainer">
+            <div className='releaseNoteSection' >
+              <span className='title'>{releaseNoteContent[selectedYear].versions[selectedVersion].heading}</span>
+              <span className='second-title'>{releaseNoteContent[selectedYear].versions[selectedVersion].subHeading}</span>
+              <p className='descriptionDate'>{releaseNoteContent[selectedYear].versions[selectedVersion].releaseDate}</p>
+
+              {
+                releaseNoteContent && releaseNoteContent[selectedYear].versions[selectedVersion].content.map((content) => {
+
+                  return (
+                    <>
+                      <span>{content.paragraph}</span>
+                      <ul className="study-details">
+                        {content.list.map((item) => (<li> {item}</li>))}
+                      </ul>
+                    </>
+                  )
+                })
+              }
             </div>
           </div>
-
         </div>
-        <div className="releaseNoteSectionContainer">
-          <div className='releaseNoteSection' dangerouslySetInnerHTML={{ __html: versionList[selectedVersion] }} >
-          </div>
-        </div>
-      </div>
-    </ReleaseNoteContainer>
+      </ReleaseNoteContainer>
     </>
   );
 }
