@@ -1,7 +1,7 @@
 
 import env from "../utils/env";
 
-    const releaseNoteJsonUrl = env.REACT_APP_DATA_RELEASES_URL || "https://raw.githubusercontent.com/CBIIT/C3DC-Data-Releases/dev/DataReleaseNotes.json";
+const releaseNoteJsonUrl = env.REACT_APP_DATA_RELEASES_URL || "https://raw.githubusercontent.com/CBIIT/C3DC-Data-Releases/dev/DataReleaseNotes.json";
 
 export const fetchReleaseNoteContent = async () => {
    return fetch(releaseNoteJsonUrl, {

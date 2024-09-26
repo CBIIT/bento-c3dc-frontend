@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react';
-import { CohortContext } from '../../components/CohortSelector/CohortContext.js';
+import { CohortStateContext } from '../../components/CohortSelectorState/CohortStateContext.js';
 import { 
   onCreateNewCohort, 
   onMutateSingleCohort, 
   onDeleteSingleCohort, 
   onDeleteAllCohort, 
   onAddParticipantsToCohort,  
-} from '../../components/CohortSelector/store/action.js'; 
+} from '../../components/CohortSelectorState/store/action.js'; 
 import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, Select, MenuItem, InputLabel, FormControl, Typography, Grid } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CohortManager = (props) => {
   const classes = useStyles();
-  const { state, dispatch } = useContext(CohortContext);
+  const { state, dispatch } = useContext(CohortStateContext);
 
   // Local state for inputs
   const [cohortId, setCohortId] = useState('');

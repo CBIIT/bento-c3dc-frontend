@@ -18,7 +18,7 @@ const CustomBreadcrumb = ({ classes, data }) => (
         }
         if (index < data.length - 1) {
           acc.push(
-            <img  src={next} />
+            <img src={next} alt='next arrow'/>
 
           );
         }

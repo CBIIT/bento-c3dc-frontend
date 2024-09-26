@@ -2,8 +2,9 @@ import { onRowSeclect, TableContext } from '@bento-core/paginated-table';
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
-import { onCreateNewCohort } from '../../../../components/CohortSelector/store/action';
-import { CohortContext } from '../../../../components/CohortSelector/CohortContext';
+import { onCreateNewCohort } from '../../../../components/CohortSelectorState/store/action';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
+import { CohortModalContext } from '../../cohortModal/CohortModalContext';
 import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/Actions';
 
 const ButtonContainer = styled.div`
@@ -51,7 +52,8 @@ const ButtonStyled = styled.button`
 export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohortsAvailable, borderColor }) => {
 
   const tableContext = useContext(TableContext);
-  const { dispatch } = useContext(CohortContext);
+  const { dispatch } = useContext(CohortStateContext);
+  const { setShowCohortModal} = useContext(CohortModalContext);
   const { Notification } = useGlobal();
   const [isActive, setIsActive] = useState(false);
 
@@ -90,7 +92,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
   const handleClick = () => {
     if (isActive) {
       if (type === "VIEW") {
-
+        setShowCohortModal(true);
       } else {
         const { context } = tableContext;
         const {
@@ -101,7 +103,10 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
           "",
           "",
           hiddenSelectedRows,
-          () => triggerNotification(hiddenSelectedRows.length),
+          () => { 
+            triggerNotification(hiddenSelectedRows.length);
+            setShowCohortModal(true);
+          },
           (error) => alert("Something Went Wrong")
         ));
       }
