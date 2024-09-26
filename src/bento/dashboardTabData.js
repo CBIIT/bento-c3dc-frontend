@@ -8,12 +8,12 @@ import questionIcon from '../assets/icons/Question_Icon.svg';
 export const tooltipContentAddToNewCohort = {
     icon: questionIcon,
     alt: 'tooltipIcon',
-    Participants: 'Participant ID selected from the table will be added to a new cohort',
-    Diagnosis: 'Participant ID selected from the table will be added to a new cohort',
-    Studies: 'Participant ID selected from the table will be added to a new cohort',
-    Treatment: 'Participant ID selected from the table will be added to a new cohort',
-    Survival: 'Participant ID selected from the table will be added to a new cohort',
-    "Treatment Response": 'Participant ID selected from the table will be added to a new cohort',
+    Participants: 'Participant IDs selected from the table will be added to a new cohort',
+    Diagnosis: 'Participant IDs selected from the table will be added to a new cohort',
+    Studies: 'Participant IDs selected from the table will be added to a new cohort',
+    Treatment: 'Participant IDs selected from the table will be added to a new cohort',
+    Survival: 'Participant IDs selected from the table will be added to a new cohort',
+    "Treatment Response": 'Participant IDs selected from the table will be added to a new cohort',
     arrow: true,
     styles: {
       border: '1px red solid'
