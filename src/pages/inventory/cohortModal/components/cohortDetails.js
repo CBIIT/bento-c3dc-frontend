@@ -310,7 +310,7 @@ const CohortDetails = (props) => {
                                     className={classes.dropdownItem}
                                     onClick={downloadCohortMetadata}
                                 >
-                                    Manifest JSON
+                                    Metadata JSON
                                 </div>
                             </div>
                         )}
