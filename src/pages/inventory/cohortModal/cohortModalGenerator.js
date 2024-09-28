@@ -109,6 +109,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                 if (props.onCloseModal) {
                     props.onCloseModal();
                 }
+                setSelectedCohort(null);
             };
 
             return (
