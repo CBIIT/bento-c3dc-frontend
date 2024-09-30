@@ -210,6 +210,7 @@ const styles = () => ({
         '&:first-child': {
             borderTop: '1px solid #73C7BE',
         },
+        cursor: 'pointer',
     },
     selectedCohort: {
         backgroundColor: '#3A555E',
