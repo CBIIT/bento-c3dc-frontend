@@ -31,6 +31,14 @@ export const CustomCellView = (props) => {
     )
   }
 
+  if (Array.isArray(label)) {
+    /* This is copied from CDS where it has a limit of 5 items to display. We can use this if we want to limit the number of items to display.
+    if (label.length > 5){
+      return (<Typography>{label.slice(0,5).join(", ") + ", ..."}</Typography>);
+    }*/
+    return (<Typography>{label.join(", ")}</Typography>);
+  }
+
   if (cellStyle === 'TRANSFORM') {
     const content = dataFormatter(props[dataField]);
     return (<>{ReactHtmlParser(content)}</>);
