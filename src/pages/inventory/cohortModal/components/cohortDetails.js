@@ -136,11 +136,11 @@ const CohortDetails = (props) => {
     const datePrefix = config && config.datePrefix && typeof config.datePrefix === 'string'
         ? config.datePrefix
         : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
-    
+
     const cohortHeaderLabel = config && config.cohortHeaderLabel && typeof config.cohortHeaderLabel === 'string'
         ? config.cohortHeaderLabel
         : DEFAULT_CONFIG.config.cohortDetails.cohortHeaderLabel;
-    
+
     const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
         ? config.cohortCountsLabel
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
@@ -241,13 +241,12 @@ const CohortDetails = (props) => {
                                 className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'dbgap_accession' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
                             />
                         </div>
-                        <div className={classes.removeHeader}>
+                        <div className={classes.removeHeader} onClick={handleDeleteAllParticipants}>
                             <span className={classes.removeLabel}>Remove</span>
                             <img
                                 src={TrashCanIconRed}
                                 alt="delete cohort icon"
                                 className={classes.redTrashCan}
-                                onClick={handleDeleteAllParticipants}
                             />
                         </div>
                     </div>
@@ -494,6 +493,7 @@ const styles = () => ({
         alignItems: 'center',
         justifyContent: 'start',
         paddingLeft: '25px',
+        cursor: 'pointer',
     },
     sortingIcon: {
         height: '14px',
@@ -570,6 +570,7 @@ const styles = () => ({
         width: '100px',
         color: '#A61401',
         flex: '0 0 95px !important',
+        cursor: 'pointer',
     },
     tableBody: {
         overflowY: 'auto',
