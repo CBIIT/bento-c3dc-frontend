@@ -1,7 +1,7 @@
 import { onRowSeclect, TableContext } from '@bento-core/paginated-table';
 import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/Actions';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
-import React, { useContext, useEffect,useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { onAddParticipantsToCohort } from '../../../../components/CohortSelectorState/store/action';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
@@ -160,6 +160,23 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
 
     }
   };
+  const dropDownListRef = useRef(null);
+
+  function useClickOutside(ref, onClickOutside) {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          onClickOutside();
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref, onClickOutside]);
+  }
+
+  useClickOutside(dropDownListRef, () => setIsOpen(false));
 
   return (
     <DropdownContainer isHidden={isHidden}>
@@ -172,7 +189,7 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
 
       </DropdownHeader>
       {isOpen && (
-        <DropdownList>
+        <DropdownList ref={dropDownListRef}>
           {options.map((option, index) => {
             return (
               <DropdownItem key={index} onClick={() => { handleSelect(option) }}>{option}</DropdownItem>
