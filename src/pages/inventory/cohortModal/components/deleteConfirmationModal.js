@@ -1,12 +1,19 @@
 import React from 'react';
 import { Modal, withStyles } from '@material-ui/core';
 
+export const deletionTypes = {
+    DELETE_ALL_COHORTS: 'ALL cohorts',
+    DELETE_SINGLE_COHORT: 'this cohort',
+    DELETE_ALL_PARTICIPANTS: 'ALL participants',
+};
+
 const DeleteConfirmationModal = (props) => {
     const {
         classes,
         open,
         setOpen,
         handleDelete,
+        deletionType
     } = props;
 
     return (
@@ -17,7 +24,7 @@ const DeleteConfirmationModal = (props) => {
             <div className={classes.modal}>
                 <div className={classes.modalContent}>
                     <div className={classes.modalHeading}>
-                        <span>Are you sure you want to delete all cohorts? This action cannot be undone.</span>
+                        <span>Are you sure you want to delete {deletionType}? {deletionType !== deletionTypes.DELETE_ALL_PARTICIPANTS && 'This action cannot be undone.'}</span>
                         <span>Press Confirm or Cancel.</span>
                     </div>
                     <div className={classes.modalButtons}>
@@ -29,7 +36,10 @@ const DeleteConfirmationModal = (props) => {
                         </button>
                         <button
                             className={classes.confirmButton}
-                            onClick={() => handleDelete()}
+                            onClick={() => {
+                                handleDelete();
+                                setOpen(false);
+                            }}
                         >
                             Confirm
                         </button>

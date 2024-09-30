@@ -102,6 +102,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
             const {
                 CohortList: cohortListClasses,
                 CohortDetails: cohortDetailsClasses,
+                DeleteConfirmation: deleteConfirmationClasses,
             } = classes;
 
             const closeModalWrapper = () => {
@@ -144,6 +145,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                 closeParentModal={closeModalWrapper}
                                 handleDeleteCohort={handleDeleteCohort}
                                 handleDeleteAllCohorts={handleDeleteAllCohorts}
+                                deleteConfirmationClasses={deleteConfirmationClasses}
                                 state={state}
                             />
                             <CohortDetails
@@ -154,6 +156,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                 handleSaveCohort={handleSaveCohort}
                                 downloadCohortManifest={downloadCohortManifest}
                                 downloadCohortMetadata={downloadCohortMetadata}
+                                deleteConfirmationClasses={deleteConfirmationClasses}
                             />
                         </div>
                     </div>
