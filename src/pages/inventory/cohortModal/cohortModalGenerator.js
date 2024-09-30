@@ -55,7 +55,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         const participantPKs = state[selectedCohort].participants.map(item => item.participant_pk);
         const { data } = await client.query({
             query: GET_COHORT_MANIFEST_QUERY,
-            variables: { "participant_pks": participantPKs },
+            variables: { "participant_pks": participantPKs, "first": state[selectedCohort].participants.length },
         });
         arrayToCSVDownload(data['diagnosisOverview'], selectedCohort);
     };
@@ -64,7 +64,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         const participantPKs = state[selectedCohort].participants.map(item => item.participant_pk);
         const { data } = await client.query({
             query: GET_COHORT_METADATA_QUERY,
-            variables: { "participant_pks": participantPKs },
+            variables: { "participant_pks": participantPKs, "first": state[selectedCohort].participants.length },
         });
         objectToJsonDownload(data['cohortMetadata'], selectedCohort);
     };

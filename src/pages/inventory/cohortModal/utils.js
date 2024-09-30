@@ -50,7 +50,7 @@ function removeTypename(obj) {
       });
       return newObj;
     }
-    return obj; // Return primitive types as is
+    return obj; 
   };
 
 export const arrayToCSVDownload = (arr, cohortID) => {
@@ -59,7 +59,6 @@ export const arrayToCSVDownload = (arr, cohortID) => {
     const rows = arr.map((row) => {
         return keys.map((k) => {
             let value = row[downloadManifestKeys[k]] !== undefined ? row[downloadManifestKeys[k]] : '';
-            // If the value contains a comma or double quotes, wrap it in quotes and escape double quotes
             if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
                 value = `"${value.replace(/"/g, '""')}"`; 
             }
