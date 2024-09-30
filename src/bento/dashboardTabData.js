@@ -1465,7 +1465,7 @@ export const tabContainers = [
         header: "Study Id",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: 'dbgap_accession',
@@ -1490,28 +1490,28 @@ export const tabContainers = [
         header: "Study Description",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: "consent",
         header: "Consent",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: "consent_number",
         header: "Consent Number",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: "external_url",
         header: "External URL",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       }
     ],
     id: 'study_tab',
@@ -1600,7 +1600,7 @@ export const tabContainers = [
         header: "Study Id",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
     ],
     id: 'participant_tab',
@@ -1762,7 +1762,7 @@ export const tabContainers = [
         header: "Study Id",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
 
 
@@ -1822,14 +1822,14 @@ export const tabContainers = [
         header: "Treatment Id",
         display: true,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: "age_at_treatment_start",
         header: "Age at Treatment Start",
         display: true,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: 'age_at_treatment_end',
@@ -1850,7 +1850,8 @@ export const tabContainers = [
         header: "Treatment Agent",
         display: true,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY,
+        cellType: cellTypes.CUSTOM_ELEM,
       },
       {
         dataField: 'dbgap_accession',
@@ -1869,7 +1870,7 @@ export const tabContainers = [
         header: "Study Id",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
 
     ],
@@ -1927,7 +1928,7 @@ export const tabContainers = [
         header: "Treatment Response Id",
         display: true,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: 'response',
@@ -1948,14 +1949,14 @@ export const tabContainers = [
         header: "Response Category",
         display: true,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: "response_system",
         header: "Response System",
         display: true,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: 'dbgap_accession',
@@ -1974,7 +1975,7 @@ export const tabContainers = [
         header: "Study Id",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
     ],
     id: 'treatment_response_tab',
@@ -2045,7 +2046,7 @@ export const tabContainers = [
         header: "Survival Id",
         display: true,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: 'last_known_survival_status',
@@ -2067,7 +2068,7 @@ export const tabContainers = [
         header: "Event-Free Survival Status",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
       {
         dataField: "age_at_event_free_survival_status",
@@ -2108,7 +2109,7 @@ export const tabContainers = [
         header: "Study Id",
         display: false,
         tooltipText: "sort",
-        role: "cellTypes.DISPLAY"
+        role: cellTypes.DISPLAY
       },
 
     ],
