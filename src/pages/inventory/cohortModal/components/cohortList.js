@@ -4,6 +4,7 @@ import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DEFAULT_CONFIG from '../config';
 import DeleteConfirmationModal from './deleteConfirmationModal';
+import { deletionTypes } from './deleteConfirmationModal';
 
 /**
  * A list of cohorts to select from and manage.
@@ -12,6 +13,7 @@ import DeleteConfirmationModal from './deleteConfirmationModal';
 const CohortList = (props) => {
     const {
         classes,
+        deleteConfirmationClasses,
         config,
         selectedCohort,
         setSelectedCohort,
@@ -44,10 +46,10 @@ const CohortList = (props) => {
     }
 
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-
-    const {
-        DeleteConfirmation: deleteConfirmationClasses
-    } = classes;
+    const [deleteModalProps, setDeleteModalProps] = useState({
+        handleDelete: () => { },
+        deletionType: "",
+    });
 
     useEffect(() => {
         if (scrollContainerRef.current) {
@@ -76,7 +78,8 @@ const CohortList = (props) => {
                 classes={deleteConfirmationClasses}
                 open={showDeleteConfirmation}
                 setOpen={setShowDeleteConfirmation}
-                handleDelete={() => handleDeleteAllCohorts()}
+                handleDelete={deleteModalProps.handleDelete}
+                deletionType={deleteModalProps.deletionType}
             />
             <div className={classes.cohortListSection}>
                 <div className={classes.cohortListHeading}>
@@ -88,7 +91,13 @@ const CohortList = (props) => {
                             src={TrashCanIconGray}
                             alt="delete all cohorts icon"
                             className={classes.grayTrashCan + (isScrollbarActive ? ' ' + classes.grayTrashCanScrollPadding : '')}
-                            onClick={() => setShowDeleteConfirmation(true)}
+                            onClick={() => {
+                                setDeleteModalProps({
+                                    handleDelete: () => handleDeleteAllCohorts(),
+                                    deletionType: deletionTypes.DELETE_ALL_COHORTS,
+                                });
+                                setShowDeleteConfirmation(true)
+                            }}
                         />
                     </span>
 
@@ -117,7 +126,11 @@ const CohortList = (props) => {
                                         className={classes.whiteTrashCan}
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            handleDeleteCohort(state[cohort].cohortId)
+                                            setDeleteModalProps({
+                                                handleDelete: () => handleDeleteCohort(state[cohort].cohortId),
+                                                deletionType: deletionTypes.DELETE_SINGLE_COHORT,
+                                            });
+                                            setShowDeleteConfirmation(true);
                                         }}
                                     />
                                 </span>
@@ -210,6 +223,7 @@ const styles = () => ({
         '&:first-child': {
             borderTop: '1px solid #73C7BE',
         },
+        cursor: 'pointer',
     },
     selectedCohort: {
         backgroundColor: '#3A555E',

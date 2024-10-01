@@ -7,6 +7,8 @@ import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
 import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
+import DeleteConfirmationModal from './deleteConfirmationModal';
+import { deletionTypes } from './deleteConfirmationModal';
 
 /**
  * A list of cohorts to select from and manage.
@@ -21,6 +23,7 @@ const CohortDetails = (props) => {
         handleSaveCohort,
         downloadCohortManifest,
         downloadCohortMetadata,
+        deleteConfirmationClasses,
     } = props;
 
     if (!activeCohort) {
@@ -86,6 +89,12 @@ const CohortDetails = (props) => {
         setShowDownloadDropdown(!showDownloadDropdown);
     };
 
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+    const [deleteModalProps, setDeleteModalProps] = useState({
+        handleDelete: () => { },
+        deletionType: "",
+    });
+
     const handleSort = (column) => {
         if (selectedColumn[0] === column) {
             setSelectedColumn([column, selectedColumn[1] === 'ascending' ? 'descending' : 'ascending']);
@@ -136,192 +145,206 @@ const CohortDetails = (props) => {
     const datePrefix = config && config.datePrefix && typeof config.datePrefix === 'string'
         ? config.datePrefix
         : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
-    
+
     const cohortHeaderLabel = config && config.cohortHeaderLabel && typeof config.cohortHeaderLabel === 'string'
         ? config.cohortHeaderLabel
         : DEFAULT_CONFIG.config.cohortDetails.cohortHeaderLabel;
-    
+
     const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
         ? config.cohortCountsLabel
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
     return (
-        <div className={classes.cohortDetailsSection}>
-            <div className={classes.cohortHeading}>
-                <span className={classes.cohortHeader}>
-                    <span className={classes.cohortLabel}>
-                        {cohortHeaderLabel}
-                    </span>
-                    <span className={classes.cohortTitle}>
-                        &nbsp;
-                        {isEditingName ? (
-                            <input
-                                className={classes.editingCohortName}
-                                type="text"
-                                value={localCohortName}
-                                onBlur={handleSaveName}
-                                onChange={(e) => setLocalCohortName(e.target.value)}
-                                autoFocus
+        <>
+            <DeleteConfirmationModal
+                classes={deleteConfirmationClasses}
+                open={showDeleteConfirmation}
+                setOpen={setShowDeleteConfirmation}
+                handleDelete={deleteModalProps.handleDelete}
+                deletionType={deleteModalProps.deletionType}
+            />
+            <div className={classes.cohortDetailsSection}>
+                <div className={classes.cohortHeading}>
+                    <span className={classes.cohortHeader}>
+                        <span className={classes.cohortLabel}>
+                            {cohortHeaderLabel}
+                        </span>
+                        <span className={classes.cohortTitle}>
+                            &nbsp;
+                            {isEditingName ? (
+                                <input
+                                    className={classes.editingCohortName}
+                                    type="text"
+                                    value={localCohortName}
+                                    onBlur={handleSaveName}
+                                    onChange={(e) => setLocalCohortName(e.target.value)}
+                                    autoFocus
+                                />
+                            ) : (
+                                <span>{localCohortName}</span>
+                            )}
+                            <img
+                                src={EditIcon}
+                                alt="edit cohort name icon"
+                                className={classes.editIcon}
+                                onClick={handleEditName}
                             />
-                        ) : (
-                            <span>{localCohortName}</span>
-                        )}
-                        <img
-                            src={EditIcon}
-                            alt="edit cohort name icon"
-                            className={classes.editIcon}
-                            onClick={handleEditName}
-                        />
+                        </span>
                     </span>
-                </span>
-                <span className={classes.cohortItemCounts}>
-                    {cohortCountsLabel} ({activeCohort.participants.length})
-                </span>
-            </div>
-            <div className={classes.cohortDescription}>
-                {isEditingDescription ? (
-                    <textarea
-                        className={classes.editingCohortDescription}
-                        value={localCohortDescription}
-                        onBlur={handleSaveDescription}
-                        onChange={(e) => setLocalCohortDescription(e.target.value)}
-                        onInput={handleInput}
-                        rows={1}
-                        placeholder="Enter cohort description..."
-                        autoFocus
-                    />
-                ) : (
-                    <span>{localCohortDescription}</span>
-                )}
-                <img
-                    src={EditIcon}
-                    alt="edit cohort description icon"
-                    className={classes.editIcon}
-                    onClick={handleEditDescription}
-                />
-            </div>
-            <div className={classes.participantViewer}>
-                <div className={classes.participantSearchBarSection}>
-                    <input
-                        type="text"
-                        placeholder="Search Participant ID here"
-                        className={classes.participantSearchBar}
-                        value={searchText}
-                        onChange={(e) => setSearchText(e.target.value)}
-                    />
-                    <span className={classes.searchIcon}>
-                        <img
-                            src={SearchIcon}
-                            alt="search icon"
-                        />
+                    <span className={classes.cohortItemCounts}>
+                        {cohortCountsLabel} ({localCohort.participants.length})
                     </span>
                 </div>
-                <div className={classes.participantTableSection}>
-                    <div className={classes.participantTableHeader + (isScrollbarActive ? ' ' + classes.participantTableHeaderScrollPadding : '')}>
-                        <div
-                            onClick={() => handleSort('participant_id')}
-                            className={classes.headerColumn}
+                <div className={classes.cohortDescription}>
+                    {isEditingDescription ? (
+                        <textarea
+                            className={classes.editingCohortDescription}
+                            value={localCohortDescription}
+                            onBlur={handleSaveDescription}
+                            onChange={(e) => setLocalCohortDescription(e.target.value)}
+                            onInput={handleInput}
+                            rows={1}
+                            placeholder="Enter cohort description..."
+                            autoFocus
+                        />
+                    ) : (
+                        <span>{localCohortDescription}</span>
+                    )}
+                    <img
+                        src={EditIcon}
+                        alt="edit cohort description icon"
+                        className={classes.editIcon}
+                        onClick={handleEditDescription}
+                    />
+                </div>
+                <div className={classes.participantViewer}>
+                    <div className={classes.participantSearchBarSection}>
+                        <input
+                            type="text"
+                            placeholder="Search Participant ID here"
+                            className={classes.participantSearchBar}
+                            value={searchText}
+                            onChange={(e) => setSearchText(e.target.value)}
+                        />
+                        <span className={classes.searchIcon}>
+                            <img
+                                src={SearchIcon}
+                                alt="search icon"
+                            />
+                        </span>
+                    </div>
+                    <div className={classes.participantTableSection}>
+                        <div className={classes.participantTableHeader + (isScrollbarActive ? ' ' + classes.participantTableHeaderScrollPadding : '')}>
+                            <div
+                                onClick={() => handleSort('participant_id')}
+                                className={classes.headerColumn}
 
-                        >
-                            <span >Participant Id</span>
-                            <img
-                                src={SortingIcon}
-                                alt="sort by participant id icon"
-                                className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'participant_id' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
-                            />
+                            >
+                                <span >Participant Id</span>
+                                <img
+                                    src={SortingIcon}
+                                    alt="sort by participant id icon"
+                                    className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'participant_id' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
+                                />
+                            </div>
+                            <div
+                                onClick={() => handleSort('dbgap_accession')}
+                                className={classes.headerColumn}
+                            >
+                                <span >dbGaP Accession</span>
+                                <img
+                                    src={SortingIcon}
+                                    alt="sort by participant id icon"
+                                    className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'dbgap_accession' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
+                                />
+                            </div>
+                            <div className={classes.removeHeader} onClick={() => {
+                                        setDeleteModalProps({
+                                            handleDelete: () => handleDeleteAllParticipants(),
+                                            deletionType: deletionTypes.DELETE_ALL_PARTICIPANTS,
+                                        });
+                                        setShowDeleteConfirmation(true)
+                                    }}>
+                                <span className={classes.removeLabel}>Remove</span>
+                                <img
+                                    src={TrashCanIconRed}
+                                    alt="delete cohort icon"
+                                    className={classes.redTrashCan}
+                                />
+                            </div>
                         </div>
                         <div
-                            onClick={() => handleSort('dbgap_accession')}
-                            className={classes.headerColumn}
+                            className={classes.tableBody}
+                            ref={scrollContainerRef}
                         >
-                            <span >dbGaP Accession</span>
-                            <img
-                                src={SortingIcon}
-                                alt="sort by participant id icon"
-                                className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'dbgap_accession' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
-                            />
-                        </div>
-                        <div className={classes.removeHeader}>
-                            <span className={classes.removeLabel}>Remove</span>
-                            <img
-                                src={TrashCanIconRed}
-                                alt="delete cohort icon"
-                                className={classes.redTrashCan}
-                                onClick={handleDeleteAllParticipants}
-                            />
-                        </div>
-                    </div>
-                    <div
-                        className={classes.tableBody}
-                        ref={scrollContainerRef}
-                    >
-                        {filteredParticipants.length > 0 ? filteredParticipants.map((participant) => (
-                            <div key={participant.participant_pk} className={classes.tableRow}>
-                                <div>{participant.participant_id}</div>
-                                <div>{participant.dbgap_accession}</div>
-                                <div className={classes.removeParticipant}>
-                                    <img
-                                        src={TrashCanIconBlue}
-                                        alt="delete participant icon"
-                                        className={classes.blueTrashCan}
-                                        onClick={() => handleDeleteParticipant(participant.participant_pk)}
-                                    />
+                            {filteredParticipants.length > 0 ? filteredParticipants.map((participant) => (
+                                <div key={participant.participant_pk} className={classes.tableRow}>
+                                    <div>{participant.participant_id}</div>
+                                    <div>{participant.dbgap_accession}</div>
+                                    <div className={classes.removeParticipant}>
+                                        <img
+                                            src={TrashCanIconBlue}
+                                            alt="delete participant icon"
+                                            className={classes.blueTrashCan}
+                                            onClick={() => handleDeleteParticipant(participant.participant_pk)}
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                        )) :
-                            <div className={classes.emptyTable}>
-                                {localCohort.participants.length === 0 ? 'No Data' : 'No matching Participant Id'}
-                            </div>
-                        }
+                            )) :
+                                <div className={classes.emptyTable}>
+                                    {localCohort.participants.length === 0 ? 'No Data' : 'No matching Participant Id'}
+                                </div>
+                            }
+                        </div>
                     </div>
-                </div>
-                <div className={classes.cohortButtonSection}>
-                    <Button variant="contained" className={classes.cancelButton} onClick={closeModal}>
-                        Cancel
-                    </Button>
-                    <Button variant="contained" className={classes.saveButton} onClick={() => handleSaveCohort(localCohort)}>
-                        Save Changes
-                    </Button>
-                    <div className={classes.dropdownSection} ref={dropdownRef}>
-                        <Button
-                            variant="contained"
-                            className={showDownloadDropdown ? classes.downloadButtonOpened : classes.downloadButton}
-                            onClick={handleDownloadDropdown}
-                        >
-                            <div className={classes.downloadButtonText}>
-                                <span>Download</span>
-                                <span>Selected Cohorts</span>
-                            </div>
-                            <img
-                                src={ExpandMoreIcon}
-                                alt="expand download icon"
-                                className={`${classes.expandMoreIcon} ${showDownloadDropdown ? classes.rotatedIcon : ''}`}
-                            />
+                    <div className={classes.cohortButtonSection}>
+                        <Button variant="contained" className={classes.cancelButton} onClick={closeModal}>
+                            Cancel
                         </Button>
-                        {showDownloadDropdown && (
-                            <div className={classes.dropdownMenu}>
-                                <div
-                                    className={classes.dropdownItem + ' ' + classes.firstDropdownItem}
-                                    onClick={downloadCohortManifest}
-                                >
-                                    Manifest CSV
+                        <Button variant="contained" className={classes.saveButton} onClick={() => handleSaveCohort(localCohort)}>
+                            Save Changes
+                        </Button>
+                        <div className={classes.dropdownSection} ref={dropdownRef}>
+                            <Button
+                                variant="contained"
+                                className={showDownloadDropdown ? classes.downloadButtonOpened : classes.downloadButton}
+                                onClick={handleDownloadDropdown}
+                            >
+                                <div className={classes.downloadButtonText}>
+                                    <span>Download</span>
+                                    <span>Selected Cohorts</span>
                                 </div>
-                                <div
-                                    className={classes.dropdownItem}
-                                    onClick={downloadCohortMetadata}
-                                >
-                                    Manifest JSON
+                                <img
+                                    src={ExpandMoreIcon}
+                                    alt="expand download icon"
+                                    className={`${classes.expandMoreIcon} ${showDownloadDropdown ? classes.rotatedIcon : ''}`}
+                                />
+                            </Button>
+                            {showDownloadDropdown && (
+                                <div className={classes.dropdownMenu}>
+                                    <div
+                                        className={classes.dropdownItem + ' ' + classes.firstDropdownItem}
+                                        onClick={downloadCohortManifest}
+                                    >
+                                        Manifest CSV
+                                    </div>
+                                    <div
+                                        className={classes.dropdownItem}
+                                        onClick={downloadCohortMetadata}
+                                    >
+                                        Metadata JSON
+                                    </div>
                                 </div>
-                            </div>
-                        )}
-                    </div>
+                            )}
+                        </div>
 
+                    </div>
+                    <span className={classes.cohortLastUpdated}>
+                        {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
+                    </span>
                 </div>
-                <span className={classes.cohortLastUpdated}>
-                    {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
-                </span>
             </div>
-        </div>
+        </>
     );
 };
 
@@ -494,6 +517,7 @@ const styles = () => ({
         alignItems: 'center',
         justifyContent: 'start',
         paddingLeft: '25px',
+        cursor: 'pointer',
     },
     sortingIcon: {
         height: '14px',
@@ -570,6 +594,7 @@ const styles = () => ({
         width: '100px',
         color: '#A61401',
         flex: '0 0 95px !important',
+        cursor: 'pointer',
     },
     tableBody: {
         overflowY: 'auto',

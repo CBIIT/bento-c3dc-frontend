@@ -55,7 +55,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         const participantPKs = state[selectedCohort].participants.map(item => item.participant_pk);
         const { data } = await client.query({
             query: GET_COHORT_MANIFEST_QUERY,
-            variables: { "participant_pks": participantPKs },
+            variables: { "participant_pks": participantPKs, "first": state[selectedCohort].participants.length },
         });
         arrayToCSVDownload(data['diagnosisOverview'], selectedCohort);
     };
@@ -64,7 +64,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         const participantPKs = state[selectedCohort].participants.map(item => item.participant_pk);
         const { data } = await client.query({
             query: GET_COHORT_METADATA_QUERY,
-            variables: { "participant_pks": participantPKs },
+            variables: { "participant_pks": participantPKs, "first": state[selectedCohort].participants.length },
         });
         objectToJsonDownload(data['cohortMetadata'], selectedCohort);
     };
@@ -102,6 +102,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
             const {
                 CohortList: cohortListClasses,
                 CohortDetails: cohortDetailsClasses,
+                DeleteConfirmation: deleteConfirmationClasses,
             } = classes;
 
             const closeModalWrapper = () => {
@@ -109,6 +110,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                 if (props.onCloseModal) {
                     props.onCloseModal();
                 }
+                setSelectedCohort(null);
             };
 
             return (
@@ -143,6 +145,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                 closeParentModal={closeModalWrapper}
                                 handleDeleteCohort={handleDeleteCohort}
                                 handleDeleteAllCohorts={handleDeleteAllCohorts}
+                                deleteConfirmationClasses={deleteConfirmationClasses}
                                 state={state}
                             />
                             <CohortDetails
@@ -153,6 +156,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                 handleSaveCohort={handleSaveCohort}
                                 downloadCohortManifest={downloadCohortManifest}
                                 downloadCohortMetadata={downloadCohortMetadata}
+                                deleteConfirmationClasses={deleteConfirmationClasses}
                             />
                         </div>
                     </div>
