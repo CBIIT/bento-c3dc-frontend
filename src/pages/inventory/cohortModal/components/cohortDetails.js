@@ -178,6 +178,7 @@ const CohortDetails = (props) => {
                                     value={localCohortName}
                                     onBlur={handleSaveName}
                                     onChange={(e) => setLocalCohortName(e.target.value)}
+                                    maxLength={20}
                                     autoFocus
                                 />
                             ) : (
