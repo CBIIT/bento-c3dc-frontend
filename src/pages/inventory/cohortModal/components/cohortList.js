@@ -70,7 +70,7 @@ const CohortList = (props) => {
             const { scrollHeight, clientHeight } = scrollContainerRef.current;
             setIsScrollbarActive(scrollHeight > clientHeight); // Check if scrollbar is active
         }
-    }, []); 
+    }, []);
 
     return (
         <>
@@ -116,7 +116,7 @@ const CohortList = (props) => {
                                     setSelectedCohort(state[cohort].cohortId)
                                 }}
                             >
-                                <span>
+                                <span className={classes.cohortListItemText}>
                                     {listItemPrefix} {state[cohort].cohortId}
                                 </span>
                                 <span>
@@ -224,6 +224,12 @@ const styles = () => ({
             borderTop: '1px solid #73C7BE',
         },
         cursor: 'pointer',
+    },
+    cohortListItemText:{
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        width: '85%',
     },
     selectedCohort: {
         backgroundColor: '#3A555E',
