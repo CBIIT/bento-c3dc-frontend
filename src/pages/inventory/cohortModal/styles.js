@@ -16,7 +16,7 @@ export default (theme) => ({
     maxHeight: '875px',
     maxWidth: '944px',
     borderRadius: '10px',
-    overflow: 'auto',
+    overflow: 'none',
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     backgroundColor: theme.palette.background.paper,
