@@ -8,12 +8,12 @@ import questionIcon from '../assets/icons/Question_Icon.svg';
 export const tooltipContentAddToNewCohort = {
     icon: questionIcon,
     alt: 'tooltipIcon',
-    Participants: 'Participant IDs selected from the table will be added to a new cohort',
-    Diagnosis: 'Participant IDs selected from the table will be added to a new cohort',
-    Studies: 'Participant IDs selected from the table will be added to a new cohort',
-    Treatment: 'Participant IDs selected from the table will be added to a new cohort',
-    Survival: 'Participant IDs selected from the table will be added to a new cohort',
-    "Treatment Response": 'Participant IDs selected from the table will be added to a new cohort',
+    Participants: 'Create a new cohort using the selected Participant IDs',
+    Diagnosis: 'Create a new cohort using the selected Participant IDs',
+    Studies: 'Create a new cohort using the selected Participant IDs',
+    Treatment: 'Create a new cohort using the selected Participant IDs',
+    Survival: 'Create a new cohort using the selected Participant IDs ',
+    "Treatment Response": 'Create a new cohort using the selected Participant IDs',
     arrow: true,
     styles: {
       border: '1px red solid'
@@ -23,12 +23,12 @@ export const tooltipContentAddToNewCohort = {
 export const tooltipContentAddToExistingCohort = {
   icon: questionIcon,
   alt: 'tooltipIcon',
-  Participants: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
-  Diagnosis: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
-  Studies: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
-  Survival: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
-  Treatment: 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
-  "Treatment Response": 'Add Participant IDs to existing cohort. New and past cohorts are accessible from menu bar',
+  Participants: 'Add selected Participant IDs to an existing cohort',
+  Diagnosis: 'Add selected Participant IDs to an existing cohort',
+  Studies: 'Add selected Participant IDs to an existing cohort',
+  Survival: 'Add selected Participant IDs to an existing cohort',
+  Treatment: 'Add selected Participant IDs to an existing cohort',
+  "Treatment Response": 'Add selected Participant IDs to an existing cohort',
   arrow: true,
   styles: {
   }
@@ -37,12 +37,12 @@ export const tooltipContentAddToExistingCohort = {
 export const tooltipContentListAll = {
   icon: questionIcon,
   alt: 'tooltipIcon',
-  Participants: 'Open modal to see full list of cohorts',
-  Diagnosis: 'Open modal to see full list of cohorts',
-  Studies: 'Open modal to see full list of cohorts',
-  Treatment: 'Open modal to see full list of cohorts',
-  Survival: 'Open modal to see full list of cohorts',
-  "Treatment Response": 'Open modal to see full list of cohorts',
+  Participants: 'Click to view the complete list of all cohorts',
+  Diagnosis: 'Click to view the complete list of all cohorts',
+  Studies: 'Click to view the complete list of all cohorts',
+  Treatment: 'Click to view the complete list of all cohorts',
+  Survival: 'Click to view the complete list of all cohorts',
+  "Treatment Response": 'Click to view the complete list of all cohorts',
   arrow: true,
   styles: {
   }
