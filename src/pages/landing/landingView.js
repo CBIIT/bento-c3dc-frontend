@@ -219,6 +219,7 @@ const LandingView = ({ classes, statsData }) => (
                       <Link
                         to={landingPageData.tile3.callToActionLink}
                         className={classes.blueButton}
+                        reloadDocument={true}
                       >
                         {landingPageData.tile3.callToActionText}
                       </Link>
