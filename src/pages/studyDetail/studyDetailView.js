@@ -10,7 +10,6 @@ import next from "../../assets/resources/next.svg";
 import Stats from '../../components/Stats/StatsView';
 import CloudDownload from "../../assets/studies/cloud_download.svg";
 import {
-  openDoubleLink,
   rightPanel,
   studyDetailDownloadLinks
 } from '../../bento/studyDetailData';
@@ -18,6 +17,8 @@ import { toggleCheckBox } from '@bento-core/facet-filter';
 import "./scrollBarConfig.css";
 import { useDispatch } from 'react-redux';
 import Alert from '@material-ui/lab/Alert';
+import { openDoubleLink } from './utils';
+
 const StudyDetailView = ({ classes, data, theme }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
