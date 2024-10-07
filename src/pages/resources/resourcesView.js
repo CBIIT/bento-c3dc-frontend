@@ -114,6 +114,7 @@ const ResourcesView = () => {
                     {!data.urlInTitle &&
                       <a className='linkBlock' href={data.url}  target="_blank" rel="noopener noreferrer"><span className='resourceLink'>{data.url}</span></a>
                     }
+                    {data.postParagraph && <div className='textParagraph'>{ReactHtmlParser(data.postParagraph)}</div>}
                   </div>
                 )
               })

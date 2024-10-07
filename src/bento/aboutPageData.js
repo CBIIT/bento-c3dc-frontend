@@ -21,6 +21,7 @@ export const aboutData = {
     "  <li>Facilitates longitudinal data analyses.</li>" +
     "  <li>Enables custom/synthetic cohort creation and data downloading for subsequent local analyses.</li>" +
     "</ul>",
+  /* These paragraphs were originally in the about page when we had one large about page. Their content are now in separate pages.
   fourthParagraph:
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
     "This release contains harmonized data from:" +
@@ -80,7 +81,7 @@ export const aboutData = {
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/README.md' target='_blank' rel='noopener noreferrer'>Release Notes</a> " +
     ":  Stay informed about the latest updates. <br> " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>" +
-    ": Whether you are new or aiming to expand your knowledge about C3DC, </br> our user guide is your resource.",
+    ": Whether you are new or aiming to expand your knowledge about C3DC, </br> our user guide is your resource.",*/
   lastParagraph:
     "The CCDI welcomes input from the community to enhance usability. " +
     "Please send your <br> feedback and comments to " +
