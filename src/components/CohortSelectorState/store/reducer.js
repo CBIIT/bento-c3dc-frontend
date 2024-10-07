@@ -92,11 +92,11 @@ const createNewCohort = (state, payload) => {
     [cohortId]: newCohort,
   };
 
-  return newState;
+  return {newState, count: participants.length};
 };
 
 const addParticipantsToCohort = (state, payload, ) => {
-  const { cohortId, participants, success = ()=>{} } = payload;
+  const { cohortId, participants } = payload;
 
   if (!state[cohortId]) {
     throw new Error(`Cohort with ID ${cohortId} does not exist`);
@@ -128,11 +128,7 @@ const addParticipantsToCohort = (state, payload, ) => {
     [cohortId]: newCohort,
   };
 
-  if(success){
-    success(newParticipants.length);
-  }
-
-  return newState;
+  return {newState, count: newParticipants.length};
 };
 
 const mutateSingleCohort = (state, payload) => {
@@ -191,11 +187,12 @@ const deleteAllCohort = (state) => {
 export const reducer = (state, action) => {
   const { type, payload } = action;
   let newState;
+  let count;
 
   try {
     switch (type) {
       case 'CREATE_NEW_COHORT':
-        newState = createNewCohort(state, payload);
+        ({ newState, count } = createNewCohort(state, payload));
         break;
       case 'MUTATE_SINGLE_COHORT':
         newState = mutateSingleCohort(state, payload);
@@ -207,13 +204,17 @@ export const reducer = (state, action) => {
         newState = deleteAllCohort(state);
         break;
       case 'ADD_PARTICIPANTS_TO_COHORT':
-        newState = addParticipantsToCohort(state, payload);
+        ({ newState, count } = addParticipantsToCohort(state, payload));
         break;
       default:
         return state;
     }
 
     localStorage.setItem('cohortState', JSON.stringify(newState));
+
+    if (payload.success) {
+      payload.success(count);
+    }
 
     return newState;
   } catch (error) {

@@ -103,8 +103,8 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
           "",
           "",
           hiddenSelectedRows,
-          () => { 
-            triggerNotification(hiddenSelectedRows.length);
+          (count) => { 
+            triggerNotification(count);
             setShowCohortModal(true);
           },
           (error) => alert("Something Went Wrong")
