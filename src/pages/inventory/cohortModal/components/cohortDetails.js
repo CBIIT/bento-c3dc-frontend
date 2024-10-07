@@ -49,11 +49,25 @@ const CohortDetails = (props) => {
 
 
     useEffect(() => {
-        if (scrollContainerRef.current) {
+        const checkForScrollbar = () => {
+          if (scrollContainerRef.current) {
             const { scrollHeight, clientHeight } = scrollContainerRef.current;
-            setIsScrollbarActive(scrollHeight > clientHeight); // Check if scrollbar is active
+            setIsScrollbarActive(scrollHeight > clientHeight);
+          }
+        };
+        checkForScrollbar();
+
+        const resizeObserver = new ResizeObserver(() => checkForScrollbar());
+        if (scrollContainerRef.current) {
+          resizeObserver.observe(scrollContainerRef.current);
         }
-    }, []);
+    
+        return () => {
+          if (scrollContainerRef.current) {
+            resizeObserver.disconnect();
+          }
+        };
+      }, []);
 
     useEffect(() => {
         if (showDownloadDropdown) {
@@ -270,7 +284,6 @@ const CohortDetails = (props) => {
                                         });
                                         setShowDeleteConfirmation(true)
                                     }}>
-                                <span className={classes.removeLabel}>Remove</span>
                                 <img
                                     src={TrashCanIconRed}
                                     alt="delete cohort icon"
@@ -583,7 +596,8 @@ const styles = () => ({
         justifyContent: 'end !important',
         paddingRight: '15px !important',
         width: '100px',
-        flex: '0 0 95px !important',
+        flex: '0 0 20px !important',
+        paddingLeft: '0px !important',
     },
     participantTableHeader: {
         display: 'flex',
@@ -609,8 +623,9 @@ const styles = () => ({
         alignItems: 'center',
         width: '100px',
         color: '#A61401',
-        flex: '0 0 95px !important',
+        flex: '0 0 20px !important',
         cursor: 'pointer',
+        paddingLeft: '0px !important',
     },
     tableBody: {
         overflowY: 'auto',
