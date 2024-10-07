@@ -94,7 +94,8 @@ const DropdownItem = styled.li`
     padding: 4px;
     border-bottom: 1px solid #ccc;
     max-height: 27px;
-    text-align: center;
+    text-align: left;
+    padding-left: 18px;
     border: 0px 1px 1px 1px;
     border-color: #73A9C7;
     background-color: #EFF2F6;
