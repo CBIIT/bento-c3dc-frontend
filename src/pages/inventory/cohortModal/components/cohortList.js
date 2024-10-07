@@ -27,10 +27,6 @@ const CohortList = (props) => {
         ? config.listHeading
         : DEFAULT_CONFIG.config.cohortList.listHeading;
 
-    const listItemPrefix = config && config.listItemPrefix && typeof config.listItemPrefix === 'string'
-        ? config.listItemPrefix
-        : DEFAULT_CONFIG.config.cohortList.listItemPrefix;
-
     const scrollContainerRef = useRef(null);
 
     const cohortOrderedList = Object.keys(state).sort((a, b) => {
@@ -117,7 +113,7 @@ const CohortList = (props) => {
                                 }}
                             >
                                 <span className={classes.cohortListItemText}>
-                                    {listItemPrefix} {state[cohort].cohortId}
+                                    {state[cohort].cohortId}
                                 </span>
                                 <span>
                                     <img
