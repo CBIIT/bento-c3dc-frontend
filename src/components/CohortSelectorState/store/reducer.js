@@ -95,8 +95,8 @@ const createNewCohort = (state, payload) => {
   return newState;
 };
 
-const addParticipantsToCohort = (state, payload) => {
-  const { cohortId, participants } = payload;
+const addParticipantsToCohort = (state, payload, ) => {
+  const { cohortId, participants, success = ()=>{} } = payload;
 
   if (!state[cohortId]) {
     throw new Error(`Cohort with ID ${cohortId} does not exist`);
@@ -128,34 +128,9 @@ const addParticipantsToCohort = (state, payload) => {
     [cohortId]: newCohort,
   };
 
-  return newState;
-};
-
-const removeParticipantsFromCohort = (state, payload) => {
-  const { cohortId, participants } = payload;
-
-  if (!state[cohortId]) {
-    throw new Error(`Cohort with ID ${cohortId} does not exist`);
+  if(success){
+    success(newParticipants.length);
   }
-
-  const updatedParticipants = state[cohortId].participants.filter(
-    (participant) => !participants.some(p => p.participant_id === participant.participant_id)
-  );
-
-  const newCohort = {
-    ...state[cohortId],
-    participants: updatedParticipants,
-    lastUpdated: new Date().toISOString(),
-  };
-
-  if (!isValidCohort(newCohort)) {
-    throw new Error('Invalid cohort data');
-  }
-
-  const newState = {
-    ...state,
-    [cohortId]: newCohort,
-  };
 
   return newState;
 };
@@ -234,18 +209,11 @@ export const reducer = (state, action) => {
       case 'ADD_PARTICIPANTS_TO_COHORT':
         newState = addParticipantsToCohort(state, payload);
         break;
-      case 'DELETE_PARTICIPANTS_FROM_COHORT':
-        newState = removeParticipantsFromCohort(state, payload);
-        break;
       default:
         return state;
     }
 
     localStorage.setItem('cohortState', JSON.stringify(newState));
-
-    if (payload.success) {
-      payload.success();
-    }
 
     return newState;
   } catch (error) {

@@ -156,7 +156,7 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
       dispatch(onAddParticipantsToCohort(
         value,
         hiddenSelectedRows,
-        triggerNotification(hiddenSelectedRows.length)
+        (count) => triggerNotification(count) // Pass as a callback
       ));
 
     }
