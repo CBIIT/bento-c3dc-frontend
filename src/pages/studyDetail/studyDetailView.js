@@ -240,7 +240,7 @@ const StudyDetailView = ({ classes, data, theme }) => {
                             openDoubleLink(studyDetailDownloadLinks[studyData.studyDetails.dbgap_accession][innerKey],(errorMessage) => {
                               setErrorMessage(errorMessage);
                               setError(true); 
-                            })
+                            }, innerKey)
                           }} className={classes.LinkStyle} >
                             {innerKey}
                           </span>

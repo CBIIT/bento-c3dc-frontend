@@ -158,7 +158,8 @@ query studyDetails($study_id: String) {
   }
 }`
 
-const downloadLinkPrefix = "https://d2l5jy2ao2mx5b.cloudfront.net/";
+//const downloadLinkPrefix = "https://d2ugardyiv9yoe.cloudfront.net/"; //non-prod
+const downloadLinkPrefix = "https://d2l5jy2ao2mx5b.cloudfront.net/"; //prod
 
 const studyDetailDownloadLinks = {
   "phs000466": {
