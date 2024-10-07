@@ -1,5 +1,5 @@
 import React from 'react';
-import { withStyles } from '@material-ui/core';
+import { Grid, withStyles } from '@material-ui/core';
 import { 
   TableContextProvider,
   TableView,
@@ -80,7 +80,9 @@ const TabView = (props) => {
         activeFilters={activeFilters}
         fileCount={dashboardStats['numberOfFiles']}
       >
-        
+         <Grid container>
+        <Grid item xs={12} id={config.tableID}>
+
             <TableView
               initState={initTblState}
               themeConfig={themeConfig}
@@ -88,7 +90,8 @@ const TabView = (props) => {
               totalRowCount={dashboardStats[config.count]}
               activeTab={activeTab}
             />
-          
+          </Grid>
+        </Grid>
       
       </Wrapper>
     </TableContextProvider>
