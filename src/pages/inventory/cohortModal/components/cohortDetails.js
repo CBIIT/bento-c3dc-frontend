@@ -141,6 +141,11 @@ const CohortDetails = (props) => {
         });
     };
 
+    const handleDownloadFile = (download) => {
+        download();
+        setShowDownloadDropdown(false);
+    };
+
     localCohort.participants.sort((a, b) => {
         const primaryComparison = selectedColumn[1] === 'ascending'
             ? a[selectedColumn[0]].localeCompare(b[selectedColumn[0]])
@@ -342,13 +347,13 @@ const CohortDetails = (props) => {
                                 <div className={classes.dropdownMenu}>
                                     <div
                                         className={classes.dropdownItem + ' ' + classes.firstDropdownItem}
-                                        onClick={downloadCohortManifest}
+                                        onClick={() => {handleDownloadFile(downloadCohortManifest)}}
                                     >
                                         Manifest CSV
                                     </div>
                                     <div
                                         className={classes.dropdownItem}
-                                        onClick={downloadCohortMetadata}
+                                        onClick={() => {handleDownloadFile(downloadCohortMetadata)}}
                                     >
                                         Metadata JSON
                                     </div>
