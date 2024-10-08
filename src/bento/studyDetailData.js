@@ -158,18 +158,24 @@ query studyDetails($study_id: String) {
   }
 }`
 
+//const downloadLinkPrefix = "https://d2ugardyiv9yoe.cloudfront.net/"; //non-prod
+const downloadLinkPrefix = "https://d2l5jy2ao2mx5b.cloudfront.net/"; //prod
+
 const studyDetailDownloadLinks = {
+  "phs000466": {
+    "TARGET_CCSK_ClinicalData_Discovery_20170525.xlsx": downloadLinkPrefix + "TARGET-CCSK_clinicalData_PUBLIC_20220207/TARGET_CCSK_ClinicalData_Discovery_20170525.xlsx",
+  },
   "phs000467": {
-    "TARGET_NBL_ClinicalData_Discovery_20220125.xlsx": "https://nci-crdc.datacommons.io/user/data/download/dg.4DFC/92192aee-a4e7-11ee-b42e-1ed67ff2713c",
-    "TARGET_NBL_ClinicalData_Validation_20220125.xlsx": "https://nci-crdc.datacommons.io/user/data/download/dg.4DFC/92192b84-a4e7-11ee-b42f-1ed67ff2713c"
+    "TARGET_NBL_ClinicalData_Discovery_20220125.xlsx": downloadLinkPrefix + "target-nbl/TARGET_NBL_ClinicalData_Discovery_20220125.xlsx",
+    "TARGET_NBL_ClinicalData_Validation_20220125.xlsx": downloadLinkPrefix + "target-nbl/TARGET_NBL_ClinicalData_Validation_20220125.xlsx",
   },
   "phs000470": {
-    "TARGET_RT_ClinicalData_Discovery_20211111.xlsx": "https://nci-crdc.datacommons.io/user/data/download/dg.4DFC/2d835abd-7ac7-491e-aa87-00f021240b17",
-    "TARGET_RT_ClinicalData_Validation_20211111.xlsx": "https://nci-crdc.datacommons.io/user/data/download/dg.4DFC/0aed243f-5292-4a82-bbd0-4847590b426d"
+    "TARGET_RT_ClinicalData_Discovery_20211111.xlsx": downloadLinkPrefix + "TARGET-RT_clinicalData_PUBLIC_20220209/TARGET_RT_ClinicalData_Discovery_20211111.xlsx",
+    "TARGET_RT_ClinicalData_Validation_20211111.xlsx": downloadLinkPrefix + "TARGET-RT_clinicalData_PUBLIC_20220209/TARGET_RT_ClinicalData_Validation_20211111.xlsx",
   },
   "phs000471": {
-    "TARGET_WT_ClinicalData_Discovery_20211111.xlsx": "https://nci-crdc.datacommons.io/user/data/download/dg.4DFC/ff2f8ab7-92a0-4d0a-bfd1-edf95db91590",
-    "TARGET_WT_ClinicalData_Validation_20211111.xlsx": "https://nci-crdc.datacommons.io/user/data/download/dg.4DFC/c1251495-749e-413e-b2a4-31edadb86d12"
+    "TARGET_WT_ClinicalData_Discovery_20211111.xlsx": downloadLinkPrefix + "TARGET-WT_clinicalData_PUBLIC_20220131/TARGET_WT_ClinicalData_Discovery_20211111.xlsx",
+    "TARGET_WT_ClinicalData_Validation_20211111.xlsx": downloadLinkPrefix + "TARGET-WT_clinicalData_PUBLIC_20220131/TARGET_WT_ClinicalData_Validation_20211111.xlsx",
   }
 };
 
@@ -189,25 +195,3 @@ export {
   studyDetailDownloadLinks
 
 };
-
-export async function openDoubleLink(url, setError) {
-  try {
-    let urlContent = await fetch(url);
-    if (urlContent.ok) {
-      let finalContent = await urlContent.json();
-      if (typeof finalContent == "object") {
-        if (finalContent.url) {
-          window.location.href = finalContent.url
-        } else {
-          setError("The server response does not contain a valid download link");
-        }
-      } else {
-        setError("Received an invalid response from the server. Please try again later")
-      }
-    } else {
-      setError("Network error. Please check your internet connection and try again");
-    }
-  } catch (e) {
-    setError("Failed to fetch the download URL. Please try again");
-  }
-}
