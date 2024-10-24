@@ -21,6 +21,7 @@ import AnnouncementPage from "../../pages/announcement/announcementPage";
 import ReleaseNotePage from "../../pages/releaseNote/releaseNote";
 import CohortManager from "../../pages/CohortManager/CohortManagerController";
 import ReleaseNoteController from "../../pages/releaseNote/releaseNoteController";
+import  CohortAnalyzerController  from "../../pages/CohortAnalyzer/CohortAnalyzerController";
 
 // import NewsDetail from '../../pages/news/newsDetailView';
 
@@ -45,6 +46,7 @@ const Layout = () => {
           <Route path="/release_notes" element={<ReleaseNoteController />} />
           <Route path="/release_notes_pdf" element={<PdfReader />} />
           <Route path="/cohort_Manager" element={<CohortManager />} />
+          <Route path="/cohortAnalyzer" element={<CohortAnalyzerController />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />
