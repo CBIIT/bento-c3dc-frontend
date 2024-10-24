@@ -137,7 +137,14 @@ export const CohortAnalyzer = () => {
             <div className={classes.container}>
                 <div className={classes.leftSideAnalyzer}>
                     <div className={classes.sideHeader}>
+                        <div className={classes.cohortSelectionChild}>
                         <span> {"COHORTS (" + Object.keys(state).length + ")"} </span>
+                        <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="bottom">
+
+                                <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
+                            </ToolTip>
+                        </div>
+                        
                         <img alt={"Trashcan"} onClick={() => deleteAllCohort()} src={trashCan} width={15} height={16} />
                     </div>
                     <div>
