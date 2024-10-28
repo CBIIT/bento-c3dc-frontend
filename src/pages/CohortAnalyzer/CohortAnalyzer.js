@@ -26,6 +26,7 @@ export const CohortAnalyzer = () => {
     function generateQueryVariable(cohortNames) {
         let query = {};
         query['participant_pks'] = [];
+        query["first"] = 10000;
         cohortNames.forEach((cName) => {
             state[cName].participants.forEach((participant) => {
                 query["participant_pks"].push(participant.participant_pk);
@@ -51,6 +52,7 @@ export const CohortAnalyzer = () => {
                     let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
                     setRowData(filteredRowData);
                 } else {
+                    
                     setRowData(data['diagnosisOverview']);
                 }
 
