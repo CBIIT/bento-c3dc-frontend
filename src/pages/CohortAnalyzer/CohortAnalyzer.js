@@ -138,16 +138,16 @@ export const CohortAnalyzer = () => {
                 <div className={classes.leftSideAnalyzer}>
                     <div className={classes.sideHeader}>
                         <div className={classes.cohortSelectionChild}>
-                        <span> {"COHORTS (" + Object.keys(state).length + ")"} </span>
-                        <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="bottom">
+                            <span> {"COHORTS (" + Object.keys(state).length + ")"} </span>
+                            <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="bottom">
 
                                 <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
                             </ToolTip>
                         </div>
-                        
+
                         <img alt={"Trashcan"} onClick={() => deleteAllCohort()} src={trashCan} width={15} height={16} />
                     </div>
-                    <div>
+                    <div className={classes.leftSideAnalyzerChild}>
                         {state && Object.keys(state).map((cohort) => {
                             return (
                                 <div className={classes.CohortChild}>
@@ -227,9 +227,21 @@ const useStyle = makeStyles((theme) => ({
         width: 268,
         height: 588,
         marginTop: 70,
+        overflowY: 'hidden',
         borderRadius: ' 0px 35px 35px 0px',
         border: '1px solid #B0B0B0',
-        overflowY: 'scroll'
+
+    },
+    leftSideAnalyzerChild: {
+        height: '90%',
+        overflowY: 'scroll',
+        '&::-webkit-scrollbar': {
+            width: "6px"
+        },
+        '&::-webkit-scrollbar-thumb': {
+            width: "6px",
+            backgroundColor: '#003F74'
+        },
     },
     cohortSelectionChild: {
         display: 'flex',
