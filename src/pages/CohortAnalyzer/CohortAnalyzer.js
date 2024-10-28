@@ -186,7 +186,7 @@ export const CohortAnalyzer = () => {
                             themeConfig={themeConfig}
                             tblRows={rowData}
                             queryVariables={queryVariable}
-                            server={selectedCohorts.length === 0 ? false : false}
+                            server={false}
                             totalRowCount={rowData.length}
                             activeTab={"Participant"}
                         />
@@ -333,7 +333,6 @@ const useStyle = makeStyles((theme) => ({
     rightSideTableContainer: {
 
         width: '90%',
-
     }
 }))
 
