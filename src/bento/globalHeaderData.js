@@ -41,6 +41,11 @@ export const navMobileList = [
   //     className: 'navMobileItem clickable',
   // },
   {
+    name: 'Cohort Analyzer',
+    link: '/cohortAnalyzer',
+    className: 'navMobileItem',
+  },
+  {
     name: 'Studies',
     link: '/studies',
     className: 'navMobileItem',
