@@ -14,6 +14,7 @@ import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import Question_Icon from '../../assets/icons/Question_Icon.svg';
 import search_icon from '../../assets/icons/Search_Icon.svg';
 import Stats from '../../components/Stats/GlobalStatsController';
+import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -52,7 +53,7 @@ export const CohortAnalyzer = () => {
                     let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
                     setRowData(filteredRowData);
                 } else {
-                    
+
                     setRowData(data['diagnosisOverview']);
                 }
 
@@ -133,8 +134,32 @@ export const CohortAnalyzer = () => {
         )
     }
 
+    const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
+
+    const handelPopup = (cohortId) => {
+        let deleteType = cohortId ? "this cohort" : "ALL cohorts";
+        if (Object.keys(state).length > 0) {
+            setDeleteInfo({ showDeleteConfirmation: !deleteInfo.showDeleteConfirmation, deleteType: deleteType, cohortId: cohortId });
+        }
+    }
+
+    const handleDelete = (cohortId) => {
+        if (cohortId) {
+            deleteCohort(cohortId);
+        } else {
+            deleteAllCohort();
+        }
+    }
+
     return (
         <>
+            <DeleteConfirmationModal
+                classes={""}
+                open={deleteInfo.showDeleteConfirmation}
+                setOpen={() => { handelPopup("") }}
+                handleDelete={() => { handleDelete(deleteInfo.cohortId) }}
+                deletionType={deleteInfo.deleteType}
+            />
             <Stats />
             <div className={classes.container}>
                 <div className={classes.leftSideAnalyzer}>
@@ -146,8 +171,7 @@ export const CohortAnalyzer = () => {
                                 <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
                             </ToolTip>
                         </div>
-
-                        <img alt={"Trashcan"} onClick={() => deleteAllCohort()} src={trashCan} width={15} height={16} />
+                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1 }} onClick={() => handelPopup("")} src={trashCan} width={15} height={16} />
                     </div>
                     <div className={classes.leftSideAnalyzerChild}>
                         {state && Object.keys(state).map((cohort) => {
@@ -158,7 +182,7 @@ export const CohortAnalyzer = () => {
                                             <Checkbox checked={selectedCohorts.includes(cohort)} onChange={(e) => { handleCheckbox(cohort, e); }} />
                                             <span> {cohort} </span>
                                         </div>
-                                        <img alt={"Trashcan"} onClick={() => { deleteCohort(cohort) }} src={trashCan} width={15} height={16} />
+                                        <img alt={"Trashcan"} onClick={() => { handelPopup(cohort) }} src={trashCan} width={15} height={16} />
                                     </div>
                                 </div>
                             )
@@ -244,6 +268,9 @@ const useStyle = makeStyles((theme) => ({
             width: "6px",
             backgroundColor: '#003F74'
         },
+        '&::-webkit-scrollbar-track': {
+            background: '#CECECE',
+        },
     },
     cohortSelectionChild: {
         display: 'flex',
@@ -263,6 +290,9 @@ const useStyle = makeStyles((theme) => ({
         },
         '& span': {
             color: 'black'
+        },
+        '& img': {
+            opacity: 1
         }
     },
     sideHeader: {
@@ -278,7 +308,10 @@ const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         alignSelf: 'center',
-        margin: 'auto'
+        margin: 'auto',
+        '& img': {
+            marginRight: 6.5
+        }
     },
     cohortCountSection: {
         fontFamily: 'Poppins',
@@ -304,7 +337,7 @@ const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        overflowY: 'scroll'
+        overflowY: 'hidden'
     },
     rightSideAnalyzerHeader: {
         display: 'flex',
@@ -331,8 +364,20 @@ const useStyle = makeStyles((theme) => ({
         }
     },
     rightSideTableContainer: {
-
         width: '90%',
+        height: 420,
+        overflowY: 'scroll',
+        '&::-webkit-scrollbar': {
+            width: "6px"
+        },
+        '&::-webkit-scrollbar-thumb': {
+            width: "6px",
+            backgroundColor: '#003F74'
+        },
+        '&::-webkit-scrollbar-track': {
+            background: '#CECECE',
+        },
+
     }
 }))
 
