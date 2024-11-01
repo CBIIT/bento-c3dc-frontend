@@ -15,6 +15,7 @@ import Question_Icon from '../../assets/icons/Question_Icon.svg';
 import search_icon from '../../assets/icons/Search_Icon.svg';
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
+import ChartVenn from "./vennDigaram/ChartVenn";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -191,6 +192,7 @@ export const CohortAnalyzer = () => {
                 </div>
 
                 <div className={classes.rightSideAnalyzer}>
+                    <ChartVenn />
                     <div className={classes.rightSideAnalyzerHeader}>
                         <h1> Cohort Analyzer</h1>
                     </div>
