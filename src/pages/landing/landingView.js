@@ -308,68 +308,68 @@ const styles = () => ({
     position: 'absolute',
     left: '50%',
     marginLeft: '-720px',
-    top: '690px',
+    top: '515px',
     animation: '6s $heartbeatPulse infinite linear',
   },
   "@keyframes heartlineTracking": {
     "0%": {
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "-726px", 
     },
     "32.33%": { //left
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "47px",  
     },
     "39.67%": { //peak
-      top: '685px',
+      top: '510px',
       left: '50%',
       marginLeft: "77px", 
     },
     "47%": { //drop
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "107px",  
     },
     "51.56%": { //left
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "284px",
     },
     "58.89%": { //peak
-      top: '685px',
+      top: '510px',
       left: '50%',
       marginLeft: "314px", 
     },
     "66.22%": { //drop
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "344px", 
     },
     "70.78%": { //left
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "520px", 
     },
     "78.11%": { //peak
-      top: '685px',
+      top: '510px',
       left: '50%',
       marginLeft: "550px", 
     },
     "85.44%": { //drop
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "580px", 
     },
     "88%": {
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "711px", 
       opacity: '1'
     },
     "100%": {
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "711px", 
       opacity: '0'
@@ -377,7 +377,7 @@ const styles = () => ({
   },
   heartlineTracker:{
     position: 'absolute',
-    top: '745px',
+    top: '570px',
     left: '50%',
     marginLeft: "-726px",
     animation: '6s $heartlineTracking infinite linear'
@@ -396,6 +396,7 @@ const styles = () => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
   },
   heroFrame: {
     height: '614px',

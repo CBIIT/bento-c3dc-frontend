@@ -15,6 +15,7 @@ import Question_Icon from '../../assets/icons/Question_Icon.svg';
 import search_icon from '../../assets/icons/Search_Icon.svg';
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
+import sortIcon from "../../assets/icons/sort_icon.svg";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -23,6 +24,8 @@ export const CohortAnalyzer = () => {
     const [queryVariable, setQueryVariable] = useState({});
     const [rowData, setRowData] = useState([]);
     const [searchValue, setSearchValue] = useState("");
+    const [cohortList, setCohortList] = useState(Object.keys(state) || []);
+    const [sortDirection, setSortDirection] = useState("asc");
 
     function generateQueryVariable(cohortNames) {
         let query = {};
@@ -89,6 +92,23 @@ export const CohortAnalyzer = () => {
 
     const deleteAllCohort = () => {
         dispatch(onDeleteAllCohort(() => { }, () => { }));
+    }
+
+    const sortBy = (type) => {
+        let listOfCohortsLocal = Object.keys(state);
+        if (type === "alphabet") {
+            listOfCohortsLocal.sort((a, b) => sortDirection === "asc" ?
+                a.localeCompare(b) :
+                b.localeCompare(a))
+            setCohortList(listOfCohortsLocal);
+        } else {
+            listOfCohortsLocal.sort((a, b) => sortDirection === "asc" ?
+                state[a].participants.length - state[b].participants.length :
+                state[b].participants.length - state[a].participants.length)
+            setCohortList(listOfCohortsLocal);
+
+        }
+        setSortDirection(sortDirection === "asc" ? "dec" : "asc")
     }
 
     const initTblState = (initailState) => ({
@@ -166,15 +186,28 @@ export const CohortAnalyzer = () => {
                     <div className={classes.sideHeader}>
                         <div className={classes.cohortSelectionChild}>
                             <span> {"COHORTS (" + Object.keys(state).length + ")"} </span>
-                            <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="bottom">
+                            <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="top">
 
                                 <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
                             </ToolTip>
                         </div>
                         <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1 }} onClick={() => handelPopup("")} src={trashCan} width={15} height={16} />
                     </div>
+                    <div className={classes.sortSection}>
+                        <div onClick={() => {
+                            sortBy("alphabet");
+                        }} style={{ display: 'flex', margin: 0, alignItems: 'center', cursor: 'pointer' }}>
+                            <img alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} />
+                            <p> Sort Alphabetically </p>
+                        </div>
+                        <div onClick={() => {
+                            sortBy("");
+                        }} className={classes.sortCount}>
+                            <p>Sort by Count</p>
+                        </div>
+                    </div>
                     <div className={classes.leftSideAnalyzerChild}>
-                        {state && Object.keys(state).map((cohort) => {
+                        {state && cohortList.map((cohort) => {
                             return (
                                 <div className={classes.CohortChild}>
                                     <div className={classes.cohortChildContent} >
@@ -197,7 +230,7 @@ export const CohortAnalyzer = () => {
                     <div className={classes.cohortCountSection}>
                         <div className={classes.cohortSelectionChild}>
                             <span>{"SELECTED COHORTS (" + selectedCohorts.length + "/3)"}</span>
-                            <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="bottom">
+                            <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="top">
 
                                 <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
                             </ToolTip>
@@ -226,6 +259,13 @@ const useStyle = makeStyles((theme) => ({
         height: '100%',
         display: 'flex',
         flexDirection: 'row'
+    },
+    sortCount: {
+        display: 'flex',
+        margin: 0,
+        alignItems: 'center',
+        marginRight: 25,
+        cursor: 'pointer'
     },
     inputStyleContainer: {
         position: 'relative',
@@ -302,15 +342,29 @@ const useStyle = makeStyles((theme) => ({
         fontWeight: 500,
         letterSpacing: '-0.02em',
         textAlign: 'left',
-        width: '90%',
+        width: '100%',
         verticalAlign: 'center',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
         alignSelf: 'center',
         margin: 'auto',
+        borderBottom: '1px solid #B0B0B0',
+        paddingLeft: 15,
+        paddingRight: 15,
         '& img': {
             marginRight: 6.5
+        }
+    },
+    sortSection: {
+        height: 31,
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'space-between',
+        marginLeft: 10,
+        marginRight: 25,
+        '& p': {
+            fontSize: 9
         }
     },
     cohortCountSection: {

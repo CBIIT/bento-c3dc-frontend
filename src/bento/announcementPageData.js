@@ -15,7 +15,7 @@ export const announcementPageData = [
         "type": 1,
         "is_release_notes": true,
         "alt": "An animated laptop surrounded by animated objects, including a server, gears, and a magnifying glass.",
-        "verbiage": "This release includes three new harmonized data sets (phs003432, phs003519, and phs000466) and updates to existing data sets (phs002517, and phs002790) on the C3DC Explore page. All the data have been aligned to the most recent version of the data model. For more detailed information about these changes and to review the full list of updates, please refer to our data release update"
+        "verbiage": "This release includes three new harmonized data sets (phs003432, phs003519, and phs000466) and updates to existing data sets (phs002517, and phs002790) on the C3DC Explore page. All the data have been aligned to the most recent version of the data model. For more detailed information about these changes and to review the full list of updates, please refer to our data release update."
     },
     {
         "title": "Data Model Update",
@@ -56,6 +56,6 @@ export const announcementPageData = [
         "image": fig2,
         "type": 2,
         "alt": "A woman wearing glasses sitting in front of a computer",
-        "verbiage": "This new feature in the explore page provides users with the ability to select up to 10 cohort groups (participants) and generate clinical and manifest files in CSV or JSON format, which can then be utilized on other platforms for further analysis. Users are able to customize each cohort by assigning a name and description, and they can view, add, or remove participants from individual cohorts. Additionally, users have the option to delete an entire cohort if necessary. The application also offers a view of all selected cohorts"
+        "verbiage": "This new feature in the explore page provides users with the ability to select up to 10 cohort groups (participants) and generate clinical and manifest files in CSV or JSON format, which can then be utilized on other platforms for further analysis. Users are able to customize each cohort by assigning a name and description, and they can view, add, or remove participants from individual cohorts. Additionally, users have the option to delete an entire cohort if necessary. The application also offers a view of all selected cohorts."
     }
 ];
