@@ -192,7 +192,7 @@ export const CohortAnalyzer = () => {
                 </div>
 
                 <div className={classes.rightSideAnalyzer}>
-                    <ChartVenn />
+                    <ChartVenn  cohortData={selectedCohorts.map(cohortId=>state[cohortId])} />
                     <div className={classes.rightSideAnalyzerHeader}>
                         <h1> Cohort Analyzer</h1>
                     </div>

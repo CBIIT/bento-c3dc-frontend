@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
 
 
-const ChartVenn = () => {
+const ChartVenn = ({ cohortData }) => {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -15,14 +15,22 @@ const ChartVenn = () => {
   };
   const selectedColor = "rgba(255, 99, 132, 0.7)"; // Red for selected sections
 
-  const data = extractSets(
-    [
-      { label: "Cohort1", values: ["alex", "casey", "drew", "hunter", "jade"] },
-      { label: "Cohort2", values: ["casey", "drew", "jade"] },
-      { label: "Cohort3", values: ["drew", "glen", "jade", "hunter"] }
-    ],
-    { label: "Cohort diagram" }
-  );
+  const getValue = (c,key='participant_pk') => c.map((o)=>o[key]);
+
+  const baseSets = cohortData.map((c) => ({ label: c.cohortId, values: getValue(c.participants) }));
+
+  // Note: Keeping these lines as example.
+  // const data = extractSets(
+  //   [
+  //     { label: "Cohort1", values: ["alex", "casey", "drew", "hunter", "jade"] },
+  //     { label: "Cohort2", values: ["casey", "drew", "jade"] },
+  //     { label: "Cohort3", values: ["drew", "glen", "jade", "hunter"] }
+  //   ],
+  //   { label: "Cohort diagram" }
+  // );
+
+  const data = extractSets(baseSets,{ label: "Cohort diagram" });
+
 
   const config = {
     type: "venn",
@@ -39,7 +47,7 @@ const ChartVenn = () => {
       ],
     },
     options: {
-      onClick: (event, elements) => {
+      onClick: (event) => {
         const elementsAtEvent = chartRef.current.getElementsAtEventForMode(
           event,
           "nearest",
@@ -75,7 +83,7 @@ const ChartVenn = () => {
     return () => {
       if (chartRef.current) chartRef.current.destroy(); // Clean up on unmount
     };
-  }, [selectedVenns]); // Re-render the chart when selectedVenns changes
+  }, [selectedVenns,data]); // Re-render the chart when selectedVenns changes
 
   return (
     <div className="App">
