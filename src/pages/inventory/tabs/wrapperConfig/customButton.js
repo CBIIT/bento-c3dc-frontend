@@ -111,7 +111,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
           },
           (error) => {
           
-          setWarningMessage(error.toString());
+          setWarningMessage(error.toString().replace("Error:",""));
           }
         ));
       }
