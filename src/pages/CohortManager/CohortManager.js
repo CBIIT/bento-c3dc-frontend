@@ -60,6 +60,8 @@ const CohortManager = (props) => {
   const [selectedCohort, setSelectedCohort] = useState('');
   const [participants, setParticipants] = useState([]);
   const [alert, setAlert] = useState({ type: '', message: '' });
+  const   [cohorts, setCohorts]= useState('')
+
 
   // Handle cohort creation
   const handleCreateCohort = () => {

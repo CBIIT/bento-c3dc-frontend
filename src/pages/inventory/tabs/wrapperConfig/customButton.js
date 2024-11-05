@@ -6,6 +6,7 @@ import { onCreateNewCohort } from '../../../../components/CohortSelectorState/st
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalContext } from '../../cohortModal/CohortModalContext';
 import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/Actions';
+import DeleteConfirmationModal from '../../cohortModal/components/deleteConfirmationModal';
 
 const ButtonContainer = styled.div`
   position: relative;
@@ -53,9 +54,10 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
 
   const tableContext = useContext(TableContext);
   const { dispatch } = useContext(CohortStateContext);
-  const { setShowCohortModal} = useContext(CohortModalContext);
+  const { setShowCohortModal, setWarningMessage} = useContext(CohortModalContext);
   const { Notification } = useGlobal();
   const [isActive, setIsActive] = useState(false);
+  const [warning,setWarning] = useState("");
 
   const triggerNotification = (count) => {
     if (count > 1) {
@@ -107,7 +109,10 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
             triggerNotification(count);
             setShowCohortModal(true);
           },
-          (error) => alert("Something Went Wrong")
+          (error) => {
+          
+          setWarningMessage(error.toString());
+          }
         ));
       }
 
