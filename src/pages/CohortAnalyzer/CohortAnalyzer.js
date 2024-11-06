@@ -16,6 +16,7 @@ import search_icon from '../../assets/icons/Search_Icon.svg';
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
 import sortIcon from "../../assets/icons/sort_icon.svg";
+import CheckBoxCustom from "./customCheckbox/CustomCheckbox";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -211,9 +212,12 @@ export const CohortAnalyzer = () => {
                             return (
                                 <div className={classes.CohortChild}>
                                     <div className={classes.cohortChildContent} >
-                                        <div>
-                                            <Checkbox checked={selectedCohorts.includes(cohort)} onChange={(e) => { handleCheckbox(cohort, e); }} />
-                                            <span> {cohort} </span>
+                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                                            <CheckBoxCustom
+                                                selectedCohorts={selectedCohorts}
+                                                cohort={cohort}
+                                                handleCheckbox={handleCheckbox} />
+                                            <span> {cohort + " (" + state[cohort].participants.length + ")"} </span>
                                         </div>
                                         <img alt={"Trashcan"} onClick={() => { handelPopup(cohort) }} src={trashCan} width={15} height={16} />
                                     </div>
