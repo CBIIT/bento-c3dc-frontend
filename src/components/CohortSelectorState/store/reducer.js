@@ -202,6 +202,8 @@ const trackTemporaryCohort = (state, payload) => {
     throw new Error('Invalid cohort data');
   }
 
+  delete newCohort['lastUpdated'];
+
   let newState = { 
     ...state,
     [COHORTS] : {

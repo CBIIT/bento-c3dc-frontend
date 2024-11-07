@@ -19,7 +19,7 @@ import { deletionTypes } from './components/deleteConfirmationModal';
 import Alert from '@material-ui/lab/Alert';
 import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../bento/dashboardTabData.js';
 import client from '../../../utils/graphqlClient.js'
-import { arrayToCSVDownload, objectToJsonDownload } from './utils.js';
+import { arrayToCSVDownload, objectToJsonDownload, haveUnsavedChanges } from './utils.js';
 
 /**
  * Generator function to create cohortModal component with custom configuration
@@ -38,7 +38,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     const { state, dispatch } = useContext(CohortStateContext);
     const [selectedCohort, setSelectedCohort] = useState(null); // Default to the first entry
     const [alert, setAlert] = useState({ type: '', message: '' });
-    const unSavedChanges = state[TEMPORARY_COHORT] ? JSON.stringify(state[TEMPORARY_COHORT]) !== JSON.stringify(state[COHORTS][selectedCohort]) : false;
+    const unSavedChanges = state[TEMPORARY_COHORT] ? haveUnsavedChanges(state[TEMPORARY_COHORT], state[COHORTS][selectedCohort]) : false;
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [deleteModalProps, setDeleteModalProps] = useState({
         handleDelete: () => { },
@@ -112,7 +112,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
             {
                 cohortName: localCohort.cohortName,
                 cohortDescription: localCohort.cohortDescription,
-                participants: localCohort.participants
+                participants: localCohort.participants,
+                searchText: localCohort.searchText,
             }
         ));
     };
