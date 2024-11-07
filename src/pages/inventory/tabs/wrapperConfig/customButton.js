@@ -100,6 +100,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
           hiddenSelectedRows = []
         } = context;
         clearSelection();
+        dispatch(onClearTemporaryCohort());
         dispatch(onCreateNewCohort(
           "",
           "",
@@ -107,7 +108,6 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
           (count) => { 
             triggerNotification(count);
             setShowCohortModal(true);
-            dispatch(onClearTemporaryCohort());
           },
           (error) => alert("Something Went Wrong")
         ));
