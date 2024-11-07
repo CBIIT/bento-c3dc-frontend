@@ -1,6 +1,8 @@
 export const actionTypes = {
   CREATE_NEW_COHORT: 'CREATE_NEW_COHORT',
   MUTATE_SINGLE_COHORT: 'MUTATE_SINGLE_COHORT',
+  TRACK_TEMPORARY_COHORT: 'TRACK_TEMPORARY_COHORT',
+  CLEAR_TEMPORARY_COHORT: 'CLEAR_TEMPORARY_COHORT',
   DELETE_SINGLE_COHORT: 'DELETE_SINGLE_COHORT',
   DELETE_ALL_COHORT: 'DELETE_ALL_COHORT',
   ADD_PARTICIPANTS_TO_COHORT: 'ADD_PARTICIPANTS_TO_COHORT',
@@ -34,6 +36,26 @@ export const onCreateNewCohort = (cohortId, cohortDescription, participants, suc
 export const onMutateSingleCohort = (cohortId, data, success, error) => ({
   type: actionTypes.MUTATE_SINGLE_COHORT,
   payload: { cohortId, data, success, error},
+});
+
+/**
+ * Action to track the temporary changes on a cohort.
+ * @param {string} cohortId - The ID of the cohort.
+ * @param {Object} data - The data to update the cohort with.
+ */
+export const onTrackTemporaryCohort = (cohortId, data, success, error) => ({
+  type: actionTypes.TRACK_TEMPORARY_COHORT,//update this?
+  payload: { cohortId, data, success, error},
+});
+
+/**
+ * Action to clear the temporary changes of a cohort.
+ * @param {string} cohortId - The ID of the cohort.
+ * @param {Object} data - The data to update the cohort with.
+ */
+export const onClearTemporaryCohort = (cohortId, data, success, error) => ({
+  type: actionTypes.CLEAR_TEMPORARY_COHORT,
+  payload: { success, error},
 });
 
 /**

@@ -4,6 +4,7 @@ export const initialState = {
 };
 
 const COHORTS = "COHORTS";
+const TEMPORARY_COHORT = "TEMPORARY_COHORT";
 
 const participantObjectTemplate = {
   participant_id: '',
@@ -182,6 +183,48 @@ const mutateSingleCohort = (state, payload) => {
   return newState;
 };
 
+const trackTemporaryCohort = (state, payload) => {
+  const { cohortId, data } = payload;
+  const { cohortName } = data;
+
+  if (!state[COHORTS][cohortId]) {
+    throw new Error(`Cohort with ID ${cohortId} does not exist`);
+  }
+
+  const newCohort = {
+    ...state[COHORTS][cohortId],
+    ...data,
+    cohortName: cohortName || state[COHORTS][cohortId].cohortName,
+    lastUpdated: new Date().toISOString(),
+  };
+
+  if (!isValidCohort(newCohort)) {
+    throw new Error('Invalid cohort data');
+  }
+
+  let newState = { 
+    ...state,
+    [COHORTS] : {
+      ...state[COHORTS],
+    },
+    [TEMPORARY_COHORT]: newCohort,
+   };
+
+  return newState;
+};
+
+const clearTemporaryCohort = (state) => {
+  let newState = { 
+    ...state,
+    [COHORTS]: {
+      ...state[COHORTS],
+    },
+  };
+
+  delete newState[TEMPORARY_COHORT];
+  return newState;
+}
+
 const deleteSingleCohort = (state, payload) => {
   const { cohortId } = payload;
 
@@ -217,6 +260,12 @@ export const reducer = (state, action) => {
         break;
       case 'MUTATE_SINGLE_COHORT':
         newState = mutateSingleCohort(state, payload);
+        break;
+      case 'TRACK_TEMPORARY_COHORT':
+        newState = trackTemporaryCohort(state, payload);
+        break;
+      case 'CLEAR_TEMPORARY_COHORT':
+        newState = clearTemporaryCohort(state);
         break;
       case 'DELETE_SINGLE_COHORT':
         newState = deleteSingleCohort(state, payload);

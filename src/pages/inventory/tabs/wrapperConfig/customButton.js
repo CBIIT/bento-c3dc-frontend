@@ -2,7 +2,7 @@ import { onRowSeclect, TableContext } from '@bento-core/paginated-table';
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
-import { onCreateNewCohort } from '../../../../components/CohortSelectorState/store/action';
+import { onCreateNewCohort, onClearTemporaryCohort } from '../../../../components/CohortSelectorState/store/action';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalContext } from '../../cohortModal/CohortModalContext';
 import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/Actions';
@@ -93,6 +93,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
     if (isActive) {
       if (type === "VIEW") {
         setShowCohortModal(true);
+        dispatch(onClearTemporaryCohort());
       } else {
         const { context } = tableContext;
         const {
@@ -106,6 +107,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
           (count) => { 
             triggerNotification(count);
             setShowCohortModal(true);
+            dispatch(onClearTemporaryCohort());
           },
           (error) => alert("Something Went Wrong")
         ));
