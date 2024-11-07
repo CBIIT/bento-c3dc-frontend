@@ -19,12 +19,13 @@ import sortIcon from "../../assets/icons/sort_icon.svg";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
+    const COHORTS = "COHORTS";
     const { state, dispatch } = useContext(CohortStateContext);
     const [selectedCohorts, setSelectedCohorts] = useState([]);
     const [queryVariable, setQueryVariable] = useState({});
     const [rowData, setRowData] = useState([]);
     const [searchValue, setSearchValue] = useState("");
-    const [cohortList, setCohortList] = useState(Object.keys(state) || []);
+    const [cohortList, setCohortList] = useState(Object.keys(state[COHORTS]) || []);
     const [sortDirection, setSortDirection] = useState("asc");
 
     function generateQueryVariable(cohortNames) {
@@ -32,7 +33,7 @@ export const CohortAnalyzer = () => {
         query['participant_pks'] = [];
         query["first"] = 10000;
         cohortNames.forEach((cName) => {
-            state[cName].participants.forEach((participant) => {
+            state[COHORTS][cName].participants.forEach((participant) => {
                 query["participant_pks"].push(participant.participant_pk);
             });
         });
@@ -42,7 +43,7 @@ export const CohortAnalyzer = () => {
     useEffect(() => {
         let rowDataFinal = [];
         selectedCohorts.forEach((cohortId) => {
-            rowDataFinal = [...rowDataFinal, ...state[cohortId].participants];
+            rowDataFinal = [...rowDataFinal, ...state[COHORTS][cohortId].participants];
         });
         async function getJoinedCohort() {
             let queryVariables = generateQueryVariable(selectedCohorts);
@@ -95,7 +96,7 @@ export const CohortAnalyzer = () => {
     }
 
     const sortBy = (type) => {
-        let listOfCohortsLocal = Object.keys(state);
+        let listOfCohortsLocal = Object.keys(state[COHORTS]);
         if (type === "alphabet") {
             listOfCohortsLocal.sort((a, b) => sortDirection === "asc" ?
                 a.localeCompare(b) :
@@ -103,8 +104,8 @@ export const CohortAnalyzer = () => {
             setCohortList(listOfCohortsLocal);
         } else {
             listOfCohortsLocal.sort((a, b) => sortDirection === "asc" ?
-                state[a].participants.length - state[b].participants.length :
-                state[b].participants.length - state[a].participants.length)
+                state[COHORTS][a].participants.length - state[COHORTS][b].participants.length :
+                state[COHORTS][b].participants.length - state[COHORTS][a].participants.length)
             setCohortList(listOfCohortsLocal);
 
         }
@@ -133,7 +134,7 @@ export const CohortAnalyzer = () => {
         showDownloadIcon: false,
         SearchBox: SearchBox,
         showSearchBox: true,
-        tableMsg: (state && Object.keys(state).length === 0) ? {
+        tableMsg: (state[COHORTS] && Object.keys(state[COHORTS]).length === 0) ? {
             noMatch: 'To proceed, please create your cohort by visiting the Explore Page.'
         } : tableConfig.tableMsg
     });
@@ -158,7 +159,7 @@ export const CohortAnalyzer = () => {
 
     const handelPopup = (cohortId) => {
         let deleteType = cohortId ? "this cohort" : "ALL cohorts";
-        if (Object.keys(state).length > 0) {
+        if (Object.keys(state[COHORTS]).length > 0) {
             setDeleteInfo({ showDeleteConfirmation: !deleteInfo.showDeleteConfirmation, deleteType: deleteType, cohortId: cohortId });
         }
     }
@@ -185,13 +186,13 @@ export const CohortAnalyzer = () => {
                 <div className={classes.leftSideAnalyzer}>
                     <div className={classes.sideHeader}>
                         <div className={classes.cohortSelectionChild}>
-                            <span> {"COHORTS (" + Object.keys(state).length + ")"} </span>
+                            <span> {"COHORTS (" + Object.keys(state[COHORTS]).length + ")"} </span>
                             <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="top">
 
                                 <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
                             </ToolTip>
                         </div>
-                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1 }} onClick={() => handelPopup("")} src={trashCan} width={15} height={16} />
+                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state[COHORTS]).length === 0 ? 0.6 : 1 }} onClick={() => handelPopup("")} src={trashCan} width={15} height={16} />
                     </div>
                     <div className={classes.sortSection}>
                         <div onClick={() => {
@@ -207,7 +208,7 @@ export const CohortAnalyzer = () => {
                         </div>
                     </div>
                     <div className={classes.leftSideAnalyzerChild}>
-                        {state && cohortList.map((cohort) => {
+                        {state[COHORTS] && cohortList.map((cohort) => {
                             return (
                                 <div className={classes.CohortChild}>
                                     <div className={classes.cohortChildContent} >

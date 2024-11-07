@@ -29,6 +29,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         config, functions,
     } = uiConfig;
 
+    const COHORTS = "COHORTS";
     const { state, dispatch } = useContext(CohortStateContext);
     const [selectedCohort, setSelectedCohort] = useState(null); // Default to the first entry
     const [alert, setAlert] = useState({ type: '', message: '' });
@@ -52,19 +53,19 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         : DEFAULT_CONFIG.config.title;
 
     const downloadCohortManifest = async () => {
-        const participantPKs = state[selectedCohort].participants.map(item => item.participant_pk);
+        const participantPKs = state[COHORTS][selectedCohort].participants.map(item => item.participant_pk);
         const { data } = await client.query({
             query: GET_COHORT_MANIFEST_QUERY,
-            variables: { "participant_pks": participantPKs, "first": state[selectedCohort].participants.length },
+            variables: { "participant_pks": participantPKs, "first": state[COHORTS][selectedCohort].participants.length },
         });
         arrayToCSVDownload(data['diagnosisOverview'], selectedCohort);
     };
 
     const downloadCohortMetadata = async () => {
-        const participantPKs = state[selectedCohort].participants.map(item => item.participant_pk);
+        const participantPKs = state[COHORTS][selectedCohort].participants.map(item => item.participant_pk);
         const { data } = await client.query({
             query: GET_COHORT_METADATA_QUERY,
-            variables: { "participant_pks": participantPKs, "first": state[selectedCohort].participants.length },
+            variables: { "participant_pks": participantPKs, "first": state[COHORTS][selectedCohort].participants.length },
         });
         objectToJsonDownload(data['cohortMetadata'], selectedCohort);
     };
@@ -146,12 +147,12 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                 handleDeleteCohort={handleDeleteCohort}
                                 handleDeleteAllCohorts={handleDeleteAllCohorts}
                                 deleteConfirmationClasses={deleteConfirmationClasses}
-                                state={state}
+                                state={state[COHORTS]}
                             />
                             <CohortDetails
                                 classes={cohortDetailsClasses}
                                 config={config.cohortDetails}
-                                activeCohort={state[selectedCohort]}
+                                activeCohort={state[COHORTS][selectedCohort]}
                                 closeModal={closeModalWrapper}
                                 handleSaveCohort={handleSaveCohort}
                                 downloadCohortManifest={downloadCohortManifest}

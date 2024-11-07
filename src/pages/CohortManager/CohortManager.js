@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
 const CohortManager = (props) => {
   const classes = useStyles();
   const { state, dispatch } = useContext(CohortStateContext);
+  const COHORTS = "COHORTS";
 
   // Local state for inputs
   const [cohortId, setCohortId] = useState('');
@@ -138,7 +139,7 @@ const CohortManager = (props) => {
   // Handle selecting a cohort
   const handleSelectCohort = (cohortId) => {
     setSelectedCohort(cohortId);
-    const cohort = state[cohortId];
+    const cohort = state[COHORTS][cohortId];
     setCohortName(cohort.cohortName);
     setCohortDescription(cohort.cohortDescription);
     setParticipants(cohort.participants);
@@ -200,7 +201,7 @@ const CohortManager = (props) => {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            {Object.keys(state).map((id) => (
+            {Object.keys(state[COHORTS]).map((id) => (
               <MenuItem key={id} value={id}>
                 {id}
               </MenuItem>

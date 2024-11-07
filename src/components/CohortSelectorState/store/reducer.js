@@ -3,6 +3,8 @@ import _ from "lodash";
 export const initialState = {
 };
 
+const COHORTS = "COHORTS";
+
 const participantObjectTemplate = {
   participant_id: '',
   dbgap_accession: '',
@@ -58,7 +60,7 @@ const createNewCohort = (state, payload) => {
     let counter = 1;
 
     // Increment the cohort name if it already exists
-    while (state[cohortId]) {
+    while (state[COHORTS][cohortId]) {
       cohortId = `New Cohort ${counter}`;
       counter++;
     }
@@ -68,7 +70,7 @@ const createNewCohort = (state, payload) => {
     cohortName = cohortId;
   }
 
-  if (state[cohortId]) {
+  if (state[COHORTS][cohortId]) {
     throw new Error(`Cohort with ID ${cohortId} already exists`);
   }
 
@@ -89,7 +91,10 @@ const createNewCohort = (state, payload) => {
 
   const newState = {
     ...state,
-    [cohortId]: newCohort,
+    [COHORTS] : {
+      ...state[COHORTS],
+      [cohortId]: newCohort,
+    },
   };
 
   return {newState, count: participants.length};
@@ -98,23 +103,23 @@ const createNewCohort = (state, payload) => {
 const addParticipantsToCohort = (state, payload, ) => {
   const { cohortId, participants } = payload;
 
-  if (!state[cohortId]) {
+  if (!state[COHORTS][cohortId]) {
     throw new Error(`Cohort with ID ${cohortId} does not exist`);
   }
 
   // Get existing participant PKs
-  const existingParticipantPks = new Set(state[cohortId].participants.map(p => p.participant_pk));
+  const existingParticipantPks = new Set(state[COHORTS][cohortId].participants.map(p => p.participant_pk));
 
   // Filter out participants with duplicate PKs
   const newParticipants = participants.filter(p => !existingParticipantPks.has(p.participant_pk));
 
   const updatedParticipants = [
-    ...state[cohortId].participants,
+    ...state[COHORTS][cohortId].participants,
     ...newParticipants
   ];
 
   const newCohort = {
-    ...state[cohortId],
+    ...state[COHORTS][cohortId],
     participants: updatedParticipants,
     lastUpdated: new Date().toISOString(),
   };
@@ -125,7 +130,10 @@ const addParticipantsToCohort = (state, payload, ) => {
 
   const newState = {
     ...state,
-    [cohortId]: newCohort,
+    [COHORTS] : {
+      ...state[COHORTS],
+      [cohortId]: newCohort,
+    },
   };
 
   return {newState, count: newParticipants.length};
@@ -135,14 +143,14 @@ const mutateSingleCohort = (state, payload) => {
   const { cohortId, data } = payload;
   const { cohortName } = data;
 
-  if (!state[cohortId]) {
+  if (!state[COHORTS][cohortId]) {
     throw new Error(`Cohort with ID ${cohortId} does not exist`);
   }
 
   const newCohort = {
-    ...state[cohortId],
+    ...state[COHORTS][cohortId],
     ...data,
-    cohortName: cohortName || state[cohortId].cohortName,
+    cohortName: cohortName || state[COHORTS][cohortId].cohortName,
     lastUpdated: new Date().toISOString(),
   };
 
@@ -150,7 +158,12 @@ const mutateSingleCohort = (state, payload) => {
     throw new Error('Invalid cohort data');
   }
 
-  let newState = { ...state };
+  let newState = { 
+    ...state,
+    [COHORTS] : {
+      ...state[COHORTS],
+    },
+   };
 
   // Check if cohortName is different from cohortId
   if (cohortName && cohortName !== cohortId) {
@@ -159,11 +172,11 @@ const mutateSingleCohort = (state, payload) => {
       throw new Error(`Cohort with Name ${cohortName} already exists, please choose a different name`);
     }
     newCohort.cohortId = cohortName;
-    newState[cohortName] = newCohort;
+    newState[COHORTS][cohortName] = newCohort;
     // Delete the old entry
-    delete newState[cohortId];
+    delete newState[COHORTS][cohortId];
   } else {
-    newState[cohortId] = newCohort;
+    newState[COHORTS][cohortId] = newCohort;
   }
 
   return newState;
@@ -172,16 +185,24 @@ const mutateSingleCohort = (state, payload) => {
 const deleteSingleCohort = (state, payload) => {
   const { cohortId } = payload;
 
-  if (!state[cohortId]) {
+  if (!state[COHORTS][cohortId]) {
     throw new Error(`Cohort with ID ${cohortId} does not exist`);
   }
 
-  const { [cohortId]: removedCohort, ...newState } = state;
-  return newState;
+  const { [cohortId]: removedCohort, ...updatedCohorts } = state[COHORTS];
+
+  return {
+    ...state,
+    [COHORTS]: updatedCohorts,
+  };
 };
 
+
 const deleteAllCohort = (state) => {
-  return {};
+  return {
+    ...state,
+    [COHORTS]: {}
+  };
 };
 
 export const reducer = (state, action) => {

@@ -14,8 +14,9 @@ import { CustomButton } from './customButton';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 
 const GetOptions = () => {
+  const COHORTS = "COHORTS";
   const { state } = useContext(CohortStateContext);
-  return Object.keys(state);
+  return Object.keys(state[COHORTS]);
 }
 
 export const layoutConfig = [{
