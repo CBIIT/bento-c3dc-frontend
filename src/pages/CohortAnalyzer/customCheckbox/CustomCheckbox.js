@@ -18,7 +18,8 @@ export default function CheckBoxCustom({ selectedCohorts, cohort, handleCheckbox
                     margin: '10px',
                     top: 3,
                     marginRight: 7,
-                    backgroundColor: (selectedCohorts.includes(cohort) ? '#6D5F5B' : isDisabled ? '#6D5F5B' : 'white'),
+                    backgroundColor: (selectedCohorts.includes(cohort) ? '#6D5F5B' : 'white'),
+                    opacity: isDisabled ? 0.3 : 1,
                     cursor: isDisabled ? 'not-allowed' : 'pointer',
                 }}
                 checked={selectedCohorts.includes(cohort)}
