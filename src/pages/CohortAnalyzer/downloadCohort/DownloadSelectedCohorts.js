@@ -78,7 +78,7 @@ export default function DownloadSelectedCohort({ queryVariable, isSelected }) {
 
 const useStyles = makeStyles((theme) => ({
     downloadButton: (props) => ({
-        backgroundColor: props.isSelected ? '#0C534C' : '#556469',
+        backgroundColor: props.isSelected ? '#556469' : '#556469',
         border: '1.25px solid #73A9C7',
         width: '189px',
         color: 'white',
@@ -91,6 +91,7 @@ const useStyles = makeStyles((theme) => ({
         lineHeight: '13px !important',
         zIndex: '1',
         boxShadow: 'none',
+        opacity: props.isSelected ? 1 : 0.4,
         '&:hover': {
             backgroundColor: props.isSelected ? '#003B35' : '#556469',
             boxShadow: 'none',

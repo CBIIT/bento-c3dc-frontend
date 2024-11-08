@@ -166,11 +166,17 @@ export const CohortAnalyzer = () => {
 
     const handleDelete = (cohortId) => {
         if (cohortId) {
+            setCohortList(prevCohortList => prevCohortList.filter(cohort => cohort != cohortId))
+            setSelectedCohorts(prevSelectedCohortList => prevSelectedCohortList.filter(cohort => cohort != cohortId));
             deleteCohort(cohortId);
         } else {
+            setCohortList([]);
+            setSelectedCohorts([]);
             deleteAllCohort();
         }
     }
+
+  
 
     return (
         <>
@@ -321,21 +327,20 @@ const useStyle = makeStyles((theme) => ({
         alignItems: 'start'
     },
     CohortChild: {
-        background: '#A5C2C8',
+        background: '#E2F1F5',
         width: '100%',
         height: 28,
         display: 'flex',
-        opacity: 0.6,
         marginBottom: 2,
         alignItems: 'center',
         justifyContent: 'space-between',
         '&:nth-child(even)': {
-            backgroundColor: '#B5DDE5'
+            backgroundColor: '#DAE7E9'
         },
         '& span': {
             color: 'black'
         },
-        '& img': {
+        '& div img': {
             opacity: 1
         }
     },
@@ -344,6 +349,7 @@ const useStyle = makeStyles((theme) => ({
         fontFamily: 'Poppins',
         fontSize: 18.5,
         fontWeight: 500,
+        color: '#000',
         letterSpacing: '-0.02em',
         textAlign: 'left',
         width: '100%',
@@ -413,12 +419,21 @@ const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         opacity: '1 !important',
         color: 'black',
+
         '& div span': {
             color: 'black',
-            opacity: 1
+            opacity: 1,
+            fontFamily: 'Nunito',
+            fontSize: 14,
+            fontWeight: 300,
+            lineHeight: 19.1,
+            textAlign: 'left'
         },
         '& img': {
-            opacity: 1
+            opacity: 1,
+            position: 'relative',
+            zIndex: 10000,
+
         }
     },
     rightSideTableContainer: {
