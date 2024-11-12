@@ -1,4 +1,4 @@
-import { Checkbox, makeStyles } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core";
 import React, { useContext, useEffect, useState } from "react";
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
 import { GET_COHORT_MANIFEST_QUERY } from "../../bento/dashboardTabData";
@@ -26,7 +26,28 @@ export const CohortAnalyzer = () => {
     const [rowData, setRowData] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [cohortList, setCohortList] = useState(Object.keys(state) || []);
-    const [sortDirection, setSortDirection] = useState("asc");
+    const [sortDirection, setSortDirection] = useState("dec");
+
+    const getSortDirection = (list, type) => {
+        let isAscending = true;
+        let isDescending = true;
+
+        for (let i = 1; i < list.length; i++) {
+            if (type === "alphabet") {
+                if (list[i].localeCompare(list[i - 1]) < 0) isAscending = false;
+                if (list[i].localeCompare(list[i - 1]) > 0) isDescending = false;
+            } else if (type === "participants") {
+                const currentCount = state[list[i]].participants.length;
+                const previousCount = state[list[i - 1]].participants.length;
+                if (currentCount < previousCount) isAscending = false;
+                if (currentCount > previousCount) isDescending = false;
+            }
+        }
+
+        if (isAscending) return "asc";
+        if (isDescending) return "des";
+        return "Unsorted";
+    };
 
     function generateQueryVariable(cohortNames) {
         let query = {};
@@ -57,10 +78,8 @@ export const CohortAnalyzer = () => {
                     let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
                     setRowData(filteredRowData);
                 } else {
-
                     setRowData(data['diagnosisOverview']);
                 }
-
             } else {
                 setRowData([]);
             }
@@ -96,14 +115,15 @@ export const CohortAnalyzer = () => {
     }
 
     const sortBy = (type) => {
-        let listOfCohortsLocal = Object.keys(state);
+        let listOfCohortsLocal = cohortList;
         if (type === "alphabet") {
-            listOfCohortsLocal.sort((a, b) => sortDirection === "asc" ?
+            let sortDirectionLocal = getSortDirection(cohortList, "alphabet");
+            listOfCohortsLocal.sort((a, b) => sortDirectionLocal === "des" ?
                 a.localeCompare(b) :
                 b.localeCompare(a))
             setCohortList(listOfCohortsLocal);
         } else {
-            listOfCohortsLocal.sort((a, b) => sortDirection === "asc" ?
+            listOfCohortsLocal.sort((a, b) => getSortDirection(cohortList, "participants") === "des" ?
                 state[a].participants.length - state[b].participants.length :
                 state[b].participants.length - state[a].participants.length)
             setCohortList(listOfCohortsLocal);
@@ -166,8 +186,8 @@ export const CohortAnalyzer = () => {
 
     const handleDelete = (cohortId) => {
         if (cohortId) {
-            setCohortList(prevCohortList => prevCohortList.filter(cohort => cohort != cohortId))
-            setSelectedCohorts(prevSelectedCohortList => prevSelectedCohortList.filter(cohort => cohort != cohortId));
+            setCohortList(prevCohortList => prevCohortList.filter(cohort => cohort !== cohortId))
+            setSelectedCohorts(prevSelectedCohortList => prevSelectedCohortList.filter(cohort => cohort !== cohortId));
             deleteCohort(cohortId);
         } else {
             setCohortList([]);
@@ -176,7 +196,7 @@ export const CohortAnalyzer = () => {
         }
     }
 
-  
+
 
     return (
         <>
@@ -216,9 +236,9 @@ export const CohortAnalyzer = () => {
                     <div className={classes.leftSideAnalyzerChild}>
                         {state && cohortList.map((cohort) => {
                             return (
-                                <div className={classes.CohortChild}>
+                                <div className={selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? classes.CohortChildDisabled : classes.CohortChild}  >
                                     <div className={classes.cohortChildContent} >
-                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 6 }}>
                                             <CheckBoxCustom
                                                 selectedCohorts={selectedCohorts}
                                                 cohort={cohort}
@@ -333,6 +353,26 @@ const useStyle = makeStyles((theme) => ({
         display: 'flex',
         marginBottom: 2,
         alignItems: 'center',
+        justifyContent: 'space-between',
+        '&:nth-child(even)': {
+            backgroundColor: '#DAE7E9'
+        },
+        '& span': {
+            color: 'black'
+        },
+        '& div img': {
+            opacity: 1
+        }
+    },
+    CohortChildDisabled: {
+        background: '#E2F1F5',
+        width: '100%',
+        height: 28,
+        display: 'flex',
+        marginBottom: 2,
+        alignItems: 'center',
+        opacity: 0.3,
+        pointerEvents: 'auto',
         justifyContent: 'space-between',
         '&:nth-child(even)': {
             backgroundColor: '#DAE7E9'

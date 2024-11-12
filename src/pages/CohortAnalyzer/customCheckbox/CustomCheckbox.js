@@ -1,25 +1,26 @@
 import React from "react";
 
 export default function CheckBoxCustom({ selectedCohorts, cohort, handleCheckbox }) {
-
-    const isDisabled = selectedCohorts.length === 3;
+    const isChecked = selectedCohorts.includes(cohort);
+    const isDisabled = selectedCohorts.length === 3 && !isChecked;
 
     return (
-        <label style={{ display: 'inline-block', cursor: isDisabled ? 'not-allowed' : 'pointer' }}>
+        <label style={{ display: 'inline-block', cursor: isDisabled ? selectedCohorts.includes(cohort) ? 'pointer' : 'not-allowed' : 'pointer' }}>
             <input
                 type="checkbox"
                 style={{
                     appearance: 'none',
                     width: '16px',
                     height: '16px',
-                    border: `2px solid #6D5F5B`,
+                    border: `1px solid #6D5F5B`,
                     borderRadius: '3px',
                     position: 'relative',
                     margin: '10px',
                     top: 3,
+                    zIndex: 100,
                     marginRight: 7,
-                    backgroundColor: (selectedCohorts.includes(cohort) ? '#6D5F5B' : 'white'),
-                    opacity: isDisabled ? 0.3 : 1,
+                    backgroundColor: isChecked ? '#6D5F5B' : 'white',
+                    opacity: isDisabled ?  0.3 : 1,
                     cursor: isDisabled ? 'not-allowed' : 'pointer',
                 }}
                 checked={selectedCohorts.includes(cohort)}
