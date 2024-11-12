@@ -2,9 +2,10 @@ import React from 'react';
 import { Modal, withStyles } from '@material-ui/core';
 
 export const deletionTypes = {
-    DELETE_ALL_COHORTS: 'ALL cohorts',
-    DELETE_SINGLE_COHORT: 'this cohort',
-    DELETE_ALL_PARTICIPANTS: 'ALL participants',
+    DELETE_ALL_COHORTS: 'delete ALL cohorts?',
+    DELETE_SINGLE_COHORT: 'delete this cohort?',
+    DELETE_ALL_PARTICIPANTS: 'delete ALL participants?',
+    CLEAR_UNSAVED_CHANGES: 'leave? You will lose all unsaved changes.'
 };
 
 const DeleteConfirmationModal = (props) => {
@@ -28,8 +29,8 @@ const DeleteConfirmationModal = (props) => {
                             <span>{message}</span>
                             :
                             <>
-                                <span>Are you sure you want to delete {deletionType}? {deletionType !== deletionTypes.DELETE_ALL_PARTICIPANTS && 'This action cannot be undone.'}</span>
-                                <span>Press Confirm or Cancel.</span>
+                                <span> Are you sure you want to {deletionType} </span>
+                                {deletionType !== deletionTypes.DELETE_ALL_PARTICIPANTS && <span>This action cannot be undone.</span>}
                             </>
                         }
 

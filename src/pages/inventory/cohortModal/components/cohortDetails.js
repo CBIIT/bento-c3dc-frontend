@@ -19,8 +19,10 @@ const CohortDetails = (props) => {
         classes,
         config,
         activeCohort,
+        temporaryCohort,
         closeModal,
         handleSaveCohort,
+        handleSetCurrentCohortChanges,
         downloadCohortManifest,
         downloadCohortMetadata,
         deleteConfirmationClasses,
@@ -30,14 +32,16 @@ const CohortDetails = (props) => {
         return null;
     }
 
+    let matchingCohortID = temporaryCohort && temporaryCohort.cohortId === activeCohort.cohortId;
+
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState(matchingCohortID && temporaryCohort['searchText'] ? temporaryCohort['searchText'] : '');
 
     const [localCohort, setLocalCohort] = useState({
-        cohortId: activeCohort.cohortId,
-        cohortName: activeCohort.cohortName,
-        cohortDescription: activeCohort.cohortDescription,
-        participants: JSON.parse(JSON.stringify(activeCohort.participants)),
+        cohortId: matchingCohortID ? temporaryCohort.cohortId : activeCohort.cohortId,
+        cohortName: matchingCohortID ? temporaryCohort.cohortName : activeCohort.cohortName,
+        cohortDescription: matchingCohortID ? temporaryCohort.cohortDescription : activeCohort.cohortDescription,
+        participants: matchingCohortID ? JSON.parse(JSON.stringify(temporaryCohort.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
     });
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -94,12 +98,30 @@ const CohortDetails = (props) => {
         setIsEditingDescription(true);
     };
 
-    const handleSaveName = () => {
+    const handleSaveName = (e) => {
         setIsEditingName(false);
+        handleSetCurrentCohortChanges({
+            ...temporaryCohort,
+            ...localCohort,
+            [e.target.name]: e.target.value,
+        });
     };
 
-    const handleSaveDescription = () => {
+    const handleSaveDescription = (e) => {
         setIsEditingDescription(false);
+        handleSetCurrentCohortChanges({
+            ...temporaryCohort,
+            ...localCohort,
+            [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSetSearch = (e) => {
+        handleSetCurrentCohortChanges({
+            ...temporaryCohort,
+            ...localCohort,
+            searchText: e.target.value,
+        });
     };
 
     const handleDownloadDropdown = () => {
@@ -132,10 +154,20 @@ const CohortDetails = (props) => {
             ...localCohort,
             participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
         });
+        handleSetCurrentCohortChanges({
+            ...temporaryCohort,
+            ...localCohort,
+            participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
+        });
     };
 
     const handleDeleteAllParticipants = () => {
         setLocalCohort({
+            ...localCohort,
+            participants: [],
+        });
+        handleSetCurrentCohortChanges({
+            ...temporaryCohort,
             ...localCohort,
             participants: [],
         });
@@ -198,7 +230,7 @@ const CohortDetails = (props) => {
                                 type="text"
                                 name="cohortName"
                                 value={localCohort['cohortName']}
-                                onBlur={handleSaveName}
+                                onBlur={(e) => handleSaveName(e)}
                                 onChange={(e) => handleTextChange(e)}
                                 maxLength={20}
                                 autoFocus
@@ -223,7 +255,7 @@ const CohortDetails = (props) => {
                         <textarea
                         className={classes.editingCohortDescription}
                         value={localCohort['cohortDescription']}
-                        onBlur={handleSaveDescription}
+                        onBlur={(e) => handleSaveDescription(e)}
                         name="cohortDescription"
                         onChange={(e) => handleTextChange(e)}
                         rows={2}
@@ -249,6 +281,7 @@ const CohortDetails = (props) => {
                             className={classes.participantSearchBar}
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
+                            onBlur={(e) => handleSetSearch(e)}
                         />
                         <span className={classes.searchIcon}>
                             <img

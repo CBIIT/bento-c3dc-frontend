@@ -14,7 +14,7 @@ const Tabs = (props) => {
     setCurrentTab(value);
   };
 
-  const { showCohortModal, setShowCohortModal , setWarningMessage, warningMessage} = useContext(CohortModalContext);
+  const { showCohortModal, setShowCohortModal , setWarningMessage, warningMessage } = useContext(CohortModalContext);
 
   /**
   * 1. change <name> to <display> as array item

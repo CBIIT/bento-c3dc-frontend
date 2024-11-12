@@ -17,9 +17,13 @@ const CohortList = (props) => {
         config,
         selectedCohort,
         setSelectedCohort,
+        unSavedChanges,
+        setChangingConfirmation,
+        setShowChangingConfirmation,
         closeParentModal,
         handleDeleteCohort,
         handleDeleteAllCohorts,
+        handleClearCurrentCohortChanges,
         state,
     } = props;
 
@@ -109,7 +113,23 @@ const CohortList = (props) => {
                                 key={state[cohort].cohortId}
                                 className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
                                 onClick={() => {
-                                    setSelectedCohort(state[cohort].cohortId)
+                                    if (state[cohort].cohortId === selectedCohort){
+                                        return;
+                                    }
+                                    if (unSavedChanges){
+                                        setChangingConfirmation({
+                                            handleDelete: () => {
+                                                setSelectedCohort(state[cohort].cohortId)
+                                                handleClearCurrentCohortChanges();
+                                            },
+                                            deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
+                                        });
+                                        setShowChangingConfirmation(true);
+                                    }
+                                    else {
+                                        setSelectedCohort(state[cohort].cohortId)
+                                        handleClearCurrentCohortChanges();
+                                    }
                                 }}
                             >
                                 <span className={classes.cohortListItemText}>

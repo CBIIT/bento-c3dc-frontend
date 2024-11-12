@@ -93,3 +93,18 @@ export const objectToJsonDownload = (obj, cohortID) => {
     tempLink.click();
     document.body.removeChild(tempLink);
   };
+
+  export const hasUnsavedChanges = (obj1, obj2) => {
+    if (!obj1 || !obj2) return false; // If either object is undefined, consider no changes
+  
+    const sharedKeys = Object.keys(obj1).filter(key => key in obj2);
+    const filteredObj1 = sharedKeys.reduce((acc, key) => {
+        acc[key] = obj1[key];
+        return acc;
+    }, {});
+    const filteredObj2 = sharedKeys.reduce((acc, key) => {
+        acc[key] = obj2[key];
+        return acc;
+    }, {});
+    return JSON.stringify(filteredObj1) !== JSON.stringify(filteredObj2);
+  };
