@@ -52,6 +52,10 @@ const isValidCohort = (cohort) => {
 const createNewCohort = (state, payload) => {
   let { cohortId, cohortName, participants, cohortDescription = '' } = payload;
 
+  if(Object.keys(state).length >= 20){
+    throw new Error(`You cannot create more than 20 cohorts`)
+  }
+
   // If no cohortId is provided, default to "New Cohort"
   if (!cohortId) {
     cohortId = "New Cohort";
