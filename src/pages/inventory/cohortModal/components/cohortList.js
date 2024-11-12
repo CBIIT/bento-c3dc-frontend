@@ -113,6 +113,9 @@ const CohortList = (props) => {
                                 key={state[cohort].cohortId}
                                 className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
                                 onClick={() => {
+                                    if (state[cohort].cohortId === selectedCohort){
+                                        return;
+                                    }
                                     if (unSavedChanges){
                                         setChangingConfirmation({
                                             handleDelete: () => {

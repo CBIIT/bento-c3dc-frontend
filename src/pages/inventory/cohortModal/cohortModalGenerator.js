@@ -95,7 +95,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
             cohortId: localCohort.cohortId,
             cohortName: localCohort.cohortName,
             cohortDescription: localCohort.cohortDescription,
-            participants: localCohort.participants
+            participants: localCohort.participants,
+            searchText: localCohort.searchText,
         })
     };
 

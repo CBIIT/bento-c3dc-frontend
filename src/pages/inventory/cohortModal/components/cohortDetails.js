@@ -35,7 +35,7 @@ const CohortDetails = (props) => {
     let matchingCohortID = temporaryCohort && temporaryCohort.cohortId === activeCohort.cohortId;
 
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
-    const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useState(matchingCohortID && temporaryCohort['searchText'] ? temporaryCohort['searchText'] : '');
 
     const [localCohort, setLocalCohort] = useState({
         cohortId: matchingCohortID ? temporaryCohort.cohortId : activeCohort.cohortId,
@@ -101,6 +101,7 @@ const CohortDetails = (props) => {
     const handleSaveName = (e) => {
         setIsEditingName(false);
         handleSetCurrentCohortChanges({
+            ...temporaryCohort,
             ...localCohort,
             [e.target.name]: e.target.value,
         });
@@ -109,8 +110,17 @@ const CohortDetails = (props) => {
     const handleSaveDescription = (e) => {
         setIsEditingDescription(false);
         handleSetCurrentCohortChanges({
+            ...temporaryCohort,
             ...localCohort,
             [e.target.name]: e.target.value,
+        });
+    };
+
+    const handleSetSearch = (e) => {
+        handleSetCurrentCohortChanges({
+            ...temporaryCohort,
+            ...localCohort,
+            searchText: e.target.value,
         });
     };
 
@@ -145,6 +155,7 @@ const CohortDetails = (props) => {
             participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
         });
         handleSetCurrentCohortChanges({
+            ...temporaryCohort,
             ...localCohort,
             participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
         });
@@ -156,6 +167,7 @@ const CohortDetails = (props) => {
             participants: [],
         });
         handleSetCurrentCohortChanges({
+            ...temporaryCohort,
             ...localCohort,
             participants: [],
         });
@@ -269,6 +281,7 @@ const CohortDetails = (props) => {
                             className={classes.participantSearchBar}
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
+                            onBlur={(e) => handleSetSearch(e)}
                         />
                         <span className={classes.searchIcon}>
                             <img
