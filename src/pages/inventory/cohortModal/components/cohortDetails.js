@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { withStyles, Button } from '@material-ui/core';
+import ToolTip from '@bento-core/tool-tip';
 import DEFAULT_CONFIG from '../config';
 import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
 import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
@@ -54,24 +55,24 @@ const CohortDetails = (props) => {
 
     useEffect(() => {
         const checkForScrollbar = () => {
-          if (scrollContainerRef.current) {
-            const { scrollHeight, clientHeight } = scrollContainerRef.current;
-            setIsScrollbarActive(scrollHeight > clientHeight);
-          }
+            if (scrollContainerRef.current) {
+                const { scrollHeight, clientHeight } = scrollContainerRef.current;
+                setIsScrollbarActive(scrollHeight > clientHeight);
+            }
         };
         checkForScrollbar();
 
         const resizeObserver = new ResizeObserver(() => checkForScrollbar());
         if (scrollContainerRef.current) {
-          resizeObserver.observe(scrollContainerRef.current);
+            resizeObserver.observe(scrollContainerRef.current);
         }
-    
+
         return () => {
-          if (scrollContainerRef.current) {
-            resizeObserver.disconnect();
-          }
+            if (scrollContainerRef.current) {
+                resizeObserver.disconnect();
+            }
         };
-      }, []);
+    }, []);
 
     useEffect(() => {
         if (showDownloadDropdown) {
@@ -226,24 +227,26 @@ const CohortDetails = (props) => {
                             &nbsp;
                             {isEditingName ? (
                                 <input
-                                className={classes.editingCohortName}
-                                type="text"
-                                name="cohortName"
-                                value={localCohort['cohortName']}
-                                onBlur={(e) => handleSaveName(e)}
-                                onChange={(e) => handleTextChange(e)}
-                                maxLength={20}
-                                autoFocus
+                                    className={classes.editingCohortName}
+                                    type="text"
+                                    name="cohortName"
+                                    value={localCohort['cohortName']}
+                                    onBlur={(e) => handleSaveName(e)}
+                                    onChange={(e) => handleTextChange(e)}
+                                    maxLength={20}
+                                    autoFocus
                                 />
                             ) : (
                                 <span>{localCohort['cohortName']}</span>
                             )}
-                            <img
-                                src={EditIcon}
-                                alt="edit cohort name icon"
-                                className={classes.editIcon}
-                                onClick={handleEditName}
-                            />
+                            <ToolTip title="Edit Cohort ID" placement="top-end" arrow>
+                                <img
+                                    src={EditIcon}
+                                    alt="edit cohort name icon"
+                                    className={classes.editIcon}
+                                    onClick={handleEditName}
+                                />
+                            </ToolTip>
                         </span>
                     </span>
                     <span className={classes.cohortItemCounts}>
@@ -253,25 +256,27 @@ const CohortDetails = (props) => {
                 <div className={classes.cohortDescription}>
                     {isEditingDescription ? (
                         <textarea
-                        className={classes.editingCohortDescription}
-                        value={localCohort['cohortDescription']}
-                        onBlur={(e) => handleSaveDescription(e)}
-                        name="cohortDescription"
-                        onChange={(e) => handleTextChange(e)}
-                        rows={2}
-                        maxLength={250}
-                        placeholder="Enter cohort description..."
-                        autoFocus
+                            className={classes.editingCohortDescription}
+                            value={localCohort['cohortDescription']}
+                            onBlur={(e) => handleSaveDescription(e)}
+                            name="cohortDescription"
+                            onChange={(e) => handleTextChange(e)}
+                            rows={2}
+                            maxLength={250}
+                            placeholder="Enter cohort description..."
+                            autoFocus
                         />
                     ) : (
                         <span>{localCohort['cohortDescription']}</span>
                     )}
-                    <img
-                        src={EditIcon}
-                        alt="edit cohort description icon"
-                        className={classes.editIcon}
-                        onClick={handleEditDescription}
-                    />
+                    <ToolTip title="Edit Cohort description" placement="top-end" arrow>
+                        <img
+                            src={EditIcon}
+                            alt="edit cohort description icon"
+                            className={classes.editIcon}
+                            onClick={handleEditDescription}
+                        />
+                    </ToolTip>
                 </div>
                 <div className={classes.participantViewer}>
                     <div className={classes.participantSearchBarSection}>
@@ -316,12 +321,12 @@ const CohortDetails = (props) => {
                                 />
                             </div>
                             <div className={classes.removeHeader} onClick={() => {
-                                        setDeleteModalProps({
-                                            handleDelete: () => handleDeleteAllParticipants(),
-                                            deletionType: deletionTypes.DELETE_ALL_PARTICIPANTS,
-                                        });
-                                        setShowDeleteConfirmation(true)
-                                    }}>
+                                setDeleteModalProps({
+                                    handleDelete: () => handleDeleteAllParticipants(),
+                                    deletionType: deletionTypes.DELETE_ALL_PARTICIPANTS,
+                                });
+                                setShowDeleteConfirmation(true)
+                            }}>
                                 <img
                                     src={TrashCanIconRed}
                                     alt="delete cohort icon"
@@ -380,13 +385,13 @@ const CohortDetails = (props) => {
                                 <div className={classes.dropdownMenu}>
                                     <div
                                         className={classes.dropdownItem + ' ' + classes.firstDropdownItem}
-                                        onClick={() => {handleDownloadFile(downloadCohortManifest)}}
+                                        onClick={() => { handleDownloadFile(downloadCohortManifest) }}
                                     >
                                         Manifest CSV
                                     </div>
                                     <div
                                         className={classes.dropdownItem}
-                                        onClick={() => {handleDownloadFile(downloadCohortMetadata)}}
+                                        onClick={() => { handleDownloadFile(downloadCohortMetadata) }}
                                     >
                                         Metadata JSON
                                     </div>
