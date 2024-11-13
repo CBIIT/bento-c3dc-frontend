@@ -16,6 +16,7 @@ import search_icon from '../../assets/icons/Search_Icon.svg';
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
 import sortIcon from "../../assets/icons/sort_icon.svg";
+import ChartVenn from "./vennDiagram/ChartVenn";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -26,6 +27,8 @@ export const CohortAnalyzer = () => {
     const [searchValue, setSearchValue] = useState("");
     const [cohortList, setCohortList] = useState(Object.keys(state) || []);
     const [sortDirection, setSortDirection] = useState("asc");
+    const [selectedChart, setSelectedChart] = useState([]);
+    const [refershSelectedChart, setRefershSelectedChart] = useState(false);
 
     function generateQueryVariable(cohortNames) {
         let query = {};
@@ -41,9 +44,43 @@ export const CohortAnalyzer = () => {
 
     useEffect(() => {
         let rowDataFinal = [];
+        if (selectedChart.length > 0) {
+            rowDataFinal = selectedChart;
+        }
+
+        async function getJoinedCohort() {
+
+
+            const { data } = await client.query({
+                query: GET_COHORT_MANIFEST_QUERY,
+                variables: { "participant_pks": selectedChart },
+            });
+            if (selectedChart.length > 0) {
+                if (searchValue !== "") {
+                    let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
+                    setRowData(filteredRowData);
+                } else {
+
+                    setRowData(data['diagnosisOverview']);
+                }
+
+            } else {
+                setRowData([]);
+            }
+        }
+        console.log("selectedcohort: ", selectedChart);
+        getJoinedCohort();
+
+    }, [selectedChart, refershSelectedChart])
+
+    useEffect(() => {
+        let rowDataFinal = [];
+
         selectedCohorts.forEach((cohortId) => {
             rowDataFinal = [...rowDataFinal, ...state[cohortId].participants];
         });
+
+
         async function getJoinedCohort() {
             let queryVariables = generateQueryVariable(selectedCohorts);
             setQueryVariable(queryVariables)
@@ -175,7 +212,7 @@ export const CohortAnalyzer = () => {
         }
     }
 
-  
+
 
     return (
         <>
@@ -232,6 +269,14 @@ export const CohortAnalyzer = () => {
                 <div className={classes.rightSideAnalyzer}>
                     <div className={classes.rightSideAnalyzerHeader}>
                         <h1> Cohort Analyzer</h1>
+                    </div>
+                    <div className={classes.rightSideAnalyzerHeader2}>
+                        <p>Select a Cohort(s) from the Cohort Sidebar to view corresponding and interactive venn diagram. Click on a circle(s) and/or overlapping section(s) in the venn diagram to view the corresponding data within the table below.</p>
+
+                    </div>
+                    <div style={{ display: 'flex' }}>
+                        <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])} setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }} />
+
                     </div>
                     <div className={classes.cohortCountSection}>
                         <div className={classes.cohortSelectionChild}>
@@ -388,7 +433,7 @@ const useStyle = makeStyles((theme) => ({
     },
     rightSideAnalyzer: {
         width: 1081,
-        height: 588,
+        height: 1149,
         borderRadius: '35px',
         border: '4px solid #4E8191',
         margin: 100,
@@ -408,9 +453,17 @@ const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         borderBottom: '1px solid gray'
     },
-    cohortChildContent: {
-        width: '95%',
+    rightSideAnalyzerHeader2: {
         display: 'flex',
+        justifyContent: 'space-between',
+        position: 'relative',
+        width: '90%',
+        alignSelf: 'center',
+        alignItems: 'center',
+        marginBottom: '30px'
+    },
+    cohortChildContent: {
+        width: '95%', display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
         opacity: '1 !important',
