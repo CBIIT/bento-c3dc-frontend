@@ -61,6 +61,7 @@ const ResourcesContainer = styled.div`
     font-family: 'Inter';
     font-weight: 400;
     font-size: 16px;
+    widows: 3;
   }
 
   .upperImg {
@@ -111,7 +112,7 @@ const ResourcesView = () => {
                     }
                   </div>
                     <div className='textParagraph'>{ReactHtmlParser(data.text)}</div>
-                    {!data.urlInTitle &&
+                    {!data.urlInTitle && data.url &&
                       <a className='linkBlock' href={data.url}  target="_blank" rel="noopener noreferrer"><span className='resourceLink'>{data.url}</span></a>
                     }
                     {data.postParagraph && <div className='textParagraph'>{ReactHtmlParser(data.postParagraph)}</div>}
