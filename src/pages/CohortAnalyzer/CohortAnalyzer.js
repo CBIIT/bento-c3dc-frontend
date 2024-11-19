@@ -178,7 +178,7 @@ export const CohortAnalyzer = () => {
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
 
     const handelPopup = (cohortId) => {
-        let deleteType = cohortId ? "this cohort" : "ALL cohorts";
+        let deleteType = cohortId ? "this cohort?" : "ALL cohorts?";
         if (Object.keys(state).length > 0) {
             setDeleteInfo({ showDeleteConfirmation: !deleteInfo.showDeleteConfirmation, deleteType: deleteType, cohortId: cohortId });
         }
