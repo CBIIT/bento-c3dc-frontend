@@ -75,14 +75,14 @@ export const CohortAnalyzer = () => {
 
             const { data } = await client.query({
                 query: GET_COHORT_MANIFEST_QUERY,
-                variables: { "participant_pks": selectedChart },
+                variables: { "participant_pks": selectedChart, "first": 10000 },
             });
             if (selectedChart.length > 0) {
                 if (searchValue !== "") {
                     let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
                     setRowData(filteredRowData);
                 } else {
-
+                    console.log("SIZEOFRESPONSE: ",data['diagnosisOverview'].length)
                     setRowData(data['diagnosisOverview']);
                 }
 
@@ -504,7 +504,13 @@ const useStyle = makeStyles((theme) => ({
         width: '90%',
         alignSelf: 'center',
         alignItems: 'center',
-        marginBottom: '30px'
+        marginBottom: '30px',
+        fontFamily: 'Open Sans',
+        fontSize: '16px',
+        fontWeight: 400,
+        lineHeight: '20.8px',
+        textAlign: 'left',
+
     },
     cohortChildContent: {
         width: '95%', display: 'flex',
