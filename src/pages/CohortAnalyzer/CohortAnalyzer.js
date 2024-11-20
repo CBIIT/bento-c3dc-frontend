@@ -28,6 +28,9 @@ export const CohortAnalyzer = () => {
     const [searchValue, setSearchValue] = useState("");
     const [cohortList, setCohortList] = useState(Object.keys(state) || []);
     const [sortDirection, setSortDirection] = useState("dec");
+    const [selectedChart, setSelectedChart] = useState([]);
+    const [refershSelectedChart, setRefershSelectedChart] = useState(false);
+    const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
 
     const getSortDirection = (list, type) => {
         let isAscending = true;
@@ -49,8 +52,7 @@ export const CohortAnalyzer = () => {
         if (isDescending) return "des";
         return "Unsorted";
     };
-    const [selectedChart, setSelectedChart] = useState([]);
-    const [refershSelectedChart, setRefershSelectedChart] = useState(false);
+
 
     function generateQueryVariable(cohortNames) {
         let query = {};
@@ -65,14 +67,11 @@ export const CohortAnalyzer = () => {
     }
 
     useEffect(() => {
-        let rowDataFinal = [];
-        if (selectedChart.length > 0) {
-            rowDataFinal = selectedChart;
-        }
+        setSearchValue("")
+    },[selectedChart])
 
+    useEffect(() => {
         async function getJoinedCohort() {
-
-
             const { data } = await client.query({
                 query: GET_COHORT_MANIFEST_QUERY,
                 variables: { "participant_pks": selectedChart, "first": 10000 },
@@ -82,26 +81,14 @@ export const CohortAnalyzer = () => {
                     let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
                     setRowData(filteredRowData);
                 } else {
-                    console.log("SIZEOFRESPONSE: ",data['diagnosisOverview'].length)
                     setRowData(data['diagnosisOverview']);
                 }
-
-            } else {
-                setRowData([]);
             }
         }
-        console.log("selectedcohort: ", selectedChart);
         getJoinedCohort();
-
-    }, [selectedChart, refershSelectedChart])
+    }, [selectedChart, refershSelectedChart,searchValue])
 
     useEffect(() => {
-        let rowDataFinal = [];
-
-        selectedCohorts.forEach((cohortId) => {
-            rowDataFinal = [...rowDataFinal, ...state[cohortId].participants];
-        });
-
 
         async function getJoinedCohort() {
             let queryVariables = generateQueryVariable(selectedCohorts);
@@ -121,8 +108,11 @@ export const CohortAnalyzer = () => {
                 setRowData([]);
             }
         }
-        getJoinedCohort();
-    }, [selectedCohorts, searchValue]);
+        if (selectedChart.length === 0) {
+            getJoinedCohort();
+        }
+
+    }, [selectedCohorts, searchValue, selectedChart]);
 
     const handleCheckbox = (cohort, self) => {
         if (selectedCohorts.includes(cohort)) {
@@ -164,7 +154,6 @@ export const CohortAnalyzer = () => {
                 state[a].participants.length - state[b].participants.length :
                 state[b].participants.length - state[a].participants.length)
             setCohortList(listOfCohortsLocal);
-
         }
         setSortDirection(sortDirection === "asc" ? "dec" : "asc")
     }
@@ -212,8 +201,6 @@ export const CohortAnalyzer = () => {
         )
     }
 
-    const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
-
     const handelPopup = (cohortId) => {
         let deleteType = cohortId ? "this cohort" : "ALL cohorts";
         if (Object.keys(state).length > 0) {
@@ -233,8 +220,6 @@ export const CohortAnalyzer = () => {
         }
     }
 
-
-
     return (
         <>
             <DeleteConfirmationModal
@@ -251,7 +236,6 @@ export const CohortAnalyzer = () => {
                         <div className={classes.cohortSelectionChild}>
                             <span> {"COHORTS (" + Object.keys(state).length + ")"} </span>
                             <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="top">
-
                                 <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
                             </ToolTip>
                         </div>
@@ -273,14 +257,14 @@ export const CohortAnalyzer = () => {
                     <div className={classes.leftSideAnalyzerChild}>
                         {state && cohortList.map((cohort) => {
                             return (
-                                <div className={selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? classes.CohortChildDisabled : classes.CohortChild}  >
+                                <div className={selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? classes.CohortChild : classes.CohortChild}  >
                                     <div className={classes.cohortChildContent} >
                                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 6 }}>
                                             <CheckBoxCustom
                                                 selectedCohorts={selectedCohorts}
                                                 cohort={cohort}
                                                 handleCheckbox={handleCheckbox} />
-                                            <span> {cohort + " (" + state[cohort].participants.length + ")"} </span>
+                                            <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {cohort + " (" + state[cohort].participants.length + ")"} </span>
                                         </div>
                                         <img alt={"Trashcan"} onClick={() => { handelPopup(cohort) }} src={trashCan} width={15} height={16} />
                                     </div>
@@ -296,7 +280,6 @@ export const CohortAnalyzer = () => {
                     </div>
                     <div className={classes.rightSideAnalyzerHeader2}>
                         <p>Select a Cohort(s) from the Cohort Sidebar to view corresponding and interactive venn diagram. Click on a circle(s) and/or overlapping section(s) in the venn diagram to view the corresponding data within the table below.</p>
-
                     </div>
                     <div style={{ display: 'flex' }}>
                         <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])} setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }} />
@@ -352,6 +335,13 @@ const useStyle = makeStyles((theme) => ({
             width: 12,
             height: 13
         }
+    },
+    cardContent: {
+        fontFamily: 'Nunito',
+        fontSize: '12px',
+        fontWeight: 300,
+        lineHeight: '16.37px',
+        textAlign: 'left',
     },
     inputStyle: {
         width: '349px',
@@ -510,7 +500,6 @@ const useStyle = makeStyles((theme) => ({
         fontWeight: 400,
         lineHeight: '20.8px',
         textAlign: 'left',
-
     },
     cohortChildContent: {
         width: '95%', display: 'flex',
@@ -518,7 +507,6 @@ const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         opacity: '1 !important',
         color: 'black',
-
         '& div span': {
             color: 'black',
             opacity: 1,
@@ -532,12 +520,11 @@ const useStyle = makeStyles((theme) => ({
             opacity: 1,
             position: 'relative',
             zIndex: 10000,
-
         }
     },
     rightSideTableContainer: {
         width: '90%',
-        height: 420,
+        height: 540,
         overflowY: 'scroll',
         '&::-webkit-scrollbar': {
             width: "6px"
@@ -549,8 +536,5 @@ const useStyle = makeStyles((theme) => ({
         '&::-webkit-scrollbar-track': {
             background: '#CECECE',
         },
-
     }
 }))
-
-
