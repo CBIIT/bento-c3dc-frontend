@@ -30,7 +30,7 @@ const DeleteConfirmationModal = (props) => {
                             :
                             <>
                                 <span> Are you sure you want to {deletionType} </span>
-                                {deletionType !== deletionTypes.DELETE_ALL_PARTICIPANTS && <span>This action cannot be undone.</span>}
+                                {deletionType !== deletionTypes.DELETE_ALL_PARTICIPANTS && <span>This action cannot be undone. Press Confirm or Cancel </span>}
                             </>
                         }
 

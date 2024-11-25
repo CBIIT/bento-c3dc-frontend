@@ -27,10 +27,11 @@ const blendColors = (color1, color2) => {
   return `rgba(${blendedColor.join(",")})`;
 };
 
-const ChartVenn = ({ cohortData, setSelectedChart }) => {
+const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo }) => {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
   const [selectedVenns, setSelectedVenns] = useState([]);
+  //const [generalInfo, setGeneralInfo] = useState({});
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
   const baseColorArray = ["#86E2B9", "#5198C8D9", "#F9E28B"].map(color => hexToRgba(color));;
@@ -66,7 +67,7 @@ const ChartVenn = ({ cohortData, setSelectedChart }) => {
         return Array.from(updatedChart);
       });
 
-      setSelectedVenns(prev => {
+      setSelectedCohortSections(prev => {
         return prev.includes(label)
           ? prev.filter(item => item !== label)
           : [...prev, label];
@@ -82,9 +83,9 @@ const ChartVenn = ({ cohortData, setSelectedChart }) => {
       });
 
       const blendedColor = intersectingColors.reduce((acc, color) => blendColors(acc || intersectingColors[0], color));
-      return selectedVenns.includes(item.label) ? selectedColor : blendedColor;
+      return selectedCohortSection.includes(item.label) ? selectedColor : blendedColor;
     } else {
-      return selectedVenns.includes(item.label)
+      return selectedCohortSection.includes(item.label)
         ? selectedColor
         : baseColorArray[index];
     }
@@ -114,7 +115,18 @@ const ChartVenn = ({ cohortData, setSelectedChart }) => {
     return () => {
       if (chartRef.current) chartRef.current.destroy();
     };
-  }, [selectedVenns, data]);
+    
+  }, [selectedCohortSection, data,selectedCohort]);
+
+  useEffect(() => {
+    let updatedStat = {};
+    data.datasets[0].data.forEach(item => {
+      if (selectedCohortSection.includes(item.label)) {
+        updatedStat[item.label] = item.values;
+      }
+    });
+    setGeneralInfo(updatedStat);
+  },[selectedCohortSection])
 
   return (
     <div className="App">

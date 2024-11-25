@@ -67,6 +67,13 @@ export const tableConfig = {
       display: false,
       tooltipText: "sort",
       role: cellTypes.DISPLAY
+    },
+    {
+      dataField: "cohort",
+      header: "Cohort",
+      display: true,
+      tooltipText: "sort",
+      role: cellTypes.DISPLAY
     }
   ],
   id: 'participant_tab',
