@@ -2,6 +2,8 @@ import userGuide from '../assets/releaseNotes/C3DC User Guide -R4-V3.pdf';
 import latestRelease from '../assets/releaseNotes/C3DC_Release_Notes.pdf';
 
 export const aboutData = {
+  aboutHeaderText:
+    "About the Childhood Cancer <br />Clinical Data Commons",
   introParagraph:
     "<a className='sectionTitle'>Childhood Cancer Data Initiative</a><br/>" +
     "The <a className='aboutLink' href='https://www.cancer.gov/research/areas/childhood/childhood-cancer-data-initiative' target='_blank' rel='noopener noreferrer'>NCI’s Childhood Cancer Data Initiative (CCDI)</a>, " +
@@ -82,10 +84,14 @@ export const aboutData = {
     ":  Stay informed about the latest updates. <br> " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>" +
     ": Whether you are new or aiming to expand your knowledge about C3DC, </br> our user guide is your resource.",*/
-  lastParagraph:
-    "The CCDI welcomes input from the community to enhance usability. " +
-    "Please send your <br> feedback and comments to " +
-    "<a className='aboutLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>.",
+
+
+  aboutFooterTitle:
+    "Questions for C3DC?",
+  aboutFooterText:
+    "The Childhood Cancer Data Initiative (CCDI) welcomes community input to improve the this web application usability. Please send your feedback and suggestions to " +
+    "<a className='aboutFooterLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>." +
+    "Your contributions are valuable to enhancing the user experience.",
 };
 
 
