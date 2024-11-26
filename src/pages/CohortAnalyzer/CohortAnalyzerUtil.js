@@ -18,26 +18,6 @@ export const getAllIds = (generalInfo) => {
     return finalIds;
 }
 
-export const getSortDirection = (list, type, state) => {
-    let isAscending = true;
-    let isDescending = true;
-    for (let i = 1; i < list.length; i++) {
-        if (type === "alphabet") {
-            if (list[i].localeCompare(list[i - 1]) < 0) isAscending = false;
-            if (list[i].localeCompare(list[i - 1]) > 0) isDescending = false;
-        } else if (type === "participants") {
-            const currentCount = state[list[i]].participants.length;
-            const previousCount = state[list[i - 1]].participants.length;
-            if (currentCount < previousCount) isAscending = false;
-            if (currentCount > previousCount) isDescending = false;
-        }
-    }
-
-    if (isAscending) return "asc";
-    if (isDescending) return "des";
-    return "Unsorted";
-};
-
 export const addCohortColumn = (rowD, state) => {
     let finalRowData = rowD.map((row) => {
         // Get the cohort name for the current participant
@@ -65,21 +45,33 @@ export const resetSelection = (setSelectedCohorts) => {
     setSelectedCohorts([]);
 }
 
-export const sortBy = (type, cohortList, setCohortList, state, setSortDirection, sortDirection) => {
+export const sortBy = (type, cohortList, setCohortList, state) => {
     let listOfCohortsLocal = cohortList;
     if (type === "alphabet") {
-        let sortDirectionLocal = getSortDirection(cohortList, "alphabet", state);
-        listOfCohortsLocal.sort((a, b) => sortDirectionLocal === "des" ?
-            a.localeCompare(b) :
-            b.localeCompare(a))
+        listOfCohortsLocal.sort((a, b) => 
+            a.localeCompare(b) )
         setCohortList(listOfCohortsLocal);
-    } else {
-        listOfCohortsLocal.sort((a, b) => getSortDirection(cohortList, "participants", state) === "des" ?
-            state[a].participants.length - state[b].participants.length :
-            state[b].participants.length - state[a].participants.length)
+    } else if(type === "count") {
+        listOfCohortsLocal.sort((a, b) => 
+            state[a].participants.length - state[b].participants.length )
         setCohortList(listOfCohortsLocal);
     }
-    setSortDirection(sortDirection === "asc" ? "dec" : "asc")
+    
+    return listOfCohortsLocal;
+}
+
+export const sortByReturn = (type, cohortList, state) => {
+    let listOfCohortsLocal = cohortList;
+    if (type === "alphabet") {
+        listOfCohortsLocal.sort((a, b) =>
+            a.localeCompare(b))
+    } else {
+        listOfCohortsLocal.sort((a, b) =>
+            state[a].participants.length - state[b].participants.length)
+
+    }
+
+    return listOfCohortsLocal;
 }
 
 const deleteCohort = (cohortId, dispatch, onDeleteSingleCohort) => {
@@ -106,13 +98,14 @@ export const handleDelete = (cohortId,
     }
 }
 
-export const SearchBox = (classes,setSearchValue) => {
+export const SearchBox = (classes,setSearchValue,searchValue) => {  
     return (
         <div className={classes.inputStyleContainer}>
             <input
                 onChange={(e) => {
                     setSearchValue(e.target.value);
                 }}
+                value={searchValue}
                 type="text"
                 placeholder={"Search Participant ID"}
                 className={classes.inputStyle}
@@ -122,7 +115,7 @@ export const SearchBox = (classes,setSearchValue) => {
     )
 }
 
-export function generateQueryVariable(cohortNames,state) {
+export function generateQueryVariable(cohortNames, state) {
     let query = {};
     query['participant_pks'] = [];
     query["first"] = 10000;
@@ -134,7 +127,7 @@ export function generateQueryVariable(cohortNames,state) {
     return query;
 }
 
-export const handlePopup = (cohortId,state,setDeleteInfo,deleteInfo) => {
+export const handlePopup = (cohortId, state, setDeleteInfo, deleteInfo) => {
     let deleteType = cohortId ? " this cohort?" : " ALL cohorts?";
     if (Object.keys(state).length > 0) {
         setDeleteInfo({ showDeleteConfirmation: !deleteInfo.showDeleteConfirmation, deleteType: deleteType, cohortId: cohortId });

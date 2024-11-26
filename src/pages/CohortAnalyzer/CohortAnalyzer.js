@@ -30,7 +30,8 @@ import {
     resetSelection,
     SearchBox,
     sortBy,
-    triggerNotification
+    triggerNotification,
+    sortByReturn
 } from "./CohortAnalyzerUtil";
 
 export const CohortAnalyzer = () => {
@@ -41,11 +42,11 @@ export const CohortAnalyzer = () => {
     const [rowData, setRowData] = useState([]);
     const [searchValue, setSearchValue] = useState("");
     const [cohortList, setCohortList] = useState(Object.keys(state) || {});
-    const [sortDirection, setSortDirection] = useState("dec");
     const [selectedChart, setSelectedChart] = useState([]);
     const [refershSelectedChart, setRefershSelectedChart] = useState(false);
     const [refershTableContent, setRefershTableContent] = useState(false);
     const [selectedCohortSection, setSelectedCohortSections] = useState([]);
+    const [sortType, setSortType] = useState("");
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
     const [generalInfo, setGeneralInfo] = useState({});
 
@@ -54,11 +55,11 @@ export const CohortAnalyzer = () => {
     const { Notification } = useGlobal();
 
     async function getJoinedCohort() {
-        let queryVariables = generateQueryVariable(selectedCohorts,state);
-        setQueryVariable(queryVariables)
+        let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
             queryVariables = { "participant_pks": getAllIds(generalInfo), first: 10000 };
         }
+        setQueryVariable(queryVariables);
         const { data } = await client.query({
             query: GET_COHORT_MANIFEST_QUERY,
             variables: queryVariables,
@@ -76,7 +77,7 @@ export const CohortAnalyzer = () => {
     }
 
     useEffect(() => {
-        setSearchValue("")
+        setSearchValue("");
     }, [selectedChart])
 
     useEffect(() => {
@@ -161,7 +162,7 @@ export const CohortAnalyzer = () => {
                     setShowCohortModal(true);
                 },
                 (error) => {
-                   alert("Something Went Wrong");
+                    alert("Something Went Wrong");
                 }
             ));
         }
@@ -187,7 +188,7 @@ export const CohortAnalyzer = () => {
         page: 0,
         downloadFileName: "download",
         showDownloadIcon: false,
-        SearchBox: () => SearchBox(classes, setSearchValue),
+        SearchBox: () => SearchBox(classes, setSearchValue, searchValue),
         showSearchBox: true,
         tableMsg: (cohortList.length === 0) ? {
             noMatch: 'To proceed, please create your cohort by visiting the Explore Page.'
@@ -199,7 +200,7 @@ export const CohortAnalyzer = () => {
             <DeleteConfirmationModal
                 classes={""}
                 open={deleteInfo.showDeleteConfirmation}
-                setOpen={() => { handlePopup("",state,setDeleteInfo,deleteInfo) }}
+                setOpen={() => { handlePopup("", state, setDeleteInfo, deleteInfo) }}
                 handleDelete={() => {
                     handleDelete(deleteInfo.cohortId,
                         setCohortList,
@@ -224,25 +225,27 @@ export const CohortAnalyzer = () => {
                                 <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
                             </ToolTip>
                         </div>
-                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1 }} onClick={() => handlePopup("",state,setDeleteInfo,deleteInfo)} src={trashCan} width={15} height={16} />
+                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1 }} onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)} src={trashCan} width={15} height={16} />
                     </div>
                     <div className={classes.sortSection}>
                         <div style={{ display: 'flex', margin: 0, alignItems: 'center', cursor: 'pointer' }}>
                             <img onClick={() => {
                                 resetSelection(setSelectedCohorts);
                             }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} />
-                            <p onClick={() => {
-                                sortBy("alphabet", cohortList, setCohortList, state, setSortDirection, sortDirection);
+                            <p style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'alphabet' ? 'lightgray' : '#646464' }} onClick={() => {
+                                sortBy("alphabet", cohortList, setCohortList, state);
+                                setSortType("alphabet");
                             }}> Sort Alphabetically </p>
                         </div>
                         <div onClick={() => {
-                            sortBy("", cohortList, setCohortList, state, setSortDirection, sortDirection);
-                        }} className={classes.sortCount}>
+                            sortBy("", cohortList, setCohortList, state);
+                            setSortType("count");
+                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'count' ? 'lightgray' : '#646464' }}>
                             <p>Sort by Count</p>
                         </div>
                     </div>
                     <div className={classes.leftSideAnalyzerChild}>
-                        {state && cohortList.map((cohort) => {
+                        {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state) : Object.keys(state)).map((cohort) => {
                             return (
                                 <div className={selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? classes.CohortChild : classes.CohortChild}  >
                                     <div className={classes.cohortChildContent} >
@@ -253,7 +256,7 @@ export const CohortAnalyzer = () => {
                                                 handleCheckbox={handleCheckbox} />
                                             <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {cohort + " (" + state[cohort].participants.length + ")"} </span>
                                         </div>
-                                        <img alt={"Trashcan"} onClick={() => { handlePopup(cohort,state,setDeleteInfo,deleteInfo) }} src={trashCan} width={15} height={16} />
+                                        <img alt={"Trashcan"} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
                                     </div>
                                 </div>
                             )
@@ -303,8 +306,20 @@ export const CohortAnalyzer = () => {
                         </div>
                     </div>
                     <div className={classes.rightSideTableContainer}>
-                        {refershTableContent &&
+                        {refershTableContent && !searchValue &&
 
+                            <TableView
+                                initState={!searchValue ? initTblState : initTblState}
+                                themeConfig={themeConfig}
+                                tblRows={rowData}
+                                queryVariables={queryVariable}
+                                server={false}
+                                totalRowCount={rowData.length}
+                                activeTab={"Participant"}
+                            />
+                        }
+
+                        {refershTableContent && searchValue &&
                             <TableView
                                 initState={initTblState}
                                 themeConfig={themeConfig}

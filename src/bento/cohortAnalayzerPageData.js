@@ -72,7 +72,7 @@ export const tableConfig = {
       dataField: "cohort",
       header: "Cohort",
       display: true,
-      tooltipText: "sort",
+      tooltipText: "This entry is found in the following cohorts",
       role: cellTypes.DISPLAY
     }
   ],
