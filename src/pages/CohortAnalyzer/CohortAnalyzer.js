@@ -207,7 +207,9 @@ export const CohortAnalyzer = () => {
                         setSelectedCohorts,
                         dispatch,
                         onDeleteSingleCohort,
-                        onDeleteAllCohort)
+                        onDeleteAllCohort,
+                    setGeneralInfo,
+                setRowData)
                 }}
                 deletionType={deleteInfo.deleteType}
             />

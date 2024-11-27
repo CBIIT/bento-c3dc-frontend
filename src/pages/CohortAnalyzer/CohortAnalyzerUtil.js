@@ -86,7 +86,9 @@ export const handleDelete = (cohortId,
     setCohortList,
     setSelectedCohorts,
     dispatch, onDeleteSingleCohort,
-    onDeleteAllCohort) => {
+    onDeleteAllCohort,
+    setGeneralInfo,
+    setRowData) => {
     if (cohortId) {
         setCohortList(prevCohortList => prevCohortList.filter(cohort => cohort !== cohortId))
         setSelectedCohorts(prevSelectedCohortList => prevSelectedCohortList.filter(cohort => cohort !== cohortId));
@@ -94,6 +96,8 @@ export const handleDelete = (cohortId,
     } else {
         setCohortList([]);
         setSelectedCohorts([]);
+        setGeneralInfo({});
+        setRowData([]);
         deleteAllCohort(dispatch, onDeleteAllCohort);
     }
 }
