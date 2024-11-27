@@ -60,7 +60,7 @@ export const sortBy = (type, cohortList, setCohortList, state) => {
     return listOfCohortsLocal;
 }
 
-export const sortByReturn = (type, cohortList, state) => {
+export const sortByReturn = (type, cohortList, state,selected) => {
     let listOfCohortsLocal = cohortList;
     if (type === "alphabet") {
         listOfCohortsLocal.sort((a, b) =>
@@ -71,7 +71,15 @@ export const sortByReturn = (type, cohortList, state) => {
 
     }
 
-    return listOfCohortsLocal;
+    let reArranged = [];
+    listOfCohortsLocal.forEach((cohort) => {
+        if(!selected.includes(cohort)){
+            reArranged.push(cohort);
+        }
+    });
+    reArranged = [...selected,...reArranged];
+
+    return reArranged;
 }
 
 const deleteCohort = (cohortId, dispatch, onDeleteSingleCohort) => {

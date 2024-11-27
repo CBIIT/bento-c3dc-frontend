@@ -46,7 +46,7 @@ export const CohortAnalyzer = () => {
     const [refershSelectedChart, setRefershSelectedChart] = useState(false);
     const [refershTableContent, setRefershTableContent] = useState(false);
     const [selectedCohortSection, setSelectedCohortSections] = useState([]);
-    const [sortType, setSortType] = useState("");
+    const [sortType, setSortType] = useState("alphabet");
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
     const [generalInfo, setGeneralInfo] = useState({});
 
@@ -79,10 +79,6 @@ export const CohortAnalyzer = () => {
     useEffect(() => {
         setSearchValue("");
     }, [selectedChart])
-
-    useEffect(() => {
-        setCohortList(Object.keys(state));
-    }, [showCohortModal]);
 
     useEffect(() => {
         if (selectedChart.length === 0) {
@@ -247,7 +243,7 @@ export const CohortAnalyzer = () => {
                         </div>
                     </div>
                     <div className={classes.leftSideAnalyzerChild}>
-                        {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state) : Object.keys(state)).map((cohort) => {
+                        {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state,selectedCohorts) : Object.keys(state)).map((cohort) => {
                             return (
                                 <div className={selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? classes.CohortChild : classes.CohortChild}  >
                                     <div className={classes.cohortChildContent} >
