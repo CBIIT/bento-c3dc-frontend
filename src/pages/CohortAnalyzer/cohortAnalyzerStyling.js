@@ -221,13 +221,15 @@ export const useStyle = makeStyles((theme) => ({
         width: '90%',
         alignSelf: 'center',
         alignItems: 'center',
-        marginBottom: '30px',
-        fontFamily: 'Open Sans',
-        fontSize: '16px',
-        fontWeight: 400,
-        lineHeight: '20.8px',
-        textAlign: 'left',
-        color: 'black',
+        marginBottom: '30px',  
+        '& p': {
+            fontFamily: 'Open Sans',
+            fontSize: '16px',
+            fontWeight: 400,
+            lineHeight: '20.8px',
+            textAlign: 'left',
+            color: 'black',
+        }
     },
     cohortChildContent: {
         width: '95%', display: 'flex',

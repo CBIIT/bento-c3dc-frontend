@@ -14,6 +14,7 @@ import Question_Icon from '../../assets/icons/Question_Icon.svg';
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
 import sortIcon from "../../assets/icons/sort_icon.svg";
+import placeHolder from "../../assets/vennDigram/placeHolder.png";
 import ChartVenn from "./vennDiagram/ChartVenn";
 import CheckBoxCustom from "./customCheckbox/CustomCheckbox";
 import { CohortModalContext } from "../inventory/cohortModal/CohortModalContext";
@@ -50,7 +51,7 @@ export const CohortAnalyzer = () => {
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
     const [generalInfo, setGeneralInfo] = useState({});
 
-    const { setShowCohortModal, showCohortModal, setCurrentCohortChanges } = useContext(CohortModalContext);
+    const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { CohortModal } = CohortModalGenerator();
     const { Notification } = useGlobal();
 
@@ -147,7 +148,7 @@ export const CohortAnalyzer = () => {
     }
 
     const handleClick = () => {
-        if (rowData.length > 0) {
+        if (selectedCohortSection.length > 0 && rowData.length > 0) {
             setCurrentCohortChanges(null);
             dispatch(onCreateNewCohort(
                 "",
@@ -158,11 +159,21 @@ export const CohortAnalyzer = () => {
                     setShowCohortModal(true);
                 },
                 (error) => {
-                    alert("Something Went Wrong");
+                    setWarningMessage(error.toString().replace("Error:", ""));
                 }
             ));
         }
     };
+
+    const getTitle = () => {
+        if(Object.keys(state).length === 0){
+            return "To proceed, please create your cohort by visiting the Explore Page.";
+        }else if(selectedCohorts.length === 0){
+            return "Please select up to 3 cohorts from the Cohort List to view the interactive Venn diagram and corresponding table row information.";
+        }else{
+            return "Click on a circle(s) and/or overlapping section(s) in the venn diagram to view the corresponding data within the table below.";
+        }
+    }
 
     const initTblState = (initailState) => ({
         ...initailState,
@@ -204,11 +215,21 @@ export const CohortAnalyzer = () => {
                         dispatch,
                         onDeleteSingleCohort,
                         onDeleteAllCohort,
-                    setGeneralInfo,
-                setRowData)
+                        setGeneralInfo,
+                        setRowData)
                 }}
                 deletionType={deleteInfo.deleteType}
             />
+
+            <DeleteConfirmationModal
+                classes={""}
+                open={warningMessage}
+                setOpen={() => { setWarningMessage("") }}
+                handleDelete={() => { setWarningMessage("") }}
+                deletionType={false}
+                message={warningMessage}
+            />
+
             <CohortModal
                 open={showCohortModal}
                 onCloseModal={() => setShowCohortModal(false)}
@@ -243,7 +264,7 @@ export const CohortAnalyzer = () => {
                         </div>
                     </div>
                     <div className={classes.leftSideAnalyzerChild}>
-                        {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state,selectedCohorts) : Object.keys(state)).map((cohort) => {
+                        {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state, selectedCohorts) : Object.keys(state)).map((cohort) => {
                             return (
                                 <div className={selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? classes.CohortChild : classes.CohortChild}  >
                                     <div className={classes.cohortChildContent} >
@@ -266,10 +287,10 @@ export const CohortAnalyzer = () => {
                         <h1> Cohort Analyzer</h1>
                     </div>
                     <div className={classes.rightSideAnalyzerHeader2}>
-                        <p>Select a Cohort(s) from the Cohort Sidebar to view corresponding and interactive venn diagram. Click on a circle(s) and/or overlapping section(s) in the venn diagram to view the corresponding data within the table below.</p>
+                        <p>{getTitle()}</p>
                     </div>
                     <div style={{ display: 'flex', marginBottom: 40 }}>
-                        {refershTableContent && <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])}
+                        {refershTableContent && selectedCohorts.length > 0 && <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])}
                             setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
                             setSelectedCohortSections={(data) => {
                                 setSelectedCohortSections(data);
@@ -278,6 +299,10 @@ export const CohortAnalyzer = () => {
                             selectedCohort={selectedCohorts}
                             setGeneralInfo={setGeneralInfo}
                         />}
+
+                        {selectedCohorts.length === 0 &&
+                            <img src={placeHolder} width={725} style={{marginTop:-30}} />
+                        }
 
                     </div>
                     <div className={classes.cohortCountSection}>
@@ -290,8 +315,8 @@ export const CohortAnalyzer = () => {
                         </div>
                         <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '45%' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <button onClick={() => handleClick()} className={rowData.length === 0 ? classes.createCohortOpacity : classes.createCohort} >CREATE NEW COHORT</button>
-                                <ToolTip title={"Create a new cohort with the listed Participant IDs."} arrow placement="top">
+                                <button onClick={() => handleClick()} className={(selectedCohortSection.length === 0 || rowData.length === 0) ? classes.createCohortOpacity : classes.createCohort} >CREATE NEW COHORT</button>
+                                <ToolTip title={"Click to create a new cohort based on these analysis results."} arrow placement="top">
                                     <div
                                         style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}
                                     >
