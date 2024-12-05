@@ -140,7 +140,7 @@ export function generateQueryVariable(cohortNames, state) {
 }
 
 export const handlePopup = (cohortId, state, setDeleteInfo, deleteInfo) => {
-    let deleteType = cohortId ? " this cohort?" : " ALL cohorts?";
+    let deleteType = cohortId ? "delete this cohort?" : "delete ALL cohorts?";
     if (Object.keys(state).length > 0) {
         setDeleteInfo({ showDeleteConfirmation: !deleteInfo.showDeleteConfirmation, deleteType: deleteType, cohortId: cohortId });
     }
