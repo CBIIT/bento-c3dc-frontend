@@ -93,7 +93,7 @@ const AboutContainer = styled.div`
   }
   .aboutFooter {
     background-color: #336368;
-    width: 1127px;
+    width: 1111px;
     height: 260px;
     margin: 0 auto;
     padding: 42px 66px 0 70px;
