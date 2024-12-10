@@ -89,8 +89,8 @@ export const aboutData = {
   aboutFooterTitle:
     "Questions for C3DC?",
   aboutFooterText:
-    "The Childhood Cancer Data Initiative (CCDI) welcomes community input to improve the this web application usability. Please send your feedback and suggestions to " +
-    "<a className='aboutFooterLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>." +
+    "The Childhood Cancer Data Initiative (CCDI) welcomes community input to improve this web application usability. Please send your feedback and suggestions to " +
+    "<a className='aboutFooterLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>. " +
     "Your contributions are valuable to enhancing the user experience.",
 };
 
