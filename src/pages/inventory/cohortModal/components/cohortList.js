@@ -136,7 +136,7 @@ const CohortList = (props) => {
                                 }}
                             >
                                 <span className={classes.cohortListItemText}>
-                                    {state[cohort].cohortId}
+                                    {state[cohort].cohortName}
                                 </span>
                                 <span>
                                     <img

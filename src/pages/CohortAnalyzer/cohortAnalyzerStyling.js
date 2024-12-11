@@ -233,6 +233,7 @@ export const useStyle = makeStyles((theme) => ({
     },
     cohortChildContent: {
         width: '95%', display: 'flex',
+        height: '100%',
         justifyContent: 'space-between',
         alignItems: 'center',
         opacity: '1 !important',
@@ -243,8 +244,7 @@ export const useStyle = makeStyles((theme) => ({
             fontFamily: 'Nunito',
             fontSize: 14,
             fontWeight: 300,
-            lineHeight: 19.1,
-            textAlign: 'left'
+            textAlign: 'left',
         },
         '& img': {
             opacity: 1,
