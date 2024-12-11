@@ -7,6 +7,7 @@ import StudyDetailView from './studyDetailView';
 import { useParams } from 'react-router-dom';
 
 const studyDetailContainer = () => {
+  console.log(process.env.PUBLIC_URL);
   const {studyId} = useParams();
   const { loading, error, data } = useQuery(GET_STUDY_DETAIL_DATA_QUERY, {
     variables: { "study_id": studyId },

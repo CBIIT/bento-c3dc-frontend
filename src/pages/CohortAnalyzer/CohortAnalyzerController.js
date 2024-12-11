@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { CohortStateProvider } from "../../components/CohortSelectorState/CohortStateContext";
 import { CohortAnalyzer } from "./CohortAnalyzer";
+import {CohortAnalyzerWithRadioButtons} from "./CohortAnalyzerWithRadioButtons";
 import { CohortModalContext } from "../inventory/cohortModal/CohortModalContext";
 
 const CohortAnalyzerController = (state) => {
@@ -12,7 +13,8 @@ const CohortAnalyzerController = (state) => {
     <CohortModalContext.Provider value={{ showCohortModal, setShowCohortModal, warningMessage, setWarningMessage, currentCohortChanges, setCurrentCohortChanges }}>
      
     <CohortStateProvider>
-      <CohortAnalyzer />
+      {/* <CohortAnalyzer /> */}
+      <CohortAnalyzerWithRadioButtons />
     </CohortStateProvider>
     </CohortModalContext.Provider>
 
