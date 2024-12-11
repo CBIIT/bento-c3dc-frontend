@@ -85,6 +85,10 @@ export const CohortAnalyzer = () => {
         if (selectedChart.length === 0) {
             getJoinedCohort();
         }
+        if (selectedCohorts.length === 0) {
+            setGeneralInfo({});
+            setRowData([]);
+        }
         let finalVennSelection = [];
         selectedCohortSection.forEach((section) => {
             if (section.split(" ∩ ").length > 1) {
