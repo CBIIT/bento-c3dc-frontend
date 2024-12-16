@@ -157,13 +157,16 @@ const mutateSingleCohort = (state, payload) => {
   let newState = { ...state };
 
   // Check if cohortName is different from cohortId
-  if (cohortName && cohortName !== cohortId) {
+  //normalize the name as an ID by removing trailing and leading spaces and case sensitivity.
+  const newCleanCohortID = cohortName.trim().toLowerCase();
+
+  if (newCleanCohortID && newCleanCohortID !== cohortId) {
     // Create a new entry with the new cohort ID
-    if (state[cohortName]) {
+    if (state[newCleanCohortID]) {
       throw new Error(`Cohort with Name ${cohortName} already exists, please choose a different name`);
     }
-    newCohort.cohortId = cohortName;
-    newState[cohortName] = newCohort;
+    newCohort.cohortId = newCleanCohortID;
+    newState[newCleanCohortID] = newCohort;
     // Delete the old entry
     delete newState[cohortId];
   } else {

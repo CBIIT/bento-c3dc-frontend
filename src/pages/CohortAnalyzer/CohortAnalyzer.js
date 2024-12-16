@@ -273,7 +273,7 @@ export const CohortAnalyzer = () => {
                                                 selectedCohorts={selectedCohorts}
                                                 cohort={cohort}
                                                 handleCheckbox={handleCheckbox} />
-                                            <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {cohort + " (" + state[cohort].participants.length + ")"} </span>
+                                            <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {state[cohort].cohortName + " (" + state[cohort].participants.length + ")"} </span>
                                         </div>
                                         <img alt={"Trashcan"} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
                                     </div>
