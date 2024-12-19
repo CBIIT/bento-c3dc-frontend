@@ -18,10 +18,10 @@ export const getAllIds = (generalInfo) => {
     return finalIds;
 }
 
-export const addCohortColumn = (rowD, state) => {
+export const addCohortColumn = (rowD, state, selectedCohorts) => {
     let finalRowData = rowD.map((row) => {
         // Get the cohort name for the current participant
-        let cohortName = getCohortName(row.participant_pk, state);
+        let cohortName = getCohortName(row.participant_pk, state, selectedCohorts);
         // Return a new object with the added cohort property
         return {
             ...row,
@@ -31,14 +31,20 @@ export const addCohortColumn = (rowD, state) => {
     return finalRowData;
 }
 
-const getCohortName = (pk, state) => {
-    const cohortNames = Object.keys(state)
-        .filter(cohortKey =>
+const getCohortName = (pk, state, selectedCohorts) => {
+    const cohortNames = selectedCohorts
+        .filter(cohortKey => 
             state[cohortKey].participants.some(participant => participant.participant_pk === pk)
-        )
-        .map(cohortKey => state[cohortKey].cohortName)
-        .join(", ");
-    return cohortNames;
+        ).map(cohortKey => state[cohortKey].cohortName);
+    let finalResponse = [];
+    const baseColorArray = ["#F0D571", "#A4E9CB", "#A3CCE8"];
+    selectedCohorts.forEach((cohort, index) => {
+        if (cohortNames.includes(cohort)) {
+            finalResponse.push({ color: baseColorArray[index], "cohort": cohort })
+        }
+    })
+
+    return finalResponse;
 }
 
 export const resetSelection = (setSelectedCohorts) => {
@@ -48,19 +54,19 @@ export const resetSelection = (setSelectedCohorts) => {
 export const sortBy = (type, cohortList, setCohortList, state) => {
     let listOfCohortsLocal = cohortList;
     if (type === "alphabet") {
-        listOfCohortsLocal.sort((a, b) => 
-            a.localeCompare(b) )
+        listOfCohortsLocal.sort((a, b) =>
+            a.localeCompare(b))
         setCohortList(listOfCohortsLocal);
-    } else if(type === "count") {
-        listOfCohortsLocal.sort((a, b) => 
-            state[a].participants.length - state[b].participants.length )
+    } else if (type === "count") {
+        listOfCohortsLocal.sort((a, b) =>
+            state[a].participants.length - state[b].participants.length)
         setCohortList(listOfCohortsLocal);
     }
-    
+
     return listOfCohortsLocal;
 }
 
-export const sortByReturn = (type, cohortList, state,selected) => {
+export const sortByReturn = (type, cohortList, state, selected) => {
     let listOfCohortsLocal = cohortList;
     if (type === "alphabet") {
         listOfCohortsLocal.sort((a, b) =>
@@ -73,11 +79,11 @@ export const sortByReturn = (type, cohortList, state,selected) => {
 
     let reArranged = [];
     listOfCohortsLocal.forEach((cohort) => {
-        if(!selected.includes(cohort)){
+        if (!selected.includes(cohort)) {
             reArranged.push(cohort);
         }
     });
-    reArranged = [...selected,...reArranged];
+    reArranged = [...selected, ...reArranged];
 
     return reArranged;
 }
@@ -110,7 +116,7 @@ export const handleDelete = (cohortId,
     }
 }
 
-export const SearchBox = (classes,setSearchValue,searchValue) => {  
+export const SearchBox = (classes, setSearchValue, searchValue) => {
     return (
         <div className={classes.inputStyleContainer}>
             <input

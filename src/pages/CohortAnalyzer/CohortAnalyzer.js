@@ -41,6 +41,7 @@ export const CohortAnalyzer = () => {
     const [selectedCohorts, setSelectedCohorts] = useState([]);
     const [queryVariable, setQueryVariable] = useState({});
     const [rowData, setRowData] = useState([]);
+    const [refershInit, setRefershInit] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [cohortList, setCohortList] = useState(Object.keys(state) || {});
     const [selectedChart, setSelectedChart] = useState([]);
@@ -68,9 +69,10 @@ export const CohortAnalyzer = () => {
         if (queryVariables.participant_pks.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
-                setRowData(addCohortColumn(filteredRowData, state));
+                setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
-                setRowData(addCohortColumn(data['diagnosisOverview'], state));
+                setRowData(addCohortColumn(data['diagnosisOverview'], state, selectedCohorts));
+                setRefershInit(!refershInit)
             }
         } else {
             setRowData([]);
@@ -132,6 +134,9 @@ export const CohortAnalyzer = () => {
         setTimeout(() => setRefershTableContent(true), 0)
     }, [cohortList])
 
+
+
+
     const handleCheckbox = (cohort, self) => {
         if (selectedCohorts.includes(cohort)) {
             let finalCohortList = [];
@@ -170,11 +175,11 @@ export const CohortAnalyzer = () => {
     };
 
     const getTitle = () => {
-        if(Object.keys(state).length === 0){
+        if (Object.keys(state).length === 0) {
             return "To proceed, please create your cohort by visiting the Explore Page.";
-        }else if(selectedCohorts.length === 0){
+        } else if (selectedCohorts.length === 0) {
             return "Please select up to 3 cohorts from the Cohort List to view the interactive Venn diagram and corresponding table row information.";
-        }else{
+        } else {
             return "Click on a circle(s) and/or overlapping section(s) in the venn diagram to view the corresponding data within the table below.";
         }
     }
@@ -242,13 +247,19 @@ export const CohortAnalyzer = () => {
             <div className={classes.container}>
                 <div className={classes.leftSideAnalyzer}>
                     <div className={classes.sideHeader}>
-                        <div className={classes.cohortSelectionChild}>
-                            <span> {"COHORTS (" + Object.keys(state).length + ")"} </span>
-                            <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="top">
-                                <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
-                            </ToolTip>
+                        <div style={{ display: 'flex' }}>
+                            <div className={classes.cohortSelectionChild}>
+                                <span> {"SELECTED COHORTS (" + Object.keys(state).length + ")"} </span>
+                                <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="top">
+                                    <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
+                                </ToolTip>
+                            </div>
+                            <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1 }} onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)} src={trashCan} width={15} height={16} />
                         </div>
-                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1 }} onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)} src={trashCan} width={15} height={16} />
+                        <p>
+                            {"Select up to three cohorts to view in the Cohort Analyzer"}
+
+                        </p>
                     </div>
                     <div className={classes.sortSection}>
                         <div style={{ display: 'flex', margin: 0, alignItems: 'center', cursor: 'pointer' }}>
@@ -270,7 +281,7 @@ export const CohortAnalyzer = () => {
                     <div className={classes.leftSideAnalyzerChild}>
                         {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state, selectedCohorts) : Object.keys(state)).map((cohort) => {
                             return (
-                                <div className={selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? classes.CohortChild : classes.CohortChild}  >
+                                <div className={!selectedCohorts.includes(cohort) ? classes.CohortChild : classes.cohortChildSelected}  >
                                     <div className={classes.cohortChildContent} >
                                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 6 }}>
                                             <CheckBoxCustom
@@ -305,7 +316,7 @@ export const CohortAnalyzer = () => {
                         />}
 
                         {selectedCohorts.length === 0 &&
-                            <img src={placeHolder} width={725} style={{marginTop:-30}} />
+                            <img src={placeHolder} width={725} style={{ marginTop: -30 }} />
                         }
 
                     </div>
@@ -348,7 +359,7 @@ export const CohortAnalyzer = () => {
 
                         {refershTableContent && searchValue &&
                             <TableView
-                                initState={initTblState}
+                                initState={refershInit ? initTblState : initTblState}
                                 themeConfig={themeConfig}
                                 tblRows={rowData}
                                 queryVariables={queryVariable}

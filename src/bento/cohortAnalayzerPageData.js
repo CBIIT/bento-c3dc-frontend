@@ -73,7 +73,8 @@ export const tableConfig = {
       header: "Cohort",
       display: true,
       tooltipText: "This entry is found in the following cohorts",
-      role: cellTypes.DISPLAY
+      role: cellTypes.DISPLAY,
+      cellType: cellTypes.CUSTOM_ELEM
     }
   ],
   id: 'participant_tab',
