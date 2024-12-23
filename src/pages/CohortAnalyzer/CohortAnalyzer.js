@@ -328,7 +328,7 @@ export const CohortAnalyzer = () => {
                                     </div>
                                 </ToolTip>
                             </div>
-                            <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0} />
+                            <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
 
                         </div>
                     </div>
