@@ -37,7 +37,7 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections,sel
   const baseColorArray = ["#86E2B9", "#5198C8D9", "#F9E28B"].map(color => hexToRgba(color));;
 
   const baseSets = cohortData.map((cohort) => ({
-    label: `${cohort.cohortId} (${cohort.participants.length})`,
+    label: `${cohort.cohortName} (${cohort.participants.length})`,
     values: cohort.participants.map(p => p.participant_pk),
     size: cohort.participants.length,
   }));
