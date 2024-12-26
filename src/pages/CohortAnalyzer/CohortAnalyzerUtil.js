@@ -39,11 +39,10 @@ const getCohortName = (pk, state, selectedCohorts) => {
     let finalResponse = [];
     const baseColorArray = ["#F0D571", "#A4E9CB", "#A3CCE8"];
     selectedCohorts.forEach((cohort, index) => {
-        if (cohortNames.includes(cohort)) {
-            finalResponse.push({ color: baseColorArray[index], "cohort": cohort })
+        if (cohortNames.map(name => name.toLowerCase()).includes(cohort.toLowerCase())) {
+            finalResponse.push({ color: baseColorArray[index], "cohort":cohortNames[index] })
         }
     })
-
     return finalResponse;
 }
 

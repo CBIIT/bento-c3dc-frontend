@@ -18,7 +18,7 @@ export const CustomCellView = (props) => {
   };
 
   if (Array.isArray(label)) {
-
+console.log("LOG: ", label); 
     const baseColorArray = ["#F0D571", "#A4E9CB", "#A3CCE8"];
     return (
       <div style={{ display: 'flex', gap: 10 }}>

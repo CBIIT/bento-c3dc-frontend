@@ -98,6 +98,7 @@ export const useStyle = makeStyles((theme) => ({
     cohortSelectionChild: {
         display: 'flex',
         alignItems: 'start',
+        width: '100%',
         '& span':{
             fontSize: 12,
             fontFamily: 'Poppins',
@@ -174,8 +175,7 @@ export const useStyle = makeStyles((theme) => ({
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-        paddingLeft: 15,
-        paddingRight: 15,
+       
         '& img': {
             marginRight: 6.5
         },
@@ -206,7 +206,7 @@ export const useStyle = makeStyles((theme) => ({
         minHeight: 58.94,
         display: 'flex',
         alignItems: 'flex-end',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         width: '90%',
         paddingBottom: 10,
         borderTop: '1.02px #8A7F7C solid'
@@ -247,15 +247,16 @@ export const useStyle = makeStyles((theme) => ({
         position: 'relative',
         width: '90%',
         alignSelf: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         marginBottom: '30px',  
         '& p': {
             fontFamily: 'Open Sans',
-            fontSize: '16px',
+            fontSize: '15px',
             fontWeight: 400,
+            width: 455,
             lineHeight: '20.8px',
             textAlign: 'left',
-            color: 'black',
+            color: '#8A7F7C'
         }
     },
     cohortChildContent: {

@@ -8,7 +8,6 @@ const hexToRgba = (hex, alpha = 1) => {
 };
 
 function reduceOpacity(rgbaColor, reductionPercentage) {
-  console.log("RGBA: ", rgbaColor);
   const matches = rgbaColor.match(/rgba?\((\d+), (\d+), (\d+),? ([\d.]+)?\)/);
   if (!matches) throw new Error("Invalid RGBA color format");
 
@@ -139,7 +138,7 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
 
   return (
     <div className="App">
-      <canvas style={{ width: 800, height: 100 }} ref={canvasRef} id="canvas"></canvas>
+      <canvas style={{ width: 800, height: 100,position:'relative',left:40,top:-100}} ref={canvasRef} id="canvas"></canvas>
 
     </div>
   );
