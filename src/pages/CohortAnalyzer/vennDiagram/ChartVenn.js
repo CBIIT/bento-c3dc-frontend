@@ -84,6 +84,14 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
     }
   };
 
+  const getBorderColor = (item, index ) => {
+    return selectedCohortSection.includes(item.label) ? "white" : "#929292";
+  }
+
+  const getBorderWidth = (item, index) =>{
+    return selectedCohortSection.includes(item.label) ? 4 : 0.5;
+  }
+
   const getBackgroundColor = (item, index) => {
     if (item.sets.length > 1) {
       const intersectingColors = item.sets.map(set => {
@@ -107,13 +115,37 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
         {
           ...data.datasets[0],
           backgroundColor: data.datasets[0].data.map(getBackgroundColor),
-          borderWidth: 1,
+          borderColor: data.datasets[0].data.map(getBorderColor),
+          borderWidth: data.datasets[0].data.map(getBorderWidth) ,
         },
       ],
     },
     options: {
       onClick: handleChartClick,
+      scales: {
+        x: {
+            ticks: {
+                font: {
+                    family: 'Nunito',
+                    size: 15,
+                    weight: 300,
+                },
+                color: '#000',
+            },
+        },
+        y: {
+            ticks: {
+                font: {
+                    family: 'Nunito',
+                    size: 17,
+                    weight: 800,
+                },
+                color: 'black',
+            },
+        },
     },
+    },
+   
   };
 
   useEffect(() => {
