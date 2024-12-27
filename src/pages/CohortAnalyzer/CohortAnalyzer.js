@@ -6,7 +6,7 @@ import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
 import trashCan from "../../assets/icons/trash_can.svg";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
-import { tableConfig } from "../../bento/cohortAnalayzerPageData";
+import { analyzer_query, analyzer_tables, tableConfig } from "../../bento/cohortAnalayzerPageData";
 import DownloadSelectedCohort from "./downloadCohort/DownloadSelectedCohorts";
 import client from "../../utils/graphqlClient";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
@@ -50,6 +50,7 @@ export const CohortAnalyzer = () => {
     const [sortType, setSortType] = useState("alphabet");
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
     const [generalInfo, setGeneralInfo] = useState({});
+    const [nodeIndex,setNodeIndex] = useState(0);
 
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { CohortModal } = CohortModalGenerator();
@@ -62,7 +63,7 @@ export const CohortAnalyzer = () => {
         }
         setQueryVariable(queryVariables);
         const { data } = await client.query({
-            query: GET_COHORT_MANIFEST_QUERY,
+            query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
         if (queryVariables.participant_pks.length > 0) {
@@ -125,12 +126,12 @@ export const CohortAnalyzer = () => {
 
     useEffect(() => {
         getJoinedCohort();
-    }, [generalInfo])
+    }, [generalInfo,nodeIndex])
 
     useEffect(() => {
         setRefershTableContent(false)
         setTimeout(() => setRefershTableContent(true), 0)
-    }, [cohortList])
+    }, [cohortList,nodeIndex])
 
     const handleCheckbox = (cohort, self) => {
         if (selectedCohorts.includes(cohort)) {
@@ -181,17 +182,17 @@ export const CohortAnalyzer = () => {
 
     const initTblState = (initailState) => ({
         ...initailState,
-        title: tableConfig.name,
-        query: tableConfig.api,
+        title: analyzer_tables[nodeIndex].name,
+        query: analyzer_tables[nodeIndex].api,
         downloadButtonTooltipText: "Download data in CSV or JSON format",
-        paginationAPIField: tableConfig.paginationAPIField,
-        dataKey: tableConfig.dataKey,
-        hiddenDataKeys: tableConfig.hiddenDataKeys,
-        columns: configColumn(tableConfig.columns),
+        paginationAPIField: analyzer_tables[nodeIndex].paginationAPIField,
+        dataKey:analyzer_tables[nodeIndex].dataKey,
+        hiddenDataKeys: analyzer_tables[nodeIndex].hiddenDataKeys,
+        columns: configColumn(analyzer_tables[nodeIndex].columns),
         count: 3,
         selectedRows: [],
         hiddenSelectedRows: [],
-        enableRowSelection: tableConfig.enableRowSelection,
+        enableRowSelection: analyzer_tables[nodeIndex].enableRowSelection,
         sortBy: tableConfig.defaultSortField,
         sortOrder: tableConfig.defaultSortDirection,
         extendedViewConfig: tableConfig.extendedViewConfig,
@@ -293,7 +294,32 @@ export const CohortAnalyzer = () => {
                     <div className={classes.rightSideAnalyzerHeader2}>
                         <p>{getTitle()}</p>
                     </div>
+                   
+
                     <div style={{ display: 'flex', marginBottom: 40 }}>
+                    <div className={classes.catagoryCard}>
+                            <h3>Select a data category for cohort matching</h3>
+                            <div className={classes.catagoryCardChildren}>
+                                <p>
+                                    <input type="radio" onClick={() => {
+                                        setNodeIndex(0);
+                                    }}  radioGroup="node_type" name="node_type" />
+                                    Participant Pk
+                                </p>
+                                <p>
+                                    <input type="radio" onClick={() => {
+                                        setNodeIndex(1);
+                                    }} radioGroup="node_type" name="node_type"  />
+                                    Diagnosis Pk
+                                </p>
+                                <p>
+                                    <input onClick={() => {
+                                        setNodeIndex(2);
+                                    }}  type="radio" radioGroup="node_type" name="node_type" />
+                                    Treatment Pk
+                                </p>
+                            </div>
+                        </div>
                         {refershTableContent && selectedCohorts.length > 0 && <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])}
                             setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
                             setSelectedCohortSections={(data) => {

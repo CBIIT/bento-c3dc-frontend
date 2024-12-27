@@ -105,7 +105,7 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections,sel
     },
     options: {
       onClick: handleChartClick,
-    },
+  },
   };
 
   useEffect(() => {

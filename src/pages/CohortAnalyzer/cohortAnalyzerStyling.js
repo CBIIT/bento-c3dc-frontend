@@ -252,6 +252,35 @@ export const useStyle = makeStyles((theme) => ({
             zIndex: 10000,
         }
     },
+    catagoryCard: {
+        width: '208px',
+        height: '230px',
+        top: '245px',
+        left: '1011px',
+        gap: '0px',
+        border: '1px 0px 0px 0px',
+        opacity: '0px',
+        border: '1px solid #8B98AF',
+        borderRadius: '8px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        '& h3': {
+            fontFamily: 'Poppins',
+            fontSize: '16px',
+            fontWeight: 400,
+            lineHeight: '19.2px',
+            letterSpacing: '-0.01em',
+            textAlign: 'center'
+
+        },
+    },
+    catagoryCardChildren: {
+        width: '80%',
+        height: '80%',
+        alignSelf: 'center'
+    },
+
     rightSideTableContainer: {
         width: '90%',
         height: 540,
