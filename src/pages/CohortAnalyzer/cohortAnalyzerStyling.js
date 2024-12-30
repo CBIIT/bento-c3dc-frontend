@@ -249,6 +249,7 @@ export const useStyle = makeStyles((theme) => ({
         alignSelf: 'center',
         alignItems: 'flex-start',
         marginBottom: '30px',  
+        zIndex: 900,
         '& p': {
             fontFamily: 'Open Sans',
             fontSize: '15px',

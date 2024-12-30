@@ -361,8 +361,8 @@ export const CohortAnalyzer = () => {
                     <div className={classes.rightSideAnalyzerHeader2}>
                         <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 
-                            <ToolTip title={"The venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate,"} arrow placement="top">
-                                <Help size={5} style={{ fontSize: 12 }} />
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"The venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate,"} arrow placement="top">
+                                <Help size={5} style={{ fontSize: 14 }} />
                             </ToolTip>
                         </p>
                     </div>

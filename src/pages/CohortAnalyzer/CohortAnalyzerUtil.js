@@ -39,8 +39,9 @@ const getCohortName = (pk, state, selectedCohorts) => {
     let finalResponse = [];
     const baseColorArray = ["#F0D571", "#A4E9CB", "#A3CCE8"];
     selectedCohorts.forEach((cohort, index) => {
-        if (cohortNames.map(name => name.toLowerCase()).includes(cohort.toLowerCase())) {
-            finalResponse.push({ color: baseColorArray[index], "cohort":cohortNames[index] })
+        let indexOfHashKey = cohortNames.map(name => name.toLowerCase()).indexOf(cohort.toLowerCase());
+        if (indexOfHashKey >= 0) {
+            finalResponse.push({ color: baseColorArray[index], "cohort": cohortNames[indexOfHashKey] })
         }
     })
     return finalResponse;
