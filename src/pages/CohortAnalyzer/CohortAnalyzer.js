@@ -359,12 +359,15 @@ export const CohortAnalyzer = () => {
                         <h1> Cohort Analyzer</h1>
                     </div>
                     <div className={classes.rightSideAnalyzerHeader2}>
-                        <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.  
-                        <img src={Question_Icon} width={10} height={10} />
+                        <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
+
+                            <ToolTip title={"The venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate,"} arrow placement="top">
+                                <Help size={5} style={{ fontSize: 12 }} />
+                            </ToolTip>
                         </p>
                     </div>
 
-                    <div style={{ display: 'flex', marginBottom: 40,width: '100%', alignItems: 'flex-end',justifyContent: 'flex-end' }}>
+                    <div style={{ display: 'flex', marginBottom: 40, width: '100%', alignItems: 'flex-end', justifyContent: 'flex-end' }}>
                         {refershTableContent && selectedCohorts.length > 0 && <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])}
                             setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
                             setSelectedCohortSections={(data) => {
