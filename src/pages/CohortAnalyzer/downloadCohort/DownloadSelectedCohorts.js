@@ -92,6 +92,7 @@ const useStyles = makeStyles((theme) => ({
         zIndex: '1',
         boxShadow: 'none',
         opacity: props.isSelected ? 1 : 0.4,
+        cursor: props.isSelected ? 'pointer' : 'default',
         '&:hover': {
             backgroundColor: props.isSelected ? '#003B35' : '#556469',
             boxShadow: 'none',

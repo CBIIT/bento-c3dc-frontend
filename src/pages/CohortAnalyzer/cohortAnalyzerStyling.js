@@ -20,6 +20,7 @@ export const useStyle = makeStyles((theme) => ({
         fontFamily: "Poppins",
         fontSize: "12px",
         fontWeight: 600,
+        cursor: 'pointer',
 
     },
     createCohortOpacity: {
