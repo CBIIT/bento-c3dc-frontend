@@ -388,7 +388,39 @@ cohortMetadata(
     }
 }}
 `;
+export const DISPLAY_COHORT_QUERY = gql`
+query participantOverview(
+    # Demographics
+    $participant_pks: [String],
 
+    # Table config
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
+    $sort_direction: String
+) {
+participantOverview(
+    # Demographics
+    participant_pks: $participant_pks,
+
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+) { 
+    # Participants
+    participant_id
+    participant_pk
+    race
+    sex_at_birth
+
+    # Studies
+    dbgap_accession
+
+    __typename
+}}
+`;
 export const GET_COHORT_MANIFEST_QUERY = gql`
 query cohortManifest(
     # Demographics

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
-import { GET_COHORT_MANIFEST_QUERY } from "../../bento/dashboardTabData";
+import { DISPLAY_COHORT_QUERY } from "../../bento/dashboardTabData";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
@@ -62,7 +62,7 @@ export const CohortAnalyzer = () => {
         }
         setQueryVariable(queryVariables);
         const { data } = await client.query({
-            query: GET_COHORT_MANIFEST_QUERY,
+            query: DISPLAY_COHORT_QUERY,
             variables: queryVariables,
         });
         if (queryVariables.participant_pks.length > 0) {
@@ -70,7 +70,7 @@ export const CohortAnalyzer = () => {
                 let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state));
             } else {
-                setRowData(addCohortColumn(data['diagnosisOverview'], state));
+                setRowData(addCohortColumn(data['participantOverview'], state));
             }
         } else {
             setRowData([]);
