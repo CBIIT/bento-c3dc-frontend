@@ -27,7 +27,7 @@ const blendColors = (color1, color2) => {
   return `rgba(${blendedColor.join(",")})`;
 };
 
-const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo }) => {
+const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo }) => {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
   const [selectedVenns, setSelectedVenns] = useState([]);
@@ -35,12 +35,15 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections,sel
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
   const baseColorArray = ["#86E2B9", "#5198C8D9", "#F9E28B"].map(color => hexToRgba(color));;
+  const nodes = ["participant_pk","diagnosis_pk"];
 
   const baseSets = cohortData.map((cohort) => ({
     label: `${cohort.cohortId} (${cohort.participants.length})`,
-    values: cohort.participants.map(p => p.participant_pk),
+    values: cohort.participants.map(p => p[nodes[intersection]]),
     size: cohort.participants.length,
   }));
+
+console.log("Baseset: ", baseSets);
 
   const data = extractSets(
     baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
