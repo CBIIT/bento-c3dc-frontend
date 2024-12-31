@@ -1,5 +1,5 @@
 import { Button, makeStyles } from '@material-ui/core';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ExpandMoreIcon from '../../../assets/icons/Expand_More_Icon.svg'
 import { arrayToCSVDownload, objectToJsonDownload } from '../../inventory/cohortModal/utils';
 import client from '../../../utils/graphqlClient';
@@ -34,6 +34,23 @@ export default function DownloadSelectedCohort({ queryVariable, isSelected }) {
             variables: queryVariable,
         });
         objectToJsonDownload(data['cohortMetadata'], "Analyzed");
+    };
+    
+    useEffect(() => {
+        if (showDownloadDropdown) {
+            document.addEventListener('mousedown', handleClickOutside);
+        } else {
+            document.removeEventListener('mousedown', handleClickOutside);
+        }
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showDownloadDropdown]);
+    
+    const handleClickOutside = (event) => {
+        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+            setShowDownloadDropdown(false); // Close the dropdown when clicking outside
+        }
     };
 
     const classes = useStyles({ isSelected });
