@@ -9,19 +9,18 @@ import openBook from "../../assets/resources/openBook.svg";
 import next from "../../assets/resources/next.svg";
 import Stats from '../../components/Stats/StatsView';
 import CloudDownload from "../../assets/studies/cloud_download.svg";
-import {
-  rightPanel,
-  studyDetailDownloadLinks
-} from '../../bento/studyDetailData';
+import { rightPanel } from '../../bento/studyDetailData';
 import { toggleCheckBox } from '@bento-core/facet-filter';
 import "./scrollBarConfig.css";
 import { useDispatch } from 'react-redux';
 import Alert from '@material-ui/lab/Alert';
 import { openDoubleLink } from './utils';
+import { useEffect } from 'react';
 
-const StudyDetailView = ({ classes, data, theme }) => {
+const StudyDetailView = ({ classes, data, manifestData, theme }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [sutdyManifestData, setStudyManifestData] = useState(null);
   const [error,setError] = useState(false);
   const [errorMessage,setErrorMessage] = useState("Something Went Wrong");
   const studyData = data;
@@ -30,6 +29,12 @@ const StudyDetailView = ({ classes, data, theme }) => {
     numberOfParticipants: data.studyDetails.num_participants,
     numberOfStudies: 1,
   };
+
+  useEffect(() => {
+    if (manifestData[studyData.studyDetails.dbgap_accession]) {
+      setStudyManifestData(manifestData[studyData.studyDetails.dbgap_accession]);
+    }
+  }, [manifestData, studyData.studyDetails.dbgap_accession]);
 
 
   const updatedAttributesData = [
@@ -226,18 +231,28 @@ const StudyDetailView = ({ classes, data, theme }) => {
                     </div>
                   </Grid>
                 ))}
-                {studyDetailDownloadLinks[studyData.studyDetails.dbgap_accession] &&
+
+                {manifestData.networkError && !manifestData[studyData.studyDetails.dbgap_accession] &&
                   <div className={classes.downloadSection}>
-                    <p style={{ fontWeight: 'bold', margin: 0, marginRight: 15 }}> Data Files: </p>
+                  <p style={{ fontWeight: 'bold', margin: 0, marginRight: 15 }}> 
+                    {manifestData.networkError}
+                  </p>
+                  </div>
+                }
+
+
+
+                {manifestData[studyData.studyDetails.dbgap_accession] &&
+                  <div className={classes.downloadSection}>
+                    <p style={{ fontWeight: 'bold', margin: 0, marginRight: 15 }}> 
+                      {manifestData[studyData.studyDetails.dbgap_accession].isTarget === true ? "Source Files:" : "Manifest Files:"}
+                    </p>
                     <div className={classes.downloadSectionLinks}>
 
-
-
-                      {
-                        Object.keys(studyDetailDownloadLinks[studyData.studyDetails.dbgap_accession]).map((innerKey) =>
+                      { Object.keys(manifestData[studyData.studyDetails.dbgap_accession]).filter((innerKey)=> innerKey !== "isTarget" ).map((innerKey) =>
                         (
                           <span  onClick={()=>{
-                            openDoubleLink(studyDetailDownloadLinks[studyData.studyDetails.dbgap_accession][innerKey],(errorMessage) => {
+                            openDoubleLink(manifestData[studyData.studyDetails.dbgap_accession][innerKey],(errorMessage) => {
                               setErrorMessage(errorMessage);
                               setError(true); 
                             }, innerKey)

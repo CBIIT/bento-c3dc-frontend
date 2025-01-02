@@ -8,4 +8,6 @@ window.injectedEnv = {
   REACT_APP_APPLICATION_VERSION: 'YYYY_MM_DD/HH:MM',
   REACT_APP_ABOUT_CONTENT_URL: '../src/assets/aboutPagesContent.yaml',
   REACT_APP_FILE_SERVICE_API: 'https://bento-tools.org/v1/graphql/',
+  REACT_APP_DATA_RELEASES_URL: "https://raw.githubusercontent.com/CBIIT/C3DC-Data-Releases/dev/DataReleaseNotes.json",
+  REACT_APP_CCDI_MANIFEST_FILES_URL: "https://raw.githubusercontent.com/CBIIT/C3DC-Data-Releases/refs/heads/Manifest_url_2/ccdiManifestURL.json",
 };
