@@ -19,7 +19,8 @@ const studyDetailContainer = () => {
   useEffect(() => {
     const fetchManifestData = async () => {
       try {
-        const response = await fetch(env.REACT_APP_CCDI_MANIFEST_FILES_URL);
+        const URL = env.REACT_APP_CCDI_MANIFEST_FILES_URL || "https://raw.githubusercontent.com/CBIIT/C3DC-Data-Releases/refs/heads/dev/ccdiManifestURL.json";
+        const response = await fetch(URL);
         const jsonData = await response.json();
         setManifestData(jsonData);
       } catch (error) {
