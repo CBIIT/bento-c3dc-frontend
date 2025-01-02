@@ -305,7 +305,7 @@ export const CohortAnalyzer = () => {
                         />}
 
                         {selectedCohorts.length === 0 &&
-                            <img src={placeHolder} width={725} style={{marginTop:-30}} />
+                            <img src={placeHolder} alt='placeholder' width={725} style={{marginTop:-30}} />
                         }
 
                     </div>

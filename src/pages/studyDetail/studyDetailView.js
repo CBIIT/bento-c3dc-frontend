@@ -15,12 +15,10 @@ import "./scrollBarConfig.css";
 import { useDispatch } from 'react-redux';
 import Alert from '@material-ui/lab/Alert';
 import { openDoubleLink } from './utils';
-import { useEffect } from 'react';
 
 const StudyDetailView = ({ classes, data, manifestData, theme }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [sutdyManifestData, setStudyManifestData] = useState(null);
   const [error,setError] = useState(false);
   const [errorMessage,setErrorMessage] = useState("Something Went Wrong");
   const studyData = data;
@@ -29,13 +27,6 @@ const StudyDetailView = ({ classes, data, manifestData, theme }) => {
     numberOfParticipants: data.studyDetails.num_participants,
     numberOfStudies: 1,
   };
-
-  useEffect(() => {
-    if (manifestData[studyData.studyDetails.dbgap_accession]) {
-      setStudyManifestData(manifestData[studyData.studyDetails.dbgap_accession]);
-    }
-  }, [manifestData, studyData.studyDetails.dbgap_accession]);
-
 
   const updatedAttributesData = [
     {
@@ -239,8 +230,6 @@ const StudyDetailView = ({ classes, data, manifestData, theme }) => {
                   </p>
                   </div>
                 }
-
-
 
                 {manifestData[studyData.studyDetails.dbgap_accession] &&
                   <div className={classes.downloadSection}>
