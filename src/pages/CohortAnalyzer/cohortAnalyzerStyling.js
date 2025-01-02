@@ -254,7 +254,7 @@ export const useStyle = makeStyles((theme) => ({
             fontFamily: 'Open Sans',
             fontSize: '15px',
             fontWeight: 400,
-            width: 455,
+            width: 655,
             lineHeight: '20.8px',
             textAlign: 'left',
             color: '#8A7F7C'

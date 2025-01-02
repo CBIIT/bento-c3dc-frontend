@@ -7,6 +7,15 @@ const hexToRgba = (hex, alpha = 1) => {
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 };
 
+const intersectionColors = [
+  0,0,"#cbdfcc",
+  "#cbdfcc",
+  "#e4e3c4",
+  "#BAD9CB",
+  "#65DEA8"
+];
+
+
 function reduceOpacity(rgbaColor, reductionPercentage) {
   const matches = rgbaColor.match(/rgba?\((\d+), (\d+), (\d+),? ([\d.]+)?\)/);
   if (!matches) throw new Error("Invalid RGBA color format");
@@ -43,10 +52,13 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
   //const [generalInfo, setGeneralInfo] = useState({});
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
-  const baseColorArray = ["#FAE69C", "#A4E9CB", "#A3CCE8"].map(color => hexToRgba(color));;
+ 
 
+  const baseColorArray = ["#FBEBB0", "#BAD9CB", "#B9CEDC"].map(color => hexToRgba(color));;
+  
+  
   const baseSets = cohortData.map((cohort) => ({
-    label: `${cohort.cohortId} (${cohort.participants.length})`,
+    label: `${cohort.cohortName} (${cohort.participants.length})`,
     values: cohort.participants.map(p => p.participant_pk),
     size: cohort.participants.length,
   }));
@@ -94,16 +106,15 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
 
   const getBackgroundColor = (item, index) => {
     if (item.sets.length > 1) {
-      const intersectingColors = item.sets.map(set => {
-        const setIndex = baseSets.findIndex(bSet => bSet.label === set);
-        return setIndex !== -1 ? baseColorArray[setIndex] : "rgba(0, 0, 0, 0)";
-      });
-      const blendedColor = intersectingColors.reduce((acc, color) => blendColors(acc || intersectingColors[0], color));
-      return selectedCohortSection.includes(item.label) ? blendedColor : reduceOpacity(blendedColor, 85);
+      const intersectionKey = item.sets.sort().join("-");
+      console.log("INTERSECTION:" , index)
+      const hardcodedColor = intersectionColors[index] || "rgba(223, 29, 29, 0)";
+  
+  return selectedCohortSection.includes(item.label) ? hardcodedColor : hardcodedColor;
     } else {
       return selectedCohortSection.includes(item.label)
         ? baseColorArray[index]
-        : reduceOpacity(baseColorArray[index], 85);
+        : reduceOpacity(baseColorArray[index], 55);
     }
   };
 
@@ -145,7 +156,6 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
         },
     },
     },
-   
   };
 
   useEffect(() => {
@@ -170,7 +180,7 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
 
   return (
     <div className="App">
-      <canvas style={{ width: 800, height: 100,position:'relative',left:40,top:-100}} ref={canvasRef} id="canvas"></canvas>
+      <canvas style={{ width: 800, height: 100,position:'relative',left:0,top:-30}} ref={canvasRef} id="canvas"></canvas>
 
     </div>
   );
