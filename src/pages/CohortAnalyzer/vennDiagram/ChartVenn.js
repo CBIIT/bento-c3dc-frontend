@@ -8,12 +8,12 @@ const hexToRgba = (hex, alpha = 1) => {
 };
 
 const intersectionColors = [
-  0,0,"#cbdfcc",
+  "#000","#000","#cbdfcc",
   "#cbdfcc",
   "#e4e3c4",
-  "#BAD9CB",
+  "#bcd8d1",
   "#65DEA8"
-];
+].map(color => hexToRgba(color));
 
 
 function reduceOpacity(rgbaColor, reductionPercentage) {
@@ -101,16 +101,16 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
   }
 
   const getBorderWidth = (item, index) =>{
+  
     return selectedCohortSection.includes(item.label) ? 4 : 0.5;
   }
 
   const getBackgroundColor = (item, index) => {
     if (item.sets.length > 1) {
       const intersectionKey = item.sets.sort().join("-");
-      console.log("INTERSECTION:" , index)
       const hardcodedColor = intersectionColors[index] || "rgba(223, 29, 29, 0)";
   
-  return selectedCohortSection.includes(item.label) ? hardcodedColor : hardcodedColor;
+  return selectedCohortSection.includes(item.label) ? hardcodedColor :  reduceOpacity(hardcodedColor, 35);;
     } else {
       return selectedCohortSection.includes(item.label)
         ? baseColorArray[index]
@@ -155,6 +155,10 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
             },
         },
     },
+    hover: {
+      mode: null,
+      animationDuration: 0 
+    }
     },
   };
 
