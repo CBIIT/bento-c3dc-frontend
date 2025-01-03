@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
-import { GET_COHORT_MANIFEST_QUERY } from "../../bento/dashboardTabData";
+import { DISPLAY_COHORT_QUERY } from "../../bento/dashboardTabData";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
@@ -64,7 +64,7 @@ export const CohortAnalyzer = () => {
         }
         setQueryVariable(queryVariables);
         const { data } = await client.query({
-            query: GET_COHORT_MANIFEST_QUERY,
+            query: DISPLAY_COHORT_QUERY,
             variables: queryVariables,
         });
         if (queryVariables.participant_pks.length > 0) {
@@ -72,7 +72,7 @@ export const CohortAnalyzer = () => {
                 let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
-                setRowData(addCohortColumn(data['diagnosisOverview'], state, selectedCohorts));
+                setRowData(addCohortColumn(data['participantOverview'], state, selectedCohorts));
                 setRefershInit(!refershInit)
             }
         } else {
@@ -347,7 +347,7 @@ export const CohortAnalyzer = () => {
                                                 handleCheckbox={handleCheckbox} />
                                             <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {state[cohort].cohortName + " (" + state[cohort].participants.length + ")"} </span>
                                         </div>
-                                        <img alt={"Trashcan"} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
+                                        <img alt={"Trashcan"} style={{cursor: 'pointer' }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
                                     </div>
                                 </div>
                             )
@@ -370,9 +370,8 @@ export const CohortAnalyzer = () => {
                     <div style={{ display: 'flex', marginBottom: 40, width: '100%', alignItems: 'flex-end', justifyContent: 'center' }}>
                         {refershTableContent && selectedCohorts.length > 0 && <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])}
                             setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
-                            setSelectedCohortSections={(data) => {
-                                setSelectedCohortSections(data);
-                            }}
+                            setSelectedCohortSections={
+                                setSelectedCohortSections}
                             selectedCohortSection={selectedCohortSection}
                             selectedCohort={selectedCohorts}
                             setGeneralInfo={setGeneralInfo}
@@ -396,7 +395,7 @@ export const CohortAnalyzer = () => {
                                     </div>
                                 </ToolTip>
                             </div>
-                            <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0} />
+                            <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
 
                         </div>
                     </div>

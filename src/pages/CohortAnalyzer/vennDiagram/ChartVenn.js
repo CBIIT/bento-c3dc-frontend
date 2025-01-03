@@ -87,12 +87,14 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
         content.forEach(item => updatedChart.has(item) ? updatedChart.delete(item) : updatedChart.add(item));
         return Array.from(updatedChart);
       });
+      let prevData = [...selectedCohortSection];
+      if(prevData.includes(label)){
+        prevData = prevData.filter(labels => labels !== label);
+      }else{
+        prevData =[...prevData,label];
 
-      setSelectedCohortSections(prev => {
-        return prev.includes(label)
-          ? prev.filter(item => item !== label)
-          : [...prev, label];
-      });
+      }
+      setSelectedCohortSections(prevData);
     }
   };
 

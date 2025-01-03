@@ -57,35 +57,36 @@ const createNewCohort = (state, payload) => {
   }
 
   // If no cohortId is provided, default to "New Cohort"
+  let normalizedCohortId;
   if (!cohortId) {
     cohortId = "New Cohort";
     let counter = 1;
-
+    normalizedCohortId = cohortId.trim().toLowerCase();
     // Increment the cohort name if it already exists
-    while (state[cohortId]) {
+    while (state[normalizedCohortId]) {
       cohortId = `New Cohort ${counter}`;
+      normalizedCohortId = cohortId.trim().toLowerCase();
       counter++;
     }
   }
+  normalizedCohortId = cohortId.trim().toLowerCase();
 
   if (!cohortName) {
     cohortName = cohortId;
   }
 
-  if (state[cohortId]) {
-    throw new Error(`Cohort with ID ${cohortId} already exists`);
+  if (state[normalizedCohortId]) {
+    throw new Error(`Cohort with ID ${cohortName} already exists`);
   }
 
   const newCohort = {
     ..._.cloneDeep(cohortObjectTemplate),
-    cohortId,
+    cohortId: normalizedCohortId,
     cohortName,
     participants,
     cohortDescription,
     lastUpdated: new Date().toISOString(),
   };
-
-
 
   if (!isValidCohort(newCohort)) {
     throw new Error('Invalid cohort data');
@@ -93,7 +94,7 @@ const createNewCohort = (state, payload) => {
 
   const newState = {
     ...state,
-    [cohortId]: newCohort,
+    [normalizedCohortId]: newCohort,
   };
 
   return {newState, count: participants.length};
@@ -158,15 +159,15 @@ const mutateSingleCohort = (state, payload) => {
 
   // Check if cohortName is different from cohortId
   //normalize the name as an ID by removing trailing and leading spaces and case sensitivity.
-  const newCleanCohortID = cohortName.trim().toLowerCase();
+  const normalizedCohortId = cohortName.trim().toLowerCase();
 
-  if (newCleanCohortID && newCleanCohortID !== cohortId) {
+  if (normalizedCohortId && normalizedCohortId !== cohortId) {
     // Create a new entry with the new cohort ID
-    if (state[newCleanCohortID]) {
+    if (state[normalizedCohortId]) {
       throw new Error(`Cohort with Name ${cohortName} already exists, please choose a different name`);
     }
-    newCohort.cohortId = newCleanCohortID;
-    newState[newCleanCohortID] = newCohort;
+    newCohort.cohortId = normalizedCohortId;
+    newState[normalizedCohortId] = newCohort;
     // Delete the old entry
     delete newState[cohortId];
   } else {
