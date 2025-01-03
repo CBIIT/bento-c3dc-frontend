@@ -108,7 +108,15 @@ console.log("Baseset: ", baseSets);
     },
     options: {
       onClick: handleChartClick,
-  },
+      onHover: (event, elements) => {
+        const canvas = event.native.target;
+        if (elements.length) {
+          canvas.style.cursor = 'pointer';
+        } else {
+          canvas.style.cursor = 'default';
+        }
+      }
+    },
   };
 
   useEffect(() => {

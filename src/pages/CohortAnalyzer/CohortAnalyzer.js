@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
-import { GET_COHORT_MANIFEST_QUERY } from "../../bento/dashboardTabData";
+import { DISPLAY_COHORT_QUERY } from "../../bento/dashboardTabData";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
@@ -288,7 +288,7 @@ export const CohortAnalyzer = () => {
                                 <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
                             </ToolTip>
                         </div>
-                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1 }} onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)} src={trashCan} width={15} height={16} />
+                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1, cursor: 'pointer' }} onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)} src={trashCan} width={15} height={16} />
                     </div>
                     <div className={classes.sortSection}>
                         <div style={{ display: 'flex', margin: 0, alignItems: 'center', cursor: 'pointer' }}>
@@ -319,7 +319,7 @@ export const CohortAnalyzer = () => {
                                                 handleCheckbox={handleCheckbox} />
                                             <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {state[cohort].cohortName + " (" + state[cohort].participants.length + ")"} </span>
                                         </div>
-                                        <img alt={"Trashcan"} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
+                                        <img alt={"Trashcan"} style={{cursor: 'pointer' }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
                                     </div>
                                 </div>
                             )
@@ -396,7 +396,7 @@ export const CohortAnalyzer = () => {
                                     </div>
                                 </ToolTip>
                             </div>
-                            <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0} />
+                            <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
 
                         </div>
                     </div>
