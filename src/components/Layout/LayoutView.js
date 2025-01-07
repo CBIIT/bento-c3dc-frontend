@@ -18,7 +18,6 @@ import PdfReader from "../../pages/pdfReader/pdfReader";
 import StudyDetail from "../../pages/studyDetail/studyDetailController";
 import OverlayWindow from "../OverlayWindow/OverlayWindow";
 import AnnouncementPage from "../../pages/announcement/announcementPage";
-import ReleaseNotePage from "../../pages/releaseNote/releaseNote";
 import CohortManager from "../../pages/CohortManager/CohortManagerController";
 import ReleaseNoteController from "../../pages/releaseNote/releaseNoteController";
 import  CohortAnalyzerController  from "../../pages/CohortAnalyzer/CohortAnalyzerController";

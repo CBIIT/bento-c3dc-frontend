@@ -156,28 +156,7 @@ query studyDetails($study_id: String) {
       
       __typename
   }
-}`
-
-//const downloadLinkPrefix = "https://d2ugardyiv9yoe.cloudfront.net/"; //non-prod
-const downloadLinkPrefix = "https://d2l5jy2ao2mx5b.cloudfront.net/"; //prod
-
-const studyDetailDownloadLinks = {
-  "phs000466": {
-    "TARGET_CCSK_ClinicalData_Discovery_20170525.xlsx": downloadLinkPrefix + "TARGET-CCSK_clinicalData_PUBLIC_20220207/TARGET_CCSK_ClinicalData_Discovery_20170525.xlsx",
-  },
-  "phs000467": {
-    "TARGET_NBL_ClinicalData_Discovery_20220125.xlsx": downloadLinkPrefix + "target-nbl/TARGET_NBL_ClinicalData_Discovery_20220125.xlsx",
-    "TARGET_NBL_ClinicalData_Validation_20220125.xlsx": downloadLinkPrefix + "target-nbl/TARGET_NBL_ClinicalData_Validation_20220125.xlsx",
-  },
-  "phs000470": {
-    "TARGET_RT_ClinicalData_Discovery_20211111.xlsx": downloadLinkPrefix + "TARGET-RT_clinicalData_PUBLIC_20220209/TARGET_RT_ClinicalData_Discovery_20211111.xlsx",
-    "TARGET_RT_ClinicalData_Validation_20211111.xlsx": downloadLinkPrefix + "TARGET-RT_clinicalData_PUBLIC_20220209/TARGET_RT_ClinicalData_Validation_20211111.xlsx",
-  },
-  "phs000471": {
-    "TARGET_WT_ClinicalData_Discovery_20211111.xlsx": downloadLinkPrefix + "TARGET-WT_clinicalData_PUBLIC_20220131/TARGET_WT_ClinicalData_Discovery_20211111.xlsx",
-    "TARGET_WT_ClinicalData_Validation_20211111.xlsx": downloadLinkPrefix + "TARGET-WT_clinicalData_PUBLIC_20220131/TARGET_WT_ClinicalData_Validation_20211111.xlsx",
-  }
-};
+}`;
 
 
 export {
@@ -192,6 +171,5 @@ export {
   // GET_PROGRAM_DETAIL_DATA_QUERY,
   GET_STUDY_DETAIL_DATA_QUERY,
   //table,
-  studyDetailDownloadLinks
 
 };
