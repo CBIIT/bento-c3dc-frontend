@@ -9,6 +9,7 @@ export const aboutData = {
     "The <a className='aboutLink' href='https://www.cancer.gov/research/areas/childhood/childhood-cancer-data-initiative' target='_blank' rel='noopener noreferrer'>NCI’s Childhood Cancer Data Initiative (CCDI)</a>, " +
     "which the Childhood Cancer Clinical Data Commons is part of, is an initiative seeking to build a community centered around childhood cancer care and research. " +
     "Through enhanced data sharing, the initiative works to improve understanding of cancer biology, preventive measures, treatment, quality of life, and survivorship, as well as ensure that the community can learn from every child with cancer. " +
+    "C3DC is part of the CCDI Data Ecosystem. Learn more about other CCDI data and resources on the CCDI Hub. " +
     "<a className='aboutLink' href='https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new?topic_id=USNIHNCI_223' target='_blank' rel='noopener noreferrer'>Sign-up for email updates</a> from NCI about CCDI.",
   secondParagraph:
     "<a className='sectionTitle'>Childhood Cancer Clinical Data Commons</a><br/>" +
