@@ -31,22 +31,33 @@ export const customTheme = {
         '&.participants': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #006A8F',
+          borderTop: '6px solid #E39520',
         },
         '&.diagnosis': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #E39520',
+          borderTop: '6px solid #35B899',
         },
         '&.survival': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #35B899',
+          borderTop: '6px solid #862405',
         },
         '&.studies': {
           background: '#FFFFFF',
           color: '#000000',
+          borderTop: '6px solid #006A8F',
+        },
+        '&.treatment': {
+          background: '#FFFFFF',
+          color: '#000000',
           borderTop: '6px solid #9664C7',
+        },
+        '&.treatment_response': {
+          background: '#FFFFFF',
+          color: '#000000',
+          borderTop: '6px solid #006B57',
+        },
         },
         '&.MuiTypography-body1': {
           color: 'red',
@@ -72,6 +83,16 @@ export const customTheme = {
         fontSize: '16px',
         fontWeight: '300',
       },
+      '& span.treatment_count': {
+        marginLeft: '5px',
+        fontSize: '16px',
+        fontWeight: '300',
+      },
+      '& span.treatment_response_count': {
+        marginLeft: '5px',
+        fontSize: '16px',
+        fontWeight: '300',
+      },
     },
-  },
-};
+  };
+;

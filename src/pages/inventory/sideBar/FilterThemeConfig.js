@@ -43,29 +43,41 @@ const theme = {
     },
     MuiListItem: {
       root: {
-        '&.demographicsCheckedEven': {
+        '&.studyCheckedEven': {
           backgroundColor: '#B5DDE5',
         },
-        '&.demographicsCheckedOdd': {
+        '&.studyCheckedOdd': {
           backgroundColor: '#A5C2C8',
         },
-        '&.diagnosisCheckedEven': {
+        '&.demographicsCheckedEven': {
           backgroundColor: '#FFF2DF',
         },
-        '&.diagnosisCheckedOdd': {
+        '&.demographicsCheckedOdd': {
           backgroundColor: '#F0DCBE',
         },
-        '&.survivalCheckedEven': {
-          backgroundColor: '#C2FFF1',
+        '&.diagnosisCheckedEven': {
+          backgroundColor: '#E6FFF9',
         },
-        '&.survivalCheckedOdd': {
+        '&.diagnosisCheckedOdd': {
           backgroundColor: '#BCE1D8',
         },
-        '&.studyCheckedEven': {
-          backgroundColor: '#E8DBF5',
+        '&.treatmentCheckedEven': {
+          backgroundColor: '#F6F0FB',
         },
-        '&.studyCheckedOdd': {
+        '&.treatmentCheckedOdd': {
           backgroundColor: '#D3BFE8',
+        },
+        '&.treatmentresponseCheckedEven': {
+          backgroundColor: '#E9F5F3',
+        },
+        '&.treatmentresponseCheckedOdd': {
+          backgroundColor: '#E0ECEA',
+        },
+        '&.survivalCheckedEven': {
+          backgroundColor: '#FFF6F3',
+        },
+        '&.survivalCheckedOdd': {
+          backgroundColor: '#FFEDE7',
         },
       },
     },
@@ -102,6 +114,12 @@ const theme = {
         },
         '&.divider3': {
           backgroundColor: '#9664C7',
+        },
+        '&.divider4': {
+          backgroundColor: '#006B57',
+        },
+        '&.divider5': {
+          backgroundColor: '#862405',
         },
       },
     },

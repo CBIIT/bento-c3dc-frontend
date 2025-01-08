@@ -157,8 +157,8 @@ const LandingView = ({ classes, statsData }) => (
             </div>
             <div className={classes.contentRight}>
               <div className={classes.contentRightTop}>
-                <div className={classes.program}>
-                  <div className={classes.programImg}>
+                <div className={classes.study}>
+                  <div className={classes.studyImg}>
                     <img
                       className={classes.image}
                       src={landingPageData.tile2.img}
@@ -184,6 +184,8 @@ const LandingView = ({ classes, statsData }) => (
                       <Link
                         to={landingPageData.tile2.callToActionLink}
                         className={classes.blueButton}
+                        target="_blank" 
+                        rel="noopener noreferrer"
                       >
                         {landingPageData.tile2.callToActionText}
                       </Link>
@@ -191,7 +193,7 @@ const LandingView = ({ classes, statsData }) => (
                   </div>
                 </div>
                 <div className={classes.studies}>
-                  <div className={classes.programImg}>
+                  <div className={classes.studyImg}>
                     <img
                       className={classes.image}
                       src={landingPageData.tile3.img}
@@ -207,7 +209,7 @@ const LandingView = ({ classes, statsData }) => (
                       {landingPageData.tile3.descriptionText}
                     </div>
 
-                  </div>{/*
+                  </div>
                   <div className={classes.blueButton}>
                     <div className={classes.blueButtonLeft}>
                       <img className={classes.icon} src={icon} alt="CTDC about " />
@@ -217,11 +219,12 @@ const LandingView = ({ classes, statsData }) => (
                       <Link
                         to={landingPageData.tile3.callToActionLink}
                         className={classes.blueButton}
+                        reloadDocument={true}
                       >
                         {landingPageData.tile3.callToActionText}
                       </Link>
                     </div>
-                  </div>*/}
+                  </div>
                 </div>
 
               </div>
@@ -264,31 +267,31 @@ const styles = () => ({
       clipPath: "inset(0px 100% 0px 0px)" 
     },
     "32.33%": { //left
-      clipPath: "inset(0px 46.9% 0px 0px)" 
+      clipPath: "inset(0px 47.1% 0px 0px)" 
     },
     "39.67%": { //peak
-      clipPath: "inset(0px 45% 0px 0px)" 
+      clipPath: "inset(0px 45.2% 0px 0px)" 
     },
     "47%": { //drop -3
-      clipPath: "inset(0px 42.7% 0px 0px)" 
+      clipPath: "inset(0px 43% 0px 0px)" 
     },
     "51.56%": { //left -4
-      clipPath: "inset(0px 30.3% 0px 0px)" 
+      clipPath: "inset(0px 31.0% 0px 0px)" 
     },
     "58.89%": { //peak -5
-      clipPath: "inset(0px 28.4% 0px 0px)" 
+      clipPath: "inset(0px 29.0% 0px 0px)" 
     },
     "66.22%": { //drop -6
-      clipPath: "inset(0px 26.1% 0px 0px)" 
+      clipPath: "inset(0px 26.8% 0px 0px)" 
     },
     "70.78%": { //left -7
-      clipPath: "inset(0px 14.5% 0px 0px)" 
+      clipPath: "inset(0px 14.8% 0px 0px)" 
     },
     "78.11%": { //peak -8
-      clipPath: "inset(0px 12.6% 0px 0px)" 
+      clipPath: "inset(0px 12.9% 0px 0px)" 
     },
     "85.44%": { //drop -9 
-      clipPath: "inset(0px 10.3% 0px 0px)" 
+      clipPath: "inset(0px 10.7% 0px 0px)" 
     },
     "88%": {
       clipPath: "inset(0px 1.7% 0px 0px)",
@@ -317,47 +320,47 @@ const styles = () => ({
     "32.33%": { //left
       top: '745px',
       left: '50%',
-      marginLeft: "48px",  
+      marginLeft: "47px",  
     },
     "39.67%": { //peak
       top: '685px',
       left: '50%',
-      marginLeft: "80px", 
+      marginLeft: "77px", 
     },
     "47%": { //drop
       top: '745px',
       left: '50%',
-      marginLeft: "110px",  
+      marginLeft: "107px",  
     },
     "51.56%": { //left
       top: '745px',
       left: '50%',
-      marginLeft: "292px",
+      marginLeft: "284px",
     },
     "58.89%": { //peak
       top: '685px',
       left: '50%',
-      marginLeft: "322px", 
+      marginLeft: "314px", 
     },
     "66.22%": { //drop
       top: '745px',
       left: '50%',
-      marginLeft: "352px", 
+      marginLeft: "344px", 
     },
     "70.78%": { //left
       top: '745px',
       left: '50%',
-      marginLeft: "524px", 
+      marginLeft: "520px", 
     },
     "78.11%": { //peak
       top: '685px',
       left: '50%',
-      marginLeft: "555px", 
+      marginLeft: "550px", 
     },
     "85.44%": { //drop
       top: '745px',
       left: '50%',
-      marginLeft: "586px", 
+      marginLeft: "580px", 
     },
     "88%": {
       top: '745px',
@@ -789,7 +792,7 @@ const styles = () => ({
   },
   tile3Content: {
     width: '100%',
-    height: '200px',
+    height: '155px',
     overflowY: 'auto',
     background: '#fff',
     paddingLeft: '30px',
@@ -813,13 +816,13 @@ const styles = () => ({
     lineHeight: '24px',
   },
 
-  program: {
+  study: {
     float: 'left',
     margin: '0 10px 6.8px 0px',
     border: 'solid 2px #096761',
 
   },
-  programImg: {
+  studyImg: {
     background: '#fff',
     height: '249px',
   },
@@ -844,7 +847,7 @@ const styles = () => ({
   mountainMeadowButtonSection: {
     height: '44px',
     width: '184px',
-    marginTop: '32px',
+    marginTop: '60px',
     backgroundColor: 'transparent',
     border: '1px white solid',
   },
@@ -870,7 +873,7 @@ const styles = () => ({
     fontFamily: 'Lato',
     fontSize: '14px',
     color: '#fff',
-    textTransform: 'uppercase',
+    textTransform: 'uppercase'
   },
   mountainMeadowContentHeader: {
     color: '#ffffff',

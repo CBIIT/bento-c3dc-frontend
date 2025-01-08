@@ -89,7 +89,7 @@ const tblBody = {
           lineBreak: 'anywhere',
         },
       },
-      '&.study_short_title': {
+      '&.study_name': {
         minWidth: '300px',
       },
       '&.md5sum': {
@@ -214,16 +214,22 @@ export const extendedView = {
 
 export const toolbar = {
   MuiToolbar: {
-    root: {
+    root: { 
+      '&.downloadColumnView': {
+        maxHeight: '10px'
+      },
+      height: '10px',
       borderTop: '1px solid #8A7F7C',
       '& div' :{
         fontFamily: 'Open Sans',
         fontSize: '14px',
+        maxHeight: '15px',
       }
     },
     regular: {
+      maxHeight: '15px',
       '@media (min-width: 600px)': {
-        minHeight: '35px',
+        maxHeight: '25px',
       },
     },
   },

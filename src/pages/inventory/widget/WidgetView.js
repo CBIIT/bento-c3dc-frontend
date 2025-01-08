@@ -31,7 +31,7 @@ const WidgetView = ({
       colors,
       styles: {
         cellPadding: 2,
-        textOverflowLength: 20,
+        textOverflowLength: 15,
         textColor: theme.palette.widgetBackground.contrastText,
       },
       functions:{
@@ -78,7 +78,13 @@ const WidgetView = ({
       <Collapse in={collapse} className={classes.backgroundWidgets}>
         <Grid container>
           {widgetConfig.slice(0, 6).map((widget, index) => {
-            const dataset = displayWidgets[widget.dataName];
+            let dataset = displayWidgets[widget.dataName];
+          let newDataset  = dataset.map((data) => {
+              return {
+                ...data
+              };
+            });
+            dataset = newDataset;
             if (!dataset || dataset.length === 0) {
               return <></>;
             }

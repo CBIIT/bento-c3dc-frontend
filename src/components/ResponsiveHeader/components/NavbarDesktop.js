@@ -181,7 +181,7 @@ const DropdownContainer = styled.div`
       background: #1F4671;
       display: grid;
       grid-column-gap: 2%;
-      grid-template-columns: 32% 32% 32%;
+      grid-template-columns: 24.25% 24.25% 24.25% 24.25%;
       padding: 32px 140px 0 140px;
     }
 
@@ -189,7 +189,7 @@ const DropdownContainer = styled.div`
       // border: 1px solid rgba(0, 0, 0, 0.8);
       padding: 0 10px 32px 10px;
       font-size: 30px;
-      text-align: left;
+      text-align: center;
       font-family: poppins;
       font-weight: 600;
       font-size: 20px;
@@ -312,17 +312,25 @@ const NavBar = () => {
       </NavContainer>
       <Dropdown ref={dropdownSelection} style={clickedTitle === '' ? dropdownInvisibleStyle : null}>
         <DropdownContainer>
-            <div className="dropdownList">
-              {
-                clickedTitle !== "" ? navbarSublists[clickedTitle].map((dropItem, idx) => {
-                  const dropkey = `drop_${idx}`;
-                  return (
-                    dropItem.link && <a href={dropItem.link} className="dropdownItem" key={dropkey} onClick={() => setClickedTitle("")}>{dropItem.name}</a>
-                  )
-                })
-                :null
-              }
-            </div>
+          <div className="dropdownList">
+            {clickedTitle !== "" ? navbarSublists[clickedTitle].map((dropItem, idx) => {
+              const dropkey = `drop_${idx}`;
+              return (
+                dropItem.link && (
+                  <a
+                    href={dropItem.link}
+                    className="dropdownItem"
+                    key={dropkey}
+                    onClick={() => setClickedTitle("")}
+                    target={dropItem.externalLink ? "_blank" : "_self"} // Set target attribute based on externalLink
+                    rel='noopener noreferrer'
+                  >
+                    {dropItem.name}
+                  </a>
+                )
+              );
+            }) : null}
+          </div>
         </DropdownContainer>
       </Dropdown>
     </Nav>

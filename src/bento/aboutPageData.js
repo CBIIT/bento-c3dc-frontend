@@ -1,3 +1,6 @@
+import userGuide from '../assets/releaseNotes/C3DC User Guide -R4-V3.pdf';
+import latestRelease from '../assets/releaseNotes/C3DC_Release_Notes.pdf';
+
 export const aboutData = {
   introParagraph:
     "<a className='sectionTitle'>Childhood Cancer Data Initiative</a><br/>" +
@@ -8,7 +11,7 @@ export const aboutData = {
   secondParagraph:
     "<a className='sectionTitle'>Childhood Cancer Clinical Data Commons</a><br/>" +
     "The Childhood Cancer Clinical Data Commons (C3DC) is an open-access web application that serves as the primary source for deidentified, individual-level harmonized data that describes the demographic and phenotypic characteristics of participants. " +
-    "This harmonization process uses a standard <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/dmdirect/NIH/NCI/CO/CDEDD?filter=Administered%20Item%20%28Data%20Element%20CO%29.CDEDD%20Classification.P_ITEM_ID_VER=12119072v1' target='_blank' rel='noopener noreferrer'>data dictionary</a> consisting of Common Data Elements (CDEs), C3DC employs a common data model to facilitate cohort analyses and correlative analytics with data in other datatype-specific commons. " +
+    "This harmonization process uses a standard <a className='aboutLink' href='https://cadsr.cancer.gov/onedata/dmdirect/NIH/NCI/CO/CDEDD?filter=Administered%20Item%20%28Data%20Element%20CO%29.CDEDD%20Classification.P_ITEM_ID_VER=12119072v1' target='_blank' rel='noopener noreferrer'>data dictionary</a> consisting of Common Data Elements (CDEs), C3DC employs a common data model to facilitate cohort analyses and correlative analytics with data in other datatype-specific commons." +
     "The data model has been deposited in " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-model' target='_blank' rel='noopener noreferrer'>GitHub</a>.",
   thirdParagraph:
@@ -18,6 +21,7 @@ export const aboutData = {
     "  <li>Facilitates longitudinal data analyses.</li>" +
     "  <li>Enables custom/synthetic cohort creation and data downloading for subsequent local analyses.</li>" +
     "</ul>",
+  /* These paragraphs were originally in the about page when we had one large about page. Their content are now in separate pages.
   fourthParagraph:
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
     "This release contains harmonized data from:" +
@@ -77,9 +81,15 @@ export const aboutData = {
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/README.md' target='_blank' rel='noopener noreferrer'>Release Notes</a> " +
     ":  Stay informed about the latest updates. <br> " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>" +
-    ": Whether you are new or aiming to expand your knowledge about C3DC, </br> our user guide is your resource.",
+    ": Whether you are new or aiming to expand your knowledge about C3DC, </br> our user guide is your resource.",*/
   lastParagraph:
     "The CCDI welcomes input from the community to enhance usability. " +
-    "Please send your feedback and comments to " +
+    "Please send your <br> feedback and comments to " +
     "<a className='aboutLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>.",
 };
+
+
+export const pdfList = {
+  release_notes_pdf: latestRelease,
+  user_guide: userGuide
+}

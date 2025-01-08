@@ -52,11 +52,14 @@ const TabView = (props) => {
     ...initailState,
     title: config.name,
     query: config.api,
+    downloadButtonTooltipText: "Download data in CSV or JSON format",
     paginationAPIField: config.paginationAPIField,
     dataKey: config.dataKey,
+    hiddenDataKeys: config.hiddenDataKeys,
     columns: configColumn(config.columns),
     count: dashboardStats[config.count],
     selectedRows: [],
+    hiddenSelectedRows: [],
     enableRowSelection: config.enableRowSelection,
     tableMsg: config.tableMsg,
     sortBy: config.defaultSortField,
@@ -77,8 +80,9 @@ const TabView = (props) => {
         activeFilters={activeFilters}
         fileCount={dashboardStats['numberOfFiles']}
       >
-        <Grid container>
-          <Grid item xs={12} id={config.tableID}>
+         <Grid container>
+        <Grid item xs={12} id={config.tableID}>
+
             <TableView
               initState={initTblState}
               themeConfig={themeConfig}
@@ -88,6 +92,7 @@ const TabView = (props) => {
             />
           </Grid>
         </Grid>
+      
       </Wrapper>
     </TableContextProvider>
   );

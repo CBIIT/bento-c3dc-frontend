@@ -7,8 +7,8 @@ const NotificationFunctions = () => {
   const [message, setMessage] = React.useState('');
   // eslint-disable-next-line no-unused-vars
   const [location, setLocation] = React.useState({
-    vertical: 'top',
-    horizontal: 'center',
+    vertical: 'bottom',
+    horizontal: 'right',
   });
 
   // Variables

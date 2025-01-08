@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { Link, Typography } from '@material-ui/core';
 import { cellTypes, headerTypes } from '@bento-core/table';
 import ReactHtmlParser from "html-react-parser";
 
 export const CustomCellView = (props) => {
   const {
-    dataField, dataFormatter, cellStyle,
+    dataField, dataFormatter, cellStyle, label,
   } = props;
   const [top5, setTop5] = useState(true);
   const newStyle = {
@@ -14,6 +15,30 @@ export const CustomCellView = (props) => {
     textDecoration: 'underline',
     height: '23px',
   };
+
+  if (props.linkAttr) {
+    const { rootPath } = props.linkAttr;
+    return(
+      <Link 
+        className={cellTypes.LINK}
+        href={`${rootPath}${label}`}
+        target="_blank" 
+        rel="noopener noreferrer"
+        >
+
+        <Typography >{label}</Typography>
+      </Link>
+    )
+  }
+
+  if (Array.isArray(label)) {
+    /* This is copied from CDS where it has a limit of 5 items to display. We can use this if we want to limit the number of items to display.
+    if (label.length > 5){
+      return (<Typography>{label.slice(0,5).join(", ") + ", ..."}</Typography>);
+    }*/
+    return (<Typography>{label.join(", ")}</Typography>);
+  }
+
   if (cellStyle === 'TRANSFORM') {
     const content = dataFormatter(props[dataField]);
     return (<>{ReactHtmlParser(content)}</>);

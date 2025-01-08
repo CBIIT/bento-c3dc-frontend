@@ -3,6 +3,7 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import { useGlobal } from '../Global/GlobalProvider';
+import SuccessOutlined from '../../assets/icons/SuccessOutlined.svg';
 
 const Alert = withStyles(() => ({
   message: {},
@@ -17,9 +18,10 @@ const useStyles = makeStyles(() => ({
   },
   alertStyles: {
     // Widths & Size
-    width: '535px',
+    width: '235px',
     minHeight: '50px',
     boxSizing: 'border-box',
+    
 
     // Fonts
     color: '#ffffff',
@@ -32,9 +34,9 @@ const useStyles = makeStyles(() => ({
     lineHeight: '22px',
 
     // Background & Borders
-    backgroundColor: (props) => props.backgroundColor || '#5D53F6',
+    backgroundColor: (props) => props.backgroundColor || '#313131',
     borderColor: (props) => props.backgroundColor || 'none',
-    borderRadius: '0px',
+    borderRadius: '5px',
     boxShadow: '-4px 8px 27px 4px rgba(27,28,28,0.09)',
 
     // Positioning
@@ -65,6 +67,7 @@ const NotificationView = () => {
         onClose={handleClose}
       >
         <Alert severity="success" icon={false} className={classes.alertStyles}>
+          <img src={SuccessOutlined} alt="" />
           {message}
         </Alert>
       </Snackbar>

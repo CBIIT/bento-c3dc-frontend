@@ -83,12 +83,9 @@ export const landingPageData = {
     alt: '',
     img: landingTile3,
     titleText: 'Announcements',
-    descriptionText: 'Current release contains harmonized demographic and phenotypic data from the TARGET Neuroblastoma study and Molecular Characterization Initiative. Future releases will include additional CCDI-managed data.',
-    titleText: 'New Datasets',
-    descriptionText: 'Our latest release contains harmonized demographic and phenotypic data from nine additional CCDI datasets.',
-    callToActionText: 'Learn More',
-    callToActionLink: '', // Link to the "Resources" Static Page
-    callToActionLink: '', //Link to the "Resources" Static Page
+    descriptionText: 'The latest updates for both datasets and the application are now available. Stay current with the latest enhancements and improvements.',
+    callToActionText: 'EXPLORE ANNOUNCEMENTS',
+    callToActionLink: '/announcements', //Link to the "Announcement" Static Page
   },
   tile4: {
     alt: '',
@@ -100,7 +97,7 @@ export const landingPageData = {
   },
 };
 // --------------- GraphQL query - Retrieve Landing page data --------------
-export const GET_LANDING_PAGE_DATA_QUERY = gql`{
+export const GLOBAL_STATS_BAR_QUERY = gql`{
   numberOfDiseases,
   numberOfParticipants,
   numberOfReferenceFiles,

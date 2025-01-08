@@ -6,7 +6,7 @@
 /* eslint-disable vars-on-top */
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable arrow-body-style */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   AccordionSummary,
   Button,
@@ -28,6 +28,7 @@ import FacetFilterThemeProvider from './FilterThemeConfig';
 import {
   getAllParticipantIds, getAllIds,
 } from './BentoFilterUtils';
+import { toUpper } from 'lodash';
 
 const CustomExpansionPanelSummary = withStyles({
   root: {
@@ -101,7 +102,7 @@ const { UploadModal } = UploadModalGenerator({
     maxSearchTerms: 1000,
     matchedId: 'participant_id',
     matchedLabel : 'Submitted Participant ID',
-    associateId: 'phs_accession',
+    associateId: 'dbgap_accession',
     associateLabel: '',
     projectName: 'C3DC',
     caseIds: 'Participant IDs',
@@ -237,6 +238,32 @@ const BentoFacetFilter = ({
     );
   };
 
+  if (activeFilters['dbgap_accession']) {
+    facetSectionVariables['Study'].isExpanded = true;
+  }
+  
+  function updateSubjects(obj) {
+    if (Array.isArray(obj)) {
+      
+        return obj.map(item => updateSubjects(item));
+    } else if (typeof obj === 'object' && obj !== null) {
+        let newObj = {};
+        for (let key in obj) {
+            if (obj.hasOwnProperty(key)) {
+                if (key === 'subjects') {
+                    
+                    newObj[key] = obj[key].toLocaleString();
+                } else {
+                    
+                    newObj[key] = updateSubjects(obj[key]);
+
+                }
+            }
+        }
+        return newObj;
+    }
+    return obj;
+}
   return (
     <div>
       <FacetFilterThemeProvider>
@@ -245,7 +272,7 @@ const BentoFacetFilter = ({
           activeFilters={activeFilters}
         />
         <FacetFilter
-          data={searchData}
+          data={updateSubjects(searchData)}
           facetSectionConfig={facetSectionVariables}
           facetsConfig={facetsConfig}
           CustomFacetSection={CustomFacetSection}
