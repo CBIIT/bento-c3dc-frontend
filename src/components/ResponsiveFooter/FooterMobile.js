@@ -355,7 +355,7 @@ const FooterMobile = () => {
                         linkItem.items.map((item, itemidx) => {
                           const itemkey = `item_${itemidx}`;
                           return (
-                            item.link.includes('http') ?
+                            item.link.includes('http') || item.openNewTab === 'true' ? 
                               <a className='footItemLink' key={itemkey} href={item.link} target="_blank" rel="noopener noreferrer">{item.text}</a>
                               :
                               <a className='footItemLink' key={itemkey} href={item.link}>{item.text}</a>
