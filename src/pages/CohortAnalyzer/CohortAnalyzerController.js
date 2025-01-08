@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { CohortStateProvider } from "../../components/CohortSelectorState/CohortStateContext";
 import { CohortAnalyzer } from "./CohortAnalyzer";
 import { CohortModalContext } from "../inventory/cohortModal/CohortModalContext";

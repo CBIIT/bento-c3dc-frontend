@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
 import { DISPLAY_COHORT_QUERY } from "../../bento/dashboardTabData";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
@@ -57,6 +57,17 @@ export const CohortAnalyzer = () => {
     const { CohortModal } = CohortModalGenerator();
     const { Notification } = useGlobal();
 
+    const searchRef = useRef();
+
+
+    const handleSearchValue = (e) => {
+        setSearchValue(e.target.value)
+        if (searchRef.current) {
+            searchRef.current.value = e.target.value;
+        }
+
+    }
+
     async function getJoinedCohort() {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
@@ -69,7 +80,7 @@ export const CohortAnalyzer = () => {
         });
         if (queryVariables.participant_pks.length > 0) {
             if (searchValue !== "") {
-                let filteredRowData = rowData.filter((a, b) => a.participant_id.includes(searchValue))
+                let filteredRowData = data['participantOverview'].filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
                 setRowData(addCohortColumn(data['participantOverview'], state, selectedCohorts));
@@ -80,8 +91,14 @@ export const CohortAnalyzer = () => {
         }
     }
 
+
+
     useEffect(() => {
         setSearchValue("");
+        if (searchRef.current) {
+            searchRef.current.value = "";
+        }
+
     }, [selectedChart])
 
     useEffect(() => {
@@ -253,7 +270,7 @@ export const CohortAnalyzer = () => {
         page: 0,
         downloadFileName: "download",
         showDownloadIcon: false,
-        SearchBox: () => SearchBox(classes, setSearchValue, searchValue),
+        SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
         showSearchBox: true,
         tableMsg: (cohortList.length === 0) ? {
             noMatch: 'To proceed, please create your cohort by visiting the Explore Page.'
@@ -347,7 +364,7 @@ export const CohortAnalyzer = () => {
                                                 handleCheckbox={handleCheckbox} />
                                             <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {state[cohort].cohortName + " (" + state[cohort].participants.length + ")"} </span>
                                         </div>
-                                        <img alt={"Trashcan"} style={{cursor: 'pointer' }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
+                                        <img alt={"Trashcan"} style={{ cursor: 'pointer' }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
                                     </div>
                                 </div>
                             )
@@ -378,7 +395,7 @@ export const CohortAnalyzer = () => {
                         />}
 
                         {selectedCohorts.length === 0 &&
-                            <img src={placeHolder} width={725} style={{ marginTop: -50 }} />
+                            <img src={placeHolder} alt='placeholder' width={725} style={{marginTop:-30}} />
                         }
 
                     </div>
@@ -400,20 +417,8 @@ export const CohortAnalyzer = () => {
                         </div>
                     </div>
                     <div className={classes.rightSideTableContainer}>
-                        {refershTableContent && !searchValue &&
+                        {refershTableContent &&
 
-                            <TableView
-                                initState={!searchValue ? initTblState : initTblState}
-                                themeConfig={themeConfig}
-                                tblRows={rowData}
-                                queryVariables={queryVariable}
-                                server={false}
-                                totalRowCount={rowData.length}
-                                activeTab={"Participant"}
-                            />
-                        }
-
-                        {refershTableContent && searchValue &&
                             <TableView
                                 initState={refershInit ? initTblState : initTblState}
                                 themeConfig={themeConfig}
@@ -424,6 +429,8 @@ export const CohortAnalyzer = () => {
                                 activeTab={"Participant"}
                             />
                         }
+
+                    
                     </div>
                 </div>
             </div>

@@ -116,14 +116,12 @@ export const handleDelete = (cohortId,
     }
 }
 
-export const SearchBox = (classes, setSearchValue, searchValue) => {
+export const SearchBox = (classes, handleSearchValue ,searchValue,searchReference) => {  
     return (
         <div className={classes.inputStyleContainer}>
             <input
-                onChange={(e) => {
-                    setSearchValue(e.target.value);
-                }}
-                value={searchValue}
+                onChange={handleSearchValue}
+                ref={searchReference}
                 type="text"
                 placeholder={"Search Participant ID"}
                 className={classes.inputStyle}

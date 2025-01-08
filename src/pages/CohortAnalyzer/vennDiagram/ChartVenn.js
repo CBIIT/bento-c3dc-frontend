@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
 
 // Utility Functions
@@ -48,7 +48,6 @@ const blendColors = (color1, color2) => {
 const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, selectedCohortSection, selectedCohort, setGeneralInfo }) => {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
-  const [selectedVenns, setSelectedVenns] = useState([]);
   //const [generalInfo, setGeneralInfo] = useState({});
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
