@@ -359,7 +359,7 @@ export const CohortAnalyzer = () => {
                                 </p>
                             </div>
                         </div>
-                        {refershTableContent && selectedCohorts.length > 0 &&
+                        {refershTableContent && selectedCohorts.length > 0 && 
                         <ChartVenn 
                         intersection={nodeIndex} 
                         cohortData={ cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}

@@ -35,19 +35,32 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
   const baseColorArray = ["#86E2B9", "#5198C8D9", "#F9E28B"].map(color => hexToRgba(color));;
-  const nodes = ["participant_pk","diagnosis_pk"];
+  const nodes = ["participant_pk","diagnosis"];
 
-  const baseSets = cohortData.map((cohort) => ({
-    label: `${cohort.cohortId} (${cohort.participants.length})`,
-    values: cohort.participants.map(p => p[nodes[intersection]]),
-    size: cohort.participants.length,
-  }));
+  const [baseSets, setBaseSets] = useState([]);
+  const [data, setData] = useState(null);
 
-console.log("Baseset: ", baseSets);
+  useEffect(() => {
+    const updatedBaseSets = cohortData.map((cohort) => ({
+      label: `${cohort.cohortId} (${cohort.participants.length})`,
+      values: cohort.participants.map(p => p[nodes[intersection]]),
+      size: cohort.participants.length,
+    }));
+    setBaseSets(updatedBaseSets);
+  }, [cohortData]);
+  
+  useEffect(() => {
+    if (baseSets.length > 0) {
+      const updatedData = extractSets(
+        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
+      );
+      console.log("Newbasesets: ", updatedData);
+      setData(updatedData);
+    }
+    console.log("baseSets: ", baseSets);
+  }, [baseSets]);
 
-  const data = extractSets(
-    baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
-  );
+ 
 
   const handleChartClick = (event) => {
     const elementsAtEvent = chartRef.current.getElementsAtEventForMode(
@@ -57,7 +70,7 @@ console.log("Baseset: ", baseSets);
       true
     );
 
-    if (elementsAtEvent.length) {
+    if (elementsAtEvent.length && data) {
       const firstElement = elementsAtEvent[0];
       const datasetIndex = firstElement.datasetIndex;
       const index = firstElement.index;
@@ -94,7 +107,9 @@ console.log("Baseset: ", baseSets);
     }
   };
 
-  const config = {
+  let config = {};
+  if(data){
+   config = {
     type: "venn",
     data: {
       ...data,
@@ -119,6 +134,10 @@ console.log("Baseset: ", baseSets);
     },
   };
 
+
+}
+ 
+
   useEffect(() => {
     if (chartRef.current) chartRef.current.destroy();
     chartRef.current = new VennDiagramChart(canvasRef.current, config);
@@ -131,14 +150,24 @@ console.log("Baseset: ", baseSets);
 
   useEffect(() => {
     let updatedStat = {};
-    data.datasets[0].data.forEach(item => {
-      if (selectedCohortSection.includes(item.label)) {
-        updatedStat[item.label] = item.values;
-      }
-    });
-    setGeneralInfo(updatedStat);
+    if(data){
+      data.datasets[0].data.forEach(item => {
+        if (selectedCohortSection.includes(item.label)) {
+          updatedStat[item.label] = item.values;
+        }
+      });
+      setGeneralInfo(updatedStat);
+    }
+   
   },[selectedCohortSection])
 
+  if(!data){
+    return (
+      <div>
+        <p>Loading....</p>
+      </div>
+    )
+  }
   return (
     <div className="App">
       <canvas style={{ width: 800, height: 100 }} ref={canvasRef} id="canvas"></canvas>

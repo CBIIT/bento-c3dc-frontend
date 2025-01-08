@@ -208,6 +208,7 @@ diagnosisOverview(
     diagnosis_pk
     age_at_diagnosis
     anatomic_site
+    diagnosis
 
     __typename
 }}`;
