@@ -79,26 +79,49 @@ export const useStyle = makeStyles((theme) => ({
         marginTop: 70,
         overflowY: 'hidden',
         borderRadius: ' 0px 35px 35px 0px',
-        border: '1px solid #B0B0B0',
+        border: '4px solid #4E8191',
 
     },
     leftSideAnalyzerChild: {
         height: '90%',
         overflowY: 'scroll',
         '&::-webkit-scrollbar': {
-            width: "6px"
+            width: "2px"
         },
         '&::-webkit-scrollbar-thumb': {
-            width: "6px",
+            width: "2px",
             backgroundColor: '#003F74'
         },
         '&::-webkit-scrollbar-track': {
-            background: '#CECECE',
+            background: '#4E8191',
         },
     },
     cohortSelectionChild: {
         display: 'flex',
-        alignItems: 'start'
+        alignItems: 'start',
+        width: '100%',
+        '& span':{
+            fontSize: 12,
+            fontFamily: 'Poppins',
+            fontWeight: 500
+        }
+    },
+    cohortChildSelected: {
+        width: '100%',
+        height: 28,
+        display: 'flex',
+        marginBottom: 2,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        '&:first-child':{
+            background: '#FAE69C',
+        },
+        '&:nth-child(2)':{
+            background: '#A4E9CB',
+        },
+        '&:nth-child(3)':{
+            background: '#A3CCE8'
+        }
     },
     CohortChild: {
         background: '#E2F1F5',
@@ -139,7 +162,7 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     sideHeader: {
-        height: 62,
+        height: 112,
         fontFamily: 'Poppins',
         fontSize: 18.5,
         fontWeight: 500,
@@ -147,17 +170,21 @@ export const useStyle = makeStyles((theme) => ({
         letterSpacing: '-0.02em',
         textAlign: 'left',
         width: '100%',
-        verticalAlign: 'center',
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
+        paddingTop:20,
+        flexDirection: 'column',
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-        paddingLeft: 15,
-        paddingRight: 15,
+       
         '& img': {
             marginRight: 6.5
+        },
+        '& p':{
+            fontFamily: 'Open Sans',
+                fontSize: 15,
+                fontWeight: 400,
+                color: '#8A7F7C'
         }
     },
     sortSection: {
@@ -180,7 +207,7 @@ export const useStyle = makeStyles((theme) => ({
         minHeight: 58.94,
         display: 'flex',
         alignItems: 'flex-end',
-        justifyContent: 'space-between',
+        justifyContent: 'flex-end',
         width: '90%',
         paddingBottom: 10,
         borderTop: '1.02px #8A7F7C solid'
@@ -221,15 +248,17 @@ export const useStyle = makeStyles((theme) => ({
         position: 'relative',
         width: '90%',
         alignSelf: 'center',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         marginBottom: '30px',  
+        zIndex: 900,
         '& p': {
             fontFamily: 'Open Sans',
-            fontSize: '16px',
+            fontSize: '15px',
             fontWeight: 400,
+            width: 655,
             lineHeight: '20.8px',
             textAlign: 'left',
-            color: 'black',
+            color: '#8A7F7C'
         }
     },
     cohortChildContent: {

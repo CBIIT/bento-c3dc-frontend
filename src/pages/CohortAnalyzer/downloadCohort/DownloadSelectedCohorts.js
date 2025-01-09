@@ -64,8 +64,7 @@ export default function DownloadSelectedCohort({ queryVariable, isSelected }) {
                 onClick={handleDownloadDropdown}
             >
                 <div className={classes.downloadButtonText}>
-                    <span>Download</span>
-                    <span>Selected Cohorts</span>
+                    Download Results
                 </div>
                 <img
                     src={ExpandMoreIcon}
@@ -97,7 +96,8 @@ const useStyles = makeStyles((theme) => ({
     downloadButton: (props) => ({
         backgroundColor: props.isSelected ? '#556469' : '#556469',
         border: '1.25px solid #73A9C7',
-        width: '189px',
+        height: '41px',
+        width: '199px',
         color: 'white',
         borderTopLeftRadius: '5px',
         borderTopRightRadius: '5px',
@@ -122,6 +122,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#0C534C',
         border: '1.25px solid #73A9C7',
         width: '189px',
+        height: '41px',
         color: 'white',
         borderTopLeftRadius: '5px',
         borderTopRightRadius: '5px',

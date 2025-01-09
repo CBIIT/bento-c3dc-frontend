@@ -34,6 +34,7 @@ import {
     triggerNotification,
     sortByReturn
 } from "./CohortAnalyzerUtil";
+import styled from "styled-components";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -41,6 +42,7 @@ export const CohortAnalyzer = () => {
     const [selectedCohorts, setSelectedCohorts] = useState([]);
     const [queryVariable, setQueryVariable] = useState({});
     const [rowData, setRowData] = useState([]);
+    const [refershInit, setRefershInit] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [cohortList, setCohortList] = useState(Object.keys(state) || {});
     const [selectedChart, setSelectedChart] = useState([]);
@@ -79,9 +81,10 @@ export const CohortAnalyzer = () => {
         if (queryVariables.participant_pks.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data['participantOverview'].filter((a, b) => a.participant_id.includes(searchValue))
-                setRowData(addCohortColumn(filteredRowData, state));
+                setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
-                setRowData(addCohortColumn(data['participantOverview'], state));
+                setRowData(addCohortColumn(data['participantOverview'], state, selectedCohorts));
+                setRefershInit(!refershInit)
             }
         } else {
             setRowData([]);
@@ -148,6 +151,57 @@ export const CohortAnalyzer = () => {
         setRefershTableContent(false)
         setTimeout(() => setRefershTableContent(true), 0)
     }, [cohortList])
+
+
+    const Wrapper = styled.div`
+  display: flex;
+  position: relative;
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 0;
+  justify-content: space-between;
+`;
+
+    const CohortSelectionChild = styled.div`
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+
+  & > span:first-child {
+    font-size: 18px;
+    font-family: Poppins;
+    font-size: 18.5px;
+    font-weight: 500;
+  }
+
+  & > span:last-child {
+    font-size: 16px;
+    font-weight: 400;
+    padding-left: 4px;
+    font-family: Poppins;
+
+  }
+`;
+
+    const TrashCanIcon = styled.img`
+  opacity: ${(props) => (Object.keys(props.state).length === 0 ? 0.6 : 1)};
+  cursor: ${(props) => (Object.keys(props.state).length === 0 ? 'not-allowed' : 'pointer')};
+`;
+
+    const Instructions = styled.p`
+  font-size: 15px;
+  padding: 0;
+  margin: 0;
+  margin-top: 7px;
+  font-weight: 400;
+  font-family: 'Open Sans';
+`;
+
+    const InstructionsWrapper = styled.div`
+  padding: 0;
+  padding-left: 10px;
+`;
+
 
     const handleCheckbox = (cohort, self) => {
         if (selectedCohorts.includes(cohort)) {
@@ -259,13 +313,27 @@ export const CohortAnalyzer = () => {
             <div className={classes.container}>
                 <div className={classes.leftSideAnalyzer}>
                     <div className={classes.sideHeader}>
-                        <div className={classes.cohortSelectionChild}>
-                            <span> {"COHORTS (" + Object.keys(state).length + ")"} </span>
-                            <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="top">
-                                <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
-                            </ToolTip>
-                        </div>
-                        <img alt={"Trashcan"} style={{ opacity: Object.keys(state).length === 0 ? 0.6 : 1, cursor: 'pointer' }} onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)} src={trashCan} width={15} height={16} />
+                        <>
+                            <Wrapper>
+                                <CohortSelectionChild>
+                                    <span>{"Cohort Selector "}</span>
+                                    <span>{" (" + selectedCohorts.length + "/3)"}</span>
+                                </CohortSelectionChild>
+                                <TrashCanIcon
+                                    alt="Trashcan"
+                                    state={state}
+                                    onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)}
+                                    src={trashCan}
+                                    width={15}
+                                    height={16}
+                                />
+                            </Wrapper>
+                            <InstructionsWrapper>
+                                <Instructions>
+                                    {"Select up to three cohorts to view in the Cohort Analyzer"}
+                                </Instructions>
+                            </InstructionsWrapper>
+                        </>
                     </div>
                     <div className={classes.sortSection}>
                         <div style={{ display: 'flex', margin: 0, alignItems: 'center', cursor: 'pointer' }}>
@@ -287,7 +355,7 @@ export const CohortAnalyzer = () => {
                     <div className={classes.leftSideAnalyzerChild}>
                         {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state, selectedCohorts) : Object.keys(state)).map((cohort) => {
                             return (
-                                <div className={selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? classes.CohortChild : classes.CohortChild}  >
+                                <div className={!selectedCohorts.includes(cohort) ? classes.CohortChild : classes.cohortChildSelected}  >
                                     <div className={classes.cohortChildContent} >
                                         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 6 }}>
                                             <CheckBoxCustom
@@ -308,14 +376,19 @@ export const CohortAnalyzer = () => {
                         <h1> Cohort Analyzer</h1>
                     </div>
                     <div className={classes.rightSideAnalyzerHeader2}>
-                        <p>{getTitle()}</p>
+                        <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
+
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate."} arrow placement="top">
+                                <Help size={5} style={{ fontSize: 14 }} />
+                            </ToolTip>
+                        </p>
                     </div>
-                    <div style={{ display: 'flex', marginBottom: 40 }}>
+
+                    <div style={{ display: 'flex', marginBottom: 40, width: '100%', alignItems: 'flex-end', justifyContent: 'center' }}>
                         {refershTableContent && selectedCohorts.length > 0 && <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])}
                             setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
-                            setSelectedCohortSections={(data) => {
-                                setSelectedCohortSections(data);
-                            }}
+                            setSelectedCohortSections={
+                                setSelectedCohortSections}
                             selectedCohortSection={selectedCohortSection}
                             selectedCohort={selectedCohorts}
                             setGeneralInfo={setGeneralInfo}
@@ -327,13 +400,7 @@ export const CohortAnalyzer = () => {
 
                     </div>
                     <div className={classes.cohortCountSection}>
-                        <div className={classes.cohortSelectionChild}>
-                            <span>{"SELECTED COHORTS (" + selectedCohorts.length + "/3)"}</span>
-                            <ToolTip title={"A maximum of 3 cohorts can be selected at this time."} arrow placement="top">
 
-                                <img alt={"QuestionMark"} src={Question_Icon} width={"10px"} height={"10px"} />
-                            </ToolTip>
-                        </div>
                         <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '45%' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <button onClick={() => handleClick()} className={(selectedCohortSection.length === 0 || rowData.length === 0) ? classes.createCohortOpacity : classes.createCohort} >CREATE NEW COHORT</button>
@@ -353,7 +420,7 @@ export const CohortAnalyzer = () => {
                         {refershTableContent &&
 
                             <TableView
-                                initState={initTblState}
+                                initState={refershInit ? initTblState : initTblState}
                                 themeConfig={themeConfig}
                                 tblRows={rowData}
                                 queryVariables={queryVariable}
@@ -363,7 +430,7 @@ export const CohortAnalyzer = () => {
                             />
                         }
 
-
+                    
                     </div>
                 </div>
             </div>
