@@ -81,7 +81,7 @@ export const CohortAnalyzer = () => {
         });
         if (queryVariables.participant_pks.length > 0) {
             if (searchValue !== "") {
-                let filteredRowData = data[nodeIndex == 0? 'participantOverview' : 'diagnosisOverview'].filter((a, b) => a.participant_id.includes(searchValue))
+                let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
                 setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
