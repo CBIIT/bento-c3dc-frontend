@@ -20,7 +20,7 @@ export const getAllIds = (generalInfo) => {
 
 export const addCohortColumn = (rowD, state, selectedCohorts) => {
     let finalRowData = rowD.map((row) => {
-        // Get the cohort name for the current participant
+        // Get the cohort name for the current participants
         let cohortName = getCohortName(row.participant_pk, state, selectedCohorts);
         // Return a new object with the added cohort property
         return {
