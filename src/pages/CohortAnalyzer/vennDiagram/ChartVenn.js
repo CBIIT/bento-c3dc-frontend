@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
 
 // Utility Functions
@@ -6,24 +6,6 @@ const hexToRgba = (hex, alpha = 1) => {
   const rgb = hex.replace("#", "").match(/.{2}/g).map(x => parseInt(x, 16));
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 };
-
-const intersectionColors = [
-  "#000","#000","#cbdfcc",
-  "#cbdfcc",
-  "#e4e3c4",
-  "#bcd8d1",
-  "#65DEA8"
-].map(color => hexToRgba(color));
-
-
-function reduceOpacity(rgbaColor, reductionPercentage) {
-  const matches = rgbaColor.match(/rgba?\((\d+), (\d+), (\d+),? ([\d.]+)?\)/);
-  if (!matches) throw new Error("Invalid RGBA color format");
-
-  const [_, r, g, b, a = 1] = matches.map(Number); // Default alpha to 1 if not specified
-  const newAlpha = a * (1 - reductionPercentage / 100);
-  return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
-}
 
 const blendColors = (color1, color2) => {
   const rgba1 = color1.match(/[\d.]+/g).map(Number);
@@ -37,34 +19,48 @@ const blendColors = (color1, color2) => {
     Math.round((rgba1[0] + rgba2[0]) / 2), // Red
     Math.round((rgba1[1] + rgba2[1]) / 2), // Green
     Math.round((rgba1[2] + rgba2[2]) / 2), // Blue
-    rgba1[3] !== undefined && rgba2[3] !== undefined
+    rgba1[3] !== undefined && rgba2[3] !== undefined 
       ? (rgba1[3] + rgba2[3]) / 2
       : 1, // Alpha
   ];
 
-  return `rgba(${blendedColor.join(", ")})`;
+  return `rgba(${blendedColor.join(",")})`;
 };
 
-const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, selectedCohortSection, selectedCohort, setGeneralInfo }) => {
+const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo }) => {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
+  const [selectedVenns, setSelectedVenns] = useState([]);
   //const [generalInfo, setGeneralInfo] = useState({});
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
+  const baseColorArray = ["#86E2B9", "#5198C8D9", "#F9E28B"].map(color => hexToRgba(color));;
+  const nodes = ["participant_pk","diagnosis"];
+
+  const [baseSets, setBaseSets] = useState([]);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const updatedBaseSets = cohortData.map((cohort) => ({
+      label: `${cohort.cohortId} (${cohort.participants.length})`,
+      values: cohort.participants.map(p => p[nodes[intersection]]),
+      size: cohort.participants.length,
+    }));
+    setBaseSets(updatedBaseSets);
+  }, [cohortData]);
+  
+  useEffect(() => {
+    if (baseSets.length > 0) {
+      const updatedData = extractSets(
+        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
+      );
+      console.log("Newbasesets: ", updatedData);
+      setData(updatedData);
+    }
+    console.log("baseSets: ", baseSets);
+  }, [baseSets]);
+
  
-
-  const baseColorArray = ["#FBEBB0", "#BAD9CB", "#B9CEDC"].map(color => hexToRgba(color));;
-  
-  
-  const baseSets = cohortData.map((cohort) => ({
-    label: `${cohort.cohortName} (${cohort.participants.length})`,
-    values: cohort.participants.map(p => p.participant_pk),
-    size: cohort.participants.length,
-  }));
-
-  const data = extractSets(
-    baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
-  );
 
   const handleChartClick = (event) => {
     const elementsAtEvent = chartRef.current.getElementsAtEventForMode(
@@ -74,7 +70,7 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
       true
     );
 
-    if (elementsAtEvent.length) {
+    if (elementsAtEvent.length && data) {
       const firstElement = elementsAtEvent[0];
       const datasetIndex = firstElement.datasetIndex;
       const index = firstElement.index;
@@ -86,40 +82,34 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
         content.forEach(item => updatedChart.has(item) ? updatedChart.delete(item) : updatedChart.add(item));
         return Array.from(updatedChart);
       });
-      let prevData = [...selectedCohortSection];
-      if(prevData.includes(label)){
-        prevData = prevData.filter(labels => labels !== label);
-      }else{
-        prevData =[...prevData,label];
 
-      }
-      setSelectedCohortSections(prevData);
+      setSelectedCohortSections(prev => {
+        return prev.includes(label)
+          ? prev.filter(item => item !== label)
+          : [...prev, label];
+      });
     }
   };
-
-  const getBorderColor = (item, index ) => {
-    return selectedCohortSection.includes(item.label) ? "white" : "#929292";
-  }
-
-  const getBorderWidth = (item, index) =>{
-  
-    return selectedCohortSection.includes(item.label) ? 4 : 0.5;
-  }
 
   const getBackgroundColor = (item, index) => {
     if (item.sets.length > 1) {
-      const intersectionKey = item.sets.sort().join("-");
-      const hardcodedColor = intersectionColors[index] || "rgba(223, 29, 29, 0)";
-  
-  return selectedCohortSection.includes(item.label) ? hardcodedColor :  reduceOpacity(hardcodedColor, 35);;
+      const intersectingColors = item.sets.map(set => {
+        const setIndex = baseSets.findIndex(bSet => bSet.label === set);
+        return setIndex !== -1 ? baseColorArray[setIndex] : "rgba(0, 0, 0, 0)";
+      });
+
+      const blendedColor = intersectingColors.reduce((acc, color) => blendColors(acc || intersectingColors[0], color));
+      return selectedCohortSection.includes(item.label) ? selectedColor : blendedColor;
     } else {
       return selectedCohortSection.includes(item.label)
-        ? baseColorArray[index]
-        : reduceOpacity(baseColorArray[index], 55);
+        ? selectedColor
+        : baseColorArray[index];
     }
   };
 
-  const config = {
+  let config = {};
+  if(data){
+   config = {
     type: "venn",
     data: {
       ...data,
@@ -127,41 +117,26 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
         {
           ...data.datasets[0],
           backgroundColor: data.datasets[0].data.map(getBackgroundColor),
-          borderColor: data.datasets[0].data.map(getBorderColor),
-          borderWidth: data.datasets[0].data.map(getBorderWidth) ,
+          borderWidth: 1,
         },
       ],
     },
     options: {
       onClick: handleChartClick,
-      scales: {
-        x: {
-            ticks: {
-                font: {
-                    family: 'Nunito',
-                    size: 15,
-                    weight: 300,
-                },
-                color: '#000',
-            },
-        },
-        y: {
-            ticks: {
-                font: {
-                    family: 'Nunito',
-                    size: 17,
-                    weight: 800,
-                },
-                color: 'black',
-            },
-        },
-    },
-    hover: {
-      mode: null,
-      animationDuration: 0 
-    }
+      onHover: (event, elements) => {
+        const canvas = event.native.target;
+        if (elements.length) {
+          canvas.style.cursor = 'pointer';
+        } else {
+          canvas.style.cursor = 'default';
+        }
+      }
     },
   };
+
+
+}
+ 
 
   useEffect(() => {
     if (chartRef.current) chartRef.current.destroy();
@@ -170,23 +145,33 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
     return () => {
       if (chartRef.current) chartRef.current.destroy();
     };
-
-  }, [selectedCohortSection, data, selectedCohort]);
+    
+  }, [selectedCohortSection, data,selectedCohort]);
 
   useEffect(() => {
     let updatedStat = {};
-    data.datasets[0].data.forEach(item => {
-      if (selectedCohortSection.includes(item.label)) {
-        updatedStat[item.label] = item.values;
-      }
-    });
-    setGeneralInfo(updatedStat);
-  }, [selectedCohortSection])
+    if(data){
+      data.datasets[0].data.forEach(item => {
+        if (selectedCohortSection.includes(item.label)) {
+          updatedStat[item.label] = item.values;
+        }
+      });
+      setGeneralInfo(updatedStat);
+    }
+   
+  },[selectedCohortSection])
 
+  if(!data){
+    return (
+      <div>
+        <p>Loading....</p>
+      </div>
+    )
+  }
   return (
     <div className="App">
-      <canvas style={{ width: 800, height: 100,position:'relative',left:0,top:-30}} ref={canvasRef} id="canvas"></canvas>
-
+      <canvas style={{ width: 800, height: 100 }} ref={canvasRef} id="canvas"></canvas>
+    
     </div>
   );
 };

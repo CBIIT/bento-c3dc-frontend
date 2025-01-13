@@ -53,6 +53,7 @@ export const CohortAnalyzer = () => {
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
     const [generalInfo, setGeneralInfo] = useState({});
     const [nodeIndex,setNodeIndex] = useState(0);
+    const [cohortData, setCohortData] = useState();
 
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { CohortModal } = CohortModalGenerator();
@@ -66,6 +67,45 @@ export const CohortAnalyzer = () => {
         if (searchRef.current) {
             searchRef.current.value = e.target.value;
         }
+
+    }
+
+    function updatedCohortContent(newParticipantsData) {
+        console.log("SELECTEDCOHORT: ", selectedCohorts);
+        
+        selectedCohorts.forEach(cohortId => {
+            console.log("STATE: " , state);
+            console.log("COHORTID: ", cohortId);
+            console.log("specific: ", state[cohortId].participants            )
+            const existingParticipants = state[cohortId].participants || [];
+            const existingParticipantPks = existingParticipants.map(p => p.participant_id);
+            console.log("EXISTINGPARTICIPANT: ", existingParticipantPks);
+            
+            const newParticipants = newParticipantsData.filter(newParticipant => 
+              !existingParticipantPks.includes(newParticipant.participant_id)
+            );
+
+            const updatedParticipants = existingParticipants.map(participant => {
+                const matchingNewParticipant = newParticipantsData.find(
+                    newParticipant => newParticipant.participant_id === participant.participant_id
+                );
+
+                if(matchingNewParticipant){
+                    return {...participant, ...matchingNewParticipant
+
+                    };
+                }
+            
+                return participant;
+            })
+           console.log("NewParticipant: ", newParticipants);
+            state[cohortId] = {
+              ...state[cohortId],
+              participants: updatedParticipants,
+            };
+            setCohortData(state);
+            console.log("STATE: ", state);
+          });
 
     }
 
@@ -85,6 +125,7 @@ export const CohortAnalyzer = () => {
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
                 setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
+                  updatedCohortContent(data[responseKeys[nodeIndex]])
                 setRefershInit(!refershInit)
             }
         } else {
@@ -412,10 +453,14 @@ export const CohortAnalyzer = () => {
                         </div>
                         </div>
                         
-                        {refershTableContent && selectedCohorts.length > 0 && <ChartVenn cohortData={selectedCohorts.map(cohortId => state[cohortId])}
+                        {refershTableContent && selectedCohorts.length > 0 && 
+                        <ChartVenn 
+                        intersection={nodeIndex} 
+                        cohortData={ cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
                             setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
-                            setSelectedCohortSections={
-                                setSelectedCohortSections}
+                            setSelectedCohortSections={(data) => {
+                                setSelectedCohortSections(data);
+                            }}
                             selectedCohortSection={selectedCohortSection}
                             selectedCohort={selectedCohorts}
                             setGeneralInfo={setGeneralInfo}
