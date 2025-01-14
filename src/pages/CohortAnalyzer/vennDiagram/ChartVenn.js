@@ -35,7 +35,7 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
   const baseColorArray = ["#86E2B9", "#5198C8D9", "#F9E28B"].map(color => hexToRgba(color));;
-  const nodes = ["participant_pk","diagnosis"];
+  const nodes = ["participant_id","diagnosis"];
 
   const [baseSets, setBaseSets] = useState([]);
   const [data, setData] = useState(null);

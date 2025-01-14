@@ -187,7 +187,7 @@ export const CohortAnalyzer = () => {
 
     useEffect(() => {
         getJoinedCohort();
-    }, [generalInfo])
+    }, [generalInfo, nodeIndex])
 
     useEffect(() => {
         setRefershTableContent(false)
@@ -426,8 +426,7 @@ export const CohortAnalyzer = () => {
                         </p>
                     </div>
 
-                    <div style={{ display: 'flex', marginBottom: 40, width: '100%', alignItems: 'flex-end', justifyContent: 'center' }}>
-                    <div style={{ display: 'flex', marginBottom: 40 }}>
+                   <div style={{ display: 'flex', marginBottom: 40 }}>
                     <div className={classes.catagoryCard}>
                             <h3>Select a data category for cohort matching</h3>
                             <div className={classes.catagoryCardChildren}>
@@ -450,7 +449,7 @@ export const CohortAnalyzer = () => {
                                     Treatment 
                                 </p>
                             </div>
-                        </div>
+                       
                         </div>
                         
                         {refershTableContent && selectedCohorts.length > 0 && 
@@ -465,7 +464,7 @@ export const CohortAnalyzer = () => {
                             selectedCohort={selectedCohorts}
                             setGeneralInfo={setGeneralInfo}
                         />}
-
+                       
                         {selectedCohorts.length === 0 &&
                             <img src={placeHolder} alt='placeholder' width={725} style={{marginTop:-30}} />
                         }

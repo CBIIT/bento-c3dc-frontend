@@ -34,7 +34,7 @@ export const addCohortColumn = (rowD, state, selectedCohorts) => {
 const getCohortName = (pk, state, selectedCohorts) => {
     const cohortNames = selectedCohorts
         .filter(cohortKey => 
-            state[cohortKey].participants.some(participant => participant.participant_pk === pk)
+            state[cohortKey].participants.some(participant => participant.participant_id === pk)
         ).map(cohortKey => state[cohortKey].cohortName);
     let finalResponse = [];
     const baseColorArray = ["#F0D571", "#A4E9CB", "#A3CCE8"];
