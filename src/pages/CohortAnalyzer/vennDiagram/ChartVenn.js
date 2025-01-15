@@ -7,6 +7,23 @@ const hexToRgba = (hex, alpha = 1) => {
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 };
 
+const intersectionColors = [
+  "#000","#000","#cbdfcc",
+  "#cbdfcc",
+  "#e4e3c4",
+  "#bcd8d1",
+  "#65DEA8"
+].map(color => hexToRgba(color));
+
+function reduceOpacity(rgbaColor, reductionPercentage) {
+  const matches = rgbaColor.match(/rgba?\((\d+), (\d+), (\d+),? ([\d.]+)?\)/);
+  if (!matches) throw new Error("Invalid RGBA color format");
+
+  const [_, r, g, b, a = 1] = matches.map(Number); // Default alpha to 1 if not specified
+  const newAlpha = a * (1 - reductionPercentage / 100);
+  return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
+}
+
 const blendColors = (color1, color2) => {
   const rgba1 = color1.match(/[\d.]+/g).map(Number);
   const rgba2 = color2.match(/[\d.]+/g).map(Number);
@@ -32,10 +49,12 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
   const chartRef = useRef(null);
   const [selectedVenns, setSelectedVenns] = useState([]);
   //const [generalInfo, setGeneralInfo] = useState({});
+  const [generalInfoBaseset, setGeneralInfoBaseSet ]= useState([]);
+  const [generalInfoData, setGeneralInfoData ] =useState(null);
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
   const baseColorArray = ["#86E2B9", "#5198C8D9", "#F9E28B"].map(color => hexToRgba(color));;
-  const nodes = ["participant_id","diagnosis"];
+  const nodes = ["participant_pk","diagnosis","treatment_type"];
 
   const [baseSets, setBaseSets] = useState([]);
   const [data, setData] = useState(null);
@@ -45,7 +64,14 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
       label: `${cohort.cohortId} (${cohort.participants.length})`,
       values: cohort.participants.map(p => p[nodes[intersection]]),
       size: cohort.participants.length,
-    }));
+    }));  
+
+    const generalInfoBaseSetLocal = cohortData.map((cohort) => ({
+      label: `${cohort.cohortId} (${cohort.participants.length})`,
+      values: cohort.participants.map(p => p[nodes[0]]),
+      size: cohort.participants.length,
+    }));  
+    setGeneralInfoBaseSet(generalInfoBaseSetLocal)
     setBaseSets(updatedBaseSets);
   }, [cohortData]);
   
@@ -54,11 +80,14 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
       const updatedData = extractSets(
         baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
       );
-      console.log("Newbasesets: ", updatedData);
+      const generalInfoDataLocal = extractSets(
+        generalInfoBaseset.map(set => ({ label: set.label, values: set.values, value: set.size }))
+      );
+
+      setGeneralInfoData(generalInfoDataLocal)
       setData(updatedData);
-    }
-    console.log("baseSets: ", baseSets);
-  }, [baseSets]);
+    } 
+  }, [generalInfoBaseset]);
 
  
 
@@ -70,7 +99,7 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
       true
     );
 
-    if (elementsAtEvent.length && data) {
+    if (elementsAtEvent.length) {
       const firstElement = elementsAtEvent[0];
       const datasetIndex = firstElement.datasetIndex;
       const index = firstElement.index;
@@ -82,33 +111,45 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
         content.forEach(item => updatedChart.has(item) ? updatedChart.delete(item) : updatedChart.add(item));
         return Array.from(updatedChart);
       });
+      let prevData = [...selectedCohortSection];
+      if(prevData.includes(label)){
+        prevData = prevData.filter(labels => labels !== label);
+      }else{
+        prevData =[...prevData,label];
 
-      setSelectedCohortSections(prev => {
-        return prev.includes(label)
-          ? prev.filter(item => item !== label)
-          : [...prev, label];
-      });
+      }
+      setSelectedCohortSections(prevData);
     }
   };
+
+
+
+  
+  const getBorderColor = (item, index ) => {
+    return selectedCohortSection.includes(item.label) ? "white" : "#929292";
+  }
+
+  const getBorderWidth = (item, index) =>{
+  
+    return selectedCohortSection.includes(item.label) ? 4 : 0.5;
+  }
 
   const getBackgroundColor = (item, index) => {
     if (item.sets.length > 1) {
-      const intersectingColors = item.sets.map(set => {
-        const setIndex = baseSets.findIndex(bSet => bSet.label === set);
-        return setIndex !== -1 ? baseColorArray[setIndex] : "rgba(0, 0, 0, 0)";
-      });
-
-      const blendedColor = intersectingColors.reduce((acc, color) => blendColors(acc || intersectingColors[0], color));
-      return selectedCohortSection.includes(item.label) ? selectedColor : blendedColor;
+      const intersectionKey = item.sets.sort().join("-");
+      const hardcodedColor = intersectionColors[index] || "rgba(223, 29, 29, 0)";
+  
+  return selectedCohortSection.includes(item.label) ? hardcodedColor :  reduceOpacity(hardcodedColor, 35);;
     } else {
       return selectedCohortSection.includes(item.label)
-        ? selectedColor
-        : baseColorArray[index];
+        ? baseColorArray[index]
+        : reduceOpacity(baseColorArray[index], 55);
     }
   };
 
-  let config = {};
-  if(data){
+  
+let config = {};
+if(data){
    config = {
     type: "venn",
     data: {
@@ -117,46 +158,72 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
         {
           ...data.datasets[0],
           backgroundColor: data.datasets[0].data.map(getBackgroundColor),
-          borderWidth: 1,
+          borderColor: data.datasets[0].data.map(getBorderColor),
+          borderWidth: data.datasets[0].data.map(getBorderWidth) ,
         },
       ],
     },
     options: {
       onClick: handleChartClick,
-      onHover: (event, elements) => {
-        const canvas = event.native.target;
-        if (elements.length) {
-          canvas.style.cursor = 'pointer';
-        } else {
-          canvas.style.cursor = 'default';
-        }
-      }
+      scales: {
+        x: {
+            ticks: {
+                font: {
+                    family: 'Nunito',
+                    size: 15,
+                    weight: 300,
+                },
+                color: '#000',
+            },
+        },
+        y: {
+            ticks: {
+                font: {
+                    family: 'Nunito',
+                    size: 17,
+                    weight: 800,
+                },
+                color: 'black',
+            },
+        },
+    },
+    hover: {
+      mode: null,
+      animationDuration: 0 
+    }
     },
   };
 
-
 }
+
  
 
-  useEffect(() => {
-    if (chartRef.current) chartRef.current.destroy();
-    chartRef.current = new VennDiagramChart(canvasRef.current, config);
+useEffect(() => {
+  if (chartRef.current && canvasRef.current) {
+    chartRef.current.destroy();
+    canvasRef.current.width = 600;
+    canvasRef.current.height = 270; 
+  }
+  chartRef.current = new VennDiagramChart(canvasRef.current, config);
 
-    return () => {
-      if (chartRef.current) chartRef.current.destroy();
-    };
+  return () => {
+    if (chartRef.current) chartRef.current.destroy();
+  };
+}, [selectedCohortSection, data, selectedCohort]);
     
-  }, [selectedCohortSection, data,selectedCohort]);
+    
 
   useEffect(() => {
     let updatedStat = {};
-    if(data){
-      data.datasets[0].data.forEach(item => {
+    if(generalInfoData){
+     
+      generalInfoData.datasets[0].data.forEach(item => {
         if (selectedCohortSection.includes(item.label)) {
           updatedStat[item.label] = item.values;
         }
       });
-      setGeneralInfo(updatedStat);
+
+      setGeneralInfo(updatedStat)
     }
    
   },[selectedCohortSection])

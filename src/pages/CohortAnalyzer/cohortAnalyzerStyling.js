@@ -100,7 +100,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'start',
         width: '100%',
-        '& span':{
+        '& span': {
             fontSize: 12,
             fontFamily: 'Poppins',
             fontWeight: 500
@@ -113,13 +113,13 @@ export const useStyle = makeStyles((theme) => ({
         marginBottom: 2,
         alignItems: 'center',
         justifyContent: 'space-between',
-        '&:first-child':{
+        '&:first-child': {
             background: '#FAE69C',
         },
-        '&:nth-child(2)':{
+        '&:nth-child(2)': {
             background: '#A4E9CB',
         },
-        '&:nth-child(3)':{
+        '&:nth-child(3)': {
             background: '#A3CCE8'
         }
     },
@@ -171,20 +171,20 @@ export const useStyle = makeStyles((theme) => ({
         textAlign: 'left',
         width: '100%',
         display: 'flex',
-        paddingTop:20,
+        paddingTop: 20,
         flexDirection: 'column',
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-       
+
         '& img': {
             marginRight: 6.5
         },
-        '& p':{
+        '& p': {
             fontFamily: 'Open Sans',
-                fontSize: 15,
-                fontWeight: 400,
-                color: '#8A7F7C'
+            fontSize: 15,
+            fontWeight: 400,
+            color: '#8A7F7C'
         }
     },
     sortSection: {
@@ -240,7 +240,7 @@ export const useStyle = makeStyles((theme) => ({
             textAlign: 'left',
             color: '#0D3A3F'
         }
-   
+
     },
     rightSideAnalyzerHeader2: {
         display: 'flex',
@@ -249,7 +249,7 @@ export const useStyle = makeStyles((theme) => ({
         width: '90%',
         alignSelf: 'center',
         alignItems: 'flex-start',
-        marginBottom: '30px',  
+        marginBottom: '30px',
         zIndex: 900,
         '& p': {
             fontFamily: 'Open Sans',
@@ -283,32 +283,44 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     catagoryCard: {
-        width: '208px',
-        height: '230px',
-        top: '245px',
-        left: '1011px',
         gap: '0px',
-        border: '1px 0px 0px 0px',
         opacity: '0px',
-        border: '1px solid #8B98AF',
         borderRadius: '8px',
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
+        width: 297,
+        height: 194,
+        
+        marginLeft: 100,
+        border: '1px solid #8B98AF',
+        alignItems: 'center',
+        alignContent: 'center',
         '& h3': {
             fontFamily: 'Poppins',
-            fontSize: '16px',
+            fontSize: '18px',
             fontWeight: 400,
-            lineHeight: '19.2px',
-            letterSpacing: '-0.01em',
-            textAlign: 'center'
-
+            textAlign: 'center',
+            color: '#000'
         },
     },
     catagoryCardChildren: {
-        width: '80%',
-        height: '80%',
-        alignSelf: 'center'
+        width: '50%',
+        height: 150,
+        alignSelf: 'center',
+        display: 'flex',
+        overflow: 'hidden',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'flex-start',
+        '& p': {
+            fontSize: 14,
+            fontFamily: 'Poppins',
+            fontWeight: 300,
+            lineHeight: 2,
+            margin: 0
+
+        }
     },
     rightSideTableContainer: {
         width: '90%',

@@ -25,14 +25,15 @@ import { useStyle } from "./cohortAnalyzerStyling";
 import {
     addCohortColumn,
     generateQueryVariable,
-    getAllIds,
+    getAllId,
     handlePopup,
     handleDelete,
     resetSelection,
     SearchBox,
     sortBy,
     triggerNotification,
-    sortByReturn
+    sortByReturn,
+    getAllIds
 } from "./CohortAnalyzerUtil";
 import styled from "styled-components";
 
@@ -71,15 +72,10 @@ export const CohortAnalyzer = () => {
     }
 
     function updatedCohortContent(newParticipantsData) {
-        console.log("SELECTEDCOHORT: ", selectedCohorts);
         
         selectedCohorts.forEach(cohortId => {
-            console.log("STATE: " , state);
-            console.log("COHORTID: ", cohortId);
-            console.log("specific: ", state[cohortId].participants            )
             const existingParticipants = state[cohortId].participants || [];
             const existingParticipantPks = existingParticipants.map(p => p.participant_id);
-            console.log("EXISTINGPARTICIPANT: ", existingParticipantPks);
             
             const newParticipants = newParticipantsData.filter(newParticipant => 
               !existingParticipantPks.includes(newParticipant.participant_id)
@@ -98,13 +94,11 @@ export const CohortAnalyzer = () => {
             
                 return participant;
             })
-           console.log("NewParticipant: ", newParticipants);
             state[cohortId] = {
               ...state[cohortId],
               participants: updatedParticipants,
             };
             setCohortData(state);
-            console.log("STATE: ", state);
           });
 
     }
@@ -126,7 +120,7 @@ export const CohortAnalyzer = () => {
             } else {
                 setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
                   updatedCohortContent(data[responseKeys[nodeIndex]])
-                setRefershInit(!refershInit)
+                //setRefershInit(!refershInit)
             }
         } else {
             setRowData([]);
@@ -188,6 +182,11 @@ export const CohortAnalyzer = () => {
     useEffect(() => {
         getJoinedCohort();
     }, [generalInfo, nodeIndex])
+
+    useEffect(() => {
+        setSelectedCohortSections([]);
+        
+    },[nodeIndex])
 
     useEffect(() => {
         setRefershTableContent(false)
@@ -282,15 +281,7 @@ export const CohortAnalyzer = () => {
         }
     };
 
-    const getTitle = () => {
-        if (Object.keys(state).length === 0) {
-            return "To proceed, please create your cohort by visiting the Explore Page.";
-        } else if (selectedCohorts.length === 0) {
-            return "Please select up to 3 cohorts from the Cohort List to view the interactive Venn diagram and corresponding table row information.";
-        } else {
-            return "Click on a circle(s) and/or overlapping section(s) in the venn diagram to view the corresponding data within the table below.";
-        }
-    }
+   
 
     const initTblState = (initailState) => ({
         ...initailState,
@@ -427,27 +418,39 @@ export const CohortAnalyzer = () => {
                     </div>
 
                    <div style={{ display: 'flex', marginBottom: 40 }}>
-                    <div className={classes.catagoryCard}>
-                            <h3>Select a data category for cohort matching</h3>
+                    <div className={classes.catagoryCard} style={{opacity: selectedCohorts.length > 0 ? 1 : 0.3}} >
+                            <h3>Select a data category   <ToolTip title={"Cohorts are compared using the data category selected below.  Participant ID is the default"} arrow placement="top">
+                                   
+                                        <Help size={5} style={{ fontSize: 12}} />
+                                    
+                                </ToolTip>  <br></br>for cohort matching</h3>
                             <div className={classes.catagoryCardChildren}>
-                                <p>
-                                    <input type="radio" onClick={() => {
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"all Venn diagram selected areas will be  cleared when changing buttons"} arrow placement="top">
+                            <p>
+                                    <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
                                         setNodeIndex(0);
                                     }}  radioGroup="node_type" name="node_type" />
                                     Participant ID
                                 </p>
+                            </ToolTip>
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"all Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                
                                 <p>
-                                    <input type="radio" onClick={() => {
+                                    <input disabled={selectedCohorts.length === 0}  type="radio" onClick={() => {
                                         setNodeIndex(1);
                                     }} radioGroup="node_type" name="node_type"  />
                                     Diagnosis 
                                 </p>
+                                </ToolTip>
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"all Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+
                                 <p>
-                                    <input onClick={() => {
+                                    <input disabled={selectedCohorts.length === 0}  onClick={() => {
                                         setNodeIndex(2);
                                     }}  type="radio" radioGroup="node_type" name="node_type" />
                                     Treatment 
                                 </p>
+                                </ToolTip>
                             </div>
                        
                         </div>
