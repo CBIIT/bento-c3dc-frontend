@@ -61,7 +61,7 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
 
   useEffect(() => {
     const updatedBaseSets = cohortData.map((cohort) => ({
-      label: `${cohort.cohortId} (${cohort.participants.length})`,
+      label: `${cohort.cohortName} (${cohort.participants.length})`,
       values: cohort.participants.map(p =>  p[nodes[intersection]]),
       size: cohort.participants.length,
     }));  
