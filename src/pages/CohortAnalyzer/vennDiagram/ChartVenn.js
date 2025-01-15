@@ -53,7 +53,7 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
   const [generalInfoData, setGeneralInfoData ] =useState(null);
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
-  const baseColorArray = ["#86E2B9", "#5198C8D9", "#F9E28B"].map(color => hexToRgba(color));;
+  const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;
   const nodes = ["participant_pk","diagnosis","treatment_type"];
 
   const [baseSets, setBaseSets] = useState([]);
@@ -62,32 +62,24 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
   useEffect(() => {
     const updatedBaseSets = cohortData.map((cohort) => ({
       label: `${cohort.cohortId} (${cohort.participants.length})`,
-      values: cohort.participants.map(p => p[nodes[intersection]]),
+      values: cohort.participants.map(p =>  p[nodes[intersection]]),
       size: cohort.participants.length,
     }));  
 
-    const generalInfoBaseSetLocal = cohortData.map((cohort) => ({
-      label: `${cohort.cohortId} (${cohort.participants.length})`,
-      values: cohort.participants.map(p => p[nodes[0]]),
-      size: cohort.participants.length,
-    }));  
-    setGeneralInfoBaseSet(generalInfoBaseSetLocal)
+
     setBaseSets(updatedBaseSets);
   }, [cohortData]);
   
   useEffect(() => {
     if (baseSets.length > 0) {
       const updatedData = extractSets(
-        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
-      );
-      const generalInfoDataLocal = extractSets(
-        generalInfoBaseset.map(set => ({ label: set.label, values: set.values, value: set.size }))
+        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size}))
       );
 
-      setGeneralInfoData(generalInfoDataLocal)
+      
       setData(updatedData);
     } 
-  }, [generalInfoBaseset]);
+  }, [baseSets]);
 
  
 
@@ -215,9 +207,9 @@ useEffect(() => {
 
   useEffect(() => {
     let updatedStat = {};
-    if(generalInfoData){
+    if(data){
      
-      generalInfoData.datasets[0].data.forEach(item => {
+      data.datasets[0].data.forEach(item => {
         if (selectedCohortSection.includes(item.label)) {
           updatedStat[item.label] = item.values;
         }
@@ -226,7 +218,7 @@ useEffect(() => {
       setGeneralInfo(updatedStat)
     }
    
-  },[selectedCohortSection])
+  },[selectedCohortSection,intersection])
 
   if(!data){
     return (

@@ -314,6 +314,8 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'flex-start',
         '& p': {
+            top: 375,
+            gap: 9,
             fontSize: 14,
             fontFamily: 'Poppins',
             fontWeight: 300,

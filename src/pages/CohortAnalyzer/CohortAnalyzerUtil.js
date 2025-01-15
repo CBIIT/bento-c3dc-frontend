@@ -10,10 +10,58 @@ export const triggerNotification = (count, Notification) => {
 
 };
 
+
+
+export const filterAllParticipantWithDiagnosisName=(generalInfo,allParticipants)=>{
+    let finalIds = [];
+    
+    Object.keys(generalInfo).forEach((section) => {
+        allParticipants.forEach((part) => {
+            if(generalInfo[section].includes(part.diagnosis)){
+                finalIds = [...finalIds,part]
+            }
+        })
+    });
+    return finalIds;
+}
+
+export const filterAllParticipantWithTreatmentType=(generalInfo,allParticipants)=>{
+    let finalIds = [];
+    
+    Object.keys(generalInfo).forEach((section) => {
+        allParticipants.forEach((part) => {
+            if(generalInfo[section].includes(part.treatment_type)){
+                finalIds = [...finalIds,part]
+            }
+        })
+    });
+    return finalIds;
+}
+
+
+export const getIdsFromCohort = (data,selectedCohorts) => {
+    const allParticipantPKs = [];
+
+    for (const cohortKey in data) {
+        if(selectedCohorts.includes(cohortKey)){
+        if (data[cohortKey].participants) {
+            const participantPKs = data[cohortKey].participants.map(participant => participant.participant_pk);
+            allParticipantPKs.push(...participantPKs);
+        }
+    }
+    }
+
+    return allParticipantPKs;
+}
+
+
+
 export const getAllIds = (generalInfo) => {
     let finalIds = [];
     Object.keys(generalInfo).forEach((section) => {
-        finalIds = [...finalIds, ...generalInfo[section]]
+        
+            finalIds = [...finalIds, ...generalInfo[section]]
+        
     })
     return finalIds;
 }

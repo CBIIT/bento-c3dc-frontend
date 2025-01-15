@@ -25,7 +25,6 @@ import { useStyle } from "./cohortAnalyzerStyling";
 import {
     addCohortColumn,
     generateQueryVariable,
-    getAllId,
     handlePopup,
     handleDelete,
     resetSelection,
@@ -33,7 +32,10 @@ import {
     sortBy,
     triggerNotification,
     sortByReturn,
-    getAllIds
+    getAllIds,
+    getIdsFromCohort,
+    filterAllParticipantWithDiagnosisName,
+    filterAllParticipantWithTreatmentType
 } from "./CohortAnalyzerUtil";
 import styled from "styled-components";
 
@@ -75,15 +77,15 @@ export const CohortAnalyzer = () => {
         
         selectedCohorts.forEach(cohortId => {
             const existingParticipants = state[cohortId].participants || [];
-            const existingParticipantPks = existingParticipants.map(p => p.participant_id);
+            const existingParticipantPks = existingParticipants.map(p => p.participant_pk);
             
             const newParticipants = newParticipantsData.filter(newParticipant => 
-              !existingParticipantPks.includes(newParticipant.participant_id)
+              !existingParticipantPks.includes(newParticipant.participant_pk)
             );
 
             const updatedParticipants = existingParticipants.map(participant => {
                 const matchingNewParticipant = newParticipantsData.find(
-                    newParticipant => newParticipant.participant_id === participant.participant_id
+                    newParticipant => newParticipant.participant_pk === participant.participant_pk
                 );
 
                 if(matchingNewParticipant){
@@ -120,13 +122,78 @@ export const CohortAnalyzer = () => {
             } else {
                 setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
                   updatedCohortContent(data[responseKeys[nodeIndex]])
-                //setRefershInit(!refershInit)
+                
             }
         } else {
             setRowData([]);
         }
     }
 
+    async function getJoinedCohortByD(selectedCohortSection = null){
+        let queryVariables = generateQueryVariable(selectedCohorts, state);
+        if (Object.keys(generalInfo).length > 0) {
+            queryVariables = { "participant_pks": getIdsFromCohort(state,selectedCohorts), first: 10000 };
+        }
+        setQueryVariable(queryVariables);
+        const { data } = await client.query({
+            query: analyzer_query[nodeIndex],
+            variables: queryVariables,
+        });
+        if (queryVariables.participant_pks.length > 0) {
+            if (searchValue !== "") {
+                let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
+                setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
+            } else {
+                
+              
+                if(JSON.stringify(selectedCohortSection) !== "{}"){
+                    
+                    let filterRowData = filterAllParticipantWithDiagnosisName(generalInfo,data[responseKeys[nodeIndex]]) 
+                    setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
+                    updatedCohortContent(filterRowData)
+                }else{
+                    setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
+                    updatedCohortContent(data[responseKeys[nodeIndex]])
+                }
+                
+            }
+        } else {
+            setRowData([]);
+        }
+    }
+
+    async function getJoinedCohortByT(selectedCohortSection = null){
+        let queryVariables = generateQueryVariable(selectedCohorts, state);
+        if (Object.keys(generalInfo).length > 0) {
+            queryVariables = { "participant_pks": getIdsFromCohort(state,selectedCohorts), first: 10000 };
+        }
+        setQueryVariable(queryVariables);
+        const { data } = await client.query({
+            query: analyzer_query[nodeIndex],
+            variables: queryVariables,
+        });
+        if (queryVariables.participant_pks.length > 0) {
+            if (searchValue !== "") {
+                let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
+                setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
+            } else {
+                
+              
+                if(JSON.stringify(selectedCohortSection) !== "{}"){
+                    
+                    let filterRowData = filterAllParticipantWithTreatmentType(generalInfo,data[responseKeys[nodeIndex]]) 
+                    setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
+                    updatedCohortContent(filterRowData)
+                }else{
+                    setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
+                    updatedCohortContent(data[responseKeys[nodeIndex]])
+                }
+                
+            }
+        } else {
+            setRowData([]);
+        }
+    }
 
 
     useEffect(() => {
@@ -138,13 +205,18 @@ export const CohortAnalyzer = () => {
     }, [selectedChart])
 
     useEffect(() => {
+       
+
         if (selectedChart.length === 0) {
-            getJoinedCohort();
+            if(nodeIndex === 0){
+                getJoinedCohort();
+            }
+               
+           
         }
-        if (selectedCohorts.length === 0) {
-            setGeneralInfo({});
-            setRowData([]);
-        }
+        
+
+        if(nodeIndex === 0 ){
         let finalVennSelection = [];
         selectedCohortSection.forEach((section) => {
             if (section.split(" ∩ ").length > 1) {
@@ -173,14 +245,31 @@ export const CohortAnalyzer = () => {
 
         })
         setSelectedCohortSections(finalVennSelection);
+      
+        }
+        if (selectedCohorts.length === 0) {
+            setGeneralInfo({});
+            setRowData([]);
+        }
+
     }, [selectedCohorts, selectedChart]);
+
+    
 
     useEffect(() => {
         getJoinedCohort()
     }, [searchValue])
 
     useEffect(() => {
-        getJoinedCohort();
+        if(nodeIndex === 0 ) {
+            getJoinedCohort();
+        }else if(nodeIndex === 1) {
+            
+            getJoinedCohortByD(generalInfo);
+        }else if(nodeIndex === 2){
+            getJoinedCohortByT(generalInfo)
+        }
+       
     }, [generalInfo, nodeIndex])
 
     useEffect(() => {
@@ -191,7 +280,7 @@ export const CohortAnalyzer = () => {
     useEffect(() => {
         setRefershTableContent(false)
         setTimeout(() => setRefershTableContent(true), 0)
-    }, [cohortList, nodeIndex])
+    }, [cohortList, nodeIndex, cohortData])
 
 
     const Wrapper = styled.div`
