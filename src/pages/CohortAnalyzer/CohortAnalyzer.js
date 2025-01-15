@@ -419,13 +419,13 @@ export const CohortAnalyzer = () => {
 
                    <div style={{ display: 'flex', marginBottom: 40 }}>
                     <div className={classes.catagoryCard} style={{opacity: selectedCohorts.length > 0 ? 1 : 0.3}} >
-                            <h3>Select a data category   <ToolTip title={"Cohorts are compared using the data category selected below.  Participant ID is the default"} arrow placement="top">
+                            <h3>Select a data category   <ToolTip title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
                                    
                                         <Help size={5} style={{ fontSize: 12}} />
                                     
                                 </ToolTip>  <br></br>for cohort matching</h3>
                             <div className={classes.catagoryCardChildren}>
-                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"all Venn diagram selected areas will be  cleared when changing buttons"} arrow placement="top">
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
                             <p>
                                     <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
                                         setNodeIndex(0);
@@ -433,7 +433,7 @@ export const CohortAnalyzer = () => {
                                     Participant ID
                                 </p>
                             </ToolTip>
-                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"all Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
                                 
                                 <p>
                                     <input disabled={selectedCohorts.length === 0}  type="radio" onClick={() => {
@@ -442,7 +442,7 @@ export const CohortAnalyzer = () => {
                                     Diagnosis 
                                 </p>
                                 </ToolTip>
-                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"all Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
                                 <p>
                                     <input disabled={selectedCohorts.length === 0}  onClick={() => {
