@@ -34,20 +34,7 @@ export const tableConfig = {
       tooltipText: 'sort',
       role: cellTypes.DISPLAY,
     },
-    {
-      dataField: 'race',
-      header: 'Race',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
-    {
-      dataField: 'sex_at_birth',
-      header: 'Sex at Birth',
-      display: true,
-      tooltipText: 'sort',
-      role: cellTypes.DISPLAY,
-    },
+
     {
       dataField: 'dbgap_accession',
       header: 'dbGaP Accession',
@@ -61,6 +48,20 @@ export const tableConfig = {
         cellType: cellTypes.CUSTOM_ELEM,
       },
       doNotDownload: true,
+    },
+    {
+      dataField: 'race',
+      header: 'Race',
+      display: true,
+      tooltipText: 'sort',
+      role: cellTypes.DISPLAY,
+    },
+    {
+      dataField: 'sex_at_birth',
+      header: 'Sex at Birth',
+      display: true,
+      tooltipText: 'sort',
+      role: cellTypes.DISPLAY,
     },
     {
       dataField: "study_id",
@@ -121,15 +122,15 @@ export const diagnosesTableConfig=
       role: cellTypes.DISPLAY,
     },
     {
-      dataField: 'age_at_diagnosis',
-      header: 'Age At Diagnosis',
+      dataField: 'anatomic_site',
+      header: 'Anatomic Sites',
       display: true,
       tooltipText: 'sort',
       role: cellTypes.DISPLAY,
     },
     {
-      dataField: 'anatomic_site',
-      header: 'Anatomic Sites',
+      dataField: 'age_at_diagnosis',
+      header: 'Age At Diagnosis',
       display: true,
       tooltipText: 'sort',
       role: cellTypes.DISPLAY,
