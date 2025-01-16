@@ -507,8 +507,8 @@ export const CohortAnalyzer = () => {
                     </div>
 
                    <div style={{ display: 'flex', marginBottom: 40 }}>
-                    <div className={classes.catagoryCard} style={{opacity: selectedCohorts.length > 0 ? 1 : 0.3}} >
-                            <h3>Select a data category   <ToolTip title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
+                    <div className={classes.catagoryCard} >
+                            <h3>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
                                    
                                         <Help size={5} style={{ fontSize: 12}} />
                                     

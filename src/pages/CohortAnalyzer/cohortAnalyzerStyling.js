@@ -266,7 +266,6 @@ export const useStyle = makeStyles((theme) => ({
         height: '100%',
         justifyContent: 'space-between',
         alignItems: 'center',
-        opacity: '1 !important',
         color: 'black',
         '& div span': {
             color: 'black',
@@ -283,8 +282,6 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     catagoryCard: {
-        gap: '0px',
-        opacity: '0px',
         borderRadius: '8px',
         display: 'flex',
         flexDirection: 'column',
@@ -293,6 +290,7 @@ export const useStyle = makeStyles((theme) => ({
         height: 194,
         
         marginLeft: 100,
+        paddingBottom: 30,
         border: '1px solid #8B98AF',
         alignItems: 'center',
         alignContent: 'center',
@@ -313,8 +311,9 @@ export const useStyle = makeStyles((theme) => ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',
+        color: '#5D7B87',
         '& p': {
-            top: 375,
+            top: 325,
             gap: 9,
             fontSize: 14,
             fontFamily: 'Poppins',

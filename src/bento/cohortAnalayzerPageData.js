@@ -122,6 +122,13 @@ export const diagnosesTableConfig=
       role: cellTypes.DISPLAY,
     },
     {
+      dataField: 'diagnosis',
+      header: 'Diagnosis',
+      display: true,
+      tooltipText: 'sort',
+      role: cellTypes.DISPLAY,
+    },
+    {
       dataField: 'anatomic_site',
       header: 'Anatomic Sites',
       display: true,
