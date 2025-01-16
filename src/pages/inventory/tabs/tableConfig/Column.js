@@ -17,7 +17,13 @@ export const CustomCellView = (props) => {
     height: '23px',
   };
 
-  if (Array.isArray(label)) {
+
+  if (Array.isArray(label) && dataField === "treatment_agent") {
+   
+    return (<Typography>{label.join(", ")}</Typography>);
+  }
+
+  if (Array.isArray(label) && dataField === "cohort") {
     return (
       <div style={{ display: 'flex', gap: 10, justifyContent:'center', width: 67 }}>
         {
