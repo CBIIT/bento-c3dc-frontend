@@ -289,7 +289,7 @@ export const useStyle = makeStyles((theme) => ({
         width: 297,
         height: 194,
         
-        marginLeft: 100,
+        marginLeft: 0,
         paddingBottom: 30,
         border: '1px solid #8B98AF',
         alignItems: 'center',

@@ -6,7 +6,7 @@ import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
 import trashCan from "../../assets/icons/trash_can.svg";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
-import { tableConfig , analyzer_query , analyzer_tables, responseKeys } from "../../bento/cohortAnalayzerPageData";
+import { tableConfig, analyzer_query, analyzer_tables, responseKeys } from "../../bento/cohortAnalayzerPageData";
 import DownloadSelectedCohort from "./downloadCohort/DownloadSelectedCohorts";
 import client from "../../utils/graphqlClient";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
@@ -55,7 +55,7 @@ export const CohortAnalyzer = () => {
     const [sortType, setSortType] = useState("alphabet");
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
     const [generalInfo, setGeneralInfo] = useState({});
-    const [nodeIndex,setNodeIndex] = useState(0);
+    const [nodeIndex, setNodeIndex] = useState(0);
     const [cohortData, setCohortData] = useState();
 
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
@@ -74,13 +74,13 @@ export const CohortAnalyzer = () => {
     }
 
     function updatedCohortContent(newParticipantsData) {
-        
+
         selectedCohorts.forEach(cohortId => {
             const existingParticipants = state[cohortId].participants || [];
             const existingParticipantPks = existingParticipants.map(p => p.participant_pk);
-            
-            const newParticipants = newParticipantsData.filter(newParticipant => 
-              !existingParticipantPks.includes(newParticipant.participant_pk)
+
+            const newParticipants = newParticipantsData.filter(newParticipant =>
+                !existingParticipantPks.includes(newParticipant.participant_pk)
             );
 
             const updatedParticipants = existingParticipants.map(participant => {
@@ -88,20 +88,21 @@ export const CohortAnalyzer = () => {
                     newParticipant => newParticipant.participant_pk === participant.participant_pk
                 );
 
-                if(matchingNewParticipant){
-                    return {...participant, ...matchingNewParticipant
+                if (matchingNewParticipant) {
+                    return {
+                        ...participant, ...matchingNewParticipant
 
                     };
                 }
-            
+
                 return participant;
             })
             state[cohortId] = {
-              ...state[cohortId],
-              participants: updatedParticipants,
+                ...state[cohortId],
+                participants: updatedParticipants,
             };
             setCohortData(state);
-          });
+        });
 
     }
 
@@ -121,18 +122,18 @@ export const CohortAnalyzer = () => {
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
                 setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
-                  updatedCohortContent(data[responseKeys[nodeIndex]])
-                
+                updatedCohortContent(data[responseKeys[nodeIndex]])
+
             }
         } else {
             setRowData([]);
         }
     }
 
-    async function getJoinedCohortByD(selectedCohortSection = null){
+    async function getJoinedCohortByD(selectedCohortSection = null) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": getIdsFromCohort(state,selectedCohorts), first: 10000 };
+            queryVariables = { "participant_pks": getIdsFromCohort(state, selectedCohorts), first: 10000 };
         }
         setQueryVariable(queryVariables);
         const { data } = await client.query({
@@ -144,28 +145,28 @@ export const CohortAnalyzer = () => {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
-                
-              
-                if(JSON.stringify(selectedCohortSection) !== "{}"){
-                    
-                    let filterRowData = filterAllParticipantWithDiagnosisName(generalInfo,data[responseKeys[nodeIndex]]) 
+
+
+                if (JSON.stringify(selectedCohortSection) !== "{}") {
+
+                    let filterRowData = filterAllParticipantWithDiagnosisName(generalInfo, data[responseKeys[nodeIndex]])
                     setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
                     updatedCohortContent(filterRowData)
-                }else{
+                } else {
                     setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
                     updatedCohortContent(data[responseKeys[nodeIndex]])
                 }
-                
+
             }
         } else {
             setRowData([]);
         }
     }
 
-    async function getJoinedCohortByT(selectedCohortSection = null){
+    async function getJoinedCohortByT(selectedCohortSection = null) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": getIdsFromCohort(state,selectedCohorts), first: 10000 };
+            queryVariables = { "participant_pks": getIdsFromCohort(state, selectedCohorts), first: 10000 };
         }
         setQueryVariable(queryVariables);
         const { data } = await client.query({
@@ -177,18 +178,18 @@ export const CohortAnalyzer = () => {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
-                
-              
-                if(JSON.stringify(selectedCohortSection) !== "{}"){
-                    
-                    let filterRowData = filterAllParticipantWithTreatmentType(generalInfo,data[responseKeys[nodeIndex]]) 
+
+
+                if (JSON.stringify(selectedCohortSection) !== "{}") {
+
+                    let filterRowData = filterAllParticipantWithTreatmentType(generalInfo, data[responseKeys[nodeIndex]])
                     setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
                     updatedCohortContent(filterRowData)
-                }else{
+                } else {
                     setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
                     updatedCohortContent(data[responseKeys[nodeIndex]])
                 }
-                
+
             }
         } else {
             setRowData([]);
@@ -205,47 +206,47 @@ export const CohortAnalyzer = () => {
     }, [selectedChart])
 
     useEffect(() => {
-       
+
 
         if (selectedChart.length === 0) {
-            if(nodeIndex === 0){
+            if (nodeIndex === 0) {
                 getJoinedCohort();
             }
-               
-           
+
+
         }
-        
 
-        if(nodeIndex === 0 ){
-        let finalVennSelection = [];
-        selectedCohortSection.forEach((section) => {
-            if (section.split(" ∩ ").length > 1) {
-                let validCohorts = [];
-                section.split(" ∩ ").forEach((sec, index) => {
+
+        if (nodeIndex === 0) {
+            let finalVennSelection = [];
+            selectedCohortSection.forEach((section) => {
+                if (section.split(" ∩ ").length > 1) {
+                    let validCohorts = [];
+                    section.split(" ∩ ").forEach((sec, index) => {
+                        const regex = /(.*?)(?= \(\d+\))/;
+                        const match = sec.match(regex);
+                        if (selectedCohorts.includes(match[1])) {
+                            validCohorts.push(sec);
+                        }
+                    })
+
+                    if (validCohorts.length > 0) {
+                        finalVennSelection.push(validCohorts.join(" ∩ "))
+                    }
+                } else {
                     const regex = /(.*?)(?= \(\d+\))/;
-                    const match = sec.match(regex);
-                    if (selectedCohorts.includes(match[1])) {
-                        validCohorts.push(sec);
+                    const match = section.match(regex);
+                    if (match) {
+                        if (selectedCohorts.includes(match[1])) {
+                            finalVennSelection.push(section)
+                        }
                     }
-                })
 
-                if (validCohorts.length > 0) {
-                    finalVennSelection.push(validCohorts.join(" ∩ "))
-                }
-            } else {
-                const regex = /(.*?)(?= \(\d+\))/;
-                const match = section.match(regex);
-                if (match) {
-                    if (selectedCohorts.includes(match[1])) {
-                        finalVennSelection.push(section)
-                    }
                 }
 
-            }
+            })
+            setSelectedCohortSections(finalVennSelection);
 
-        })
-        setSelectedCohortSections(finalVennSelection);
-      
         }
         if (selectedCohorts.length === 0) {
             setGeneralInfo({});
@@ -254,28 +255,28 @@ export const CohortAnalyzer = () => {
 
     }, [selectedCohorts, selectedChart]);
 
-    
+
 
     useEffect(() => {
         getJoinedCohort()
     }, [searchValue])
 
     useEffect(() => {
-        if(nodeIndex === 0 ) {
+        if (nodeIndex === 0) {
             getJoinedCohort();
-        }else if(nodeIndex === 1) {
-            
+        } else if (nodeIndex === 1) {
+
             getJoinedCohortByD(generalInfo);
-        }else if(nodeIndex === 2){
+        } else if (nodeIndex === 2) {
             getJoinedCohortByT(generalInfo)
         }
-       
+
     }, [generalInfo, nodeIndex])
 
     useEffect(() => {
         setSelectedCohortSections([]);
-        
-    },[nodeIndex])
+
+    }, [nodeIndex])
 
     useEffect(() => {
         setRefershTableContent(false)
@@ -370,7 +371,7 @@ export const CohortAnalyzer = () => {
         }
     };
 
-   
+
 
     const initTblState = (initailState) => ({
         ...initailState,
@@ -378,7 +379,7 @@ export const CohortAnalyzer = () => {
         query: analyzer_tables[nodeIndex].api,
         downloadButtonTooltipText: "Download data in CSV or JSON format",
         paginationAPIField: analyzer_tables[nodeIndex].paginationAPIField,
-        dataKey:analyzer_tables[nodeIndex].dataKey,
+        dataKey: analyzer_tables[nodeIndex].dataKey,
         hiddenDataKeys: analyzer_tables[nodeIndex].hiddenDataKeys,
         columns: configColumn(analyzer_tables[nodeIndex].columns),
         count: 3,
@@ -506,59 +507,59 @@ export const CohortAnalyzer = () => {
                         </p>
                     </div>
 
-                   <div style={{ display: 'flex', marginBottom: 40 }}>
-                    <div className={classes.catagoryCard} >
+                    <div style={{ display: 'flex', marginBottom: 40, justifyContent: 'space-between',width: '90%' }}>
+                        <div className={classes.catagoryCard} >
                             <h3>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
-                                   
-                                        <Help size={5} style={{ fontSize: 12}} />
-                                    
-                                </ToolTip>  <br></br>for cohort matching</h3>
-                            <div className={classes.catagoryCardChildren}>
-                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
-                            <p>
-                                    <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
-                                        setNodeIndex(0);
-                                    }}  radioGroup="node_type" name="node_type" />
-                                    Participant ID
-                                </p>
-                            </ToolTip>
-                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
-                                
-                                <p>
-                                    <input disabled={selectedCohorts.length === 0}  type="radio" onClick={() => {
-                                        setNodeIndex(1);
-                                    }} radioGroup="node_type" name="node_type"  />
-                                    Diagnosis 
-                                </p>
-                                </ToolTip>
-                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
-                                <p>
-                                    <input disabled={selectedCohorts.length === 0}  onClick={() => {
-                                        setNodeIndex(2);
-                                    }}  type="radio" radioGroup="node_type" name="node_type" />
-                                    Treatment 
-                                </p>
+                                <Help size={5} style={{ fontSize: 12 }} />
+
+                            </ToolTip>  <br></br>for cohort matching</h3>
+                            <div className={classes.catagoryCardChildren}>
+                                <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                    <p>
+                                        <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
+                                            setNodeIndex(0);
+                                        }} radioGroup="node_type" name="node_type" />
+                                        Participant ID
+                                    </p>
+                                </ToolTip>
+                                <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+
+                                    <p>
+                                        <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
+                                            setNodeIndex(1);
+                                        }} radioGroup="node_type" name="node_type" />
+                                        Diagnosis
+                                    </p>
+                                </ToolTip>
+                                <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+
+                                    <p>
+                                        <input disabled={selectedCohorts.length === 0} onClick={() => {
+                                            setNodeIndex(2);
+                                        }} type="radio" radioGroup="node_type" name="node_type" />
+                                        Treatment
+                                    </p>
                                 </ToolTip>
                             </div>
-                       
+
                         </div>
-                        
-                        {refershTableContent && selectedCohorts.length > 0 && 
-                        <ChartVenn 
-                        intersection={nodeIndex} 
-                        cohortData={ cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
-                            setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
-                            setSelectedCohortSections={(data) => {
-                                setSelectedCohortSections(data);
-                            }}
-                            selectedCohortSection={selectedCohortSection}
-                            selectedCohort={selectedCohorts}
-                            setGeneralInfo={setGeneralInfo}
-                        />}
-                       
+
+                        {refershTableContent && selectedCohorts.length > 0 &&
+                            <ChartVenn
+                                intersection={nodeIndex}
+                                cohortData={cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
+                                setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
+                                setSelectedCohortSections={(data) => {
+                                    setSelectedCohortSections(data);
+                                }}
+                                selectedCohortSection={selectedCohortSection}
+                                selectedCohort={selectedCohorts}
+                                setGeneralInfo={setGeneralInfo}
+                            />}
+
                         {selectedCohorts.length === 0 &&
-                            <img src={placeHolder} alt='placeholder' width={725} style={{marginTop:-30}} />
+                            <img src={placeHolder} alt='placeholder' width={725} style={{ marginTop: -30 }} />
                         }
 
                     </div>
@@ -580,7 +581,7 @@ export const CohortAnalyzer = () => {
                         </div>
                     </div>
                     <div className={classes.rightSideTableContainer}>
-                   
+
                         {refershTableContent &&
 
                             <TableView
@@ -594,7 +595,7 @@ export const CohortAnalyzer = () => {
                             />
                         }
 
-                    
+
                     </div>
                 </div>
             </div>

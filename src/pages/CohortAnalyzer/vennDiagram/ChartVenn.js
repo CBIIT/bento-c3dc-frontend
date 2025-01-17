@@ -193,15 +193,15 @@ if(data){
 useEffect(() => {
   if (chartRef.current && canvasRef.current) {
     chartRef.current.destroy();
-    canvasRef.current.width = 600;
-    canvasRef.current.height = 270; 
+    canvasRef.current.width = cohortData.length === 2 ? 680 : 700;
+    canvasRef.current.height =  cohortData.length === 2 ? 200 : 270; 
   }
   chartRef.current = new VennDiagramChart(canvasRef.current, config);
 
   return () => {
     if (chartRef.current) chartRef.current.destroy();
   };
-}, [selectedCohortSection, data, selectedCohort]);
+}, [selectedCohortSection, data, selectedCohort , cohortData]);
     
     
 
@@ -229,7 +229,7 @@ useEffect(() => {
   }
   return (
     <div className="App">
-      <canvas style={{ width: 800, height: 100 }} ref={canvasRef} id="canvas"></canvas>
+      <canvas  ref={canvasRef} id="canvas"></canvas>
     
     </div>
   );
