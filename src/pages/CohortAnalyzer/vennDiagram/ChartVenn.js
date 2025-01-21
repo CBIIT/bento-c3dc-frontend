@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
 
 // Utility Functions
@@ -14,7 +14,6 @@ const intersectionColors = [
   "#bcd8d1",
   "#65DEA8"
 ].map(color => hexToRgba(color));
-
 
 function reduceOpacity(rgbaColor, reductionPercentage) {
   const matches = rgbaColor.match(/rgba?\((\d+), (\d+), (\d+),? ([\d.]+)?\)/);
@@ -37,34 +36,52 @@ const blendColors = (color1, color2) => {
     Math.round((rgba1[0] + rgba2[0]) / 2), // Red
     Math.round((rgba1[1] + rgba2[1]) / 2), // Green
     Math.round((rgba1[2] + rgba2[2]) / 2), // Blue
-    rgba1[3] !== undefined && rgba2[3] !== undefined
+    rgba1[3] !== undefined && rgba2[3] !== undefined 
       ? (rgba1[3] + rgba2[3]) / 2
       : 1, // Alpha
   ];
 
-  return `rgba(${blendedColor.join(", ")})`;
+  return `rgba(${blendedColor.join(",")})`;
 };
 
-const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, selectedCohortSection, selectedCohort, setGeneralInfo }) => {
+const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo }) => {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
+  const [selectedVenns, setSelectedVenns] = useState([]);
   //const [generalInfo, setGeneralInfo] = useState({});
+  const [generalInfoBaseset, setGeneralInfoBaseSet ]= useState([]);
+  const [generalInfoData, setGeneralInfoData ] =useState(null);
 
   const selectedColor = "rgba(255, 99, 132, 0.7)";
+  const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;
+  const nodes = ["participant_pk","diagnosis","treatment_type"];
+
+  const [baseSets, setBaseSets] = useState([]);
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const updatedBaseSets = cohortData.map((cohort) => ({
+      label: `${cohort.cohortName} (${cohort.participants.length})`,
+      values: cohort.participants.map(p =>  p[nodes[intersection]]),
+      size: cohort.participants.length,
+    }));  
+
+
+    setBaseSets(updatedBaseSets);
+  }, [cohortData]);
+  
+  useEffect(() => {
+    if (baseSets.length > 0) {
+      const updatedData = extractSets(
+        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size}))
+      );
+
+      
+      setData(updatedData);
+    } 
+  }, [baseSets]);
+
  
-
-  const baseColorArray = ["#FBEBB0", "#BAD9CB", "#B9CEDC"].map(color => hexToRgba(color));;
-  
-  
-  const baseSets = cohortData.map((cohort) => ({
-    label: `${cohort.cohortName} (${cohort.participants.length})`,
-    values: cohort.participants.map(p => p.participant_pk),
-    size: cohort.participants.length,
-  }));
-
-  const data = extractSets(
-    baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
-  );
 
   const handleChartClick = (event) => {
     const elementsAtEvent = chartRef.current.getElementsAtEventForMode(
@@ -97,6 +114,9 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
     }
   };
 
+
+
+  
   const getBorderColor = (item, index ) => {
     return selectedCohortSection.includes(item.label) ? "white" : "#929292";
   }
@@ -119,7 +139,10 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
     }
   };
 
-  const config = {
+  
+let config = {};
+if(data){
+   config = {
     type: "venn",
     data: {
       ...data,
@@ -163,30 +186,51 @@ const ChartVenn = ({ cohortData, setSelectedChart, setSelectedCohortSections, se
     },
   };
 
-  useEffect(() => {
+}
+
+ 
+
+useEffect(() => {
+  if (chartRef.current && canvasRef.current) {
+    chartRef.current.destroy();
+    canvasRef.current.width = cohortData.length === 2 ? 680 : 700;
+    canvasRef.current.height =  cohortData.length === 2 ? 200 : 270; 
+  }
+  chartRef.current = new VennDiagramChart(canvasRef.current, config);
+
+  return () => {
     if (chartRef.current) chartRef.current.destroy();
-    chartRef.current = new VennDiagramChart(canvasRef.current, config);
-
-    return () => {
-      if (chartRef.current) chartRef.current.destroy();
-    };
-
-  }, [selectedCohortSection, data, selectedCohort]);
+  };
+}, [selectedCohortSection, data, selectedCohort , cohortData]);
+    
+    
 
   useEffect(() => {
     let updatedStat = {};
-    data.datasets[0].data.forEach(item => {
-      if (selectedCohortSection.includes(item.label)) {
-        updatedStat[item.label] = item.values;
-      }
-    });
-    setGeneralInfo(updatedStat);
-  }, [selectedCohortSection])
+    if(data){
+     
+      data.datasets[0].data.forEach(item => {
+        if (selectedCohortSection.includes(item.label)) {
+          updatedStat[item.label] = item.values;
+        }
+      });
 
+      setGeneralInfo(updatedStat)
+    }
+   
+  },[selectedCohortSection,intersection])
+
+  if(!data){
+    return (
+      <div>
+        <p>Loading....</p>
+      </div>
+    )
+  }
   return (
     <div className="App">
-      <canvas style={{ width: 800, height: 100,position:'relative',left:0,top:-30}} ref={canvasRef} id="canvas"></canvas>
-
+      <canvas  ref={canvasRef} id="canvas"></canvas>
+    
     </div>
   );
 };
