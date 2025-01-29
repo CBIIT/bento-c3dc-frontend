@@ -211,9 +211,11 @@ export const CohortAnalyzer = () => {
         if (selectedChart.length === 0) {
             if (nodeIndex === 0) {
                 getJoinedCohort();
+            } else if (nodeIndex === 1) {
+                getJoinedCohortByD(generalInfo);
+            } else if (nodeIndex === 2) {
+                getJoinedCohortByT(generalInfo)
             }
-
-
         }
 
 
@@ -273,7 +275,7 @@ export const CohortAnalyzer = () => {
     }, [generalInfo, nodeIndex])
 
     useEffect(() => {
-        
+
         setSelectedCohortSections([]);
         setGeneralInfo({})
         if (nodeIndex === 0) {
@@ -516,7 +518,7 @@ export const CohortAnalyzer = () => {
                         </p>
                     </div>
 
-                    <div style={{ display: 'flex', marginBottom: 40, justifyContent: 'space-between',width: '90%' }}>
+                    <div style={{ display: 'flex', marginBottom: 40, justifyContent: 'space-between', width: '90%' }}>
                         <div className={classes.catagoryCard} >
                             <h3>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
 
