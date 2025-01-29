@@ -142,9 +142,14 @@ export const CohortAnalyzer = () => {
         });
         if (queryVariables.participant_pks.length > 0) {
             if (searchValue !== "") {
-                let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
-                    filteredRowData = filterAllParticipantWithDiagnosisName(generalInfo, filteredRowData)                  
+               
+                let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue)) 
+                 
+                 if (JSON.stringify(selectedCohortSection) !== "{}") {
+                     filteredRowData = filterAllParticipantWithDiagnosisName(generalInfo, filteredRowData) 
+                 }               
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
+                updatedCohortContent(filteredRowData)
             } else {
 
 
@@ -177,7 +182,9 @@ export const CohortAnalyzer = () => {
         if (queryVariables.participant_pks.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
+                if (JSON.stringify(selectedCohortSection) !== "{}") {
                 filteredRowData = filterAllParticipantWithTreatmentType(generalInfo, filteredRowData)
+                }
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
 
@@ -261,7 +268,14 @@ export const CohortAnalyzer = () => {
 
 
     useEffect(() => {
-        getJoinedCohort()
+      
+        if (nodeIndex === 0) {
+            getJoinedCohort();
+        } else if (nodeIndex === 1) {
+            getJoinedCohortByD(generalInfo);
+        } else if (nodeIndex === 2) {
+            getJoinedCohortByT(generalInfo)
+        }
     }, [searchValue])
 
     useEffect(() => {
@@ -280,6 +294,10 @@ export const CohortAnalyzer = () => {
 
         setSelectedCohortSections([]);
         setGeneralInfo({})
+        setSearchValue("");
+        if (searchRef.current) {
+            searchRef.current.value = "";
+        }
         if (nodeIndex === 0) {
             getJoinedCohort();
         } else if (nodeIndex === 1) {
