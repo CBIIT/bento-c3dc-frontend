@@ -143,6 +143,7 @@ export const CohortAnalyzer = () => {
         if (queryVariables.participant_pks.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
+                    filteredRowData = filterAllParticipantWithDiagnosisName(generalInfo, filteredRowData)                  
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
 
@@ -176,6 +177,7 @@ export const CohortAnalyzer = () => {
         if (queryVariables.participant_pks.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
+                filteredRowData = filterAllParticipantWithTreatmentType(generalInfo, filteredRowData)
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
 
@@ -282,9 +284,9 @@ export const CohortAnalyzer = () => {
             getJoinedCohort();
         } else if (nodeIndex === 1) {
 
-            getJoinedCohortByD(generalInfo);
+            getJoinedCohortByD({});
         } else if (nodeIndex === 2) {
-            getJoinedCohortByT(generalInfo)
+            getJoinedCohortByT({})
         }
 
     }, [nodeIndex])
