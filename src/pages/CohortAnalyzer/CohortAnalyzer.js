@@ -528,7 +528,7 @@ export const CohortAnalyzer = () => {
                             <div className={classes.catagoryCardChildren}>
                                 <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
                                     <p>
-                                        <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
+                                        <input disabled={selectedCohorts.length === 0} type="radio" checked={nodeIndex === 0}  onClick={() => {
                                             setNodeIndex(0);
                                         }} radioGroup="node_type" name="node_type" />
                                         Participant ID
