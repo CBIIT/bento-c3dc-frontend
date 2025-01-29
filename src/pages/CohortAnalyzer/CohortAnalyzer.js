@@ -217,7 +217,7 @@ export const CohortAnalyzer = () => {
         }
 
 
-        if (nodeIndex === 0) {
+        if (nodeIndex === 0 || nodeIndex === 1 || nodeIndex === 2) {
             let finalVennSelection = [];
             selectedCohortSection.forEach((section) => {
                 if (section.split(" ∩ ").length > 1) {
@@ -252,7 +252,6 @@ export const CohortAnalyzer = () => {
             setGeneralInfo({});
             setRowData([]);
         }
-
     }, [selectedCohorts, selectedChart]);
 
 
@@ -274,7 +273,17 @@ export const CohortAnalyzer = () => {
     }, [generalInfo, nodeIndex])
 
     useEffect(() => {
+        
         setSelectedCohortSections([]);
+        setGeneralInfo({})
+        if (nodeIndex === 0) {
+            getJoinedCohort();
+        } else if (nodeIndex === 1) {
+
+            getJoinedCohortByD(generalInfo);
+        } else if (nodeIndex === 2) {
+            getJoinedCohortByT(generalInfo)
+        }
 
     }, [nodeIndex])
 
