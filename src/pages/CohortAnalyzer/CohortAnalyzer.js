@@ -101,9 +101,9 @@ export const CohortAnalyzer = () => {
                 ...state[cohortId],
                 participants: updatedParticipants,
             };
-            setCohortData(state);
+           
         });
-
+        setCohortData(state);
     }
 
     async function getJoinedCohort() {
@@ -205,7 +205,6 @@ export const CohortAnalyzer = () => {
         }
     }
 
-
     useEffect(() => {
         setSearchValue("");
         if (searchRef.current) {
@@ -217,7 +216,8 @@ export const CohortAnalyzer = () => {
     useEffect(() => {
 
 
-        if (selectedChart.length === 0) {
+        if (selectedChart.length >= 0 ) {
+           
             if (nodeIndex === 0) {
                 getJoinedCohort();
             } else if (nodeIndex === 1) {
@@ -259,6 +259,8 @@ export const CohortAnalyzer = () => {
             setSelectedCohortSections(finalVennSelection);
 
         }
+
+
         if (selectedCohorts.length === 0) {
             setGeneralInfo({});
             setRowData([]);
