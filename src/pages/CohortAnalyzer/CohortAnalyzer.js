@@ -74,7 +74,7 @@ export const CohortAnalyzer = () => {
     }
 
     function updatedCohortContent(newParticipantsData) {
-
+        const nodes = ["participant_pk","diagnosis","treatment_type"];
         selectedCohorts.forEach(cohortId => {
             const existingParticipants = state[cohortId].participants || [];
             const existingParticipantPks = existingParticipants.map(p => p.participant_pk);
@@ -103,8 +103,51 @@ export const CohortAnalyzer = () => {
             };
            
         });
+        console.log("Newwwww: " , newParticipantsData)
+        console.log("STATEEE: ", state);
         setCohortData(state);
     }
+
+    function updatedCohortContentTreatment(newParticipantsData) {
+        const nodes = ["participant_pk","diagnosis","treatment_type"];
+        selectedCohorts.forEach(cohortId => {
+            const existingParticipants = state[cohortId].participants || [];
+            const existingParticipantPks = existingParticipants.map(p => p.participant_pk);
+
+
+                let finalResponse = [];
+                newParticipantsData.forEach((participant) => {
+                const matchingExistingParticipants = existingParticipants.find(
+                    existingParticipant => existingParticipant.participant_pk === participant.participant_pk
+                ); 
+
+                let isInFinalResponse = finalResponse.find(
+                    finalParticipant => finalParticipant.treatment_type === participant.treatment_type
+                );
+
+                if(matchingExistingParticipants){
+                    finalResponse.push({
+                        ...matchingExistingParticipants, ...participant
+                    })
+                }
+                
+            })
+
+
+           
+            state[cohortId] = {
+                ...state[cohortId],
+                participants: finalResponse,
+            };
+           
+        });
+        console.log("Newwwww: " , newParticipantsData)
+        console.log("STATEEE: ", state);
+        setCohortData(state);
+    } 
+    
+    
+
 
     async function getJoinedCohort() {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
@@ -157,7 +200,7 @@ export const CohortAnalyzer = () => {
 
                     let filterRowData = filterAllParticipantWithDiagnosisName(generalInfo, data[responseKeys[nodeIndex]])
                     setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
-                    updatedCohortContent(filterRowData)
+                 //   updatedCohortContent(filterRowData)
                 } else {
                     setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
                     updatedCohortContent(data[responseKeys[nodeIndex]])
@@ -193,10 +236,11 @@ export const CohortAnalyzer = () => {
 
                     let filterRowData = filterAllParticipantWithTreatmentType(generalInfo, data[responseKeys[nodeIndex]])
                     setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
-                    updatedCohortContent(filterRowData)
+                    //updatedCohortContent(filterRowData)
+
                 } else {
                     setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
-                    updatedCohortContent(data[responseKeys[nodeIndex]])
+                    updatedCohortContentTreatment(data[responseKeys[nodeIndex]])
                 }
 
             }
@@ -284,10 +328,10 @@ export const CohortAnalyzer = () => {
         if (nodeIndex === 0) {
             getJoinedCohort();
         } else if (nodeIndex === 1) {
-
+         
             getJoinedCohortByD(generalInfo);
         } else if (nodeIndex === 2) {
-            getJoinedCohortByT(generalInfo)
+           getJoinedCohortByT(generalInfo)
         }
 
     }, [generalInfo, nodeIndex])
