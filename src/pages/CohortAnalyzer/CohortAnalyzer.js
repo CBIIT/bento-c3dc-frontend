@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
-import { DISPLAY_COHORT_QUERY } from "../../bento/dashboardTabData";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
@@ -10,7 +9,6 @@ import { tableConfig, analyzer_query, analyzer_tables, responseKeys } from "../.
 import DownloadSelectedCohort from "./downloadCohort/DownloadSelectedCohorts";
 import client from "../../utils/graphqlClient";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
-import Question_Icon from '../../assets/icons/Question_Icon.svg';
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
 import sortIcon from "../../assets/icons/sort_icon.svg";
@@ -45,7 +43,7 @@ export const CohortAnalyzer = () => {
     const [selectedCohorts, setSelectedCohorts] = useState([]);
     const [queryVariable, setQueryVariable] = useState({});
     const [rowData, setRowData] = useState([]);
-    const [refershInit, setRefershInit] = useState(false);
+    const [refershInit ] = useState(false);
     const [searchValue, setSearchValue] = useState("");
     const [cohortList, setCohortList] = useState(Object.keys(state) || {});
     const [selectedChart, setSelectedChart] = useState([]);
@@ -74,16 +72,11 @@ export const CohortAnalyzer = () => {
     }
 
     function updatedCohortContent(newParticipantsData) {
-
+        const newState = {...state};
         selectedCohorts.forEach(cohortId => {
-            const existingParticipants = state[cohortId].participants || [];
-            const existingParticipantPks = existingParticipants.map(p => p.participant_pk);
+            const existingParticipants = newState[cohortId].participants || [];
 
-            const newParticipants = newParticipantsData.filter(newParticipant =>
-                !existingParticipantPks.includes(newParticipant.participant_pk)
-            );
-
-            const updatedParticipants = existingParticipants.map(participant => {
+                    const updatedParticipants = existingParticipants.map(participant => {
                 const matchingNewParticipant = newParticipantsData.find(
                     newParticipant => newParticipant.participant_pk === participant.participant_pk
                 );
@@ -97,14 +90,46 @@ export const CohortAnalyzer = () => {
 
                 return participant;
             })
-            state[cohortId] = {
-                ...state[cohortId],
+            newState[cohortId] = {
+                ...newState[cohortId],
                 participants: updatedParticipants,
             };
            
         });
-        setCohortData(state);
+        setCohortData(newState);
     }
+
+    function updatedCohortContentAllowDuplication(newParticipantsData) {
+        const newState = {...state};
+        selectedCohorts.forEach(cohortId => {
+            const existingParticipants = newState[cohortId].participants || [];
+
+
+                let finalResponse = [];
+                newParticipantsData.forEach((participant) => {
+                const matchingExistingParticipants = existingParticipants.find(
+                    existingParticipant => existingParticipant.participant_pk === participant.participant_pk
+                ); 
+
+                if(matchingExistingParticipants){
+                    finalResponse.push({
+                        ...matchingExistingParticipants, ...participant
+                    })
+                }
+                
+            })
+ 
+            newState[cohortId] = {
+                ...newState[cohortId],
+                participants: finalResponse,
+            };
+           
+        });
+        setCohortData(newState);
+    } 
+    
+    
+
 
     async function getJoinedCohort() {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
@@ -149,7 +174,7 @@ export const CohortAnalyzer = () => {
                      filteredRowData = filterAllParticipantWithDiagnosisName(generalInfo, filteredRowData) 
                  }               
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
-                updatedCohortContent(filteredRowData)
+                  updatedCohortContentAllowDuplication(filteredRowData)
             } else {
 
 
@@ -157,7 +182,7 @@ export const CohortAnalyzer = () => {
 
                     let filterRowData = filterAllParticipantWithDiagnosisName(generalInfo, data[responseKeys[nodeIndex]])
                     setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
-                    updatedCohortContent(filterRowData)
+                 //   updatedCohortContent(filterRowData)
                 } else {
                     setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
                     updatedCohortContent(data[responseKeys[nodeIndex]])
@@ -193,10 +218,11 @@ export const CohortAnalyzer = () => {
 
                     let filterRowData = filterAllParticipantWithTreatmentType(generalInfo, data[responseKeys[nodeIndex]])
                     setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
-                    updatedCohortContent(filterRowData)
+                    //updatedCohortContent(filterRowData)
+
                 } else {
                     setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
-                    updatedCohortContent(data[responseKeys[nodeIndex]])
+                    updatedCohortContentAllowDuplication(data[responseKeys[nodeIndex]])
                 }
 
             }
@@ -284,10 +310,10 @@ export const CohortAnalyzer = () => {
         if (nodeIndex === 0) {
             getJoinedCohort();
         } else if (nodeIndex === 1) {
-
+         
             getJoinedCohortByD(generalInfo);
         } else if (nodeIndex === 2) {
-            getJoinedCohortByT(generalInfo)
+           getJoinedCohortByT(generalInfo)
         }
 
     }, [generalInfo, nodeIndex])
@@ -581,7 +607,7 @@ export const CohortAnalyzer = () => {
                         {refershTableContent && selectedCohorts.length > 0 &&
                             <ChartVenn
                                 intersection={nodeIndex}
-                                cohortData={cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
+                                cohortData={ cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
                                 setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
                                 setSelectedCohortSections={(data) => {
                                     setSelectedCohortSections(data);
