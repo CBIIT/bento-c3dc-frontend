@@ -62,14 +62,12 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
   useEffect(() => {
     const updatedBaseSets = cohortData.map((cohort) => {
       const seenValues = new Set();
-      
       return {
         label: `${cohort.cohortName} (${cohort.participants.length})`,
         values: cohort.participants
           .map(p => p[nodes[intersection]])
           .filter(value => {
             if (value !== null && value !== undefined && !seenValues.has(value)) {
-              console.log("ALLVALUES: " , value)
               seenValues.add(value);
               return true;
             }

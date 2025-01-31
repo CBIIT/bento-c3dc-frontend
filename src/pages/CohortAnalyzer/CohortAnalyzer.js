@@ -57,6 +57,7 @@ export const CohortAnalyzer = () => {
     const [generalInfo, setGeneralInfo] = useState({});
     const [nodeIndex, setNodeIndex] = useState(0);
     const [cohortData, setCohortData] = useState();
+    const [cohortDataTreatment, setCohortDataTreatment] = useState();
 
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { CohortModal } = CohortModalGenerator();
@@ -75,8 +76,10 @@ export const CohortAnalyzer = () => {
 
     function updatedCohortContent(newParticipantsData) {
         const nodes = ["participant_pk","diagnosis","treatment_type"];
+        const newState = {...state};
         selectedCohorts.forEach(cohortId => {
-            const existingParticipants = state[cohortId].participants || [];
+           console.log("NOW BEING USED: " , newState); 
+            const existingParticipants = newState[cohortId].participants || [];
             const existingParticipantPks = existingParticipants.map(p => p.participant_pk);
 
             const newParticipants = newParticipantsData.filter(newParticipant =>
@@ -97,21 +100,20 @@ export const CohortAnalyzer = () => {
 
                 return participant;
             })
-            state[cohortId] = {
-                ...state[cohortId],
+            newState[cohortId] = {
+                ...newState[cohortId],
                 participants: updatedParticipants,
             };
            
         });
-        console.log("Newwwww: " , newParticipantsData)
-        console.log("STATEEE: ", state);
-        setCohortData(state);
+        setCohortData(newState);
     }
 
     function updatedCohortContentTreatment(newParticipantsData) {
         const nodes = ["participant_pk","diagnosis","treatment_type"];
+        const newState = {...state};
         selectedCohorts.forEach(cohortId => {
-            const existingParticipants = state[cohortId].participants || [];
+            const existingParticipants = newState[cohortId].participants || [];
             const existingParticipantPks = existingParticipants.map(p => p.participant_pk);
 
 
@@ -132,18 +134,14 @@ export const CohortAnalyzer = () => {
                 }
                 
             })
-
-
-           
-            state[cohortId] = {
-                ...state[cohortId],
+ 
+            newState[cohortId] = {
+                ...newState[cohortId],
                 participants: finalResponse,
             };
            
         });
-        console.log("Newwwww: " , newParticipantsData)
-        console.log("STATEEE: ", state);
-        setCohortData(state);
+        setCohortDataTreatment(newState);
     } 
     
     
@@ -625,7 +623,7 @@ export const CohortAnalyzer = () => {
                         {refershTableContent && selectedCohorts.length > 0 &&
                             <ChartVenn
                                 intersection={nodeIndex}
-                                cohortData={cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
+                                cohortData={nodeIndex === 2 ? (cohortDataTreatment ?  selectedCohorts.map(cohortId => cohortDataTreatment[cohortId]) : (selectedCohorts.map(cohortId => state[cohortId]))) :  cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
                                 setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
                                 setSelectedCohortSections={(data) => {
                                     setSelectedCohortSections(data);
