@@ -19,7 +19,7 @@ export const announcementPageData = [
         "image": fig10,
         "type": 2,
         "is_release_notes": true,
-        "alt": "An animated laptop surrounded by animated objects, including a server, gears, and a magnifying glass.",
+        "alt": 'Hand holding a yellow and red megaphone against a red and teal background with the text "C3DC News."',
         "verbiage": "We are excited to announce the release of the C3DC application version 1.4.0! This release includes the new TARGET datasets (phs000468 and phs000469), enhancements to the Explore page Cohort Selector, and the addition of the new Cohort Analyzer feature. These updates enhance the user experience and provide more comprehensive data access. For full release details, please visit the  <a href='/release_notes_pdf' target='_blank'>Release Note</a>  to see all the details in the release note."
     },
     {
@@ -28,7 +28,7 @@ export const announcementPageData = [
         "image": fig11,
         "type": 2,
         "is_release_notes": true,
-        "alt": "An animated visualization of Venn diagrams showing overlaps and unique elements among cohorts.",
+        "alt": 'Person typing on a laptop with a notepad and pencil beside it; the word "Updates" is displayed in the background.',
         "verbiage": "The new Cohort Analyzer feature allows users to visualize results on a dedicated page, including Venn diagrams that highlight overlaps and unique elements among selected cohorts. Users can explore data views such as participants ID, diagnosis, and treatment."
     },
     {
@@ -37,7 +37,7 @@ export const announcementPageData = [
         "image": fig12,
         "type": 2,
         "is_release_notes": true,
-        "alt": "A representation of study source files and metadata available for download.",
+        "alt": 'Laptop screen displaying "UPDATING" with a partially filled progress bar, surrounded by abstract design elements including an orange arrow and gears.',
         "verbiage": "The source files for all TARGET studies and manifest metadata for CCDI studies are now available for download through the Studies Details page. This update provides easier access to data for analysis and research."
     },
     {
@@ -46,7 +46,7 @@ export const announcementPageData = [
         "image": fig13,
         "type": 2,
         "is_release_notes": true,
-        "alt": "A user interface showcasing cohort selection and dataset export options.",
+        "alt": "Woman smiling at her desk with two monitors displaying code.",
         "verbiage": "The C3DC application now allows users to select up to 20 cohorts—an increase from the previous limit of 10—and generate harmonized clinical manifest files in CSV or JSON formats. These files can be utilized on other platforms for further analysis."
     },
     {
@@ -55,8 +55,8 @@ export const announcementPageData = [
         "image": fig9, 
         "type": 1,
         "is_release_notes": true,
-        "alt": "An animated laptop surrounded by animated objects, including a server, gears, and a magnifying glass.",
-        "verbiage": " This release includes two new harmonized TARGET datasets (phs000468 and phs000469), along with updates to existing CCDI datasets (phs002517 and phs002790). Two datasets (phs003111 and phs002620) have been temporarily removed and will be updated soon. "
+        "alt": "Abstract digital image with binary code and glowing circuit lines.",
+        "verbiage": " This release includes two new harmonized TARGET datasets (phs000468 and phs000469), along with updates to existing CCDI dataset (phs002517). Two datasets (phs003111 and phs002620) have been temporarily removed and will be updated soon. "
     },
     {
         "title": "Data Model Update",
@@ -64,7 +64,7 @@ export const announcementPageData = [
         "image": fig8, 
         "type": 1,
         "is_release_notes": true,
-        "alt": "An animated laptop surrounded by animated objects, including a server, gears, and a magnifying glass.",
+        "alt": "A blue-toned graphic illustrating a network of interconnected nodes, some of which include user icons, representing digital connectivity and social networks.",
         "verbiage": "The C3DC data model has been enhanced with additional data properties to support genetic analysis and improve data organization and usability. This update helps researchers integrate genetic and clinical data for more efficient and insightful analysis in childhood cancer research."
 
     },
