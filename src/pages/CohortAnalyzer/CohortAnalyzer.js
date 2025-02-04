@@ -527,7 +527,7 @@ export const CohortAnalyzer = () => {
                     <div className={classes.sortSection}>
                         <div style={{ display: 'flex', margin: 0, alignItems: 'center', cursor: 'pointer' }}>
                             <img onClick={() => {
-                                resetSelection(setSelectedCohorts);
+                                resetSelection(setSelectedCohorts,setNodeIndex);
                             }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} />
                             <p style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'alphabet' ? 'lightgray' : '#646464' }} onClick={() => {
                                 sortBy("alphabet", cohortList, setCohortList, state);
@@ -567,7 +567,7 @@ export const CohortAnalyzer = () => {
                     <div className={classes.rightSideAnalyzerHeader2}>
                         <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 
-                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate."} arrow placement="top">
+                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of selected cohorts. Numbers in parentheses show unique records for the radio button selection, while numbers inside the diagram indicate unique values. The count next to your cohort in the sidebar reflects total participants."} arrow placement="top">
                                 <Help size={5} style={{ fontSize: 14 }} />
                             </ToolTip>
                         </p>
