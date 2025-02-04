@@ -340,7 +340,7 @@ export const CohortAnalyzer = () => {
     useEffect(() => {
         setRefershTableContent(false)
         setTimeout(() => setRefershTableContent(true), 0)
-    }, [cohortList, nodeIndex, cohortData])
+    }, [cohortList, nodeIndex, cohortData ])
 
 
     const Wrapper = styled.div`
@@ -430,7 +430,16 @@ export const CohortAnalyzer = () => {
         }
     };
 
-
+    const getTableMessage = (cohortList, selectedCohortSection, tableConfig) => {
+        if (cohortList.length === 0) {
+            return { noMatch: 'To proceed, please create your cohort by visiting the Explore Page.' };
+        }
+        if (selectedCohortSection.length === 0) {
+            return tableConfig.tableMsg;
+        }
+        return { noMatch: "No data available for the selected segment/segments. Please try a different segment/segments." };
+    };
+    
 
     const initTblState = (initailState) => ({
         ...initailState,
@@ -454,9 +463,7 @@ export const CohortAnalyzer = () => {
         showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
         showSearchBox: true,
-        tableMsg: (cohortList.length === 0) ? {
-            noMatch: 'To proceed, please create your cohort by visiting the Explore Page.'
-        } : tableConfig.tableMsg
+        tableMsg: getTableMessage(cohortList,selectedCohortSection,tableConfig) 
     });
 
     return (
