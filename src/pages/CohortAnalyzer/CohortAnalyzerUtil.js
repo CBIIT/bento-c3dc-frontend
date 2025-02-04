@@ -95,8 +95,9 @@ const getCohortName = (pk, state, selectedCohorts) => {
     return finalResponse;
 }
 
-export const resetSelection = (setSelectedCohorts) => {
+export const resetSelection = (setSelectedCohorts,setNodeIndex) => {
     setSelectedCohorts([]);
+    setNodeIndex(0);
 }
 
 export const sortBy = (type, cohortList, setCohortList, state) => {
