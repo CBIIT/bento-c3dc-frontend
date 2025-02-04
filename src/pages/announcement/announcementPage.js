@@ -250,7 +250,6 @@ const AnnouncementPage = () => {
 
   }, [selectedOption])
 
-
   useEffect(() => {
     calculatePageInfo(announcementPageData);
   }, [])
