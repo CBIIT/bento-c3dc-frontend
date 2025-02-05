@@ -4,8 +4,9 @@ import { pdfList } from "../../bento/aboutPageData";
 export default function PdfReader() {
     const containerStyle = {
         width: '100%',
-        height: '90vh',
+        height: '160dvh',
         display: 'flex',
+        overflowY: 'scroll',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
@@ -13,7 +14,7 @@ export default function PdfReader() {
 
     const iframeStyle = {
         width: '50%',
-        height: '100%',
+        minHeight: '80%',
         margin: 40
     };
 

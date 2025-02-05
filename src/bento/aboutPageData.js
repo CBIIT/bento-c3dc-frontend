@@ -1,4 +1,4 @@
-import userGuide from '../assets/releaseNotes/C3DC User Guide -R4-V3.pdf';
+import userGuide from '../assets/releaseNotes/C3DC_User_Guide-R5-V8.pdf';
 import latestRelease from '../assets/releaseNotes/C3DC_Release_Notes.pdf';
 
 export const aboutData = {
