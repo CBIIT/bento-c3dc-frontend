@@ -88,7 +88,7 @@ export const tableConfig = {
   },
 };
 
-export const diagnosesTableConfig= 
+export const diagnosesTableConfig =
 {
   name: 'Participants',
   dataField: 'dataParticipant',
@@ -204,7 +204,7 @@ export const treatmentTableConfig = {
       display: true,
       tooltipText: 'sort',
       role: cellTypes.DISPLAY,
-    },{
+    }, {
       dataField: 'treatment_pk',
       header: 'Treatment Id',
       display: true,
@@ -283,12 +283,13 @@ diagnosisOverview(
 ) {
     # Demographics
     participant_id
-participant_pk
+    participant_pk
     # Diagnosis
     diagnosis_pk
     age_at_diagnosis
     anatomic_site
     diagnosis
+    dbgap_accession
 
     __typename
 }}`;
@@ -314,7 +315,9 @@ treatmentOverview(
 ) {
     # Participant
     participant_id
-   participant_pk 
+    participant_pk
+    dbgap_accession
+
     # Treatment
     treatment_pk
     treatment_type
@@ -325,6 +328,6 @@ treatmentOverview(
 }}
 `;
 
-export const analyzer_query = [participant_query,diagnosis_query,treatment_query];
-export const analyzer_tables = [tableConfig,diagnosesTableConfig,treatmentTableConfig];
-export const responseKeys = ["participantOverview","diagnosisOverview","treatmentOverview"];
+export const analyzer_query = [participant_query, diagnosis_query, treatment_query];
+export const analyzer_tables = [tableConfig, diagnosesTableConfig, treatmentTableConfig];
+export const responseKeys = ["participantOverview", "diagnosisOverview", "treatmentOverview"];
