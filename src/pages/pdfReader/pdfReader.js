@@ -6,7 +6,6 @@ export default function PdfReader() {
         width: '100%',
         height: '160dvh',
         display: 'flex',
-        overflowY: 'scroll',
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center'
@@ -14,12 +13,11 @@ export default function PdfReader() {
 
     const iframeStyle = {
         width: '50%',
-        minHeight: '80%',
+        minHeight: '94%',
         margin: 40
     };
 
     const [pdfUrl,setPdfUrl] = useState("");
-    
     useEffect(()=>{
         const pathname = new URL(window.location.href).pathname.substring(1).replace("/","");
     
