@@ -4,7 +4,7 @@ import { pdfList } from "../../bento/aboutPageData";
 export default function PdfReader() {
     const containerStyle = {
         width: '100%',
-        height: '90vh',
+        height: '160dvh',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
@@ -13,12 +13,11 @@ export default function PdfReader() {
 
     const iframeStyle = {
         width: '50%',
-        height: '100%',
+        minHeight: '94%',
         margin: 40
     };
 
     const [pdfUrl,setPdfUrl] = useState("");
-    
     useEffect(()=>{
         const pathname = new URL(window.location.href).pathname.substring(1).replace("/","");
     
