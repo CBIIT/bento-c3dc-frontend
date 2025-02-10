@@ -131,10 +131,10 @@ export const CohortAnalyzer = () => {
     
 
 
-    async function getJoinedCohort() {
+    async function getJoinedCohort(isReset = false) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": getAllIds(generalInfo), first: 10000 };
+            queryVariables = { "participant_pks": isReset ? getIdsFromCohort(state, selectedCohorts): getAllIds(generalInfo), first: 10000 };
         }
         setQueryVariable(queryVariables);
         const { data } = await client.query({
@@ -316,7 +316,7 @@ export const CohortAnalyzer = () => {
            getJoinedCohortByT(generalInfo)
         }
 
-    }, [generalInfo, nodeIndex])
+    }, [generalInfo])
 
     useEffect(() => {
 
@@ -327,7 +327,7 @@ export const CohortAnalyzer = () => {
             searchRef.current.value = "";
         }
         if (nodeIndex === 0) {
-            getJoinedCohort();
+            getJoinedCohort(true);
         } else if (nodeIndex === 1) {
 
             getJoinedCohortByD({});
