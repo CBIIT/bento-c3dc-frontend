@@ -150,7 +150,7 @@ if(data){
                 font: {
                     family: 'Nunito',
                     size: 15,
-                    weight: 300,
+                    weight: 0,
                 },
                 color: '#000',
             },
@@ -159,8 +159,8 @@ if(data){
             ticks: {
                 font: {
                     family: 'Nunito',
-                    size: 17,
-                    weight: 800,
+                    size: 16,
+                    weight: 570,
                 },
                 color: 'black',
             },
@@ -180,7 +180,7 @@ if(data){
 useEffect(() => {
   if (chartRef.current && canvasRef.current) {
     chartRef.current.destroy();
-    canvasRef.current.width = cohortData.length === 2 ? 680 : 700;
+    canvasRef.current.width = cohortData.length === 2 ? 800 : 700;
     canvasRef.current.height =  cohortData.length === 2 ? 200 : 270; 
   }
   chartRef.current = new VennDiagramChart(canvasRef.current, config);
