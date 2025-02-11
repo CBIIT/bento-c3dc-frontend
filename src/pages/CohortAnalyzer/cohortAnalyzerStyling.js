@@ -286,7 +286,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-        width: 297,
+       minWidth: 297,
         height: 194,
         
         marginLeft: 0,
