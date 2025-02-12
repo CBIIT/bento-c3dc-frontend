@@ -560,7 +560,12 @@ export const CohortAnalyzer = () => {
                         {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state, selectedCohorts) : Object.keys(state)).map((cohort) => {
                             let cohortName = state[cohort].cohortName + " (" + state[cohort].participants.length + ")";
                             return (
-                                <div onMouseMove={(e) => { handleMouseMove(e, cohortName) }} onMouseLeave={handleMouseLeave}>
+                                <div onMouseMove={(e) => { handleMouseMove(e, cohortName) }} onMouseLeave={handleMouseLeave}
+                                style={{
+                                    background: selectedCohorts.includes(cohort) 
+                                    ?['#FAE69C','#A4E9CB','#A3CCE8'][selectedCohorts.indexOf(cohort) %3] : 'transparent'
+                                }}
+                                >
 
                                     <ToolTip
                                         open={HoveredCohort === cohortName}
@@ -583,7 +588,8 @@ export const CohortAnalyzer = () => {
                                             ],
                                         }}
                                         backgroundColor={'white'} zIndex={3000} title={cohortName} arrow placement="top">
-                                        <div className={!selectedCohorts.includes(cohort) ? classes.CohortChild : classes.cohortChildSelected}  >
+                                        <div className={!selectedCohorts.includes(cohort) ? classes.CohortChild : classes.cohortChildSelected}
+                                        >
                                             <div className={classes.cohortChildContent} >
                                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 6 }}>
                                                     <CheckBoxCustom
