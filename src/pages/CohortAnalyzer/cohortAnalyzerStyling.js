@@ -113,15 +113,6 @@ export const useStyle = makeStyles((theme) => ({
         marginBottom: 2,
         alignItems: 'center',
         justifyContent: 'space-between',
-        '&:first-child': {
-            background: '#FAE69C',
-        },
-        '&:nth-child(2)': {
-            background: '#A4E9CB',
-        },
-        '&:nth-child(3)': {
-            background: '#A3CCE8'
-        }
     },
     CohortChild: {
         background: '#E2F1F5',
@@ -319,7 +310,11 @@ export const useStyle = makeStyles((theme) => ({
             fontFamily: 'Poppins',
             fontWeight: 300,
             lineHeight: 2,
-            margin: 0
+            margin: 0,
+            cursor: 'pointer',
+            '& input': {
+                cursor: 'pointer'
+            }
 
         }
     },
