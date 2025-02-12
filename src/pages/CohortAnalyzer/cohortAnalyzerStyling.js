@@ -310,7 +310,11 @@ export const useStyle = makeStyles((theme) => ({
             fontFamily: 'Poppins',
             fontWeight: 300,
             lineHeight: 2,
-            margin: 0
+            margin: 0,
+            cursor: 'pointer',
+            '& input': {
+                cursor: 'pointer'
+            }
 
         }
     },

@@ -64,7 +64,7 @@ export const CohortAnalyzer = () => {
     const [HoveredCohort, setHoveredCohort] = useState(true);
 
     const handleMouseMove = (event, cohortName) => {
-        if (cohortName.length > 18) {
+        if (cohortName.length > 17) {
             setHoveredCohort(cohortName)
         }
         setMousePosition({ x: event.clientX, y: event.clientY });
@@ -242,7 +242,7 @@ export const CohortAnalyzer = () => {
         }
     }
 
-    function shortenText(text, maxSize = 18) {
+    function shortenText(text, maxSize = 17) {
         return text.length > maxSize ? text.slice(0, maxSize) + "..." : text;
     }
 
@@ -562,6 +562,7 @@ export const CohortAnalyzer = () => {
                             return (
                                 <div onMouseMove={(e) => { handleMouseMove(e, cohortName) }} onMouseLeave={handleMouseLeave}
                                 style={{
+                                    cursor: 'pointer',
                                     background: selectedCohorts.includes(cohort) 
                                     ?['#FAE69C','#A4E9CB','#A3CCE8'][selectedCohorts.indexOf(cohort) %3] : 'transparent'
                                 }}
