@@ -1,6 +1,5 @@
 import gql from 'graphql-tag';
 import { cellTypes } from '@bento-core/table';
-import { customParticipantsTabDownloadCSV, customSamplesTabDownloadCSV, customDiagnosisTabDownloadCSV, customStudyTabDownloadCSV } from './tableDownloadCSV';
 import questionIcon from '../assets/icons/Question_Icon.svg';
 
 // --------------- Tooltip configuration --------------
@@ -1138,313 +1137,6 @@ query search (
 }
   `;
 
-export const GET_ALL_FILEIDS_FROM_PARTICIPANTSTAB_FOR_ADD_ALL_CART = gql`
-query participantsAddAllToCart(
-    $participant_ids: [String],
-    $gender: [String] ,
-    $race: [String] ,
-    $ethnicity: [String] ,
-    $age_at_diagnosis: [Int] ,
-    $diagnosis_anatomic_site: [String] ,
-    $disease_phase: [String] ,
-    $diagnosis_icd_o: [String] ,
-    $vital_status: [String] ,
-    $sample_anatomic_site: [String] ,
-    $participant_age_at_collection: [Int] ,
-    $sample_tumor_status: [String] ,
-    $tumor_classification: [String] ,
-    $assay_method: [String],
-    $file_type: [String],
-    $dbgap_accession: [String],
-    $grant_id: [String],
-    $institution: [String],
-    $study_name: [String],
-    $library_selection: [String],
-    $library_source: [String],
-    $library_strategy: [String],
-    $first: Int,
-    $offset: Int= 0, 
-    $order_by: String = "file_id",
-    $sort_direction: String = "asc" 
-  ){
-    participantOverview(
-      participant_ids: $participant_ids,
-      gender: $gender,
-      race: $race,
-      ethnicity: $ethnicity,
-      age_at_diagnosis: $age_at_diagnosis,
-      diagnosis_anatomic_site: $diagnosis_anatomic_site,
-      disease_phase: $disease_phase,
-      diagnosis_icd_o: $diagnosis_icd_o,
-      vital_status: $vital_status,
-      sample_anatomic_site: $sample_anatomic_site,
-      participant_age_at_collection: $participant_age_at_collection,
-      sample_tumor_status: $sample_tumor_status,
-      tumor_classification: $tumor_classification,
-      assay_method: $assay_method,
-      file_type: $file_type,
-      dbgap_accession: $dbgap_accession,       
-      grant_id: $grant_id,
-      institution: $institution,
-      study_name: $study_name,
-      library_selection: $library_selection,
-      library_source: $library_source,
-      library_strategy: $library_strategy,
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-      ) {
-      files
-  }
-}
-    `;
-
-export const GET_ALL_FILEIDS_FROM_SAMPLETAB_FOR_ADD_ALL_CART = gql`
-    query samplesAddAllToCart(
-      $participant_ids: [String],
-      $gender: [String] ,
-      $race: [String] ,
-      $ethnicity: [String] ,
-      $age_at_diagnosis: [Int] ,
-      $diagnosis_anatomic_site: [String] ,
-      $disease_phase: [String] ,
-      $diagnosis_icd_o: [String] ,
-      $vital_status: [String] ,
-      $sample_anatomic_site: [String] ,
-      $participant_age_at_collection: [Int] ,
-      $sample_tumor_status: [String] ,
-      $tumor_classification: [String] ,
-      $assay_method: [String],
-      $file_type: [String],
-      $dbgap_accession: [String],
-      $grant_id: [String],
-      $institution: [String],
-      $study_name: [String],
-      $library_selection: [String],
-      $library_source: [String],
-      $library_strategy: [String],
-      $first: Int,
-      $offset: Int= 0, 
-      $order_by: String = "file_id",
-      $sort_direction: String = "asc" ){
-      sampleOverview(
-          participant_ids: $participant_ids,
-          gender: $gender,
-          race: $race,
-          ethnicity: $ethnicity,
-          age_at_diagnosis: $age_at_diagnosis,
-          diagnosis_anatomic_site: $diagnosis_anatomic_site,
-          disease_phase: $disease_phase,
-          diagnosis_icd_o: $diagnosis_icd_o,
-          vital_status: $vital_status,
-          sample_anatomic_site: $sample_anatomic_site,
-          participant_age_at_collection: $participant_age_at_collection,
-          sample_tumor_status: $sample_tumor_status,
-          tumor_classification: $tumor_classification,
-          assay_method: $assay_method,
-          file_type: $file_type,
-          dbgap_accession: $dbgap_accession,       
-          grant_id: $grant_id,
-          institution: $institution,
-          study_name: $study_name,
-          library_selection: $library_selection,
-          library_source: $library_source,
-          library_strategy: $library_strategy,
-          first: $first,
-          offset: $offset,
-          order_by: $order_by,
-          sort_direction: $sort_direction
-          ) {
-          files
-      }
-    }
-        `;
-
-export const GET_ALL_FILEIDS_FROM_FILESTAB_FOR_ADD_ALL_CART = gql`
-query fileAddAllToCart(
-  $participant_ids: [String],
-  $gender: [String] ,
-  $race: [String] ,
-  $ethnicity: [String] ,
-  $age_at_diagnosis: [Int] ,
-  $diagnosis_anatomic_site: [String] ,
-  $disease_phase: [String] ,
-  $diagnosis_icd_o: [String] ,
-  $vital_status: [String] ,
-  $sample_anatomic_site: [String] ,
-  $participant_age_at_collection: [Int] ,
-  $sample_tumor_status: [String] ,
-  $tumor_classification: [String] ,
-  $assay_method: [String],
-  $file_type: [String],
-  $dbgap_accession: [String],
-  $grant_id: [String],
-  $institution: [String],
-  $study_name: [String],
-  $library_selection: [String],
-  $library_source: [String],
-  $library_strategy: [String],
-  $first: Int,
-  $offset: Int= 0, 
-  $order_by: String = "file_id",
-  $sort_direction: String = "asc"
- ){
-  fileOverview(
-      participant_ids: $participant_ids,
-      gender: $gender,
-      race: $race,
-      ethnicity: $ethnicity,
-      age_at_diagnosis: $age_at_diagnosis,
-      diagnosis_anatomic_site: $diagnosis_anatomic_site,
-      disease_phase: $disease_phase,
-      diagnosis_icd_o: $diagnosis_icd_o,
-      vital_status: $vital_status,
-      sample_anatomic_site: $sample_anatomic_site,
-      participant_age_at_collection: $participant_age_at_collection,
-      sample_tumor_status: $sample_tumor_status,
-      tumor_classification: $tumor_classification,
-      assay_method: $assay_method,
-      file_type: $file_type,
-      dbgap_accession: $dbgap_accession,       
-      grant_id: $grant_id,
-      institution: $institution,
-      study_name: $study_name,
-      library_selection: $library_selection,
-      library_source: $library_source,
-      library_strategy: $library_strategy,
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-  ){
-    files
-  }
-}
-            `;
-
-export const GET_ALL_FILEIDS_FROM_DIAGNOSISTAB_FOR_ADD_ALL_CART = gql`
-query diagnosisAddAllToCart(
-  $participant_ids: [String],
-  $gender: [String] ,
-  $race: [String] ,
-  $ethnicity: [String] ,
-  $age_at_diagnosis: [Int] ,
-  $diagnosis_anatomic_site: [String] ,
-  $disease_phase: [String] ,
-  $diagnosis_icd_o: [String] ,
-  $vital_status: [String] ,
-  $sample_anatomic_site: [String] ,
-  $participant_age_at_collection: [Int] ,
-  $sample_tumor_status: [String] ,
-  $tumor_classification: [String] ,
-  $assay_method: [String],
-  $file_type: [String],
-  $dbgap_accession: [String],
-  $grant_id: [String],
-  $institution: [String],
-  $study_name: [String],
-  $library_selection: [String],
-  $library_source: [String],
-  $library_strategy: [String],
-  $first: Int,
-  $offset: Int= 0, 
-  $order_by: String = "file_id",
-  $sort_direction: String = "asc" ){
-  diagnosisOverview(
-      participant_ids: $participant_ids,
-      gender: $gender,
-      race: $race,
-      ethnicity: $ethnicity,
-      age_at_diagnosis: $age_at_diagnosis,
-      diagnosis_anatomic_site: $diagnosis_anatomic_site,
-      disease_phase: $disease_phase,
-      diagnosis_icd_o: $diagnosis_icd_o,
-      vital_status: $vital_status,
-      sample_anatomic_site: $sample_anatomic_site,
-      participant_age_at_collection: $participant_age_at_collection,
-      sample_tumor_status: $sample_tumor_status,
-      tumor_classification: $tumor_classification,
-      assay_method: $assay_method,
-      file_type: $file_type,
-      dbgap_accession: $dbgap_accession,       
-      grant_id: $grant_id,
-      institution: $institution,
-      study_name: $study_name,
-      library_selection: $library_selection,
-      library_source: $library_source,
-      library_strategy: $library_strategy,
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-      ) {
-      files
-  }
-}
-    `;
-
-export const GET_ALL_FILEIDS_FROM_STUDYTAB_FOR_ADD_ALL_CART = gql`
-query studyAddAllToCart(
-  $participant_ids: [String],
-  $gender: [String] ,
-  $race: [String] ,
-  $ethnicity: [String] ,
-  $age_at_diagnosis: [Int] ,
-  $diagnosis_anatomic_site: [String] ,
-  $disease_phase: [String] ,
-  $diagnosis_icd_o: [String] ,
-  $vital_status: [String] ,
-  $sample_anatomic_site: [String] ,
-  $participant_age_at_collection: [Int] ,
-  $sample_tumor_status: [String] ,
-  $tumor_classification: [String] ,
-  $assay_method: [String],
-  $file_type: [String],
-  $dbgap_accession: [String],
-  $grant_id: [String],
-  $institution: [String],
-  $study_name: [String],
-  $library_selection: [String],
-  $library_source: [String],
-  $library_strategy: [String],
-  $first: Int,
-  $offset: Int= 0, 
-  $order_by: String = "file_id",
-  $sort_direction: String = "asc" ){
-  studyOverview(
-      participant_ids: $participant_ids,
-      gender: $gender,
-      race: $race,
-      ethnicity: $ethnicity,
-      age_at_diagnosis: $age_at_diagnosis,
-      diagnosis_anatomic_site: $diagnosis_anatomic_site,
-      disease_phase: $disease_phase,
-      diagnosis_icd_o: $diagnosis_icd_o,
-      vital_status: $vital_status,
-      sample_anatomic_site: $sample_anatomic_site,
-      participant_age_at_collection: $participant_age_at_collection,
-      sample_tumor_status: $sample_tumor_status,
-      tumor_classification: $tumor_classification,
-      assay_method: $assay_method,
-      file_type: $file_type,
-      dbgap_accession: $dbgap_accession,       
-      grant_id: $grant_id,
-      institution: $institution,
-      study_name: $study_name,
-      library_selection: $library_selection,
-      library_source: $library_source,
-      library_strategy: $library_strategy,
-      first: $first,
-      offset: $offset,
-      order_by: $order_by,
-      sort_direction: $sort_direction
-      ) {
-      files
-  }
-}
-    `;
-
 // --------------- GraphQL query - Retrieve files tab details --------------
 export const GET_FILES_NAME_QUERY = gql`
 query fileOverview($file_ids: [String], $offset: Int = 0, $first: Int = 100000, $order_by:String ="file_name"){
@@ -1555,7 +1247,7 @@ export const tabContainers = [
     id: 'study_tab',
     tabIndex: '4',
     selectableRows: true,
-    tableDownloadCSV: customStudyTabDownloadCSV,
+    tableDownloadCSV: {},
     downloadFileName: 'C3DC Studies Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
@@ -1642,7 +1334,7 @@ export const tabContainers = [
       },
     ],
     id: 'participant_tab',
-    tableDownloadCSV: customParticipantsTabDownloadCSV,
+    tableDownloadCSV: {},
     tabIndex: '0',
     downloadFileName: 'C3DC Participants Download',
     tableMsg: {
@@ -1807,7 +1499,7 @@ export const tabContainers = [
     ],
     id: 'diagnosis_tab',
     tabIndex: '3',
-    tableDownloadCSV: customDiagnosisTabDownloadCSV,
+    tableDownloadCSV: {},
     downloadFileName: 'C3DC Diagnosis Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
@@ -1915,7 +1607,7 @@ export const tabContainers = [
     id: 'treatment_tab',
     tabIndex: '4',
     selectableRows: true,
-    tableDownloadCSV: customStudyTabDownloadCSV,
+    tableDownloadCSV: {},
     downloadFileName: 'C3DC Treatment Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
@@ -1923,7 +1615,7 @@ export const tabContainers = [
     addFilesRequestVariableKey: 'treatment_ids',
     addFilesResponseKeys: ['fileIDsFromList'],
     addAllFilesResponseKeys: ['treatmentOverview', 'files'],
-    addAllFileQuery: GET_ALL_FILEIDS_FROM_DIAGNOSISTAB_FOR_ADD_ALL_CART,
+    addAllFileQuery: "",
     addSelectedFilesQuery: GET_ALL_FILEIDS_DIAGNOSISTAB_FOR_SELECT_ALL,
   },
   {
@@ -2019,7 +1711,7 @@ export const tabContainers = [
     id: 'treatment_response_tab',
     tabIndex: '4',
     selectableRows: true,
-    tableDownloadCSV: customStudyTabDownloadCSV,
+    tableDownloadCSV: {},
     downloadFileName: 'C3DC Treatment Response Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
@@ -2153,7 +1845,7 @@ export const tabContainers = [
     ],
     id: 'survival_tab',
     tabIndex: '1',
-    tableDownloadCSV: customSamplesTabDownloadCSV,
+    tableDownloadCSV: {},
     downloadFileName: 'C3DC Survival Download',
     tableMsg: {
       noMatch: 'No Matching Records Found',
