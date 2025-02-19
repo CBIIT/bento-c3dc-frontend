@@ -232,7 +232,7 @@ export const treatmentTableConfig = {
 
 const participant_query = gql`query participantOverview(
     # Demographics
-    $participant_pks: [String],
+    $participant_pk: [String],
 
     # Table config
     $first: Int,
@@ -242,7 +242,7 @@ const participant_query = gql`query participantOverview(
 ) {
 participantOverview(
     # Demographics
-    participant_pks: $participant_pks,
+    participant_pk: $participant_pk,
 
     # Table config
     first: $first,
@@ -251,7 +251,7 @@ participantOverview(
     sort_direction: $sort_direction
 ) { 
     # Participants
-    participant_pk
+    id 
     participant_id
     race
     sex_at_birth
@@ -263,7 +263,7 @@ participantOverview(
 }}`;
 const diagnosis_query = gql`query diagnosisOverview(
     # Demographics
-    $participant_pks: [String]
+    $participant_pk: [String]
 
     # Table config
     $first: Int,
@@ -273,7 +273,7 @@ const diagnosis_query = gql`query diagnosisOverview(
 ) {
 diagnosisOverview(
     # Demographics
-    participant_pks: $participant_pks,
+    participant_pk: $participant_pk,
 
     # Table config
     first: $first,
@@ -283,9 +283,9 @@ diagnosisOverview(
 ) {
     # Demographics
     participant_id
-    participant_pk
+    id 
     # Diagnosis
-    diagnosis_pk
+    id 
     age_at_diagnosis
     anatomic_site
     diagnosis
@@ -295,7 +295,7 @@ diagnosisOverview(
 }}`;
 const treatment_query = gql`query treatmentOverview(
     # Demographics
-    $participant_pks: [String],
+    $participant_pk: [String],
 
     # Table config
     $first: Int,
@@ -305,7 +305,7 @@ const treatment_query = gql`query treatmentOverview(
 ) {
 treatmentOverview(
     # Demographics
-    participant_pks: $participant_pks,
+    participant_pk: $participant_pk,
 
     # Table config
     first: $first,
@@ -315,11 +315,11 @@ treatmentOverview(
 ) {
     # Participant
     participant_id
-    participant_pk
+    id 
     dbgap_accession
 
     # Treatment
-    treatment_pk
+    id 
     treatment_type
     treatment_agent
     treatment_agent_str

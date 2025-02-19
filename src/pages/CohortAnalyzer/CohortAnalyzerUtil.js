@@ -182,11 +182,11 @@ export const SearchBox = (classes, handleSearchValue ,searchValue,searchReferenc
 
 export function generateQueryVariable(cohortNames, state) {
     let query = {};
-    query['participant_pks'] = [];
+    query['participant_pk'] = [];
     query["first"] = 10000;
     cohortNames.forEach((cName) => {
         state[cName].participants.forEach((participant) => {
-            query["participant_pks"].push(participant.participant_pk);
+            query["participant_pk"].push(participant.participant_pk);
         });
     });
     return query;

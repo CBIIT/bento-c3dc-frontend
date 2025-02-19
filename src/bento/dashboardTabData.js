@@ -316,7 +316,7 @@ getParticipants(
 export const GET_COHORT_METADATA_QUERY = gql`
 query cohortMetadata(
     # Demographics
-    $participant_pks: [String],
+    $participant_pk: [String],
 
     # Table config
     $first: Int,
@@ -326,7 +326,7 @@ query cohortMetadata(
 ) {
 cohortMetadata(
     # Demographics
-    participant_pks: $participant_pks,
+    participant_pk: $participant_pk,
 
     # Table config
     first: $first,
@@ -337,13 +337,13 @@ cohortMetadata(
     dbgap_accession
 
     participants {
-        participant_pk
+        id 
         participant_id
         race
         sex_at_birth
 
         diagnoses {
-            diagnosis_pk
+            id 
             diagnosis_id
             age_at_diagnosis
             anatomic_site
@@ -360,7 +360,7 @@ cohortMetadata(
             tumor_stage_clinical_t
         }
         survivals {
-            survival_pk
+            id 
             survival_id
             age_at_event_free_survival_status
             age_at_last_known_survival_status
@@ -370,14 +370,14 @@ cohortMetadata(
             last_known_survival_status
         }
         treatments {
-            treatment_pk
+            id 
             treatment_id
             age_at_treatment_end
             age_at_treatment_start
             treatment_agent
             treatment_type
         }
-        treatment_responses {    treatment_response_pk
+        treatment_responses {    id 
             treatment_response_id
             age_at_response
             response
@@ -390,7 +390,7 @@ cohortMetadata(
 export const DISPLAY_COHORT_QUERY = gql`
 query participantOverview(
     # Demographics
-    $participant_pks: [String],
+    $participant_pk: [String],
 
     # Table config
     $first: Int,
@@ -400,7 +400,7 @@ query participantOverview(
 ) {
 participantOverview(
     # Demographics
-    participant_pks: $participant_pks,
+    participant_pk: $participant_pk,
 
     # Table config
     first: $first,
@@ -410,7 +410,7 @@ participantOverview(
 ) { 
     # Participants
     participant_id
-    participant_pk
+    id 
     race
     sex_at_birth
 
@@ -423,7 +423,7 @@ participantOverview(
 export const GET_COHORT_MANIFEST_QUERY = gql`
 query cohortManifest(
     # Demographics
-    $participant_pks: [String],
+    $participant_pk: [String],
 
     # Table config
     $first: Int,
@@ -433,7 +433,7 @@ query cohortManifest(
 ) {
 diagnosisOverview(
     # Demographics
-    participant_pks: $participant_pks,
+    participant_pk: $participant_pk,
 
     # Table config
     first: $first,
@@ -442,11 +442,11 @@ diagnosisOverview(
     sort_direction: $sort_direction
 ) {
     # Diagnosis
-    diagnosis_pk
+    id 
     diagnosis
 
     # Participants
-    participant_pk
+    id 
     participant_id
     race
     sex_at_birth
@@ -542,7 +542,7 @@ studyOverview(
     sort_direction: $sort_direction
 ) {
     # Studies
-    study_pk
+    id 
     consent
     consent_number
     external_url
@@ -641,9 +641,9 @@ participantOverview(
     sort_direction: $sort_direction
 ) { 
     # Participants
-    participant_pk
+    id 
     participant_id
-    participant_pk
+    id 
     race
     sex_at_birth
 
@@ -744,7 +744,7 @@ diagnosisOverview(
     participant_id
 
     # Diagnosis
-    diagnosis_pk
+    id 
     age_at_diagnosis
     anatomic_site
     diagnosis_basis
@@ -761,7 +761,7 @@ diagnosisOverview(
     tumor_stage_clinical_t
 
     # Participants
-    participant_pk
+    id 
     participant_id
 
     # Study
@@ -857,7 +857,7 @@ treatmentOverview(
   sort_direction: $sort_direction
 ) {
   # Participant
-  participant_pk
+  id 
   participant_id
 
   # Study
@@ -865,7 +865,7 @@ treatmentOverview(
   study_id
 
   # Treatment
-  treatment_pk
+  id 
   treatment_id
   age_at_treatment_start
   age_at_treatment_end
@@ -962,7 +962,7 @@ treatmentResponseOverview(
   sort_direction: $sort_direction
 ) {
   # Participant
-  participant_pk
+  id 
   participant_id
 
   # Study
@@ -970,7 +970,7 @@ treatmentResponseOverview(
   study_id
 
   # Treatment Response
-  treatment_response_pk
+  id 
   treatment_response_id
   response
   age_at_response
@@ -1067,7 +1067,7 @@ survivalOverview(
     sort_direction: $sort_direction
 ) {
     # Participant
-    participant_pk
+    id 
     participant_id
 
     # Study
@@ -1075,7 +1075,7 @@ survivalOverview(
     study_id
 
     # Survival
-    survival_pk
+    id 
     age_at_event_free_survival_status
     age_at_last_known_survival_status
     cause_of_death
