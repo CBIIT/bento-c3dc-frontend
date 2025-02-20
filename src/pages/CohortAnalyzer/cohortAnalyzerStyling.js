@@ -74,12 +74,14 @@ export const useStyle = makeStyles((theme) => ({
         textDecoration: 'none'
     },
     leftSideAnalyzer: {
-        width: 268,
+        minWidth: 268,
+        maxWidth: 268,
         height: 588,
         marginTop: 70,
-        overflowY: 'hidden',
+        overflow: 'hidden',
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
+        borderLeft: 'none',
 
     },
     leftSideAnalyzerChild: {
@@ -153,7 +155,7 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     sideHeader: {
-        height: 112,
+        height: 125,
         fontFamily: 'Poppins',
         fontSize: 18.5,
         fontWeight: 500,
@@ -167,15 +169,18 @@ export const useStyle = makeStyles((theme) => ({
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-
+       paddingLeft: 20,
+       justifyContent: 'flex-start',
+       justifyItems: 'flex-start',
         '& img': {
-            marginRight: 6.5
+            marginRight: 6.5,
         },
         '& p': {
             fontFamily: 'Open Sans',
             fontSize: 15,
             fontWeight: 400,
-            color: '#8A7F7C'
+            color: '#8A7F7C',
+            padding: 0,
         }
     },
     sortSection: {
@@ -183,8 +188,7 @@ export const useStyle = makeStyles((theme) => ({
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
-        marginLeft: 10,
-        marginRight: 25,
+        marginLeft: 20,
         '& p': {
             fontSize: 9
         }
@@ -209,7 +213,7 @@ export const useStyle = makeStyles((theme) => ({
         borderRadius: '35px',
         border: '4px solid #4E8191',
         margin: 100,
-        marginLeft: 50,
+        marginLeft: 30,
         marginTop: 70,
         display: 'flex',
         flexDirection: 'column',
