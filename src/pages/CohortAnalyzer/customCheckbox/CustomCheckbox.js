@@ -8,7 +8,7 @@ export default function CheckBoxCustom({ selectedCohorts, cohort, handleCheckbox
     const isDisabled = selectedCohorts.length === 3 && !isChecked;
     
     return (
-        <label style={{ display: 'inline-block', cursor: isDisabled ? 'not-allowed' : 'pointer' }}>
+        <label style={{ display: 'inline-block', cursor: isDisabled ? 'not-allowed' : 'pointer', zIndex: 1 }}>
             <img 
                 src={isChecked ? tickIcon  : whiteBox} 
                 alt={isChecked ? "Checked" : "Unchecked"} 

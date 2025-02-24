@@ -63,15 +63,21 @@ export const useStyle = makeStyles((theme) => ({
         textAlign: 'left',
     },
     inputStyle: {
+        fontFamily: 'Poppins',
+        fontWeight: 300,
         width: '349px',
-        height: '29px',
+        height: '26px',
         gap: '0px',
         borderRadius: '8px',
         margin: 'auto',
         marginLeft: '0px',
         paddingLeft: 13,
         border: '1px solid #8B98AF',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        "&::placeolder": {
+            fontFamily: 'Poppins',
+            color: 'red'
+        }
     },
     leftSideAnalyzer: {
         minWidth: 268,
@@ -208,7 +214,7 @@ export const useStyle = makeStyles((theme) => ({
         borderTop: '1.02px #8A7F7C solid'
     },
     rightSideAnalyzer: {
-        width: 1327,
+        width: "94%",
         height: 1149,
         borderRadius: '35px',
         border: '4px solid #4E8191',
@@ -224,7 +230,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '90%',
+        width: '91%',
         alignSelf: 'center',
         alignItems: 'center',
         borderBottom: '1px solid gray',
@@ -233,7 +239,8 @@ export const useStyle = makeStyles((theme) => ({
             fontSize: '35px',
             fontWeight: 400,
             textAlign: 'left',
-            color: '#0D3A3F'
+            color: '#0D3A3F',
+            marginLeft: '10px'
         }
 
     },
@@ -241,7 +248,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '90%',
+        width: '91%',
         alignSelf: 'center',
         alignItems: 'flex-start',
         marginBottom: '30px',
@@ -253,7 +260,8 @@ export const useStyle = makeStyles((theme) => ({
             width: 655,
             lineHeight: '20.8px',
             textAlign: 'left',
-            color: '#8A7F7C'
+            color: '#8A7F7C',
+            marginLeft: '10px',
         }
     },
     cohortChildContent: {
