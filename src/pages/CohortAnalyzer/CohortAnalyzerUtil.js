@@ -50,11 +50,8 @@ export const getIdsFromCohort = (data,selectedCohorts) => {
         }
     }
     }
-
     return allParticipantPKs;
 }
-
-
 
 export const getAllIds = (generalInfo) => {
     let finalIds = [];

@@ -477,6 +477,7 @@ padding-left: 5px;
         extendedViewConfig: tableConfig.extendedViewConfig,
         rowsPerPage: 10,
         page: 0,
+        onPageChange: (somevalue) =>  alert("ok ok"),
         downloadFileName: "download",
         showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
