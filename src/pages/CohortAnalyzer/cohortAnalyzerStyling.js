@@ -214,7 +214,8 @@ export const useStyle = makeStyles((theme) => ({
         borderTop: '1.02px #8A7F7C solid'
     },
     rightSideAnalyzer: {
-        width: "94%",
+        minWidth: "77%",
+        maxWidth: "77%",
         height: 1149,
         borderRadius: '35px',
         border: '4px solid #4E8191',
