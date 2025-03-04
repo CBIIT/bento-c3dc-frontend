@@ -4,6 +4,7 @@ import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
 import trashCan from "../../assets/icons/trash_can.svg";
+import trashCanBlack from "../../assets/icons/trash_can_black.svg";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
 import { tableConfig, analyzer_query, analyzer_tables, responseKeys } from "../../bento/cohortAnalayzerPageData";
 import DownloadSelectedCohort from "./downloadCohort/DownloadSelectedCohorts";
@@ -391,6 +392,8 @@ export const CohortAnalyzer = () => {
     const TrashCanIcon = styled.img`
   opacity: ${(props) => (Object.keys(props.state).length === 0 ? 0.6 : 1)};
   cursor: ${(props) => (Object.keys(props.state).length === 0 ? 'not-allowed' : 'pointer')};
+    position: relative;
+    bottom: -2px;
 `;
 
     const Instructions = styled.p`
@@ -400,11 +403,11 @@ export const CohortAnalyzer = () => {
   margin-top: 7px;
   font-weight: 400;
   font-family: 'Open Sans';
+  
 `;
 
     const InstructionsWrapper = styled.div`
-  padding: 0;
-  padding-left: 10px;
+padding-left: 5px;
 `;
 
 
@@ -474,6 +477,7 @@ export const CohortAnalyzer = () => {
         extendedViewConfig: tableConfig.extendedViewConfig,
         rowsPerPage: 10,
         page: 0,
+        onPageChange: (somevalue) =>  alert("ok ok"),
         downloadFileName: "download",
         showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
@@ -527,14 +531,16 @@ export const CohortAnalyzer = () => {
                                     alt="Trashcan"
                                     state={state}
                                     onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)}
-                                    src={trashCan}
-                                    width={15}
-                                    height={16}
+                                    src={trashCanBlack}
+                                    width={18}
+                                    height={20}
                                 />
                             </Wrapper>
                             <InstructionsWrapper>
                                 <Instructions>
-                                    {"Select up to three cohorts to view in the Cohort Analyzer"}
+                                    {"Select up to three cohorts "}
+                                    <br /> 
+                                      {"to view in the Cohort Analyzer"}
                                 </Instructions>
                             </InstructionsWrapper>
                         </>
@@ -561,11 +567,11 @@ export const CohortAnalyzer = () => {
                             let cohortName = state[cohort].cohortName + " (" + state[cohort].participants.length + ")";
                             return (
                                 <div onMouseMove={(e) => { handleMouseMove(e, cohortName) }} onMouseLeave={handleMouseLeave}
-                                style={{
-                                    cursor: 'pointer',
-                                    background: selectedCohorts.includes(cohort) 
-                                    ?['#FAE69C','#A4E9CB','#A3CCE8'][selectedCohorts.indexOf(cohort) %3] : 'transparent'
-                                }}
+                                    style={{
+                                        cursor: 'pointer',
+                                        background: selectedCohorts.includes(cohort)
+                                            ? ['#FAE69C', '#A4E9CB', '#A3CCE8'][selectedCohorts.indexOf(cohort) % 3] : 'transparent'
+                                    }}
                                 >
 
                                     <ToolTip
@@ -592,14 +598,14 @@ export const CohortAnalyzer = () => {
                                         <div className={!selectedCohorts.includes(cohort) ? classes.CohortChild : classes.cohortChildSelected}
                                         >
                                             <div className={classes.cohortChildContent} >
-                                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 6 }}>
+                                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 20 }}>
                                                     <CheckBoxCustom
                                                         selectedCohorts={selectedCohorts}
                                                         cohort={cohort}
                                                         handleCheckbox={handleCheckbox} />
                                                     <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {shortenText(cohortName)} </span>
                                                 </div>
-                                                <img alt={"Trashcan"} style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
+                                                <img alt={"Trashcan"} style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={11} height={12} />
                                             </div>
                                         </div>
                                     </ToolTip>
@@ -616,7 +622,7 @@ export const CohortAnalyzer = () => {
                         <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 
                             <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of selected cohorts. Numbers in parentheses show unique records for the radio button selection, while numbers inside the diagram indicate unique values. The count next to your cohort in the sidebar reflects total participants."} arrow placement="top">
-                                <img src={questionIcon} width={10} style={{fontSize: 10, position: 'relative', top: -5, left: -3}} />
+                                <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
                             </ToolTip>
                         </p>
                     </div>
@@ -626,7 +632,7 @@ export const CohortAnalyzer = () => {
                             <h3>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
 
 
-                                <img src={questionIcon} width={10} style={{fontSize: 10, position: 'relative', top: -5, left: -3}} />
+                                <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
 
                             </ToolTip>  <br></br>for cohort matching</h3>
                             <div className={classes.catagoryCardChildren}>
@@ -687,7 +693,7 @@ export const CohortAnalyzer = () => {
                                     <div
                                         style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}
                                     >
-                                <img src={questionIcon} width={10} style={{fontSize: 10, position: 'relative', top: -5, left: -3}} />
+                                        <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
                                     </div>
                                 </ToolTip>
                             </div>
