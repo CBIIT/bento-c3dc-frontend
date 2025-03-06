@@ -1,5 +1,11 @@
-
-import { clearAllAndSelectFacet } from '@bento-core/facet-filter';
+import { 
+  clearAllAndSelectFacet 
+} from '@bento-core/facet-filter';
+import {
+  updateAutocompleteData, 
+  updateUploadData, 
+  updateUploadMetadata,
+} from '@bento-core/local-find';
 import {
   GET_IDS_BY_TYPE, GET_PARTICIPANT_IDS,
 } from '../../../bento/localSearchData';
@@ -52,3 +58,27 @@ export async function getAllParticipantIds(participantIdsArray) {
     .catch(() => []);
   return allids;
 }
+
+export const setActiveFilterByPathQuery = (filterQuery) => {
+  const query = Buffer.from(decodeURIComponent(filterQuery || ''), "base64")
+  const filterObject = JSON.parse(query);
+  const { autocomplete = [], upload = [], uploadMetadata } = filterObject;
+
+  const activeFilterValues = Object.keys(filterObject).reduce((curr, key) => {
+    if (Array.isArray(filterObject[key])) {
+      const activeFilters = filterObject[key].reduce((value, item) => ({
+        ...value,
+        [item]: true,
+      }), {});
+      return {
+        ...curr,
+        [key]: activeFilters,
+      };
+    }
+    return curr;
+  }, {});
+  store.dispatch(clearAllAndSelectFacet(activeFilterValues));
+  store.dispatch(updateAutocompleteData(autocomplete));
+  store.dispatch(updateUploadData(upload));
+  store.dispatch(updateUploadMetadata(uploadMetadata));
+};
