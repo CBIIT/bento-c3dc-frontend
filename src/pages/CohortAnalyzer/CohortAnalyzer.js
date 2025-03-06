@@ -90,7 +90,7 @@ export const CohortAnalyzer = () => {
 
             const updatedParticipants = existingParticipants.map(participant => {
                 const matchingNewParticipant = newParticipantsData.find(
-                    newParticipant => newParticipant.participant_pk === participant.id 
+                    newParticipant => newParticipant.participant_pk === participant.participant_pk
                 );
 
                 if (matchingNewParticipant) {
@@ -120,7 +120,7 @@ export const CohortAnalyzer = () => {
             let finalResponse = [];
             newParticipantsData.forEach((participant) => {
                 const matchingExistingParticipants = existingParticipants.find(
-                    existingParticipant => existingParticipant.participant_pk === participant.id 
+                    existingParticipant => existingParticipant.participant_pk === participant.participant_pk
                 );
 
                 if (matchingExistingParticipants) {
@@ -140,8 +140,30 @@ export const CohortAnalyzer = () => {
         setCohortData(newState);
     }
 
+    function transformData(data, type) {
+        if (type === "treatment") {
+            return data.map(({ participant, id, ...rest }) => ({
+                participant_pk: participant.id,
+                participant_id: participant.participant_id,
+                treatment_pk: id,
+                ...rest,
+            }));
+        } else if ("diagnoses") {
+            return data.map(({ participant, id, ...rest }) => ({
+                participant_pk: participant.id,
+                participant_id: participant.participant_id,
+                diagnosis_pk: id,
+                ...rest,
+            }));
+        } else {
+            return data.map(({ id, participant_id, ...rest }) => ({
+                participant_pk: id,
+                participant_id: participant_id,
+                ...rest,
+            }));
+        }
 
-
+    }
 
     async function getJoinedCohort(isReset = false) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
@@ -149,7 +171,7 @@ export const CohortAnalyzer = () => {
             queryVariables = { "participant_pk": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
@@ -158,7 +180,7 @@ export const CohortAnalyzer = () => {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
-                setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
+                setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts, "participant"));
                 updatedCohortContent(data[responseKeys[nodeIndex]])
 
             }
@@ -173,10 +195,11 @@ export const CohortAnalyzer = () => {
             queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "diagnoses") }
         if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
 
@@ -211,10 +234,12 @@ export const CohortAnalyzer = () => {
             queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "treatment") }
+
         if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
@@ -561,11 +586,11 @@ export const CohortAnalyzer = () => {
                             let cohortName = state[cohort].cohortName + " (" + state[cohort].participants.length + ")";
                             return (
                                 <div onMouseMove={(e) => { handleMouseMove(e, cohortName) }} onMouseLeave={handleMouseLeave}
-                                style={{
-                                    cursor: 'pointer',
-                                    background: selectedCohorts.includes(cohort) 
-                                    ?['#FAE69C','#A4E9CB','#A3CCE8'][selectedCohorts.indexOf(cohort) %3] : 'transparent'
-                                }}
+                                    style={{
+                                        cursor: 'pointer',
+                                        background: selectedCohorts.includes(cohort)
+                                            ? ['#FAE69C', '#A4E9CB', '#A3CCE8'][selectedCohorts.indexOf(cohort) % 3] : 'transparent'
+                                    }}
                                 >
 
                                     <ToolTip
@@ -616,7 +641,7 @@ export const CohortAnalyzer = () => {
                         <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 
                             <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of selected cohorts. Numbers in parentheses show unique records for the radio button selection, while numbers inside the diagram indicate unique values. The count next to your cohort in the sidebar reflects total participants."} arrow placement="top">
-                                <img src={questionIcon} width={10} style={{fontSize: 10, position: 'relative', top: -5, left: -3}} />
+                                <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
                             </ToolTip>
                         </p>
                     </div>
@@ -626,7 +651,7 @@ export const CohortAnalyzer = () => {
                             <h3>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
 
 
-                                <img src={questionIcon} width={10} style={{fontSize: 10, position: 'relative', top: -5, left: -3}} />
+                                <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
 
                             </ToolTip>  <br></br>for cohort matching</h3>
                             <div className={classes.catagoryCardChildren}>
@@ -687,7 +712,7 @@ export const CohortAnalyzer = () => {
                                     <div
                                         style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}
                                     >
-                                <img src={questionIcon} width={10} style={{fontSize: 10, position: 'relative', top: -5, left: -3}} />
+                                        <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
                                     </div>
                                 </ToolTip>
                             </div>

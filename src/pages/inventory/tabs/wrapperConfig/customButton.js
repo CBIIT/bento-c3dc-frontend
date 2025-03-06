@@ -89,6 +89,14 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
     dispatch(onRowSelectHidden([]));
   }
 
+  const buildCohortFormat = (jsonArray) => {
+    return jsonArray.map(item => ({
+      ...item,
+      participant_id: typeof item.participant === 'object' ? item.participant.participant_id : item.participant_id,
+      participant_pk:  typeof item.participant === 'object' ? item.participant.id : item.id,
+    }));
+  };
+
   const handleClick = () => {
     if (isActive) {
       if (type === "VIEW") {
@@ -104,7 +112,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
         dispatch(onCreateNewCohort(
           "",
           "",
-          hiddenSelectedRows,
+         buildCohortFormat(hiddenSelectedRows),
           (count) => { 
             triggerNotification(count);
             setShowCohortModal(true);
@@ -118,6 +126,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
 
     }
   };
+
 
   return (
     <ButtonContainer>
