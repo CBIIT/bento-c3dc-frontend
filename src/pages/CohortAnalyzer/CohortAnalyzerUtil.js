@@ -49,7 +49,7 @@ export const getIdsFromCohort = (data, selectedCohorts) => {
             }
         }
     }
-    
+
     return allParticipantPKs;
 }
 
@@ -73,9 +73,9 @@ export const addCohortColumn = (rowD, state, selectedCohorts, type = "other") =>
                 cohort: cohortName
             };
         } else {
-            // Get the cohort name for the current participants
+
             let cohortName = getCohortName(row.id, state, selectedCohorts);
-            // Return a new object with the added cohort property
+
             return {
                 ...row,
                 cohort: cohortName

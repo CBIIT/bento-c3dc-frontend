@@ -149,7 +149,7 @@ export const CohortAnalyzer = () => {
                 treatment_pk: id,
                 ...rest,
             }));
-        } else if ("diagnoses") {
+        } else if ("diagnosis") {
             return data.map(({ participant, id, ...rest }) => ({
                 participant_pk: participant.id,
                 participant_id: participant.participant_id,
@@ -200,7 +200,7 @@ export const CohortAnalyzer = () => {
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
-        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "diagnoses") }
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "diagnosis") }
         if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
 
@@ -502,7 +502,7 @@ padding-left: 5px;
         extendedViewConfig: tableConfig.extendedViewConfig,
         rowsPerPage: 10,
         page: 0,
-        onPageChange: (somevalue) =>  alert("ok ok"),
+        onPageChange: (somevalue) => alert("ok ok"),
         downloadFileName: "download",
         showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
@@ -564,8 +564,8 @@ padding-left: 5px;
                             <InstructionsWrapper>
                                 <Instructions>
                                     {"Select up to three cohorts "}
-                                    <br /> 
-                                      {"to view in the Cohort Analyzer"}
+                                    <br />
+                                    {"to view in the Cohort Analyzer"}
                                 </Instructions>
                             </InstructionsWrapper>
                         </>
