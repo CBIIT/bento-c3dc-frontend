@@ -49,15 +49,13 @@ export const getIdsFromCohort = (data, selectedCohorts) => {
             }
         }
     }
-
+    
     return allParticipantPKs;
 }
 
-
-
 export const getAllIds = (generalInfo) => {
     let finalIds = [];
-    Object.keys(generalInfo).forEach((section) => {
+    Object.keys(generalInfo).forEch((section) => {
 
         finalIds = [...finalIds, ...generalInfo[section]]
 

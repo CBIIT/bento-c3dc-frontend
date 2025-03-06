@@ -4,6 +4,7 @@ import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
 import trashCan from "../../assets/icons/trash_can.svg";
+import trashCanBlack from "../../assets/icons/trash_can_black.svg";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
 import { tableConfig, analyzer_query, analyzer_tables, responseKeys } from "../../bento/cohortAnalayzerPageData";
 import DownloadSelectedCohort from "./downloadCohort/DownloadSelectedCohorts";
@@ -416,6 +417,8 @@ export const CohortAnalyzer = () => {
     const TrashCanIcon = styled.img`
   opacity: ${(props) => (Object.keys(props.state).length === 0 ? 0.6 : 1)};
   cursor: ${(props) => (Object.keys(props.state).length === 0 ? 'not-allowed' : 'pointer')};
+    position: relative;
+    bottom: -2px;
 `;
 
     const Instructions = styled.p`
@@ -425,11 +428,11 @@ export const CohortAnalyzer = () => {
   margin-top: 7px;
   font-weight: 400;
   font-family: 'Open Sans';
+  
 `;
 
     const InstructionsWrapper = styled.div`
-  padding: 0;
-  padding-left: 10px;
+padding-left: 5px;
 `;
 
 
@@ -499,6 +502,7 @@ export const CohortAnalyzer = () => {
         extendedViewConfig: tableConfig.extendedViewConfig,
         rowsPerPage: 10,
         page: 0,
+        onPageChange: (somevalue) =>  alert("ok ok"),
         downloadFileName: "download",
         showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
@@ -552,14 +556,16 @@ export const CohortAnalyzer = () => {
                                     alt="Trashcan"
                                     state={state}
                                     onClick={() => handlePopup("", state, setDeleteInfo, deleteInfo)}
-                                    src={trashCan}
-                                    width={15}
-                                    height={16}
+                                    src={trashCanBlack}
+                                    width={18}
+                                    height={20}
                                 />
                             </Wrapper>
                             <InstructionsWrapper>
                                 <Instructions>
-                                    {"Select up to three cohorts to view in the Cohort Analyzer"}
+                                    {"Select up to three cohorts "}
+                                    <br /> 
+                                      {"to view in the Cohort Analyzer"}
                                 </Instructions>
                             </InstructionsWrapper>
                         </>
@@ -617,14 +623,14 @@ export const CohortAnalyzer = () => {
                                         <div className={!selectedCohorts.includes(cohort) ? classes.CohortChild : classes.cohortChildSelected}
                                         >
                                             <div className={classes.cohortChildContent} >
-                                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 6 }}>
+                                                <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 20 }}>
                                                     <CheckBoxCustom
                                                         selectedCohorts={selectedCohorts}
                                                         cohort={cohort}
                                                         handleCheckbox={handleCheckbox} />
                                                     <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {shortenText(cohortName)} </span>
                                                 </div>
-                                                <img alt={"Trashcan"} style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={15} height={16} />
+                                                <img alt={"Trashcan"} style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={11} height={12} />
                                             </div>
                                         </div>
                                     </ToolTip>

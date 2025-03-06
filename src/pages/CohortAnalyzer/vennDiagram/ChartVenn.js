@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
+import shadows from "@material-ui/core/styles/shadows";
 
 // Utility Functions
 const hexToRgba = (hex, alpha = 1) => {
@@ -106,7 +107,7 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
 
   
   const getBorderColor = (item, index ) => {
-    return selectedCohortSection.includes(item.label) ? "white" : "#929292";
+    return selectedCohortSection.includes(item.label) ? "rgba(0, 0, 0, 0.1)" : "#929292";
   }
 
   const getBorderWidth = (item, index) =>{
@@ -169,7 +170,7 @@ if(data){
     hover: {
       mode: null,
       animationDuration: 0 
-    }
+    },
     },
   };
 

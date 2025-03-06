@@ -119,15 +119,18 @@ export const tblHeader = {
     },
     MuiTableCell: {
       body: {
-        color: 'inherit',
-        fontSize: '16px',
+        color: '#0F253A',
+        fontSize: '14px',
         maxWidth: '250px',
         fontStyle: 'normal',
-        fontFamily: 'Nunito',
-        fontWeight: 'normal',
+        fontFamily: 'Open Sans',
+        fontWeight: '400',
         paddingLeft: '20px',
         overflowWrap: 'break-word',
         letterSpacing: '0.025em',
+        '&:first-of-type': {
+          color: '#004C73',
+        },
         '&.numberOfSubjects': {
           paddingLeft: '55px',
         },
