@@ -7,7 +7,7 @@ const theme = {
           },
         },
         root: {
-          '&.icdc_query_bar': {
+          '&.c3dc_query_bar': {
             padding: '0px 0px 1px 0px',
             '& .filter-by-cases': {
               // borderLeft: '2px solid',
