@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { connect } from 'react-redux';
+import { useParams, useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import { getFilters } from '@bento-core/facet-filter';
 import InventoryView from './inventoryView';
 import { DASHBOARD_QUERY_NEW } from '../../bento/dashboardTabData';
 import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalProvider } from './cohortModal/CohortModalContext';
+import { setActiveFilterByPathQuery } from './sideBar/BentoFilterUtils';
 
 
 const getDashData = (states) => {
@@ -48,6 +50,14 @@ const getDashData = (states) => {
 };
 
 const InventoryController = ((props) => {
+  const { filterQuery } = useParams();
+  const navigate = useNavigate();
+
+  if (filterQuery) {
+    setActiveFilterByPathQuery(filterQuery);
+    const redirectUrl = '/explore';
+    navigate(redirectUrl, { replace: true })
+  }
   const { dashData, activeFilters } = getDashData(props);
   if (!dashData) {
     return (<div style={{"height": "1200px","paddingTop": "10px"}}><div style={{"margin": "auto","display": "flex","maxWidth": "1800px"}}><CircularProgress /></div></div>);
