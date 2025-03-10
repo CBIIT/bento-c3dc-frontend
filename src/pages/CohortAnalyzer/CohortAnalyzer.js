@@ -550,7 +550,7 @@ padding-left: 5px;
                             <img onClick={() => {
                                 resetSelection(setSelectedCohorts, setNodeIndex);
                             }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} />
-                            <p style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'alphabet' ? 'lightgray' : '#646464' }} onClick={() => {
+                            <p style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'alphabet' ? '#646464' : '#646464' }} onClick={() => {
                                 sortBy("alphabet", cohortList, setCohortList, state);
                                 setSortType("alphabet");
                             }}> Sort Alphabetically </p>
@@ -558,7 +558,7 @@ padding-left: 5px;
                         <div onClick={() => {
                             sortBy("", cohortList, setCohortList, state);
                             setSortType("count");
-                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'count' ? 'lightgray' : '#646464' }}>
+                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === '#646464' ? 'lightgray' : '#646464' }}>
                             <p>Sort by Count</p>
                         </div>
                     </div>
@@ -622,7 +622,7 @@ padding-left: 5px;
                         <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 
                             <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of selected cohorts. Numbers in parentheses show unique records for the radio button selection, while numbers inside the diagram indicate unique values. The count next to your cohort in the sidebar reflects total participants."} arrow placement="top">
-                                <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
+                                <img alt={"question mark icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
                             </ToolTip>
                         </p>
                     </div>
@@ -632,7 +632,7 @@ padding-left: 5px;
                             <h3>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
 
 
-                                <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
+                                <img alt={"question mark icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
 
                             </ToolTip>  <br></br>for cohort matching</h3>
                             <div className={classes.catagoryCardChildren}>
@@ -640,7 +640,7 @@ padding-left: 5px;
                                     <p>
                                         <input disabled={selectedCohorts.length === 0} type="radio" checked={nodeIndex === 0} onClick={() => {
                                             setNodeIndex(0);
-                                        }} radioGroup="node_type" name="node_type" />
+                                        }} radioGroup="node_type" name="node_type" aria-label="Participant radio button" />
                                         Participant ID
                                     </p>
                                 </ToolTip>
@@ -649,7 +649,7 @@ padding-left: 5px;
                                     <p>
                                         <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
                                             setNodeIndex(1);
-                                        }} radioGroup="node_type" name="node_type" />
+                                        }} radioGroup="node_type" name="node_type" aria-label="Daignosis Radio button" />
                                         Diagnosis
                                     </p>
                                 </ToolTip>
@@ -658,7 +658,7 @@ padding-left: 5px;
                                     <p>
                                         <input disabled={selectedCohorts.length === 0} onClick={() => {
                                             setNodeIndex(2);
-                                        }} type="radio" radioGroup="node_type" name="node_type" />
+                                        }} type="radio" radioGroup="node_type" name="node_type" aria-label="Treatment Radio button" />
                                         Treatment
                                     </p>
                                 </ToolTip>
@@ -693,7 +693,7 @@ padding-left: 5px;
                                     <div
                                         style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}
                                     >
-                                        <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
+                                        <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
                                     </div>
                                 </ToolTip>
                             </div>

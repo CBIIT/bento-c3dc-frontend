@@ -35,7 +35,7 @@ export const useStyle = makeStyles((theme) => ({
         opacity: 0.4,
         fontFamily: "Poppins",
         fontSize: "12px",
-        fontWeight: 600,
+        fontWeight: 900,
     },
     sortCount: {
         display: 'flex',
@@ -185,7 +185,7 @@ export const useStyle = makeStyles((theme) => ({
             fontFamily: 'Open Sans',
             fontSize: 15,
             fontWeight: 400,
-            color: '#8A7F7C',
+            color: 'black',
             padding: 0,
         }
     },
@@ -261,7 +261,7 @@ export const useStyle = makeStyles((theme) => ({
             width: 655,
             lineHeight: '20.8px',
             textAlign: 'left',
-            color: '#8A7F7C',
+            color: 'black',
             marginLeft: '10px',
         }
     },
