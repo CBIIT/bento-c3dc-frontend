@@ -62,7 +62,9 @@ export const CustomCellView = (props) => {
 
   }
 
-
+  if( typeof label === 'object'){
+    return (<Typography>{label["participant_id"] }</Typography>)
+  }
 
   if (props.linkAttr) {
     const { rootPath } = props.linkAttr;

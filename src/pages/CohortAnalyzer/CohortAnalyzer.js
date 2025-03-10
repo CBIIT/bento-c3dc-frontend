@@ -141,25 +141,47 @@ export const CohortAnalyzer = () => {
         setCohortData(newState);
     }
 
+    function transformData(data, type) {
+        if (type === "treatment") {
+            return data.map(({ participant, id, ...rest }) => ({
+                participant_pk: participant.id,
+                participant_id: participant.participant_id,
+                treatment_pk: id,
+                ...rest,
+            }));
+        } else if ("diagnosis") {
+            return data.map(({ participant, id, ...rest }) => ({
+                participant_pk: participant.id,
+                participant_id: participant.participant_id,
+                diagnosis_pk: id,
+                ...rest,
+            }));
+        } else {
+            return data.map(({ id, participant_id, ...rest }) => ({
+                participant_pk: id,
+                participant_id: participant_id,
+                ...rest,
+            }));
+        }
 
-
+    }
 
     async function getJoinedCohort(isReset = false) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: 10000 };
+            queryVariables = { "participant_pk": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
-        if (queryVariables.participant_pks.length > 0) {
+        if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
-                setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
+                setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts, "participant"));
                 updatedCohortContent(data[responseKeys[nodeIndex]])
 
             }
@@ -171,14 +193,15 @@ export const CohortAnalyzer = () => {
     async function getJoinedCohortByD(selectedCohortSection = null) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": getIdsFromCohort(state, selectedCohorts), first: 10000 };
+            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
-        if (queryVariables.participant_pks.length > 0) {
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "diagnosis") }
+        if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
 
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
@@ -209,14 +232,16 @@ export const CohortAnalyzer = () => {
     async function getJoinedCohortByT(selectedCohortSection = null) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": getIdsFromCohort(state, selectedCohorts), first: 10000 };
+            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
-        if (queryVariables.participant_pks.length > 0) {
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "treatment") }
+
+        if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
                 if (JSON.stringify(selectedCohortSection) !== "{}") {
@@ -477,7 +502,7 @@ padding-left: 5px;
         extendedViewConfig: tableConfig.extendedViewConfig,
         rowsPerPage: 10,
         page: 0,
-        onPageChange: (somevalue) =>  alert("ok ok"),
+        onPageChange: (somevalue) => alert("ok ok"),
         downloadFileName: "download",
         showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
@@ -539,8 +564,8 @@ padding-left: 5px;
                             <InstructionsWrapper>
                                 <Instructions>
                                     {"Select up to three cohorts "}
-                                    <br /> 
-                                      {"to view in the Cohort Analyzer"}
+                                    <br />
+                                    {"to view in the Cohort Analyzer"}
                                 </Instructions>
                             </InstructionsWrapper>
                         </>
