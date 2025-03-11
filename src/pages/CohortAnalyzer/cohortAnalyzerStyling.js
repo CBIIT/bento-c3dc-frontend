@@ -7,36 +7,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row'
     },
-    createCohort: {
-        width: "199px",
-        height: "41px",
-        padding: "12px 30px 12px 30px",
-        gap: "10px",
-        borderRadius: "5px",
-        opacity: "0px",
-        border: "1.25px solid #73C7BE",
-        background: "#375C67",
-        color: 'white',
-        fontFamily: "Poppins",
-        fontSize: "12px",
-        fontWeight: 600,
-        cursor: 'pointer',
-
-    },
-    createCohortOpacity: {
-        width: "199px",
-        height: "41px",
-        padding: "12px 30px 12px 30px",
-        gap: "10px",
-        borderRadius: "5px",
-        border: "1.25px solid #73C7BE",
-        background: "#375C67",
-        color: 'white',
-        opacity: 0.4,
-        fontFamily: "Poppins",
-        fontSize: "12px",
-        fontWeight: 900,
-    },
+   
     sortCount: {
         display: 'flex',
         margin: 0,
@@ -123,7 +94,7 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'space-between',
     },
     CohortChild: {
-        background: '#E2F1F5',
+        background: 'rgba(181, 221, 229, 0.4)',
         width: '100%',
         height: 28,
         display: 'flex',
@@ -131,7 +102,25 @@ export const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         '&:nth-child(even)': {
-            backgroundColor: '#DAE7E9'
+            background: 'rgba(165, 194, 200, 0.4)'
+        },
+        '& span': {
+            color: 'black'
+        },
+        '& div img': {
+            opacity: 1
+        }
+    },
+    CohortChildOpacity: {
+        background: 'rgba(181, 221, 229, 0.2)',
+        width: '100%',
+        height: 28,
+        display: 'flex',
+        marginBottom: 2,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        '&:nth-child(even)': {
+            background: 'rgba(165, 194, 200, 0.2)'
         },
         '& span': {
             color: 'black'
@@ -151,7 +140,7 @@ export const useStyle = makeStyles((theme) => ({
         pointerEvents: 'auto',
         justifyContent: 'space-between',
         '&:nth-child(even)': {
-            backgroundColor: '#DAE7E9'
+            background: 'rgba(165, 194, 200, 0.4)'
         },
         '& span': {
             color: 'black'

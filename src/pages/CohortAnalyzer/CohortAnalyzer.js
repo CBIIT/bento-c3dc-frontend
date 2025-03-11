@@ -38,6 +38,7 @@ import {
     filterAllParticipantWithTreatmentType
 } from "./CohortAnalyzerUtil";
 import styled from "styled-components";
+import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -141,25 +142,47 @@ export const CohortAnalyzer = () => {
         setCohortData(newState);
     }
 
+    function transformData(data, type) {
+        if (type === "treatment") {
+            return data.map(({ participant, id, ...rest }) => ({
+                participant_pk: participant.id,
+                participant_id: participant.participant_id,
+                treatment_pk: id,
+                ...rest,
+            }));
+        } else if ("diagnosis") {
+            return data.map(({ participant, id, ...rest }) => ({
+                participant_pk: participant.id,
+                participant_id: participant.participant_id,
+                diagnosis_pk: id,
+                ...rest,
+            }));
+        } else {
+            return data.map(({ id, participant_id, ...rest }) => ({
+                participant_pk: id,
+                participant_id: participant_id,
+                ...rest,
+            }));
+        }
 
-
+    }
 
     async function getJoinedCohort(isReset = false) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: 10000 };
+            queryVariables = { "participant_pk": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
-        if (queryVariables.participant_pks.length > 0) {
+        if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
             } else {
-                setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
+                setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts, "participant"));
                 updatedCohortContent(data[responseKeys[nodeIndex]])
 
             }
@@ -171,14 +194,15 @@ export const CohortAnalyzer = () => {
     async function getJoinedCohortByD(selectedCohortSection = null) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": getIdsFromCohort(state, selectedCohorts), first: 10000 };
+            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
-        if (queryVariables.participant_pks.length > 0) {
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "diagnosis") }
+        if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
 
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
@@ -209,14 +233,16 @@ export const CohortAnalyzer = () => {
     async function getJoinedCohortByT(selectedCohortSection = null) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pks": getIdsFromCohort(state, selectedCohorts), first: 10000 };
+            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
         }
         setQueryVariable(queryVariables);
-        const { data } = await client.query({
+        let { data } = await client.query({
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
-        if (queryVariables.participant_pks.length > 0) {
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "treatment") }
+
+        if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
                 if (JSON.stringify(selectedCohortSection) !== "{}") {
@@ -477,7 +503,7 @@ padding-left: 5px;
         extendedViewConfig: tableConfig.extendedViewConfig,
         rowsPerPage: 10,
         page: 0,
-        onPageChange: (somevalue) =>  alert("ok ok"),
+        onPageChange: (somevalue) => alert("ok ok"),
         downloadFileName: "download",
         showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
@@ -539,8 +565,8 @@ padding-left: 5px;
                             <InstructionsWrapper>
                                 <Instructions>
                                     {"Select up to three cohorts "}
-                                    <br /> 
-                                      {"to view in the Cohort Analyzer"}
+                                    <br />
+                                    {"to view in the Cohort Analyzer"}
                                 </Instructions>
                             </InstructionsWrapper>
                         </>
@@ -595,7 +621,14 @@ padding-left: 5px;
                                             ],
                                         }}
                                         backgroundColor={'white'} zIndex={3000} title={cohortName} arrow placement="top">
-                                        <div className={!selectedCohorts.includes(cohort) ? classes.CohortChild : classes.cohortChildSelected}
+                                        <div
+                                            className={
+                                                selectedCohorts.includes(cohort)
+                                                    ? classes.cohortChildSelected
+                                                    : selectedCohorts.length === 3 && !selectedCohorts.includes(cohort)
+                                                        ? classes.CohortChildOpacity
+                                                        : classes.CohortChild
+                                            }
                                         >
                                             <div className={classes.cohortChildContent} >
                                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 20 }}>
@@ -603,7 +636,10 @@ padding-left: 5px;
                                                         selectedCohorts={selectedCohorts}
                                                         cohort={cohort}
                                                         handleCheckbox={handleCheckbox} />
-                                                    <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {shortenText(cohortName)} </span>
+                                                    <span className={classes.cardContent}
+                                                        style={{
+                                                            color: '#000'
+                                                        }} > {shortenText(cohortName)} </span>
                                                 </div>
                                                 <img alt={"Trashcan"} style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={11} height={12} />
                                             </div>
@@ -687,16 +723,13 @@ padding-left: 5px;
                     <div className={classes.cohortCountSection}>
 
                         <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '45%' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <button onClick={() => handleClick()} className={(selectedCohortSection.length === 0 || rowData.length === 0) ? classes.createCohortOpacity : classes.createCohort} >CREATE NEW COHORT</button>
-                                <ToolTip title={"Click to create a new cohort based on these analysis results."} arrow placement="top">
-                                    <div
-                                        style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}
-                                    >
-                                        <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
-                                    </div>
-                                </ToolTip>
-                            </div>
+                          <CreateNewCOhortButton  
+                          selectedCohortSection={selectedCohortSection}
+                          classes={classes}
+                          questionIcon={questionIcon}
+                          handleClick={handleClick}
+                          ToolTip={ToolTip}
+                          /> 
                             <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
 
                         </div>

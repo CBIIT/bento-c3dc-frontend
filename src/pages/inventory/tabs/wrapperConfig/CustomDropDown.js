@@ -145,6 +145,14 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
   };
   const { dispatch } = useContext(CohortStateContext);
 
+  const buildCohortFormat = (jsonArray) => {
+    return jsonArray.map(item => ({
+      ...item,
+      participant_id: typeof item.participant === 'object' ? item.participant.participant_id : item.participant_id,
+      participant_pk:  typeof item.participant === 'object' ? item.participant.id : item.id,
+    }));
+  };
+
   const handleSelect = (value) => {
     if (isActive) {
       const { context } = tableContext;
@@ -155,7 +163,7 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
       clearSelection();
       dispatch(onAddParticipantsToCohort(
         value,
-        hiddenSelectedRows,
+        buildCohortFormat(hiddenSelectedRows),
         (count) => triggerNotification(count) // Pass as a callback
       ));
 
