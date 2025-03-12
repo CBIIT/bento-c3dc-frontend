@@ -7,7 +7,18 @@ export const CreateNewCOhortButton = ({ selectedCohortSection, questionIcon, row
 
     return (
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <button disabled onClick={() => handleClick()} className={(selectedCohortSection.length === 0 || rowData.length === 0) ? classes.createCohortOpacity : classes.createCohort} style={{ color: 'white' }} >CREATE NEW COHORT</button>
+            <button
+              
+                onClick={() => handleClick()}
+                className={(selectedCohortSection && selectedCohortSection.length === 0) || (rowData && rowData.length === 0)
+                    ? classes.createCohortOpacity
+                    : classes.createCohort}
+                style={{ color: 'white' }}
+            >
+                CREATE NEW COHORT
+            </button>
+
+
             <ToolTip title={"Click to create a new cohort based on these analysis results."} arrow placement="top">
                 <div
                     style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}

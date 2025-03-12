@@ -150,7 +150,7 @@ export const CohortAnalyzer = () => {
                 treatment_pk: id,
                 ...rest,
             }));
-        } else if ("diagnosis") {
+        } else if (type === "diagnosis") {
             return data.map(({ participant, id, ...rest }) => ({
                 participant_pk: participant.id,
                 participant_id: participant.participant_id,
@@ -161,6 +161,7 @@ export const CohortAnalyzer = () => {
             return data.map(({ id, participant_id, ...rest }) => ({
                 participant_pk: id,
                 participant_id: participant_id,
+                id: id,
                 ...rest,
             }));
         }
@@ -177,6 +178,7 @@ export const CohortAnalyzer = () => {
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "participants") }
         if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
@@ -458,6 +460,7 @@ padding-left: 5px;
 
     const handleClick = () => {
         if (selectedCohortSection.length > 0 && rowData.length > 0) {
+           
             setCurrentCohortChanges(null);
             dispatch(onCreateNewCohort(
                 "",
