@@ -210,7 +210,7 @@ export const CohortAnalyzer = () => {
                     filteredRowData = filterAllParticipantWithDiagnosisName(generalInfo, filteredRowData)
                 }
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
-                updatedCohortContentAllowDuplication(filteredRowData)
+               
             } else {
 
 
