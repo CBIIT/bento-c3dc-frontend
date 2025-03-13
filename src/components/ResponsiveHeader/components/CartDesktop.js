@@ -108,40 +108,7 @@ const Cart = (props) => {
       {
         navBarCartData && (
           <Box id="button_navbar_mycases" className="logotype">
-              <NavLink
-                className="cartLabelText"
-                to={navBarCartData.cartLink}
-              >
-                {navBarCartData.cartLabel}
-                {/*
-                <Tooltip title="Files" placement="bottom-end">
-                  <span className="badge">
-                  <div className='myFilesText'>MY FILES</div>
-                    <img
-                      className="cartIcon"
-                      src={navBarCartData.cartIcon}
-                      alt={navBarCartData.cartIconAlt}
-                    />
-                    {navBarCartData.cartLabelType === "labelUnderCount" ? (
-                      <div className="cartCounter2Wrapper">
-                        <div className="cartCounter2">
-                          {numberOfCases}
-                        </div>
-                        <div className="cartLabel">
-                          Files
-                        </div>
-                      </div>
-                    ) : (
-                      <span className="badge">
-                        <span className="cartCounter">
-                          {numberOfCases}
-                        </span>
-                      </span>
-                    )}
-                  </span>
-                </Tooltip>
-                    */}
-              </NavLink>
+           
           </Box>
         )
       }
