@@ -13,7 +13,6 @@ import Inventory from '../../pages/inventory/inventoryController';
 import Studies from '../../pages/studies/studiesController';
 //import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
-import DataModel from "../../pages/DataModel/dataModel";
 import PdfReader from "../../pages/pdfReader/pdfReader";
 import StudyDetail from "../../pages/studyDetail/studyDetailController";
 import OverlayWindow from "../OverlayWindow/OverlayWindow";
@@ -21,7 +20,7 @@ import AnnouncementPage from "../../pages/announcement/announcementPage";
 import CohortManager from "../../pages/CohortManager/CohortManagerController";
 import ReleaseNoteController from "../../pages/releaseNote/releaseNoteController";
 import  CohortAnalyzerController  from "../../pages/CohortAnalyzer/CohortAnalyzerController";
-
+import DataModelNavigator from '../../pages/dmn';
 // import NewsDetail from '../../pages/news/newsDetailView';
 
 const Layout = () => {
@@ -42,7 +41,7 @@ const Layout = () => {
           <Route path="/explore" element={<Inventory />} />
           <Route path="/explore/:filterQuery" element={<Inventory />} />
           <Route path="/user_guide" element={<PdfReader />} />
-          <Route path="/data_model" element={<DataModel />} />
+          <Route path="/data_model" element={<DataModelNavigator />} />
           <Route path="/release_notes" element={<ReleaseNoteController />} />
           <Route path="/release_notes_pdf" element={<PdfReader />} />
           <Route path="/cohort_Manager" element={<CohortManager />} />
