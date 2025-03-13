@@ -26,6 +26,21 @@ const OverlayWindow = () => {
   };
 
   useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const isExistingUser = urlParams.has('existingUser');
+
+    if (isExistingUser) {
+      urlParams.delete('existingUser');
+      window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+      return;
+    }
+
+    if (!sessionStorage.length) {
+      setOpen(true);
+    }
+  }, []);
+  
+  useEffect(() => {
     if (!sessionStorage.length) {
       setOpen(true);
     }
