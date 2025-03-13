@@ -98,7 +98,7 @@ const WidgetView = ({
                 <Widget
                   header={(
                     
-                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'start',width:'92%'}} color="lochmara" className={classes.widgetTitle}>
+                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center', width: widget.type === 'donut' ? '92%' : '100%'}} color="lochmara" className={classes.widgetTitle}>
                       {widget.title}
                     </Typography>
                   )}
