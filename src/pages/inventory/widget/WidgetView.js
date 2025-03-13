@@ -56,7 +56,7 @@ const WidgetView = ({
           <FormControlLabel
             control={(
               <Button className={classes.customButton} onClick={handleChange}>
-                {collapse ? 'COLLAPSE VIEW' : 'OPEN VIEW'}
+                {collapse ? 'collapse view' : 'open view'}
               </Button>
             )}
           />

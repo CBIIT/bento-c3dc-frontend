@@ -4,6 +4,7 @@ export default () => ({
   },
   contentBox: {
     paddingTop: '0px',
+    borderTop: '1px solid #B0B0B0',
   },
   content: {
     display: 'flex',
