@@ -21,4 +21,5 @@ window.injectedEnv = {
     PUBLIC_ACCESS: '${PUBLIC_ACCESS}',
     NODE_LEVEL_ACCESS:'${NODE_LEVEL_ACCESS}',
     NODE_LABEL: '${NODE_LABEL}'
+    REACT_APP_DMN_URL: '${DMN_URL}'
 };
