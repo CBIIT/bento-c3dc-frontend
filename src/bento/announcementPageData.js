@@ -20,7 +20,7 @@ export const announcementPageData = [
         "type": 2,
         "is_release_notes": true,
         "alt": 'Hand holding a yellow and red megaphone against a red and teal background with the text "C3DC News."',
-        "verbiage": "We are excited to announce the release of the C3DC application version 1.4.0! This release includes the new TARGET datasets (phs000468 and phs000469), enhancements to the Explore page Cohort Selector, and the addition of the new Cohort Analyzer feature. These updates enhance the user experience and provide more comprehensive data access. For full release details, please visit the  <a href='/release_notes_pdf?existingUser' target='_blank'>Release Note</a>  to see all the details in the release note."
+        "verbiage": "We are excited to announce the release of the C3DC application version 1.4.0! This release includes the new TARGET datasets (phs000468 and phs000469), enhancements to the Explore page Cohort Selector, and the addition of the new Cohort Analyzer feature. These updates enhance the user experience and provide more comprehensive data access. For full release details, please visit the  <a href='/release_notes_pdf' target='_blank'>Release Note</a>  to see all the details in the release note."
     },
     {
         "title": "Cohort Analyzer (New Feature)",
@@ -91,7 +91,7 @@ export const announcementPageData = [
         "image": fig1,
         "type": 2,
         "alt": "Megaphone",
-        "verbiage": "We are excited to announce that Release 4 of the C3DC application is now available! This release introduces three new datasets (phs003432, phs003519, and phs000466), adds new facets to the Explore page (including treatment and treatment response nodes), and introduces new sections under the About page, such as an Announcements page and Release Notes. These updates are designed to enhance the user experience and provide more comprehensive data updates. Please visit the <a href='/release_notes_pdf?existingUser' target='_blank'>Release Note</a> to see all the details in the release note."
+        "verbiage": "We are excited to announce that Release 4 of the C3DC application is now available! This release introduces three new datasets (phs003432, phs003519, and phs000466), adds new facets to the Explore page (including treatment and treatment response nodes), and introduces new sections under the About page, such as an Announcements page and Release Notes. These updates are designed to enhance the user experience and provide more comprehensive data updates. Please visit the <a href='/release_notes_pdf' target='_blank'>Release Note</a> to see all the details in the release note."
     },
     {
         "title": "Home Page",
