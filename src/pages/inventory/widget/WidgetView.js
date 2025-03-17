@@ -15,6 +15,12 @@ import colors from '../../../utils/colors';
 import { Typography } from '../../../components/Wrappers/Wrappers';
 import { formatWidgetData } from './WidgetUtils';
 
+const CustomCollapse = withStyles({
+  wrapper:{
+    display: 'block',
+  }
+})(Collapse);
+
 const WidgetView = ({
   classes,
   data,
@@ -75,7 +81,7 @@ const WidgetView = ({
           /> */}
         </div>
       </div>
-      <Collapse in={collapse} className={classes.backgroundWidgets}>
+      <CustomCollapse in={collapse} className={classes.backgroundWidgets}>
         <Grid container>
           {widgetConfig.slice(0, 6).map((widget, index) => {
             let dataset = displayWidgets[widget.dataName];
@@ -119,7 +125,7 @@ const WidgetView = ({
             );
           })}
         </Grid>
-      </Collapse>
+      </CustomCollapse>
       {collapse && <div className={classes.dashboardDividerTop} />}
       {collapse && <div className={classes.dashboardDivider} />}
     </>
