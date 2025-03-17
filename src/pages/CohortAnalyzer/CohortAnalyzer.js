@@ -38,6 +38,7 @@ import {
     filterAllParticipantWithTreatmentType
 } from "./CohortAnalyzerUtil";
 import styled from "styled-components";
+import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -149,7 +150,7 @@ export const CohortAnalyzer = () => {
                 treatment_pk: id,
                 ...rest,
             }));
-        } else if ("diagnosis") {
+        } else if (type === "diagnosis") {
             return data.map(({ participant, id, ...rest }) => ({
                 participant_pk: participant.id,
                 participant_id: participant.participant_id,
@@ -160,6 +161,7 @@ export const CohortAnalyzer = () => {
             return data.map(({ id, participant_id, ...rest }) => ({
                 participant_pk: id,
                 participant_id: participant_id,
+                id: id,
                 ...rest,
             }));
         }
@@ -176,6 +178,7 @@ export const CohortAnalyzer = () => {
             query: analyzer_query[nodeIndex],
             variables: queryVariables,
         });
+        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "participants") }
         if (queryVariables.participant_pk.length > 0) {
             if (searchValue !== "") {
                 let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
@@ -210,7 +213,7 @@ export const CohortAnalyzer = () => {
                     filteredRowData = filterAllParticipantWithDiagnosisName(generalInfo, filteredRowData)
                 }
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
-                updatedCohortContentAllowDuplication(filteredRowData)
+               
             } else {
 
 
@@ -457,6 +460,7 @@ padding-left: 5px;
 
     const handleClick = () => {
         if (selectedCohortSection.length > 0 && rowData.length > 0) {
+           
             setCurrentCohortChanges(null);
             dispatch(onCreateNewCohort(
                 "",
@@ -575,7 +579,7 @@ padding-left: 5px;
                             <img onClick={() => {
                                 resetSelection(setSelectedCohorts, setNodeIndex);
                             }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} />
-                            <p style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'alphabet' ? 'lightgray' : '#646464' }} onClick={() => {
+                            <p style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'alphabet' ? '#646464' : '#646464' }} onClick={() => {
                                 sortBy("alphabet", cohortList, setCohortList, state);
                                 setSortType("alphabet");
                             }}> Sort Alphabetically </p>
@@ -583,7 +587,7 @@ padding-left: 5px;
                         <div onClick={() => {
                             sortBy("", cohortList, setCohortList, state);
                             setSortType("count");
-                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'count' ? 'lightgray' : '#646464' }}>
+                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === '#646464' ? 'lightgray' : '#646464' }}>
                             <p>Sort by Count</p>
                         </div>
                     </div>
@@ -620,7 +624,14 @@ padding-left: 5px;
                                             ],
                                         }}
                                         backgroundColor={'white'} zIndex={3000} title={cohortName} arrow placement="top">
-                                        <div className={!selectedCohorts.includes(cohort) ? classes.CohortChild : classes.cohortChildSelected}
+                                        <div
+                                            className={
+                                                selectedCohorts.includes(cohort)
+                                                    ? classes.cohortChildSelected
+                                                    : selectedCohorts.length === 3 && !selectedCohorts.includes(cohort)
+                                                        ? classes.CohortChildOpacity
+                                                        : classes.CohortChild
+                                            }
                                         >
                                             <div className={classes.cohortChildContent} >
                                                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 20 }}>
@@ -628,7 +639,10 @@ padding-left: 5px;
                                                         selectedCohorts={selectedCohorts}
                                                         cohort={cohort}
                                                         handleCheckbox={handleCheckbox} />
-                                                    <span className={classes.cardContent} style={{ opacity: selectedCohorts.length === 3 && !selectedCohorts.includes(cohort) ? 0.3 : 1 }} > {shortenText(cohortName)} </span>
+                                                    <span className={classes.cardContent}
+                                                        style={{
+                                                            color: '#000'
+                                                        }} > {shortenText(cohortName)} </span>
                                                 </div>
                                                 <img alt={"Trashcan"} style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={11} height={12} />
                                             </div>
@@ -647,7 +661,7 @@ padding-left: 5px;
                         <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 
                             <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of selected cohorts. Numbers in parentheses show unique records for the radio button selection, while numbers inside the diagram indicate unique values. The count next to your cohort in the sidebar reflects total participants."} arrow placement="top">
-                                <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
+                                <img alt={"question mark icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
                             </ToolTip>
                         </p>
                     </div>
@@ -657,7 +671,7 @@ padding-left: 5px;
                             <h3>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
 
 
-                                <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
+                                <img alt={"question mark icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
 
                             </ToolTip>  <br></br>for cohort matching</h3>
                             <div className={classes.catagoryCardChildren}>
@@ -665,7 +679,7 @@ padding-left: 5px;
                                     <p>
                                         <input disabled={selectedCohorts.length === 0} type="radio" checked={nodeIndex === 0} onClick={() => {
                                             setNodeIndex(0);
-                                        }} radioGroup="node_type" name="node_type" />
+                                        }} radioGroup="node_type" name="node_type" aria-label="Participant radio button" />
                                         Participant ID
                                     </p>
                                 </ToolTip>
@@ -674,7 +688,7 @@ padding-left: 5px;
                                     <p>
                                         <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
                                             setNodeIndex(1);
-                                        }} radioGroup="node_type" name="node_type" />
+                                        }} radioGroup="node_type" name="node_type" aria-label="Daignosis Radio button" />
                                         Diagnosis
                                     </p>
                                 </ToolTip>
@@ -683,7 +697,7 @@ padding-left: 5px;
                                     <p>
                                         <input disabled={selectedCohorts.length === 0} onClick={() => {
                                             setNodeIndex(2);
-                                        }} type="radio" radioGroup="node_type" name="node_type" />
+                                        }} type="radio" radioGroup="node_type" name="node_type" aria-label="Treatment Radio button" />
                                         Treatment
                                     </p>
                                 </ToolTip>
@@ -712,16 +726,13 @@ padding-left: 5px;
                     <div className={classes.cohortCountSection}>
 
                         <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '45%' }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                                <button onClick={() => handleClick()} className={(selectedCohortSection.length === 0 || rowData.length === 0) ? classes.createCohortOpacity : classes.createCohort} >CREATE NEW COHORT</button>
-                                <ToolTip title={"Click to create a new cohort based on these analysis results."} arrow placement="top">
-                                    <div
-                                        style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}
-                                    >
-                                        <img src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
-                                    </div>
-                                </ToolTip>
-                            </div>
+                          <CreateNewCOhortButton  
+                          selectedCohortSection={selectedCohortSection}
+                          classes={classes}
+                          questionIcon={questionIcon}
+                          handleClick={handleClick}
+                          ToolTip={ToolTip}
+                          /> 
                             <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
 
                         </div>

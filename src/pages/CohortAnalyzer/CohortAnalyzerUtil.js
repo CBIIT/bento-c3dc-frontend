@@ -55,7 +55,7 @@ export const getIdsFromCohort = (data, selectedCohorts) => {
 
 export const getAllIds = (generalInfo) => {
     let finalIds = [];
-    Object.keys(generalInfo).forEch((section) => {
+    Object.keys(generalInfo).forEach((section) => {
 
         finalIds = [...finalIds, ...generalInfo[section]]
 
