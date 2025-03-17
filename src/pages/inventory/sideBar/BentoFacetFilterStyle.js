@@ -85,6 +85,12 @@ export default () => ({
     paddingLeft: 0,
     borderBottom: '1px solid #D2D2D2',
   },
+  customExpansionPanelSummaryRootSlider: {
+    height: '42px',
+    padding: '0',
+    flexDirection: 'row-reverse',
+    paddingLeft: 0,
+  },
   sortGroup: {
     padding: '10px',
   },

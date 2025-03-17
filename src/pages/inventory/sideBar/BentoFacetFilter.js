@@ -225,7 +225,9 @@ const BentoFacetFilter = ({
             />
           )}
           id={facet.label}
-          className={classes.customExpansionPanelSummaryRoot}
+          className={
+            facet.slider ? classes.customExpansionPanelSummaryRootSlider : classes.customExpansionPanelSummaryRoot
+          }
         >
           <div
             id={facet.label}
