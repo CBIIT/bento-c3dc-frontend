@@ -30,13 +30,14 @@ const OverlayWindow = () => {
     const isExistingUser = urlParams.has('existingUser');
 
     if (isExistingUser) {
+      sessionStorage.setItem('overlayLoad', 'true'); 
       urlParams.delete('existingUser');
       window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-      return;
+      return
     }
 
     if (!sessionStorage.length) {
-      setOpen(true);
+      setOpen(true)
     }
   }, []);
   
