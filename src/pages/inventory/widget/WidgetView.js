@@ -15,6 +15,12 @@ import colors from '../../../utils/colors';
 import { Typography } from '../../../components/Wrappers/Wrappers';
 import { formatWidgetData } from './WidgetUtils';
 
+const CustomCollapse = withStyles({
+  wrapper:{
+    display: 'block',
+  }
+})(Collapse);
+
 const WidgetView = ({
   classes,
   data,
@@ -56,7 +62,7 @@ const WidgetView = ({
           <FormControlLabel
             control={(
               <Button className={classes.customButton} onClick={handleChange}>
-                {collapse ? 'COLLAPSE VIEW' : 'OPEN VIEW'}
+                {collapse ? 'collapse view' : 'open view'}
               </Button>
             )}
           />
@@ -75,7 +81,7 @@ const WidgetView = ({
           /> */}
         </div>
       </div>
-      <Collapse in={collapse} className={classes.backgroundWidgets}>
+      <CustomCollapse in={collapse} className={classes.backgroundWidgets}>
         <Grid container>
           {widgetConfig.slice(0, 6).map((widget, index) => {
             let dataset = displayWidgets[widget.dataName];
@@ -98,7 +104,7 @@ const WidgetView = ({
                 <Widget
                   header={(
                     
-                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'start',width:'92%'}} color="lochmara" className={classes.widgetTitle}>
+                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center', width: widget.type === 'donut' ? '92%' : '100%'}} color="lochmara" className={classes.widgetTitle}>
                       {widget.title}
                     </Typography>
                   )}
@@ -119,7 +125,7 @@ const WidgetView = ({
             );
           })}
         </Grid>
-      </Collapse>
+      </CustomCollapse>
       {collapse && <div className={classes.dashboardDividerTop} />}
       {collapse && <div className={classes.dashboardDivider} />}
     </>

@@ -69,10 +69,10 @@ const styles = (theme) => ({
   customButton: {
     borderRadius: '0 0 18px 18px',
     minHeight: '20px',
-    fontSize: 8,
+    fontSize: 12,
     color: '#ffffff',
-    textTransform: 'none',
-    backgroundColor: '#566672',
+    textTransform: 'capitalize',
+    backgroundColor: '#686F7F',
     marginRight: '4px',
     fontFamily: theme.custom.fontFamilySans,
     // marginTop: '-4px',

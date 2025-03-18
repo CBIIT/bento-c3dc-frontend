@@ -83,8 +83,9 @@ const theme = {
     },
     MuiListItemText: {
       root: {
-        //flex: 'none',
-        //paddingRight: '3px',
+        flex: 'none',
+        //width: '3px',
+        paddingRight: '3px',
       },
     },
     MuiTypography: {
