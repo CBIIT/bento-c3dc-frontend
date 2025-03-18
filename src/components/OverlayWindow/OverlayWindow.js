@@ -26,18 +26,26 @@ const OverlayWindow = () => {
   };
 
   useEffect(() => {
-    const handleLoad = () => {
-      if (sessionStorage.getItem('overlayLoad') !== 'true') {
-       setOpen(true);
-      }
-    };
+    const urlParams = new URLSearchParams(window.location.search);
+    const isExistingUser = urlParams.has('existingUser');
 
-    window.addEventListener("load", handleLoad);
-    return () => {
-      window.removeEventListener("load", handleLoad)
+    if (isExistingUser) {
+      sessionStorage.setItem('overlayLoad', 'true'); 
+      urlParams.delete('existingUser');
+      window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
+      return
     }
 
+    if (!sessionStorage.length) {
+      setOpen(true)
+    }
   }, []);
+  
+  useEffect(() => {
+    if (!sessionStorage.length) {
+      setOpen(true);
+    }
+  }, [open]);
 
   const content = text.content.map((item) => (
     <DialogContentText id="alert-dialog-description">
