@@ -3,9 +3,11 @@
  */
 export  const customStyles = {
     queryWrapper: {
-      height: '120px',
-      backgroundColor: '#f1f1f1',
-      padding: '14px 14px 0px 35px',
+      //height: '120px',
+      paddingBottom: '12px',
+      backgroundColor: '#FFFFFF',
+      borderBottom: '1px solid #B0B0B0',
+      padding: '14px 14px 0px 25px',
       overflowY: 'auto',
     },
     queryContainer: {
@@ -67,7 +69,7 @@ export  const customStyles = {
     },
     clearQueryButton: {
       margin: '1px',
-      marginLeft: -6,
+      //marginLeft: -6,
       fontWeight: 600,
       fontSize: '12px',
       color: '#fff',

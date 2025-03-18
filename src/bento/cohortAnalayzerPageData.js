@@ -30,7 +30,7 @@ export const tableConfig = {
   
     {
       dataField: 'participant_id',
-      header: 'Participant Id',
+      header: 'Participant ID',
       display: true,
       tooltipText: 'sort',
       role: cellTypes.DISPLAY,
@@ -65,7 +65,7 @@ export const tableConfig = {
     },
     {
       dataField: "study_id",
-      header: "Study Id",
+      header: "Study ID",
       display: false,
       tooltipText: "sort",
       role: cellTypes.DISPLAY
@@ -116,7 +116,7 @@ export const diagnosesTableConfig =
   columns: [
     {
       dataField: 'participant_id',
-      header: 'Participant Id',
+      header: 'Participant ID',
       display: true,
       tooltipText: 'sort',
       role: cellTypes.DISPLAY
@@ -186,7 +186,7 @@ export const treatmentTableConfig = {
   columns: [
     {
       dataField: 'participant_id',
-      header: 'Participant Id',
+      header: 'Participant ID',
       display: true,
       tooltipText: 'sort',
       role: cellTypes.DISPLAY,
@@ -206,7 +206,7 @@ export const treatmentTableConfig = {
       role: cellTypes.DISPLAY,
     }, {
       dataField: 'treatment_pk',
-      header: 'Treatment Id',
+      header: 'Treatment ID',
       display: true,
       tooltipText: 'sort',
       role: cellTypes.DISPLAY,

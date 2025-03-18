@@ -72,7 +72,7 @@ export default () => ({
     lineHeight: '24px',
     marginLeft: '5px',
     letterSpacing: '-0.02em',
-    textTransform: 'uppercase',
+    textTransform: 'capitalize',
   },
   dropDownIconSubSection: {
     marginLeft: '0px',
@@ -84,6 +84,12 @@ export default () => ({
     flexDirection: 'row-reverse',
     paddingLeft: 0,
     borderBottom: '1px solid #D2D2D2',
+  },
+  customExpansionPanelSummaryRootSlider: {
+    height: '42px',
+    padding: '0',
+    flexDirection: 'row-reverse',
+    paddingLeft: 0,
   },
   sortGroup: {
     padding: '10px',

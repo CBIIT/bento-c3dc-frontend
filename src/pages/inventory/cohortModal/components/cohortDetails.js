@@ -302,7 +302,7 @@ const CohortDetails = (props) => {
                                 className={classes.headerColumn}
 
                             >
-                                <span >Participant Id</span>
+                                <span >Participant ID</span>
                                 <img
                                     src={SortingIcon}
                                     alt="sort by participant id icon"
@@ -353,7 +353,7 @@ const CohortDetails = (props) => {
                                 </div>
                             )) :
                                 <div className={classes.emptyTable}>
-                                    {localCohort.participants.length === 0 ? 'No Data' : 'No matching Participant Id'}
+                                    {localCohort.participants.length === 0 ? 'No Data' : 'No matching Participant ID'}
                                 </div>
                             }
                         </div>

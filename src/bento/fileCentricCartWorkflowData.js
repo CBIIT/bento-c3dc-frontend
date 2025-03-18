@@ -95,7 +95,7 @@ export const myFilesPageData = {
 
 export const manifestData = {
   keysToInclude: ['guid', 'file_name', 'participant_id', 'md5sum'],
-  header: ['drs_uri', 'name', 'Participant Id', 'Md5sum'],
+  header: ['drs_uri', 'name', 'Participant ID', 'Md5sum'],
 };
 
 // --------------- GraphQL query - Retrieve selected cases info --------------

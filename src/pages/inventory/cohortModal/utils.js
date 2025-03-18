@@ -1,5 +1,5 @@
 const downloadManifestKeys = {
-    'Participant Id': 'participant_id',
+    'Participant ID': 'participant_id',
     'dbGaP Accession': 'dbgap_accession',
     'Sex at Birth': 'sex_at_birth',
     'Race': 'race',
