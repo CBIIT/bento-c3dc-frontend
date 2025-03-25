@@ -53,31 +53,45 @@ function removeTypename(obj) {
     return obj; 
   };
 
-export const arrayToCSVDownload = (arr, cohortID) => {
+  export const arrayToCSVDownload = (arr, cohortID) => {
     const keys = Object.keys(downloadManifestKeys);
     const header = keys.join(',');
     const rows = arr.map((row) => {
         return keys.map((k) => {
-            let value = row[downloadManifestKeys[k]] !== undefined ? row[downloadManifestKeys[k]] : '';
+            let value = row[downloadManifestKeys[k]];
+
+            if (row.participant) {
+                if (k === 'Participant ID') {
+                    value = row.participant.participant_id || '';
+                } else if (k === 'Sex at Birth') {
+                    value = row.participant.sex_at_birth || '';
+                } else if (k === 'Race') {
+                    value = row.participant.race || '';
+                }
+            }
+
             if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
                 value = `"${value.replace(/"/g, '""')}"`; 
             }
+
             return value;
         }).join(',');
     });
 
-    const csvData = [header, ...rows].join('\n')
+    const csvData = [header, ...rows].join('\n');
 
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
     const JsonURL = window.URL.createObjectURL(blob);
-    let tempLink = '';
-    tempLink = document.createElement('a');
+    
+    let tempLink = document.createElement('a');
     tempLink.setAttribute('href', JsonURL);
     tempLink.setAttribute('download', createFileName(true, cohortID));
     document.body.appendChild(tempLink);
     tempLink.click();
     document.body.removeChild(tempLink);
 };
+
+
 
 export const objectToJsonDownload = (obj, cohortID) => {
     const cleanedObj = removeTypename(obj);
