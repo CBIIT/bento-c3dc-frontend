@@ -442,16 +442,21 @@ diagnosisOverview(
     sort_direction: $sort_direction
 ) {
     # Diagnosis
-    id 
+    id
     diagnosis
 
     # Participants
-    id 
-    race
-    sex_at_birth
+    participant {
+        id
+        participant_id
+        race
+        sex_at_birth
+    }
 
     # Study
     dbgap_accession
+
+    __typename
 }}
 `;
 

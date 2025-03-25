@@ -277,7 +277,7 @@ const AnnouncementPage = () => {
 
   useEffect(()=>{
   calculatePageInfo(announcementPageData)
-  },[currentPage])
+  },[currentPage,resultsPerPage])
 
   return (
     <AnnouncementContainer>
