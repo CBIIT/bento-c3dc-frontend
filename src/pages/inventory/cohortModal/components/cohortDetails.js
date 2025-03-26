@@ -9,6 +9,8 @@ import TrashCanIconRed from '../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
 import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
 import DeleteConfirmationModal from './deleteConfirmationModal';
+import Linkout from "../../../../assets/about/Export_Icon_White.svg";
+
 import { deletionTypes } from './deleteConfirmationModal';
 
 /**
@@ -52,6 +54,18 @@ const CohortDetails = (props) => {
     const scrollContainerRef = useRef(null);
     const dropdownRef = useRef(null);
 
+    const generateCCDIHub_url = (cohortId) => {
+        
+        const data = cohortId;
+        const participantIds = data.participants.map(p => p.participant_id).join("|");
+        const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
+        const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
+        const dbgapBase = "&dbgap_accession=";
+    
+        const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
+        window.open(finalUrl,'_blank')
+            return finalUrl;
+    }
 
     useEffect(() => {
         const checkForScrollbar = () => {
@@ -209,7 +223,7 @@ const CohortDetails = (props) => {
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
     return (
-        <>
+        <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
             <DeleteConfirmationModal
                 classes={deleteConfirmationClasses}
                 open={showDeleteConfirmation}
@@ -365,15 +379,25 @@ const CohortDetails = (props) => {
                         <Button variant="contained" className={classes.saveButton} onClick={() => handleSaveCohort(localCohort)}>
                             Save Changes
                         </Button>
-                        <div className={classes.dropdownSection} ref={dropdownRef}>
+
+                    </div>
+                    <span className={classes.cohortLastUpdated}>
+                        {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
+                    </span>
+                </div>
+                
+            </div>
+            <div style={{display:'flex',flexDirection:'row',gap: 10, justifyContent: 'flex-end'}}>
+
+            <div className={classes.dropdownSection} ref={dropdownRef}>
                             <Button
                                 variant="contained"
                                 className={showDownloadDropdown ? classes.downloadButtonOpened : classes.downloadButton}
                                 onClick={handleDownloadDropdown}
                             >
                                 <div className={classes.downloadButtonText}>
-                                    <span>Download</span>
-                                    <span>Selected Cohorts</span>
+                                    <span>Download Selected</span>
+                                    <span>Cohorts</span>
                                 </div>
                                 <img
                                     src={ExpandMoreIcon}
@@ -397,15 +421,21 @@ const CohortDetails = (props) => {
                                     </div>
                                 </div>
                             )}
+                        </div> 
+            
+                        <Button variant="contained" className={classes.viewCohortAnalyzerButton} onClick={() => {}}>
+                        View Cohort <br/> Analyzer
+                        </Button> 
+                        <ToolTip title="Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user's selected cohort." placement="top-end" arrow>
+                        <Button variant="contained" className={classes.exploreButton} onClick={() => generateCCDIHub_url(localCohort)}>
+                        <span style={{textAlign: 'left'}}>
+                        EXPLORE <br /> IN CCDI Hub
+                            </span>
+                            <img src={Linkout} width={14} height={14}  alt="Linkout Icon" />
+                        </Button>
+                        </ToolTip>
                         </div>
-
-                    </div>
-                    <span className={classes.cohortLastUpdated}>
-                        {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
-                    </span>
-                </div>
-            </div>
-        </>
+        </div>
     );
 };
 
@@ -720,7 +750,7 @@ const styles = () => ({
     },
     cohortButtonSection: {
         display: 'flex',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: '40px 20px 10px 20px',
         width: '100%',
         gap: '8px',
@@ -760,10 +790,60 @@ const styles = () => ({
         },
 
     },
-    downloadButton: {
-        backgroundColor: '#0C534C',
+    
+    exploreButton: {
+        backgroundColor: '#044249',
+        border: '1.25px solid #4EA1A1',
+        width: '137px',
+        height: '41px',
+        borderRadius: '5px',
+        boxShadow: 'none',
+        fontFamily: 'Poppins',
+        fontWeight: '600',
+        fontSize: '12px',
+        lineHeight: '13px',
+        letterSpacing: '2%',
+        verticalAlign: 'middle',
+        textTransform: 'uppercase',
+        color: '#FFFFFF',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        '&:hover': {
+            backgroundColor: '#1d4d67',
+            boxShadow: 'none',
+        },
+
+    },
+    viewCohortAnalyzerButton: {
+        backgroundColor: '#003F74',
         border: '1.25px solid #73A9C7',
-        width: '189px',
+        width: '137px',
+        height: '41px',
+        borderRadius: '5px',
+        boxShadow: 'none',
+        fontFamily: 'Poppins',
+        fontWeight: '600',
+        fontSize: '12px',
+        lineHeight: '13px',
+        letterSpacing: '2%',
+        verticalAlign: 'middle',
+        textTransform: 'uppercase',
+        textAlign: 'left',
+        color: '#FFFFFF',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        '&:hover': {
+            backgroundColor: '#073F60',
+            boxShadow: 'none',
+        },
+
+    },
+    downloadButton: {
+        backgroundColor: '#4F5D69',
+        border: '1.25px solid #4F5D69',
+        width: '200px',
         borderRadius: '5px',
         display: 'flex',
         justifyContent: 'space-between',
@@ -771,12 +851,12 @@ const styles = () => ({
         boxShadow: 'none',
 
         '&:hover': {
-            backgroundColor: '#003B35',
+            backgroundColor: '#374149',
             boxShadow: 'none',
         },
     },
     downloadButtonOpened: {
-        backgroundColor: '#0C534C',
+        backgroundColor: '#4F5D69',
         border: '1.25px solid #73A9C7',
         width: '189px',
         borderTopLeftRadius: '5px',
@@ -789,7 +869,7 @@ const styles = () => ({
         zIndex: '1',
         boxShadow: 'none',
         '&:hover': {
-            backgroundColor: '#003B35',
+            backgroundColor: '#374149',
             boxShadow: 'none',
         },
     },
@@ -801,10 +881,16 @@ const styles = () => ({
     },
     dropdownSection: {
         position: 'relative',
-    },
+            '& button': {
+            height: '41px',
+            fontFamily: 'Poppins',
+            fontSize: '12px',
+            fontWeight: '600',
+            lineHeight: '16px',
+            color: '#FFFFFF',
+        },},
     dropdownMenu: {
         position: 'absolute',
-        top: '39.5px',
         width: '189px',
         backgroundColor: '#EFF2F6',
         border: '1px solid #0C534C',

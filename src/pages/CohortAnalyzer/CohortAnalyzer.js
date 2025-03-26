@@ -65,7 +65,21 @@ export const CohortAnalyzer = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [HoveredCohort, setHoveredCohort] = useState(true);
 
+    const generateCCDIHub_url = (cohortId) => {
+        
+        const data = state[cohortId]
+        const participantIds = data.participants.map(p => p.participant_id).join("|");
+        const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
+        const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
+        const dbgapBase = "&dbgap_accession=";
+    
+        const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
+
+            return finalUrl;
+    }
+
     const handleMouseMove = (event, cohortName) => {
+       
         if (cohortName.length > 17) {
             setHoveredCohort(cohortName)
         }
