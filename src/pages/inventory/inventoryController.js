@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useApolloClient } from '@apollo/client';
 import { connect } from 'react-redux';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
 import { getFilters } from '@bento-core/facet-filter';
 import InventoryView from './inventoryView';
@@ -50,7 +50,9 @@ const getDashData = (states) => {
 };
 
 const InventoryController = ((props) => {
-  const { filterQuery } = useParams();
+  const [searchParams] = useSearchParams();
+  const filterQuery = searchParams.get("filterQuery")
+
   const navigate = useNavigate();
 
   if (filterQuery) {

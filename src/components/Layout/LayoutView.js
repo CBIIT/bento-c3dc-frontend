@@ -39,7 +39,6 @@ const Layout = () => {
           <Route path="/announcements" element={<AnnouncementPage />} />
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
-          <Route path="/explore/:filterQuery" element={<Inventory />} />
           <Route path="/user_guide" element={<PdfReader />} />
           <Route path="/data_model" element={<DataModelNavigator />} />
           <Route path="/release_notes" element={<ReleaseNoteController />} />
