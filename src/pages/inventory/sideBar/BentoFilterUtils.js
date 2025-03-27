@@ -1,5 +1,5 @@
 import { 
-  clearAllAndSelectFacet 
+  clearAllAndSelectFacet, InputTypes
 } from '@bento-core/facet-filter';
 import {
   updateAutocompleteData, 
@@ -11,6 +11,7 @@ import {
 } from '../../../bento/localSearchData';
 import store from '../../../store';
 import client from '../../../utils/graphqlClient';
+import { facetsConfig } from '../../../bento/dashTemplate';
 
 export const getFacetValues = (facet, facetValue) => ({[facet]: { [facetValue]: true }});
 
@@ -60,7 +61,7 @@ export async function getAllParticipantIds(participantIdsArray) {
 }
 
 export const setActiveFilterByPathQuery = (filterQuery) => {
-  const query = Buffer.from(decodeURIComponent(filterQuery || ''), "base64")
+  const query = decodeURIComponent(filterQuery || '');
   const filterObject = JSON.parse(query);
   const { autocomplete = [], upload = [], uploadMetadata } = filterObject;
 
@@ -77,7 +78,20 @@ export const setActiveFilterByPathQuery = (filterQuery) => {
     }
     return curr;
   }, {});
-  store.dispatch(clearAllAndSelectFacet(activeFilterValues));
+
+  const transformSliderFilters = (filters) => {
+    return Object.keys(filters).reduce((acc, key) => {
+      const isSlider = facetsConfig.some(facet => facet.datafield === key && facet.type === InputTypes.SLIDER);
+      if (isSlider) {
+        acc[key] = Object.keys(filters[key]).map(Number);
+      } else {
+        acc[key] = filters[key]; 
+      }
+      return acc;
+    }, {});
+  };
+  
+  store.dispatch(clearAllAndSelectFacet(transformSliderFilters(activeFilterValues)));
   store.dispatch(updateAutocompleteData(autocomplete));
   store.dispatch(updateUploadData(upload));
   store.dispatch(updateUploadMetadata(uploadMetadata));
