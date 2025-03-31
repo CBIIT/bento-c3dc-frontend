@@ -66,20 +66,20 @@ export const CohortAnalyzer = () => {
     const [HoveredCohort, setHoveredCohort] = useState(true);
 
     const generateCCDIHub_url = (cohortId) => {
-        
+
         const data = state[cohortId]
         const participantIds = data.participants.map(p => p.participant_id).join("|");
         const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
         const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
         const dbgapBase = "&dbgap_accession=";
-    
+
         const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
 
-            return finalUrl;
+        return finalUrl;
     }
 
     const handleMouseMove = (event, cohortName) => {
-       
+
         if (cohortName.length > 17) {
             setHoveredCohort(cohortName)
         }
@@ -93,8 +93,17 @@ export const CohortAnalyzer = () => {
 
     const handleSearchValue = (e) => {
         setSearchValue(e.target.value)
+
+
         if (searchRef.current) {
             searchRef.current.value = e.target.value;
+            if (searchRef.current.value == "") {
+
+                setTimeout(() => {
+                    searchRef.current.focus();
+                }, 200);
+
+            }
         }
 
     }
@@ -227,7 +236,7 @@ export const CohortAnalyzer = () => {
                     filteredRowData = filterAllParticipantWithDiagnosisName(generalInfo, filteredRowData)
                 }
                 setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
-               
+
             } else {
 
 
@@ -474,7 +483,7 @@ padding-left: 5px;
 
     const handleClick = () => {
         if (selectedCohortSection.length > 0 && rowData.length > 0) {
-           
+
             setCurrentCohortChanges(null);
             dispatch(onCreateNewCohort(
                 "",
@@ -740,13 +749,13 @@ padding-left: 5px;
                     <div className={classes.cohortCountSection}>
 
                         <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '45%' }}>
-                          <CreateNewCOhortButton  
-                          selectedCohortSection={selectedCohortSection}
-                          classes={classes}
-                          questionIcon={questionIcon}
-                          handleClick={handleClick}
-                          ToolTip={ToolTip}
-                          /> 
+                            <CreateNewCOhortButton
+                                selectedCohortSection={selectedCohortSection}
+                                classes={classes}
+                                questionIcon={questionIcon}
+                                handleClick={handleClick}
+                                ToolTip={ToolTip}
+                            />
                             <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
 
                         </div>
