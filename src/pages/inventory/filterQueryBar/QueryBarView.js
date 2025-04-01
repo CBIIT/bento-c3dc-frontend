@@ -40,6 +40,7 @@ const QueryBarView = ({ data, statusReducer, localFind }) => {
       caseIDLabel: 'Participant IDs',
       rootPath: `${window.location.href}/`,
       viewQueryURL: true,
+      queryUrlCharacterLimit: 70,
     },
     functions: {
       clearAll: () => {
