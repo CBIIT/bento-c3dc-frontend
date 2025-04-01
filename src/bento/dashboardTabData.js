@@ -1349,6 +1349,13 @@ export const tabContainers = [
         doNotDownload: true,
       },
       {
+        dataField: '',
+        header: 'Synonyms',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: "study_id",
         header: "Study ID",
         display: false,
