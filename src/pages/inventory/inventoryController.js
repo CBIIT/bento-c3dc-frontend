@@ -19,6 +19,7 @@ const getDashData = (states) => {
 
   const client = useApolloClient();
   async function getData(activeFilters) {
+    await client.clearStore();
     let result = await client.query({
       query: DASHBOARD_QUERY_NEW,
       variables: activeFilters,
