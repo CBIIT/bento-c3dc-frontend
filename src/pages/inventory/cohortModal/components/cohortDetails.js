@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import DEFAULT_CONFIG from '../config';
+import { debounce } from '../utils';
 import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
 import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
 import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
@@ -112,23 +113,34 @@ const CohortDetails = (props) => {
     const handleEditDescription = () => {
         setIsEditingDescription(true);
     };
-
-    const handleSaveName = (e) => {
-        setIsEditingName(false);
+    
+    const handleSave = () => {
+        handleSaveCohort(localCohort)
         handleSetCurrentCohortChanges({
             ...temporaryCohort,
             ...localCohort,
-            [e.target.name]: e.target.value,
         });
+    }
+
+    const debouncedSave = useRef(
+        debounce((e) => {
+            setIsEditingName(false);
+            handleSetCurrentCohortChanges({
+                ...temporaryCohort,
+                ...localCohort,
+                [e.target.name]: e.target.value,
+            });
+        }, 500) // Adjust debounce delay
+    ).current;
+
+    const handleSaveName = (e) => {
+        setIsEditingName(false);
+        debouncedSave(e);
     };
 
     const handleSaveDescription = (e) => {
         setIsEditingDescription(false);
-        handleSetCurrentCohortChanges({
-            ...temporaryCohort,
-            ...localCohort,
-            [e.target.name]: e.target.value,
-        });
+        debouncedSave(e);
     };
 
     const handleSetSearch = (e) => {
@@ -376,7 +388,7 @@ const CohortDetails = (props) => {
                         <Button variant="contained" className={classes.cancelButton} onClick={closeModal}>
                             Cancel
                         </Button>
-                        <Button variant="contained" className={classes.saveButton} onClick={() => handleSaveCohort(localCohort)}>
+                        <Button variant="contained" className={classes.saveButton} onClick={() => handleSave()}>
                             Save Changes
                         </Button>
 
