@@ -21,9 +21,11 @@ import CohortManager from "../../pages/CohortManager/CohortManagerController";
 import ReleaseNoteController from "../../pages/releaseNote/releaseNoteController";
 import  CohortAnalyzerController  from "../../pages/CohortAnalyzer/CohortAnalyzerController";
 import DataModelNavigator from '../../pages/dmn';
+import env from "../../utils/env";
 // import NewsDetail from '../../pages/news/newsDetailView';
 
 const Layout = () => {
+  console.log(env);
     return (
     <>
       <CssBaseline />
