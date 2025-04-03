@@ -32,8 +32,10 @@ const Layout = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/studies" element={<Studies />} />
-          <Route path="/:studyId" element={<StudyDetail />} />          
+          <Route path="/studies"  >
+            <Route index={true} element={<Studies />}></Route>
+            <Route path=":studyId" element={<StudyDetail />} />          
+          </ Route>
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/announcements" element={<AnnouncementPage />} />
