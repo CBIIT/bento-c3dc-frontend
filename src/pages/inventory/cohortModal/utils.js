@@ -108,10 +108,10 @@ export const objectToJsonDownload = (obj, cohortID) => {
     document.body.removeChild(tempLink);
   };
 
-  export const hasUnsavedChanges = (obj1, obj2) => {
+  export const hasUnsavedChanges = (obj1, obj2, ignoredFields) => {
     if (!obj1 || !obj2) return false; // If either object is undefined, consider no changes
   
-    const sharedKeys = Object.keys(obj1).filter(key => key in obj2);
+    const sharedKeys = Object.keys(obj1).filter(key => key in obj2 && !ignoredFields.includes(key) );
     const filteredObj1 = sharedKeys.reduce((acc, key) => {
         acc[key] = obj1[key];
         return acc;
@@ -122,3 +122,16 @@ export const objectToJsonDownload = (obj, cohortID) => {
     }, {});
     return JSON.stringify(filteredObj1) !== JSON.stringify(filteredObj2);
   };
+
+  export function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+
+        timeoutId = setTimeout(() => {
+            func(...args); 
+        }, delay);
+    };
+}

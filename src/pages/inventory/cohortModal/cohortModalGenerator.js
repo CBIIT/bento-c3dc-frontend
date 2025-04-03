@@ -36,7 +36,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     const { state, dispatch } = useContext(CohortStateContext);
     const [selectedCohort, setSelectedCohort] = useState(null); // Default to the first entry
     const [alert, setAlert] = useState({ type: '', message: '' });
-    const unSavedChanges = currentCohortChanges ? hasUnsavedChanges(currentCohortChanges, state[selectedCohort]) : false;
+    const ignoredFields = ["cohortId"]
+    const unSavedChanges = currentCohortChanges ? hasUnsavedChanges(currentCohortChanges, state[selectedCohort], ignoredFields) : false;
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [deleteModalProps, setDeleteModalProps] = useState({
         handleDelete: () => { },
