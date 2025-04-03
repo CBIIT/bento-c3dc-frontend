@@ -10,7 +10,7 @@ import NotificationView from './Notifications/NotifactionView';
 const App = () => (
     <CustomThemeProvider>
         <GlobalProvider>
-            <BrowserRouter>
+            <BrowserRouter basename="/">
                 <Layout />
                 <NotificationView />
             </BrowserRouter>
