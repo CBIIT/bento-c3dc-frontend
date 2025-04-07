@@ -26,7 +26,7 @@ const table = {
       tooltipText: 'Sort by dbGaP ACCESSION',
       cellType: cellTypes.LINK,
       linkAttr: {
-        rootPath: '',
+        rootPath: '/studies',
         pathParams: ['dbgap_accession']
       },
       display: true,
