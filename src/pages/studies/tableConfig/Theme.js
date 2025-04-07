@@ -225,6 +225,9 @@ export const tblHeader = {
             },
         },
       MuiSelect: {
+        nativeInput: {
+          visibility: "hidden !important"
+        },
         select: {
           '&:focus': {
             backgroundColor: '#FFFFFF'
@@ -235,9 +238,6 @@ export const tblHeader = {
         },
         iconOpen: {
           padding: '2px 0 0 3px',
-        },
-        nativeInput: {
-          visibility: "hidden !important"
         },
       },
         MuiMenu: {
