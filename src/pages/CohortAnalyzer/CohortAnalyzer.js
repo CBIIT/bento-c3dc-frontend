@@ -602,7 +602,7 @@ padding-left: 5px;
                             <img onClick={() => {
                                 resetSelection(setSelectedCohorts, setNodeIndex);
                             }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} />
-                            <p style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === 'alphabet' ? '#646464' : '#646464' }} onClick={() => {
+                            <p style={{ fontFamily: 'Nunito', fontSize: '11px', color: sortType === 'alphabet' ? '#646464' : '#646464' }} onClick={() => {
                                 sortBy("alphabet", cohortList, setCohortList, state);
                                 setSortType("alphabet");
                             }}> Sort Alphabetically </p>
@@ -610,8 +610,8 @@ padding-left: 5px;
                         <div onClick={() => {
                             sortBy("", cohortList, setCohortList, state);
                             setSortType("count");
-                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito', fontSize: '9px', color: sortType === '#646464' ? 'lightgray' : '#646464' }}>
-                            <p>Sort by Count</p>
+                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito',  color: sortType === '#646464' ? 'lightgray' : '#646464' }}>
+                            <p style={{fontSize: 11}}>Sort by Count</p>
                         </div>
                     </div>
                     <div className={classes.leftSideAnalyzerChild}>
@@ -691,16 +691,23 @@ padding-left: 5px;
 
                     <div style={{ display: 'flex', marginBottom: 40, justifyContent: 'space-between', width: '90%' }}>
                         <div className={classes.catagoryCard} >
-                            <h3>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
+                            <h2>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
 
 
                                 <img alt={"question mark icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
 
-                            </ToolTip>  <br></br>for cohort matching</h3>
+                            </ToolTip>  <br></br>for cohort matching</h2>
+
+                            <fieldset className={classes.fieldsetReset}>
+                            <legend style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+                                    Select Node Type
+                                </legend>
+
                             <div className={classes.catagoryCardChildren}>
+                               
                                 <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
                                     <p>
-                                        <input disabled={selectedCohorts.length === 0} type="radio" checked={nodeIndex === 0} onClick={() => {
+                                        <input disabled={selectedCohorts.length === 0} type="radio" value={"1"}  checked={nodeIndex === 0} onClick={() => {
                                             setNodeIndex(0);
                                         }} radioGroup="node_type" name="node_type" aria-label="Participant radio button" />
                                         Participant ID
@@ -709,7 +716,7 @@ padding-left: 5px;
                                 <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
                                     <p>
-                                        <input disabled={selectedCohorts.length === 0} type="radio" onClick={() => {
+                                        <input disabled={selectedCohorts.length === 0} type="radio" value={"2"} onClick={() => {
                                             setNodeIndex(1);
                                         }} radioGroup="node_type" name="node_type" aria-label="Daignosis Radio button" />
                                         Diagnosis
@@ -718,14 +725,15 @@ padding-left: 5px;
                                 <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
                                     <p>
-                                        <input disabled={selectedCohorts.length === 0} onClick={() => {
+                                        <input disabled={selectedCohorts.length === 0} value={"3"} onClick={() => {
                                             setNodeIndex(2);
                                         }} type="radio" radioGroup="node_type" name="node_type" aria-label="Treatment Radio button" />
                                         Treatment
                                     </p>
                                 </ToolTip>
+                                
                             </div>
-
+                            </fieldset>
                         </div>
 
                         {refershTableContent && selectedCohorts.length > 0 &&

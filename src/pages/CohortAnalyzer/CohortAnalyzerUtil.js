@@ -175,14 +175,21 @@ export const handleDelete = (cohortId,
 export const SearchBox = (classes, handleSearchValue, searchValue, searchReference) => {
     return (
         <div className={classes.inputStyleContainer}>
+               
+
             <input
                 onChange={handleSearchValue}
                 ref={searchReference}
                 type="text"
                 placeholder={"Search Participant ID"}
+                name="search"
+                id="participant-search"
                 className={classes.inputStyle}
             />
+            <label htmlFor="participant-search" aria-label="search">
             <img alt={"Search Icon"} src={search_icon} />
+            </label>
+           
         </div>
     )
 }
