@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 export const CreateNewCOhortButton = ({ selectedCohortSection, questionIcon, rowData, handleClick, ToolTip }) => {
 
