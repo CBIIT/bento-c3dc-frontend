@@ -626,27 +626,7 @@ padding-left: 5px;
                                     }}
                                 >
 
-                                    <ToolTip
-                                        open={HoveredCohort === cohortName}
-                                        PopperProps={{
-                                            anchorEl: {
-                                                getBoundingClientRect: () => ({
-                                                    top: mousePosition.y,
-                                                    left: mousePosition.x,
-                                                    right: mousePosition.x,
-                                                    bottom: mousePosition.y,
-                                                    width: 0,
-                                                    height: 0,
-                                                }),
-                                            },
-                                            modifiers: [
-                                                {
-                                                    name: "offset",
-                                                    options: { offset: [10, 10] },
-                                                },
-                                            ],
-                                        }}
-                                        backgroundColor={'white'} zIndex={3000} title={cohortName} arrow placement="top">
+                                    <div  backgroundColor={'white'} zIndex={3000}  arrow placement="top">
                                         <div
                                             className={
                                                 selectedCohorts.includes(cohort)
@@ -665,12 +645,12 @@ padding-left: 5px;
                                                     <span className={classes.cardContent}
                                                         style={{
                                                             color: '#000'
-                                                        }} > {shortenText(cohortName)} </span>
+                                                        }} > {cohortName} </span>
                                                 </div>
                                                 <img alt={"Trashcan"} style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={11} height={12} />
                                             </div>
                                         </div>
-                                    </ToolTip>
+                                    </div>
                                 </div>
                             )
                         })}
