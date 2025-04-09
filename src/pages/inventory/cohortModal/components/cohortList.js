@@ -237,7 +237,7 @@ const styles = () => ({
         fontSize: 14,
         fontWeight: '300',
         lineHeight: '15px',
-        backgroundColor: '#4E8191',
+        backgroundColor: '#2A4C58',
         borderBottom: '1px solid #73C7BE',
         '&:first-child': {
             borderTop: '1px solid #73C7BE',
@@ -248,6 +248,7 @@ const styles = () => ({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',
+        color: 'white',
         width: '85%',
     },
     selectedCohort: {
