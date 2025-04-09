@@ -98,6 +98,11 @@ export const tblHeader = {
         minHeight: '40px',
       },
     },
+    MuiSelect: {
+      nativeInput: {
+        visibility: "hidden !important"
+      }
+    },
   };
   
   export const tblBody = {
@@ -219,19 +224,22 @@ export const tblHeader = {
                 minHeight: '40px',
             },
         },
-        MuiSelect: {
-            select: {
-                '&:focus': {
-                    backgroundColor: '#FFFFFF'
-                }
-            },
-            icon: {
-                padding: '2px 0 0 3px',
-            },
-                iconOpen: {
-                padding: '2px 0 0 3px',
-            },
+      MuiSelect: {
+        select: {
+          '&:focus': {
+            backgroundColor: '#FFFFFF'
+          }
         },
+        icon: {
+          padding: '2px 0 0 3px',
+        },
+        iconOpen: {
+          padding: '2px 0 0 3px',
+        },
+        nativeInput: {
+          visibility: "hidden !important"
+        },
+      },
         MuiMenu: {
             paper: {
                 boxShadow: 'none',
