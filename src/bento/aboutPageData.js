@@ -24,6 +24,23 @@ export const aboutData = {
     "  <li>Facilitates longitudinal data analyses.</li>" +
     "  <li>Enables custom/synthetic cohort creation and data downloading for subsequent local analyses.</li>" +
     "</ul>",
+  fourthParagraph:
+    "<a className='sectionTitle'>Citing the C3DC</a><br/>" +
+    "NCI expects users to acknowledge CCDI data use as follows:",
+  fifthParagraph:
+    "\"The results published here are, in whole or in part, derived from the analysis of data listed in the C3DC " +
+    "(<a className='aboutLinkNoIcon' href='https://clinicalcommons.ccdi.cancer.gov/' target='_blank' rel='noopener noreferrer'>clinicalcommons.ccdi.cancer.gov</a>), " +
+    "established by the National Cancer Institute’s Childhood Cancer Data Initiative (CCDI).\"",
+  sixthParagraph:
+    "To cite individual studies, note the CCDI study ID (e.g., phs002790) and include the name and URL or link for the C3DC " +
+    "(<a className='aboutLinkNoIcon' href='https://clinicalcommons.ccdi.cancer.gov/' target='_blank' rel='noopener noreferrer'>clinicalcommons.ccdi.cancer.gov</a>), " +
+    "along with the phrase, \"established by the National Cancer Institute’s Childhood Cancer Data Initiative (CCDI).\"",
+  seventhParaph:
+    "Example: \"The results analyzed and &lt;published or shown&gt; here are based in whole or in part from analyzing the Molecular Characterization Initiative data listed in the C3DC " +
+    "(<a className='aboutLinkNoIcon' href='https://clinicalcommons.ccdi.cancer.gov/' target='_blank' rel='noopener noreferrer'>clinicalcommons.ccdi.cancer.gov</a>) " + 
+    "under study ID phs002790. The data were accessed from the NCI’s Cancer Research Data Commons " + 
+    "(<a className='aboutLinkNoIcon' href='https://datacommons.cancer.gov/' target='_blank' rel='noopener noreferrer'>datacommons.cancer.gov</a>). " + 
+    "The C3DC was established by the National Cancer Institute’s Childhood Cancer Data Initiative (CCDI)\".",
   /* These paragraphs were originally in the about page when we had one large about page. Their content are now in separate pages.
   fourthParagraph:
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
