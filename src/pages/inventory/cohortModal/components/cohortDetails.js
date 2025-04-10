@@ -306,7 +306,9 @@ const CohortDetails = (props) => {
                 </div>
                 <div className={classes.participantViewer}>
                     <div className={classes.participantSearchBarSection}>
+                        <lable htmlFor="participantSearch" > </lable> 
                         <input
+                            id="participantSearch"
                             type="text"
                             placeholder="Search Participant ID here"
                             className={classes.participantSearchBar}
@@ -928,8 +930,8 @@ const styles = () => ({
     },
     cohortLastUpdated: {
         width: '100%',
-        fontSize: 10,
-        color: '#3A7A81',
+        fontSize: 14,
+        color: '#2D5D63',
         fontFamily: 'Lato',
         textAlign: 'left',
         lineHeight: '22px',

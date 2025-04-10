@@ -54,10 +54,10 @@ const useStyles = makeStyles((theme) => ({
         padding: "12px 30px 12px 30px",
         gap: "10px",
         borderRadius: "5px",
-        backgroundColor: "#556467",
-        opacity: 0.4,
+        backgroundColor: "#55646766",
         fontFamily: "Poppins",
         fontSize: "12px",
         fontWeight: 900,
+        border: '1.25px solid #0000001A',
     },
 }));

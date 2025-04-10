@@ -7,7 +7,10 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row'
     },
-   
+    fieldsetReset: {
+        all: 'unset',
+        display: 'contents',
+      },
     sortCount: {
         display: 'flex',
         margin: 0,
@@ -262,14 +265,12 @@ export const useStyle = makeStyles((theme) => ({
         color: 'black',
         '& div span': {
             color: 'black',
-            opacity: 1,
             fontFamily: 'Nunito',
             fontSize: 14,
             fontWeight: 300,
             textAlign: 'left',
         },
         '& img': {
-            opacity: 1,
             position: 'relative',
             zIndex: 10000,
         }
