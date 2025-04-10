@@ -278,7 +278,7 @@ const FooterDesktop = () => {
                         const linkkey =  `link_${linkidx}`;
                         return (
                             <div className='footItem' key={linkkey}>
-                                <h3 className='footItemTitle'>{linkItem.title}</h3>
+                                <h6 className='footItemTitle'>{linkItem.title}</h6>
                                 {
                                     linkItem.items.map((item, itemidx) => {
                                         const itemkey =  `item_${itemidx}`;
