@@ -415,7 +415,7 @@ const CohortDetails = (props) => {
                                 </div>
                                 <img
                                     src={ExpandMoreIcon}
-                                    alt="expand download icon"
+                                    alt="expand download iconcas caddsv"
                                     className={`${classes.expandMoreIcon} ${showDownloadDropdown ? classes.rotatedIcon : ''}`}
                                 />
                             </Button>

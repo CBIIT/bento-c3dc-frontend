@@ -18,6 +18,15 @@ const GetOptions = () => { //This function has been updated to return the name f
   return Object.values(state).map(cohort => cohort.cohortName);
 }
 
+const getParticipants = () => { 
+  const { state } = useContext(CohortStateContext);
+  return Object.values(state).map(cohort => cohort.cohortName);
+}
+
+const getParticipantOptions = () => { 
+  return ["All Participants","Selected Participants"];
+}
+
 export const layoutConfig = [{
   container: 'buttons',
   size: 'xxl',
@@ -45,8 +54,9 @@ export const wrapperConfig = [
         tooltipCofig: tooltipContentAddToNewCohort,
         conditional: false,
         CustomViewElem: () => {
+          const options = getParticipantOptions();
           return (
-            <CustomButton borderColor={"#73C7BE"} label={"CREATE COHORT"} backgroundColor={"#375C67"} type={"CREATE"} hoverColor={"#375C67"} />
+            <CustomDropDown borderColor={"#73C7BE"} label={"CREATE NEW COHORT"} backgroundColor={"#375C67"} options={options}/>
           )
         },
         alertMessage,
