@@ -4,7 +4,9 @@ import { KeyboardArrowDownOutlined } from '@material-ui/icons';
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { onAddParticipantsToCohort } from '../../../../components/CohortSelectorState/store/action';
+import { onCreateNewCohort } from '../../../../components/CohortSelectorState/store/action';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
+import { CohortModalContext } from '../../cohortModal/CohortModalContext';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
 
 const DropdownContainer = styled.div`
@@ -108,19 +110,25 @@ const DropdownItem = styled.li`
   }
 `;
 
-export const CustomDropDown = ({ options, label, isHidden, backgroundColor, borderColor }) => {
+export const CustomDropDown = ({ options, label, isHidden, backgroundColor, borderColor, type = "existing" , enabledWithoutSelect = false}) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const tableContext = useContext(TableContext);
   const [isActive, setIsActive] = useState(false);
+  const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges} = useContext(CohortModalContext);
 
   useEffect(() => {
     const { context } = tableContext;
     const {
       hiddenSelectedRows = [],
     } = context;
-    setIsActive(hiddenSelectedRows.length > 0 && options.length > 0);
-  }, [tableContext])
+    if(enabledWithoutSelect){
+      setIsActive(true);
+    }else{
+      setIsActive(hiddenSelectedRows.length > 0 && options.length > 0);
+    }
+   
+  }, [tableContext, enabledWithoutSelect])
   const toggleDropdown = () => isActive && setIsOpen(!isOpen);
 
   const clearSelection = () => {
@@ -154,7 +162,7 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
   };
 
   const handleSelect = (value) => {
-    if (isActive) {
+    if (isActive && type === "existing") {
       const { context } = tableContext;
       const {
         hiddenSelectedRows = [],
@@ -166,6 +174,31 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
         buildCohortFormat(hiddenSelectedRows),
         (count) => triggerNotification(count) // Pass as a callback
       ));
+
+    }else{
+      
+            const { context } = tableContext;
+        const {
+          hiddenSelectedRows = [] ,
+          tblRows = [],
+          allRows = [],
+        } = context;
+       /// console.log("TBLROWS: ", allRows);
+        console.log("Value", value)
+        clearSelection();
+        dispatch(onCreateNewCohort(
+          "",
+          "",
+         buildCohortFormat(value === "all participants" ? allRows : hiddenSelectedRows),
+          (count) => { 
+            triggerNotification(count);
+            setShowCohortModal(true);
+          },
+          (error) => {
+          
+          //setWarningMessage(error.toString().replace("Error:",""));
+          }
+        ));
 
     }
   };

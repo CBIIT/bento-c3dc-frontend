@@ -9,7 +9,7 @@
     "@bento-core/cart": "1.0.1-ccdihub.7",
     "@bento-core/facet-filter": "^1.0.1-c3dc.3",
     "@bento-core/local-find": "1.0.0-c3dc.0",
-    "@bento-core/paginated-table": "^1.0.0-c3dc.26",
+    "@bento-core/paginated-table": "file:../bento-frontend/packages/paginated-table",
     "@bento-core/query-bar": "^1.0.0-c3dc.6",
     "@bento-core/stats-bar": "1.0.1-ccdihub.2",
     "@bento-core/tab": "^1.0.0-c3dc.1",
