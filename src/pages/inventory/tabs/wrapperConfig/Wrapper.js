@@ -56,7 +56,7 @@ export const wrapperConfig = [
         CustomViewElem: () => {
           const options = getParticipantOptions();
           return (
-            <CustomDropDown borderColor={"#73C7BE"} label={"CREATE NEW COHORT"} backgroundColor={"#375C67"} options={options}/>
+            <CustomDropDown borderColor={"#73C7BE"} label={"CREATE NEW COHORT"} backgroundColor={"#375C67"} type={"new"} options={options} enabledWithoutSelect={true}/>
           )
         },
         alertMessage,
