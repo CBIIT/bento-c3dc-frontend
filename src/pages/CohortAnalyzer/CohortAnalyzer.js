@@ -767,6 +767,9 @@ padding-left: 5px;
                     </div>
                 </div>
             </div>
+            <h3 style={{ "display": "none" }}>
+                End of Data Exploration Page
+            </h3>
         </>
     )
 }
