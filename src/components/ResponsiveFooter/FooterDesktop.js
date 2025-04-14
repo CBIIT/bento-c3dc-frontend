@@ -278,7 +278,7 @@ const FooterDesktop = () => {
                         const linkkey =  `link_${linkidx}`;
                         return (
                             <div className='footItem' key={linkkey}>
-                                <h6 className='footItemTitle'>{linkItem.title}</h6>
+                                <h4 className='footItemTitle'>{linkItem.title}</h4>
                                 {
                                     linkItem.items.map((item, itemidx) => {
                                         const itemkey =  `item_${itemidx}`;
@@ -301,9 +301,9 @@ const FooterDesktop = () => {
             </FooterLinksContainer>
             <FooterEmailSignupContainer  onSubmit={handleSubmit} ref={emailForm} action="https://public.govdelivery.com/accounts/USNIHNCI/subscribers/qualify" ariaLabel="Footer subscribe" method="post" target="_blank" id="signup_desktop" noValidate>
               <input type="hidden" name="topic_id" id="topic_id" value="USNIHNCI_223" />
-              <h4 className='signUpTitle'>
+              <h5 className='signUpTitle'>
                 Sign up for email updates
-              </h4>
+              </h5>
               <div className={errorClass !== "" ? 'ErrorBorder' : null}>
                 <div className='enterTitle'>
                   <label htmlFor="email_desktop"> Enter your email address</label>
@@ -323,12 +323,12 @@ const FooterDesktop = () => {
         <div className="bottom-footer-container">
           <div id="bottom-footer-header">
             <a className='logoText' href="https://www.cancer.gov" target="_blank" rel="noopener noreferrer">
-              <h4 className='logoUpperText'>National Cancer Institute</h4>
+              <h5 className='logoUpperText'>National Cancer Institute</h5>
               <div className='logoLowerText'>at the National Institutes of Health</div>
             </a>
           </div>
           <div id="bottom-footer-contact-us">
-            <h4 className='contactUs'>Contact Us</h4>
+            <h5 className='contactUs'>Contact Us</h5>
             <div id="bottom-footer-contact-links">
               {
                 FooterData.contact_links.map((contactItem, contactidx) => {
