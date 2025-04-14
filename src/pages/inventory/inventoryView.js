@@ -15,7 +15,14 @@ const Inventory = ({
   activeFilters,
 }) => (
   <div className={classes.dashboardContainer}>
+    <h1 style={{ "display": "none" }}>
+      Data Exploration Page
+    </h1>
+    <h2 style={{ "display": "none" }}>
+      Diagnosis, Participant, and Studies stats based on filters
+    </h2>
     <StatsView data={dashData} />
+    
     <div className={classes.contentBox}>
       <div className={classes.content}>
         <div className={classes.sideBar}>
@@ -42,6 +49,9 @@ const Inventory = ({
         </div>
       </div>
     </div>
+    <h3 style={{ "display": "none" }}>
+      End of Data Exploration Page
+    </h3>
   </div>
 );
 

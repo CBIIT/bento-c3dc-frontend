@@ -9,6 +9,11 @@ export default () => ({
     '& fieldset': {
       borderWidth: '1px !important',
       borderColor: '#003F74 !important',
+      '& legend': {
+          '& span': {
+              fontSize: '11px',
+          },
+        },
     },
   },
   clearAllButtonRoot: {

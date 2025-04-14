@@ -128,7 +128,7 @@ export const facetSectionVariables = {
     upperBound: {
       fontFamily: 'Montserrat',
       fontWeight: 500,
-      fontSize: '10px !important',
+      fontSize: '11px !important',
       color: '#000000',
       float: 'right',
       marginLeft: 'Auto',
@@ -138,7 +138,7 @@ export const facetSectionVariables = {
     lowerBound: {
       fontFamily: 'Montserrat',
       fontWeight: 500,
-      fontSize: '10px !important',
+      fontSize: '11px !important',
       color: '#000000',
       float: 'left',
       marginLeft: 'Auto',
