@@ -128,6 +128,7 @@ const styles = (theme) => ({
     color: '#FFFFFF',
     fontSize: '35px',
     lineHeight: '45px',
+    background: '#52979d',
   },
   headerTitle: {
     maxWidth: '1440px',
