@@ -28,7 +28,8 @@ export const landingPageData = {
   heartbeatAnimation: {
     heartlineFull: heartlineFull,
     tracker: heartlineTracker,
-    alt: 'Heartbeat Animation',
+    lineAlt: 'Heartbeat Line Animation',
+    trackerAlt: 'Heartbeat Tracker Animation',
   },
   landingPageStatsIcons: {
     diagnosesIcon: diagnosesIcon,
@@ -68,7 +69,7 @@ export const landingPageData = {
     img: landingTile1,
     titleText: 'About the Childhood Cancer Clinical Data Commons',
     descriptionText: 'The Childhood Cancer Clinical Data Commons (C3DC) is a database that houses childhood cancer demographics and phenotypic clinical data. These data have been harmonized to a standard set of common data elements (CDEs). C3DC empowers researchers to search for participant-level data to create synthetic cohorts and export data for analysis.',
-    callToActionText: 'READ MORE',
+    callToActionText: 'QUICK OVERVIEW',
     callToActionLink: '/about', // This links to the "About" static page.
   },
   tile2: {
