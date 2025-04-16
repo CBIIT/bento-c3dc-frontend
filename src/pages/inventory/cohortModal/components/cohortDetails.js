@@ -126,10 +126,8 @@ const CohortDetails = (props) => {
     }
 
     const handleHideTooltip = () => {
-
-        setTimeout(() => {
-            setTooltipOpen(false);
-        }, 3000)
+setTooltipOpen(false)
+        
     }
 
     const debouncedSave = useRef(
@@ -471,7 +469,11 @@ Proceed with direct export within C3DC.
                         open={tooltipOpen}
                         disableHoverListener
                         maxWidth="255px"
-                        title={exploreCCDIHubTooltip} placement="top-end" arrow arrowSize="30px">
+                        title={  <div onMouseEnter={() => {setTooltipOpen(true)}} onMouseLeave={handleHideTooltip}>
+                        
+                          {exploreCCDIHubTooltip}
+                       
+                      </div>} placement="top-end" arrow arrowSize="30px">
                         <Button onMouseEnter={()=>{setTooltipOpen(true)}}  onMouseLeave={handleHideTooltip } variant="contained" className={classes.exploreButton} onClick={() => generateCCDIHub_url(localCohort)}>
                         <span style={{textAlign: 'left'}}>
                         EXPLORE <br /> IN CCDI Hub

@@ -171,7 +171,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   const tableContext = useContext(TableContext);
   const [isActive, setIsActive] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
-  const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges } = useContext(CohortModalContext);
+  const { setShowCohortModal } = useContext(CohortModalContext);
 
   useEffect(() => {
     const { context } = tableContext;
@@ -340,12 +340,12 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   useClickOutside(dropDownListRef, () => setIsOpen(false));
 
   const getNewCohortDropDownItem = (index,option,hiddenSelectedRows,totalRowCount) => {
-    if (option == "Selected Participants" && hiddenSelectedRows.length == 0) {
+    if (option === "Selected Participants" && hiddenSelectedRows.length === 0) {
       return (
         <DropdownItem key={index} className='new-cohort-item' isDisabled={true}>{option}</DropdownItem>
       )
     }
-    if (option == "All Participants" && totalRowCount >= 4000) {
+    if (option === "All Participants" && totalRowCount >= 4000) {
       return (
         <DropdownItem className='new-cohort-item' isDisabled={true} key={index}>{option}</DropdownItem>
       )
@@ -357,12 +357,12 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   }
 
   const getExistingCohortDropDownItem = (index,option,hiddenSelectedRows,totalRowCount) => {
-    if (option == "Selected Participants" && hiddenSelectedRows.length == 0) {
+    if (option === "Selected Participants" && hiddenSelectedRows.length === 0) {
       return (
         <DropdownItem key={index} className='existing-cohort-item' isDisabled={true}>{option}</DropdownItem>
       )
     }
-    if (option == "All Participants" && totalRowCount >= 4000) {
+    if (option === "All Participants" && totalRowCount >= 4000) {
       return (
         <DropdownItem className='existing-cohort-item' isDisabled={true} key={index}>{option}</DropdownItem>
       )
@@ -396,11 +396,11 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       {isOpen && (
         <DropdownList ref={dropDownListRef}>
           {options.map((option, index) => {
-            if (type == "new") {
+            if (type === "new") {
               return getNewCohortDropDownItem(index,option,hiddenSelectedRows,totalRowCount);
             }
 
-            if (type == "existing") {
+            if (type === "existing") {
                return getExistingCohortDropDownItem(index,option,hiddenSelectedRows,totalRowCount);
             }
 
