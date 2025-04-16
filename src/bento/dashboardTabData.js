@@ -11,6 +11,7 @@ const existingCohortToolTip = <p style={{fontFamily:"Poppins"}}>Add selected Par
 export const tooltipContentAddToNewCohort = {
     icon: questionIcon,
     alt: 'tooltipIcon',
+    maxWidth:'290px',
     Participants: newCohortToolTip,
     Diagnosis: newCohortToolTip,
     Studies: newCohortToolTip,
@@ -26,6 +27,7 @@ export const tooltipContentAddToNewCohort = {
 export const tooltipContentAddToExistingCohort = {
   icon: questionIcon,
   alt: 'tooltipIcon',
+  maxWidth:'290px',
   Participants: existingCohortToolTip,
   Diagnosis: existingCohortToolTip,
   Studies: existingCohortToolTip,
