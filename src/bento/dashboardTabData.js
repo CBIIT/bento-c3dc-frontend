@@ -1,18 +1,22 @@
 import gql from 'graphql-tag';
 import { cellTypes } from '@bento-core/table';
 import questionIcon from '../assets/icons/Question_Icon.svg';
+import React from 'react';
 
 // --------------- Tooltip configuration --------------
+
+const newCohortToolTip = <p style={{fontFamily:"Poppins"}}>Create a new cohort with the selected Participant IDs. <br/> <br/> <b>Note:</b> The optimal number of participants in a cohort is =&lt; 4000 participants</p>;
+const existingCohortToolTip = <p style={{fontFamily:"Poppins"}}>Add selected Participant IDs to existing cohort from dropdown list. <br/><br/>  <b>Note:</b> The optimal number of participants in a cohort is =&lt; 4000 participants</p>;
 
 export const tooltipContentAddToNewCohort = {
     icon: questionIcon,
     alt: 'tooltipIcon',
-    Participants: 'Create a new cohort using the selected Participant IDs',
-    Diagnosis: 'Create a new cohort using the selected Participant IDs',
-    Studies: 'Create a new cohort using the selected Participant IDs',
-    Treatment: 'Create a new cohort using the selected Participant IDs',
-    Survival: 'Create a new cohort using the selected Participant IDs ',
-    "Treatment Response": 'Create a new cohort using the selected Participant IDs',
+    Participants: newCohortToolTip,
+    Diagnosis: newCohortToolTip,
+    Studies: newCohortToolTip,
+    Treatment: newCohortToolTip,
+    Survival: newCohortToolTip,
+    "Treatment Response": newCohortToolTip,
     arrow: true,
     styles: {
       border: '1px red solid'
@@ -22,12 +26,12 @@ export const tooltipContentAddToNewCohort = {
 export const tooltipContentAddToExistingCohort = {
   icon: questionIcon,
   alt: 'tooltipIcon',
-  Participants: 'Add selected Participant IDs to an existing cohort',
-  Diagnosis: 'Add selected Participant IDs to an existing cohort',
-  Studies: 'Add selected Participant IDs to an existing cohort',
-  Survival: 'Add selected Participant IDs to an existing cohort',
-  Treatment: 'Add selected Participant IDs to an existing cohort',
-  "Treatment Response": 'Add selected Participant IDs to an existing cohort',
+  Participants: existingCohortToolTip,
+  Diagnosis: existingCohortToolTip,
+  Studies: existingCohortToolTip,
+  Survival: existingCohortToolTip,
+  Treatment: existingCohortToolTip,
+  "Treatment Response": existingCohortToolTip,
   arrow: true,
   styles: {
   }

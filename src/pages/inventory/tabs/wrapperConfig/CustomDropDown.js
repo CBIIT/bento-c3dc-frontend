@@ -12,6 +12,7 @@ import client from "../../../../utils/graphqlClient"
 import { GET_PARTICIPANTS_OVERVIEW_QUERY } from '../../../../bento/dashboardTabData';
 import { connect } from 'react-redux';
 import { getFilters } from '@bento-core/facet-filter';
+import CustomCheckBox from '../../../../components/CustomCheckbox/CustomCheckbox';
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -96,7 +97,6 @@ const DropdownItem = styled.li`
     line-height: 13px;
     letter-spacing: 0.02em;
     text-align: left;
-    cursor: pointer;
     padding: 4px;
     border-bottom: 1px solid #ccc;
     max-height: 27px;
@@ -105,13 +105,64 @@ const DropdownItem = styled.li`
     border: 0px 1px 1px 1px;
     border-color: #73A9C7;
     background-color: #EFF2F6;
+    cursor: ${(props) => (props.isDisabled ? "default" : "pointer")}
     color: #343434;
     &:nth-child(even){
         background-color: #CCD5E1; 
     }
-  &:last-child {
-    border-bottom: none;
-  }
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &.new-cohort-item{
+      color: #286273;
+      border: none ;
+      background-color: #FFFFFF;
+    }
+    
+    &.new-cohort-item:first-child{
+      font-weight: 700;
+    }
+
+    &.new-cohort-item:last-child{
+      color: #343434;
+    }
+
+    &.existing-cohort-item{
+      
+    }
+    
+    &.existing-cohort-item:nth-child(1),&.existing-cohort-item:nth-child(2){
+      order: none ;
+      background-color: #FFFFFF;
+      border-bottom: none;
+    }
+
+     &.existing-cohort-item:nth-child(1){
+      padding-top: 0.5rem;
+    }
+
+    &.existing-cohort-item:nth-child(2){
+      color: #00639D;
+      font-weight: 700;
+      border-bottom: 2px solid #00639D;
+      padding-bottom: 1.5rem;
+    }
+
+    &.existing-cohort-item:nth-child(n+3){
+      display: flex;
+      gap:0.75rem;
+      align-items: center;
+      border-bottom: 1px solid #00639D;
+    }
+
+    &.existing-cohort-item:nth-child(odd){
+      background-color: #FFFFFF;
+    }
+
+    &.existing-cohort-item:last-child{
+      border-bottom: none;
+    }
 `;
 
 const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, type, borderColor, enabledWithoutSelect = null, filterState, localFindUpload, localFindAutocomplete }) => {
@@ -119,6 +170,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   const [isOpen, setIsOpen] = useState(false);
   const tableContext = useContext(TableContext);
   const [isActive, setIsActive] = useState(false);
+  const [checkedItems, setCheckedItems] = useState([]);
   const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges } = useContext(CohortModalContext);
 
   useEffect(() => {
@@ -128,13 +180,20 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       totalRowCount = 0
     } = context;
 
-    if (enabledWithoutSelect && totalRowCount<=4000) {
+    if (enabledWithoutSelect && totalRowCount <= 4000) {
       setIsActive(true);
     } else {
       setIsActive(hiddenSelectedRows.length > 0 && options.length > 0);
     }
 
-  }, [tableContext, enabledWithoutSelect])
+  }, [tableContext, enabledWithoutSelect]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      setCheckedItems([]);
+    }
+
+  }, [isOpen]);
   const toggleDropdown = () => isActive && setIsOpen(!isOpen);
 
   const clearSelection = () => {
@@ -178,13 +237,33 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       const {
         hiddenSelectedRows = [],
       } = context;
+      let toBeAdded = hiddenSelectedRows;
       setIsOpen(false);
       clearSelection();
-      dispatch(onAddParticipantsToCohort(
-        value,
-        buildCohortFormat(hiddenSelectedRows),
+
+      if (value === "all participants") {
+        const activeFilters = {
+          ...getFilters(filterState),
+          participant_ids: [
+            ...(localFindUpload || []).map((obj) => obj.participant_id),
+            ...(localFindAutocomplete || []).map((obj) => obj.title),
+          ],
+        };
+        let { data } = await client.query({
+          query: GET_PARTICIPANTS_OVERVIEW_QUERY,
+          variables: { ...activeFilters, first: 4000 },
+          fetchPolicy: 'network-only'
+        });
+        toBeAdded = data.participantOverview.map((item) => ({ participant_id: item.participant_id, id: item.id, dbgap_accession: item.dbgap_accession }));
+
+      }
+      
+      checkedItems.forEach((item)=>dispatch(onAddParticipantsToCohort(
+        item,
+        buildCohortFormat(toBeAdded),
         (count) => triggerNotification(count) // Pass as a callback
-      ));
+      )))
+      
 
     } else {
 
@@ -194,24 +273,25 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       } = context;
 
       let toBeAdded = hiddenSelectedRows;
-      const activeFilters = {
-        ...getFilters(filterState),
-        participant_ids: [
-          ...(localFindUpload || []).map((obj) => obj.participant_id),
-          ...(localFindAutocomplete || []).map((obj) => obj.title),
-        ],
-      };
+      
 
       if (value === "all participants") {
+        const activeFilters = {
+          ...getFilters(filterState),
+          participant_ids: [
+            ...(localFindUpload || []).map((obj) => obj.participant_id),
+            ...(localFindAutocomplete || []).map((obj) => obj.title),
+          ],
+        };
         let { data } = await client.query({
           query: GET_PARTICIPANTS_OVERVIEW_QUERY,
           variables: { ...activeFilters, first: 4000 },
           fetchPolicy: 'network-only'
         });
-
         toBeAdded = data.participantOverview.map((item) => ({ participant_id: item.participant_id, id: item.id, dbgap_accession: item.dbgap_accession }));
 
       }
+
       clearSelection();
       dispatch(onCreateNewCohort(
         "",
@@ -228,6 +308,18 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       ));
 
     }
+  };
+
+  const handleCheckbox = async (value) => {
+    
+    const isChecked = checkedItems.includes(value);
+    if(isChecked){
+      setCheckedItems(checkedItems.filter((item)=>value!==item));
+    }else{
+      setCheckedItems([...checkedItems,value]);
+    }
+    
+
   };
   const dropDownListRef = useRef(null);
 
@@ -247,6 +339,50 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
 
   useClickOutside(dropDownListRef, () => setIsOpen(false));
 
+  const getNewCohortDropDownItem = (index,option,hiddenSelectedRows,totalRowCount) => {
+    if (option == "Selected Participants" && hiddenSelectedRows.length == 0) {
+      return (
+        <DropdownItem key={index} className='new-cohort-item' isDisabled={true}>{option}</DropdownItem>
+      )
+    }
+    if (option == "All Participants" && totalRowCount >= 4000) {
+      return (
+        <DropdownItem className='new-cohort-item' isDisabled={true} key={index}>{option}</DropdownItem>
+      )
+    }
+
+    return (
+      <DropdownItem key={index} className='new-cohort-item' onClick={() => { handleSelect(option.toLowerCase()) }}>{option}</DropdownItem>
+    )
+  }
+
+  const getExistingCohortDropDownItem = (index,option,hiddenSelectedRows,totalRowCount) => {
+    if (option == "Selected Participants" && hiddenSelectedRows.length == 0) {
+      return (
+        <DropdownItem key={index} className='existing-cohort-item' isDisabled={true}>{option}</DropdownItem>
+      )
+    }
+    if (option == "All Participants" && totalRowCount >= 4000) {
+      return (
+        <DropdownItem className='existing-cohort-item' isDisabled={true} key={index}>{option}</DropdownItem>
+      )
+    }
+
+    if (index > 1) {
+      return (
+
+        <DropdownItem key={index} className='existing-cohort-item' >
+          <CustomCheckBox selectedItems={checkedItems} item={option.cohortId} handleCheckbox={handleCheckbox} />
+          <span>{option.cohortName}</span>
+        </DropdownItem>
+      )
+    }
+
+    return (
+      <DropdownItem key={index} className='existing-cohort-item' onClick={() => { handleSelect(option.toLowerCase()) }}>{option}</DropdownItem>
+    )
+  }
+
   return (
     <DropdownContainer isHidden={isHidden}>
       <DropdownHeader isOpen={isOpen} isActive={isActive} backgroundColor={backgroundColor} borderColor={borderColor} onClick={toggleDropdown}>
@@ -260,16 +396,14 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       {isOpen && (
         <DropdownList ref={dropDownListRef}>
           {options.map((option, index) => {
-            if (option == "Selected Participants" && hiddenSelectedRows.length == 0) {
-              return (
-                <DropdownItem key={index}>{option}</DropdownItem>
-              )
+            if (type == "new") {
+              return getNewCohortDropDownItem(index,option,hiddenSelectedRows,totalRowCount);
             }
-            if (option == "All Participants" && totalRowCount >= 4000) {
-              return (
-                <DropdownItem key={index}>{option}</DropdownItem>
-              )
+
+            if (type == "existing") {
+               return getExistingCohortDropDownItem(index,option,hiddenSelectedRows,totalRowCount);
             }
+
             return (
               <DropdownItem key={index} onClick={() => { handleSelect(option.toLowerCase()) }}>{option}</DropdownItem>
             )
