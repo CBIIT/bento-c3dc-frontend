@@ -11,6 +11,7 @@ import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
 import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
 import DeleteConfirmationModal from './deleteConfirmationModal';
 import Linkout from "../../../../assets/about/Export_Icon_White.svg";
+import LinkoutBlue from "../../../../assets/about/Export_Icon.svg";
 
 import { deletionTypes } from './deleteConfirmationModal';
 
@@ -51,6 +52,8 @@ const CohortDetails = (props) => {
     const [isEditingDescription, setIsEditingDescription] = useState(false);
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const [isScrollbarActive, setIsScrollbarActive] = useState(false); // State to check if scrollbar is active
+
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     const scrollContainerRef = useRef(null);
     const dropdownRef = useRef(null);
@@ -120,6 +123,13 @@ const CohortDetails = (props) => {
             ...temporaryCohort,
             ...localCohort,
         });
+    }
+
+    const handleHideTooltip = () => {
+
+        setTimeout(() => {
+            setTooltipOpen(false);
+        }, 3000)
     }
 
     const debouncedSave = useRef(
@@ -234,14 +244,16 @@ const CohortDetails = (props) => {
         ? config.cohortCountsLabel
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
-    const exploreCCDIHubTooltip = <p style={{fontFamily:"Poppins"}}>
-         Clicking this button will create a url and open a new tab showing the <a href="https://ccdi.cancer.gov/explore"> CCDI Hub </a> Explore page with filtered facets based on the user&apos;s selected  cohort.
+    const exploreCCDIHubTooltip = <p style={{fontFamily:"Poppins", zIndex: 10000}}>
+         Clicking this button will create a url and open a new tab showing the  CCDI Hub  Explore page with filtered facets based on the user&apos;s selected  cohort.
          <br/><br/>
          <b>If cohort size &le; 600:</b><br/> 
 Proceed with direct export within C3DC.
 <br/><br/>
             <b>If cohort size &gt; 600:</b><br/> 
-            Download the manifest and upload it manually to the CCDI Hub by following these steps:
+            Download the manifest and upload it manually to the <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub 
+            <img src={LinkoutBlue} width={14} height={14} style={{margin: 4, marginTop: 45, top: 8, position: 'relative'}} alt="Linkout Icon" /> 
+            </a> by following these steps:
 <ol>
 <li> Choose the Explore page from the menu.</li>
 <li> In the Facets side panel, open the Demographic facet.</li>
@@ -455,8 +467,12 @@ Proceed with direct export within C3DC.
                         <Button variant="contained" className={classes.viewCohortAnalyzerButton} onClick={() => {}}>
                         View Cohort <br/> Analyzer
                         </Button> 
-                        <ToolTip title={exploreCCDIHubTooltip} placement="top-end" arrow arrowSize="30px">
-                        <Button variant="contained" className={classes.exploreButton} onClick={() => generateCCDIHub_url(localCohort)}>
+                        <ToolTip 
+                        open={tooltipOpen}
+                        disableHoverListener
+                        maxWidth="255px"
+                        title={exploreCCDIHubTooltip} placement="top-end" arrow arrowSize="30px">
+                        <Button onMouseEnter={()=>{setTooltipOpen(true)}}  onMouseLeave={handleHideTooltip } variant="contained" className={classes.exploreButton} onClick={() => generateCCDIHub_url(localCohort)}>
                         <span style={{textAlign: 'left'}}>
                         EXPLORE <br /> IN CCDI Hub
                             </span>
