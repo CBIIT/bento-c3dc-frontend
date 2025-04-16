@@ -10,6 +10,7 @@ import { CohortStateProvider } from '../../components/CohortSelectorState/Cohort
 import { CohortModalProvider } from './cohortModal/CohortModalContext';
 import { setActiveFilterByPathQuery } from './sideBar/BentoFilterUtils';
 
+let latestRequestId = 0;
 
 const getDashData = (states) => {
   const {
@@ -19,12 +20,16 @@ const getDashData = (states) => {
 
   const client = useApolloClient();
   async function getData(activeFilters) {
-    await client.clearStore();
+    const currentRequestId = ++latestRequestId;
     let result = await client.query({
       query: DASHBOARD_QUERY_NEW,
       variables: activeFilters,
     })
       .then((response) => response.data);
+
+    if (currentRequestId !== latestRequestId) {
+      return null;
+    }
     return result;
   }
 
@@ -41,7 +46,7 @@ const getDashData = (states) => {
   useEffect(() => {
     const controller = new AbortController();
     getData(activeFilters).then((result) => {
-      if (result.getParticipants) {
+      if (result && result.getParticipants) {
         setDashData(result.getParticipants);
       }
     });
