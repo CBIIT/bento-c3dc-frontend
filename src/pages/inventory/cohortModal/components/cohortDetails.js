@@ -250,9 +250,9 @@ Proceed with direct export within C3DC.
 <br/><br/>
             <b>If cohort size &gt; 600:</b><br/> 
             Download the manifest and upload it manually to the <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub 
-            <img src={LinkoutBlue} width={14} height={14} style={{margin: 2, top: 0, position: 'relative'}} alt="Linkout Icon" /> 
+            <img src={LinkoutBlue} width={14} height={14} style={{padding: "4px 0px 0px 2px", bottom: 0, position: 'relative'}} alt="Linkout Icon" /> 
             </a> by following these steps:
-<ol>
+<ol style={{ paddingLeft: "1rem"}}>
 <li> Choose the Explore page from the menu.</li>
 <li> In the Facets side panel, open the Demographic facet.</li>
 <li> Click on “Upload Participants Set.”</li>
@@ -468,7 +468,7 @@ Proceed with direct export within C3DC.
                         <ToolTip 
                         open={tooltipOpen}
                         disableHoverListener
-                        maxWidth="355px"
+                        maxWidth="335px"
                         title={  <div onMouseEnter={() => {setTooltipOpen(true)}} onMouseLeave={handleHideTooltip}>
                         
                           {exploreCCDIHubTooltip}
