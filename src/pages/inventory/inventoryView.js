@@ -15,6 +15,9 @@ const Inventory = ({
   activeFilters,
 }) => (
   <div className={classes.dashboardContainer}>
+    <h1 style={{ "display": "none" }}>
+      Data Exploration Page
+    </h1>
     <StatsView data={dashData} />
     <div className={classes.contentBox}>
       <div className={classes.content}>
