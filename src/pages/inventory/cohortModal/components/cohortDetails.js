@@ -253,7 +253,7 @@ const CohortDetails = (props) => {
             <br/>
             <br/>
             <b>If cohort size &gt; 600:</b><br/> 
-            Download the manifest and upload it manually to the 
+            Download the manifest and upload it manually to the  
             <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
                 CCDI Hub 
                 <img src={LinkoutBlue} width={14} height={14} style={{margin: 4, marginTop: 45, top: 8, position: 'relative'}} alt="Linkout Icon" /> 
