@@ -256,7 +256,17 @@ const CohortDetails = (props) => {
             Download the manifest and upload it manually to the  
             <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
                 CCDI Hub 
-                <img src={LinkoutBlue} width={14} height={14} style={{margin: 2, top: 0, position: 'relative'}} alt="Linkout Icon" /> 
+                <img 
+                    src={LinkoutBlue} 
+                    width={14} 
+                    height={14} 
+                    style={{
+                        padding: "4px 0px 0px 2px", 
+                        bottom: 0, 
+                        position: 'relative'
+                    }} 
+                    alt="Linkout Icon" 
+                /> 
             </a>
             by following these steps:
             <ol>
@@ -475,7 +485,7 @@ const CohortDetails = (props) => {
                         <ToolTip
                             open={tooltipOpen}
                             disableHoverListener
-                            maxWidth="355px"
+                            maxWidth="335px"
                             title={exploreCCDIHubTooltip}
                             placement="top-end"
                             arrow
