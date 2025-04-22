@@ -15,7 +15,7 @@ import { CohortStateContext } from '../../../../components/CohortSelectorState/C
 
 const GetOptions = () => { //This function has been updated to return the name field instead of the ID field
   const { state } = useContext(CohortStateContext);
-  return Object.values(state).map(cohort => cohort.cohortName);
+  return ["All Participants","Selected Participants",...Object.values(state).map(cohort => ({cohortId:cohort.cohortId, cohortName:cohort.cohortName}))];
 }
 
 const getParticipants = () => { 
@@ -71,9 +71,9 @@ export const wrapperConfig = [
         tooltipCofig: tooltipContentAddToExistingCohort,
         conditional: true,
         CustomViewElem: () => {
-          let options = GetOptions();
+          let options = getParticipants();
           return (
-            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} />
+            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} type={"existing"} enabledWithoutSelect={true}/>
           )
         }
       },

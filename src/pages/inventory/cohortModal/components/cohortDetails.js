@@ -234,6 +234,27 @@ const CohortDetails = (props) => {
         ? config.cohortCountsLabel
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
+    const exploreCCDIHubTooltip = 
+        <p style={{fontFamily:"Poppins"}}>
+            Clicking this button will create a url and open a new tab showing the 
+                <a href="https://ccdi.cancer.gov/explore"> CCDI Hub </a> 
+            Explore page with filtered facets based on the user&apos;s selected  cohort.
+            <br/>
+            <br/>
+            <b>If cohort size &le; 600:</b>
+            <br/> 
+            Proceed with direct export within C3DC.
+            <br/>
+            <br/>
+            <b>If cohort size &gt; 600:</b><br/> 
+                Download the manifest and upload it manually to the CCDI Hub by following these steps:
+            <ol>
+                <li> Choose the Explore page from the menu.</li>
+                <li> In the Facets side panel, open the Demographic facet.</li>
+                <li> Click on “Upload Participants Set.”</li>
+            </ol>
+        </p>;
+
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
             <DeleteConfirmationModal
@@ -440,7 +461,7 @@ const CohortDetails = (props) => {
                         <Button variant="contained" className={classes.viewCohortAnalyzerButton} onClick={() => {}}>
                         View Cohort <br/> Analyzer
                         </Button> 
-                        <ToolTip title="Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user's selected cohort." placement="top-end" arrow>
+                        <ToolTip title={exploreCCDIHubTooltip} placement="top-end" arrow arrowSize="30px">
                         <Button variant="contained" className={classes.exploreButton} onClick={() => generateCCDIHub_url(localCohort)}>
                         <span style={{textAlign: 'left'}}>
                         EXPLORE <br /> IN CCDI Hub
