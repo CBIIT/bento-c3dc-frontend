@@ -160,7 +160,8 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   const tableContext = useContext(TableContext);
   const [isActive, setIsActive] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
-  const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges } = useContext(CohortModalContext);
+  const { setShowCohortModal } = useContext(CohortModalContext);
+  //const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges } = useContext(CohortModalContext);
 
   useEffect(() => {
     const { context } = tableContext;
