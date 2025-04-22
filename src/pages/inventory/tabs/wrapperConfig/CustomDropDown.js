@@ -8,6 +8,10 @@ import { onCreateNewCohort } from '../../../../components/CohortSelectorState/st
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalContext } from '../../cohortModal/CohortModalContext';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
+import client from "../../../../utils/graphqlClient"
+import { GET_PARTICIPANTS_OVERVIEW_QUERY } from '../../../../bento/dashboardTabData';
+import { connect } from 'react-redux';
+import { getFilters } from '@bento-core/facet-filter';
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -29,7 +33,7 @@ const DropdownHeader = styled.div`
   max-width: 189px;
   border-radius: 5px 5px 0 0;
   border-radius: ${(props) => (props.isOpen ? '5px 5px 0 0' : '5px')};
-  background:  ${(props) => (props.backgroundColor)};
+  background:  ${(props) => (props.isActive ? props.backgroundColor : "gray")}
   border: 1.25px solid ${(props) => (props.borderColor)};
   opacity: ${(props) => (props.isActive ? "1" : "0.4")}
   cursor: pointer;
@@ -110,19 +114,20 @@ const DropdownItem = styled.li`
   }
 `;
 
-export const CustomDropDown = ({ options, label, isHidden, backgroundColor, borderColor, type = "existing" , enabledWithoutSelect = false}) => {
+const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, type, borderColor, enabledWithoutSelect = null, filterState, localFindUpload, localFindAutocomplete }) => {
 
   const [isOpen, setIsOpen] = useState(false);
   const tableContext = useContext(TableContext);
   const [isActive, setIsActive] = useState(false);
-  const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges} = useContext(CohortModalContext);
+  const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges } = useContext(CohortModalContext);
 
   useEffect(() => {
     const { context } = tableContext;
     const {
       hiddenSelectedRows = [],
+      totalRowCount = 0,
     } = context;
-    if (enabledWithoutSelect) {
+    if (enabledWithoutSelect && totalRowCount <= 4000) {
       setIsActive(true);
     }
     else {
@@ -152,16 +157,21 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
 
   };
   const { dispatch } = useContext(CohortStateContext);
+  const { context } = tableContext;
+  const {
+    hiddenSelectedRows = [],
+    totalRowCount = 0
+  } = context;
 
   const buildCohortFormat = (jsonArray) => {
     return jsonArray.map(item => ({
       ...item,
       participant_id: typeof item.participant === 'object' ? item.participant.participant_id : item.participant_id,
-      participant_pk:  typeof item.participant === 'object' ? item.participant.id : item.id,
+      participant_pk: typeof item.participant === 'object' ? item.participant.id : item.id,
     }));
   };
 
-  const handleSelect = (value) => {
+  const handleSelect = async (value) => {
     if (isActive && type === "existing") {
       const { context } = tableContext;
       const {
@@ -175,25 +185,41 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
         (count) => triggerNotification(count) // Pass as a callback
       ));
     }
-    else{
+    else {
       const { context } = tableContext;
       const {
-        hiddenSelectedRows = [] ,
-        tblRows = [],
-        allRows = [],
+        hiddenSelectedRows = [],
       } = context;
-      //console.log("TBLROWS: ", allRows);
-      console.log("Value", value)
+
+      let toBeAdded = hiddenSelectedRows;
+      const activeFilters = {
+        ...getFilters(filterState),
+        participant_ids: [
+          ...(localFindUpload || []).map((obj) => obj.participant_id),
+          ...(localFindAutocomplete || []).map((obj) => obj.title),
+        ],
+      };
+
+      if (value === "all participants") {
+        let { data } = await client.query({
+          query: GET_PARTICIPANTS_OVERVIEW_QUERY,
+          variables: { ...activeFilters, first: 4000 },
+          fetchPolicy: 'network-only'
+        });
+        toBeAdded = data.participantOverview.map((item) => ({ participant_id: item.participant_id, id: item.id, dbgap_accession: item.dbgap_accession }));
+      }
+
       clearSelection();
       dispatch(onCreateNewCohort(
         "",
         "",
-      buildCohortFormat(value === "all participants" ? allRows : hiddenSelectedRows),
-        (count) => { 
+        buildCohortFormat(toBeAdded),
+        (count) => {
           triggerNotification(count);
           setShowCohortModal(true);
         },
         (error) => {
+
         //setWarningMessage(error.toString().replace("Error:",""));
         }
       ));
@@ -230,6 +256,16 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
       {isOpen && (
         <DropdownList ref={dropDownListRef}>
           {options.map((option, index) => {
+            if (option === "Selected Participants" && hiddenSelectedRows.length === 0) {
+              return (
+                <DropdownItem key={index}>{option}</DropdownItem>
+              )
+            }
+            if (option === "All Participants" && totalRowCount >= 4000) {
+              return (
+                <DropdownItem key={index}>{option}</DropdownItem>
+              )
+            }
             return (
               <DropdownItem key={index} onClick={() => { handleSelect(option.toLowerCase()) }}>{option}</DropdownItem>
             )
@@ -239,3 +275,11 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
     </DropdownContainer>
   );
 };
+
+const mapStateToProps = (state) => ({
+  filterState: state.statusReducer.filterState,
+  localFindUpload: state.localFind.upload,
+  localFindAutocomplete: state.localFind.autocomplete,
+});
+
+export const CustomDropDown = connect(mapStateToProps, null)(CustomDropDownComponent);
