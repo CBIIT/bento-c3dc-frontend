@@ -151,6 +151,10 @@ const CohortDetails = (props) => {
         debouncedSave(e);
     };
 
+    const Gap = () => (
+        <div style={{ height: '10px' }} />
+    );
+
     const handleSetSearch = (e) => {
         handleSetCurrentCohortChanges({
             ...temporaryCohort,
@@ -243,15 +247,15 @@ const CohortDetails = (props) => {
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
     const exploreCCDIHubTooltip = 
-        <p style={{ fontFamily:"Poppins", zIndex: 10000, fontWeight: 400 }}>
+        <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
             Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user&apos;s selected cohort.
             <br/>
-            <br/>
+            <Gap/>
             <b>If cohort size &le; 600:</b>
             <br/> 
             Proceed with direct export within C3DC.
             <br/>
-            <br/>
+            <Gap/>
             <b>If cohort size &gt; 600:</b><br/> 
             Download the manifest and upload it manually to the&nbsp;
             <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">

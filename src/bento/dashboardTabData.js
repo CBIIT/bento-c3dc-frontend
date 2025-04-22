@@ -6,20 +6,20 @@ import React from 'react';
 // --------------- Tooltip configuration --------------
 
 const newCohortToolTip = 
-  <p style={{ fontFamily:"Poppins", fontWeight:400 }}>
+  <p style={{ fontFamily: "Poppins", fontWeight: 400, margin: 0 }}>
     Create a new cohort with the selected Participant IDs. 
     <br/> 
-    <br/> 
+    <div style={{height: 10}}/>
     <b>
       Note:&nbsp;
     </b> 
     The optimal number of participants in a cohort is =&lt; 4000 participants
   </p>;
 const existingCohortToolTip = 
-  <p style={{ fontFamily:"Poppins", fontWeight:400 }}>
+  <p style={{ fontFamily: "Poppins", fontWeight: 400, margin: 0 }}>
     Add selected Participant IDs to existing cohort from dropdown list.
     <br/>
-    <br/>  
+    <div style={{height: 10}}/>
     <b>
       Note:&nbsp;
     </b>
