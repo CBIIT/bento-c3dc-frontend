@@ -18,15 +18,6 @@ const GetOptions = () => { //This function has been updated to return the name f
   return Object.values(state).map(cohort => cohort.cohortName);
 }
 
-const getParticipants = () => { 
-  const { state } = useContext(CohortStateContext);
-  return ["All Participants","Selected Participants",...Object.values(state).map(cohort => ({cohortId:cohort.cohortId, cohortName:cohort.cohortName}))];
-}
-
-const getParticipantOptions = () => { 
-  return ["All Participants","Selected Participants"];
-}
-
 export const layoutConfig = [{
   container: 'buttons',
   size: 'xxl',
@@ -54,9 +45,8 @@ export const wrapperConfig = [
         tooltipCofig: tooltipContentAddToNewCohort,
         conditional: false,
         CustomViewElem: () => {
-          const options = getParticipantOptions();
           return (
-            <CustomDropDown borderColor={"#73C7BE"} label={"CREATE NEW COHORT"} backgroundColor={"#375C67"} type={"new"} options={options} enabledWithoutSelect={true}/>
+            <CustomButton borderColor={"#73C7BE"} label={"CREATE COHORT"} backgroundColor={"#375C67"} type={"CREATE"} hoverColor={"#375C67"} />
           )
         },
         alertMessage,
@@ -71,9 +61,9 @@ export const wrapperConfig = [
         tooltipCofig: tooltipContentAddToExistingCohort,
         conditional: true,
         CustomViewElem: () => {
-          let options = getParticipants();
+          let options = GetOptions();
           return (
-            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} type={"existing"} enabledWithoutSelect={true}/>
+            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} />
           )
         }
       },
