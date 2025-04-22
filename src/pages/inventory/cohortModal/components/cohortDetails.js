@@ -11,6 +11,7 @@ import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
 import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
 import DeleteConfirmationModal from './deleteConfirmationModal';
 import Linkout from "../../../../assets/about/Export_Icon_White.svg";
+import LinkoutBlue from "../../../../assets/about/Export_Icon.svg";
 
 import { deletionTypes } from './deleteConfirmationModal';
 
@@ -51,6 +52,8 @@ const CohortDetails = (props) => {
     const [isEditingDescription, setIsEditingDescription] = useState(false);
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const [isScrollbarActive, setIsScrollbarActive] = useState(false); // State to check if scrollbar is active
+
+    const [tooltipOpen, setTooltipOpen] = useState(false);
 
     const scrollContainerRef = useRef(null);
     const dropdownRef = useRef(null);
@@ -122,6 +125,11 @@ const CohortDetails = (props) => {
         });
     }
 
+    const handleHideTooltip = () => {
+setTooltipOpen(false)
+        
+    }
+
     const debouncedSave = useRef(
         debounce((e) => {
             setIsEditingName(false);
@@ -142,6 +150,11 @@ const CohortDetails = (props) => {
         setIsEditingDescription(false);
         debouncedSave(e);
     };
+    
+    const Gap = () => (
+    <div style={{ height: '10px' }} />
+    );
+    
 
     const handleSetSearch = (e) => {
         handleSetCurrentCohortChanges({
@@ -233,6 +246,25 @@ const CohortDetails = (props) => {
     const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
         ? config.cohortCountsLabel
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
+
+    const exploreCCDIHubTooltip = <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight:400, fontSize:13,margin: 0}}>
+        Clicking this button will create a url and open a new tab showing the  CCDI Hub  Explore page with filtered facets based on the user&apos;s selected  cohort.
+        <br />
+        <Gap />
+        <b>If cohort size &le; 600:</b><br />
+        Proceed with direct export within C3DC.
+        <br />
+        <Gap />
+        <b>If cohort size &gt; 600:</b><br />
+        Download the manifest and upload it manually to the <a style={{ zIndex: 10000 }} target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
+            <img src={LinkoutBlue} width={14} height={14} style={{ padding: "4px 0px 0px 2px", bottom: 0, position: 'relative' }} alt="Linkout Icon" />
+        </a> by following these steps:
+        <ol style={{ paddingLeft: "1rem" }}>
+            <li> Choose the Explore page from the menu.</li>
+            <li> In the Facets side panel, open the Demographic facet.</li>
+            <li> Click on “Upload Participants Set.”</li>
+        </ol>
+    </p>;
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
@@ -415,7 +447,7 @@ const CohortDetails = (props) => {
                                 </div>
                                 <img
                                     src={ExpandMoreIcon}
-                                    alt="expand download icon"
+                                    alt="expand download iconcas caddsv"
                                     className={`${classes.expandMoreIcon} ${showDownloadDropdown ? classes.rotatedIcon : ''}`}
                                 />
                             </Button>
@@ -440,8 +472,16 @@ const CohortDetails = (props) => {
                         <Button variant="contained" className={classes.viewCohortAnalyzerButton} onClick={() => {}}>
                         View Cohort <br/> Analyzer
                         </Button> 
-                        <ToolTip title="Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user's selected cohort." placement="top-end" arrow>
-                        <Button variant="contained" className={classes.exploreButton} onClick={() => generateCCDIHub_url(localCohort)}>
+                        <ToolTip 
+                        open={tooltipOpen}
+                        disableHoverListener
+                        maxWidth="335px"
+                        title={  <div onMouseEnter={() => {setTooltipOpen(true)}} onMouseLeave={handleHideTooltip}>
+                        
+                          {exploreCCDIHubTooltip}
+                       
+                      </div>} placement="top-end" arrow arrowSize="30px">
+                        <Button onMouseEnter={()=>{setTooltipOpen(true)}}  onMouseLeave={handleHideTooltip } variant="contained" className={classes.exploreButton} onClick={() => generateCCDIHub_url(localCohort)}>
                         <span style={{textAlign: 'left'}}>
                         EXPLORE <br /> IN CCDI Hub
                             </span>
