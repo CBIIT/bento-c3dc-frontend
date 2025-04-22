@@ -243,7 +243,7 @@ const CohortDetails = (props) => {
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
     const exploreCCDIHubTooltip = 
-        <p style={{fontFamily:"Poppins", zIndex: 10000}}>
+        <p style={{ fontFamily:"Poppins", zIndex: 10000, fontWeight: 400 }}>
             Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user&apos;s selected cohort.
             <br/>
             <br/>
@@ -253,7 +253,7 @@ const CohortDetails = (props) => {
             <br/>
             <br/>
             <b>If cohort size &gt; 600:</b><br/> 
-            Download the manifest and upload it manually to the  
+            Download the manifest and upload it manually to the&nbsp;
             <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
                 CCDI Hub 
                 <img 
@@ -268,7 +268,7 @@ const CohortDetails = (props) => {
                     alt="Linkout Icon" 
                 /> 
             </a>
-            by following these steps:
+            &nbsp;by following these steps:
             <ol>
                 <li> Choose the Explore page from the menu.</li>
                 <li> In the Facets side panel, open the Demographic facet.</li>
