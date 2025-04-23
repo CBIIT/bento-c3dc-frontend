@@ -15,16 +15,16 @@ import { CohortStateContext } from '../../../../components/CohortSelectorState/C
 
 const GetOptions = () => { //This function has been updated to return the name field instead of the ID field
   const { state } = useContext(CohortStateContext);
-  return ["All Participants","Selected Participants",...Object.values(state).map(cohort => ({cohortId:cohort.cohortId, cohortName:cohort.cohortName}))];
+  return Object.values(state).map(cohort => cohort.cohortName);
 }
 
 const getParticipants = () => { 
   const { state } = useContext(CohortStateContext);
-  return Object.values(state).map(cohort => cohort.cohortName);
+  return ["All Participants", "Selected Participants", ...Object.values(state).map(cohort => ({cohortId:cohort.cohortId, cohortName:cohort.cohortName}))];
 }
 
 const getParticipantOptions = () => { 
-  return ["All Participants","Selected Participants"];
+  return ["All Participants", "Selected Participants"];
 }
 
 export const layoutConfig = [{
