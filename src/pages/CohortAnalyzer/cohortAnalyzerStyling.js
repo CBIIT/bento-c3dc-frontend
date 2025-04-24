@@ -7,6 +7,36 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row'
     },
+    exploreButton: {
+        boxSizing: 'border-box',
+        minWidth: '189px',
+        height: '41px',
+        background: '#086C78',
+        border: '1.25px solid #4EA1A1',
+        borderRadius: '5px',
+        color: 'white',
+        fontWeight: 'bold',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '6px',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }, 
+      exploreButtonFaded: {
+        boxSizing: 'border-box',
+        minWidth: '189px',
+        height: '41px',
+        background: '#BBC1C3',
+        border: '1.25px solid #4EA1A1',
+        borderRadius: '5px',
+        color: 'white',
+        fontWeight: 'bold',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '6px',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
     fieldsetReset: {
         all: 'unset',
         display: 'contents',
