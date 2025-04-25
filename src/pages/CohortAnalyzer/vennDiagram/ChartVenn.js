@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
-import shadows from "@material-ui/core/styles/shadows";
 
 // Utility Functions
 const hexToRgba = (hex, alpha = 1) => {
@@ -20,7 +19,7 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
   const matches = rgbaColor.match(/rgba?\((\d+), (\d+), (\d+),? ([\d.]+)?\)/);
   if (!matches) throw new Error("Invalid RGBA color format");
 
-  const [_, r, g, b, a = 1] = matches.map(Number); 
+  const [, r, g, b, a = 1] = matches.map(Number); 
   const newAlpha = a * (1 - reductionPercentage / 100);
   return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
 }
