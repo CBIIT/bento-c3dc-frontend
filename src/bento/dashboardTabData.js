@@ -1418,7 +1418,6 @@ export const tabContainers = [
       },
       {
         dataField: 'participant',
-        useKey: true,
         header: 'Participant ID',
         display: true,
         tooltipText: 'sort',
@@ -1591,7 +1590,6 @@ export const tabContainers = [
       },
       {
         dataField: 'participant',
-        useKey: true,
         header: 'Participant ID',
         display: true,
         tooltipText: 'sort',
@@ -1700,7 +1698,6 @@ export const tabContainers = [
       {
         dataField: 'participant',
         header: 'Participant ID',
-        useKey: true,
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
@@ -1820,7 +1817,6 @@ export const tabContainers = [
       {
         dataField: 'participant',
         header: 'Participant ID',
-        useKey: true,
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
