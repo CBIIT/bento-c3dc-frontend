@@ -22,9 +22,6 @@ import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
 import linkoutIcon from "../../assets/about/Export_Icon_White.svg";
 import LinkoutBlue from "../../assets/about/Export_Icon.svg";
-import Tooltip from '@material-ui/core/Tooltip';
-
-import { withStyles } from '@material-ui/core/styles';
 
 import { useStyle } from "./cohortAnalyzerStyling";
 import {
@@ -44,7 +41,6 @@ import {
 } from "./CohortAnalyzerUtil";
 import styled from "styled-components";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
-
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -71,23 +67,8 @@ export const CohortAnalyzer = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [HoveredCohort, setHoveredCohort] = useState(true);
     const [tooltipOpen, setTooltipOpen] = useState(false);
-
     
-const CustomTooltip = withStyles(() => ({
-    tooltip: {
-      backgroundColor: 'white', 
-      color: 'black',         
-      border: '2px solid #3498db', 
-      maxWidth: 335,
-      fontSize: 13,
-    },
-    arrow: {
-      color: 'white', 
-    },
-  }))(Tooltip);
-
-
-
+    let movedToToolTipText = false;
 
     const handleExportToCCDIHub = () => {
         let cohortIds = selectedCohorts;
@@ -111,10 +92,18 @@ const CustomTooltip = withStyles(() => ({
 
         return finalUrl;
     }
+    
+    const handleHideTooltip = (eventSource) => {
+        if (eventSource === "tooltipText") {            
+            setTooltipOpen(false);
+        } else if (eventSource === "questionIcon") {
+            setTimeout(() => {
+                if (!movedToToolTipText) {
+                    setTooltipOpen(false);
+                }
+            }, 1000);
+        }
 
-    const handleHideTooltip = () => {
-       
-        setTooltipOpen(false);
     }
 
     const handleMouseMove = (event, cohortName) => {
@@ -549,9 +538,6 @@ padding-left: 5px;
         return { noMatch: "No data available for the selected segment/segments. Please try a different segment/segments." };
     };
 
- 
-    
-
 
     const initTblState = (initailState) => ({
         ...initailState,
@@ -592,7 +578,7 @@ padding-left: 5px;
         <br />
         <Gap />
         <b>If cohort size &gt; 600:</b><br />
-        Download the manifest and upload it manually to the <a style={{ zIndex: 10000, color: '#3156A0' }} target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
+        Download the manifest and upload it manually to the <a style={{ zIndex: 10000, color:"#598AC5", fontWeight:"bolder" }} target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
             <img src={LinkoutBlue} width={14} height={14} style={{ padding: "4px 0px 0px 2px", bottom: 0, position: 'relative' }} alt="Linkout Icon" />
         </a> by following these steps:
         <ol style={{ paddingLeft: "1rem" }}>
@@ -822,18 +808,13 @@ padding-left: 5px;
                                     EXPLORE IN CCDI HUB
                                     <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
                                 </button>
-                                <CustomTooltip
+                                <ToolTip
                                     open={tooltipOpen}
-                                    disableHoverListener
+                                    disableHoverListener 
                                     maxWidth="335px"
-                                    componentsProps={{
-                                        tooltip: {
-                                            sx: {
-                                                backgroundColor: 'red'
-                                            }
-                                        }
-                                    }}
-                                    title={<div onMouseEnter={() => { setTooltipOpen(true) }} onMouseLeave={handleHideTooltip}>
+                                    border={'2px solid #598AC5'}
+                                    arrowBorder={'2px solid #598AC5'}
+                                    title={<div onMouseEnter={() => { movedToToolTipText =true; setTooltipOpen(true); }} onMouseLeave={()=>handleHideTooltip("tooltipText")}>
 
                                         {exploreCCDIHubTooltip}
 
@@ -842,12 +823,11 @@ padding-left: 5px;
                                     arrow 
                                     arrowSize="30px">
                                     <div
-                                    onMouseEnter={() => { setTooltipOpen(true) }} onMouseLeave={handleHideTooltip}
-                                        style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}
+                                        style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }} 
                                     >
-                                        <img  alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} onMouseEnter={() => { setTooltipOpen(true) }} />
+                                        <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
                                     </div>
-                                </CustomTooltip>
+                                </ToolTip>
                             </div>
                         </div>
                     </div>

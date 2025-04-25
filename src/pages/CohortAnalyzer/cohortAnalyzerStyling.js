@@ -20,7 +20,8 @@ export const useStyle = makeStyles((theme) => ({
         flexDirection: 'row',
         gap: '6px',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        cursor: "pointer"
       }, 
       exploreButtonFaded: {
         boxSizing: 'border-box',
