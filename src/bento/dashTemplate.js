@@ -255,7 +255,7 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
     search: true,
-    searchPlaceholder: 'e.g. C00.9, C14.0',
+    searchPlaceholder: 'e.g. Neuroblastoma, NOS',
   },
    {
     section: DIAGNOSIS,
@@ -268,6 +268,7 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
     search: true,
+    searchPlaceholder: 'e.g. Abdomen, NOS',
    },
    {
     section: DIAGNOSIS,
