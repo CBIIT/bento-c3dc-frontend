@@ -53,6 +53,7 @@ const CohortDetails = (props) => {
     const [isScrollbarActive, setIsScrollbarActive] = useState(false); // State to check if scrollbar is active
 
     const scrollContainerRef = useRef(null);
+    const descriptionRef = useRef(null);
     const dropdownRef = useRef(null);
 
     const generateCCDIHub_url = (cohortId) => {
@@ -99,6 +100,14 @@ const CohortDetails = (props) => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [showDownloadDropdown]);
+
+    useEffect(() => {
+        if (isEditingDescription && descriptionRef.current) {
+            const textarea = descriptionRef.current;
+            descriptionRef.current.focus();
+            textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
+        }
+    }, [isEditingDescription]);
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -226,9 +235,9 @@ const CohortDetails = (props) => {
         ? config.datePrefix
         : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
 
-    const cohortHeaderLabel = config && config.cohortHeaderLabel && typeof config.cohortHeaderLabel === 'string'
+    /*const cohortHeaderLabel = config && config.cohortHeaderLabel && typeof config.cohortHeaderLabel === 'string'
         ? config.cohortHeaderLabel
-        : DEFAULT_CONFIG.config.cohortDetails.cohortHeaderLabel;
+        : DEFAULT_CONFIG.config.cohortDetails.cohortHeaderLabel;*/
 
     const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
         ? config.cohortCountsLabel
@@ -245,36 +254,32 @@ const CohortDetails = (props) => {
             />
             <div className={classes.cohortDetailsSection}>
                 <div className={classes.cohortHeading}>
-                    <span className={classes.cohortHeader}>
-                        <span className={classes.cohortLabel}>
-                            {cohortHeaderLabel}
-                        </span>
-                        <span className={classes.cohortTitle}>
-                            &nbsp;
-                            {isEditingName ? (
-                                <input
-                                    className={classes.editingCohortName}
-                                    type="text"
-                                    name="cohortName"
-                                    value={localCohort['cohortName']}
-                                    onBlur={(e) => handleSaveName(e)}
-                                    onChange={(e) => handleTextChange(e)}
-                                    maxLength={20}
-                                    autoFocus
-                                />
-                            ) : (
-                                <span>{localCohort['cohortName']}</span>
-                            )}
+                    <div className={ isEditingName ? classes.editingCohortTitle: classes.cohortTitle }>
+                        {isEditingName ? (
+                            <input
+                                className={classes.editingCohortName}
+                                type="text"
+                                name="cohortName"
+                                value={localCohort['cohortName']}
+                                onBlur={(e) => handleSaveName(e)}
+                                onChange={(e) => handleTextChange(e)}
+                                maxLength={20}
+                                autoFocus
+                            />
+                        ) : (
+                            <>
+                            <span>{localCohort['cohortName']}</span>
                             <ToolTip title="Edit Cohort ID" placement="top-end" arrow>
-                                <img
-                                    src={EditIcon}
-                                    alt="edit cohort name icon"
-                                    className={classes.editIcon}
-                                    onClick={handleEditName}
-                                />
+                            <img
+                                src={EditIcon}
+                                alt="edit cohort name icon"
+                                className={classes.editIcon}
+                                onClick={handleEditName}
+                            />
                             </ToolTip>
-                        </span>
-                    </span>
+                            </>
+                        )}
+                    </div>
                     <span className={classes.cohortItemCounts}>
                         {cohortCountsLabel} ({localCohort.participants.length})
                     </span>
@@ -282,20 +287,32 @@ const CohortDetails = (props) => {
                 <div className={classes.cohortDescription}>
                     {isEditingDescription ? (
                         <textarea
+                            ref={descriptionRef}
                             className={classes.editingCohortDescription}
                             value={localCohort['cohortDescription']}
                             onBlur={(e) => handleSaveDescription(e)}
                             name="cohortDescription"
                             onChange={(e) => handleTextChange(e)}
-                            rows={2}
+                            rows={4}
                             maxLength={250}
                             placeholder="Enter cohort description..."
                             autoFocus
                         />
+                        
                     ) : (
-                        <span>{localCohort['cohortDescription']}</span>
-                    )}
-                    <ToolTip title="Edit Cohort description" placement="top-end" arrow>
+                        <>
+                        <textarea
+                            className={classes.cohortDescriptionBox}
+                            value={localCohort['cohortDescription']}
+                            name="cohortDescription"
+                            //onFocus={(e) => setIsEditingDescription(true)}
+                            rows={4}
+                            maxLength={250}
+                            placeholder="Enter cohort description..."
+                            readonly="true"
+                            
+                        />
+                        <ToolTip title="Edit Cohort description" placement="top-end" arrow>
                         <img
                             src={EditIcon}
                             alt="edit cohort description icon"
@@ -303,6 +320,17 @@ const CohortDetails = (props) => {
                             onClick={handleEditDescription}
                         />
                     </ToolTip>
+                        {/*
+                        <span
+                            className={classes.cohortDescriptionBox}
+                            >
+                            {localCohort['cohortDescription']}
+                        </span>
+                        
+                    */}
+                        </>
+                    )}
+                    
                 </div>
                 <div className={classes.participantViewer}>
                     <div className={classes.participantSearchBarSection}>
@@ -482,22 +510,6 @@ const styles = () => ({
         justifyContent: 'space-between',
         padding: '17px 23px 0px 23px',
     },
-    cohortHeader: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'normal',
-        overflowWrap: 'break-word',
-        width: '{100% - 130px}',
-    },
-    cohortLabel: {
-        fontFamily: 'Poppins',
-        fontSize: '18px',
-        fontWeight: '300',
-        lineHeight: '20px',
-        letterspacing: '-0.5%',
-        color: '#3A555E',
-        whiteSpace: 'nowrap',
-    },
     cohortTitle: {
         fontFamily: 'Poppins',
         fontSize: '18px',
@@ -505,31 +517,55 @@ const styles = () => ({
         lineHeight: '20px',
         letterspacing: '-0.5%',
         color: '#3A555E',
+        display: 'flex',
+        alignItems: 'center',
+        gap: '10px',
+        height: '29px',
+        paddingLeft: '10px',
     },
-    editingCohortName: {
+    editingCohortTitle: {
         fontFamily: 'Poppins',
         fontSize: '18px',
         fontWeight: '500',
         lineHeight: '20px',
         letterspacing: '-0.5%',
         color: '#3A555E',
-        height: '25px',
-        padding: '0px',
+        height: '29px',
         margin: '0px',
         outline: 'none',
-        border: '1px solid #8B98AF',
+        padding: '0px 10px 0px 10px',
+        boxSize: 'border-box',
+        border: '2px solid #00CBD2',
+        borderRadius: '5px',
+        display: 'flex',
+        alignItems: 'center',
+        width: '250px',
+    },
+    editingCohortName: {
+        fontSize: 'inherit',
+        fontWeight: 'inherit',
+        fontFamily: 'inherit',
+        lineHeight: 'inherit',
+        letterspacing: 'inherit',
+        color: '#3A555E',
+        width: '100%',
+        margin: '0px',
+        outline: 'none',
         '&:focus-within': {
             padding: '0px',
             margin: '0px',
         },
-        boxSize: 'border-box',
+        boxSizing: 'border-box',
+        border: 'none',
     },
     editIcon: {
         height: '13px',
-        paddingLeft: '8px',
+        //paddingLeft: '8px',
         '&:hover': {
             cursor: 'pointer',
         },
+        border: '1px solid #D0D0D0',
+        borderRadius: '2px',
     },
     cohortItemCounts: {
         fontFamily: 'Poppins',
@@ -549,17 +585,21 @@ const styles = () => ({
         padding: '10px 25px 0px 23px',
         overflowWrap: 'break-word',
         whiteSpace: 'normal',
+        display: 'flex',
+        alignItems: 'flex-end',
+        gap: '10px',
     },
-    editingCohortDescription: {
+    cohortDescriptionBox: {
         fontFamily: 'Open Sans',
         fontSize: '13px',
         fontWeight: '400',
         lineHeight: '20px',
-        maxHeight: '45px',
+        maxHeight: '90px',
         color: '#343434',
         padding: '0px',
         margin: '0px',
-        border: '1px solid #8B98AF',
+        border: '.5px solid #8B98AF',
+        borderRadius: '5px',
         outline: 'none',
         width: '90%',
         resize: 'none',
@@ -567,7 +607,28 @@ const styles = () => ({
             padding: '0px',
             margin: '0px',
         },
-        boxSize: 'border-box !important',
+        boxSizing: 'content-box !important',
+        caretColor: 'transparent',
+    },
+    editingCohortDescription: {
+        fontFamily: 'Open Sans',
+        fontSize: '13px',
+        fontWeight: '400',
+        lineHeight: '20px',
+        maxHeight: '90px',
+        color: '#343434',
+        padding: '0px',
+        margin: '0px',
+        border: '2px solid #00CBD2',
+        borderRadius: '5px',
+        outline: 'none',
+        width: '90%',
+        resize: 'none',
+        '&:focus-within': {
+            padding: '0px',
+            margin: '0px',
+        },
+        boxSizing: 'content-box !important',
     },
     participantViewer: {
         display: 'flex',
@@ -576,8 +637,8 @@ const styles = () => ({
         backgroundColor: '#F1F3F4',
         width: '100%',
         height: '100%',
-        borderTopLeftRadius: '8px',
-        borderTopRightRadius: '8px',
+        borderTopLeftRadius: '0px',
+        borderTopRightRadius: '0px',
         borderBottomLeftRadius: '10px',
         borderBottomRightRadius: '10px',
         marginTop: '16px',
@@ -587,7 +648,7 @@ const styles = () => ({
         justifyContent: 'center',
         borderRadius: '8px',
         border: '1px solid #8B98AF',
-        width: '82%',
+        width: '92%',
         height: '31px',
         marginTop: '10px',
         marginBottom: '12px',
