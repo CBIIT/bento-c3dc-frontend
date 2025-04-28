@@ -812,8 +812,8 @@ padding-left: 5px;
                                     open={tooltipOpen}
                                     disableHoverListener 
                                     maxWidth="335px"
-                                    border={'2px solid #598AC5'}
-                                    arrowBorder={'2px solid #598AC5'}
+                                    border={'1px solid #598ac5'}
+                                    arrowBorder={'1px solid #598AC5'}
                                     title={<div onMouseEnter={() => { movedToToolTipText =true; setTooltipOpen(true); }} onMouseLeave={()=>handleHideTooltip("tooltipText")}>
 
                                         {exploreCCDIHubTooltip}
