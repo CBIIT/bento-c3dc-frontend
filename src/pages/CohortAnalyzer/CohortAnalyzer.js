@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
@@ -41,6 +42,8 @@ import {
 } from "./CohortAnalyzerUtil";
 import styled from "styled-components";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
+import store from "../../store";
+import { updateAutocompleteData, updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -67,8 +70,29 @@ export const CohortAnalyzer = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [HoveredCohort, setHoveredCohort] = useState(true);
     const [tooltipOpen, setTooltipOpen] = useState(false);
+    const navigate = useNavigate();
     
     let movedToToolTipText = false;
+
+    const handleBuildInExplore = () => {
+
+        // NOTE: If needed to show in Autocomplete.
+        // const data = rowData.map(r=>({type: 'participantIds', title: r.participant_id}))
+        // store.dispatch(updateAutocompleteData(data));
+        // navigate('/explore');
+
+        const upload = rowData.map(r=>({participant_id: r.participant_id, study_id: r.dbgap_accession}));
+        const uploadMetadata = {
+            filename: "",
+            fileContent:upload.map(p => p.participant_id).join(","),
+            matched: upload,
+            unmatched: [],
+        };
+        
+        store.dispatch(updateUploadData(upload));
+        store.dispatch(updateUploadMetadata(uploadMetadata));
+        navigate('/explore');
+    }
 
     const handleExportToCCDIHub = () => {
         let cohortIds = selectedCohorts;
@@ -787,7 +811,7 @@ padding-left: 5px;
                     </div>
                     <div className={classes.cohortCountSection}>
 
-                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '65%',marginTop: 10 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '75%',marginTop: 10 }}>
                             <CreateNewCOhortButton
                                 selectedCohortSection={selectedCohortSection}
                                 classes={classes}
@@ -796,6 +820,43 @@ padding-left: 5px;
                                 ToolTip={ToolTip}
                             />
                             <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
+
+                            {/* BUILD IN EXPLORE DASHBOARD Button */}
+                            <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1, marginLeft: 10}}>
+                                <button
+                                    onClick={() => {
+                                        if (selectedCohorts.length > 0) {
+                                            handleBuildInExplore();
+                                        }
+
+                                    }}
+                                    className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}>
+                                    BUILD IN EXPLORE DASHBOARD
+                                    {/* <img alt="link out icon" src={linkoutIcon} height={13} width={13} /> */}
+                                </button>
+                                <ToolTip
+                                    open={tooltipOpen}
+                                    disableHoverListener 
+                                    maxWidth="335px"
+                                    border={'1px solid #598ac5'}
+                                    arrowBorder={'1px solid #598AC5'}
+                                    title={<div onMouseEnter={() => { movedToToolTipText =true; setTooltipOpen(true); }} onMouseLeave={()=>handleHideTooltip("tooltipText")}>
+
+                                        {exploreCCDIHubTooltip}
+
+                                    </div>} 
+                                    placement="top-end" 
+                                    arrow 
+                                    arrowSize="30px">
+                                    <div
+                                        style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }} 
+                                    >
+                                        <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
+                                    </div>
+                                </ToolTip>
+                            </div>
+
+                            {/* EXPLORE IN CCDI HUB Button */}
                             <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1, marginLeft: 10}}>
                                 <button
                                     onClick={() => {
