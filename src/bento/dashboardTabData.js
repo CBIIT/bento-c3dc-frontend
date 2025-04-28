@@ -37,9 +37,6 @@ export const tooltipContentAddToNewCohort = {
     Survival: newCohortToolTip,
     "Treatment Response": newCohortToolTip,
     arrow: true,
-    styles: {
-      border: '1px red solid'
-    }
 }
 
 export const tooltipContentAddToExistingCohort = {
@@ -53,8 +50,6 @@ export const tooltipContentAddToExistingCohort = {
   Treatment: existingCohortToolTip,
   "Treatment Response": existingCohortToolTip,
   arrow: true,
-  styles: {
-  }
 }
 
 export const tooltipContentListAll = {
@@ -67,8 +62,6 @@ export const tooltipContentListAll = {
   Survival: 'Click to view the complete list of all cohorts',
   "Treatment Response": 'Click to view the complete list of all cohorts',
   arrow: true,
-  styles: {
-  }
 }
 
 export const tooltipContent = {

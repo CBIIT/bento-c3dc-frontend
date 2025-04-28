@@ -20,6 +20,8 @@ import { CohortModalContext } from "../inventory/cohortModal/CohortModalContext"
 import CohortModalGenerator from "../inventory/cohortModal/cohortModalGenerator";
 import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
+import linkoutIcon from "../../assets/about/Export_Icon_White.svg";
+import LinkoutBlue from "../../assets/about/Export_Icon.svg";
 
 import { useStyle } from "./cohortAnalyzerStyling";
 import {
@@ -64,18 +66,44 @@ export const CohortAnalyzer = () => {
     const { Notification } = useGlobal();
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [HoveredCohort, setHoveredCohort] = useState(true);
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+    
+    let movedToToolTipText = false;
 
-    const generateCCDIHub_url = (cohortId) => {
+    const handleExportToCCDIHub = () => {
+        let cohortIds = selectedCohorts;
+        let data = [];
 
-        const data = state[cohortId]
-        const participantIds = data.participants.map(p => p.participant_id).join("|");
-        const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
+        cohortIds.forEach(id => {
+            if (state[id]) {
+                data = data.concat(state[id]);
+            }
+        });
+        const allParticipants = data.flatMap(d => d.participants || []);
+
+        const participantIds = allParticipants.map(p => p.participant_id).join("|");
+        const dbgapAccessions = [...new Set(allParticipants.map(p => p.dbgap_accession))].join("|");
+
         const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
         const dbgapBase = "&dbgap_accession=";
 
         const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
+        window.open(finalUrl, '_blank');
 
         return finalUrl;
+    }
+    
+    const handleHideTooltip = (eventSource) => {
+        if (eventSource === "tooltipText") {            
+            setTooltipOpen(false);
+        } else if (eventSource === "questionIcon") {
+            setTimeout(() => {
+                if (!movedToToolTipText) {
+                    setTooltipOpen(false);
+                }
+            }, 1000);
+        }
+
     }
 
     const handleMouseMove = (event, cohortName) => {
@@ -537,6 +565,29 @@ padding-left: 5px;
         tableMsg: getTableMessage(cohortList, selectedCohortSection, tableConfig)
     });
 
+    const Gap = () => (
+        <div style={{ height: '10px' }} />
+    );
+
+    const exploreCCDIHubTooltip = <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight:400, fontSize:13,margin: 0}}>
+        Clicking this button will create a url and open a new tab showing the  CCDI Hub  Explore page with filtered facets based on the user&apos;s selected  cohort.
+        <br />
+        <Gap />
+        <b>If cohort size &le; 600:</b><br />
+        Proceed with direct export within C3DC.
+        <br />
+        <Gap />
+        <b>If cohort size &gt; 600:</b><br />
+        Download the manifest and upload it manually to the <a style={{ zIndex: 10000, color:"#598AC5", fontWeight:"bolder" }} target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
+            <img src={LinkoutBlue} width={14} height={14} style={{ padding: "4px 0px 0px 2px", bottom: 0, position: 'relative' }} alt="Linkout Icon" />
+        </a> by following these steps:
+        <ol style={{ paddingLeft: "1rem" }}>
+            <li> Choose the Explore page from the menu.</li>
+            <li> In the Facets side panel, open the Demographic facet.</li>
+            <li> Click on “Upload Participants Set.”</li>
+        </ol>
+    </p>;
+
     return (
         <>
             <DeleteConfirmationModal
@@ -610,8 +661,8 @@ padding-left: 5px;
                         <div onClick={() => {
                             sortBy("", cohortList, setCohortList, state);
                             setSortType("count");
-                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito',  color: sortType === '#646464' ? 'lightgray' : '#646464' }}>
-                            <p style={{fontSize: 11}}>Sort by Count</p>
+                        }} className={classes.sortCount} style={{ fontFamily: 'Nunito', color: sortType === '#646464' ? 'lightgray' : '#646464' }}>
+                            <p style={{ fontSize: 11 }}>Sort by Count</p>
                         </div>
                     </div>
                     <div className={classes.leftSideAnalyzerChild}>
@@ -626,7 +677,7 @@ padding-left: 5px;
                                     }}
                                 >
 
-                                    <div  backgroundColor={'white'} zIndex={3000}  arrow placement="top">
+                                    <div backgroundColor={'white'} zIndex={3000} arrow placement="top">
                                         <div
                                             className={
                                                 selectedCohorts.includes(cohort)
@@ -679,40 +730,40 @@ padding-left: 5px;
                             </ToolTip>  <br></br>for cohort matching</h2>
 
                             <fieldset className={classes.fieldsetReset}>
-                            <legend style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
+                                <legend style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
                                     Select Node Type
                                 </legend>
 
-                            <div className={classes.catagoryCardChildren}>
-                               
-                                <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
-                                    <p>
-                                        <input disabled={selectedCohorts.length === 0} type="radio" value={"1"}  checked={nodeIndex === 0} onClick={() => {
-                                            setNodeIndex(0);
-                                        }} radioGroup="node_type" name="node_type" aria-label="Participant radio button" />
-                                        Participant ID
-                                    </p>
-                                </ToolTip>
-                                <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                <div className={classes.catagoryCardChildren}>
 
-                                    <p>
-                                        <input disabled={selectedCohorts.length === 0} type="radio" value={"2"} onClick={() => {
-                                            setNodeIndex(1);
-                                        }} radioGroup="node_type" name="node_type" aria-label="Daignosis Radio button" />
-                                        Diagnosis
-                                    </p>
-                                </ToolTip>
-                                <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                    <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                        <p>
+                                            <input disabled={selectedCohorts.length === 0} type="radio" value={"1"} checked={nodeIndex === 0} onClick={() => {
+                                                setNodeIndex(0);
+                                            }} radioGroup="node_type" name="node_type" aria-label="Participant radio button" />
+                                            Participant ID
+                                        </p>
+                                    </ToolTip>
+                                    <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
-                                    <p>
-                                        <input disabled={selectedCohorts.length === 0} value={"3"} onClick={() => {
-                                            setNodeIndex(2);
-                                        }} type="radio" radioGroup="node_type" name="node_type" aria-label="Treatment Radio button" />
-                                        Treatment
-                                    </p>
-                                </ToolTip>
-                                
-                            </div>
+                                        <p>
+                                            <input disabled={selectedCohorts.length === 0} type="radio" value={"2"} onClick={() => {
+                                                setNodeIndex(1);
+                                            }} radioGroup="node_type" name="node_type" aria-label="Daignosis Radio button" />
+                                            Diagnosis
+                                        </p>
+                                    </ToolTip>
+                                    <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+
+                                        <p>
+                                            <input disabled={selectedCohorts.length === 0} value={"3"} onClick={() => {
+                                                setNodeIndex(2);
+                                            }} type="radio" radioGroup="node_type" name="node_type" aria-label="Treatment Radio button" />
+                                            Treatment
+                                        </p>
+                                    </ToolTip>
+
+                                </div>
                             </fieldset>
                         </div>
 
@@ -736,7 +787,7 @@ padding-left: 5px;
                     </div>
                     <div className={classes.cohortCountSection}>
 
-                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '45%' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '65%',marginTop: 10 }}>
                             <CreateNewCOhortButton
                                 selectedCohortSection={selectedCohortSection}
                                 classes={classes}
@@ -745,7 +796,39 @@ padding-left: 5px;
                                 ToolTip={ToolTip}
                             />
                             <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
+                            <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1, marginLeft: 10}}>
+                                <button
+                                    onClick={() => {
+                                        if (selectedCohorts.length > 0) {
+                                            handleExportToCCDIHub();
+                                        }
 
+                                    }}
+                                    className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}>
+                                    EXPLORE IN CCDI HUB
+                                    <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
+                                </button>
+                                <ToolTip
+                                    open={tooltipOpen}
+                                    disableHoverListener 
+                                    maxWidth="335px"
+                                    border={'1px solid #598ac5'}
+                                    arrowBorder={'1px solid #598AC5'}
+                                    title={<div onMouseEnter={() => { movedToToolTipText =true; setTooltipOpen(true); }} onMouseLeave={()=>handleHideTooltip("tooltipText")}>
+
+                                        {exploreCCDIHubTooltip}
+
+                                    </div>} 
+                                    placement="top-end" 
+                                    arrow 
+                                    arrowSize="30px">
+                                    <div
+                                        style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }} 
+                                    >
+                                        <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
+                                    </div>
+                                </ToolTip>
+                            </div>
                         </div>
                     </div>
                     <div className={classes.rightSideTableContainer}>
