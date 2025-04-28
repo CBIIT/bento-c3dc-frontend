@@ -679,6 +679,18 @@ participantOverview(
     dbgap_accession
     study_id
 
+    # Synonyms
+    cpi_data {
+        associated_id
+        repository_of_synonym_id
+        domain_description
+        domain_category
+        data_location
+        data_type
+
+        __typename
+    }
+
     __typename
 }}
 `;
@@ -1343,6 +1355,7 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
+        cellType: cellTypes.CPI,
       },
       {
         dataField: 'race',
