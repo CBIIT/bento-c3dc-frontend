@@ -3,7 +3,7 @@ import { withStyles, Button } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import DEFAULT_CONFIG from '../config';
 import { debounce } from '../utils';
-import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
+//import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
 import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
 import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../assets/icons/Trash_Can_Icon_Red.svg';
@@ -139,7 +139,7 @@ const CohortDetails = (props) => {
                 ...localCohort,
                 [e.target.name]: e.target.value,
             });
-        }, 500) // Adjust debounce delay
+        }, 100) // Adjust debounce delay
     ).current;
 
     const handleSaveName = (e) => {
@@ -264,11 +264,23 @@ const CohortDetails = (props) => {
                                 onBlur={(e) => handleSaveName(e)}
                                 onChange={(e) => handleTextChange(e)}
                                 maxLength={20}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        e.preventDefault();
+                                        handleSaveName(e); 
+                                    }
+                                }}
                                 autoFocus
                             />
                         ) : (
                             <>
-                            <span>{localCohort['cohortName']}</span>
+                            <span
+                                onClick={(e) => handleEditName(true)}
+                                className={classes.cohortName}
+                            >
+                                {localCohort['cohortName']}
+                            </span>
+                            {/*
                             <ToolTip title="Edit Cohort ID" placement="top-end" arrow>
                             <img
                                 src={EditIcon}
@@ -277,6 +289,7 @@ const CohortDetails = (props) => {
                                 onClick={handleEditName}
                             />
                             </ToolTip>
+                            */}
                             </>
                         )}
                     </div>
@@ -305,28 +318,28 @@ const CohortDetails = (props) => {
                             className={classes.cohortDescriptionBox}
                             value={localCohort['cohortDescription']}
                             name="cohortDescription"
-                            //onFocus={(e) => setIsEditingDescription(true)}
+                            onFocus={(e) => handleEditDescription(true)}
                             rows={4}
                             maxLength={250}
                             placeholder="Enter cohort description..."
                             readonly="true"
                             
                         />
+                        {/*
                         <ToolTip title="Edit Cohort description" placement="top-end" arrow>
                         <img
                             src={EditIcon}
                             alt="edit cohort description icon"
                             className={classes.editIcon}
                             onClick={handleEditDescription}
-                        />
-                    </ToolTip>
-                        {/*
+                            />
+                        </ToolTip>
+                        {*
                         <span
                             className={classes.cohortDescriptionBox}
                             >
                             {localCohort['cohortDescription']}
                         </span>
-                        
                     */}
                         </>
                     )}
@@ -522,6 +535,9 @@ const styles = () => ({
         gap: '10px',
         height: '29px',
         paddingLeft: '10px',
+    },
+    cohortName: {
+        width: '250px',
     },
     editingCohortTitle: {
         fontFamily: 'Poppins',
