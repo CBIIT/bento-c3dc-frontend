@@ -71,19 +71,9 @@ export const CohortAnalyzer = () => {
     let movedToToolTipText = false;
 
     const handleExportToCCDIHub = () => {
-        let cohortIds = selectedCohorts;
-        let data = [];
-
-        cohortIds.forEach(id => {
-            if (state[id]) {
-                data = data.concat(state[id]);
-            }
-        });
-        const allParticipants = data.flatMap(d => d.participants || []);
-
-        const participantIds = allParticipants.map(p => p.participant_id).join("|");
-        const dbgapAccessions = [...new Set(allParticipants.map(p => p.dbgap_accession))].join("|");
-
+        const participantIds = rowData.map(p => p.participant_id).join("|");
+        const dbgapAccessions = [...new Set(rowData.map(p => p.dbgap_accession))].join("|");
+            
         const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
         const dbgapBase = "&dbgap_accession=";
 
@@ -853,3 +843,5 @@ padding-left: 5px;
         </>
     )
 }
+
+//https://ccdi.cancer.gov/explore?p_id=00301d78915737fa100f|0061cbb0846973206fcf|0065af91e89ee2859595|008b04a84717e7d007a4|009f9efaedc9602a28fb|00c5e4372375eb3627f3|00dfd38d509984eada22|00e3d1d383c8c08a25d2|00eff50ac98a200da9f9|01504e3b7031a9eec2b2|TARGET-10-PALWVU|TARGET-10-PAMESL|TARGET-10-PANPUY|TARGET-10-PANRFG|TARGET-10-PANSTB|TARGET-10-PANVIG|TARGET-10-PANVZG|TARGET-10-PAPADB|TARGET-10-PAPBES|TARGET-10-PAPBFN|TARGET-10-PAPCGZ|TARGET-10-PAPFIW|TARGET-10-PARDLJ|TARGET-10-PARMIH|TARGET-10-PASUIN|TARGET-10-PATGMP|TARGET-10-PATYWV|TARGET-20-PAUXKD|TARGET-20-PAUXNR|TARGET-20-PAVDXR|TARGET-30-PALXMM|TARGET-30-PALXRL|TARGET-30-PAPTDH|TARGET-30-PASDRV|TARGET-30-PASLCD|TARGET-30-PATFMU|TARGET-40-NAAHBV|TARGET-40-PANGPE|TARGET-40-PASNCK&
