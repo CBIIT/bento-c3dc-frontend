@@ -71,19 +71,9 @@ export const CohortAnalyzer = () => {
     let movedToToolTipText = false;
 
     const handleExportToCCDIHub = () => {
-        let cohortIds = selectedCohorts;
-        let data = [];
-
-        cohortIds.forEach(id => {
-            if (state[id]) {
-                data = data.concat(state[id]);
-            }
-        });
-        const allParticipants = data.flatMap(d => d.participants || []);
-
-        const participantIds = allParticipants.map(p => p.participant_id).join("|");
-        const dbgapAccessions = [...new Set(allParticipants.map(p => p.dbgap_accession))].join("|");
-
+        const participantIds = rowData.map(p => p.participant_id).join("|");
+        const dbgapAccessions = [...new Set(rowData.map(p => p.dbgap_accession))].join("|");
+            
         const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
         const dbgapBase = "&dbgap_accession=";
 
@@ -853,3 +843,4 @@ padding-left: 5px;
         </>
     )
 }
+
