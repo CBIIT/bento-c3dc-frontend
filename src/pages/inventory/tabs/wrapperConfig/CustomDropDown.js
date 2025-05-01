@@ -13,6 +13,7 @@ import { GET_PARTICIPANTS_OVERVIEW_QUERY } from '../../../../bento/dashboardTabD
 import { connect } from 'react-redux';
 import { getFilters } from '@bento-core/facet-filter';
 import CustomCheckBox from '../../../../components/CustomCheckbox/CustomCheckbox';
+import DeleteConfirmationModal from '../../cohortModal/components/deleteConfirmationModal';
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -97,62 +98,73 @@ const DropdownItem = styled.li`
   letter-spacing: 0.02em;
   text-align: left;
   padding: 4px;
-  border-bottom: 1px solid #ccc;
   max-height: 27px;
-  text-align: left;
   padding-left: 18px;
   border: 0px 1px 1px 1px;
   border-color: #73A9C7;
-  background-color: #EFF2F6;
-  cursor: ${(props) => (props.isDisabled ? "default" : "pointer")}
-  color: #343434;
-  &:nth-child(even){
-      background-color: #CCD5E1; 
-  }
-  &:last-child {
-      border-bottom: none;
-    }
-  &.new-cohort-item{
-    color: #286273;
-    border: none ;
-    background-color: #FFFFFF;
+  background-color: ${(props) =>
+    props.isDisabled ? "#F0F0F0" : "#EFF2F6"};
+  color: ${(props) => (props.isDisabled ? "#A0A0A0" : "#343434")};
+  cursor: ${(props) => (props.isDisabled ? "default" : "pointer")};
+  border-bottom: 1px solid #ccc;
+
+  &:nth-child(even) {
+    background-color: ${(props) =>
+      props.isDisabled ? "#F0F0F0" : "#CCD5E1"};
   }
 
-  &.new-cohort-item:first-child{
-    font-weight: 700;
-  }
-  &.new-cohort-item:last-child{
-    color: #343434;
-  }
-  &.existing-cohort-item{
-  }
-  &.existing-cohort-item:nth-child(1),&.existing-cohort-item:nth-child(2){
-    order: none ;
-    background-color: #FFFFFF;
+  &:last-child {
     border-bottom: none;
   }
-    &.existing-cohort-item:nth-child(1){
+
+  &.new-cohort-item {
+    color: ${(props) => (props.isDisabled ? "#A0A0A0" : "#286273")};
+    border: none;
+    background-color: ${(props) => (props.isDisabled ? "#F0F0F0" : "#FFFFFF")};
+  }
+
+  &.new-cohort-item:first-child {
+    font-weight: 700;
+  }
+
+  &.new-cohort-item:last-child {
+    color: ${(props) => (props.isDisabled ? "#A0A0A0" : "#343434")};
+  }
+
+  &.existing-cohort-item:nth-child(1),
+  &.existing-cohort-item:nth-child(2) {
+    order: none;
+    background-color: #ffffff;
+    border-bottom: none;
+  }
+
+  &.existing-cohort-item:nth-child(1) {
     padding-top: 0.5rem;
   }
-  &.existing-cohort-item:nth-child(2){
-    color: #00639D;
+
+  &.existing-cohort-item:nth-child(2) {
+    color: #00639d;
     font-weight: 700;
-    border-bottom: 2px solid #00639D;
+    border-bottom: 2px solid #00639d;
     padding-bottom: 1.5rem;
   }
-  &.existing-cohort-item:nth-child(n+3){
+
+  &.existing-cohort-item:nth-child(n+3) {
     display: flex;
-    gap:0.75rem;
+    gap: 0.75rem;
     align-items: center;
-    border-bottom: 1px solid #00639D;
+    border-bottom: 1px solid #00639d;
   }
-  &.existing-cohort-item:nth-child(odd){
-    background-color: #FFFFFF;
+
+  &.existing-cohort-item:nth-child(odd) {
+    background-color: #ffffff;
   }
-  &.existing-cohort-item:last-child{
+
+  &.existing-cohort-item:last-child {
     border-bottom: none;
   }
 `;
+
 
 const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, type, borderColor, enabledWithoutSelect = null, filterState, localFindUpload, localFindAutocomplete }) => {
 
@@ -161,6 +173,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   const [isActive, setIsActive] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
   const { setShowCohortModal } = useContext(CohortModalContext);
+  const [showPopupMessage,setShowPopupMessage] = useState("");
   //const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges } = useContext(CohortModalContext);
 
   useEffect(() => {
@@ -169,7 +182,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       hiddenSelectedRows = [],
       totalRowCount = 0,
     } = context;
-    if (enabledWithoutSelect && totalRowCount <= 4000) {
+    if (true) {
       setIsActive(true);
     }
     else {
@@ -262,13 +275,21 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       let toBeAdded = hiddenSelectedRows;
 
       if (value === "all participants") {
+       
         const activeFilters = {
           ...getFilters(filterState),
           participant_ids: [
             ...(localFindUpload || []).map((obj) => obj.participant_id),
             ...(localFindAutocomplete || []).map((obj) => obj.title),
           ],
+        
         };
+        
+        if(activeFilters.participant_ids.length > 4000){
+          console.log(" all participants are selected");
+            alert(" you can not add more than 4000 participants");
+          return;
+        }
         let { data } = await client.query({
           query: GET_PARTICIPANTS_OVERVIEW_QUERY,
           variables: { ...activeFilters, first: 4000 },
@@ -303,6 +324,17 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       setCheckedItems([...checkedItems,value]);
     }
   };
+
+  const onExistingOptionSelect = (option,isDisabled,totalRowCount) =>{
+    if(option === "all participants" && totalRowCount>=4000){
+      setShowPopupMessage("You are not allowed to add more than 4000 participants, in a single cohort");
+    }
+
+    if(!isDisabled){
+      handleSelect(option);
+    }
+  }
+  
   const dropDownListRef = useRef(null);
 
   function useClickOutside(ref, onClickOutside) {
@@ -329,7 +361,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
     }
     if (option === "All Participants" && totalRowCount >= 4000) {
       return (
-        <DropdownItem className='new-cohort-item' isDisabled={true} key={index}>{option}</DropdownItem>
+        <DropdownItem className='new-cohort-item' onClick={(() => {setShowPopupMessage("You are not allowed to add more than 4000 participants in a single cohort")})} isDisabled={true} key={index}>{option}</DropdownItem>
       )
     }
     return (
@@ -338,14 +370,16 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   }
 
   const getExistingCohortDropDownItem = (index,option,hiddenSelectedRows,totalRowCount) => {
-    if (option === "Selected Participants" && hiddenSelectedRows.length === 0) {
+    const isAllParticipantDisabled = totalRowCount >= 4000 || checkedItems.length ===0;
+    const isSelectedParticipantDisabled = hiddenSelectedRows.length === 0 || checkedItems.length ===0;
+    if (option === "Selected Participants") {
       return (
-        <DropdownItem key={index} className='existing-cohort-item' isDisabled={true}>{option}</DropdownItem>
+        <DropdownItem key={index}  isDisabled={isSelectedParticipantDisabled}  onClick={()=>{onExistingOptionSelect(option.toLowerCase(),isSelectedParticipantDisabled, totalRowCount)}}>{option}</DropdownItem>
       )
     }
-    if (option === "All Participants" && totalRowCount >= 4000) {
+    if (option === "All Participants") {
       return (
-        <DropdownItem className='existing-cohort-item' isDisabled={true} key={index}>{option}</DropdownItem>
+        <DropdownItem className='existing-cohort-item' isDisabled={isAllParticipantDisabled} onClick={()=>{onExistingOptionSelect(option.toLowerCase(),isAllParticipantDisabled, totalRowCount)}} key={index}>{option}</DropdownItem>
       )
     }
     if (index > 1) {
@@ -356,9 +390,6 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
         </DropdownItem>
       )
     }
-    return (
-      <DropdownItem key={index} className='existing-cohort-item' onClick={() => { handleSelect(option.toLowerCase()) }}>{option}</DropdownItem>
-    )
   }
 
   return (
@@ -386,6 +417,14 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
           })}
         </DropdownList>
       )}
+          <DeleteConfirmationModal
+                classes={""}
+                open={showPopupMessage}
+                setOpen={() => { setShowPopupMessage("")  }}
+                handleDelete={() => { setShowPopupMessage("") }}
+                deletionType={false}
+                message={showPopupMessage}
+            />
     </DropdownContainer>
   );
 };
