@@ -826,7 +826,7 @@ padding-left: 5px;
                     </div>
                     <div className={classes.cohortCountSection}>
 
-                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '57%',marginTop: 10 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '77%',marginTop: 10 }}>
                             <CreateNewCOhortButton
                                 selectedCohortSection={selectedCohortSection}
                                 classes={classes}
