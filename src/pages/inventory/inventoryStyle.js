@@ -1,4 +1,9 @@
 export default () => ({
+  backdrop: {
+    width: '100%',
+    zIndex: 99999,
+    background: 'rgba(0, 0, 0, 0.1)',
+  },
   dashboardContainer: {
     backgroundColor: '#FFFFFF',
   },
