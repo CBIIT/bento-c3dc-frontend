@@ -41,6 +41,7 @@ import {
 } from "./CohortAnalyzerUtil";
 import styled from "styled-components";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
+import { useLocation } from "react-router-dom";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -315,6 +316,19 @@ export const CohortAnalyzer = () => {
     function shortenText(text, maxSize = 17) {
         return text.length > maxSize ? text.slice(0, maxSize) + "..." : text;
     }
+
+    const location = useLocation();
+    
+
+    useEffect(()=>{
+         if (location) {
+            const viewCohort = location && location.state ? location.state.cohort:null;
+            if (viewCohort) {
+                handleCheckbox(viewCohort.cohortId, null);
+            }
+        } 
+        
+    },[location]);
 
     useEffect(() => {
         setSearchValue("");
