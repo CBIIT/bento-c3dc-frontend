@@ -152,7 +152,12 @@ export  const customStyles = {
       backgroundColor: '#FFEDE7',
       border: '2px solid #646464',
     },
-    
+    localFindAssociatedIdsBackground: {
+      backgroundColor: '#F6A700',
+    },
+    localFindAssociatedIdsText: {
+      color: '#B36B00',
+    },
 
     /*
     facetSectionSamples: {

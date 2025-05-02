@@ -21,9 +21,10 @@ query search($participant_id: [String]) {
 }
 `;
 
-export const GET_IDS_BY_TYPE = (type) => gql`{
+export const GET_IDS_BY_TYPE = () => gql`{
   idsLists {
-    ${type}
+    participantIds
+    # associatedIds
   }
 }
 `;
