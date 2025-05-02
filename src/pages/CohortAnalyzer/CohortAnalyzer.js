@@ -13,6 +13,7 @@ import client from "../../utils/graphqlClient";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
+import NavigateAwayModal from './navigateAwayModal';
 import sortIcon from "../../assets/icons/sort_icon.svg";
 import placeHolder from "../../assets/vennDigram/placeHolder.png";
 import ChartVenn from "./vennDiagram/ChartVenn";
@@ -63,6 +64,7 @@ export const CohortAnalyzer = () => {
     const [generalInfo, setGeneralInfo] = useState({});
     const [nodeIndex, setNodeIndex] = useState(0);
     const [cohortData, setCohortData] = useState();
+    const [showNavigateAwayModal, setShowNavigateAwayModal] = useState(false);
 
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { CohortModal } = CohortModalGenerator();
@@ -74,9 +76,8 @@ export const CohortAnalyzer = () => {
     
     let movedToToolTipText = false;
 
-    const handleBuildInExplore = () => {
-
-        // NOTE: If needed to show in Autocomplete.
+    const handleUserRedirect = () => {
+        // NOTE: If needed to show in only Autocomplete of Localfind.
         // const data = rowData.map(r=>({type: 'participantIds', title: r.participant_id}))
         // store.dispatch(updateAutocompleteData(data));
         // navigate('/explore');
@@ -92,6 +93,15 @@ export const CohortAnalyzer = () => {
         store.dispatch(updateUploadData(upload));
         store.dispatch(updateUploadMetadata(uploadMetadata));
         navigate('/explore');
+    }
+
+    const handleBuildInExplore = () => {
+        const hideModal = localStorage.getItem('hideNavigateModal') === 'true';
+        if (hideModal) {
+            handleUserRedirect(); // skip modal
+        } else {
+            setShowNavigateAwayModal(true); // show modal
+        }
     }
 
     const handleExportToCCDIHub = () => {
@@ -614,6 +624,11 @@ padding-left: 5px;
 
     return (
         <>
+            <NavigateAwayModal
+                open={showNavigateAwayModal}
+                setOpen={setShowNavigateAwayModal}
+                onConfirm={handleUserRedirect}
+            />
             <DeleteConfirmationModal
                 classes={""}
                 open={deleteInfo.showDeleteConfirmation}
