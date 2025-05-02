@@ -143,7 +143,7 @@ const CohortDetails = (props) => {
     }
 
     const handleViewAnalysisClick = (cohort)=>{
-        navigate(`/cohortAnalyzer`);
+        navigate(`/cohortAnalyzer`,{state:{cohort}});
     }
 
     const debouncedSave = useRef(

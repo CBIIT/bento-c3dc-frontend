@@ -231,7 +231,12 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
@@ -270,7 +275,12 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
@@ -309,7 +319,12 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
@@ -388,7 +403,12 @@ export const CohortAnalyzer = () => {
 
         if (selectedCohorts.length === 0) {
             setGeneralInfo({});
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }, [selectedCohorts, selectedChart]);
 
