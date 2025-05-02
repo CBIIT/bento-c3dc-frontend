@@ -374,7 +374,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
     }
     if (option === "All Participants" && checkedItems.length === 0) {
       return (
-        <DropdownItem className='new-cohort-item' onClick={(() => {setShowPopupMessage("You are not allowed to add more than 4000 participants in a single cohort")})} isDisabled={true} key={index}>{option}</DropdownItem>
+        <DropdownItem className='new-cohort-item' onClick={(() => {setShowPopupMessage("Please Select a cohort from the list")})} isDisabled={true} key={index}>{option}</DropdownItem>
       )
     }
     if (option === "All Participants" ) {
