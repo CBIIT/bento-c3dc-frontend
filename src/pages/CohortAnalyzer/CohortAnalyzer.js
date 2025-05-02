@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
@@ -105,19 +105,9 @@ export const CohortAnalyzer = () => {
     }
 
     const handleExportToCCDIHub = () => {
-        let cohortIds = selectedCohorts;
-        let data = [];
-
-        cohortIds.forEach(id => {
-            if (state[id]) {
-                data = data.concat(state[id]);
-            }
-        });
-        const allParticipants = data.flatMap(d => d.participants || []);
-
-        const participantIds = allParticipants.map(p => p.participant_id).join("|");
-        const dbgapAccessions = [...new Set(allParticipants.map(p => p.dbgap_accession))].join("|");
-
+        const participantIds = rowData.map(p => p.participant_id).join("|");
+        const dbgapAccessions = [...new Set(rowData.map(p => p.dbgap_accession))].join("|");
+            
         const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
         const dbgapBase = "&dbgap_accession=";
 
@@ -274,7 +264,12 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
@@ -313,7 +308,12 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
@@ -352,13 +352,31 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
     function shortenText(text, maxSize = 17) {
         return text.length > maxSize ? text.slice(0, maxSize) + "..." : text;
     }
+
+    const location = useLocation();
+    
+
+    useEffect(()=>{
+         if (location) {
+            const viewCohort = location && location.state ? location.state.cohort:null;
+            if (viewCohort) {
+                handleCheckbox(viewCohort.cohortId, null);
+            }
+        } 
+        
+    },[location]);
 
     useEffect(() => {
         setSearchValue("");
@@ -418,7 +436,12 @@ export const CohortAnalyzer = () => {
 
         if (selectedCohorts.length === 0) {
             setGeneralInfo({});
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }, [selectedCohorts, selectedChart]);
 
@@ -930,3 +953,4 @@ padding-left: 5px;
         </>
     )
 }
+

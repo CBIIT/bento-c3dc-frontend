@@ -1,6 +1,6 @@
 import React from 'react';
 //import { NavLink } from 'react-router-dom';
-import { withStyles } from '@material-ui/core';
+import { withStyles, CircularProgress, Backdrop  } from '@material-ui/core';
 import styles from './inventoryStyle';
 import BentoFacetFilter from './sideBar/BentoFacetFilter';
 // import WidgetView from './widget/WidgetView';
@@ -13,8 +13,12 @@ const Inventory = ({
   classes,
   dashData,
   activeFilters,
+  loading,
 }) => (
   <div className={classes.dashboardContainer}>
+    <Backdrop className={classes.backdrop} open={loading}>
+            <CircularProgress color="inherit" />
+    </Backdrop>
     <h1 style={{ "display": "none" }}>
       Data Exploration Page
     </h1>
