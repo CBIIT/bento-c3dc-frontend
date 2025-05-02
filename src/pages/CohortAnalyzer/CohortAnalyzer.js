@@ -825,8 +825,16 @@ padding-left: 5px;
 
                     </div>
                     <div className={classes.cohortCountSection}>
-
-                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '77%',marginTop: 10 }}>
+                        <div style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            alignItems: 'center',
+                            gap: '12px', // Adjust gap as needed
+                            marginTop: 10,
+                            flexWrap: 'wrap' // in case of small screens
+                        }}>
+                            {/* Create New Cohort */}
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
                             <CreateNewCOhortButton
                                 selectedCohortSection={selectedCohortSection}
                                 classes={classes}
@@ -834,76 +842,69 @@ padding-left: 5px;
                                 handleClick={handleClick}
                                 ToolTip={ToolTip}
                             />
-                            <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
-
-                            {/* BUILD IN EXPLORE DASHBOARD Button */}
-                            <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1, marginRight: '-25px'}}>
-                                <button
-                                    onClick={() => {
-                                        if (selectedCohorts.length > 0) {
-                                            handleBuildInExplore();
-                                        }
-
-                                    }}
-                                    className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}>
-                                    BUILD IN EXPLORE DASHBOARD
-                                    {/* <img alt="link out icon" src={linkoutIcon} height={13} width={13} /> */}
-                                </button>
-                                <ToolTip
-                                    open={tooltipOpen}
-                                    disableHoverListener 
-                                    maxWidth="335px"
-                                    border={'1px solid #598ac5'}
-                                    arrowBorder={'1px solid #598AC5'}
-                                    title={<div onMouseEnter={() => { movedToToolTipText =true; setTooltipOpen(true); }} onMouseLeave={()=>handleHideTooltip("tooltipText")}>
-
-                                        {exploreCCDIHubTooltip}
-
-                                    </div>} 
-                                    placement="top-end" 
-                                    arrow 
-                                    arrowSize="30px">
-                                    <div
-                                        style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }} 
-                                    >
-                                        <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
-                                    </div>
-                                </ToolTip>
                             </div>
 
-                            {/* EXPLORE IN CCDI HUB Button */}
-                            <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1}}>
-                                <button
-                                    onClick={() => {
-                                        if (selectedCohorts.length > 0) {
-                                            handleExportToCCDIHub();
-                                        }
+                            {/* Download Button */}
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <DownloadSelectedCohort
+                                queryVariable={queryVariable}
+                                isSelected={selectedCohorts.length > 0 && rowData.length > 0}
+                            />
+                            </div>
 
-                                    }}
-                                    className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}>
-                                    EXPLORE IN CCDI HUB
-                                    <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
-                                </button>
-                                <ToolTip
-                                    open={tooltipOpen}
-                                    disableHoverListener 
-                                    maxWidth="335px"
-                                    border={'1px solid #598ac5'}
-                                    arrowBorder={'1px solid #598AC5'}
-                                    title={<div onMouseEnter={() => { movedToToolTipText =true; setTooltipOpen(true); }} onMouseLeave={()=>handleHideTooltip("tooltipText")}>
+                            {/* BUILD IN EXPLORE DASHBOARD */}
+                            <div style={{ display: 'flex', alignItems: 'center', marginRight: '-10px' }}>
+                            <button
+                                onClick={() => selectedCohorts.length > 0 && handleBuildInExplore()}
+                                className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
+                            >
+                                BUILD IN EXPLORE DASHBOARD
+                            </button>
+                            <ToolTip
+                                open={tooltipOpen}
+                                disableHoverListener
+                                maxWidth="335px"
+                                border={'1px solid #598ac5'}
+                                arrowBorder={'1px solid #598AC5'}
+                                title={<div onMouseEnter={() => { movedToToolTipText = true; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("tooltipText")}>
+                                {exploreCCDIHubTooltip}
+                                </div>}
+                                placement="top-end"
+                                arrow
+                                arrowSize="30px"
+                            >
+                                <div style={{ marginLeft: 5 }}>
+                                <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
+                                </div>
+                            </ToolTip>
+                            </div>
 
-                                        {exploreCCDIHubTooltip}
-
-                                    </div>} 
-                                    placement="top-end" 
-                                    arrow 
-                                    arrowSize="30px">
-                                    <div
-                                        style={{ textAlign: 'right', marginLeft: 5}} 
-                                    >
-                                        <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
-                                    </div>
-                                </ToolTip>
+                            {/* EXPLORE IN CCDI HUB */}
+                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <button
+                                onClick={() => selectedCohorts.length > 0 && handleExportToCCDIHub()}
+                                className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
+                            >
+                                EXPLORE IN CCDI HUB
+                                <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
+                            </button>
+                            <ToolTip
+                                open={tooltipOpen}
+                                disableHoverListener
+                                maxWidth="335px"
+                                border={'1px solid #598ac5'}
+                                arrowBorder={'1px solid #598AC5'}
+                                title={<div onMouseEnter={() => { movedToToolTipText = true; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("tooltipText")}>
+                                {exploreCCDIHubTooltip}
+                                </div>}
+                                placement="top-end"
+                                arrow
+                                arrowSize="30px"
+                            >
+                                <div style={{ marginLeft: 5 }}>
+                                <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
+                                </div>
+                            </ToolTip>
                             </div>
                         </div>
                     </div>
