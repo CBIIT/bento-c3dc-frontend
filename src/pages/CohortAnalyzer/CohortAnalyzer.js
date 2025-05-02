@@ -41,6 +41,7 @@ import {
 } from "./CohortAnalyzerUtil";
 import styled from "styled-components";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
+import { useLocation } from "react-router-dom";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -230,7 +231,12 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
@@ -269,7 +275,12 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
@@ -308,13 +319,31 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }
 
     function shortenText(text, maxSize = 17) {
         return text.length > maxSize ? text.slice(0, maxSize) + "..." : text;
     }
+
+    const location = useLocation();
+    
+
+    useEffect(()=>{
+         if (location) {
+            const viewCohort = location && location.state ? location.state.cohort:null;
+            if (viewCohort) {
+                handleCheckbox(viewCohort.cohortId, null);
+            }
+        } 
+        
+    },[location]);
 
     useEffect(() => {
         setSearchValue("");
@@ -374,7 +403,12 @@ export const CohortAnalyzer = () => {
 
         if (selectedCohorts.length === 0) {
             setGeneralInfo({});
-            setRowData([]);
+             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
+               
+            }else{
+                setRowData([]);
+            }
+
         }
     }, [selectedCohorts, selectedChart]);
 

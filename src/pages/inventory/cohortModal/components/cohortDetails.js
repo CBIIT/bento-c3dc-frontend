@@ -14,6 +14,7 @@ import Linkout from "../../../../assets/about/Export_Icon_White.svg";
 import LinkoutBlue from "../../../../assets/about/Export_Icon.svg";
 
 import { deletionTypes } from './deleteConfirmationModal';
+import { useNavigate } from 'react-router-dom';
 
 /**
  * A list of cohorts to select from and manage.
@@ -57,6 +58,8 @@ const CohortDetails = (props) => {
     const scrollContainerRef = useRef(null);
     const descriptionRef = useRef(null);
     const dropdownRef = useRef(null);
+
+    const navigate = useNavigate();
 
     const generateCCDIHub_url = (cohortId) => {
         
@@ -137,6 +140,10 @@ const CohortDetails = (props) => {
         setTimeout(() => {
             setTooltipOpen(false);
         }, 3000)
+    }
+
+    const handleViewAnalysisClick = (cohort)=>{
+        navigate(`/cohortAnalyzer`,{state:{cohort}});
     }
 
     const debouncedSave = useRef(
@@ -254,6 +261,8 @@ const CohortDetails = (props) => {
     const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
         ? config.cohortCountsLabel
         : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
+
+    const viewCohortAnalyzerTooltip = "Clicking on this button will take the user to the Cohort Analyzer page, where the user will see the desired cohort and click to proceed with analysis.";
 
     const exploreCCDIHubTooltip = 
         <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
@@ -523,10 +532,16 @@ const CohortDetails = (props) => {
                                 </div>
                             )}
                         </div> 
-            
-                        <Button variant="contained" className={classes.viewCohortAnalyzerButton} onClick={() => {}}>
+                        <ToolTip
+                            title={viewCohortAnalyzerTooltip}
+                            placement="top-end"
+                            arrow
+                            arrowSize="30px"
+                        >
+                        <Button variant="contained" className={classes.viewCohortAnalyzerButton} onClick={() => {handleViewAnalysisClick(localCohort)}}>
                         View Cohort <br/> Analyzer
                         </Button> 
+                        </ToolTip>
                         <ToolTip
                             open={tooltipOpen}
                             disableHoverListener
@@ -650,7 +665,7 @@ const styles = () => ({
         lineHeight: '26px',
         color: '#385C66',
         flex: '0 0 130px',
-        whiteSpace: 'nowrap',
+        whiteSpace: 'nowrap'
     },
     cohortDescription: {
         fontFamily: 'Open Sans',
