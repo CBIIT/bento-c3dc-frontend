@@ -6,7 +6,7 @@ export const CreateNewCOhortButton = ({ selectedCohortSection, questionIcon, row
     const classes = useStyles();
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginRight: '-10px' }}>
             <button
               
                 onClick={() => handleClick()}
@@ -21,7 +21,7 @@ export const CreateNewCOhortButton = ({ selectedCohortSection, questionIcon, row
 
             <ToolTip title={"Click to create a new cohort based on these analysis results."} arrow placement="top">
                 <div
-                    style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }}
+                    style={{ textAlign: 'right', marginLeft: 5}}
                 >
                     <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
                 </div>

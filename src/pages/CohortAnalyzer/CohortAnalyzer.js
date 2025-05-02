@@ -826,7 +826,7 @@ padding-left: 5px;
                     </div>
                     <div className={classes.cohortCountSection}>
 
-                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '75%',marginTop: 10 }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-evenly', width: '57%',marginTop: 10 }}>
                             <CreateNewCOhortButton
                                 selectedCohortSection={selectedCohortSection}
                                 classes={classes}
@@ -837,7 +837,7 @@ padding-left: 5px;
                             <DownloadSelectedCohort queryVariable={queryVariable} isSelected={selectedCohorts.length > 0 && rowData.length > 0} />
 
                             {/* BUILD IN EXPLORE DASHBOARD Button */}
-                            <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1, marginLeft: 10}}>
+                            <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1, marginRight: '-25px'}}>
                                 <button
                                     onClick={() => {
                                         if (selectedCohorts.length > 0) {
@@ -872,7 +872,7 @@ padding-left: 5px;
                             </div>
 
                             {/* EXPLORE IN CCDI HUB Button */}
-                            <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1, marginLeft: 10}}>
+                            <div style={{height: 45, display: 'flex' ,flexDirection: 'row', gap: 1}}>
                                 <button
                                     onClick={() => {
                                         if (selectedCohorts.length > 0) {
@@ -899,7 +899,7 @@ padding-left: 5px;
                                     arrow 
                                     arrowSize="30px">
                                     <div
-                                        style={{ textAlign: 'right', marginLeft: 5, marginRight: 10 }} 
+                                        style={{ textAlign: 'right', marginLeft: 5}} 
                                     >
                                         <img alt={"Question Icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
                                     </div>
