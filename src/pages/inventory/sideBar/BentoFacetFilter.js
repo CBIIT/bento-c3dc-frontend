@@ -71,7 +71,7 @@ const { SearchBox } = SearchBoxGenerator({
           : [];
 
         const associatedIdsSuggestions = response && response[searchType[1]] instanceof Object 
-          ? response[searchType[1]].map((item) => ({ type: searchType[1], title: item.participantId, synonym: item.associatedId }))
+          ? response[searchType[1]].map((item) => ({ type: searchType[1], title: item.participant_id, synonym: item.associated_id }))
           : [];
 
         return [...participantSuggestions, ...associatedIdsSuggestions];

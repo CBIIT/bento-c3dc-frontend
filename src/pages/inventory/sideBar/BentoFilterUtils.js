@@ -36,26 +36,7 @@ export async function getAllIds(types) {
       query: GET_IDS_BY_TYPE(),
       variables: {},
     })
-    .then((result) => {
-      const d = result.data.idsLists;
-      
-      //########### Mock Data Changes: Start ########### 
-      // Create a shallow copy of the object to make it mutable
-      const mutableD = { ...d };
-      mutableD.participantIds = mutableD.participantIds.slice(0,11);
-
-      // Add the new key
-      mutableD['associatedIds'] = [
-        {participantId:'0065af91e89ee2859595' , associatedId:'PAUSYD'  }, 
-        {participantId:'008b04a84717e7d007a4' , associatedId:'ABCD'  }
-      ];
-
-      console.log(mutableD); // Keeping this console log for now.
-
-      //########### Mock Data Changes: END ###########
-
-      return mutableD;
-    })
+    .then((result) => (result.data.idsLists))
     .catch(() => []);
   return allids;
 }
