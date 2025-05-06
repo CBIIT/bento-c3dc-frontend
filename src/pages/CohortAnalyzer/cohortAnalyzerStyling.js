@@ -313,7 +313,6 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
        minWidth: 297,
         height: 194,
-        
         marginLeft: 0,
         paddingBottom: 30,
         border: '1px solid #8B98AF',
@@ -324,12 +323,12 @@ export const useStyle = makeStyles((theme) => ({
             fontSize: '18px',
             fontWeight: 400,
             textAlign: 'center',
-            color: '#000'
+            color: '#000',
         },
     },
     catagoryCardChildren: {
         width: '50%',
-        height: 150,
+        minHeight: 75,
         alignSelf: 'center',
         display: 'flex',
         overflow: 'hidden',
@@ -337,6 +336,7 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'flex-start',
         color: '#5D7B87',
+      
         '& p': {
             top: 325,
             gap: 9,
