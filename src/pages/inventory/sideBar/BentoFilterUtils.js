@@ -27,16 +27,16 @@ export const onClearAllAndSelectFacetValue = (facet, facetValue) => {
  * Get list of all available ids for a search field
  *
  * @async
- * @param {string} type search field
+ * @param {Array} types search fields
  * @returns {Promise<string[]>} all ids for the search field
  */
-export async function getAllIds(type) {
+export async function getAllIds(types) {
   const allids = await client
     .query({
-      query: GET_IDS_BY_TYPE(type),
+      query: GET_IDS_BY_TYPE(),
       variables: {},
     })
-    .then((result) => result.data.idsLists)
+    .then((result) => (result.data.idsLists))
     .catch(() => []);
   return allids;
 }

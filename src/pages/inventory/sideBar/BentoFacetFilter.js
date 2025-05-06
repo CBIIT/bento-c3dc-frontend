@@ -58,15 +58,23 @@ const { SearchBox } = SearchBoxGenerator({
   config: {
     inputPlaceholder: 'Participant ID Search',
     noOptionsText: 'No matching items found',
-    searchType: 'participantIds',
+    searchType: ['participantIds', 'associatedIds'],
   },
   functions: {
     getSuggestions: async (searchType) => {
       try {
         const response = await getAllIds(searchType).catch(() => []);
-        return response && response[searchType] instanceof Array
-          ? response[searchType].map((id) => ({ type: searchType, title: id }))
+        // console.log(response)
+
+        const participantSuggestions = response && response[searchType[0]] instanceof Array 
+          ? response[searchType[0]].map((id) => ({ type: searchType[0], title: id }))
           : [];
+
+        const associatedIdsSuggestions = response && response[searchType[1]] instanceof Object 
+          ? response[searchType[1]].map((item) => ({ type: searchType[1], title: item.participant_id, synonym: item.associated_id }))
+          : [];
+
+        return [...participantSuggestions, ...associatedIdsSuggestions];
       } catch (e) {
         return [];
       }
