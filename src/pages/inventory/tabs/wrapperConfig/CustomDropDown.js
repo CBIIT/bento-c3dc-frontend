@@ -182,7 +182,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       hiddenSelectedRows = [],
       totalRowCount = 0,
     } = context;
-    if (true) {
+    if (enabledWithoutSelect) {
       setIsActive(true);
     }
     else {
@@ -284,7 +284,6 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
           ],
         
         };
-        
      
         let { data } = await client.query({
           query: GET_PARTICIPANTS_OVERVIEW_QUERY,
