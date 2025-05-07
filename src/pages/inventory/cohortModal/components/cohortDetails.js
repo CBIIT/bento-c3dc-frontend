@@ -54,6 +54,7 @@ const CohortDetails = (props) => {
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const [isScrollbarActive, setIsScrollbarActive] = useState(false); 
     const [tooltipOpen, setTooltipOpen] = useState(false);
+    const [tooltipOpenExplore, setTooltipOpenExplore] = useState(false);
 
     const scrollContainerRef = useRef(null);
     const descriptionRef = useRef(null);
@@ -136,10 +137,18 @@ const CohortDetails = (props) => {
         });
     }
 
-    const handleHideTooltip = () => {
-        setTimeout(() => {
+    let movedToToolTipText = false;
+
+    const handleHideTooltip = (eventSource) => {
+        if (eventSource === "tooltipText") {            
             setTooltipOpen(false);
-        }, 3000)
+        } else if (eventSource === "questionIcon") {
+            setTimeout(() => {
+                if (!movedToToolTipText) {
+                    setTooltipOpen(false);
+                }
+            }, 1000);
+        }
     }
 
     const handleViewAnalysisClick = (cohort)=>{
@@ -546,15 +555,17 @@ const CohortDetails = (props) => {
                             open={tooltipOpen}
                             disableHoverListener
                             maxWidth="335px"
-                            title={exploreCCDIHubTooltip}
+                            title={<div onMouseEnter={() => { movedToToolTipText=true;  setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("tooltipText")}>
+                            {exploreCCDIHubTooltip}
+                            </div>}
                             placement="top-end"
                             interactive
                             arrow
                             arrowSize="30px"
                         >
                         <Button 
-                            onMouseEnter={()=>{setTooltipOpen(true)}}
-                            onMouseLeave={handleHideTooltip}
+                            onMouseEnter={()=>{ movedToToolTipText = true;  setTooltipOpen(true)}}
+                            onMouseLeave={() => handleHideTooltip("questionIcon")}
                             variant="contained"
                             className={ localCohort.participants.length > 600? classes.exploreButtonFaded : classes.exploreButton }
                             onClick={() => localCohort.participants.length < 600 && generateCCDIHub_url(localCohort)}
