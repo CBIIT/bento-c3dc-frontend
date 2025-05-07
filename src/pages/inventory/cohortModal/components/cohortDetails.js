@@ -548,6 +548,7 @@ const CohortDetails = (props) => {
                             maxWidth="335px"
                             title={exploreCCDIHubTooltip}
                             placement="top-end"
+                            interactive
                             arrow
                             arrowSize="30px"
                         >
@@ -555,8 +556,8 @@ const CohortDetails = (props) => {
                             onMouseEnter={()=>{setTooltipOpen(true)}}
                             onMouseLeave={handleHideTooltip}
                             variant="contained"
-                            className={classes.exploreButton}
-                            onClick={() => generateCCDIHub_url(localCohort)}
+                            className={ localCohort.participants.length > 600? classes.exploreButtonFaded : classes.exploreButton }
+                            onClick={() => localCohort.participants.length < 600 && generateCCDIHub_url(localCohort)}
                         >
                         <span style={{textAlign: 'left'}}>
                         EXPLORE <br /> IN CCDI Hub
@@ -949,7 +950,25 @@ const styles = () => ({
         },
 
     },
-    
+    exploreButtonFaded: {
+        background: '#BBC1C3',
+        border: '1.25px solid #4EA1A1',
+        width: '137px',
+        height: '41px',
+        borderRadius: '5px',
+        boxShadow: 'none',
+        fontFamily: 'Poppins',
+        fontWeight: '600',
+        fontSize: '12px',
+        lineHeight: '13px',
+        letterSpacing: '2%',
+        verticalAlign: 'middle',
+        textTransform: 'uppercase',
+        color: '#FFFFFF',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    },
     exploreButton: {
         backgroundColor: '#044249',
         border: '1.25px solid #4EA1A1',
