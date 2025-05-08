@@ -72,9 +72,11 @@ export const CohortAnalyzer = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [HoveredCohort, setHoveredCohort] = useState(true);
     const [tooltipOpen, setTooltipOpen] = useState(false);
+    const [tooltipOpenExplore, setTooltipOpenExplore] = useState(false);
     const navigate = useNavigate();
     
     let movedToToolTipText = false;
+    let movedToToolTipTextExplore = false;
 
     const handleUserRedirect = () => {
         // NOTE: If needed to show in only Autocomplete of Localfind.
@@ -124,6 +126,19 @@ export const CohortAnalyzer = () => {
             setTimeout(() => {
                 if (!movedToToolTipText) {
                     setTooltipOpen(false);
+                }
+            }, 1000);
+        }
+
+    }
+
+    const handleHideTooltipExplore = (eventSource) => {
+        if (eventSource === "tooltipText") {            
+            setTooltipOpenExplore(false);
+        } else if (eventSource === "questionIcon") {
+            setTimeout(() => {
+                if (!movedToToolTipTextExplore) {
+                    setTooltipOpenExplore(false);
                 }
             }, 1000);
         }
@@ -645,6 +660,11 @@ padding-left: 5px;
         </ol>
     </p>;
 
+    const exploreDashboardTooltip =  <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight:400, fontSize:13,margin: 0}}>
+        Clicking this button will create a pre-filtered facet for further analysis on the Explore Dashboard
+
+    </p>;
+
     return (
         <>
             <NavigateAwayModal
@@ -890,10 +910,11 @@ padding-left: 5px;
                                 border={'1px solid #598ac5'}
                                 arrowBorder={'1px solid #598AC5'}
                                 title={<div onMouseEnter={() => { movedToToolTipText = true; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("tooltipText")}>
-                                {exploreCCDIHubTooltip}
+                                {exploreDashboardTooltip}
                                 </div>}
                                 placement="top-end"
                                 arrow
+                                interactive
                                 arrowSize="30px"
                             >
                                 <div style={{ marginLeft: 5 }}>
@@ -905,27 +926,28 @@ padding-left: 5px;
                             {/* EXPLORE IN CCDI HUB */}
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                             <button
-                                onClick={() => selectedCohorts.length > 0 && handleExportToCCDIHub()}
-                                className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
+                                onClick={() => (selectedCohorts.length > 0 && rowData.length < 600) ? handleExportToCCDIHub(): {}}
+                                className={(selectedCohorts.length > 0  && rowData.length < 600) ? classes.exploreButton : classes.exploreButtonFaded}
                             >
                                 EXPLORE IN CCDI HUB
                                 <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
                             </button>
                             <ToolTip
-                                open={tooltipOpen}
+                                open={tooltipOpenExplore}
                                 disableHoverListener
                                 maxWidth="335px"
                                 border={'1px solid #598ac5'}
                                 arrowBorder={'1px solid #598AC5'}
-                                title={<div onMouseEnter={() => { movedToToolTipText = true; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("tooltipText")}>
+                                title={<div onMouseEnter={() => { movedToToolTipTextExplore = true; setTooltipOpenExplore(true); }} onMouseLeave={() => handleHideTooltipExplore("tooltipText")}>
                                 {exploreCCDIHubTooltip}
                                 </div>}
                                 placement="top-end"
                                 arrow
+                                interactive
                                 arrowSize="30px"
                             >
                                 <div style={{ marginLeft: 5 }}>
-                                <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
+                                <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipTextExplore = false; setTooltipOpenExplore(true); }} onMouseLeave={() => handleHideTooltipExplore("questionIcon")} />
                                 </div>
                             </ToolTip>
                             </div>
