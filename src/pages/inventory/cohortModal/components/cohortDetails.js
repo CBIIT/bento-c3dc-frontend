@@ -564,7 +564,7 @@ const CohortDetails = (props) => {
                             arrowSize="30px"
                         >
                         <Button 
-                            onMouseEnter={()=>{ movedToToolTipText = true;  setTooltipOpen(true)}}
+                            onMouseEnter={()=>{ movedToToolTipText = false; setTooltipOpen(true)}}
                             onMouseLeave={() => handleHideTooltip("questionIcon")}
                             variant="contained"
                             className={ localCohort.participants.length > 600? classes.exploreButtonFaded : classes.exploreButton }
