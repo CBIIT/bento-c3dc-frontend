@@ -64,7 +64,8 @@ const CohortDetails = (props) => {
     const navigate = useNavigate();
 
     const generateCCDIHub_url = (cohortId) => {
-        
+        tooltipOpen.current = false;
+        setShowToolTip(false);
         const data = cohortId;
         const participantIds = data.participants.map(p => p.participant_id).join("|");
         const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
@@ -289,7 +290,7 @@ const CohortDetails = (props) => {
             <Gap/>
             <b>If cohort size &gt; 600:</b><br/> 
             Download the manifest and upload it manually to the&nbsp;
-            <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
+            <a style={{zIndex: 10000}} onClick={()=>{tooltipOpen.current = false; setShowToolTip(false);}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
                 CCDI Hub 
                 <img 
                     src={LinkoutBlue} 
