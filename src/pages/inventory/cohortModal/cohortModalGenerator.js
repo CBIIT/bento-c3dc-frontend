@@ -157,6 +157,12 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                 }
             }
 
+            useEffect(() => {
+                if (!open) {
+                    setCurrentCohortChanges(null);
+                }
+            }, [open]);
+
             return (
                 <>
                     <Modal
