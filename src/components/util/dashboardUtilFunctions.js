@@ -22,19 +22,7 @@ export const COLORS_LEVEL_2 = [
 ];
 
 const NOT_PROVIDED = 'Not Specified';
-/*
- Group : GroupName that will show on the page as category
- field: API return field name
-    eg: {
-          gender : male
-          cases: 123
-        }
-        gender is the field
-  api : API that we are using to get data.
-  dtatfield: datatable field that related
-  show: control show this category on the page or not
 
-*/
 export const unselectFilters = (filtersObj) => filtersObj.map((filterElement) => ({
   groupName: filterElement.groupName,
   name: filterElement.name,

@@ -193,7 +193,7 @@ export const CustomDropDown = ({ options, label, isHidden, backgroundColor, bord
         <DropdownList ref={dropDownListRef}>
           {options.map((option, index) => {
             return (
-              <DropdownItem key={index} onClick={() => { handleSelect(option) }}>{option}</DropdownItem>
+              <DropdownItem key={index} onClick={() => { handleSelect(option.toLowerCase()) }}>{option}</DropdownItem>
             )
           })}
         </DropdownList>

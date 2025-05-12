@@ -1,12 +1,15 @@
-import userGuide from '../assets/releaseNotes/C3DC User Guide -R4-V3.pdf';
+import userGuide from '../assets/releaseNotes/C3DC_User_Guide-R5-V8.pdf';
 import latestRelease from '../assets/releaseNotes/C3DC_Release_Notes.pdf';
 
 export const aboutData = {
+  aboutHeaderText:
+    "About the Childhood Cancer <br />Clinical Data Commons",
   introParagraph:
     "<a className='sectionTitle'>Childhood Cancer Data Initiative</a><br/>" +
     "The <a className='aboutLink' href='https://www.cancer.gov/research/areas/childhood/childhood-cancer-data-initiative' target='_blank' rel='noopener noreferrer'>NCI’s Childhood Cancer Data Initiative (CCDI)</a>, " +
     "which the Childhood Cancer Clinical Data Commons is part of, is an initiative seeking to build a community centered around childhood cancer care and research. " +
     "Through enhanced data sharing, the initiative works to improve understanding of cancer biology, preventive measures, treatment, quality of life, and survivorship, as well as ensure that the community can learn from every child with cancer. " +
+    "C3DC is part of the CCDI Data Ecosystem. Learn more about other CCDI data and resources on the CCDI Hub. " +
     "<a className='aboutLink' href='https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new?topic_id=USNIHNCI_223' target='_blank' rel='noopener noreferrer'>Sign-up for email updates</a> from NCI about CCDI.",
   secondParagraph:
     "<a className='sectionTitle'>Childhood Cancer Clinical Data Commons</a><br/>" +
@@ -82,10 +85,14 @@ export const aboutData = {
     ":  Stay informed about the latest updates. <br> " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>" +
     ": Whether you are new or aiming to expand your knowledge about C3DC, </br> our user guide is your resource.",*/
-  lastParagraph:
-    "The CCDI welcomes input from the community to enhance usability. " +
-    "Please send your <br> feedback and comments to " +
-    "<a className='aboutLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>.",
+
+
+  aboutFooterTitle:
+    "Questions for C3DC?",
+  aboutFooterText:
+    "The Childhood Cancer Data Initiative (CCDI) welcomes community input to improve this web application usability. Please send your feedback and suggestions to " +
+    "<a className='aboutFooterLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>. " +
+    "Your contributions are valuable to enhancing the user experience.",
 };
 
 

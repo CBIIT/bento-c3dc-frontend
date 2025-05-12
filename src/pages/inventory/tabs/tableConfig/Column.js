@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, Typography } from '@material-ui/core';
 import { cellTypes, headerTypes } from '@bento-core/table';
 import ReactHtmlParser from "html-react-parser";
+import ToolTip from "@bento-core/tool-tip";
 
 export const CustomCellView = (props) => {
   const {
@@ -16,15 +17,62 @@ export const CustomCellView = (props) => {
     height: '23px',
   };
 
+
+  if (Array.isArray(label) && dataField === "treatment_agent") {
+   
+    return (<Typography>{label.join(", ")}</Typography>);
+  }
+
+  if (Array.isArray(label) && dataField === "cohort") {
+    return (
+      <div style={{ display: 'flex', gap: 10, justifyContent:'center', width: 67 }}>
+        {
+          label.map((cohort, index) => (
+            <ToolTip title={<div>
+            
+              {label.map((coh,innerIndex) => (
+                <div style={{display:'flex',gap:10,marginBottom:5}}>
+                  <div style={{
+                    backgroundColor: coh["color"],
+                    width: 17,
+                    height: 17,
+                    border: '1px solid #686868',
+                    borderRadius: 4
+                  }}>
+                  </div>
+                  {coh["cohort"]}
+                  </div>
+              ))
+              }
+
+            </div>} arrow placement="top">
+              <div style={{
+                backgroundColor: cohort["color"],
+                width: 17,
+                height: 17,
+                border: '1px solid #686868',
+                borderRadius: 4
+              }}>
+              </div>
+            </ToolTip>
+          ))
+        }
+      </div>
+    )
+
+  }
+
+
+
   if (props.linkAttr) {
     const { rootPath } = props.linkAttr;
-    return(
-      <Link 
+    return (
+      <Link
         className={cellTypes.LINK}
         href={`${rootPath}${label}`}
-        target="_blank" 
+        target="_blank"
         rel="noopener noreferrer"
-        >
+      >
 
         <Typography >{label}</Typography>
       </Link>

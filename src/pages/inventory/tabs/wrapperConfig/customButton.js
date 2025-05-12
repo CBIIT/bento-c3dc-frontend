@@ -53,7 +53,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
 
   const tableContext = useContext(TableContext);
   const { dispatch } = useContext(CohortStateContext);
-  const { setShowCohortModal} = useContext(CohortModalContext);
+  const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges} = useContext(CohortModalContext);
   const { Notification } = useGlobal();
   const [isActive, setIsActive] = useState(false);
 
@@ -93,12 +93,14 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
     if (isActive) {
       if (type === "VIEW") {
         setShowCohortModal(true);
+        setCurrentCohortChanges(null);
       } else {
         const { context } = tableContext;
         const {
           hiddenSelectedRows = []
         } = context;
         clearSelection();
+        setCurrentCohortChanges(null);
         dispatch(onCreateNewCohort(
           "",
           "",
@@ -107,7 +109,10 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
             triggerNotification(count);
             setShowCohortModal(true);
           },
-          (error) => alert("Something Went Wrong")
+          (error) => {
+          
+          setWarningMessage(error.toString().replace("Error:",""));
+          }
         ));
       }
 

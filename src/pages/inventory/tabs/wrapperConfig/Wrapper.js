@@ -13,9 +13,9 @@ import { CustomDropDown } from './CustomDropDown';
 import { CustomButton } from './customButton';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 
-const GetOptions = () => {
+const GetOptions = () => { //This function has been updated to return the name field instead of the ID field
   const { state } = useContext(CohortStateContext);
-  return Object.keys(state);
+  return Object.values(state).map(cohort => cohort.cohortName);
 }
 
 export const layoutConfig = [{

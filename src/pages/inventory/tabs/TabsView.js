@@ -5,6 +5,7 @@ import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
 import CohortModalGenerator from '../cohortModal/cohortModalGenerator';
 import { CohortModalContext } from '../cohortModal/CohortModalContext';
+import DeleteConfirmationModal from '../cohortModal/components/deleteConfirmationModal';
 
 
 const Tabs = (props) => {
@@ -13,7 +14,7 @@ const Tabs = (props) => {
     setCurrentTab(value);
   };
 
-  const { showCohortModal, setShowCohortModal} = useContext(CohortModalContext);
+  const { showCohortModal, setShowCohortModal , setWarningMessage, warningMessage } = useContext(CohortModalContext);
 
   /**
   * 1. change <name> to <display> as array item
@@ -38,6 +39,16 @@ const Tabs = (props) => {
         open={showCohortModal}
         onCloseModal={() => setShowCohortModal(false)}
         />
+
+      <DeleteConfirmationModal
+           classes={""}
+           open={warningMessage}
+           setOpen={() => { setWarningMessage("") }}
+           handleDelete={() => { setWarningMessage("") }}
+           deletionType={false}
+           message={warningMessage}
+       />
+       
       <BentoTabs
         tabItems={getTabs(tabContainers)}
         currentTab={currentTab}

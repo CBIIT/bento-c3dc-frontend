@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { withStyles } from '@material-ui/core';
+import ToolTip from '@bento-core/tool-tip';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DEFAULT_CONFIG from '../config';
@@ -17,9 +18,13 @@ const CohortList = (props) => {
         config,
         selectedCohort,
         setSelectedCohort,
+        unSavedChanges,
+        setChangingConfirmation,
+        setShowChangingConfirmation,
         closeParentModal,
         handleDeleteCohort,
         handleDeleteAllCohorts,
+        handleClearCurrentCohortChanges,
         state,
     } = props;
 
@@ -83,18 +88,20 @@ const CohortList = (props) => {
                         {listHeading} ({Object.keys(state).length})
                     </span>
                     <span>
-                        <img
-                            src={TrashCanIconGray}
-                            alt="delete all cohorts icon"
-                            className={classes.grayTrashCan + (isScrollbarActive ? ' ' + classes.grayTrashCanScrollPadding : '')}
-                            onClick={() => {
-                                setDeleteModalProps({
-                                    handleDelete: () => handleDeleteAllCohorts(),
-                                    deletionType: deletionTypes.DELETE_ALL_COHORTS,
-                                });
-                                setShowDeleteConfirmation(true)
-                            }}
-                        />
+                        <ToolTip title="Remove all Cohorts" placement="top-end" arrow>
+                            <img
+                                src={TrashCanIconGray}
+                                alt="delete all cohorts icon"
+                                className={classes.grayTrashCan + (isScrollbarActive ? ' ' + classes.grayTrashCanScrollPadding : '')}
+                                onClick={() => {
+                                    setDeleteModalProps({
+                                        handleDelete: () => handleDeleteAllCohorts(),
+                                        deletionType: deletionTypes.DELETE_ALL_COHORTS,
+                                    });
+                                    setShowDeleteConfirmation(true)
+                                }}
+                            />
+                        </ToolTip>
                     </span>
 
                 </div>
@@ -109,11 +116,27 @@ const CohortList = (props) => {
                                 key={state[cohort].cohortId}
                                 className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
                                 onClick={() => {
-                                    setSelectedCohort(state[cohort].cohortId)
+                                    if (state[cohort].cohortId === selectedCohort) {
+                                        return;
+                                    }
+                                    if (unSavedChanges) {
+                                        setChangingConfirmation({
+                                            handleDelete: () => {
+                                                setSelectedCohort(state[cohort].cohortId)
+                                                handleClearCurrentCohortChanges();
+                                            },
+                                            deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
+                                        });
+                                        setShowChangingConfirmation(true);
+                                    }
+                                    else {
+                                        setSelectedCohort(state[cohort].cohortId)
+                                        handleClearCurrentCohortChanges();
+                                    }
                                 }}
                             >
                                 <span className={classes.cohortListItemText}>
-                                    {state[cohort].cohortId}
+                                    {state[cohort].cohortName}
                                 </span>
                                 <span>
                                     <img
@@ -221,7 +244,7 @@ const styles = () => ({
         },
         cursor: 'pointer',
     },
-    cohortListItemText:{
+    cohortListItemText: {
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         whiteSpace: 'nowrap',

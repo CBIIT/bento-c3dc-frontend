@@ -1,24 +1,5 @@
 import gql from 'graphql-tag';
 
-export const GET_PARTICIPANTS_TAB = gql`
-query participantOverViewPaged($participant_ids: [String], $offset: Int = 0, $first: Int = 1000, $order_by:String =""){
-  participantOverViewPaged(participant_ids: $participant_ids, first: $first, offset: $offset, order_by: $order_by) {
-    participant_id
-    dbgap_accession
-    race
-    gender
-  }
-}
-`;
-
-export const customParticipantsTabDownloadCSV = {
-  keysToInclude: ['participant_id', 'dbgap_accession', 'race', 'gender'],
-  header: ['Participant ID', 'dbGaP ACCESSION', 'Race', 'Gender'],
-  query: GET_PARTICIPANTS_TAB,
-  apiVariable: 'participantOverView',
-  fileName: 'tableDownload',
-  defaultFullTableDownload: false,
-};
 
 export const GET_SAMPLES_TAB = gql`
 query sampleOverview($sample_ids: [String], $offset: Int = 0, $first: Int = 1000, $order_by:String =""){
