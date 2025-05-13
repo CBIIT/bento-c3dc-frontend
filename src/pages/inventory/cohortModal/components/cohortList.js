@@ -237,10 +237,10 @@ const styles = () => ({
         fontSize: 14,
         fontWeight: '300',
         lineHeight: '15px',
-        backgroundColor: '#2A4C58',
-        borderBottom: '1px solid #73C7BE',
+        backgroundColor: '#4B7B8B',
+        borderBottom: '1px solid #FFF',
         '&:first-child': {
-            borderTop: '1px solid #73C7BE',
+            borderTop: '1px solid #FFF',
         },
         cursor: 'pointer',
     },

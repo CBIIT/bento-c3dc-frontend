@@ -627,6 +627,9 @@ const styles = () => ({
         gap: '10px',
         height: '29px',
         paddingLeft: '10px',
+        border: '.5px solid #8B98AF',
+        borderRadius: '5px',
+        width: '250px',
     },
     cohortName: {
         width: '250px',
@@ -710,7 +713,7 @@ const styles = () => ({
         border: '.5px solid #8B98AF',
         borderRadius: '5px',
         outline: 'none',
-        width: '90%',
+        width: '100%',
         resize: 'none',
         boxSizing: 'border-box',
         caretColor: 'transparent',
@@ -727,7 +730,7 @@ const styles = () => ({
         border: '2px solid #00CBD2',
         borderRadius: '3px',
         outline: 'none',
-        width: '90%',
+        width: '100%',
         resize: 'none',
         boxSizing: 'border-box',
     },
@@ -927,7 +930,7 @@ const styles = () => ({
     cohortButtonSection: {
         display: 'flex',
         justifyContent: 'center',
-        padding: '40px 20px 10px 20px',
+        padding: '10px 20px 10px 20px',
         width: '100%',
         gap: '8px',
 
@@ -1110,7 +1113,7 @@ const styles = () => ({
     },
     cohortLastUpdated: {
         width: '100%',
-        fontSize: 14,
+        fontSize: 10,
         color: '#2D5D63',
         fontFamily: 'Lato',
         textAlign: 'left',
