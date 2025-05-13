@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { CohortStateContext } from '../../../components/CohortSelectorState/CohortStateContext.js';
 import {
     onDeleteSingleCohort,
@@ -43,6 +43,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         handleDelete: () => { },
         deletionType: "",
     });
+    const tooltipOpen = useRef(false);
+
     useEffect(() => {
         if (alert.message) {
             const timer = setTimeout(() => {
@@ -212,6 +214,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     downloadCohortManifest={downloadCohortManifest}
                                     downloadCohortMetadata={downloadCohortMetadata}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
+                                    tooltipOpen={tooltipOpen}
                                 />
                             </div>
                         </div>
