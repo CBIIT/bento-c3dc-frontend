@@ -926,8 +926,8 @@ padding-left: 5px;
                             {/* EXPLORE IN CCDI HUB */}
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                             <button
-                                onClick={() => (selectedCohorts.length > 0 && rowData.length < 600) ? handleExportToCCDIHub(): {}}
-                                className={(selectedCohorts.length > 0  && rowData.length < 600) ? classes.exploreButton : classes.exploreButtonFaded}
+                                onClick={() => (selectedCohorts.length > 0 && rowData.length <= 600) ? handleExportToCCDIHub(): {}}
+                                className={(selectedCohorts.length > 0  && rowData.length <= 600) ? classes.exploreButton : classes.exploreButtonFaded}
                             >
                                 EXPLORE IN CCDI HUB
                                 <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
