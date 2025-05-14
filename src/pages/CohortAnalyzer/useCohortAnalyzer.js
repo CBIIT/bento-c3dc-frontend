@@ -47,8 +47,8 @@ export const useCohortAnalyzer = () => {
     const [tooltipOpenExplore, setTooltipOpenExplore] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-    let movedToToolTipText = false;
-    let movedToToolTipTextExplore = false;
+    let movedToToolTipText = useRef(false);
+    let movedToToolTipTextExplore = useRef(false);
 
     /* FUNCTIONS */
     const handleUserRedirect = () => {
@@ -97,7 +97,7 @@ export const useCohortAnalyzer = () => {
             setTooltipOpen(false);
         } else if (eventSource === "questionIcon") {
             setTimeout(() => {
-                if (!movedToToolTipText) {
+                if (!movedToToolTipText.current) {
                     setTooltipOpen(false);
                 }
             }, 1000);
@@ -110,7 +110,7 @@ export const useCohortAnalyzer = () => {
             setTooltipOpenExplore(false);
         } else if (eventSource === "questionIcon") {
             setTimeout(() => {
-                if (!movedToToolTipTextExplore) {
+                if (!movedToToolTipTextExplore.current) {
                     setTooltipOpenExplore(false);
                 }
             }, 1000);

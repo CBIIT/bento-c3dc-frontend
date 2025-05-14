@@ -395,7 +395,7 @@ padding-left: 5px;
                                     maxWidth="335px"
                                     border={'1px solid #598ac5'}
                                     arrowBorder={'1px solid #598AC5'}
-                                    title={<div onMouseEnter={() => { movedToToolTipText = true; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("tooltipText")}>
+                                    title={<div onMouseEnter={() => { movedToToolTipText.current = true; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("tooltipText")}>
                                         {exploreDashboardTooltip}
                                     </div>}
                                     placement="top-end"
@@ -404,7 +404,7 @@ padding-left: 5px;
                                     arrowSize="30px"
                                 >
                                     <div style={{ marginLeft: 5 }}>
-                                        <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
+                                        <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipText.current = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
                                     </div>
                                 </ToolTip>
                             </div>
@@ -424,7 +424,7 @@ padding-left: 5px;
                                     maxWidth="335px"
                                     border={'1px solid #598ac5'}
                                     arrowBorder={'1px solid #598AC5'}
-                                    title={<div onMouseEnter={() => { movedToToolTipTextExplore = true; setTooltipOpenExplore(true); }} onMouseLeave={() => handleHideTooltipExplore("tooltipText")}>
+                                    title={<div onMouseEnter={() => { movedToToolTipTextExplore.current = true; setTooltipOpenExplore(true); }} onMouseLeave={() => handleHideTooltipExplore("tooltipText")}>
                                         {exploreCCDIHubTooltip}
                                     </div>}
                                     placement="top-end"
@@ -433,7 +433,7 @@ padding-left: 5px;
                                     arrowSize="30px"
                                 >
                                     <div style={{ marginLeft: 5 }}>
-                                        <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipTextExplore = false; setTooltipOpenExplore(true); }} onMouseLeave={() => handleHideTooltipExplore("questionIcon")} />
+                                        <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipTextExplore.current = false; setTooltipOpenExplore(true); }} onMouseLeave={() => handleHideTooltipExplore("questionIcon")} />
                                     </div>
                                 </ToolTip>
                             </div>
