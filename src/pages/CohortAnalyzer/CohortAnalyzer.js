@@ -71,8 +71,6 @@ export const CohortAnalyzer = () => {
     const { Notification } = useGlobal();
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [HoveredCohort, setHoveredCohort] = useState(true);
-    const [tooltipOpen, setTooltipOpen] = useState(false);
-    const [tooltipOpenExplore, setTooltipOpenExplore] = useState(false);
     const navigate = useNavigate();
     
     let movedToToolTipText = false;
@@ -117,32 +115,6 @@ export const CohortAnalyzer = () => {
         window.open(finalUrl, '_blank');
 
         return finalUrl;
-    }
-    
-    const handleHideTooltip = (eventSource) => {
-        if (eventSource === "tooltipText") {            
-            setTooltipOpen(false);
-        } else if (eventSource === "questionIcon") {
-            setTimeout(() => {
-                if (!movedToToolTipText) {
-                    setTooltipOpen(false);
-                }
-            }, 1000);
-        }
-
-    }
-
-    const handleHideTooltipExplore = (eventSource) => {
-        if (eventSource === "tooltipText") {            
-            setTooltipOpenExplore(false);
-        } else if (eventSource === "questionIcon") {
-            setTimeout(() => {
-                if (!movedToToolTipTextExplore) {
-                    setTooltipOpenExplore(false);
-                }
-            }, 1000);
-        }
-
     }
 
     const handleMouseMove = (event, cohortName) => {
@@ -896,7 +868,7 @@ padding-left: 5px;
                             </div>
 
                             {/* BUILD IN EXPLORE DASHBOARD */}
-                            <div style={{ position:"relative", marginRight: '8px' }}>
+                            <div style={{ position:"relative", marginRight: '6px' }}>
                             <button
                                 onClick={() => selectedCohorts.length > 0 && handleBuildInExplore()}
                                 className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
