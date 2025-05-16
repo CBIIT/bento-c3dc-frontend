@@ -54,8 +54,6 @@ const CohortDetails = (props) => {
     const [isEditingDescription, setIsEditingDescription] = useState(false);
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const [isScrollbarActive, setIsScrollbarActive] = useState(false);
-    const [showToolTip, setShowToolTip] = useState(false);  
-    const movedToToolTipText = useRef(false);
 
     const scrollContainerRef = useRef(null);
     const descriptionRef = useRef(null);
@@ -65,7 +63,6 @@ const CohortDetails = (props) => {
 
     const generateCCDIHub_url = (cohortId) => {
         tooltipOpen.current = false;
-        setShowToolTip(false);
         const data = cohortId;
         const participantIds = data.participants.map(p => p.participant_id).join("|");
         const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
@@ -117,10 +114,6 @@ const CohortDetails = (props) => {
         }
     }, [isEditingDescription]);
 
-    useEffect(() => {
-        setShowToolTip(tooltipOpen.current);
-    }, [tooltipOpen.current]);
-
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
             setShowDownloadDropdown(false); // Close the dropdown when clicking outside
@@ -141,19 +134,6 @@ const CohortDetails = (props) => {
             ...temporaryCohort,
             ...localCohort,
         });
-    }
-
-    const handleHideTooltip = (eventSource) => {
-        if (eventSource === "tooltipText") {            
-            tooltipOpen.current = false;
-            setShowToolTip(false);
-        } else if (eventSource === "questionIcon") {
-            setTimeout(() => {
-                if (!movedToToolTipText.current) {
-                    tooltipOpen.current = false;
-                    setShowToolTip(false);}
-            }, 350);
-        }
     }
 
     const handleViewAnalysisClick = (cohort)=>{
@@ -290,7 +270,7 @@ const CohortDetails = (props) => {
             <Gap/>
             <b>If cohort size &gt; 600:</b><br/> 
             Download the manifest and upload it manually to the&nbsp;
-            <a style={{zIndex: 10000}} onClick={()=>{tooltipOpen.current = false; setShowToolTip(false);}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
+            <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
                 CCDI Hub 
                 <img 
                     src={LinkoutBlue} 
@@ -557,10 +537,8 @@ const CohortDetails = (props) => {
                         </Button> 
                         </ToolTip>
                         <ToolTip
-                            open={tooltipOpen.current}
-                            disableHoverListener
                             maxWidth="335px"
-                            title={<div onMouseEnter={() => { movedToToolTipText.current=true;  tooltipOpen.current = true; setShowToolTip(true);}} onMouseLeave={() => handleHideTooltip("tooltipText")}>
+                            title={<div>
                             {exploreCCDIHubTooltip}
                             </div>}
                             placement="top-end"
@@ -569,8 +547,6 @@ const CohortDetails = (props) => {
                             arrowSize="30px"
                         >
                         <Button 
-                            onMouseEnter={()=>{ movedToToolTipText.current = false; tooltipOpen.current = true; setShowToolTip(true);}}
-                            onMouseLeave={() => handleHideTooltip("questionIcon")}
                             variant="contained"
                             className={ localCohort.participants.length > 600? classes.exploreButtonFaded : classes.exploreButton }
                             onClick={() => localCohort.participants.length <= 600 && generateCCDIHub_url(localCohort)}
