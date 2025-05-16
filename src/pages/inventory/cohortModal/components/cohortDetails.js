@@ -573,7 +573,7 @@ const CohortDetails = (props) => {
                             onMouseLeave={() => handleHideTooltip("questionIcon")}
                             variant="contained"
                             className={ localCohort.participants.length > 600? classes.exploreButtonFaded : classes.exploreButton }
-                            onClick={() => localCohort.participants.length < 600 && generateCCDIHub_url(localCohort)}
+                            onClick={() => localCohort.participants.length <= 600 && generateCCDIHub_url(localCohort)}
                         >
                         <span style={{textAlign: 'left'}}>
                         EXPLORE <br /> IN CCDI Hub
