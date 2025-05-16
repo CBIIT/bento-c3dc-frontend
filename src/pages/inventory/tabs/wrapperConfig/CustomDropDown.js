@@ -321,7 +321,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   };
 
   const onExistingOptionSelect = (option,isDisabled,totalRowCount) =>{
-    if(option === "all participants" && totalRowCount>=4000){
+    if(option === "all participants" && totalRowCount>4000){
       setShowPopupMessage("You are not allowed to add more than 4000 participants in a single cohort");
     }
 
@@ -353,7 +353,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
         <DropdownItem key={index} className='new-cohort-item' isDisabled={true}>{option}</DropdownItem>
       )
     }
-    if (option === "All Participants" && totalRowCount >= 4000) {
+    if (option === "All Participants" && totalRowCount > 4000) {
       return (
         <DropdownItem className='new-cohort-item' onClick={(() => {setShowPopupMessage("You are not allowed to add more than 4000 participants in a single cohort")})} isDisabled={false} key={index}>{option}</DropdownItem>
       )
@@ -364,7 +364,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   }
 
   const getExistingCohortDropDownItem = (index,option,hiddenSelectedRows,totalRowCount) => {
-    const isAllParticipantDisabled = totalRowCount >= 4000 || checkedItems.length ===0;
+    const isAllParticipantDisabled = totalRowCount > 4000 || checkedItems.length ===0;
     const isSelectedParticipantDisabled = hiddenSelectedRows.length === 0 || checkedItems.length ===0;
     if (option === "Selected Participants") {
       return (
