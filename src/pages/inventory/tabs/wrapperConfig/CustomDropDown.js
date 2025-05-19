@@ -171,6 +171,8 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   const [isOpen, setIsOpen] = useState(false);
   const tableContext = useContext(TableContext);
   const [isActive, setIsActive] = useState(false);
+  const [exceedLimitAllParticipant, setExceedLimitAllParticipant] = useState(false);
+  const [exceedLimitSelectedParticipant, setExceedLimitSelectedParticipant] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
   const { setShowCohortModal } = useContext(CohortModalContext);
   const [showPopupMessage,setShowPopupMessage] = useState("");
@@ -196,6 +198,40 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
     }
 
   }, [isOpen]);
+
+ 
+  useEffect(() => {
+    if (checkedItems.length > 0) {
+      const cohortState = JSON.parse(localStorage.getItem('cohortState'));
+      let exceedItemFoundAll = false;
+      let exceedItemFoundSelected = false;
+      checkedItems.forEach((cohortId) => {
+        const cohort = cohortState[cohortId];
+        if (cohort) {
+          const existingParticpantCount = cohort.participants.length;
+          if ((existingParticpantCount + totalRowCount) > 4000) {
+            setExceedLimitAllParticipant(true);
+            exceedItemFoundAll = true;
+          }
+          if ((existingParticpantCount + hiddenSelectedRows.length) > 4000) {
+            setExceedLimitSelectedParticipant(true);
+            exceedItemFoundSelected = true;
+          }
+        }
+      })
+      if (!exceedItemFoundAll) {
+        setExceedLimitAllParticipant(false);
+      }
+      if (!exceedItemFoundSelected) {
+        setExceedLimitSelectedParticipant(false);
+      }
+    } else {
+      setExceedLimitAllParticipant(false);
+      setExceedLimitSelectedParticipant(false);
+    }
+  }, [checkedItems]);
+
+
   const toggleDropdown = () => isActive && setIsOpen(!isOpen);
 
   const clearSelection = () => {
@@ -323,8 +359,13 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   const onExistingOptionSelect = (option,isDisabled,totalRowCount) =>{
     if(option === "all participants" && totalRowCount>4000){
       setShowPopupMessage("You are not allowed to add more than 4000 participants in a single cohort");
+    }if(option === "all participants" && exceedLimitAllParticipant){
+      setShowPopupMessage("You are not allowed to add more than 4000 participants in a single cohort");
     }
 
+    if(option === "selected participants" && isDisabled){
+      setShowPopupMessage("You are not allowed to add more than 4000 participants in a single cohort");
+    }
     if(!isDisabled){
       handleSelect(option);    }
   }
@@ -364,8 +405,8 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   }
 
   const getExistingCohortDropDownItem = (index,option,hiddenSelectedRows,totalRowCount) => {
-    const isAllParticipantDisabled = totalRowCount > 4000 || checkedItems.length ===0;
-    const isSelectedParticipantDisabled = hiddenSelectedRows.length === 0 || checkedItems.length ===0;
+    const isAllParticipantDisabled = totalRowCount > 4000 || checkedItems.length ===0 || exceedLimitAllParticipant;
+    const isSelectedParticipantDisabled = hiddenSelectedRows.length === 0 || checkedItems.length ==0 || exceedLimitSelectedParticipant;
     if (option === "Selected Participants") {
       return (
         <DropdownItem key={index}  isDisabled={isSelectedParticipantDisabled}  onClick={()=>{onExistingOptionSelect(option.toLowerCase(),isSelectedParticipantDisabled, totalRowCount)}}>{option}</DropdownItem>
