@@ -71,8 +71,6 @@ export const CohortAnalyzer = () => {
     const { Notification } = useGlobal();
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [HoveredCohort, setHoveredCohort] = useState(true);
-    const [tooltipOpen, setTooltipOpen] = useState(false);
-    const [tooltipOpenExplore, setTooltipOpenExplore] = useState(false);
     const navigate = useNavigate();
     
     let movedToToolTipText = false;
@@ -117,32 +115,6 @@ export const CohortAnalyzer = () => {
         window.open(finalUrl, '_blank');
 
         return finalUrl;
-    }
-    
-    const handleHideTooltip = (eventSource) => {
-        if (eventSource === "tooltipText") {            
-            setTooltipOpen(false);
-        } else if (eventSource === "questionIcon") {
-            setTimeout(() => {
-                if (!movedToToolTipText) {
-                    setTooltipOpen(false);
-                }
-            }, 1000);
-        }
-
-    }
-
-    const handleHideTooltipExplore = (eventSource) => {
-        if (eventSource === "tooltipText") {            
-            setTooltipOpenExplore(false);
-        } else if (eventSource === "questionIcon") {
-            setTimeout(() => {
-                if (!movedToToolTipTextExplore) {
-                    setTooltipOpenExplore(false);
-                }
-            }, 1000);
-        }
-
     }
 
     const handleMouseMove = (event, cohortName) => {
@@ -896,20 +868,19 @@ padding-left: 5px;
                             </div>
 
                             {/* BUILD IN EXPLORE DASHBOARD */}
-                            <div style={{ display: 'flex', alignItems: 'center', marginRight: '-10px' }}>
+                            <div style={{ position:"relative", marginRight: '6px' }}>
                             <button
                                 onClick={() => selectedCohorts.length > 0 && handleBuildInExplore()}
                                 className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
                             >
                                 BUILD IN EXPLORE DASHBOARD
                             </button>
+                            <div style={{ position:"absolute",top:-5,right:-13, }}>
                             <ToolTip
-                                open={tooltipOpen}
-                                disableHoverListener
                                 maxWidth="335px"
                                 border={'1px solid #598ac5'}
                                 arrowBorder={'1px solid #598AC5'}
-                                title={<div onMouseEnter={() => { movedToToolTipText = true; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("tooltipText")}>
+                                title={<div>
                                 {exploreDashboardTooltip}
                                 </div>}
                                 placement="top-end"
@@ -917,14 +888,15 @@ padding-left: 5px;
                                 interactive
                                 arrowSize="30px"
                             >
-                                <div style={{ marginLeft: 5 }}>
-                                <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipText = false; setTooltipOpen(true); }} onMouseLeave={() => handleHideTooltip("questionIcon")} />
-                                </div>
+                                
+                                <img alt="Question Icon" src={questionIcon} width={10} style={{border:"0px"}} />
+                               
                             </ToolTip>
+                             </div>
                             </div>
 
                             {/* EXPLORE IN CCDI HUB */}
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <div style={{ position:"relative", marginRight: '10px' }}>
                             <button
                                 onClick={() => (selectedCohorts.length > 0 && rowData.length <= 600) ? handleExportToCCDIHub(): {}}
                                 className={(selectedCohorts.length > 0  && rowData.length <= 600) ? classes.exploreButton : classes.exploreButtonFaded}
@@ -932,13 +904,12 @@ padding-left: 5px;
                                 EXPLORE IN CCDI HUB
                                 <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
                             </button>
+                            <div style={{ position:"absolute",top:-5,right:-13, }}>
                             <ToolTip
-                                open={tooltipOpenExplore}
-                                disableHoverListener
                                 maxWidth="335px"
                                 border={'1px solid #598ac5'}
                                 arrowBorder={'1px solid #598AC5'}
-                                title={<div onMouseEnter={() => { movedToToolTipTextExplore = true; setTooltipOpenExplore(true); }} onMouseLeave={() => handleHideTooltipExplore("tooltipText")}>
+                                title={<div >
                                 {exploreCCDIHubTooltip}
                                 </div>}
                                 placement="top-end"
@@ -946,10 +917,10 @@ padding-left: 5px;
                                 interactive
                                 arrowSize="30px"
                             >
-                                <div style={{ marginLeft: 5 }}>
-                                <img alt="Question Icon" src={questionIcon} width={10} style={{ position: 'relative', top: -14, left: -2 }} onMouseEnter={() => { movedToToolTipTextExplore = false; setTooltipOpenExplore(true); }} onMouseLeave={() => handleHideTooltipExplore("questionIcon")} />
-                                </div>
+                                <img alt="Question Icon" src={questionIcon} width={10} style={{border:"0px"}}/>
+                                
                             </ToolTip>
+                            </div>
                             </div>
                         </div>
                     </div>
