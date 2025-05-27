@@ -329,20 +329,24 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
         toBeAdded = data.participantOverview.map((item) => ({ participant_id: item.participant_id, id: item.id, dbgap_accession: item.dbgap_accession }));
       }
 
+      let participantCount = null;
       clearSelection();
       dispatch(onCreateNewCohort(
         "",
         "",
         buildCohortFormat(toBeAdded),
         (count) => {
-          triggerNotification(count);
-          setShowCohortModal(true);
+          participantCount = count;
         },
         (error) => {
-
         //setWarningMessage(error.toString().replace("Error:",""));
         }
       ));
+
+      if (participantCount) {
+        triggerNotification(participantCount);
+        setShowCohortModal((prev)=>true);
+      }
     }
   };
   const handleCheckbox = async (value) => {
