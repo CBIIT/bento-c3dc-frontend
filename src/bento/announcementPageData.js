@@ -13,108 +13,68 @@ import fig12 from "../assets/announcement/fig12.svg";
 import fig13 from "../assets/announcement/fig13.svg";
 
 export const announcementPageData = [
-    {
-        "title": "Resource Update",
-        "timestamp": "March 5, 2025",
-        "image": fig10,
-        "type": 2,
-        "is_release_notes": true,
-        "alt": 'Hand holding a yellow and red megaphone against a red and teal background with the text "C3DC News."',
-        "verbiage": "We are excited to announce the release of the C3DC application version 1.4.0! This release includes the new TARGET datasets (phs000468 and phs000469), enhancements to the Explore page Cohort Selector, and the addition of the new Cohort Analyzer feature. These updates enhance the user experience and provide more comprehensive data access. For full release details, please visit the  <a href='/release_notes_pdf?existingUser' target='_blank'>Release Note</a>  to see all the details in the release note."
-    },
-    {
-        "title": "Cohort Analyzer (New Feature)",
-        "timestamp": "March 5, 2025",
-        "image": fig11,
-        "type": 2,
-        "is_release_notes": true,
-        "alt": 'Person typing on a laptop with a notepad and pencil beside it; the word "Updates" is displayed in the background.',
-        "verbiage": "The new Cohort Analyzer feature allows users to visualize results on a dedicated page, including Venn diagrams that highlight overlaps and unique elements among selected cohorts. Users can explore data views such as participants ID, diagnosis, and treatment."
-    },
-    {
-        "title": "Studies Page",
-        "timestamp": "March 5, 2025",
-        "image": fig12,
-        "type": 2,
-        "is_release_notes": true,
-        "alt": 'Laptop screen displaying "UPDATING" with a partially filled progress bar, surrounded by abstract design elements including an orange arrow and gears.',
-        "verbiage": "The source files for all TARGET studies and manifest metadata for CCDI studies are now available for download through the Studies Details page. This update provides easier access to data for analysis and research."
-    },
-    {
-        "title": "Cohort Selector",
-        "timestamp": "March 5, 2025",
-        "image": fig13,
-        "type": 2,
-        "is_release_notes": true,
-        "alt": "Woman smiling at her desk with two monitors displaying code.",
-        "verbiage": "The C3DC application now allows users to select up to 20 cohorts—an increase from the previous limit of 10—and generate harmonized clinical manifest files in CSV or JSON formats. These files can be utilized on other platforms for further analysis."
-    },
-    {
-        "title": "Datasets Update",
-        "timestamp": "March 5,2025",
-        "image": fig9, 
-        "type": 1,
-        "is_release_notes": true,
-        "alt": "Abstract digital image with binary code and glowing circuit lines.",
-        "verbiage": " This release includes two new harmonized TARGET datasets (phs000468 and phs000469), along with updates to existing CCDI dataset (phs002517). Two datasets (phs003111 and phs002620) have been temporarily removed and will be updated soon. "
-    },
-    {
-        "title": "Data Model Update",
-        "timestamp": "March 5,2025",
-        "image": fig8, 
-        "type": 1,
-        "is_release_notes": true,
-        "alt": "A blue-toned graphic illustrating a network of interconnected nodes, some of which include user icons, representing digital connectivity and social networks.",
-        "verbiage": "The C3DC data model has been enhanced with additional data properties to support genetic analysis and improve data organization and usability. This update helps researchers integrate genetic and clinical data for more efficient and insightful analysis in childhood cancer research."
-
-    },
-    {
-        "title": "Datasets Update",
-        "timestamp": "November 7, 2024",
-        "image": fig6,
-        "type": 1,
-        "is_release_notes": true,
-        "alt": "An animated laptop surrounded by animated objects, including a server, gears, and a magnifying glass.",
-        "verbiage": "This release includes three new harmonized datasets (phs003432, phs003519, and phs000466) and updates to existing datasets (phs002517, and phs002790) on the C3DC Explore page. All the data have been aligned to the most recent version of the data model. For more detailed information about these changes and to review the full list of updates, please refer to our data release update."
-    },
-    {
-        "title": "Data Model Update",
-        "timestamp": "Novemebr 7, 2024",
-        "image": fig7,
-        "type": 1,
-        "alt": "A web-like design connecting various icons, including people icons and profile icons.",
-        "verbiage": "In this release, we are introducing enhancements to our data model. Specifically, we have added two new nodes: treatment and treatment response. These additions will allow for more detailed tracking and analysis of treatment regimens and their outcomes, providing valuable insights for researchers and clinicians."
-    },
-    {
-        "title": "Resource Update",
-        "timestamp": "November 7, 2024",
-        "image": fig1,
-        "type": 2,
-        "alt": "Megaphone",
-        "verbiage": "We are excited to announce that Release 4 of the C3DC application is now available! This release introduces three new datasets (phs003432, phs003519, and phs000466), adds new facets to the Explore page (including treatment and treatment response nodes), and introduces new sections under the About page, such as an Announcements page and Release Notes. These updates are designed to enhance the user experience and provide more comprehensive data updates. Please visit the <a href='/release_notes_pdf?existingUser' target='_blank'>Release Note</a> to see all the details in the release note."
-    },
-    {
-        "title": "Home Page",
-        "timestamp": "November 7, 2024",
-        "image": fig4,
-        "type": 2,
-        "alt": "A laptop screen displaying a progress bar with the text 'Updating' shown on the screen.",
-        "verbiage": "We have enhanced the homepage by introducing a quick link to the announcement page, making it easier for users to access important updates regarding data releases and application changes. This improvement navigation, allowing users to stay informed about the latest developments. In addition, we've added a new feature that allows users to view the version history of our data updates, providing increased transparency and helping users track data updates more effectively."
-    },
-    {
-        "title": "Explore Page",
-        "timestamp": "November 7, 2024",
-        "image": fig3,
-        "type": 2,
-        "alt": "A top-down view of a laptop, with a person typing on the keyboard",
-        "verbiage": "In this release, we have enhanced the facet search by reorganizing it to improve usability and streamline the search process. A key update is the replacement of the Ethnicity widget with a newly introduced Treatment widget. This new widget allows users to filter data more effectively by offering advanced treatment-related options, enabling them to explore and analyze treatment-specific data with greater precision and generate more targeted insights."
-    },
-    {
-        "title": "Cohort Selector",
-        "timestamp": "November 7, 2024",
-        "image": fig2,
-        "type": 2,
-        "alt": "A woman wearing glasses sitting in front of a computer",
-        "verbiage": "This new feature in the explore page provides users with the ability to select up to 10 cohort groups (participants) and generate clinical and manifest files in CSV or JSON format, which can then be utilized on other platforms for further analysis. Users are able to customize each cohort by assigning a name and description, and they can view, add, or remove participants from individual cohorts. Additionally, users have the option to delete an entire cohort if necessary. The application also offers a view of all selected cohorts."
-    }
+  {
+    "title": "Datasets Update",
+    "timestamp": "June 18, 2025",
+    "image": fig9,
+    "type": 1,
+    "is_release_notes": true,
+    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "verbiage": "This release includes newly harmonized data from the TARGET studies (phs000463, phs000464, phs000465) and PIVOT neuroblastoma PDX models data (phs003163), along with updates to several existing CCDI datasets."
+  },
+  {
+    "title": "Data Model Update",
+    "timestamp": "June 18, 2025",
+    "image": fig8,
+    "type": 1,
+    "is_release_notes": true,
+    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "verbiage": "The C3DC data model has been enhanced with a new synonym node to enable cross-study participant mapping via the CCDI Participant Index (CPI), allowing linkage of data across studies. The treatment node was also updated with new dose-related properties (dose, dose_unit, dose_route, dose_frequency). Additionally, new permissible values were added to various properties to support data organization and usability for newly suggested studies."
+  },
+  {
+    "title": "Resource Update",
+    "timestamp": "June 18, 2025",
+    "image": fig1,
+    "type": 2,
+    "is_release_notes": true,
+    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "verbiage": "We are excited to announce the release of the C3DC application version 1.6.0! This release includes the newly harmonized datasets phs000463, phs000464, phs000465, and phs003163 as well as updates to existing datasets. It also introduces enhancements to the Explore page, Cohort Analyzer, and Data Model Navigator as a new feature. These updates will enhance the user’s experience and provide more comprehensive data access. For full release details, please visit the <a href='/release_notes_pdf?existingUser' target='_blank'>Release Note</a>"
+  },
+  {
+    "title": "Explore page (New Feature)",
+    "timestamp": "June 18, 2025",
+    "image": fig2,
+    "type": 2,
+    "is_release_notes": true,
+    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "verbiage": "Users can now copy and share query URLs for a filtered view of the C3DC Explore Dashboard. This allows users to save faceted filters of participant data for later use or to share with other users. Once at least one facet is selected, a query URL will be generated below the summary counts ribbon in the C3DC Explore Dashboard. Users can then copy the URL or clear it to reset all applied filters."
+  },
+  {
+    "title": "Cohort Selector",
+    "timestamp": "June 18, 2025",
+    "image": fig3,
+    "type": 2,
+    "is_release_notes": true,
+    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "verbiage": "Flexible participant selection has been added, allowing users to include either all participants from a filtering of participants in the Create Cohort or just a selected subset from the faceted filtering. Note that this does not add all participants released in the C3DC to a cohort. The cohort list in <i>View All Cohorts</i> window now offers a clearer view of all cohorts and provides direct access button to the <i>Cohort Analyzer</i>. Users can also export cohorts (up to 600 participants) to the CCDI Hub with data pre-filtered by selected participants."
+  },
+  {
+    "title": "Cohort Analyzer Improvement",
+    "timestamp": "June 18, 2025",
+    "image": fig4,
+    "type": 2,
+    "is_release_notes": true,
+    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "verbiage": "Users can export their set of cohorts to a pre-filtered view within the C3DC Explore Dashboard for easier review of participant data. Export of participants in Cohort Analyzer as a pre-filtered view the CCDI Hub has also been added to simplify finding data files associated with those participants."
+  },
+  {
+    "title": "Data Model Navigator",
+    "timestamp": "June 18, 2025",
+    "image": fig1,
+    "type": 2,
+    "is_release_notes": true,
+    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "verbiage": "The C3DC Data Model can now be interactively browsed with the newly released C3DC Data Model Navigator, available at the ‘Data Model’ link at the top of the C3DC application page. The Data Model Navigator allows users to browse node entities, view node properties and metadata, and download node metadata templates within an interactive user interface."
+  }
 ];
+
