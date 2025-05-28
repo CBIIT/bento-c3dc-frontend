@@ -74,7 +74,7 @@ export const announcementPageData = [
     "type": 2,
     "is_release_notes": true,
     "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
-    "verbiage": "The C3DC Data Model can now be interactively browsed with the newly released C3DC Data Model Navigator, available at the ‘Data Model’ link at the top of the C3DC application page. The Data Model Navigator allows users to browse node entities, view node properties and metadata, and download node metadata templates within an interactive user interface."
+    "verbiage": "The C3DC Data Model can now be interactively browsed with the newly released Data Model Navigator, available from the ‘Data Model’ link at the top of the C3DC application page. The Data Model Navigator enables users to explore node entities, inspect their properties and expected values, and visualize the relationships between nodes."
   }
 ];
 
