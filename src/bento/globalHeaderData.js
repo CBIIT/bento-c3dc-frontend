@@ -162,7 +162,7 @@ export const navbarSublists = {
       },
       {
         name: 'Release Notes',
-        link: '/release_notes_pdf',
+        link: '/release_notes_pdf?existingUser',
         className: 'navMobileSubItem',
         externalLink: true,
       },
