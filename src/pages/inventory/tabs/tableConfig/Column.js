@@ -68,17 +68,29 @@ export const CustomCellView = (props) => {
 
   if (props.linkAttr) {
     const { rootPath } = props.linkAttr;
-    return (
-      <Link
-        className={cellTypes.LINK}
-        href={`${rootPath}${label}`}
-        target="_blank"
-        rel="noopener noreferrer"
-      >
+    if (rootPath.startsWith('http://') || rootPath.startsWith('https://')) {
+      return (
+        <Link
+          className={cellTypes.LINK}
+          href={`${rootPath}${label}`}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
 
-        <Typography >{label}</Typography>
-      </Link>
-    )
+          <Typography >{label}</Typography>
+        </Link>
+      );
+    }
+    else {
+      return (
+        <Link
+          className={cellTypes.LINK}
+          href={`${rootPath}${label}`}
+        >
+          <Typography >{label}</Typography>
+        </Link>
+      );
+    }
   }
 
   if (Array.isArray(label)) {
