@@ -1256,7 +1256,7 @@ export const tabContainers = [
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
-          rootPath: '/studies/',
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
         },
         cellType: cellTypes.CUSTOM_ELEM,
       },
