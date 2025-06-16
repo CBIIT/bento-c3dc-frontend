@@ -174,9 +174,9 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   const [exceedLimitAllParticipant, setExceedLimitAllParticipant] = useState(false);
   const [exceedLimitSelectedParticipant, setExceedLimitSelectedParticipant] = useState(false);
   const [checkedItems, setCheckedItems] = useState([]);
-  const { setShowCohortModal } = useContext(CohortModalContext);
+  //const { setShowCohortModal } = useContext(CohortModalContext);
   const [showPopupMessage,setShowPopupMessage] = useState("");
-  //const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges } = useContext(CohortModalContext);
+  const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges } = useContext(CohortModalContext);
 
   useEffect(() => {
     const { context } = tableContext;
@@ -339,7 +339,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
           participantCount = count;
         },
         (error) => {
-        //setWarningMessage(error.toString().replace("Error:",""));
+        setWarningMessage(error.toString().replace("Error:",""));
         }
       ));
 
