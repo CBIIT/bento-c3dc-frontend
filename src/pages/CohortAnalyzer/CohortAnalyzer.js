@@ -69,8 +69,6 @@ export const CohortAnalyzer = () => {
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { CohortModal } = CohortModalGenerator();
     const { Notification } = useGlobal();
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [HoveredCohort, setHoveredCohort] = useState(true);
     const navigate = useNavigate();
 
     const handleUserRedirect = () => {
@@ -114,16 +112,7 @@ export const CohortAnalyzer = () => {
         return finalUrl;
     }
 
-    const handleMouseMove = (event, cohortName) => {
 
-        if (cohortName.length > 17) {
-            setHoveredCohort(cohortName)
-        }
-        setMousePosition({ x: event.clientX, y: event.clientY });
-    };
-    const handleMouseLeave = () => {
-        setHoveredCohort("");
-    }
     const searchRef = useRef();
 
 
@@ -716,7 +705,7 @@ padding-left: 5px;
                         {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state, selectedCohorts) : Object.keys(state)).map((cohort) => {
                             let cohortName = state[cohort].cohortName + " (" + state[cohort].participants.length + ")";
                             return (
-                                <div onMouseMove={(e) => { handleMouseMove(e, cohortName) }} onMouseLeave={handleMouseLeave}
+                                <div 
                                     style={{
                                         cursor: 'pointer',
                                         background: selectedCohorts.includes(cohort)
