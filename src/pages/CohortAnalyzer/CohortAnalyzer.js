@@ -44,7 +44,7 @@ import {
 import styled from "styled-components";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
 import store from "../../store";
-import { updateAutocompleteData, updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
+import { updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
 
 export const CohortAnalyzer = () => {
     const classes = useStyle();
@@ -72,9 +72,6 @@ export const CohortAnalyzer = () => {
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [HoveredCohort, setHoveredCohort] = useState(true);
     const navigate = useNavigate();
-    
-    let movedToToolTipText = false;
-    let movedToToolTipTextExplore = false;
 
     const handleUserRedirect = () => {
         // NOTE: If needed to show in only Autocomplete of Localfind.
@@ -136,7 +133,7 @@ export const CohortAnalyzer = () => {
 
         if (searchRef.current) {
             searchRef.current.value = e.target.value;
-            if (searchRef.current.value == "") {
+            if (searchRef.current.value === "") {
 
                 setTimeout(() => {
                     searchRef.current.focus();
@@ -346,10 +343,6 @@ export const CohortAnalyzer = () => {
             }
 
         }
-    }
-
-    function shortenText(text, maxSize = 17) {
-        return text.length > maxSize ? text.slice(0, maxSize) + "..." : text;
     }
 
     const location = useLocation();
@@ -622,7 +615,7 @@ padding-left: 5px;
         <br />
         <Gap />
         <b>If cohort size &gt; 600:</b><br />
-        Download the manifest and upload it manually to the <a style={{ zIndex: 10000, color:"#598AC5", fontWeight:"bolder" }} target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
+        Download the manifest and upload it manually to the <a style={{ zIndex: 10000, color:"#598AC5", fontWeight:"bolder" }} rel="noreferrer" target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
             <img src={LinkoutBlue} width={14} height={14} style={{ padding: "4px 0px 0px 2px", bottom: 0, position: 'relative' }} alt="Linkout Icon" />
         </a> by following these steps:
         <ol style={{ paddingLeft: "1rem" }}>
