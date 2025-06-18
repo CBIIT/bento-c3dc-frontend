@@ -182,7 +182,6 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
     const { context } = tableContext;
     const {
       hiddenSelectedRows = [],
-      totalRowCount = 0,
     } = context;
     if (enabledWithoutSelect) {
       setIsActive(true);
@@ -410,7 +409,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
 
   const getExistingCohortDropDownItem = (index,option,hiddenSelectedRows,totalRowCount) => {
     const isAllParticipantDisabled = totalRowCount > 4000 || checkedItems.length ===0 || exceedLimitAllParticipant;
-    const isSelectedParticipantDisabled = hiddenSelectedRows.length === 0 || checkedItems.length ==0 || exceedLimitSelectedParticipant;
+    const isSelectedParticipantDisabled = hiddenSelectedRows.length === 0 || checkedItems.length === 0 || exceedLimitSelectedParticipant;
     if (option === "Selected Participants") {
       return (
         <DropdownItem key={index}  isDisabled={isSelectedParticipantDisabled}  onClick={()=>{onExistingOptionSelect(option.toLowerCase(),isSelectedParticipantDisabled, totalRowCount)}}>{option}</DropdownItem>
