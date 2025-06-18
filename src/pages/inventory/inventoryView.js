@@ -8,6 +8,7 @@ import StatsView from '../../components/Stats/StatsView';
 import WidgetView from './widget/WidgetView';
 import TabsView from './tabs/TabsView';
 import QueryBarView from './filterQueryBar/QueryBarView';
+import UserGuidButton from './sideBar/UserGuidButton';
 
 const Inventory = ({
   classes,
@@ -26,6 +27,7 @@ const Inventory = ({
     <div className={classes.contentBox}>
       <div className={classes.content}>
         <div className={classes.sideBar}>
+         <UserGuidButton />
           <label for="local_find_input" style={{ display: 'none' }}>Participant ID Text Search box</label>
           <BentoFacetFilter
             searchData={dashData}
