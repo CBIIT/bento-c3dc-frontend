@@ -13,7 +13,7 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
-// import { useSelector } from 'react-redux';
+import { setCookie, getCookie } from '../util';
 import * as text from './OverlayText.json';
 import DialogThemeProvider from './OverlayThemConfig';
 
@@ -22,30 +22,14 @@ const OverlayWindow = () => {
 
   const handleClose = () => {
     setOpen(false);
-    sessionStorage.setItem('overlayLoad', 'true');
+    setCookie("privacyNoticeAccepted", "true");
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isExistingUser = urlParams.has('existingUser');
-
-    if (isExistingUser) {
-      sessionStorage.setItem('overlayLoad', 'true'); 
-      urlParams.delete('existingUser');
-      window.history.replaceState({}, '', `${window.location.pathname}?${urlParams.toString()}`);
-      return
-    }
-
-    if (!sessionStorage.length) {
-      setOpen(true)
-    }
-  }, []);
-  
-  useEffect(() => {
-    if (!sessionStorage.length) {
+    if (!getCookie("privacyNoticeAccepted")) {
       setOpen(true);
     }
-  }, [open]);
+  }, []);
 
   const content = text.content.map((item) => (
     <DialogContentText id="alert-dialog-description">
