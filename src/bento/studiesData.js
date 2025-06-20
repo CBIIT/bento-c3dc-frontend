@@ -25,6 +25,11 @@ const table = {
       header: 'Study Name',
       tooltipText: 'Sort by Study Name',
       display: true,
+      linkAttr: {
+        rootPath: '/studies/',
+        linkField: 'dbgap_accession',
+      },
+      cellType: cellTypes.CUSTOM_ELEM,
     },
     {
       dataField: 'num_participants',
@@ -44,10 +49,9 @@ const table = {
       dataField: 'dbgap_accession',
       header: 'dbGaP Accession',
       tooltipText: 'Sort by dbGaP ACCESSION',
-      cellType: cellTypes.LINK,
+      cellType: cellTypes.CUSTOM_ELEM,
       linkAttr: {
-        rootPath: '/studies',
-        pathParams: ['dbgap_accession']
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
       },
       display: true,
     },
