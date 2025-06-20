@@ -6,7 +6,7 @@
  * @param {string} path 
  */
 export function setCookie(name, value, seconds = 60 * 60 * 24, path = '/') {
-  document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${seconds}; path=${path}`;
+  document.cookie = `${name}=${encodeURIComponent(value)}; max-age=${seconds}; path=${path}; SameSite=Strict`;
 }
 
 /**
