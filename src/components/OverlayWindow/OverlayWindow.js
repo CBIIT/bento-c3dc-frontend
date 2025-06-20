@@ -19,14 +19,15 @@ import DialogThemeProvider from './OverlayThemConfig';
 
 const OverlayWindow = () => {
   const [open, setOpen] = useState(false);
-
+  const PRIVACY_NOTICE_ACCEPTED_COOKIE = "privacyNoticeAccepted";
+  
   const handleClose = () => {
     setOpen(false);
-    setCookie("privacyNoticeAccepted", "true");
+    setCookie(PRIVACY_NOTICE_ACCEPTED_COOKIE, "true");
   };
 
   useEffect(() => {
-    if (!getCookie("privacyNoticeAccepted")) {
+    if (!getCookie(PRIVACY_NOTICE_ACCEPTED_COOKIE)) {
       setOpen(true);
     }
   }, []);
