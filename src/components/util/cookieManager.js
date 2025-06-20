@@ -16,5 +16,5 @@ export function setCookie(name, value, seconds = 60 * 60 * 24, path = '/') {
  */
 export function getCookie(name) {
   const matchingCookie = document.cookie.split('; ').find(row => row.startsWith(name + '='));
-  return matchingCookie ? matchingCookie.split('=')[1] : null;
+  return matchingCookie ? decodeURIComponent(matchingCookie.split('=')[1]) : null;
 }
