@@ -261,12 +261,22 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   } = context;
 
   const buildCohortFormat = (jsonArray) => {
-    return jsonArray.map(item => ({
-      ...item,
-      participant_id: typeof item.participant === 'object' ? item.participant.participant_id : item.participant_id,
-      participant_pk: typeof item.participant === 'object' ? item.participant.id : item.id,
-    }));
-  };
+   const seen = new Set();
+   return jsonArray
+     .map(item => ({
+       ...item,
+       participant_id: typeof item.participant === 'object' ? item.participant.participant_id : item.participant_id,
+       participant_pk: typeof item.participant === 'object' ? item.participant.id : item.id,
+     }))
+     .filter(item => {
+       const duplicate = seen.has(item.participant_id);
+       seen.add(item.participant_id);
+       return !duplicate;
+     });
+ };
+
+
+
 
   const handleSelect = async (value) => {
     if (isActive && type === "existing") {
