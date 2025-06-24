@@ -44,17 +44,22 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         deletionType: "",
     });
     const tooltipOpen = useRef(false);
+    const alertRef = useRef(null);
 
     useEffect(() => {
-        if (alert.message) {
-            const timer = setTimeout(() => {
-                setAlert({ type: '', message: '' }); // Clear the alert after 3 seconds
-            }, 2500);
-
-            // Cleanup timer on component unmount
-            return () => clearTimeout(timer);
+    if (alert.message) {
+        if (alertRef.current) {
+            alertRef.current.style.display = '';
         }
-    }, [alert]);
+        const timer = setTimeout(() => {
+            if (alertRef.current) {
+                alertRef.current.style.display = 'none';
+            }
+        }, 2500);
+
+        return () => clearTimeout(timer);
+    }
+}, [alert.message]);
 
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
@@ -101,9 +106,26 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
             participants: localCohort.participants,
             searchText: localCohort.searchText,
         })
+        
+        if(alertRef.current){
+
+        alertRef.current.style.display = "none";
+        }
     };
 
+    useEffect(() => {
+        if(alertRef.current){
+
+alertRef.current.style.display = "none";
+        }
+    },[])
+
     const handleClearCurrentCohortChanges = () => {
+        if(alertRef.current){
+
+
+        alertRef.current.style.display = "none";
+        }
         setCurrentCohortChanges(null);
     };
 
@@ -117,6 +139,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                 participants: localCohort.participants
             },
             () => {
+               // alertRef.current.style.display = 'flex';
                 setAlert({ type: 'success', message: 'Cohort updated successfully!' })
                 handleClearCurrentCohortChanges();
             },
@@ -182,7 +205,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     />
                                 </span>
                                 {alert.message && (
-                                    <Alert severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
+                                    <Alert ref={alertRef} severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
                                         {alert.message}
                                     </Alert>
                                 )}
