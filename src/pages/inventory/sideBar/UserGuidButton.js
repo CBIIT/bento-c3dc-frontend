@@ -28,8 +28,8 @@ import figureB3 from '../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg';
 const UseGuideButtonContainer = styled.div`
     .buttonContainer {
         display: flex;
-        margin-left: 6px;
-        margin-top: 7px;
+        margin-left: 19px;
+        margin-top: 17px;
     }
 
     .buttonText {
