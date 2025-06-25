@@ -26,6 +26,7 @@ const CohortList = (props) => {
         handleDeleteAllCohorts,
         handleClearCurrentCohortChanges,
         state,
+        switchedCohortRef,
     } = props;
 
     const listHeading = config && config.listHeading && typeof config.listHeading === 'string'
@@ -133,6 +134,7 @@ const CohortList = (props) => {
                                         setSelectedCohort(state[cohort].cohortId)
                                         handleClearCurrentCohortChanges();
                                     }
+                                    switchedCohortRef.current = true;
                                 }}
                             >
                                 <span className={classes.cohortListItemText}>

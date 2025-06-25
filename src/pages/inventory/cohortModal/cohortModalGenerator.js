@@ -45,21 +45,55 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     });
     const tooltipOpen = useRef(false);
     const alertRef = useRef(null);
+    const success = useRef(false);
+    const switchedCohort = useRef(false);
+    const errMessage = useRef("");
 
     useEffect(() => {
-    if (alert.message) {
-        if (alertRef.current) {
-            alertRef.current.style.display = '';
+        if (alert.message) {
+            if (alert.current) {
+                alertRef.current.style.display = 'flex';
+            }
+
+            const timer = setTimeout(() => {
+                if (alertRef.current) {
+                    alertRef.current.style.display = 'none';
+                    success.current = false;
+                    errMessage.current = "";
+                }
+            
+
+            }, 2500);
+
+            return () => clearTimeout(timer);
         }
-        const timer = setTimeout(() => {
-            if (alertRef.current) {
+    }, [alert]);
+
+
+    useEffect(() => {
+        if (switchedCohort.current) {
+            if (alert.current) {
                 alertRef.current.style.display = 'none';
             }
-        }, 2500);
+            success.current = false;
+            errMessage.current = "";
+            switchedCohort.current = false;
+            setAlert({ type: '', message: '' });
+        }
+    }, [switchedCohort.current])
 
-        return () => clearTimeout(timer);
-    }
-}, [alert.message]);
+    useEffect(() => {
+        if (success.current) {
+            setAlert({ type: 'success', message: 'Cohort updated successfully!' });
+
+
+        } else if (errMessage.current) {
+            setAlert({ type: 'error', message: `Failed to update cohort: ${errMessage}` });
+
+        } else {
+            setAlert({ type: '', message: '' });
+        }
+    }, [success.current, errMessage.current, state])
 
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
@@ -106,27 +140,15 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
             participants: localCohort.participants,
             searchText: localCohort.searchText,
         })
-        
-        if(alertRef.current){
-
-        alertRef.current.style.display = "none";
-        }
+       
+       
     };
 
-    useEffect(() => {
-        if(alertRef.current){
-
-alertRef.current.style.display = "none";
-        }
-    },[])
+  
 
     const handleClearCurrentCohortChanges = () => {
-        if(alertRef.current){
-
-
-        alertRef.current.style.display = "none";
-        }
-        setCurrentCohortChanges(null);
+       
+        setCurrentCohortChanges((prev)=>null);
     };
 
     const handleSaveCohort = (localCohort) => {
@@ -139,11 +161,12 @@ alertRef.current.style.display = "none";
                 participants: localCohort.participants
             },
             () => {
-               // alertRef.current.style.display = 'flex';
-                setAlert({ type: 'success', message: 'Cohort updated successfully!' })
-                handleClearCurrentCohortChanges();
+                success.current = true; 
+                 handleClearCurrentCohortChanges();        
             },
-            (error) => setAlert({ type: 'error', message: `Failed to update cohort: ${error.message}` })
+            (error) =>{
+                errMessage.current = error.message;
+            } 
         ));
     };
 
@@ -215,7 +238,10 @@ alertRef.current.style.display = "none";
                                     classes={cohortListClasses}
                                     config={config.cohortList}
                                     selectedCohort={selectedCohort}
-                                    setSelectedCohort={setSelectedCohort}
+                                    setSelectedCohort={(cohort) => {
+                                        setSelectedCohort((prev)=>cohort) ;                                     
+                                    }}
+                                    switchedCohortRef={switchedCohort}
                                     unSavedChanges={unSavedChanges}
                                     setChangingConfirmation={setDeleteModalProps}
                                     setShowChangingConfirmation={setShowDeleteConfirmation}
