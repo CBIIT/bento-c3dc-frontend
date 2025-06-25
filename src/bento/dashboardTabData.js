@@ -1266,6 +1266,11 @@ export const tabContainers = [
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
+        linkAttr: {
+          rootPath: '/studies/',
+          linkField: 'dbgap_accession',
+        },
+        cellType: cellTypes.CUSTOM_ELEM,
       },
       {
         dataField: "study_description",

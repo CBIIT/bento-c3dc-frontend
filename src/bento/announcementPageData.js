@@ -3,14 +3,8 @@ import fig1 from "../assets/announcement/fig1.svg";
 import fig2 from "../assets/announcement/fig2.svg";
 import fig3 from "../assets/announcement/fig3.svg";
 import fig4 from "../assets/announcement/fig4.svg";
-import fig6 from "../assets/announcement/fig6.svg";
-import fig7 from "../assets/announcement/fig7.svg";
 import fig8 from "../assets/announcement/fig8.svg";
 import fig9 from "../assets/announcement/fig9.svg";
-import fig10 from "../assets/announcement/fig10.svg";
-import fig11 from "../assets/announcement/fig11.svg";
-import fig12 from "../assets/announcement/fig12.svg";
-import fig13 from "../assets/announcement/fig13.svg";
 
 export const announcementPageData = [
   {
