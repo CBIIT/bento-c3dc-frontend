@@ -1,30 +1,26 @@
-import React, { useCallback } from 'react';
+import React, { useCallback } from "react";
 import {
   Button,
   Collapse,
   Grid,
   // Switch,
   withStyles,
-} from '@material-ui/core';
+} from "@material-ui/core";
 // import { useTheme } from '../../../components/ThemeContext';
-import styles from './WidgetStyle';
-import { WidgetGenerator } from '@bento-core/widgets';
-import { widgetConfig } from '../../../bento/dashTemplate';
-import colors from '../../../utils/colors';
-import { Typography } from '../../../components/Wrappers/Wrappers';
-import { formatWidgetData } from './WidgetUtils';
+import styles from "./WidgetStyle";
+import { WidgetGenerator } from "@bento-core/widgets";
+import { widgetConfig } from "../../../bento/dashTemplate";
+import colors from "../../../utils/colors";
+import { Typography } from "../../../components/Wrappers/Wrappers";
+import { formatWidgetData } from "./WidgetUtils";
 
 const CustomCollapse = withStyles({
-  wrapper:{
-    display: 'block',
-  }
+  wrapper: {
+    display: "block",
+  },
 })(Collapse);
 
-const WidgetView = ({
-  classes,
-  data,
-  theme,
-}) => {
+const WidgetView = ({ classes, data, theme }) => {
   const displayWidgets = formatWidgetData(data, widgetConfig);
   const [collapse, setCollapse] = React.useState(true);
   // const themeChanger = useTheme();
@@ -39,11 +35,11 @@ const WidgetView = ({
         textOverflowLength: 15,
         textColor: theme.palette.widgetBackground.contrastText,
       },
-      functions:{
-        // TODO: Make change in Widget package to rprovide option to configure active index. 
-        // Using getLastIndex to show first index as data set us sorted decending. 
-        getLastIndex: (dataset) => ((dataset.length !== undefined) ? 0 : 0),
-      }
+      functions: {
+        // TODO: Make change in Widget package to rprovide option to configure active index.
+        // Using getLastIndex to show first index as data set us sorted decending.
+        getLastIndex: (dataset) => (dataset.length !== undefined ? 0 : 0),
+      },
     },
     SunburstConfig: {
       styles: {
@@ -59,7 +55,7 @@ const WidgetView = ({
         <div className={classes.floatLeft} />
         <div className={classes.floatRight}>
           <Button className={classes.customButton} onClick={handleChange}>
-            {collapse ? 'collapse view' : 'open view'}
+            {collapse ? "collapse view" : "open view"}
           </Button>
           {/* <Switch
             classes={{
@@ -80,16 +76,19 @@ const WidgetView = ({
         <Grid container>
           {widgetConfig.slice(0, 6).map((widget, index) => {
             let dataset = displayWidgets[widget.dataName];
-          let newDataset  = dataset.map((data) => {
+            let newDataset = dataset.map((data) => {
               return {
-                ...data
+                ...data,
               };
             });
             dataset = newDataset;
             if (!dataset || dataset.length === 0) {
               return <></>;
             }
-            if (widget.type === 'sunburst' && (!dataset.children || !dataset.children.length)) {
+            if (
+              widget.type === "sunburst" &&
+              (!dataset.children || !dataset.children.length)
+            ) {
               return <></>;
             }
             return (
@@ -97,15 +96,24 @@ const WidgetView = ({
                 {/* TODO: Cleaan below line if not needed. */}
                 {/* <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center',width:'92%'}} color="lochmara"></Typography> */}
                 <Widget
-                  header={(
-                    
-                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center', width: widget.type === 'donut' ? '92%' : '100%'}} color="lochmara" className={classes.widgetTitle}>
+                  header={
+                    <Typography
+                      size="md"
+                      weight="normal"
+                      family="Nunito"
+                      style={{
+                        textAlign: "center",
+                        width: widget.type === "donut" ? "92%" : "100%",
+                      }}
+                      color="lochmara"
+                      className={classes.widgetTitle}
+                    >
                       {widget.title}
                     </Typography>
-                  )}
+                  }
                   bodyClass={classes.fullHeightBody}
                   className={classes.card}
-                  bottomDivider                 
+                  bottomDivider
                   customBackGround
                   data={dataset}
                   chartType={widget.type}
@@ -115,7 +123,6 @@ const WidgetView = ({
                   width={widget.width}
                   height={widget.height}
                 />
-              
               </Grid>
             );
           })}
