@@ -3,10 +3,9 @@ import {
   Button,
   Collapse,
   Grid,
-  // Switch,
+  Switch,
   withStyles,
 } from "@material-ui/core";
-// import { useTheme } from '../../../components/ThemeContext';
 import styles from "./WidgetStyle";
 import { WidgetGenerator } from "@bento-core/widgets";
 import { widgetConfig } from "../../../bento/dashTemplate";
@@ -23,7 +22,6 @@ const CustomCollapse = withStyles({
 const WidgetView = ({ classes, data, theme }) => {
   const displayWidgets = formatWidgetData(data, widgetConfig);
   const [collapse, setCollapse] = React.useState(true);
-  // const themeChanger = useTheme();
   const handleChange = () => setCollapse((prev) => !prev);
 
   const widgetGeneratorConfig = {
@@ -36,8 +34,6 @@ const WidgetView = ({ classes, data, theme }) => {
         textColor: theme.palette.widgetBackground.contrastText,
       },
       functions: {
-        // TODO: Make change in Widget package to rprovide option to configure active index.
-        // Using getLastIndex to show first index as data set us sorted decending.
         getLastIndex: (dataset) => (dataset.length !== undefined ? 0 : 0),
       },
     },
@@ -57,19 +53,6 @@ const WidgetView = ({ classes, data, theme }) => {
           <Button className={classes.customButton} onClick={handleChange}>
             {collapse ? "collapse view" : "open view"}
           </Button>
-          {/* <Switch
-            classes={{
-              root: classes.switchRoot,
-              switchBase: classes.switchBase,
-              thumb: classes.thumb,
-              track: classes.track,
-              checked: classes.checked,
-            }}
-            className={classes.customSwitch}
-            disableRipple
-            checked={themeChanger.dark}
-            onChange={themeChanger.toggleTheme}
-          /> */}
         </div>
       </div>
       <CustomCollapse in={collapse} className={classes.backgroundWidgets}>
@@ -93,23 +76,33 @@ const WidgetView = ({ classes, data, theme }) => {
             }
             return (
               <Grid key={index} item lg={4} md={6} sm={12} xs={12}>
-                {/* TODO: Cleaan below line if not needed. */}
-                {/* <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center',width:'92%'}} color="lochmara"></Typography> */}
                 <Widget
                   header={
-                    <Typography
-                      size="md"
-                      weight="normal"
-                      family="Nunito"
+                    <div
                       style={{
-                        textAlign: "center",
-                        width: widget.type === "donut" ? "92%" : "100%",
+                        display: "flex",
+                        width: "100%",
+                        justifyContent: "space-between",
                       }}
-                      color="lochmara"
-                      className={classes.widgetTitle}
                     >
-                      {widget.title}
-                    </Typography>
+                      <Typography
+                        size="md"
+                        weight="normal"
+                        family="Nunito"
+                        style={{
+                          textAlign: "start",
+                          width: "100%",
+                        }}
+                        color="lochmara"
+                        className={classes.widgetTitle}
+                      >
+                        {widget.title}
+                      </Typography>
+                      <div>
+                        <Switch
+                        />
+                      </div>
+                    </div>
                   }
                   bodyClass={classes.fullHeightBody}
                   className={classes.card}
