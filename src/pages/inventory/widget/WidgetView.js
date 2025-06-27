@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import {
   Button,
   Collapse,
@@ -21,8 +21,21 @@ const CustomCollapse = withStyles({
 
 const WidgetView = ({ classes, data, theme }) => {
   const displayWidgets = formatWidgetData(data, widgetConfig);
+  const [widgetTypes, setWidgetTypes] = useState(
+    widgetConfig.map((widget) => {
+      return widget.type;
+    })
+  );
   const [collapse, setCollapse] = React.useState(true);
   const handleChange = () => setCollapse((prev) => !prev);
+
+  const toggleWidgetType = (index) => {
+    setWidgetTypes((prev) => {
+      const newTypes = [...prev];
+      newTypes[index] = newTypes[index] === "donut" ? "bar" : "donut";
+      return newTypes;
+    });
+  };
 
   const widgetGeneratorConfig = {
     theme,
@@ -69,7 +82,7 @@ const WidgetView = ({ classes, data, theme }) => {
               return <></>;
             }
             if (
-              widget.type === "sunburst" &&
+              widgetTypes[index] === "sunburst" &&
               (!dataset.children || !dataset.children.length)
             ) {
               return <></>;
@@ -100,6 +113,7 @@ const WidgetView = ({ classes, data, theme }) => {
                       </Typography>
                       <div>
                         <Switch
+                          onChange={() => toggleWidgetType(index)}
                         />
                       </div>
                     </div>
@@ -109,7 +123,7 @@ const WidgetView = ({ classes, data, theme }) => {
                   bottomDivider
                   customBackGround
                   data={dataset}
-                  chartType={widget.type}
+                  chartType={widgetTypes[index]}
                   sliceTitle={widget.sliceTitle}
                   chartTitleLocation="bottom"
                   chartTitleAlignment="center"
