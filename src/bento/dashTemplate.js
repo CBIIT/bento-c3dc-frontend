@@ -506,42 +506,51 @@ export const SUNBURST_COLORS_LEVEL_2 = [
 // sliceTitle: string (optional)
 export const widgetConfig = [
   {
-    type: 'donut',
+    type: 'bar',
     title: 'Race',
     dataName: 'participantCountByRace',
     sliceTitle: 'Participants',
-    chartTitleAlignment: 'center'
+    width: '100%',
+    height: 210,
   },
   {
     type: 'bar',
     title: 'Sex at Birth',
     dataName: 'participantCountBySexAtBirth',
+    sliceTitle: 'Participants',
     width: '100%',
     height: 210,
   },
   {
-    type: 'donut',
+    type: 'bar',
     title: 'Diagnosis',
     dataName: 'participantCountByDiagnosis',
     sliceTitle: 'Participants',
+    width: '100%',
+    height: 210,
   },
   {
-    type: 'donut',
+    type: 'bar',
     title: 'Anatomic Site',
     dataName: 'participantCountByAnatomicSite',
     sliceTitle: 'Participants',
+    width: '100%',
+    height: 210,
   },
   {
     type: 'bar',
     title: 'Age at Diagnosis (years)',
     dataName: 'participantCountByAgeAtDiagnosis',
+    sliceTitle: 'Participants',
     width: '100%',
     height: 210,
   },
   {
-    type: 'donut',
+    type: 'bar',
     title: 'Treatment Type',
     dataName: 'participantCountByTreatmentType',
     sliceTitle: 'Participants',
+    width: '100%',
+    height: 210,
   },
 ];
