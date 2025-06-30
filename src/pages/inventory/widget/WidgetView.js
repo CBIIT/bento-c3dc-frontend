@@ -108,19 +108,26 @@ const WidgetView = ({ classes, data, theme }) => {
                         >
                           {widget.title}
                         </Typography>
-                        <ToolTip
-                          title={widget.tooltip}
-                          placement="top-end"
-                          textAlign="center"
-                          arrow
-                        >
-                          <div>
-                            <Switch
-                              onChange={() => toggleWidgetType(index)}
-                              defaultChecked={widgetTypes[index] === "bar"}
-                            />
-                          </div>
-                        </ToolTip>
+                        <div>{
+                        //TODO: Add download button and style this parent div
+                        }
+                          <ToolTip
+                            title={widget.tooltip}
+                            placement="top-end"
+                            textAlign="center"
+                            arrow
+                          >
+                            <div>
+                              <Switch
+                                onChange={() => toggleWidgetType(index)}
+                                defaultChecked={widgetTypes[index] === "bar"}
+                              />
+                            </div>
+                          </ToolTip>
+                          {
+                            //TODO: Add download button here
+                          }
+                        </div>
                       </div>
                     }
                     bodyClass={classes.fullHeightBody}
