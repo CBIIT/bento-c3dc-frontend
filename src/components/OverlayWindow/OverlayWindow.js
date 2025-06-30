@@ -34,7 +34,7 @@ const OverlayWindow = () => {
       urlParams.delete('existingUser');
 
       window.history.replaceState({}, '', `${window.location.pathname}`);
-      return
+      return;
     }
 
     if (!sessionStorage.length) {
