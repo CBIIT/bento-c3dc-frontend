@@ -7,6 +7,27 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row'
     },
+    chartContainer: {
+        backgroundColor: 'white',
+        border: '0.75px solid #679AAA',
+        borderRadius: '10px',
+        width: 657,
+        height: 523,
+        display: 'flex',
+
+        flexDirection: 'column',
+        overflow: 'hidden'
+    },
+    chartContainerHeader: {
+        width: '100%',
+        height: 69,
+        backgroundColor: '#3A7587',
+        position: 'relative',
+        top: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
     exploreButton: {
         boxSizing: 'border-box',
         minWidth: '189px',
@@ -272,8 +293,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '91%',
-        alignSelf: 'center',
+        minWidth: '50%',
         alignItems: 'flex-start',
         marginBottom: '30px',
         zIndex: 900,
