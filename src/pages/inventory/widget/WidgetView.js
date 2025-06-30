@@ -22,7 +22,7 @@ const WidgetView = ({ classes, data, theme }) => {
       return widget.type;
     })
   );
-  const [collapse, setCollapse] = React.useState(true);
+  const [collapse, setCollapse] = useState(true);
   const handleChange = () => setCollapse((prev) => !prev);
 
   const toggleWidgetType = (index) => {
@@ -41,9 +41,6 @@ const WidgetView = ({ classes, data, theme }) => {
         cellPadding: 2,
         textOverflowLength: 15,
         textColor: theme.palette.widgetBackground.contrastText,
-      },
-      functions: {
-        getLastIndex: (dataset) => (dataset.length !== undefined ? 0 : 0),
       },
     },
     SunburstConfig: {
