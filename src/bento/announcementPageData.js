@@ -32,7 +32,7 @@ export const announcementPageData = [
     "type": 2,
     "is_release_notes": true,
     "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
-    "verbiage": "We are excited to announce the release of the C3DC application version 1.6.0! This release includes the newly harmonized datasets phs000463, phs000464, phs000465, and phs003163 as well as updates to existing datasets. It also introduces enhancements to the Explore page, Cohort Analyzer, and Data Model Navigator as a new feature. These updates will enhance the user’s experience and provide more comprehensive data access. For full release details, please visit the <a href='/release_notes_pdf?existingUser' target='_blank'>Release Note</a>"
+    "verbiage": "We are excited to announce the release of the C3DC application version 1.6.0! This release includes the newly harmonized datasets phs000463, phs000464, phs000465, and phs003163 as well as updates to existing datasets. It also introduces enhancements to the Explore page, Cohort Analyzer, and Data Model Navigator as a new feature. These updates will enhance the user’s experience and provide more comprehensive data access. For full release details, please visit the <a href='/release_notes_pdf' target='_blank'>Release Note</a>"
   },
   {
     "title": "Explore page (New Feature)",

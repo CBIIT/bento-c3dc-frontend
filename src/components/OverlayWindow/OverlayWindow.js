@@ -13,48 +13,32 @@ import {
   DialogActions,
 } from '@material-ui/core';
 import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
-// import { useSelector } from 'react-redux';
+import { setCookie, getCookie } from '../util';
 import * as text from './OverlayText.json';
 import DialogThemeProvider from './OverlayThemConfig';
 
 const OverlayWindow = () => {
   const [open, setOpen] = useState(false);
+  const PRIVACY_NOTICE_ACCEPTED_COOKIE = "privacyNoticeAccepted";
 
   const handleClose = () => {
     setOpen(false);
-    sessionStorage.setItem('overlayLoad', 'true');
+    setCookie(PRIVACY_NOTICE_ACCEPTED_COOKIE, "true");
   };
 
   useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const isExistingUser = urlParams.has('existingUser');
-
-    if (isExistingUser) {
-      sessionStorage.setItem('overlayLoad', 'true'); 
-      urlParams.delete('existingUser');
-
-      window.history.replaceState({}, '', `${window.location.pathname}`);
-      return;
-    }
-
-    if (!sessionStorage.length) {
-      setOpen(true)
-    }
-  }, []);
-  
-  useEffect(() => {
-    if (!sessionStorage.length) {
+    if (!getCookie(PRIVACY_NOTICE_ACCEPTED_COOKIE)) {
       setOpen(true);
     }
-  }, [open]);
+  }, []);
 
-  const content = text.content.map((item) => (
-    <DialogContentText id="alert-dialog-description">
+  const content = text.content.map((item, index) => (
+    <DialogContentText id="alert-dialog-description" key={`dialog-content-${index}`}>
       {item}
     </DialogContentText>
   ));
   const list = text.list.map((item, index) => (
-    <ListItem key={`${index}`}>
+    <ListItem key={`text-list-item-${index}`}>
       <ListItemIcon>
         <FiberManualRecord style={{ fontSize: 8 }} />
       </ListItemIcon>
