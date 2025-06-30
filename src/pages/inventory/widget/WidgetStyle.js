@@ -95,17 +95,6 @@ const styles = (theme) => ({
   statsBar: {
     position: 'fixed',
   },
-  switchBase: {
-    color: theme.palette.widgetBackground.contrastText,
-    '&$checked': {
-      color: theme.palette.widgetBackground.contrastSwicthColor,
-    },
-    '&$checked + $track': {
-      backgroundColor: theme.palette.widgetBackground.contrastText,
-    },
-  },
-  checked: {},
-  track: {},
 });
 
 export default styles;

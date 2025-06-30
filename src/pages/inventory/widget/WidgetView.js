@@ -12,6 +12,7 @@ import { widgetConfig } from "../../../bento/dashTemplate";
 import colors from "../../../utils/colors";
 import { Typography } from "../../../components/Wrappers/Wrappers";
 import { formatWidgetData } from "./WidgetUtils";
+import WidgetThemeProvider from "./WidgetTheme";
 
 const CustomCollapse = withStyles({
   wrapper: {
@@ -89,47 +90,49 @@ const WidgetView = ({ classes, data, theme }) => {
             }
             return (
               <Grid key={index} item lg={4} md={6} sm={12} xs={12}>
-                <Widget
-                  header={
-                    <div
-                      style={{
-                        display: "flex",
-                        width: "100%",
-                        justifyContent: "space-between",
-                      }}
-                    >
-                      <Typography
-                        size="md"
-                        weight="normal"
-                        family="Nunito"
+                <WidgetThemeProvider>
+                  <Widget
+                    header={
+                      <div
                         style={{
-                          textAlign: "start",
+                          display: "flex",
                           width: "100%",
+                          justifyContent: "space-between",
                         }}
-                        color="lochmara"
-                        className={classes.widgetTitle}
                       >
-                        {widget.title}
-                      </Typography>
-                      <div>
-                        <Switch
-                          onChange={() => toggleWidgetType(index)}
-                        />
+                        <Typography
+                          size="md"
+                          weight="normal"
+                          family="Nunito"
+                          style={{
+                            textAlign: "start",
+                            width: "100%",
+                          }}
+                          color="lochmara"
+                          className={classes.widgetTitle}
+                        >
+                          {widget.title}
+                        </Typography>
+                        <div>
+                          <Switch
+                            onChange={() => toggleWidgetType(index)}
+                          />
+                        </div>
                       </div>
-                    </div>
-                  }
-                  bodyClass={classes.fullHeightBody}
-                  className={classes.card}
-                  bottomDivider
-                  customBackGround
-                  data={dataset}
-                  chartType={widgetTypes[index]}
-                  sliceTitle={widget.sliceTitle}
-                  chartTitleLocation="bottom"
-                  chartTitleAlignment="center"
-                  width={widget.width}
-                  height={widget.height}
-                />
+                    }
+                    bodyClass={classes.fullHeightBody}
+                    className={classes.card}
+                    bottomDivider
+                    customBackGround
+                    data={dataset}
+                    chartType={widgetTypes[index]}
+                    sliceTitle={widget.sliceTitle}
+                    chartTitleLocation="bottom"
+                    chartTitleAlignment="center"
+                    width={widget.width}
+                    height={widget.height}
+                  />
+                </WidgetThemeProvider>
               </Grid>
             );
           })}
