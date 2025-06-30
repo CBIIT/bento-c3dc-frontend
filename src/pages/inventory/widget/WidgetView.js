@@ -120,7 +120,7 @@ const WidgetView = ({ classes, data, theme }) => {
                             <div>
                               <Switch
                                 onChange={() => toggleWidgetType(index)}
-                                defaultChecked={widgetTypes[index] === "bar"}
+                                checked={widgetTypes[index] === "bar"}
                               />
                             </div>
                           </ToolTip>
