@@ -6,7 +6,6 @@ import {
   // Switch,
   withStyles,
 } from '@material-ui/core';
-// import { useTheme } from '../../../components/ThemeContext';
 import styles from './WidgetStyle';
 import { WidgetGenerator } from '@bento-core/widgets';
 import { widgetConfig } from '../../../bento/dashTemplate';
@@ -93,16 +92,26 @@ const WidgetView = ({
               return <></>;
             }
             return (
-              <Grid key={index} item lg={4} md={6} sm={12} xs={12}>
+              <Grid key={index} item lg={4} md={6} sm={12} xs={12}
+               style={{
+                  paddingLeft: '30px',
+                  paddingTop: '40px',
+                  borderRadius: '30px',
+                }}
+              >
                 {/* TODO: Cleaan below line if not needed. */}
                 {/* <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center',width:'92%'}} color="lochmara"></Typography> */}
+                
+                <div className={classes.widgetBox}> 
                 <Widget
                   header={(
-                    
-                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center', width: widget.type === 'donut' ? '92%' : '100%'}} color="lochmara" className={classes.widgetTitle}>
-                      {widget.title}
-                    </Typography>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Typography size="md" weight="normal" family="Nunito" style={{ color: '#4A5C5E' }}>
+                        {widget.title}
+                      </Typography>
+                    </div>
                   )}
+                  title={widget.title}
                   bodyClass={classes.fullHeightBody}
                   className={classes.card}
                   bottomDivider                 
@@ -115,6 +124,7 @@ const WidgetView = ({
                   width={widget.width}
                   height={widget.height}
                 />
+                </div>
               
               </Grid>
             );

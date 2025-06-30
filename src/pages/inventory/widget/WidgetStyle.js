@@ -106,6 +106,13 @@ const styles = (theme) => ({
   },
   checked: {},
   track: {},
+    widgetBox: {
+    transition: 'box-shadow .3s',
+    borderRadius: '20px', 
+    '&:hover': {
+      boxShadow: '0 0 11px rgba(33,33,33,.3)',
+    },
+  },
 });
 
 export default styles;
