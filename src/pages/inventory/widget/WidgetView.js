@@ -1,18 +1,13 @@
 import React, { useCallback, useState } from "react";
-import {
-  Button,
-  Collapse,
-  Grid,
-  Switch,
-  withStyles,
-} from "@material-ui/core";
-import styles from "./WidgetStyle";
+import { Button, Collapse, Grid, Switch, withStyles } from "@material-ui/core";
+import ToolTip from "@bento-core/tool-tip";
 import { WidgetGenerator } from "@bento-core/widgets";
 import { widgetConfig } from "../../../bento/dashTemplate";
 import colors from "../../../utils/colors";
 import { Typography } from "../../../components/Wrappers/Wrappers";
 import { formatWidgetData } from "./WidgetUtils";
 import WidgetThemeProvider from "./WidgetTheme";
+import styles from "./WidgetStyle";
 
 const CustomCollapse = withStyles({
   wrapper: {
@@ -113,11 +108,14 @@ const WidgetView = ({ classes, data, theme }) => {
                         >
                           {widget.title}
                         </Typography>
-                        <div>
-                          <Switch
-                            onChange={() => toggleWidgetType(index)}
-                          />
-                        </div>
+                        <ToolTip
+                          title={widget.tooltip}
+                          placement="top-end"
+                          textAlign="center"
+                          arrow
+                        >
+                          <Switch onChange={() => toggleWidgetType(index)} />
+                        </ToolTip>
                       </div>
                     }
                     bodyClass={classes.fullHeightBody}

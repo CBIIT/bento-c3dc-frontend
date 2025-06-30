@@ -512,6 +512,7 @@ export const widgetConfig = [
     sliceTitle: 'Participants',
     width: '100%',
     height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
   },
   {
     type: 'bar',
@@ -520,6 +521,7 @@ export const widgetConfig = [
     sliceTitle: 'Participants',
     width: '100%',
     height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
   },
   {
     type: 'bar',
@@ -528,6 +530,7 @@ export const widgetConfig = [
     sliceTitle: 'Participants',
     width: '100%',
     height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
   },
   {
     type: 'bar',
@@ -536,6 +539,7 @@ export const widgetConfig = [
     sliceTitle: 'Participants',
     width: '100%',
     height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
   },
   {
     type: 'bar',
@@ -544,6 +548,7 @@ export const widgetConfig = [
     sliceTitle: 'Participants',
     width: '100%',
     height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
   },
   {
     type: 'bar',
@@ -552,5 +557,6 @@ export const widgetConfig = [
     sliceTitle: 'Participants',
     width: '100%',
     height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
   },
 ];
