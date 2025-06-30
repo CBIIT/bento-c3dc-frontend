@@ -21,21 +21,15 @@ const table = {
   // A maximum of 10 columns are allowed
   columns: [
     {
-      dataField: 'dbgap_accession',
-      header: 'dbGaP Accession',
-      tooltipText: 'Sort by dbGaP ACCESSION',
-      cellType: cellTypes.LINK,
-      linkAttr: {
-        rootPath: '/studies',
-        pathParams: ['dbgap_accession']
-      },
-      display: true,
-    },
-    {
       dataField: 'study_name',
       header: 'Study Name',
       tooltipText: 'Sort by Study Name',
       display: true,
+      linkAttr: {
+        rootPath: '/studies/',
+        linkField: 'dbgap_accession',
+      },
+      cellType: cellTypes.CUSTOM_ELEM,
     },
     {
       dataField: 'num_participants',
@@ -49,6 +43,16 @@ const table = {
       dataField: 'num_diseases',
       header: 'Diagnosis Count',
       tooltipText: 'Sort by Diagnosis Count',
+      display: true,
+    },
+    {
+      dataField: 'dbgap_accession',
+      header: 'dbGaP Accession',
+      tooltipText: 'Sort by dbGaP ACCESSION',
+      cellType: cellTypes.CUSTOM_ELEM,
+      linkAttr: {
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+      },
       display: true,
     },
   ],
