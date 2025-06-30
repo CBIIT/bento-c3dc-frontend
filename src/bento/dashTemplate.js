@@ -506,7 +506,7 @@ export const SUNBURST_COLORS_LEVEL_2 = [
 // sliceTitle: string (optional)
 export const widgetConfig = [
   {
-    type: 'bar',
+    type: 'donut',
     title: 'Race',
     dataName: 'participantCountByRace',
     sliceTitle: 'Participants',
@@ -524,7 +524,7 @@ export const widgetConfig = [
     tooltip: 'Switch displays between pie and bar charts',
   },
   {
-    type: 'bar',
+    type: 'donut',
     title: 'Diagnosis',
     dataName: 'participantCountByDiagnosis',
     sliceTitle: 'Participants',
@@ -533,7 +533,7 @@ export const widgetConfig = [
     tooltip: 'Switch displays between pie and bar charts',
   },
   {
-    type: 'bar',
+    type: 'donut',
     title: 'Anatomic Site',
     dataName: 'participantCountByAnatomicSite',
     sliceTitle: 'Participants',
@@ -551,7 +551,7 @@ export const widgetConfig = [
     tooltip: 'Switch displays between pie and bar charts',
   },
   {
-    type: 'bar',
+    type: 'donut',
     title: 'Treatment Type',
     dataName: 'participantCountByTreatmentType',
     sliceTitle: 'Participants',
