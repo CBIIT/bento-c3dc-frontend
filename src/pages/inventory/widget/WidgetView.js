@@ -114,10 +114,12 @@ const WidgetView = ({ classes, data, theme }) => {
                           textAlign="center"
                           arrow
                         >
-                          <Switch
-                            onChange={() => toggleWidgetType(index)}
-                            defaultChecked={widgetTypes[index] === "bar"}
-                          />
+                          <div>
+                            <Switch
+                              onChange={() => toggleWidgetType(index)}
+                              defaultChecked={widgetTypes[index] === "bar"}
+                            />
+                          </div>
                         </ToolTip>
                       </div>
                     }
