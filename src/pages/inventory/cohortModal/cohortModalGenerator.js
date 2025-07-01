@@ -82,7 +82,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
 
 
         } else if (errMessage.current) {
-            setAlert({ type: 'error', message: `Failed to update cohort: ${errMessage}` });
+            setAlert({ type: 'error', message: `Failed to update cohort: ${errMessage.current}` });
 
         } else {
             setAlert({ type: '', message: '' });
