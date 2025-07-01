@@ -51,9 +51,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
 
     useEffect(() => {
         if (alert.message) {
-            if (alert.current) {
-                alertRef.current.style.display = 'flex';
-            }
 
             const timer = setTimeout(() => {
                 if (alertRef.current) {
@@ -72,9 +69,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
 
     useEffect(() => {
         if (switchedCohort.current) {
-            if (alert.current) {
-                alertRef.current.style.display = 'none';
-            }
             success.current = false;
             errMessage.current = "";
             switchedCohort.current = false;
