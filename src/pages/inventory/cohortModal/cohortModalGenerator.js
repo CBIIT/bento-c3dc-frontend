@@ -141,8 +141,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
   
 
     const handleClearCurrentCohortChanges = () => {
-       
-        setCurrentCohortChanges((prev)=>null);
+        setCurrentCohortChanges(null);
     };
 
     const handleSaveCohort = (localCohort) => {
