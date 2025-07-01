@@ -35,7 +35,7 @@ export default {
         },
         {
           text: 'Release Notes',
-          link: '/release_notes_pdf?existingUser',
+          link: '/release_notes_pdf',
           openNewTab: 'true',
         }
       ],
