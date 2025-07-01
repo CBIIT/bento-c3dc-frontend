@@ -7,6 +7,9 @@ export {
 export {
   custodianUtils,
 } from './CustodianUtils';
+
+export { setCookie, getCookie } from './cookieManager';
+
 export {
   getDateInFormat,
 } from './Date';
