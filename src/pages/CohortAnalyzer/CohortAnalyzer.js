@@ -140,28 +140,11 @@ export const CohortAnalyzer = () => {
       const handleDownload = () => {
     if (containerRef.current && canvasRef.current) {
       const canvas = canvasRef.current;
-      const container = containerRef.current;
-      
-      // Create a temporary canvas with container dimensions plus padding
-      const padding = 200;
-      const tempCanvas = document.createElement('canvas');
-      tempCanvas.width = container.offsetWidth + (padding * 2);
-      tempCanvas.height = container.offsetHeight + (padding * 2);
-      const tempContext = tempCanvas.getContext('2d');
-      
-      // Draw white background
-      tempContext.fillStyle = '#FFFFFF';
-      tempContext.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-      
-      // Draw the original canvas content centered in the container with padding
-      const xOffset = (tempCanvas.width - canvas.width) / 2;
-      const yOffset = padding; // Add top padding
-      tempContext.drawImage(canvas, xOffset, yOffset);
       
       // Create download link
       const link = document.createElement('a');
       link.download = 'venn-diagram.png';
-      link.href = tempCanvas.toDataURL('image/png');
+      link.href = canvas.toDataURL('image/png');
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
