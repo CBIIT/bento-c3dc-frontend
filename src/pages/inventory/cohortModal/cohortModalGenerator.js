@@ -231,9 +231,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     classes={cohortListClasses}
                                     config={config.cohortList}
                                     selectedCohort={selectedCohort}
-                                    setSelectedCohort={(cohort) => {
-                                        setSelectedCohort((prev)=>cohort) ;                                     
-                                    }}
+                                    setSelectedCohort={setSelectedCohort}
                                     switchedCohortRef={switchedCohort}
                                     unSavedChanges={unSavedChanges}
                                     setChangingConfirmation={setDeleteModalProps}
