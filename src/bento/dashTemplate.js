@@ -2,6 +2,7 @@ import { sortType, InputTypes } from '@bento-core/facet-filter';
 import clearButton from '../assets/icons/Clear_Icon.svg';
 import clearButtonActive from '../assets/icons/Clear_Icon_Active.svg';
 import clearButtonActiveHover from '../assets/icons/Clear_Icon_White.svg';
+import questionIcon from '../assets/icons/Question_Icon.svg';
 
 const DEMOGRAPHICS = 'Demographics';
 const DIAGNOSIS = 'Diagnosis';
@@ -566,3 +567,54 @@ export const widgetConfig = [
     countType: 'discrete',
   },
 ];
+
+export const widgetToolTipConfig = {
+  'Race': {
+    icon: questionIcon,
+    alt: 'race tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'races',
+  },
+  'Sex at Birth': {
+    icon: questionIcon,
+    alt: 'sex tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'sexes',
+  },
+  'Diagnosis': {
+    icon: questionIcon,
+    alt: 'diagnosis tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'diagnoses',
+  },
+  'Anatomic Site': {
+    icon: questionIcon,
+    alt: 'anatomic site tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'anatomic sites',
+  },
+  'Age at Diagnosis (years)': {
+    icon: questionIcon,
+    alt: 'age at diagnosis tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'age groups',
+  },
+  'Treatment Type': {
+    icon: questionIcon,
+    alt: 'treatment type tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'treatment types',
+  },
+};

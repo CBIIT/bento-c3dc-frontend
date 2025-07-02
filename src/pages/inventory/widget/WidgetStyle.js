@@ -97,6 +97,10 @@ const styles = (theme) => ({
   statsBar: {
     position: 'fixed',
   },
+  widgetTotalTooltipIcon: {
+    width: '10px',
+    transform: 'translateY(-5px)',
+  },
 });
 
 export default styles;
