@@ -73,11 +73,11 @@ const WidgetView = ({ classes, data, theme }) => {
               };
             });
             dataset = newDataset;
-            const datasetLength = dataset.length;
             
-            if (!dataset || datasetLength === 0) {
+            if (!dataset || dataset.length === 0) {
               return <></>;
             }
+            const datasetLength = dataset.length;
             if (widget.countType === "discrete") {
               dataset = dataset.sort((a, b) => b.subjects - a.subjects);
             }
@@ -94,8 +94,9 @@ const WidgetView = ({ classes, data, theme }) => {
             ) {
               return <></>;
             }
+            const widgetTooltip = widgetToolTipConfig[widget.title];
             const dynamicTooltipConfig = {
-              title: `Showing top ${DATASET_LIMIT} out of ${datasetLength} total ${widgetToolTipConfig[widget.title].plural}`,
+              title: `Showing top ${DATASET_LIMIT} out of ${datasetLength} total ${widgetTooltip ? widgetTooltip.plural : 'items'}`,
               clsName: classes.widgetTotalTooltipIcon
             };
             return (
@@ -122,9 +123,9 @@ const WidgetView = ({ classes, data, theme }) => {
                           className={classes.widgetTitle}
                         >
                           {widget.title}
-                          {datasetLength > 20 && <ToolTipIconView
+                          {datasetLength > DATASET_LIMIT && <ToolTipIconView
                             section={widget.title}
-                            tooltipConfig={Object.assign({}, widgetToolTipConfig[widget.title], dynamicTooltipConfig)}
+                            tooltipConfig={Object.assign({}, widgetTooltip, dynamicTooltipConfig)}
                             classes={classes}
                           />}
                         </Typography>
