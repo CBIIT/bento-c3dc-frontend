@@ -74,6 +74,16 @@ const WidgetView = ({ classes, data, theme }) => {
             if (!dataset || dataset.length === 0) {
               return <></>;
             }
+            if (widget.countType === "discrete") {
+              dataset = dataset.sort((a, b) => b.subjects - a.subjects);
+            }
+            if (dataset.length > 20) {
+              const otherGroup = {
+                group: "Other",
+                subjects: dataset.slice(20).reduce((acc, curr) => acc + curr.subjects, 0),
+              };
+              dataset = dataset.slice(0, 20).concat(otherGroup);
+            }
             if (
               widgetTypes[index] === "sunburst" &&
               (!dataset.children || !dataset.children.length)
