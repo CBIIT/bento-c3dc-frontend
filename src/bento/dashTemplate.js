@@ -513,6 +513,7 @@ export const widgetConfig = [
     width: '100%',
     height: 210,
     tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
   {
     type: 'bar',
@@ -522,6 +523,7 @@ export const widgetConfig = [
     width: '100%',
     height: 210,
     tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
   {
     type: 'donut',
@@ -531,6 +533,7 @@ export const widgetConfig = [
     width: '100%',
     height: 210,
     tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
   {
     type: 'donut',
@@ -540,6 +543,7 @@ export const widgetConfig = [
     width: '100%',
     height: 210,
     tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
   {
     type: 'bar',
@@ -549,6 +553,7 @@ export const widgetConfig = [
     width: '100%',
     height: 210,
     tooltip: 'Switch displays between pie and bar charts',
+    countType: 'continuous',
   },
   {
     type: 'donut',
@@ -558,5 +563,6 @@ export const widgetConfig = [
     width: '100%',
     height: 210,
     tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
 ];
