@@ -1,34 +1,37 @@
-import React, { useCallback } from 'react';
-import {
-  Button,
-  Collapse,
-  Grid,
-  // Switch,
-  withStyles,
-} from '@material-ui/core';
-// import { useTheme } from '../../../components/ThemeContext';
-import styles from './WidgetStyle';
-import { WidgetGenerator } from '@bento-core/widgets';
-import { widgetConfig } from '../../../bento/dashTemplate';
-import colors from '../../../utils/colors';
-import { Typography } from '../../../components/Wrappers/Wrappers';
-import { formatWidgetData } from './WidgetUtils';
+import React, { useCallback, useState } from "react";
+import { Button, Collapse, Grid, Switch, withStyles } from "@material-ui/core";
+import ToolTip from "@bento-core/tool-tip";
+import { WidgetGenerator } from "@bento-core/widgets";
+import { widgetConfig } from "../../../bento/dashTemplate";
+import colors from "../../../utils/colors";
+import { Typography } from "../../../components/Wrappers/Wrappers";
+import { formatWidgetData } from "./WidgetUtils";
+import WidgetThemeProvider from "./WidgetTheme";
+import styles from "./WidgetStyle";
 
 const CustomCollapse = withStyles({
-  wrapper:{
-    display: 'block',
-  }
+  wrapper: {
+    display: "block",
+  },
 })(Collapse);
 
-const WidgetView = ({
-  classes,
-  data,
-  theme,
-}) => {
+const WidgetView = ({ classes, data, theme }) => {
   const displayWidgets = formatWidgetData(data, widgetConfig);
-  const [collapse, setCollapse] = React.useState(true);
-  // const themeChanger = useTheme();
+  const [widgetTypes, setWidgetTypes] = useState(
+    widgetConfig.map((widget) => {
+      return widget.type;
+    })
+  );
+  const [collapse, setCollapse] = useState(true);
   const handleChange = () => setCollapse((prev) => !prev);
+
+  const toggleWidgetType = (index) => {
+    setWidgetTypes((prev) => {
+      const newTypes = [...prev];
+      newTypes[index] = newTypes[index] === "donut" ? "bar" : "donut";
+      return newTypes;
+    });
+  };
 
   const widgetGeneratorConfig = {
     theme,
@@ -39,11 +42,6 @@ const WidgetView = ({
         textOverflowLength: 15,
         textColor: theme.palette.widgetBackground.contrastText,
       },
-      functions:{
-        // TODO: Make change in Widget package to rprovide option to configure active index. 
-        // Using getLastIndex to show first index as data set us sorted decending. 
-        getLastIndex: (dataset) => ((dataset.length !== undefined) ? 0 : 0),
-      }
     },
     SunburstConfig: {
       styles: {
@@ -59,63 +57,89 @@ const WidgetView = ({
         <div className={classes.floatLeft} />
         <div className={classes.floatRight}>
           <Button className={classes.customButton} onClick={handleChange}>
-            {collapse ? 'collapse view' : 'open view'}
+            {collapse ? "collapse view" : "open view"}
           </Button>
-          {/* <Switch
-            classes={{
-              root: classes.switchRoot,
-              switchBase: classes.switchBase,
-              thumb: classes.thumb,
-              track: classes.track,
-              checked: classes.checked,
-            }}
-            className={classes.customSwitch}
-            disableRipple
-            checked={themeChanger.dark}
-            onChange={themeChanger.toggleTheme}
-          /> */}
         </div>
       </div>
       <CustomCollapse in={collapse} className={classes.backgroundWidgets}>
         <Grid container>
           {widgetConfig.slice(0, 6).map((widget, index) => {
             let dataset = displayWidgets[widget.dataName];
-          let newDataset  = dataset.map((data) => {
+            let newDataset = dataset.map((data) => {
               return {
-                ...data
+                ...data,
               };
             });
             dataset = newDataset;
             if (!dataset || dataset.length === 0) {
               return <></>;
             }
-            if (widget.type === 'sunburst' && (!dataset.children || !dataset.children.length)) {
+            if (
+              widgetTypes[index] === "sunburst" &&
+              (!dataset.children || !dataset.children.length)
+            ) {
               return <></>;
             }
             return (
               <Grid key={index} item lg={4} md={6} sm={12} xs={12}>
-                {/* TODO: Cleaan below line if not needed. */}
-                {/* <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center',width:'92%'}} color="lochmara"></Typography> */}
-                <Widget
-                  header={(
-                    
-                    <Typography size="md" weight="normal" family="Nunito"  style={{textAlign: 'center', width: widget.type === 'donut' ? '92%' : '100%'}} color="lochmara" className={classes.widgetTitle}>
-                      {widget.title}
-                    </Typography>
-                  )}
-                  bodyClass={classes.fullHeightBody}
-                  className={classes.card}
-                  bottomDivider                 
-                  customBackGround
-                  data={dataset}
-                  chartType={widget.type}
-                  sliceTitle={widget.sliceTitle}
-                  chartTitleLocation="bottom"
-                  chartTitleAlignment="center"
-                  width={widget.width}
-                  height={widget.height}
-                />
-              
+                <WidgetThemeProvider>
+                  <Widget
+                    header={
+                      <div
+                        style={{
+                          display: "flex",
+                          width: "100%",
+                          justifyContent: "space-between",
+                        }}
+                      >
+                        <Typography
+                          size="md"
+                          weight="normal"
+                          family="Nunito"
+                          style={{
+                            textAlign: "start",
+                            width: "100%",
+                          }}
+                          color="lochmara"
+                          className={classes.widgetTitle}
+                        >
+                          {widget.title}
+                        </Typography>
+                        <div>{
+                        //TODO: Add download button and style this parent div
+                        }
+                          <ToolTip
+                            title={widget.tooltip}
+                            placement="top-end"
+                            textAlign="center"
+                            arrow
+                          >
+                            <div>
+                              <Switch
+                                onChange={() => toggleWidgetType(index)}
+                                checked={widgetTypes[index] === "bar"}
+                              />
+                            </div>
+                          </ToolTip>
+                          {
+                            //TODO: Add download button here
+                          }
+                        </div>
+                      </div>
+                    }
+                    bodyClass={classes.fullHeightBody}
+                    className={classes.card}
+                    bottomDivider
+                    customBackGround
+                    data={dataset}
+                    chartType={widgetTypes[index]}
+                    sliceTitle={widget.sliceTitle}
+                    chartTitleLocation="bottom"
+                    chartTitleAlignment="center"
+                    width={widget.width}
+                    height={widget.height}
+                  />
+                </WidgetThemeProvider>
               </Grid>
             );
           })}
