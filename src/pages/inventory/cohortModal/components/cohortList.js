@@ -133,8 +133,8 @@ const CohortList = (props) => {
                                     else {
                                         setSelectedCohort(state[cohort].cohortId)
                                         handleClearCurrentCohortChanges();
+                                        switchedCohortRef.current = true;
                                     }
-                                    switchedCohortRef.current = true;
                                 }}
                             >
                                 <span className={classes.cohortListItemText}>
