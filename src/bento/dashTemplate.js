@@ -568,6 +568,8 @@ export const widgetConfig = [
   },
 ];
 
+export const WIDGET_DATASET_LIMIT = 20;
+
 export const widgetToolTipConfig = {
   'Race': {
     icon: questionIcon,

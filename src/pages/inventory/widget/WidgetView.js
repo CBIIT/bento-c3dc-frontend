@@ -2,7 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Button, Collapse, Grid, Switch, withStyles } from "@material-ui/core";
 import ToolTip from "@bento-core/tool-tip";
 import { WidgetGenerator } from "@bento-core/widgets";
-import { widgetConfig, widgetToolTipConfig } from "../../../bento/dashTemplate";
+import { widgetConfig, widgetToolTipConfig, WIDGET_DATASET_LIMIT } from "../../../bento/dashTemplate";
 import colors from "../../../utils/colors";
 import ToolTipIconView from "../../../components/ToolTipIcon/ToolTipIconView";
 import { Typography } from "../../../components/Wrappers/Wrappers";
@@ -18,7 +18,6 @@ const CustomCollapse = withStyles({
 
 const WidgetView = ({ classes, data, theme }) => {
   const displayWidgets = formatWidgetData(data, widgetConfig);
-  const DATASET_LIMIT = 20;
   const [widgetTypes, setWidgetTypes] = useState(
     widgetConfig.map((widget) => {
       return widget.type;
@@ -81,12 +80,12 @@ const WidgetView = ({ classes, data, theme }) => {
             if (widget.countType === "discrete") {
               dataset = dataset.sort((a, b) => b.subjects - a.subjects);
             }
-            if (datasetLength > DATASET_LIMIT) {
+            if (datasetLength > WIDGET_DATASET_LIMIT) {
               const otherGroup = {
                 group: "Other",
-                subjects: dataset.slice(DATASET_LIMIT).reduce((acc, curr) => acc + curr.subjects, 0),
+                subjects: dataset.slice(WIDGET_DATASET_LIMIT).reduce((acc, curr) => acc + curr.subjects, 0),
               };
-              dataset = dataset.slice(0, DATASET_LIMIT).concat(otherGroup);
+              dataset = dataset.slice(0, WIDGET_DATASET_LIMIT).concat(otherGroup);
             }
             if (
               widgetTypes[index] === "sunburst" &&
@@ -96,7 +95,7 @@ const WidgetView = ({ classes, data, theme }) => {
             }
             const widgetTooltip = widgetToolTipConfig[widget.title];
             const dynamicTooltipConfig = {
-              title: `Showing top ${DATASET_LIMIT} out of ${datasetLength} total ${widgetTooltip ? widgetTooltip.plural : 'items'}`,
+              title: `Showing top ${WIDGET_DATASET_LIMIT} out of ${datasetLength} total ${widgetTooltip ? widgetTooltip.plural : 'items'}`,
               clsName: classes.widgetTotalTooltipIcon
             };
             return (
@@ -123,9 +122,9 @@ const WidgetView = ({ classes, data, theme }) => {
                           className={classes.widgetTitle}
                         >
                           {widget.title}
-                          {datasetLength > DATASET_LIMIT && <ToolTipIconView
+                          {datasetLength > WIDGET_DATASET_LIMIT && <ToolTipIconView
                             section={widget.title}
-                            tooltipConfig={Object.assign({}, widgetTooltip, dynamicTooltipConfig)}
+                            tooltipConfig={{...widgetTooltip, ...dynamicTooltipConfig}}
                             classes={classes}
                           />}
                         </Typography>
