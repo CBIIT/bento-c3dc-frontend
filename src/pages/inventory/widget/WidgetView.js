@@ -2,8 +2,9 @@ import React, { useCallback, useState } from "react";
 import { Button, Collapse, Grid, Switch, withStyles } from "@material-ui/core";
 import ToolTip from "@bento-core/tool-tip";
 import { WidgetGenerator } from "@bento-core/widgets";
-import { widgetConfig } from "../../../bento/dashTemplate";
+import { widgetConfig, widgetToolTipConfig, WIDGET_DATASET_LIMIT } from "../../../bento/dashTemplate";
 import colors from "../../../utils/colors";
+import ToolTipIconView from "../../../components/ToolTipIcon/ToolTipIconView";
 import { Typography } from "../../../components/Wrappers/Wrappers";
 import { formatWidgetData } from "./WidgetUtils";
 import WidgetThemeProvider from "./WidgetTheme";
@@ -71,8 +72,20 @@ const WidgetView = ({ classes, data, theme }) => {
               };
             });
             dataset = newDataset;
+            
             if (!dataset || dataset.length === 0) {
               return <></>;
+            }
+            const datasetLength = dataset.length;
+            if (widget.countType === "discrete") {
+              dataset = dataset.sort((a, b) => b.subjects - a.subjects);
+            }
+            if (datasetLength > WIDGET_DATASET_LIMIT) {
+              const otherGroup = {
+                group: "Other",
+                subjects: dataset.slice(WIDGET_DATASET_LIMIT).reduce((acc, curr) => acc + curr.subjects, 0),
+              };
+              dataset = dataset.slice(0, WIDGET_DATASET_LIMIT).concat(otherGroup);
             }
             if (
               widgetTypes[index] === "sunburst" &&
@@ -80,6 +93,11 @@ const WidgetView = ({ classes, data, theme }) => {
             ) {
               return <></>;
             }
+            const widgetTooltip = widgetToolTipConfig[widget.title];
+            const dynamicTooltipConfig = {
+              title: `Showing top ${WIDGET_DATASET_LIMIT} out of ${datasetLength} total ${widgetTooltip ? widgetTooltip.plural : 'items'}`,
+              clsName: classes.widgetTotalTooltipIcon
+            };
             return (
               <Grid key={index} item lg={4} md={6} sm={12} xs={12}>
                 <WidgetThemeProvider>
@@ -104,6 +122,11 @@ const WidgetView = ({ classes, data, theme }) => {
                           className={classes.widgetTitle}
                         >
                           {widget.title}
+                          {datasetLength > WIDGET_DATASET_LIMIT && <ToolTipIconView
+                            section={widget.title}
+                            tooltipConfig={{...widgetTooltip, ...dynamicTooltipConfig}}
+                            classes={classes}
+                          />}
                         </Typography>
                         <div>{
                         //TODO: Add download button and style this parent div
