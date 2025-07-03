@@ -11,7 +11,7 @@ export const useStyle = makeStyles((theme) => ({
         backgroundColor: 'white',
         border: '0.75px solid #679AAA',
         borderRadius: '10px',
-        width: 657,
+        width: 607,
         height: 523,
         display: 'flex',
 
@@ -27,6 +27,16 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between'
+    },
+    chartRadioContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 0,
+        marginLeft: 11,
+        color: 'white',
+        padding: 0,
+        fontSize: 15,
+        gap: 15
     },
     exploreButton: {
         boxSizing: 'border-box',
@@ -307,6 +317,11 @@ export const useStyle = makeStyles((theme) => ({
             color: 'black',
             marginLeft: '10px',
         }
+    },
+    alert: {
+        position: 'absolute',
+        top: 20,
+        margin: 'auto'
     },
     cohortChildContent: {
         width: '95%', display: 'flex',

@@ -20,6 +20,7 @@ import ChartVenn from "./vennDiagram/ChartVenn";
 import CheckBoxCustom from "./customCheckbox/CustomCheckbox";
 import { CohortModalContext } from "../inventory/cohortModal/CohortModalContext";
 import CohortModalGenerator from "../inventory/cohortModal/cohortModalGenerator";
+import Alert from '@material-ui/lab/Alert';
 import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
 import questionIcon3 from "../../assets/icons/Question_Icon_3.svg";
@@ -47,6 +48,7 @@ import styled from "styled-components";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
 import store from "../../store";
 import { updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
+import { set } from "lodash";
 
 export const CohortAnalyzer = () => {
     const containerRef = useRef(null);
@@ -63,6 +65,7 @@ export const CohortAnalyzer = () => {
     const [refershSelectedChart, setRefershSelectedChart] = useState(false);
     const [refershTableContent, setRefershTableContent] = useState(false);
     const [selectedCohortSection, setSelectedCohortSections] = useState([]);
+    const [alert, setAlert] = useState({ type: '', message: '' });
     const [sortType, setSortType] = useState("alphabet");
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
     const [generalInfo, setGeneralInfo] = useState({});
@@ -148,6 +151,7 @@ export const CohortAnalyzer = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      setAlert({ type: 'success', message: 'Confirmed download of Venn Diagram from the Cohort Analyzer by Participant ID' });
     }
   };
 
@@ -364,6 +368,18 @@ export const CohortAnalyzer = () => {
         }
 
     }, [location]);
+
+
+      useEffect(() => {
+            if (alert.message) {
+                const timer = setTimeout(() => {
+                    setAlert({ type: '', message: '' }); 
+                }, 2500);
+    
+              
+                return () => clearTimeout(timer);
+            }
+        }, [alert]);
 
     useEffect(() => {
         setSearchValue("");
@@ -676,6 +692,7 @@ padding-left: 5px;
             />
             <Stats />
             <div className={classes.container}>
+               
                 <div className={classes.leftSideAnalyzer}>
                     <div className={classes.sideHeader}>
                         <>
@@ -761,7 +778,13 @@ padding-left: 5px;
                         })}
                     </div>
                 </div>
+                  
                 <div className={classes.rightSideAnalyzer}>
+                           {alert.message && (
+                    <Alert severity={alert.type}  className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
+                        {alert.message}
+                    </Alert>
+                )}
                     <div className={classes.rightSideAnalyzerHeader}>
                         <h1> Cohort Analyzer</h1>
                     </div>
@@ -786,7 +809,7 @@ padding-left: 5px;
                                            <img alt={"Question mark"} src={questionIcon3} style={{marginTop: -4}} height={10} />
                                         </ToolTip>
                                     </div>
-                                    <div style={{ display: 'flex', flexDirection: 'row', marginTop: 0,marginLeft:11, color: 'white', padding: 0, fontSize: 15, gap: 15 }}>
+                                    <div className={classes.chartRadioContainer}>
                                         <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
                                              <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center',opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
                                                 <input 
@@ -854,7 +877,7 @@ padding-left: 5px;
 
                                 <span onClick={()=>{
                                     handleDownload();
-                                }} style={{ margin: 15, cursor: 'pointer' }}>
+                                }} style={{ margin: 15, cursor: selectedCohorts.length > 0 ? 'pointer' : 'not-allowed' }}>
                                     <img alt={"download icon"} src={DownloadIcon} width={60} />
                                 </span>
                             </div>
