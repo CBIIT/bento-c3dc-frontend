@@ -106,9 +106,7 @@ const WidgetView = ({ classes, data, theme }) => {
                         >
                           {widget.title}
                         </Typography>
-                        <div>{
-                        //TODO: Add download button and style this parent div
-                        }
+                        <div>
                           <ToolTip
                             title={widget.tooltip}
                             placement="top-end"
@@ -122,12 +120,10 @@ const WidgetView = ({ classes, data, theme }) => {
                               />
                             </div>
                           </ToolTip>
-                          {
-                            //TODO: Add download button here
-                          }
                         </div>
                       </div>
                     }
+                    title={widget.title}
                     bodyClass={classes.fullHeightBody}
                     className={classes.card}
                     bottomDivider
