@@ -260,12 +260,23 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
   } = context;
 
   const buildCohortFormat = (jsonArray) => {
-    return jsonArray.map(item => ({
+   const seen = new Set();
+   const result = jsonArray.reduce((acc, item) => {
+    const participant_id = typeof item.participant === 'object' ? item.participant.participant_id : item.participant_id;
+    if(seen.has(participant_id)) return acc;
+    seen.add(participant_id);
+    acc.push({
       ...item,
-      participant_id: typeof item.participant === 'object' ? item.participant.participant_id : item.participant_id,
+      participant_id,
       participant_pk: typeof item.participant === 'object' ? item.participant.id : item.id,
-    }));
-  };
+    });
+    return acc;
+   },[]);
+   return result;
+ };
+
+
+
 
   const handleSelect = async (value) => {
     if (isActive && type === "existing") {

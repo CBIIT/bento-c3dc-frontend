@@ -57,8 +57,10 @@ const styles = (theme) => ({
     background: theme.palette.widgetBackground.main,
   },
   floatRight: {
-    float: 'right',
-    marginRight: '80px',
+    top: '0px',
+    right: '80px',
+    position: 'absolute',
+    zIndex: 1,
   },
   floatLeft: {
     float: 'left',
@@ -95,17 +97,10 @@ const styles = (theme) => ({
   statsBar: {
     position: 'fixed',
   },
-  switchBase: {
-    color: theme.palette.widgetBackground.contrastText,
-    '&$checked': {
-      color: theme.palette.widgetBackground.contrastSwicthColor,
-    },
-    '&$checked + $track': {
-      backgroundColor: theme.palette.widgetBackground.contrastText,
-    },
+  widgetTotalTooltipIcon: {
+    width: '10px',
+    transform: 'translateY(-5px)',
   },
-  checked: {},
-  track: {},
 });
 
 export default styles;

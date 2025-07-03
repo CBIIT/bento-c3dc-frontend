@@ -35,7 +35,7 @@ export default {
     fontFamily: 'Lato,"Open Sans", sans-serif',
     fontFamilyRaleway: "'Raleway', sans-serif",
     drawerWidth: '240px',
-    widgetDivider: '#181918',
+    widgetDivider: 'transparent',
   },
   palette: {
     primary: {
