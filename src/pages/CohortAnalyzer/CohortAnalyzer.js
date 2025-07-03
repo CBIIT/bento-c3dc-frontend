@@ -48,7 +48,6 @@ import styled from "styled-components";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
 import store from "../../store";
 import { updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
-import { set } from "lodash";
 
 export const CohortAnalyzer = () => {
     const containerRef = useRef(null);
@@ -790,8 +789,8 @@ padding-left: 5px;
                     </div>
                    
 
-                    <div style={{ display: 'flex', marginBottom: 40, justifyContent: 'flex-sart', width:"90%" }}>
-                    <div style={{ display: 'flex', marginBottom: 40, flexDirection:"column" }}>
+                    <div className={classes.rightSideAnalyzerOuterContainer}>
+                    <div className={classes.rightSideAnalyzerInnerContainer}>
                          <div className={classes.rightSideAnalyzerHeader2}>
                         <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 

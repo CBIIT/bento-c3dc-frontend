@@ -26,7 +26,6 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
 
 
 const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo,containerRef,canvasRef }) => {
-  //const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
   const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;

@@ -53,8 +53,8 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         cursor: "pointer"
-      }, 
-      exploreButtonFaded: {
+    },
+    exploreButtonFaded: {
         boxSizing: 'border-box',
         minWidth: '189px',
         height: '41px',
@@ -68,11 +68,11 @@ export const useStyle = makeStyles((theme) => ({
         gap: '6px',
         justifyContent: 'center',
         alignItems: 'center'
-      },
+    },
     fieldsetReset: {
         all: 'unset',
         display: 'contents',
-      },
+    },
     sortCount: {
         display: 'flex',
         margin: 0,
@@ -229,9 +229,9 @@ export const useStyle = makeStyles((theme) => ({
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-       paddingLeft: 20,
-       justifyContent: 'flex-start',
-       justifyItems: 'flex-start',
+        paddingLeft: 20,
+        justifyContent: 'flex-start',
+        justifyItems: 'flex-start',
         '& img': {
             marginRight: 6.5,
         },
@@ -280,6 +280,17 @@ export const useStyle = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         overflowY: 'hidden'
+    },
+    rightSideAnalyzerOuterContainer: {
+        display: 'flex',
+        marginBottom: 40,
+        justifyContent: 'flex-start',
+        width: "90%"
+    },
+    rightSideAnalyzerInnerContainer: {
+        display: 'flex',
+        marginBottom: 40,
+        flexDirection: "column"
     },
     rightSideAnalyzerHeader: {
         display: 'flex',
@@ -346,7 +357,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-       minWidth: 297,
+        minWidth: 297,
         height: 194,
         marginLeft: 0,
         paddingBottom: 30,
@@ -371,7 +382,7 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'flex-start',
         color: '#5D7B87',
-      
+
         '& p': {
             top: 325,
             gap: 9,
