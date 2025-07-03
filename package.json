@@ -67,7 +67,6 @@
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",
     "resolve": "1.10.0",
-    "root": "file:../bento-frontend",
     "sass-loader": "^7.1.0",
     "style-loader": "0.23.1",
     "styled-components": "^4.4.1",
