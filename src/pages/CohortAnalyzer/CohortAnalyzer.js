@@ -846,7 +846,7 @@ padding-left: 5px;
                                                 }}
                                                 disabled={selectedCohorts.length === 0} type="radio" value={"2"} onClick={() => {
                                                     setNodeIndex(1);
-                                                }} radioGroup="node_type" name="node_type" aria-label="Daignosis Radio button" />
+                                                }} radioGroup="node_type" name="node_type" aria-label="Diagnosis Radio button" />
                                                 Diagnosis
                                             </p>
                                         </ToolTip>

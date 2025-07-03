@@ -11,7 +11,8 @@ export const useStyle = makeStyles((theme) => ({
         backgroundColor: 'white',
         border: '0.75px solid #679AAA',
         borderRadius: '10px',
-        width: 607,
+        width: '100%',
+        maxWidth: 607,
         height: 523,
         display: 'flex',
 
