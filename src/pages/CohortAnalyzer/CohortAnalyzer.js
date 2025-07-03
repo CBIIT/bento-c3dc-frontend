@@ -788,7 +788,7 @@ padding-left: 5px;
                                     </div>
                                     <div style={{ display: 'flex', flexDirection: 'row', marginTop: 0,marginLeft:11, color: 'white', padding: 0, fontSize: 15, gap: 15 }}>
                                         <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
-                                             <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center' }}>
+                                             <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center',opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
                                                 <input 
                                                  style={{
                                                    appearance: 'none',
@@ -797,7 +797,7 @@ padding-left: 5px;
                                                    cursor: 'pointer',
                                                    outline: '2px solid white',
                                                    backgroundColor: nodeIndex === 0 ? '#00E1E1' : 'transparent',
-                                                   borderRadius: '50%',
+                                                   borderRadius: '50%',                                   
                                                     marginTop: -3,
                                                     border: '1px solid black'
                                                 }}
@@ -809,7 +809,7 @@ padding-left: 5px;
                                         </ToolTip>
                                         <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
-                                            <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center' }}>
+                                            <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center',opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
                                                 <input 
                                                  style={{
                                                    appearance: 'none',
@@ -830,7 +830,7 @@ padding-left: 5px;
                                         </ToolTip>
                                         <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
-                                              <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center' }}>
+                                              <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center', opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
                                                 <input 
                                                  style={{
                                                    appearance: 'none',
