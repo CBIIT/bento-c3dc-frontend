@@ -81,7 +81,7 @@ const WidgetView = ({ classes, data, theme }) => {
               return <></>;
             }
             return (
-              <Grid key={index} item lg={4} md={6} sm={12} xs={12} style={{padding: "30px"}}>
+              <Grid key={index} item lg={4} md={6} sm={12} xs={12} className={classes.padding}>
                 <WidgetThemeProvider>
                   <div className={classes.widgetBox}>
                   <Widget

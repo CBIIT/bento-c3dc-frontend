@@ -97,6 +97,9 @@ const styles = (theme) => ({
   statsBar: {
     position: 'fixed',
   },
+  padding:{
+    padding: '30px',
+  },
     widgetBox: {
     transition: 'box-shadow .3s',
     borderRadius: '20px', 
