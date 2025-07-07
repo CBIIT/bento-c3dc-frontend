@@ -7,6 +7,38 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row'
     },
+    chartContainer: {
+        backgroundColor: 'white',
+        border: '0.75px solid #679AAA',
+        borderRadius: '10px',
+        width: '100%',
+        maxWidth: 607,
+        height: 523,
+        display: 'flex',
+
+        flexDirection: 'column',
+        overflow: 'hidden'
+    },
+    chartContainerHeader: {
+        width: '100%',
+        height: 69,
+        backgroundColor: '#3A7587',
+        position: 'relative',
+        top: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    chartRadioContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 0,
+        marginLeft: 11,
+        color: 'white',
+        padding: 0,
+        fontSize: 15,
+        gap: 15
+    },
     exploreButton: {
         boxSizing: 'border-box',
         minWidth: '189px',
@@ -22,8 +54,8 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center',
         cursor: "pointer"
-      }, 
-      exploreButtonFaded: {
+    },
+    exploreButtonFaded: {
         boxSizing: 'border-box',
         minWidth: '189px',
         height: '41px',
@@ -37,11 +69,11 @@ export const useStyle = makeStyles((theme) => ({
         gap: '6px',
         justifyContent: 'center',
         alignItems: 'center'
-      },
+    },
     fieldsetReset: {
         all: 'unset',
         display: 'contents',
-      },
+    },
     sortCount: {
         display: 'flex',
         margin: 0,
@@ -198,9 +230,9 @@ export const useStyle = makeStyles((theme) => ({
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-       paddingLeft: 20,
-       justifyContent: 'flex-start',
-       justifyItems: 'flex-start',
+        paddingLeft: 20,
+        justifyContent: 'flex-start',
+        justifyItems: 'flex-start',
         '& img': {
             marginRight: 6.5,
         },
@@ -250,6 +282,17 @@ export const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         overflowY: 'hidden'
     },
+    rightSideAnalyzerOuterContainer: {
+        display: 'flex',
+        marginBottom: 40,
+        justifyContent: 'flex-start',
+        width: "90%"
+    },
+    rightSideAnalyzerInnerContainer: {
+        display: 'flex',
+        marginBottom: 40,
+        flexDirection: "column"
+    },
     rightSideAnalyzerHeader: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -272,8 +315,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '91%',
-        alignSelf: 'center',
+        minWidth: '50%',
         alignItems: 'flex-start',
         marginBottom: '30px',
         zIndex: 900,
@@ -287,6 +329,11 @@ export const useStyle = makeStyles((theme) => ({
             color: 'black',
             marginLeft: '10px',
         }
+    },
+    alert: {
+        position: 'absolute',
+        top: 20,
+        margin: 'auto'
     },
     cohortChildContent: {
         width: '95%', display: 'flex',
@@ -311,7 +358,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-       minWidth: 297,
+        minWidth: 297,
         height: 194,
         marginLeft: 0,
         paddingBottom: 30,
@@ -336,7 +383,7 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'flex-start',
         color: '#5D7B87',
-      
+
         '& p': {
             top: 325,
             gap: 9,

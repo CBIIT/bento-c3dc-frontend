@@ -20,10 +20,13 @@ import ChartVenn from "./vennDiagram/ChartVenn";
 import CheckBoxCustom from "./customCheckbox/CustomCheckbox";
 import { CohortModalContext } from "../inventory/cohortModal/CohortModalContext";
 import CohortModalGenerator from "../inventory/cohortModal/cohortModalGenerator";
+import Alert from '@material-ui/lab/Alert';
 import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
+import questionIcon3 from "../../assets/icons/Question_Icon_3.svg";
 import linkoutIcon from "../../assets/about/Export_Icon_White.svg";
 import LinkoutBlue from "../../assets/about/Export_Icon.svg";
+import DownloadIcon from "../../assets/icons/DownloadIcon.svg";
 
 import { useStyle } from "./cohortAnalyzerStyling";
 import {
@@ -47,6 +50,8 @@ import store from "../../store";
 import { updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
 
 export const CohortAnalyzer = () => {
+    const containerRef = useRef(null);
+    const canvasRef = useRef(null);
     const classes = useStyle();
     const { state, dispatch } = useContext(CohortStateContext);
     const [selectedCohorts, setSelectedCohorts] = useState([]);
@@ -59,6 +64,7 @@ export const CohortAnalyzer = () => {
     const [refershSelectedChart, setRefershSelectedChart] = useState(false);
     const [refershTableContent, setRefershTableContent] = useState(false);
     const [selectedCohortSection, setSelectedCohortSections] = useState([]);
+    const [alert, setAlert] = useState({ type: '', message: '' });
     const [sortType, setSortType] = useState("alphabet");
     const [deleteInfo, setDeleteInfo] = useState({ showDeleteConfirmation: false, deleteType: '', cohortId: '' });
     const [generalInfo, setGeneralInfo] = useState({});
@@ -77,14 +83,14 @@ export const CohortAnalyzer = () => {
         // store.dispatch(updateAutocompleteData(data));
         // navigate('/explore');
 
-        const upload = rowData.map(r=>({participant_id: r.participant_id, study_id: r.dbgap_accession}));
+        const upload = rowData.map(r => ({ participant_id: r.participant_id, study_id: r.dbgap_accession }));
         const uploadMetadata = {
             filename: "",
-            fileContent:upload.map(p => p.participant_id).join(","),
+            fileContent: upload.map(p => p.participant_id).join(","),
             matched: upload,
             unmatched: [],
         };
-        
+
         store.dispatch(updateUploadData(upload));
         store.dispatch(updateUploadMetadata(uploadMetadata));
         navigate('/explore');
@@ -102,7 +108,7 @@ export const CohortAnalyzer = () => {
     const handleExportToCCDIHub = () => {
         const participantIds = rowData.map(p => p.participant_id).join("|");
         const dbgapAccessions = [...new Set(rowData.map(p => p.dbgap_accession))].join("|");
-            
+
         const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
         const dbgapBase = "&dbgap_accession=";
 
@@ -132,6 +138,21 @@ export const CohortAnalyzer = () => {
         }
 
     }
+
+      const handleDownload = () => {
+    if (containerRef.current && canvasRef.current) {
+      const canvas = canvasRef.current;
+      
+      // Create download link
+      const link = document.createElement('a');
+      link.download = 'venn-diagram.png';
+      link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setAlert({ type: 'success', message: 'Confirmed download of Venn Diagram from the Cohort Analyzer by Participant ID' });
+    }
+  };
 
     function updatedCohortContent(newParticipantsData) {
         const newState = { ...state };
@@ -237,9 +258,9 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
-               
-            }else{
+            if (location && location.state && location.state.cohort && location.state.cohort.cohortId) {
+
+            } else {
                 setRowData([]);
             }
 
@@ -281,9 +302,9 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
-               
-            }else{
+            if (location && location.state && location.state.cohort && location.state.cohort.cohortId) {
+
+            } else {
                 setRowData([]);
             }
 
@@ -325,9 +346,9 @@ export const CohortAnalyzer = () => {
 
             }
         } else {
-             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
-               
-            }else{
+            if (location && location.state && location.state.cohort && location.state.cohort.cohortId) {
+
+            } else {
                 setRowData([]);
             }
 
@@ -335,17 +356,29 @@ export const CohortAnalyzer = () => {
     }
 
     const location = useLocation();
-    
 
-    useEffect(()=>{
-         if (location) {
-            const viewCohort = location && location.state ? location.state.cohort:null;
+
+    useEffect(() => {
+        if (location) {
+            const viewCohort = location && location.state ? location.state.cohort : null;
             if (viewCohort) {
                 handleCheckbox(viewCohort.cohortId, null);
             }
-        } 
-        
-    },[location]);
+        }
+
+    }, [location]);
+
+
+      useEffect(() => {
+            if (alert.message) {
+                const timer = setTimeout(() => {
+                    setAlert({ type: '', message: '' }); 
+                }, 2500);
+    
+              
+                return () => clearTimeout(timer);
+            }
+        }, [alert]);
 
     useEffect(() => {
         setSearchValue("");
@@ -405,9 +438,9 @@ export const CohortAnalyzer = () => {
 
         if (selectedCohorts.length === 0) {
             setGeneralInfo({});
-             if(location && location.state && location.state.cohort && location.state.cohort.cohortId){
-               
-            }else{
+            if (location && location.state && location.state.cohort && location.state.cohort.cohortId) {
+
+            } else {
                 setRowData([]);
             }
 
@@ -595,7 +628,7 @@ padding-left: 5px;
         <div style={{ height: '10px' }} />
     );
 
-    const exploreCCDIHubTooltip = <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight:400, fontSize:13,margin: 0}}>
+    const exploreCCDIHubTooltip = <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
         Clicking this button will create a url and open a new tab showing the  CCDI Hub  Explore page with filtered facets based on the user&apos;s selected  cohort.
         <br />
         <Gap />
@@ -604,7 +637,7 @@ padding-left: 5px;
         <br />
         <Gap />
         <b>If cohort size &gt; 600:</b><br />
-        Download the manifest and upload it manually to the <a style={{ zIndex: 10000, color:"#598AC5", fontWeight:"bolder" }} rel="noreferrer" target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
+        Download the manifest and upload it manually to the <a style={{ zIndex: 10000, color: "#598AC5", fontWeight: "bolder" }} rel="noreferrer" target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
             <img src={LinkoutBlue} width={14} height={14} style={{ padding: "4px 0px 0px 2px", bottom: 0, position: 'relative' }} alt="Linkout Icon" />
         </a> by following these steps:
         <ol style={{ paddingLeft: "1rem" }}>
@@ -614,7 +647,7 @@ padding-left: 5px;
         </ol>
     </p>;
 
-    const exploreDashboardTooltip =  <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight:400, fontSize:13,margin: 0}}>
+    const exploreDashboardTooltip = <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
         Clicking this button will create a pre-filtered facet for further analysis on the Explore Dashboard
 
     </p>;
@@ -658,6 +691,7 @@ padding-left: 5px;
             />
             <Stats />
             <div className={classes.container}>
+               
                 <div className={classes.leftSideAnalyzer}>
                     <div className={classes.sideHeader}>
                         <>
@@ -705,7 +739,7 @@ padding-left: 5px;
                         {state && (sortType !== "" ? sortByReturn(sortType, Object.keys(state), state, selectedCohorts) : Object.keys(state)).map((cohort) => {
                             let cohortName = state[cohort].cohortName + " (" + state[cohort].participants.length + ")";
                             return (
-                                <div 
+                                <div
                                     style={{
                                         cursor: 'pointer',
                                         background: selectedCohorts.includes(cohort)
@@ -743,11 +777,21 @@ padding-left: 5px;
                         })}
                     </div>
                 </div>
+                  
                 <div className={classes.rightSideAnalyzer}>
+                           {alert.message && (
+                    <Alert severity={alert.type}  className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
+                        {alert.message}
+                    </Alert>
+                )}
                     <div className={classes.rightSideAnalyzerHeader}>
                         <h1> Cohort Analyzer</h1>
                     </div>
-                    <div className={classes.rightSideAnalyzerHeader2}>
+                   
+
+                    <div className={classes.rightSideAnalyzerOuterContainer}>
+                    <div className={classes.rightSideAnalyzerInnerContainer}>
+                         <div className={classes.rightSideAnalyzerHeader2}>
                         <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 
                             <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of selected cohorts. Numbers in parentheses show unique records for the radio button selection, while numbers inside the diagram indicate unique values. The count next to your cohort in the sidebar reflects total participants."} arrow placement="top">
@@ -755,70 +799,110 @@ padding-left: 5px;
                             </ToolTip>
                         </p>
                     </div>
+                        <div className={classes.chartContainer}>
+                            <div className={classes.chartContainerHeader}>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+                                    <div style={{display: 'flex',flexDirection: 'row', gap:0,alignItems:'center'}}>
+                                        <p style={{ margin: 15, marginTop: 5,marginRight: 0, marginBottom: 0, fontSize: 17, fontFamily: 'Poppins', color: 'white' }}>Select a data category for cohort matching:</p>
+                                        <ToolTip maxWidth="380px"  backgroundColor={'white'} zIndex={3000}  title={"The venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate,"} arrow placement="top">
+                                           <img alt={"Question mark"} src={questionIcon3} style={{marginTop: -4}} height={10} />
+                                        </ToolTip>
+                                    </div>
+                                    <div className={classes.chartRadioContainer}>
+                                        <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                             <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center',opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
+                                                <input 
+                                                 style={{
+                                                   appearance: 'none',
+                                                   width: '10px',
+                                                   height: '10px',
+                                                   cursor: 'pointer',
+                                                   outline: '2px solid white',
+                                                   backgroundColor: nodeIndex === 0 ? '#00E1E1' : 'transparent',
+                                                   borderRadius: '50%',                                   
+                                                    marginTop: -3,
+                                                    border: '1px solid black'
+                                                }}
+                                                disabled={selectedCohorts.length === 0} type="radio" value={"1"} checked={nodeIndex === 0} onClick={() => {
+                                                    setNodeIndex(0);
+                                                }} radioGroup="node_type" name="node_type" aria-label="Participant radio button" />
+                                                Participant ID
+                                            </p>
+                                        </ToolTip>
+                                        <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
-                    <div style={{ display: 'flex', marginBottom: 40, justifyContent: 'space-between', width: '90%' }}>
-                        <div className={classes.catagoryCard} >
-                            <h2>Select a data category   <ToolTip backgroundColor={'white'} zIndex={3000} title={"Cohorts are compared using the data category selected below. Participant ID is the default"} arrow placement="top">
+                                            <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center',opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
+                                                <input 
+                                                 style={{
+                                                   appearance: 'none',
+                                                   width: '10px',
+                                                   height: '10px',
+                                                   cursor: 'pointer',
+                                                   outline: '2px solid white',
+                                                   backgroundColor: nodeIndex === 1 ? '#00E1E1' : 'transparent',
+                                                   borderRadius: '50%',
+                                                    marginTop: -3 ,
+                                                    border: '1px solid black'
+                                                }}
+                                                disabled={selectedCohorts.length === 0} type="radio" value={"2"} onClick={() => {
+                                                    setNodeIndex(1);
+                                                }} radioGroup="node_type" name="node_type" aria-label="Diagnosis Radio button" />
+                                                Diagnosis
+                                            </p>
+                                        </ToolTip>
+                                        <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
-
-                                <img alt={"question mark icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
-
-                            </ToolTip>  <br></br>for cohort matching</h2>
-
-                            <fieldset className={classes.fieldsetReset}>
-                                <legend style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0, 0, 0, 0)', whiteSpace: 'nowrap', border: 0 }}>
-                                    Select Node Type
-                                </legend>
-
-                                <div className={classes.catagoryCardChildren}>
-
-                                    <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
-                                        <p>
-                                            <input disabled={selectedCohorts.length === 0} type="radio" value={"1"} checked={nodeIndex === 0} onClick={() => {
-                                                setNodeIndex(0);
-                                            }} radioGroup="node_type" name="node_type" aria-label="Participant radio button" />
-                                            Participant ID
-                                        </p>
-                                    </ToolTip>
-                                    <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
-
-                                        <p>
-                                            <input disabled={selectedCohorts.length === 0} type="radio" value={"2"} onClick={() => {
-                                                setNodeIndex(1);
-                                            }} radioGroup="node_type" name="node_type" aria-label="Daignosis Radio button" />
-                                            Diagnosis
-                                        </p>
-                                    </ToolTip>
-                                    <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
-
-                                        <p>
-                                            <input disabled={selectedCohorts.length === 0} value={"3"} onClick={() => {
-                                                setNodeIndex(2);
-                                            }} type="radio" radioGroup="node_type" name="node_type" aria-label="Treatment Radio button" />
-                                            Treatment
-                                        </p>
-                                    </ToolTip>
-
+                                              <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center', opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
+                                                <input 
+                                                 style={{
+                                                   appearance: 'none',
+                                                   width: '10px',
+                                                   height: '10px',
+                                                   cursor: 'pointer',
+                                                   outline: '2px solid white',
+                                                   backgroundColor: nodeIndex === 2 ? '#00E1E1' : 'transparent',
+                                                   borderRadius: '50%',
+                                                    marginTop: -3,
+                                                    border: '1px solid black'
+                                                }}
+                                                disabled={selectedCohorts.length === 0} value={"3"} onClick={() => {
+                                                    setNodeIndex(2);
+                                                }} type="radio" radioGroup="node_type" name="node_type" aria-label="Treatment Radio button" />
+                                                Treatment
+                                            </p>
+                                        </ToolTip>
+                                    </div>
                                 </div>
-                            </fieldset>
+
+                                <span onClick={()=>{
+                                    handleDownload();
+                                }} style={{ margin: 15, cursor: selectedCohorts.length > 0 ? 'pointer' : 'not-allowed' }}>
+                                    <img alt={"download icon"} src={DownloadIcon} width={60} />
+                                </span>
+                            </div>
+                          
+                            {refershTableContent && selectedCohorts.length > 0 &&
+                                <ChartVenn
+                                    intersection={nodeIndex}
+                                    cohortData={cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
+                                    setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
+                                    setSelectedCohortSections={(data) => {
+                                        setSelectedCohortSections(data);
+                                    }}
+                                    selectedCohortSection={selectedCohortSection}
+                                    selectedCohort={selectedCohorts}
+                                    setGeneralInfo={setGeneralInfo}
+                                    containerRef={containerRef}
+                                    canvasRef={canvasRef}
+                                />}
+
+                                {selectedCohorts.length === 0 &&
+                            <img src={placeHolder} alt='placeholder' width={725} style={{ marginTop: 10,alignSelf:'center' }} />
+                        }
+                                </div>
                         </div>
 
-                        {refershTableContent && selectedCohorts.length > 0 &&
-                            <ChartVenn
-                                intersection={nodeIndex}
-                                cohortData={cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
-                                setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
-                                setSelectedCohortSections={(data) => {
-                                    setSelectedCohortSections(data);
-                                }}
-                                selectedCohortSection={selectedCohortSection}
-                                selectedCohort={selectedCohorts}
-                                setGeneralInfo={setGeneralInfo}
-                            />}
-
-                        {selectedCohorts.length === 0 &&
-                            <img src={placeHolder} alt='placeholder' width={725} style={{ marginTop: -30 }} />
-                        }
+                        
 
                     </div>
                     <div className={classes.cohortCountSection}>
@@ -832,77 +916,77 @@ padding-left: 5px;
                         }}>
                             {/* Create New Cohort */}
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <CreateNewCOhortButton
-                                selectedCohortSection={selectedCohortSection}
-                                classes={classes}
-                                questionIcon={questionIcon}
-                                handleClick={handleClick}
-                                ToolTip={ToolTip}
-                            />
+                                <CreateNewCOhortButton
+                                    selectedCohortSection={selectedCohortSection}
+                                    classes={classes}
+                                    questionIcon={questionIcon}
+                                    handleClick={handleClick}
+                                    ToolTip={ToolTip}
+                                />
                             </div>
 
                             {/* Download Button */}
                             <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <DownloadSelectedCohort
-                                queryVariable={queryVariable}
-                                isSelected={selectedCohorts.length > 0 && rowData.length > 0}
-                            />
+                                <DownloadSelectedCohort
+                                    queryVariable={queryVariable}
+                                    isSelected={selectedCohorts.length > 0 && rowData.length > 0}
+                                />
                             </div>
 
                             {/* BUILD IN EXPLORE DASHBOARD */}
-                            <div style={{ position:"relative", marginRight: '6px' }}>
-                            <button
-                                onClick={() => selectedCohorts.length > 0 && handleBuildInExplore()}
-                                className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
-                            >
-                                BUILD IN EXPLORE DASHBOARD
-                            </button>
-                            <div style={{ position:"absolute",top:-5,right:-13, }}>
-                            <ToolTip
-                                maxWidth="335px"
-                                border={'1px solid #598ac5'}
-                                arrowBorder={'1px solid #598AC5'}
-                                title={<div>
-                                {exploreDashboardTooltip}
-                                </div>}
-                                placement="top-end"
-                                arrow
-                                interactive
-                                arrowSize="30px"
-                            >
-                                
-                                <img alt="Question Icon" src={questionIcon} width={10} style={{border:"0px"}} />
-                               
-                            </ToolTip>
-                             </div>
+                            <div style={{ position: "relative", marginRight: '6px' }}>
+                                <button
+                                    onClick={() => selectedCohorts.length > 0 && handleBuildInExplore()}
+                                    className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
+                                >
+                                    BUILD IN EXPLORE DASHBOARD
+                                </button>
+                                <div style={{ position: "absolute", top: -5, right: -13, }}>
+                                    <ToolTip
+                                        maxWidth="335px"
+                                        border={'1px solid #598ac5'}
+                                        arrowBorder={'1px solid #598AC5'}
+                                        title={<div>
+                                            {exploreDashboardTooltip}
+                                        </div>}
+                                        placement="top-end"
+                                        arrow
+                                        interactive
+                                        arrowSize="30px"
+                                    >
+
+                                        <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px" }} />
+
+                                    </ToolTip>
+                                </div>
                             </div>
 
                             {/* EXPLORE IN CCDI HUB */}
-                            <div style={{ position:"relative", marginRight: '10px' }}>
-                            <button
-                                onClick={() => (selectedCohorts.length > 0 && rowData.length <= 600) ? handleExportToCCDIHub(): {}}
-                                className={(selectedCohorts.length > 0  && rowData.length <= 600) ? classes.exploreButton : classes.exploreButtonFaded}
-                            >
-                                EXPLORE IN CCDI HUB
-                                <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
-                            </button>
-                            <div style={{ position:"absolute",top:-5,right:-13, }}>
-                            <ToolTip
-                                maxWidth="335px"
-                                border={'1px solid #598ac5'}
-                                arrowBorder={'1px solid #598AC5'}
-                                title={<div >
-                                {exploreCCDIHubTooltip}
-                                </div>}
-                                placement="top-end"
-                                arrow
-                                interactive
-                                arrowSize="30px"
-                            >
-                                <img alt="Question Icon" src={questionIcon} width={10} style={{border:"0px"}}/>
-                                
-                            </ToolTip>
-                            </div>
+                            <div style={{ position: "relative", marginRight: '10px' }}>
+                                <button
+                                    onClick={() => (selectedCohorts.length > 0 && rowData.length <= 600) ? handleExportToCCDIHub() : {}}
+                                    className={(selectedCohorts.length > 0 && rowData.length <= 600) ? classes.exploreButton : classes.exploreButtonFaded}
+                                >
+                                    EXPLORE IN CCDI HUB
+                                    <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
+                                </button>
+                                <div style={{ position: "absolute", top: -5, right: -13, }}>
+                                    <ToolTip
+                                        maxWidth="335px"
+                                        border={'1px solid #598ac5'}
+                                        arrowBorder={'1px solid #598AC5'}
+                                        title={<div >
+                                            {exploreCCDIHubTooltip}
+                                        </div>}
+                                        placement="top-end"
+                                        arrow
+                                        interactive
+                                        arrowSize="30px"
+                                    >
+                                        <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px" }} />
+
+                                    </ToolTip>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -25,8 +25,7 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
 }
 
 
-const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo }) => {
-  const canvasRef = useRef(null);
+const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo,containerRef,canvasRef }) => {
   const chartRef = useRef(null);
 
   const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;
@@ -39,7 +38,7 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
     const updatedBaseSets = cohortData.map((cohort) => {
       const seenValues = new Set();
       return {
-        label: `${cohort.cohortName} (${cohort.participants.length})`,
+        label: `${cohort.cohortName.length > 15 ? cohort.cohortName.slice(0, 15) + '...' : cohort.cohortName} (${cohort.participants.length})`,
         values: cohort.participants
           .map(p => p[nodes[intersection]])
           .filter(value => {
@@ -215,7 +214,9 @@ useEffect(() => {
     )
   }
   return (
-    <div className="App">
+    <div ref={containerRef}  className="App">
+   <div style={{minHeight: 45}}>
+    </div> 
       <canvas  ref={canvasRef} id="canvas"></canvas>
     
     </div>
