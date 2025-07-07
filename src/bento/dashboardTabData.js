@@ -1409,7 +1409,7 @@ export const tabContainers = [
     count: 'numberOfDiagnoses',
     fileCount: 'diagnosisFileCount',
     toolTipText: 'Count of Diagnosis Record',
-    dataKey: ['participant','id'],
+    dataKey: "id",
     hiddenDataKeys: ['participant', 'participant_pk', 'dbgap_accession'],
     tableID: 'diagnosis_tab_table',
     extendedViewConfig: {
