@@ -44,17 +44,50 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         deletionType: "",
     });
     const tooltipOpen = useRef(false);
+    const alertRef = useRef(null);
+    const success = useRef(false);
+    const switchedCohort = useRef(false);
+    const errMessage = useRef("");
 
     useEffect(() => {
         if (alert.message) {
+
             const timer = setTimeout(() => {
-                setAlert({ type: '', message: '' }); // Clear the alert after 3 seconds
+                if (alertRef.current) {
+                    alertRef.current.style.display = 'none';
+                    success.current = false;
+                    errMessage.current = "";
+                }
+            
+
             }, 2500);
 
-            // Cleanup timer on component unmount
             return () => clearTimeout(timer);
         }
     }, [alert]);
+
+
+    useEffect(() => {
+        if (switchedCohort.current) {
+            success.current = false;
+            errMessage.current = "";
+            switchedCohort.current = false;
+            setAlert({ type: '', message: '' });
+        }
+    }, [switchedCohort.current])
+
+    useEffect(() => {
+        if (success.current) {
+            setAlert({ type: 'success', message: 'Cohort updated successfully!' });
+
+
+        } else if (errMessage.current) {
+            setAlert({ type: 'error', message: `Failed to update cohort: ${errMessage.current}` });
+
+        } else {
+            setAlert({ type: '', message: '' });
+        }
+    }, [success.current, errMessage.current, state])
 
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
@@ -101,7 +134,11 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
             participants: localCohort.participants,
             searchText: localCohort.searchText,
         })
+       
+       
     };
+
+  
 
     const handleClearCurrentCohortChanges = () => {
         setCurrentCohortChanges(null);
@@ -117,10 +154,12 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                 participants: localCohort.participants
             },
             () => {
-                setAlert({ type: 'success', message: 'Cohort updated successfully!' })
-                handleClearCurrentCohortChanges();
+                success.current = true; 
+                 handleClearCurrentCohortChanges();        
             },
-            (error) => setAlert({ type: 'error', message: `Failed to update cohort: ${error.message}` })
+            (error) =>{
+                errMessage.current = error.message;
+            } 
         ));
     };
 
@@ -182,7 +221,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     />
                                 </span>
                                 {alert.message && (
-                                    <Alert severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
+                                    <Alert ref={alertRef} severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
                                         {alert.message}
                                     </Alert>
                                 )}
@@ -193,6 +232,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     config={config.cohortList}
                                     selectedCohort={selectedCohort}
                                     setSelectedCohort={setSelectedCohort}
+                                    switchedCohortRef={switchedCohort}
                                     unSavedChanges={unSavedChanges}
                                     setChangingConfirmation={setDeleteModalProps}
                                     setShowChangingConfirmation={setShowDeleteConfirmation}
