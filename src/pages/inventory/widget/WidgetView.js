@@ -99,15 +99,16 @@ const WidgetView = ({ classes, data, theme }) => {
               clsName: classes.widgetTotalTooltipIcon
             };
             return (
-              <Grid key={index} item lg={4} md={6} sm={12} xs={12}>
+              <Grid key={index} item lg={4} md={6} sm={12} xs={12} className={classes.padding}>
                 <WidgetThemeProvider>
+                  <div className={classes.widgetBox}>
                   <Widget
                     header={
                       <div
                         style={{
                           display: "flex",
                           width: "100%",
-                          justifyContent: "space-between",
+                          flex:1
                         }}
                       >
                         <Typography
@@ -128,9 +129,7 @@ const WidgetView = ({ classes, data, theme }) => {
                             classes={classes}
                           />}
                         </Typography>
-                        <div>{
-                        //TODO: Add download button and style this parent div
-                        }
+                        <div>
                           <ToolTip
                             title={widget.tooltip}
                             placement="top-end"
@@ -144,12 +143,10 @@ const WidgetView = ({ classes, data, theme }) => {
                               />
                             </div>
                           </ToolTip>
-                          {
-                            //TODO: Add download button here
-                          }
                         </div>
                       </div>
                     }
+                    title={widget.title}
                     bodyClass={classes.fullHeightBody}
                     className={classes.card}
                     bottomDivider
@@ -162,6 +159,7 @@ const WidgetView = ({ classes, data, theme }) => {
                     width={widget.width}
                     height={widget.height}
                   />
+                  </div>
                 </WidgetThemeProvider>
               </Grid>
             );

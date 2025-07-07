@@ -97,6 +97,16 @@ const styles = (theme) => ({
   statsBar: {
     position: 'fixed',
   },
+  padding:{
+    padding: '30px',
+  },
+  widgetBox: {
+   transition: 'box-shadow .3s',
+   borderRadius: '20px', 
+    '&:hover': {
+      boxShadow: '0 0 11px rgba(33,33,33,.3)',
+    },
+  },
   widgetTotalTooltipIcon: {
     width: '10px',
     transform: 'translateY(-5px)',
