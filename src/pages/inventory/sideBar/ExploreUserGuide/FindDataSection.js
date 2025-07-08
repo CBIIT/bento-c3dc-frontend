@@ -1,10 +1,8 @@
 // components/ExploreUserGuide/FindDataSection.js
 import React from "react";
-import figure2 from "../../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg";
-import figure3 from "../../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg";
-import figure4 from "../../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg";
-import figure5 from "../../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg";
-import figure6 from "../../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg";
+import figure2 from "./images/figure2.png";
+import figure3 from "./images/figure3.png";
+import figure4 from "./images/figure4.png";
 
 const FindDataSection = ({ classes }) => (
   <div>
@@ -12,68 +10,118 @@ const FindDataSection = ({ classes }) => (
       id="Finding Participants, Studies, Samples, and Files"
       className={classes.sectionTitle}
     >
-      <p>Finding Participants, Studies, Samples, and Files</p>
+      <p>Finding Participants and Studies</p>
     </div>
     <div className={classes.contentContainer}>
       <p>
-        The CCDI Hub Explore Dashboard provides row-level metadata for CCDI
-        study participants and their data objects for review
+        The <a href="/explore">C3DC Explore Dashboard</a> provides row-level
+        metadata and harmonized clinical data for participants with features
+        including faceted filters, select visualizations, and an exportable
+        table of results. The dashboard is participant-centric, meaning that
+        filtering criteria and results return de-identified information about a
+        participant and their related studies and harmonized clinical data.
       </p>
+
+      <p>
+        <strong>
+          To find and filter information on the C3DC Explore Dashboard:
+        </strong>
+      </p>
+
       <ol>
         <li>
-          navigate to the Explore Dashboard by clicking “Explore” (Figure 2).
-          <div className={classes.figureContainer}>
-            <img src={figure2} style={{ width: "60%" }} alt="Figure2" />
-          </div>
-          <div className={classes.figureText}>
-            Figure 2: CCDI homepage with red box highlighting the “Explore” menu
-            bar link
-          </div>
-        </li>
-        <li>
-          filter row-level data and view them as visualizations (Figure 3).
-          <div className={classes.figureContainer}>
-            <img src={figure3} style={{ width: "40%" }} alt="Figure3" />
-          </div>
-          <div className={classes.figureText}>
-            Figure 3: Explore Dashboard page with red boxes highlighting the
-            search filters and results
-          </div>
-        </li>
-        <li>
-          faceted filtering (Figure 4).
-          <div className={classes.figureContainer}>
-            <img src={figure4} style={{ width: "90%" }} alt="Figure4" />
-          </div>
-          <div className={classes.figureText}>
-            Figure 4: Full facet list in Explore Dashboard
-          </div>
-        </li>
-        <li>
-          results tables (Figure 5).
-          <ol className={classes.alphaList}>
-            <li>“Participants”: Characteristics</li>
-            <li>“Studies”: Studies</li>
-            <li>“Samples”: Samples</li>
+          Available facets to filter are displayed in the left panel (Figure
+          2A). Filtering options include:
+          <ul>
             <li>
-              “Files”: Files
-              <div className={classes.figureContainer}>
-                <img src={figure5} style={{ width: "70%" }} alt="Figure5" />
-              </div>
-              <div className={classes.figureText}>
-                Figure 5: Explore Dashboard visualizations and results tables
-              </div>
+              Upload list of participant IDs (in “DEMOGRAPHICS”, Figure 2B)
             </li>
-          </ol>
-        </li>
-        <li>
-          “View columns” button (Figure 6).
+            <li>
+              Text searches (e.g., “DIAGNOSIS”, “DIAGNOSIS ANATOMIC SITE”,
+              Figure 2C)
+            </li>
+            <li>Numerical sliders (e.g., “AGE AT DIAGNOSIS”, Figure 2D)</li>
+            <li>Checkbox selections for other properties</li>
+          </ul>
+          Multiple criteria can be applied simultaneously. Selections can be
+          viewed or cleared in the query summary above the visual widgets
+          (Figure 2E).
           <div className={classes.figureContainer}>
-            <img src={figure6} style={{ width: "70%" }} alt="Figure6" />
+            <img src={figure2} style={{ width: "85%" }} alt="Figure 2" />
           </div>
           <div className={classes.figureText}>
-            Figure 6: Interface for selecting and deselecting columns in
-            table
+            Figure 2: Full facet list in C3DC Explore Dashboard with highlights
+            of various facet types and query display/clear function
+          </div>
+        </li>
+
+        <li>
+          Filtering will update the visualizations and result tables in the
+          dashboard (Figure 3). Note: only the top 20 values are shown for
+          visualizations like Diagnosis and Anatomic Site when more than 20
+          values are returned.
+          <br />
+          Each results table includes:
+          <ul>
+            <li>
+              <strong>Studies:</strong> Displays links to C3DC studies’ pages on{" "}
+              <a
+                href="https://dbgap.ncbi.nlm.nih.gov/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={classes.link}
+              >
+                dbGaP
+              </a>
+              .
+            </li>
+            <li>
+              <strong>Participants:</strong> De-identified information with
+              mappings via the{" "}
+              <a
+                href="https://ccdi.cancer.gov/ccdi-participant-index"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={classes.link}
+              >
+                CCDI Participant Index (CPI)
+              </a>
+              .
+            </li>
+            <li>
+              <strong>Diagnosis:</strong> Metadata and harmonized
+              diagnosis-related data.
+            </li>
+            <li>
+              <strong>Treatment:</strong> Metadata and harmonized
+              treatment-related data.
+            </li>
+            <li>
+              <strong>Treatment Outcome:</strong> Data related to treatment
+              results.
+            </li>
+            <li>
+              <strong>Survival:</strong> Participant survival information.
+            </li>
+          </ul>
+          <div className={classes.figureContainer}>
+            <img src={figure3} style={{ width: "80%" }} alt="Figure 3" />
+          </div>
+          <div className={classes.figureText}>
+            Figure 3: C3DC Explore Dashboard visualizations and results tables
+            with arrows pointing to the available informational tables
+          </div>
+        </li>
+
+        <li>
+          You can show, hide, and copy the URL used to construct your filtered
+          view using the toggle and copy buttons above the visualization widgets
+          (Figure 4).
+          <div className={classes.figureContainer}>
+            <img src={figure4} style={{ width: "75%" }} alt="Figure 4" />
+          </div>
+          <div className={classes.figureText}>
+            Figure 4: Toggle button, clear and copy query URL features
           </div>
         </li>
       </ol>

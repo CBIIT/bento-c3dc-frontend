@@ -157,7 +157,7 @@ export default () => ({
         },
     },
     link: {
-        paddingRight: '20px',
+        paddingRight: '20px', 
         background: `url(${exportIconBlue}) right center no-repeat`,
     }
 });

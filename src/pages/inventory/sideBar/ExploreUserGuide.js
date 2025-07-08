@@ -132,7 +132,7 @@ const ExploreUserGuide = ({ classes }) => {
 
             <div id='UserGuideContentSection' className={classes.contentSection}>
               <div className={classes.contentList}>
-                <div className={classes.contentTitle}>CCDI Hub Explore Dashboard and Cart</div>
+                <div className={classes.contentTitle}>C3DC Explore Dashboard and Cart</div>
                 <OverviewSection classes={classes} />
                 <FindDataSection classes={classes} />
                 <CohortSection classes={classes} />
