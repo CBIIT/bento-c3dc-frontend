@@ -1,43 +1,132 @@
-// components/ExploreUserGuide/CohortSection.js
-import React from 'react';
-import figure7 from '../../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg';
-import figure8 from '../../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg';
-import figure9 from '../../../../assets/explore/C3DCFacetLocalFindSearchIcon.svg';
+import React from "react";
+import figure5 from "./images/figure5.png";
+import figure6 from "./images/figure6.png";
 
 const CohortSection = ({ classes }) => (
   <div>
-    <div id='Creating and managing cohorts' className={classes.sectionTitle}>
-      <p>Creating and managing cohorts</p>
+    <div id="Creating and managing cohorts" className={classes.sectionTitle}>
+      <p>Creating and Managing Cohorts</p>
     </div>
     <div className={classes.contentContainer}>
       <p>
-        From the CCDI Hub Explore Dashboard Participant table, you can group participants into cohorts to find files of interest or add files directly to the cart. To create a cohort:
+        The Cohort Selector enables users to create and manage up to{" "}
+        <strong>20 cohorts</strong>. This feature offers flexibility to
+        researchers by allowing them to create and update cohort groups
+        according to their specific requirements.
       </p>
-      <ol>
-        <li>Apply any filters of interest from the lefthand facet menu.</li>
-        <li>Select rows using checkboxes on the Participants table. You can select multiple rows or all rows.</li>
+
+      <h4>
+        <strong>Creating a New Cohort</strong>
+      </h4>
+      <ul>
         <li>
-          Click “CREATE COHORT” (Figure 7).
-          <div className={classes.figureContainer}><img src={figure7} style={{ width: '70%' }} alt='Figure7' /></div>
-          <div className={classes.figureText}>Figure 7: Cohort creation and management</div>
+          Using the process described in Finding Participants and Studies, apply
+          any filters of interest from the lefthand facet menu.
         </li>
-        <li>In “View of All Cohorts”, view and manage all cohorts (Figure 8).</li>
-        <li>In the selected cohort view, edit name/description, search participants, and delete them (Figure 8).</li>
         <li>
-          Click “DOWNLOAD SELECTED COHORT” to export cohort metadata (Figure 8).
-          <div className={classes.figureContainer}><img src={figure8} style={{ width: '40%' }} alt='Figure8' /></div>
-          <div className={classes.figureText}>Figure 8: View of All Cohorts</div>
+          Users can then select rows from the results table using the checkmark
+          boxes in the leftmost column. Alternatively, select{" "}
+          <strong>“All Participants”</strong> from the “Create New Cohort”
+          button to include all participants matching the filters (Figure 5). A
+          "View of All Cohorts" pop-up window will open when at least one
+          participant row is selected. A cohort can include up to{" "}
+          <strong>4,000 participants</strong>.
         </li>
-        <li>Close the modal to return to the Participant table.</li>
-      </ol>
+      </ul>
+      <div className={classes.figureContainer}>
+        <img src={figure5} style={{ width: "80%" }} alt="Figure 5" />
+      </div>
+      <div className={classes.figureText}>
+        Figure 5: Cohort creation with either Selected Participants or All
+        Participants from faceted filters
+      </div>
+
+      <p>From the "View of All Cohorts" window, users can:</p>
+      <ul>
+        <li>
+          Update the <strong>Cohort ID</strong> and <strong>Description</strong>{" "}
+          (Figure 6A)
+        </li>
+        <li>
+          View and delete <strong>Participants</strong> (Figure 6B)
+        </li>
+        <li>
+          Delete entire <strong>Cohorts</strong> (Figure 6C)
+        </li>
+        <li>
+          Click <strong>“Save Changes”</strong> to save all modifications
+          (Figure 6D)
+        </li>
+      </ul>
+
+      <div className={classes.figureContainer}>
+        <img src={figure6} style={{ width: "80%" }} alt="Figure 6" />
+      </div>
+      <div className={classes.figureText}>
+        Figure 6: Cohort management in View of All Cohorts
+      </div>
+
+      <h4>
+        <strong>View All and Update Cohorts</strong>
+      </h4>
       <p>
-        Add participants to existing cohorts using “ADD PARTICIPANTS TO EXISTING COHORT” and selecting the desired cohort (Figure 9).
+        Selecting the <strong>“View All Cohorts”</strong> button in the{" "}
+        <a href="/explore">C3DC Explore Dashboard</a> opens a management window
+        for all saved cohorts. Features include:
       </p>
-      <div className={classes.figureContainer}><img src={figure9} style={{ width: '80%' }} alt='Figure9' /></div>
-      <div className={classes.figureText}>Figure 9: Add Participants to Existing Cohort button</div>
-      <p>
-        A user can create up to 20 cohorts with a maximum of 5,000 participants each. Cohorts persist until browser history is cleared.
-      </p>
+      <ul>
+        <li>
+          <strong>Cohort ID</strong>: Create a unique ID to identify your cohort
+          (Figure 6A)
+        </li>
+        <li>
+          <strong>Cohort Description</strong>: Add descriptive context (Figure
+          6A)
+        </li>
+        <li>
+          <strong>Save Changes</strong>: Apply updates (Figure 6D)
+        </li>
+        <li>
+          <strong>Participant ID Search</strong>: Look up participant presence
+          in cohort (Figure 6E)
+        </li>
+        <li>
+          <strong>Download Selected Cohort</strong>:
+          <ul>
+            <li>
+              <strong>Manifest CSV</strong>: Contains participant IDs and
+              high-level data
+            </li>
+            <li>
+              <strong>Metadata JSON</strong>: Full metadata for the cohort
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>View Cohort Analyzer</strong>: Launches the{" "}
+          <a
+            href="/cohortAnalyzer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.link}
+          >
+            C3DC Cohort Analyzer
+          </a>
+        </li>
+        <li>
+          <strong>Explore in CCDI Hub</strong>: Exports cohorts (up to 600
+          participants) to the{" "}
+          <a
+            href="https://ccdi.cancer.gov/explore"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={classes.link}
+          >
+            CCDI Hub Explore Dashboard
+          </a>{" "}
+          with pre-filtered data (Figure 6F)
+        </li>
+      </ul>
     </div>
   </div>
 );
