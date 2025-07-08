@@ -43,7 +43,7 @@ const OverviewSection = ({ classes }) => (
         .
       </p>
       <div className={classes.figureContainer}>
-        <img src={figure1} style={{ width: "40%" }} alt="Figure1" />
+        <img src={figure1} style={{ width: "85%" }} alt="Figure1" />
       </div>
       <div className={classes.figureText}>
         Figure 1: CCDI Hub Explore Dashboard and Cart features

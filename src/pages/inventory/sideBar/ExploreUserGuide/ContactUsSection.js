@@ -1,10 +1,9 @@
-// components/ExploreUserGuide/ContactUsSection.js
 import React from 'react';
 
 const ContactUsSection = ({ classes }) => (
   <div>
     <div id='Contact Us' className={classes.sectionTitle}>
-      <p>Contact Us</p>
+      <p>Contact Information</p>
     </div>
     <div className={classes.contentContainer}>
       <p style={{ paddingBottom: '100px' }}>

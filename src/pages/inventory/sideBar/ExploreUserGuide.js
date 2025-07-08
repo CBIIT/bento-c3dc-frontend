@@ -13,8 +13,7 @@ import OverviewSection from './ExploreUserGuide/OverviewSection';
 import FindDataSection from './ExploreUserGuide/FindDataSection';
 import CohortSection from './ExploreUserGuide/CohortSection';
 import StudyMetadataSection from './ExploreUserGuide/StudyMetadataSection';
-import CartManifestSection from './ExploreUserGuide/CartManifestSection';
-import DCFSAccessSection from './ExploreUserGuide/DCFSAccessSection';
+import AnalyzingCohortsSection from './ExploreUserGuide/AnalyzingCohortsSection';
 import FullGuideSection from './ExploreUserGuide/FullGuideSection';
 import ContactUsSection from './ExploreUserGuide/ContactUsSection';
 
@@ -47,8 +46,7 @@ const ExploreUserGuide = ({ classes }) => {
     'Finding Participants, Studies, Samples, and Files',
     'Creating and managing cohorts',
     'Downloading Metadata from the Studies tab',
-    'Creating an Exportable File Manifest from the Cart',
-    'NCI Data Commons Framework Services (DCFS): Controlled Data Access Instructions',
+    'Analyzing Cohorts',
     'Full User Guide',
     'Contact Us',
   ];
@@ -58,17 +56,6 @@ const ExploreUserGuide = ({ classes }) => {
     setSelectedNavTitle(id);
     const contentElement = document.getElementById('UserGuideContentSection');
     const element = document.getElementById(id);
-    if (contentElement && element) {
-      contentElement.scrollTo({
-        top: element.offsetTop - 40,
-        behavior: 'smooth',
-      });
-    }
-  };
-
-  const handleOnClickManifest = () => {
-    const contentElement = document.getElementById('UserGuideContentSection');
-    const element = document.getElementById('Downloading Metadata from the Studies tab');
     if (contentElement && element) {
       contentElement.scrollTo({
         top: element.offsetTop - 40,
@@ -132,13 +119,12 @@ const ExploreUserGuide = ({ classes }) => {
 
             <div id='UserGuideContentSection' className={classes.contentSection}>
               <div className={classes.contentList}>
-                <div className={classes.contentTitle}>C3DC Explore Dashboard and Cart</div>
+                <div className={classes.contentTitle}>C3DC Explore Dashboard & Cohort(s) Analyzer</div>
                 <OverviewSection classes={classes} />
                 <FindDataSection classes={classes} />
                 <CohortSection classes={classes} />
                 <StudyMetadataSection classes={classes} />
-                <CartManifestSection classes={classes} />
-                <DCFSAccessSection classes={classes} handleOnClickManifest={handleOnClickManifest} />
+                <AnalyzingCohortsSection classes={classes} />
                 <FullGuideSection classes={classes} />
                 <ContactUsSection classes={classes} />
               </div>
