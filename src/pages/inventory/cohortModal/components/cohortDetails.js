@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
-import DEFAULT_CONFIG from '../config';
-import { debounce } from '../utils';
+import CohortMetadata from './cohortMetadata';
 //import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
 import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
 import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
@@ -50,13 +49,10 @@ const CohortDetails = (props) => {
         cohortDescription: matchingCohortID ? temporaryCohort.cohortDescription : activeCohort.cohortDescription,
         participants: matchingCohortID ? JSON.parse(JSON.stringify(temporaryCohort.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
     });
-    const [isEditingName, setIsEditingName] = useState(false);
-    const [isEditingDescription, setIsEditingDescription] = useState(false);
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const [isScrollbarActive, setIsScrollbarActive] = useState(false);
 
     const scrollContainerRef = useRef(null);
-    const descriptionRef = useRef(null);
     const dropdownRef = useRef(null);
 
     const navigate = useNavigate();
@@ -106,13 +102,6 @@ const CohortDetails = (props) => {
         };
     }, [showDownloadDropdown]);
 
-    useEffect(() => {
-        if (isEditingDescription && descriptionRef.current) {
-            const textarea = descriptionRef.current;
-            descriptionRef.current.focus();
-            textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
-        }
-    }, [isEditingDescription]);
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -120,13 +109,6 @@ const CohortDetails = (props) => {
         }
     };
 
-    const handleEditName = () => {
-        setIsEditingName(true);
-    };
-
-    const handleEditDescription = () => {
-        setIsEditingDescription(true);
-    };
     
     const handleSave = () => {
         handleSaveCohort(localCohort)
@@ -140,26 +122,6 @@ const CohortDetails = (props) => {
         navigate(`/cohortAnalyzer`,{state:{cohort}});
     }
 
-    const debouncedSave = useRef(
-        debounce((e) => {
-            setIsEditingName(false);
-            handleSetCurrentCohortChanges({
-                ...temporaryCohort,
-                ...localCohort,
-                [e.target.name]: e.target.value,
-            });
-        }, 100) // Adjust debounce delay
-    ).current;
-
-    const handleSaveName = (e) => {
-        setIsEditingName(false);
-        debouncedSave(e);
-    };
-
-    const handleSaveDescription = (e) => {
-        setIsEditingDescription(false);
-        debouncedSave(e);
-    };
 
     const Gap = () => (
         <div style={{ height: '10px' }} />
@@ -177,12 +139,6 @@ const CohortDetails = (props) => {
         setShowDownloadDropdown(!showDownloadDropdown);
     };
 
-    const handleTextChange = (e) => {
-        setLocalCohort({
-            ...localCohort,
-            [e.target.name]: e.target.value,
-        });
-    };
 
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
     const [deleteModalProps, setDeleteModalProps] = useState({
@@ -244,17 +200,6 @@ const CohortDetails = (props) => {
         participant.participant_id.includes(searchText)
     ) : localCohort.participants;
 
-    const datePrefix = config && config.datePrefix && typeof config.datePrefix === 'string'
-        ? config.datePrefix
-        : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
-
-    /*const cohortHeaderLabel = config && config.cohortHeaderLabel && typeof config.cohortHeaderLabel === 'string'
-        ? config.cohortHeaderLabel
-        : DEFAULT_CONFIG.config.cohortDetails.cohortHeaderLabel;*/
-
-    const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
-        ? config.cohortCountsLabel
-        : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
     const viewCohortAnalyzerTooltip = "Clicking on this button will take the user to the Cohort Analyzer page, where the user will see the desired cohort and click to proceed with analysis.";
 
@@ -302,98 +247,15 @@ const CohortDetails = (props) => {
                 deletionType={deleteModalProps.deletionType}
             />
             <div className={classes.cohortDetailsSection}>
-                <div className={classes.cohortHeading}>
-                    <div className={ isEditingName ? classes.editingCohortTitle: classes.cohortTitle }>
-                        {isEditingName ? (
-                            <input
-                                className={classes.editingCohortName}
-                                type="text"
-                                name="cohortName"
-                                value={localCohort['cohortName']}
-                                onBlur={(e) => handleSaveName(e)}
-                                onChange={(e) => handleTextChange(e)}
-                                maxLength={20}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        e.preventDefault();
-                                        handleSaveName(e); 
-                                    }
-                                }}
-                                autoFocus
-                            />
-                        ) : (
-                            <>
-                            <span
-                                onClick={(e) => handleEditName(true)}
-                                className={classes.cohortName}
-                            >
-                                {localCohort['cohortName']}
-                            </span>
-                            {/*
-                            <ToolTip title="Edit Cohort ID" placement="top-end" arrow>
-                            <img
-                                src={EditIcon}
-                                alt="edit cohort name icon"
-                                className={classes.editIcon}
-                                onClick={handleEditName}
-                            />
-                            </ToolTip>
-                            */}
-                            </>
-                        )}
-                    </div>
-                    <span className={classes.cohortItemCounts}>
-                        {cohortCountsLabel} ({localCohort.participants.length})
-                    </span>
-                </div>
-                <div className={classes.cohortDescription}>
-                    {isEditingDescription ? (
-                        <textarea
-                            ref={descriptionRef}
-                            className={classes.editingCohortDescription}
-                            value={localCohort['cohortDescription']}
-                            onBlur={(e) => handleSaveDescription(e)}
-                            name="cohortDescription"
-                            onChange={(e) => handleTextChange(e)}
-                            rows={4}
-                            maxLength={250}
-                            placeholder="Enter cohort description..."
-                            autoFocus
-                        />
-                        
-                    ) : (
-                        <>
-                        <textarea
-                            className={classes.cohortDescriptionBox}
-                            value={localCohort['cohortDescription']}
-                            name="cohortDescription"
-                            onFocus={(e) => handleEditDescription(true)}
-                            rows={4}
-                            maxLength={250}
-                            placeholder="Enter cohort description..."
-                            readonly="true"
-                            
-                        />
-                        {/*
-                        <ToolTip title="Edit Cohort description" placement="top-end" arrow>
-                        <img
-                            src={EditIcon}
-                            alt="edit cohort description icon"
-                            className={classes.editIcon}
-                            onClick={handleEditDescription}
-                            />
-                        </ToolTip>
-                        {*
-                        <span
-                            className={classes.cohortDescriptionBox}
-                            >
-                            {localCohort['cohortDescription']}
-                        </span>
-                    */}
-                        </>
-                    )}
-                    
-                </div>
+                <CohortMetadata
+                    classes={classes}
+                    config={config}
+                    activeCohort={activeCohort}
+                    temporaryCohort={temporaryCohort}
+                    localCohort={localCohort}
+                    setLocalCohort={setLocalCohort}
+                    handleSetCurrentCohortChanges={handleSetCurrentCohortChanges}
+                />
                 <div className={classes.participantViewer}>
                     <div className={classes.participantSearchBarSection}>
                         <lable htmlFor="participantSearch" > </lable> 
@@ -485,9 +347,6 @@ const CohortDetails = (props) => {
                         </Button>
 
                     </div>
-                    <span className={classes.cohortLastUpdated}>
-                        {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
-                    </span>
                 </div>
                 
             </div>
