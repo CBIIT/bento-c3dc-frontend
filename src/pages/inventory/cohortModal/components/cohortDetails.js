@@ -3,6 +3,7 @@ import { withStyles, Button } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
 import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
+import { CohortModalContext } from '../CohortModalContext.js';
 import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../bento/dashboardTabData.js';
 import client from '../../../../utils/graphqlClient.js';
 import { arrayToCSVDownload, objectToJsonDownload } from '../utils.js';
@@ -31,13 +32,24 @@ const CohortDetails = (props) => {
         activeCohort,
         temporaryCohort,
         closeModal,
-        handleSetCurrentCohortChanges,
         deleteConfirmationClasses,
         setAlert,
         handleClearCurrentCohortChanges
     } = props;
 
     const { dispatch } = useContext(CohortStateContext);
+    const { setCurrentCohortChanges } = useContext(CohortModalContext);
+
+    const handleSetCurrentCohortChanges = (localCohort) => {
+        if (!localCohort.cohortId) return;
+        setCurrentCohortChanges({
+            cohortId: localCohort.cohortId,
+            cohortName: localCohort.cohortName,
+            cohortDescription: localCohort.cohortDescription,
+            participants: localCohort.participants,
+            searchText: localCohort.searchText,
+        })
+    };
     
     // Find the selected cohort (activeCohort should match one in state)
     const selectedCohortId = activeCohort && activeCohort.cohortId;

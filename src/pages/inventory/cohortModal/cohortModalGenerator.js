@@ -11,7 +11,6 @@ import DeleteConfirmationModal from './components/deleteConfirmationModal';
 import { deletionTypes } from './components/deleteConfirmationModal';
 import Alert from '@material-ui/lab/Alert';
 import { hasUnsavedChanges } from './utils.js';
-
 import { CohortModalContext } from './CohortModalContext.js'
 
 /**
@@ -56,27 +55,9 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         ? config.title
         : DEFAULT_CONFIG.config.title;
 
-
-    // Handle saving updates to cohort
-    const handleSetCurrentCohortChanges = (localCohort) => {
-        if (!localCohort.cohortId) return;
-        setCurrentCohortChanges({
-            cohortId: localCohort.cohortId,
-            cohortName: localCohort.cohortName,
-            cohortDescription: localCohort.cohortDescription,
-            participants: localCohort.participants,
-            searchText: localCohort.searchText,
-        })
-       
-       
-    };
-
-  
-
     const handleClearCurrentCohortChanges = () => {
         setCurrentCohortChanges(null);
     };
-
 
     return {
         CohortModal: withStyles(DEFAULT_STYLES, { withTheme: true })((props) => {
@@ -161,7 +142,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     activeCohort={state[selectedCohort]}
                                     temporaryCohort={currentCohortChanges}
                                     closeModal={unSavedChangesCheck}
-                                    handleSetCurrentCohortChanges={handleSetCurrentCohortChanges}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
                                     setAlert={setAlert}
                                     handleClearCurrentCohortChanges={handleClearCurrentCohortChanges}
