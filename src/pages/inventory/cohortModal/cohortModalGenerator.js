@@ -43,16 +43,12 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         handleDelete: () => { },
         deletionType: "",
     });
-    const success = useRef(false);
     const switchedCohort = useRef(false);
-    const errMessage = useRef("");
 
     useEffect(() => {
         if (alert.message) {
             const timer = setTimeout(() => {
                 setAlert({ type: '', message: '' });
-                success.current = false;
-                errMessage.current = "";
             }, 2500);
 
             return () => clearTimeout(timer);
@@ -62,25 +58,11 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
 
     useEffect(() => {
         if (switchedCohort.current) {
-            success.current = false;
-            errMessage.current = "";
             switchedCohort.current = false;
             setAlert({ type: '', message: '' });
         }
     }, [switchedCohort.current])
 
-    useEffect(() => {
-        if (success.current) {
-            setAlert({ type: 'success', message: 'Cohort updated successfully!' });
-
-
-        } else if (errMessage.current) {
-            setAlert({ type: 'error', message: `Failed to update cohort: ${errMessage.current}` });
-
-        } else {
-            setAlert({ type: '', message: '' });
-        }
-    }, [success.current, errMessage.current, state])
 
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
@@ -147,11 +129,11 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                 participants: localCohort.participants
             },
             () => {
-                success.current = true; 
-                 handleClearCurrentCohortChanges();        
+                setAlert({ type: 'success', message: 'Cohort updated successfully!' });
+                handleClearCurrentCohortChanges();        
             },
-            (error) =>{
-                errMessage.current = error.message;
+            (error) => {
+                setAlert({ type: 'error', message: `Failed to update cohort: ${error.message}` });
             } 
         ));
     };
