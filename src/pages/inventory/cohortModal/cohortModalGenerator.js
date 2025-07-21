@@ -9,7 +9,7 @@ import CohortList from './components/cohortList';
 import CohortDetails from './components/cohortDetails';
 import DeleteConfirmationModal from './components/deleteConfirmationModal';
 import { deletionTypes } from './components/deleteConfirmationModal';
-import Alert from '@material-ui/lab/Alert';
+import AlertManager from './components/AlertManager';
 import { hasUnsavedChanges } from './utils.js';
 import { CohortModalContext } from './CohortModalContext.js'
 
@@ -28,7 +28,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     const { currentCohortChanges, setCurrentCohortChanges } = useContext(CohortModalContext);
     const { state } = useContext(CohortStateContext);
     const [selectedCohort, setSelectedCohort] = useState(null); // Default to the first entry
-    const [alert, setAlert] = useState({ type: '', message: '' });
     const ignoredFields = ["cohortId"]
     const unSavedChanges = currentCohortChanges ? hasUnsavedChanges(currentCohortChanges, state[selectedCohort], ignoredFields) : false;
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -36,16 +35,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         handleDelete: () => { },
         deletionType: "",
     });
-
-    useEffect(() => {
-        if (alert.message) {
-            const timer = setTimeout(() => {
-                setAlert({ type: '', message: '' });
-            }, 2500);
-
-            return () => clearTimeout(timer);
-        }
-    }, [alert]);
 
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
@@ -116,11 +105,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                         className={classes.closeRoot}
                                     />
                                 </span>
-                                {alert.message && (
-                                    <Alert severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
-                                        {alert.message}
-                                    </Alert>
-                                )}
+                                <AlertManager classes={classes} />
                             </h1>
                             <div className={classes.modalContainer}>
                                 <CohortList
@@ -143,7 +128,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     temporaryCohort={currentCohortChanges}
                                     closeModal={unSavedChangesCheck}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
-                                    setAlert={setAlert}
                                     handleClearCurrentCohortChanges={handleClearCurrentCohortChanges}
                                 />
                             </div>

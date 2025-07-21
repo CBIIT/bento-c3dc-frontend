@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useCallback } from 'react';
 
 export const CohortModalContext = createContext();
 
@@ -6,6 +6,18 @@ export const CohortModalProvider = ({ children }) => {
   const [showCohortModal, setShowCohortModal] = useState(false);
   const [warningMessage, setWarningMessage] = useState("");
   const [currentCohortChanges, setCurrentCohortChanges] = useState(null);
+  const [alert, setAlert] = useState({ type: '', message: '' });
+
+  const showAlert = useCallback((type, message, duration = 2500) => {
+    setAlert({ type, message });
+    setTimeout(() => {
+      setAlert({ type: '', message: '' });
+    }, duration);
+  }, []);
+
+  const clearAlert = useCallback(() => {
+    setAlert({ type: '', message: '' });
+  }, []);
 
   const contextValue = {
     showCohortModal,
@@ -13,7 +25,10 @@ export const CohortModalProvider = ({ children }) => {
     warningMessage,
     setWarningMessage,
     currentCohortChanges,
-    setCurrentCohortChanges
+    setCurrentCohortChanges,
+    alert,
+    showAlert,
+    clearAlert
   };
 
   return (

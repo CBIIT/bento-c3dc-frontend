@@ -33,12 +33,11 @@ const CohortDetails = (props) => {
         temporaryCohort,
         closeModal,
         deleteConfirmationClasses,
-        setAlert,
         handleClearCurrentCohortChanges
     } = props;
 
     const { dispatch } = useContext(CohortStateContext);
-    const { setCurrentCohortChanges } = useContext(CohortModalContext);
+    const { setCurrentCohortChanges, showAlert } = useContext(CohortModalContext);
 
     const handleSetCurrentCohortChanges = (localCohort) => {
         if (!localCohort.cohortId) return;
@@ -82,11 +81,11 @@ const CohortDetails = (props) => {
                 participants: localCohort.participants
             },
             () => {
-                setAlert({ type: 'success', message: 'Cohort updated successfully!' });
+                showAlert('success', 'Cohort updated successfully!');
                 handleClearCurrentCohortChanges();        
             },
             (error) => {
-                setAlert({ type: 'error', message: `Failed to update cohort: ${error.message}` });
+                showAlert('error', `Failed to update cohort: ${error.message}`);
             }
         ));
     };
