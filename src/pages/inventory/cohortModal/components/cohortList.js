@@ -1,6 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
+import {
+    onDeleteSingleCohort,
+    onDeleteAllCohort,
+} from '../../../../components/CohortSelectorState/store/action.js';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DEFAULT_CONFIG from '../config';
@@ -22,11 +27,19 @@ const CohortList = (props) => {
         setChangingConfirmation,
         setShowChangingConfirmation,
         closeParentModal,
-        handleDeleteCohort,
-        handleDeleteAllCohorts,
         handleClearCurrentCohortChanges,
         state,
     } = props;
+
+    const { dispatch } = useContext(CohortStateContext);
+
+    const handleDeleteCohort = (cohortId) => {
+        dispatch(onDeleteSingleCohort(cohortId));
+    };
+
+    const handleDeleteAllCohorts = () => {
+        dispatch(onDeleteAllCohort());
+    };
 
     const listHeading = config && config.listHeading && typeof config.listHeading === 'string'
         ? config.listHeading

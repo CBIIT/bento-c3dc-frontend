@@ -54,9 +54,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         }
     }, [alert]);
 
-
-
-
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
         : DEFAULT_CONFIG.functions.modalClosed;
@@ -83,15 +80,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         objectToJsonDownload(data['cohortMetadata'], selectedCohort);
     };
 
-    const handleDeleteCohort = (cohortId) => {
-        dispatch(onDeleteSingleCohort(
-            cohortId
-        ));
-    };
-
-    const handleDeleteAllCohorts = () => {
-        dispatch(onDeleteAllCohort());
-    };
     // Handle saving updates to cohort
     const handleSetCurrentCohortChanges = (localCohort) => {
         if (!localCohort.cohortId) return;
@@ -204,8 +192,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     setChangingConfirmation={setDeleteModalProps}
                                     setShowChangingConfirmation={setShowDeleteConfirmation}
                                     closeParentModal={unSavedChangesCheck}
-                                    handleDeleteCohort={handleDeleteCohort}
-                                    handleDeleteAllCohorts={handleDeleteAllCohorts}
                                     handleClearCurrentCohortChanges={handleClearCurrentCohortChanges}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
                                     state={state}
