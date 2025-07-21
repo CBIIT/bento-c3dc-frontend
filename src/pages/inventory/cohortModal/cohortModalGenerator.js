@@ -43,7 +43,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         handleDelete: () => { },
         deletionType: "",
     });
-    const tooltipOpen = useRef(false);
     const alertRef = useRef(null);
     const success = useRef(false);
     const switchedCohort = useRef(false);
@@ -254,7 +253,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     downloadCohortManifest={downloadCohortManifest}
                                     downloadCohortMetadata={downloadCohortMetadata}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
-                                    tooltipOpen={tooltipOpen}
                                 />
                             </div>
                         </div>

@@ -30,8 +30,7 @@ const CohortDetails = (props) => {
         handleSetCurrentCohortChanges,
         downloadCohortManifest,
         downloadCohortMetadata,
-        deleteConfirmationClasses,
-        tooltipOpen
+        deleteConfirmationClasses
     } = props;
 
     if (!activeCohort) {
@@ -58,7 +57,6 @@ const CohortDetails = (props) => {
     const navigate = useNavigate();
 
     const generateCCDIHub_url = (cohortId) => {
-        tooltipOpen.current = false;
         const data = cohortId;
         const participantIds = data.participants.map(p => p.participant_id).join("|");
         const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
