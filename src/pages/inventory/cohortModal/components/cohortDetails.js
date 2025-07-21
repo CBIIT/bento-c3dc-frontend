@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
+import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
+import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../bento/dashboardTabData.js';
+import client from '../../../../utils/graphqlClient.js';
+import { arrayToCSVDownload, objectToJsonDownload } from '../utils.js';
 import CohortMetadata from './cohortMetadata';
 //import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
 import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
@@ -26,12 +31,53 @@ const CohortDetails = (props) => {
         activeCohort,
         temporaryCohort,
         closeModal,
-        handleSaveCohort,
         handleSetCurrentCohortChanges,
-        downloadCohortManifest,
-        downloadCohortMetadata,
-        deleteConfirmationClasses
+        deleteConfirmationClasses,
+        setAlert,
+        handleClearCurrentCohortChanges
     } = props;
+
+    const { dispatch } = useContext(CohortStateContext);
+    
+    // Find the selected cohort (activeCohort should match one in state)
+    const selectedCohortId = activeCohort && activeCohort.cohortId;
+
+    const downloadCohortManifest = async () => {
+        const participantPKs = activeCohort.participants.map(item => item.participant_pk);
+        const { data } = await client.query({
+            query: GET_COHORT_MANIFEST_QUERY,
+            variables: { "participant_pk": participantPKs, "first": activeCohort.participants.length },
+        });
+        arrayToCSVDownload(data['diagnosisOverview'], selectedCohortId);
+    };
+
+    const downloadCohortMetadata = async () => {
+        const participantPKs = activeCohort.participants.map(item => item.participant_pk);
+        const { data } = await client.query({
+            query: GET_COHORT_METADATA_QUERY,
+            variables: { "participant_pk": participantPKs, "first": activeCohort.participants.length },
+        });
+        objectToJsonDownload(data['cohortMetadata'], selectedCohortId);
+    };
+
+    const handleSaveCohort = (localCohort) => {
+        if (!localCohort.cohortId) return;
+        dispatch(onMutateSingleCohort(
+            localCohort.cohortId,
+            {
+                cohortName: localCohort.cohortName,
+                cohortDescription: localCohort.cohortDescription,
+                participants: localCohort.participants
+            },
+            () => {
+                setAlert({ type: 'success', message: 'Cohort updated successfully!' });
+                handleClearCurrentCohortChanges();        
+            },
+            (error) => {
+                setAlert({ type: 'error', message: `Failed to update cohort: ${error.message}` });
+            }
+        ));
+    };
 
     if (!activeCohort) {
         return null;
