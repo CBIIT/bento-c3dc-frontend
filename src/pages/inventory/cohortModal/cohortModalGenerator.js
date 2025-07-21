@@ -43,7 +43,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         handleDelete: () => { },
         deletionType: "",
     });
-    const switchedCohort = useRef(false);
 
     useEffect(() => {
         if (alert.message) {
@@ -56,12 +55,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     }, [alert]);
 
 
-    useEffect(() => {
-        if (switchedCohort.current) {
-            switchedCohort.current = false;
-            setAlert({ type: '', message: '' });
-        }
-    }, [switchedCohort.current])
 
 
     const modalClosed = functions && typeof functions.modalClosed === 'function'
@@ -207,7 +200,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     config={config.cohortList}
                                     selectedCohort={selectedCohort}
                                     setSelectedCohort={setSelectedCohort}
-                                    switchedCohortRef={switchedCohort}
                                     unSavedChanges={unSavedChanges}
                                     setChangingConfirmation={setDeleteModalProps}
                                     setShowChangingConfirmation={setShowDeleteConfirmation}
