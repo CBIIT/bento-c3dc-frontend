@@ -7,8 +7,17 @@ export const CohortModalProvider = ({ children }) => {
   const [warningMessage, setWarningMessage] = useState("");
   const [currentCohortChanges, setCurrentCohortChanges] = useState(null);
 
+  const contextValue = {
+    showCohortModal,
+    setShowCohortModal,
+    warningMessage,
+    setWarningMessage,
+    currentCohortChanges,
+    setCurrentCohortChanges
+  };
+
   return (
-    <CohortModalContext.Provider value={{ showCohortModal, setShowCohortModal, warningMessage, setWarningMessage, currentCohortChanges, setCurrentCohortChanges }}>
+    <CohortModalContext.Provider value={contextValue}>
       {children}
     </CohortModalContext.Provider>
   );
