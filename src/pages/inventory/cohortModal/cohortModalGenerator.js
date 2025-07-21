@@ -43,22 +43,16 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         handleDelete: () => { },
         deletionType: "",
     });
-    const alertRef = useRef(null);
     const success = useRef(false);
     const switchedCohort = useRef(false);
     const errMessage = useRef("");
 
     useEffect(() => {
         if (alert.message) {
-
             const timer = setTimeout(() => {
-                if (alertRef.current) {
-                    alertRef.current.style.display = 'none';
-                    success.current = false;
-                    errMessage.current = "";
-                }
-            
-
+                setAlert({ type: '', message: '' });
+                success.current = false;
+                errMessage.current = "";
             }, 2500);
 
             return () => clearTimeout(timer);
@@ -220,7 +214,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     />
                                 </span>
                                 {alert.message && (
-                                    <Alert ref={alertRef} severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
+                                    <Alert severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
                                         {alert.message}
                                     </Alert>
                                 )}
