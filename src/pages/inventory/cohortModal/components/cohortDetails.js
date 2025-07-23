@@ -31,11 +31,10 @@ const CohortDetails = (props) => {
         config,
         closeModal,
         deleteConfirmationClasses,
-        handleClearCurrentCohortChanges
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
-    const { selectedCohort, currentCohortChanges, setCurrentCohortChanges, showAlert } = useContext(CohortModalContext);
+    const { selectedCohort, currentCohortChanges, setCurrentCohortChanges, showAlert, clearCurrentCohortChanges } = useContext(CohortModalContext);
     
     const activeCohort = state[selectedCohort];
 
@@ -82,7 +81,7 @@ const CohortDetails = (props) => {
             },
             () => {
                 showAlert('success', 'Cohort updated successfully!');
-                handleClearCurrentCohortChanges();        
+                clearCurrentCohortChanges();        
             },
             (error) => {
                 showAlert('error', `Failed to update cohort: ${error.message}`);

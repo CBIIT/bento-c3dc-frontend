@@ -25,7 +25,7 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         config, functions,
     } = uiConfig;
 
-    const { currentCohortChanges, setCurrentCohortChanges, selectedCohort, setSelectedCohort } = useContext(CohortModalContext);
+    const { currentCohortChanges, clearCurrentCohortChanges, selectedCohort, setSelectedCohort } = useContext(CohortModalContext);
     const { state } = useContext(CohortStateContext);
     const ignoredFields = ["cohortId"]
     const unSavedChanges = currentCohortChanges ? hasUnsavedChanges(currentCohortChanges, state[selectedCohort], ignoredFields) : false;
@@ -43,9 +43,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         ? config.title
         : DEFAULT_CONFIG.config.title;
 
-    const handleClearCurrentCohortChanges = () => {
-        setCurrentCohortChanges(null);
-    };
 
     return {
         CohortModal: withStyles(DEFAULT_STYLES, { withTheme: true })((props) => {
@@ -82,9 +79,9 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
 
             useEffect(() => {
                 if (!open) {
-                    setCurrentCohortChanges(null);
+                    clearCurrentCohortChanges();
                 }
-            }, [open]);
+            }, [open, clearCurrentCohortChanges]);
 
             return (
                 <>
@@ -114,7 +111,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     setChangingConfirmation={setDeleteModalProps}
                                     setShowChangingConfirmation={setShowDeleteConfirmation}
                                     closeParentModal={unSavedChangesCheck}
-                                    handleClearCurrentCohortChanges={handleClearCurrentCohortChanges}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
                                 />
                                 <CohortDetails
@@ -122,7 +118,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     config={config.cohortDetails}
                                     closeModal={unSavedChangesCheck}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
-                                    handleClearCurrentCohortChanges={handleClearCurrentCohortChanges}
                                 />
                             </div>
                         </div>

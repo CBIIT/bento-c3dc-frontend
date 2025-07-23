@@ -26,11 +26,10 @@ const CohortList = (props) => {
         setChangingConfirmation,
         setShowChangingConfirmation,
         closeParentModal,
-        handleClearCurrentCohortChanges,
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
-    const { selectedCohort, setSelectedCohort } = useContext(CohortModalContext);
+    const { selectedCohort, setSelectedCohort, clearCurrentCohortChanges } = useContext(CohortModalContext);
 
     const handleDeleteCohort = (cohortId) => {
         dispatch(onDeleteSingleCohort(cohortId));
@@ -135,7 +134,7 @@ const CohortList = (props) => {
                                         setChangingConfirmation({
                                             handleDelete: () => {
                                                 setSelectedCohort(state[cohort].cohortId)
-                                                handleClearCurrentCohortChanges();
+                                                clearCurrentCohortChanges();
                                             },
                                             deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
                                         });
@@ -143,7 +142,7 @@ const CohortList = (props) => {
                                     }
                                     else {
                                         setSelectedCohort(state[cohort].cohortId)
-                                        handleClearCurrentCohortChanges();
+                                        clearCurrentCohortChanges();
                                     }
                                 }}
                             >

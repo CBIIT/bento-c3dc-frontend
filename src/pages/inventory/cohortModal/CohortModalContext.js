@@ -20,6 +20,10 @@ export const CohortModalProvider = ({ children }) => {
     setAlert({ type: '', message: '' });
   }, []);
 
+  const clearCurrentCohortChanges = useCallback(() => {
+    setCurrentCohortChanges(null);
+  }, []);
+
   const contextValue = {
     showCohortModal,
     setShowCohortModal,
@@ -31,7 +35,8 @@ export const CohortModalProvider = ({ children }) => {
     showAlert,
     clearAlert,
     selectedCohort,
-    setSelectedCohort
+    setSelectedCohort,
+    clearCurrentCohortChanges
   };
 
   return (
