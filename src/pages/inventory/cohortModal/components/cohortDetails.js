@@ -29,14 +29,13 @@ const CohortDetails = (props) => {
     const {
         classes,
         config,
-        temporaryCohort,
         closeModal,
         deleteConfirmationClasses,
         handleClearCurrentCohortChanges
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
-    const { selectedCohort, setCurrentCohortChanges, showAlert } = useContext(CohortModalContext);
+    const { selectedCohort, currentCohortChanges, setCurrentCohortChanges, showAlert } = useContext(CohortModalContext);
     
     const activeCohort = state[selectedCohort];
 
@@ -95,16 +94,16 @@ const CohortDetails = (props) => {
         return null;
     }
 
-    let matchingCohortID = temporaryCohort && temporaryCohort.cohortId === activeCohort.cohortId;
+    let matchingCohortID = currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
 
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
-    const [searchText, setSearchText] = useState(matchingCohortID && temporaryCohort['searchText'] ? temporaryCohort['searchText'] : '');
+    const [searchText, setSearchText] = useState(matchingCohortID && currentCohortChanges['searchText'] ? currentCohortChanges['searchText'] : '');
 
     const [localCohort, setLocalCohort] = useState({
-        cohortId: matchingCohortID ? temporaryCohort.cohortId : activeCohort.cohortId,
-        cohortName: matchingCohortID ? temporaryCohort.cohortName : activeCohort.cohortName,
-        cohortDescription: matchingCohortID ? temporaryCohort.cohortDescription : activeCohort.cohortDescription,
-        participants: matchingCohortID ? JSON.parse(JSON.stringify(temporaryCohort.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
+        cohortId: matchingCohortID ? currentCohortChanges.cohortId : activeCohort.cohortId,
+        cohortName: matchingCohortID ? currentCohortChanges.cohortName : activeCohort.cohortName,
+        cohortDescription: matchingCohortID ? currentCohortChanges.cohortDescription : activeCohort.cohortDescription,
+        participants: matchingCohortID ? JSON.parse(JSON.stringify(currentCohortChanges.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
     });
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const [isScrollbarActive, setIsScrollbarActive] = useState(false);
@@ -169,7 +168,7 @@ const CohortDetails = (props) => {
     const handleSave = () => {
         handleSaveCohort(localCohort)
         handleSetCurrentCohortChanges({
-            ...temporaryCohort,
+            ...currentCohortChanges,
             ...localCohort,
         });
     }
@@ -185,7 +184,7 @@ const CohortDetails = (props) => {
 
     const handleSetSearch = (e) => {
         handleSetCurrentCohortChanges({
-            ...temporaryCohort,
+            ...currentCohortChanges,
             ...localCohort,
             searchText: e.target.value,
         });
@@ -216,7 +215,7 @@ const CohortDetails = (props) => {
             participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
         });
         handleSetCurrentCohortChanges({
-            ...temporaryCohort,
+            ...currentCohortChanges,
             ...localCohort,
             participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
         });
@@ -228,7 +227,7 @@ const CohortDetails = (props) => {
             participants: [],
         });
         handleSetCurrentCohortChanges({
-            ...temporaryCohort,
+            ...currentCohortChanges,
             ...localCohort,
             participants: [],
         });
@@ -307,7 +306,7 @@ const CohortDetails = (props) => {
                     classes={classes}
                     config={config}
                     activeCohort={activeCohort}
-                    temporaryCohort={temporaryCohort}
+                    temporaryCohort={currentCohortChanges}
                     localCohort={localCohort}
                     setLocalCohort={setLocalCohort}
                     handleSetCurrentCohortChanges={handleSetCurrentCohortChanges}
