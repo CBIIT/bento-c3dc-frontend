@@ -28,10 +28,9 @@ const CohortList = (props) => {
         setShowChangingConfirmation,
         closeParentModal,
         handleClearCurrentCohortChanges,
-        state,
     } = props;
 
-    const { dispatch } = useContext(CohortStateContext);
+    const { state, dispatch } = useContext(CohortStateContext);
 
     const handleDeleteCohort = (cohortId) => {
         dispatch(onDeleteSingleCohort(cohortId));

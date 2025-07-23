@@ -119,12 +119,11 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     closeParentModal={unSavedChangesCheck}
                                     handleClearCurrentCohortChanges={handleClearCurrentCohortChanges}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
-                                    state={state}
                                 />
                                 <CohortDetails
                                     classes={cohortDetailsClasses}
                                     config={config.cohortDetails}
-                                    activeCohort={state[selectedCohort]}
+                                    selectedCohort={selectedCohort}
                                     temporaryCohort={currentCohortChanges}
                                     closeModal={unSavedChangesCheck}
                                     deleteConfirmationClasses={deleteConfirmationClasses}

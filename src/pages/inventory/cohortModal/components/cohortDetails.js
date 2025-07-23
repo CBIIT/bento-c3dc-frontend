@@ -29,15 +29,17 @@ const CohortDetails = (props) => {
     const {
         classes,
         config,
-        activeCohort,
+        selectedCohort,
         temporaryCohort,
         closeModal,
         deleteConfirmationClasses,
         handleClearCurrentCohortChanges
     } = props;
 
-    const { dispatch } = useContext(CohortStateContext);
+    const { state, dispatch } = useContext(CohortStateContext);
     const { setCurrentCohortChanges, showAlert } = useContext(CohortModalContext);
+    
+    const activeCohort = state[selectedCohort];
 
     const handleSetCurrentCohortChanges = (localCohort) => {
         if (!localCohort.cohortId) return;
