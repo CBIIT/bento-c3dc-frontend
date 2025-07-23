@@ -10,7 +10,6 @@ import { CohortModalContext } from '../CohortModalContext.js';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DEFAULT_CONFIG from '../config';
-import DeleteConfirmationModal from './deleteConfirmationModal';
 import { deletionTypes } from './deleteConfirmationModal';
 
 /**
@@ -20,7 +19,6 @@ import { deletionTypes } from './deleteConfirmationModal';
 const CohortList = (props) => {
     const {
         classes,
-        deleteConfirmationClasses,
         config,
         unSavedChanges,
         closeParentModal,
@@ -31,9 +29,7 @@ const CohortList = (props) => {
         selectedCohort, 
         setSelectedCohort, 
         clearCurrentCohortChanges,
-        showDeleteConfirmation,
         setShowDeleteConfirmation,
-        deleteModalProps,
         setDeleteModalProps
     } = useContext(CohortModalContext);
 
@@ -86,15 +82,7 @@ const CohortList = (props) => {
     }, []);
 
     return (
-        <>
-            <DeleteConfirmationModal
-                classes={deleteConfirmationClasses}
-                open={showDeleteConfirmation}
-                setOpen={setShowDeleteConfirmation}
-                handleDelete={deleteModalProps.handleDelete}
-                deletionType={deleteModalProps.deletionType}
-            />
-            <div className={classes.cohortListSection}>
+        <div className={classes.cohortListSection}>
                 <div className={classes.cohortListHeading}>
                     <span>
                         {listHeading} ({Object.keys(state).length})
@@ -170,7 +158,6 @@ const CohortList = (props) => {
                     })}
                 </div>
             </div>
-        </>
     );
 };
 

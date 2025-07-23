@@ -14,7 +14,6 @@ import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
 import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
-import DeleteConfirmationModal from './deleteConfirmationModal';
 import Linkout from "../../../../assets/about/Export_Icon_White.svg";
 import LinkoutBlue from "../../../../assets/about/Export_Icon.svg";
 
@@ -30,11 +29,18 @@ const CohortDetails = (props) => {
         classes,
         config,
         closeModal,
-        deleteConfirmationClasses,
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
-    const { selectedCohort, currentCohortChanges, setCurrentCohortChanges, showAlert, clearCurrentCohortChanges } = useContext(CohortModalContext);
+    const { 
+        selectedCohort, 
+        currentCohortChanges, 
+        setCurrentCohortChanges, 
+        showAlert, 
+        clearCurrentCohortChanges,
+        setShowDeleteConfirmation,
+        setDeleteModalProps
+    } = useContext(CohortModalContext);
     
     const activeCohort = state[selectedCohort];
 
@@ -194,11 +200,6 @@ const CohortDetails = (props) => {
     };
 
 
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [deleteModalProps, setDeleteModalProps] = useState({
-        handleDelete: () => { },
-        deletionType: "",
-    });
 
     const handleSort = (column) => {
         if (selectedColumn[0] === column) {
@@ -293,13 +294,6 @@ const CohortDetails = (props) => {
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
-            <DeleteConfirmationModal
-                classes={deleteConfirmationClasses}
-                open={showDeleteConfirmation}
-                setOpen={setShowDeleteConfirmation}
-                handleDelete={deleteModalProps.handleDelete}
-                deletionType={deleteModalProps.deletionType}
-            />
             <div className={classes.cohortDetailsSection}>
                 <CohortMetadata
                     classes={classes}
