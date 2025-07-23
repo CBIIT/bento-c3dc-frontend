@@ -23,13 +23,19 @@ const CohortList = (props) => {
         deleteConfirmationClasses,
         config,
         unSavedChanges,
-        setChangingConfirmation,
-        setShowChangingConfirmation,
         closeParentModal,
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
-    const { selectedCohort, setSelectedCohort, clearCurrentCohortChanges } = useContext(CohortModalContext);
+    const { 
+        selectedCohort, 
+        setSelectedCohort, 
+        clearCurrentCohortChanges,
+        showDeleteConfirmation,
+        setShowDeleteConfirmation,
+        deleteModalProps,
+        setDeleteModalProps
+    } = useContext(CohortModalContext);
 
     const handleDeleteCohort = (cohortId) => {
         dispatch(onDeleteSingleCohort(cohortId));
@@ -57,11 +63,6 @@ const CohortList = (props) => {
         setSelectedCohort(cohortOrderedList[0]);
     }
 
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [deleteModalProps, setDeleteModalProps] = useState({
-        handleDelete: () => { },
-        deletionType: "",
-    });
 
     useEffect(() => {
         if (scrollContainerRef.current) {
@@ -131,14 +132,14 @@ const CohortList = (props) => {
                                         return;
                                     }
                                     if (unSavedChanges) {
-                                        setChangingConfirmation({
+                                        setDeleteModalProps({
                                             handleDelete: () => {
                                                 setSelectedCohort(state[cohort].cohortId)
                                                 clearCurrentCohortChanges();
                                             },
                                             deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
                                         });
-                                        setShowChangingConfirmation(true);
+                                        setShowDeleteConfirmation(true);
                                     }
                                     else {
                                         setSelectedCohort(state[cohort].cohortId)

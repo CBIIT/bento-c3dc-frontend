@@ -8,6 +8,11 @@ export const CohortModalProvider = ({ children }) => {
   const [currentCohortChanges, setCurrentCohortChanges] = useState(null);
   const [alert, setAlert] = useState({ type: '', message: '' });
   const [selectedCohort, setSelectedCohort] = useState(null);
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [deleteModalProps, setDeleteModalProps] = useState({
+    handleDelete: () => { },
+    deletionType: "",
+  });
 
   const showAlert = useCallback((type, message, duration = 2500) => {
     setAlert({ type, message });
@@ -36,7 +41,11 @@ export const CohortModalProvider = ({ children }) => {
     clearAlert,
     selectedCohort,
     setSelectedCohort,
-    clearCurrentCohortChanges
+    clearCurrentCohortChanges,
+    showDeleteConfirmation,
+    setShowDeleteConfirmation,
+    deleteModalProps,
+    setDeleteModalProps
   };
 
   return (

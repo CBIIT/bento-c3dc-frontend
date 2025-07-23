@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { CohortStateContext } from '../../../components/CohortSelectorState/CohortStateContext.js';
 import {
     Modal, withStyles,
@@ -25,15 +25,19 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         config, functions,
     } = uiConfig;
 
-    const { currentCohortChanges, clearCurrentCohortChanges, selectedCohort, setSelectedCohort } = useContext(CohortModalContext);
+    const { 
+        currentCohortChanges, 
+        clearCurrentCohortChanges, 
+        selectedCohort, 
+        setSelectedCohort,
+        showDeleteConfirmation,
+        setShowDeleteConfirmation,
+        deleteModalProps,
+        setDeleteModalProps
+    } = useContext(CohortModalContext);
     const { state } = useContext(CohortStateContext);
     const ignoredFields = ["cohortId"]
     const unSavedChanges = currentCohortChanges ? hasUnsavedChanges(currentCohortChanges, state[selectedCohort], ignoredFields) : false;
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [deleteModalProps, setDeleteModalProps] = useState({
-        handleDelete: () => { },
-        deletionType: "",
-    });
 
     const modalClosed = functions && typeof functions.modalClosed === 'function'
         ? functions.modalClosed
@@ -108,8 +112,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                     classes={cohortListClasses}
                                     config={config.cohortList}
                                     unSavedChanges={unSavedChanges}
-                                    setChangingConfirmation={setDeleteModalProps}
-                                    setShowChangingConfirmation={setShowDeleteConfirmation}
                                     closeParentModal={unSavedChangesCheck}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
                                 />
