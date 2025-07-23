@@ -6,6 +6,7 @@ import {
     onDeleteSingleCohort,
     onDeleteAllCohort,
 } from '../../../../components/CohortSelectorState/store/action.js';
+import { CohortModalContext } from '../CohortModalContext.js';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DEFAULT_CONFIG from '../config';
@@ -21,8 +22,6 @@ const CohortList = (props) => {
         classes,
         deleteConfirmationClasses,
         config,
-        selectedCohort,
-        setSelectedCohort,
         unSavedChanges,
         setChangingConfirmation,
         setShowChangingConfirmation,
@@ -31,6 +30,7 @@ const CohortList = (props) => {
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
+    const { selectedCohort, setSelectedCohort } = useContext(CohortModalContext);
 
     const handleDeleteCohort = (cohortId) => {
         dispatch(onDeleteSingleCohort(cohortId));

@@ -7,6 +7,7 @@ export const CohortModalProvider = ({ children }) => {
   const [warningMessage, setWarningMessage] = useState("");
   const [currentCohortChanges, setCurrentCohortChanges] = useState(null);
   const [alert, setAlert] = useState({ type: '', message: '' });
+  const [selectedCohort, setSelectedCohort] = useState(null);
 
   const showAlert = useCallback((type, message, duration = 2500) => {
     setAlert({ type, message });
@@ -28,7 +29,9 @@ export const CohortModalProvider = ({ children }) => {
     setCurrentCohortChanges,
     alert,
     showAlert,
-    clearAlert
+    clearAlert,
+    selectedCohort,
+    setSelectedCohort
   };
 
   return (

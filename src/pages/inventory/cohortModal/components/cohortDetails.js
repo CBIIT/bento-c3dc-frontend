@@ -29,7 +29,6 @@ const CohortDetails = (props) => {
     const {
         classes,
         config,
-        selectedCohort,
         temporaryCohort,
         closeModal,
         deleteConfirmationClasses,
@@ -37,7 +36,7 @@ const CohortDetails = (props) => {
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
-    const { setCurrentCohortChanges, showAlert } = useContext(CohortModalContext);
+    const { selectedCohort, setCurrentCohortChanges, showAlert } = useContext(CohortModalContext);
     
     const activeCohort = state[selectedCohort];
 

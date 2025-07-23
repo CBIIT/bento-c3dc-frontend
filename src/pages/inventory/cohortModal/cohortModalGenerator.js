@@ -25,9 +25,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         config, functions,
     } = uiConfig;
 
-    const { currentCohortChanges, setCurrentCohortChanges } = useContext(CohortModalContext);
+    const { currentCohortChanges, setCurrentCohortChanges, selectedCohort, setSelectedCohort } = useContext(CohortModalContext);
     const { state } = useContext(CohortStateContext);
-    const [selectedCohort, setSelectedCohort] = useState(null); // Default to the first entry
     const ignoredFields = ["cohortId"]
     const unSavedChanges = currentCohortChanges ? hasUnsavedChanges(currentCohortChanges, state[selectedCohort], ignoredFields) : false;
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
@@ -111,8 +110,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                 <CohortList
                                     classes={cohortListClasses}
                                     config={config.cohortList}
-                                    selectedCohort={selectedCohort}
-                                    setSelectedCohort={setSelectedCohort}
                                     unSavedChanges={unSavedChanges}
                                     setChangingConfirmation={setDeleteModalProps}
                                     setShowChangingConfirmation={setShowDeleteConfirmation}
@@ -123,7 +120,6 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                                 <CohortDetails
                                     classes={cohortDetailsClasses}
                                     config={config.cohortDetails}
-                                    selectedCohort={selectedCohort}
                                     temporaryCohort={currentCohortChanges}
                                     closeModal={unSavedChangesCheck}
                                     deleteConfirmationClasses={deleteConfirmationClasses}
