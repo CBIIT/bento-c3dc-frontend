@@ -21,7 +21,7 @@ const CohortList = (props) => {
         classes,
         config,
         unSavedChanges,
-        closeParentModal,
+        closeModal,
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
@@ -52,7 +52,7 @@ const CohortList = (props) => {
     });
 
     if (Object.keys(state).length === 0) {
-        closeParentModal();
+        closeModal();
     }
 
     if (!state[selectedCohort]) {
