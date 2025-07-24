@@ -1,10 +1,13 @@
-import React, { useState, useEffect, useRef, useContext, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useContext, useCallback, useMemo } from 'react';
 import { withStyles } from '@material-ui/core';
 import { CohortModalContext } from '../CohortModalContext.js';
 import { deletionTypes } from './deleteConfirmationModal';
 import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
+
+// Constants
+const SCROLLBAR_WIDTH = '6px';
 
 const ParticipantTable = (props) => {
     const { 
@@ -68,49 +71,77 @@ const ParticipantTable = (props) => {
         setShowDeleteConfirmation(true);
     }, [onDeleteAllParticipants, setDeleteModalProps, setShowDeleteConfirmation]);
 
-    // Sort participants
-    const sortedParticipants = [...participants].sort((a, b) => {
-        const primaryComparison = selectedColumn[1] === 'ascending'
-            ? a[selectedColumn[0]].localeCompare(b[selectedColumn[0]])
-            : b[selectedColumn[0]].localeCompare(a[selectedColumn[0]]);
+    // Sort participants (memoized for performance)
+    const sortedParticipants = useMemo(() => {
+        return [...participants].sort((a, b) => {
+            const primaryComparison = selectedColumn[1] === 'ascending'
+                ? a[selectedColumn[0]].localeCompare(b[selectedColumn[0]])
+                : b[selectedColumn[0]].localeCompare(a[selectedColumn[0]]);
 
-        if (primaryComparison !== 0) return primaryComparison;
+            if (primaryComparison !== 0) return primaryComparison;
 
-        const secondaryComparison = a.dbgap_accession.localeCompare(b.dbgap_accession);
-        if (secondaryComparison !== 0) return secondaryComparison;
+            const secondaryComparison = a.dbgap_accession.localeCompare(b.dbgap_accession);
+            if (secondaryComparison !== 0) return secondaryComparison;
 
-        return a.participant_pk.localeCompare(b.participant_pk);
-    });
+            return a.participant_pk.localeCompare(b.participant_pk);
+        });
+    }, [participants, selectedColumn]);
 
-    const filteredParticipants = searchText !== '' ? sortedParticipants.filter(participant =>
-        participant.participant_id.includes(searchText)
-    ) : sortedParticipants;
+    // Filter participants (memoized for performance, case-insensitive search)
+    const filteredParticipants = useMemo(() => {
+        if (searchText === '') return sortedParticipants;
+        
+        const lowerSearchText = searchText.toLowerCase();
+        return sortedParticipants.filter(participant =>
+            participant.participant_id.toLowerCase().includes(lowerSearchText)
+        );
+    }, [sortedParticipants, searchText]);
+
+    // Helper function to generate sorting icon class names
+    const getSortingIconClasses = useCallback((columnName) => {
+        let classes_str = classes.sortingIcon;
+        if (selectedColumn[0] === columnName) {
+            classes_str += ' ' + classes.selectedColumn;
+        }
+        if (selectedColumn[1] === 'descending') {
+            classes_str += ' ' + classes.descendingColumn;
+        }
+        return classes_str;
+    }, [classes, selectedColumn]);
+
+    // Helper function to generate table header classes
+    const getTableHeaderClasses = useCallback(() => {
+        return classes.participantTableHeader + (isScrollbarActive ? ' ' + classes.participantTableHeaderScrollPadding : '');
+    }, [classes, isScrollbarActive]);
+
+    // Reusable header column component
+    const HeaderColumn = useCallback(({ columnKey, label, altText }) => (
+        <div
+            onClick={() => handleSort(columnKey)}
+            className={classes.headerColumn}
+        >
+            <span>{label}</span>
+            <img
+                src={SortingIcon}
+                alt={altText}
+                className={getSortingIconClasses(columnKey)}
+            />
+        </div>
+    ), [classes.headerColumn, handleSort, getSortingIconClasses]);
 
     return (
         <div className={classes.participantTableSection}>
-            <div className={classes.participantTableHeader + (isScrollbarActive ? ' ' + classes.participantTableHeaderScrollPadding : '')}>
-                <div
-                    onClick={() => handleSort('participant_id')}
-                    className={classes.headerColumn}
-                >
-                    <span>Participant ID</span>
-                    <img
-                        src={SortingIcon}
-                        alt="sort by participant id icon"
-                        className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'participant_id' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
-                    />
-                </div>
-                <div
-                    onClick={() => handleSort('dbgap_accession')}
-                    className={classes.headerColumn}
-                >
-                    <span>dbGaP Accession</span>
-                    <img
-                        src={SortingIcon}
-                        alt="sort by participant id icon"
-                        className={classes.sortingIcon + ' ' + (selectedColumn[0] === 'dbgap_accession' ? classes.selectedColumn : '') + ' ' + (selectedColumn[1] === 'descending' ? classes.descendingColumn : '')}
-                    />
-                </div>
+            <div className={getTableHeaderClasses()}>
+                <HeaderColumn 
+                    columnKey="participant_id" 
+                    label="Participant ID" 
+                    altText="sort by participant id icon" 
+                />
+                <HeaderColumn 
+                    columnKey="dbgap_accession" 
+                    label="dbGaP Accession" 
+                    altText="sort by dbGaP accession icon" 
+                />
                 <div className={classes.removeHeader} onClick={handleDeleteAllParticipants}>
                     <img
                         src={TrashCanIconRed}
@@ -218,7 +249,7 @@ const styles = () => ({
         },
     },
     participantTableHeaderScrollPadding: {
-        paddingRight: '6px;', //matches scrollbar width
+        paddingRight: SCROLLBAR_WIDTH, //matches scrollbar width
     },
     removeLabel: {
         paddingRight: '10px',
@@ -240,7 +271,7 @@ const styles = () => ({
         flexDirection: 'column',
         backgroundColor: '#F1F3F4',
         '&::-webkit-scrollbar': {
-            width: '6px', // Width of the scrollbar
+            width: SCROLLBAR_WIDTH, // Width of the scrollbar
         },
         '&::-webkit-scrollbar-track': {
             background: '#CECECE', // Track color
