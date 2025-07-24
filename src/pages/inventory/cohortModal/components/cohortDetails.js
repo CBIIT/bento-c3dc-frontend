@@ -227,7 +227,6 @@ const CohortDetails = (props) => {
                 <ParticipantList
                     localCohort={localCohort}
                     setLocalCohort={setLocalCohort}
-                    handleSetCurrentCohortChanges={handleSetCurrentCohortChanges}
                     handleSave={handleSave}
                     closeModal={closeModal}
                     config={config}

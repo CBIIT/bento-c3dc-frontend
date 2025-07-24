@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback, useEffect } from 'react';
+import React, { useState, useContext, useCallback, useEffect, useMemo, memo } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
 import { CohortModalContext } from '../CohortModalContext.js';
@@ -7,12 +7,13 @@ import ParticipantTable from './participantTable';
 import DEFAULT_CONFIG from '../config';
 
 const ParticipantList = (props) => {
-    const { classes, localCohort, setLocalCohort, handleSetCurrentCohortChanges, handleSave, closeModal, config } = props;
+    const { classes, localCohort, setLocalCohort, handleSave, closeModal, config } = props;
 
     const { state } = useContext(CohortStateContext);
     const { 
         selectedCohort, 
-        currentCohortChanges
+        currentCohortChanges,
+        setCurrentCohortChanges
     } = useContext(CohortModalContext);
     
     const activeCohort = state[selectedCohort];
@@ -25,44 +26,35 @@ const ParticipantList = (props) => {
         setSearchText(matchingCohortID && currentCohortChanges['searchText'] ? currentCohortChanges['searchText'] : '');
     }, [currentCohortChanges, matchingCohortID]);
 
+    // Helper function to update both local and context state
+    const updateCohortState = useCallback((updates) => {
+        const newLocalCohort = { ...localCohort, ...updates };
+        const newCohortChanges = { ...currentCohortChanges, ...localCohort, ...updates };
+        
+        setLocalCohort(newLocalCohort);
+        setCurrentCohortChanges(newCohortChanges);
+    }, [localCohort, currentCohortChanges, setLocalCohort, setCurrentCohortChanges]);
 
     const handleSearchChange = useCallback((searchValue) => {
         setSearchText(searchValue);
     }, []);
 
     const handleSetSearch = useCallback((searchValue) => {
-        handleSetCurrentCohortChanges({
-            ...currentCohortChanges,
-            ...localCohort,
-            searchText: searchValue,
-        });
-    }, [currentCohortChanges, localCohort, handleSetCurrentCohortChanges]);
+        updateCohortState({ searchText: searchValue });
+    }, [updateCohortState]);
 
     const handleDeleteParticipant = useCallback((participant_pk) => {
-        setLocalCohort({
-            ...localCohort,
-            participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
-        });
-        handleSetCurrentCohortChanges({
-            ...currentCohortChanges,
-            ...localCohort,
-            participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
-        });
-    }, [localCohort, currentCohortChanges, setLocalCohort, handleSetCurrentCohortChanges]);
+        const updatedParticipants = localCohort.participants.filter(participant => participant.participant_pk !== participant_pk);
+        updateCohortState({ participants: updatedParticipants });
+    }, [localCohort.participants, updateCohortState]);
 
     const handleDeleteAllParticipants = useCallback(() => {
-        setLocalCohort({
-            ...localCohort,
-            participants: [],
-        });
-        handleSetCurrentCohortChanges({
-            ...currentCohortChanges,
-            ...localCohort,
-            participants: [],
-        });
-    }, [localCohort, currentCohortChanges, setLocalCohort, handleSetCurrentCohortChanges]);
+        updateCohortState({ participants: [] });
+    }, [updateCohortState]);
 
-    const datePrefix = (config && config.datePrefix) || DEFAULT_CONFIG.config.cohortDetails.datePrefix;
+    const datePrefix = useMemo(() => {
+        return (config && config.datePrefix) || DEFAULT_CONFIG.config.cohortDetails.datePrefix;
+    }, [config]);
 
     return (
         <div className={classes.participantViewer}>
@@ -158,4 +150,4 @@ const styles = () => ({
     },
 });
 
-export default withStyles(styles, { withTheme: true })(ParticipantList);
+export default memo(withStyles(styles, { withTheme: true })(ParticipantList));

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useContext, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import { CohortModalContext } from '../CohortModalContext.js';
 import { deletionTypes } from './deleteConfirmationModal';
@@ -314,4 +314,4 @@ const styles = () => ({
     },
 });
 
-export default withStyles(styles, { withTheme: true })(ParticipantTable);
+export default memo(withStyles(styles, { withTheme: true })(ParticipantTable));
