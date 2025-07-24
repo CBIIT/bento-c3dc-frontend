@@ -19,7 +19,7 @@ import placeHolder from "../../assets/vennDigram/placeHolder.png";
 import ChartVenn from "./vennDiagram/ChartVenn";
 import CheckBoxCustom from "./customCheckbox/CustomCheckbox";
 import { CohortModalContext } from "../inventory/cohortModal/CohortModalContext";
-import CohortModalGenerator from "../inventory/cohortModal/cohortModalGenerator";
+import CohortModal from "../inventory/cohortModal/CohortModal";
 import Alert from '@material-ui/lab/Alert';
 import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
@@ -73,7 +73,6 @@ export const CohortAnalyzer = () => {
     const [showNavigateAwayModal, setShowNavigateAwayModal] = useState(false);
 
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
-    const { CohortModal } = CohortModalGenerator();
     const { Notification } = useGlobal();
     const navigate = useNavigate();
 

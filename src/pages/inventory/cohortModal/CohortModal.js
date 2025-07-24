@@ -14,16 +14,19 @@ import { hasUnsavedChanges } from './utils.js';
 import { CohortModalContext } from './CohortModalContext.js'
 
 /**
- * Generator function to create cohortModal component with custom configuration
- * applied.
+ * CohortModal component for managing cohorts with custom configuration support.
  *
- * @param {object} [uiConfig] component configuration object
- * @returns {object} { cohortModal }
+ * @param {object} [config] component configuration object
+ * @param {object} [functions] callback functions object
+ * @param {...object} props other props passed to the modal
  */
-export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
-    const {
-        config, functions,
-    } = uiConfig;
+const CohortModal = (props) => {
+    const { 
+        config = DEFAULT_CONFIG.config, 
+        functions = DEFAULT_CONFIG.functions,
+        classes,
+        ...modalProps
+    } = props;
 
     const { 
         currentCohortChanges, 
@@ -34,8 +37,8 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
         setShowDeleteConfirmation,
         deleteModalProps,
         setDeleteModalProps
-    } = useContext(CohortModalContext);
-    const { state } = useContext(CohortStateContext);
+    } = useContext(CohortModalContext) || {};
+    const { state } = useContext(CohortStateContext) || {};
     const ignoredFields = ["cohortId"]
     const unSavedChanges = currentCohortChanges ? hasUnsavedChanges(currentCohortChanges, state[selectedCohort], ignoredFields) : false;
 
@@ -46,55 +49,49 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
     const modalTitle = config && config.title && typeof config.title === 'string'
         ? config.title
         : DEFAULT_CONFIG.config.title;
+    const { open } = modalProps;
 
+    const {
+        CohortList: cohortListClasses,
+        CohortDetails: cohortDetailsClasses,
+        DeleteConfirmation: deleteConfirmationClasses,
+    } = classes;
 
-    return {
-        CohortModal: withStyles(DEFAULT_STYLES, { withTheme: true })((props) => {
-            const {
-                classes, open,
-            } = props;
+    const closeModalWrapper = () => {
+        modalClosed();
+        if (modalProps.onCloseModal) {
+            modalProps.onCloseModal();
+        }
+        setSelectedCohort(null);
+    };
 
-            const {
-                CohortList: cohortListClasses,
-                CohortDetails: cohortDetailsClasses,
-                DeleteConfirmation: deleteConfirmationClasses,
-            } = classes;
+    const unSavedChangesCheck = () => {
+        if (unSavedChanges) {
+            setDeleteModalProps({
+                handleDelete: () => closeModalWrapper(),
+                deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
+            });
+            setShowDeleteConfirmation(true)
+        }
+        else {
+            closeModalWrapper()
+        }
+    }
 
-            const closeModalWrapper = () => {
-                modalClosed();
-                if (props.onCloseModal) {
-                    props.onCloseModal();
-                }
-                setSelectedCohort(null);
-            };
+    useEffect(() => {
+        if (!open) {
+            clearCurrentCohortChanges();
+        }
+    }, [open, clearCurrentCohortChanges]);
 
-            const unSavedChangesCheck = () => {
-                if (unSavedChanges) {
-                    setDeleteModalProps({
-                        handleDelete: () => closeModalWrapper(),
-                        deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
-                    });
-                    setShowDeleteConfirmation(true)
-                }
-                else {
-                    closeModalWrapper()
-                }
-            }
-
-            useEffect(() => {
-                if (!open) {
-                    clearCurrentCohortChanges();
-                }
-            }, [open, clearCurrentCohortChanges]);
-
-            return (
-                <>
-                    <Modal
-                        {...props}
-                        open={open}
-                        className={classes.modal}
-                        onClose={unSavedChangesCheck}
-                    >
+    return (
+        <>
+            <Modal
+                {...modalProps}
+                open={open}
+                className={classes.modal}
+                onClose={unSavedChangesCheck}
+            >
                         <div className={classes.paper}>
                             <h1 className={classes.modalTitle}>
                                 <span>{modalTitle}</span>
@@ -126,13 +123,11 @@ export const CohortModalGenerator = (uiConfig = DEFAULT_CONFIG) => {
                         classes={deleteConfirmationClasses}
                         open={showDeleteConfirmation}
                         setOpen={setShowDeleteConfirmation}
-                        handleDelete={deleteModalProps.handleDelete}
-                        deletionType={deleteModalProps.deletionType}
-                    />
-                </>
-            )
-        }),
-    };
+                        handleDelete={deleteModalProps && deleteModalProps.handleDelete ? deleteModalProps.handleDelete : (() => {})}
+                        deletionType={deleteModalProps && deleteModalProps.deletionType ? deleteModalProps.deletionType : ""}
+                />
+        </>
+    );
 };
 
-export default CohortModalGenerator;
+export default withStyles(DEFAULT_STYLES, { withTheme: true })(CohortModal);
