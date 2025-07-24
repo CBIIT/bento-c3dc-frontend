@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext, useCallback } from 'react';
+import React, { useEffect, useRef, useState, useContext, useCallback, useMemo } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
@@ -88,9 +88,11 @@ const CohortList = (props) => {
 
     const scrollContainerRef = useRef(null);
 
-    const cohortOrderedList = Object.keys(state).sort((a, b) => {
-        return new Date(state[b].lastUpdated) - new Date(state[a].lastUpdated);
-    });
+    const cohortOrderedList = useMemo(() => {
+        return Object.keys(state).sort((a, b) => {
+            return new Date(state[b].lastUpdated) - new Date(state[a].lastUpdated);
+        });
+    }, [state]);
 
     if (Object.keys(state).length === 0) {
         closeModal();
