@@ -9,7 +9,6 @@ import client from '../../../../utils/graphqlClient.js';
 import { arrayToCSVDownload, objectToJsonDownload } from '../utils.js';
 import CohortMetadata from './cohortMetadata';
 import ParticipantList from './participantList';
-import DEFAULT_CONFIG from '../config';
 //import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
 import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
 import Linkout from "../../../../assets/about/Export_Icon_White.svg";
@@ -219,8 +218,6 @@ const CohortDetails = (props) => {
             </ol>
         </p>;
 
-    const datePrefix = (config && config.datePrefix) || DEFAULT_CONFIG.config.cohortDetails.datePrefix;
-
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
             <div className={classes.cohortDetailsSection}>
@@ -233,10 +230,8 @@ const CohortDetails = (props) => {
                     handleSetCurrentCohortChanges={handleSetCurrentCohortChanges}
                     handleSave={handleSave}
                     closeModal={closeModal}
+                    config={config}
                 />
-                <div className={classes.cohortLastUpdated}>
-                    {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
-                </div>
                 
             </div>
             <div style={{display:'flex',flexDirection:'row',gap: 10, justifyContent: 'flex-end'}}>
@@ -475,16 +470,6 @@ const styles = () => ({
     },
     firstDropdownItem: {
         borderBottom: '1px solid #0C534C',
-    },
-    cohortLastUpdated: {
-        width: '100%',
-        fontSize: 10,
-        color: '#2D5D63',
-        fontFamily: 'Lato',
-        textAlign: 'left',
-        lineHeight: '22px',
-        paddingLeft: '20px',
-        paddingBottom: '10px',
     },
 });
 
