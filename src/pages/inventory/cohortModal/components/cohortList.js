@@ -126,7 +126,7 @@ const CohortList = (props) => {
             const { scrollHeight, clientHeight } = scrollContainerRef.current;
             setIsScrollbarActive(scrollHeight > clientHeight); // Check if scrollbar is active
         }
-    }, []);
+    }, [cohortOrderedList]);
 
     return (
         <div className={classes.cohortListSection}>
@@ -139,7 +139,7 @@ const CohortList = (props) => {
                             <img
                                 src={TrashCanIconGray}
                                 alt="delete all cohorts icon"
-                                className={classes.grayTrashCan + (isScrollbarActive ? ' ' + classes.grayTrashCanScrollPadding : '')}
+                                className={`${classes.grayTrashCan} ${isScrollbarActive ? classes.grayTrashCanScrollPadding : ''}`}
                                 onClick={handleDeleteAllClick}
                             />
                         </ToolTip>
