@@ -8,9 +8,9 @@ import {
 } from '../../../../components/CohortSelectorState/store/action.js';
 import { CohortModalContext } from '../CohortModalContext.js';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
-import TrashCanIconWhite from '../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DEFAULT_CONFIG from '../config';
 import { deletionTypes } from './deleteConfirmationModal';
+import CohortListItem from './CohortListItem';
 
 /**
  * A list of cohorts to select from and manage.
@@ -132,16 +132,24 @@ const CohortList = (props) => {
         <div className={classes.cohortListSection}>
                 <div className={classes.cohortListHeading}>
                     <span>
-                        {listHeading} ({Object.keys(state).length})
+                        {listHeading} ({cohortOrderedList.length})
                     </span>
                     <span>
                         <ToolTip title="Remove all Cohorts" placement="top-end" arrow>
-                            <img
-                                src={TrashCanIconGray}
-                                alt="delete all cohorts icon"
-                                className={`${classes.grayTrashCan} ${isScrollbarActive ? classes.grayTrashCanScrollPadding : ''}`}
+                            <button
+                                type="button"
+                                className={`${classes.deleteAllButton} ${isScrollbarActive ? classes.grayTrashCanScrollPadding : ''}`}
                                 onClick={handleDeleteAllClick}
-                            />
+                                aria-label="Delete all cohorts"
+                                title="Remove all Cohorts"
+                            >
+                                <img
+                                    src={TrashCanIconGray}
+                                    alt=""
+                                    className={classes.grayTrashCan}
+                                    aria-hidden="true"
+                                />
+                            </button>
                         </ToolTip>
                     </span>
 
@@ -149,27 +157,30 @@ const CohortList = (props) => {
                 <div
                     className={classes.cohortListing}
                     ref={scrollContainerRef}
+                    role="listbox"
+                    aria-label="Cohort selection list"
                 >
                     {cohortOrderedList.map((cohort) => {
-                        const isSelected = selectedCohort === state[cohort].cohortId;
+                        const cohortData = state[cohort];
+                        
+                        // Safety check - skip rendering if cohort data is invalid
+                        if (!cohortData || !cohortData.cohortId || !cohortData.cohortName) {
+                            console.warn(`Invalid cohort data for cohort key: ${cohort}`, cohortData);
+                            return null;
+                        }
+                        
+                        const isSelected = selectedCohort === cohortData.cohortId;
+                        
                         return (
-                            <div
-                                key={state[cohort].cohortId}
-                                className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
-                                onClick={() => handleCohortSelection(state[cohort].cohortId)}
-                            >
-                                <span className={classes.cohortListItemText}>
-                                    {state[cohort].cohortName}
-                                </span>
-                                <span>
-                                    <img
-                                        src={TrashCanIconWhite}
-                                        alt="delete cohort icon"
-                                        className={classes.whiteTrashCan}
-                                        onClick={(e) => handleSingleCohortDelete(e, state[cohort].cohortId)}
-                                    />
-                                </span>
-                            </div>
+                            <CohortListItem
+                                key={cohortData.cohortId}
+                                classes={classes}
+                                cohort={cohort}
+                                cohortData={cohortData}
+                                isSelected={isSelected}
+                                onCohortSelect={handleCohortSelection}
+                                onCohortDelete={handleSingleCohortDelete}
+                            />
                         );
                     })}
                 </div>
@@ -211,12 +222,23 @@ const styles = () => ({
         borderBottom: '1px solid #5C5C5C',
 
     },
+    deleteAllButton: {
+        background: 'transparent',
+        border: 'none',
+        padding: 0,
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        '&:focus': {
+            outline: '2px solid #598AC5',
+            outlineOffset: '2px',
+        },
+    },
     grayTrashCan: {
         height: 20,
         paddingTop: 2,
-        '&:hover': {
-            cursor: 'pointer',
-        },
+        pointerEvents: 'none', // Prevent img from intercepting clicks
     },
     grayTrashCanScrollPadding: {
         paddingRight: '6px;', //matches scrollbar width
@@ -239,41 +261,6 @@ const styles = () => ({
         '&::-webkit-scrollbar-thumb:hover': {
             backgroundColor: '', // Thumb color on hover
         },*/
-    },
-    cohortListItem: {
-        width: '100%',
-        height: '55px',
-        display: 'flex',
-        padding: '19px 22px 21px 26px',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        color: '#FFFFFF',
-        fontFamily: 'Poppins',
-        fontSize: 14,
-        fontWeight: '300',
-        lineHeight: '15px',
-        backgroundColor: '#4B7B8B',
-        borderBottom: '1px solid #FFF',
-        '&:first-child': {
-            borderTop: '1px solid #FFF',
-        },
-        cursor: 'pointer',
-    },
-    cohortListItemText: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
-        color: 'white',
-        width: '85%',
-    },
-    selectedCohort: {
-        backgroundColor: '#3A555E',
-    },
-    whiteTrashCan: {
-        width: 14,
-        '&:hover': {
-            cursor: 'pointer',
-        },
     },
 });
 
