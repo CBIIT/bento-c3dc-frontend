@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext, useCallback, useMemo } from 'react';
+import React, { useEffect, useRef, useState, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
@@ -264,4 +264,4 @@ const styles = () => ({
     },
 });
 
-export default withStyles(styles, { withTheme: true })(CohortList);
+export default memo(withStyles(styles, { withTheme: true })(CohortList));
