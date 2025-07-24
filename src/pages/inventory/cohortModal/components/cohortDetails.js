@@ -314,15 +314,14 @@ const CohortDetails = (props) => {
                 />
                 <div className={classes.participantViewer}>
                     <div className={classes.participantSearchBarSection}>
-                        <lable htmlFor="participantSearch" > </lable> 
                         <input
-                            id="participantSearch"
                             type="text"
                             placeholder="Search Participant ID here"
                             className={classes.participantSearchBar}
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
                             onBlur={(e) => handleSetSearch(e)}
+                            aria-label="Search participants by ID"
                         />
                         <span className={classes.searchIcon}>
                             <img
