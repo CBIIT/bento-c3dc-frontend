@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useEffect, useRef, useState, useContext, useCallback } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
@@ -30,16 +30,57 @@ const CohortList = (props) => {
         setSelectedCohort, 
         clearCurrentCohortChanges,
         setShowDeleteConfirmation,
-        setDeleteModalProps
+        setDeleteModalProps,
+        clearAlert
     } = useContext(CohortModalContext);
 
-    const handleDeleteCohort = (cohortId) => {
+    const handleDeleteCohort = useCallback((cohortId) => {
         dispatch(onDeleteSingleCohort(cohortId));
-    };
+    }, [dispatch]);
 
-    const handleDeleteAllCohorts = () => {
+    const handleDeleteAllCohorts = useCallback(() => {
         dispatch(onDeleteAllCohort());
-    };
+    }, [dispatch]);
+
+    const handleDeleteAllClick = useCallback(() => {
+        setDeleteModalProps({
+            handleDelete: () => handleDeleteAllCohorts(),
+            deletionType: deletionTypes.DELETE_ALL_COHORTS,
+        });
+        setShowDeleteConfirmation(true);
+    }, [setDeleteModalProps, setShowDeleteConfirmation, handleDeleteAllCohorts]);
+
+    const handleCohortSelection = useCallback((cohortId) => {
+        if (cohortId === selectedCohort) {
+            return;
+        }
+        
+        // Clear any existing alert when switching cohorts
+        clearAlert();
+        
+        if (unSavedChanges) {
+            setDeleteModalProps({
+                handleDelete: () => {
+                    setSelectedCohort(cohortId);
+                    clearCurrentCohortChanges();
+                },
+                deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
+            });
+            setShowDeleteConfirmation(true);
+        } else {
+            setSelectedCohort(cohortId);
+            clearCurrentCohortChanges();
+        }
+    }, [selectedCohort, unSavedChanges, setDeleteModalProps, setShowDeleteConfirmation, setSelectedCohort, clearCurrentCohortChanges, clearAlert]);
+
+    const handleSingleCohortDelete = useCallback((e, cohortId) => {
+        e.stopPropagation();
+        setDeleteModalProps({
+            handleDelete: () => handleDeleteCohort(cohortId),
+            deletionType: deletionTypes.DELETE_SINGLE_COHORT,
+        });
+        setShowDeleteConfirmation(true);
+    }, [setDeleteModalProps, setShowDeleteConfirmation, handleDeleteCohort]);
 
     const listHeading = config && config.listHeading && typeof config.listHeading === 'string'
         ? config.listHeading
@@ -93,13 +134,7 @@ const CohortList = (props) => {
                                 src={TrashCanIconGray}
                                 alt="delete all cohorts icon"
                                 className={classes.grayTrashCan + (isScrollbarActive ? ' ' + classes.grayTrashCanScrollPadding : '')}
-                                onClick={() => {
-                                    setDeleteModalProps({
-                                        handleDelete: () => handleDeleteAllCohorts(),
-                                        deletionType: deletionTypes.DELETE_ALL_COHORTS,
-                                    });
-                                    setShowDeleteConfirmation(true)
-                                }}
+                                onClick={handleDeleteAllClick}
                             />
                         </ToolTip>
                     </span>
@@ -115,25 +150,7 @@ const CohortList = (props) => {
                             <div
                                 key={state[cohort].cohortId}
                                 className={`${classes.cohortListItem} ${isSelected ? classes.selectedCohort : ''}`}
-                                onClick={() => {
-                                    if (state[cohort].cohortId === selectedCohort) {
-                                        return;
-                                    }
-                                    if (unSavedChanges) {
-                                        setDeleteModalProps({
-                                            handleDelete: () => {
-                                                setSelectedCohort(state[cohort].cohortId)
-                                                clearCurrentCohortChanges();
-                                            },
-                                            deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
-                                        });
-                                        setShowDeleteConfirmation(true);
-                                    }
-                                    else {
-                                        setSelectedCohort(state[cohort].cohortId)
-                                        clearCurrentCohortChanges();
-                                    }
-                                }}
+                                onClick={() => handleCohortSelection(state[cohort].cohortId)}
                             >
                                 <span className={classes.cohortListItemText}>
                                     {state[cohort].cohortName}
@@ -143,14 +160,7 @@ const CohortList = (props) => {
                                         src={TrashCanIconWhite}
                                         alt="delete cohort icon"
                                         className={classes.whiteTrashCan}
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setDeleteModalProps({
-                                                handleDelete: () => handleDeleteCohort(state[cohort].cohortId),
-                                                deletionType: deletionTypes.DELETE_SINGLE_COHORT,
-                                            });
-                                            setShowDeleteConfirmation(true);
-                                        }}
+                                        onClick={(e) => handleSingleCohortDelete(e, state[cohort].cohortId)}
                                     />
                                 </span>
                             </div>

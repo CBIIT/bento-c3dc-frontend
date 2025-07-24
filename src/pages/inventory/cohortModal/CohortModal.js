@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useCallback } from 'react';
 import {
     Modal, withStyles,
 } from '@material-ui/core';
@@ -11,6 +11,9 @@ import AlertManager from './components/AlertManager';
 import { CohortModalContext } from './CohortModalContext.js';
 import { useModalState } from './hooks/useModalState';
 import { useUnsavedChanges } from './hooks/useUnsavedChanges';
+
+// Constant to avoid recreating empty function on every render
+const EMPTY_FUNCTION = () => {};
 
 /**
  * CohortModal component for managing cohorts with custom configuration support.
@@ -50,7 +53,9 @@ const CohortModal = (props) => {
         DeleteConfirmation: deleteConfirmationClasses,
     } = classes;
 
-    const handleModalClose = () => unSavedChangesCheck(unSavedChanges);
+    const handleModalClose = useCallback(() => {
+        unSavedChangesCheck(unSavedChanges);
+    }, [unSavedChangesCheck, unSavedChanges]);
 
     useEffect(() => {
         if (!open) {
@@ -97,7 +102,7 @@ const CohortModal = (props) => {
                         classes={deleteConfirmationClasses}
                         open={showDeleteConfirmation}
                         setOpen={setShowDeleteConfirmation}
-                        handleDelete={deleteModalProps && deleteModalProps.handleDelete ? deleteModalProps.handleDelete : (() => {})}
+                        handleDelete={deleteModalProps && deleteModalProps.handleDelete ? deleteModalProps.handleDelete : EMPTY_FUNCTION}
                         deletionType={deleteModalProps && deleteModalProps.deletionType ? deleteModalProps.deletionType : ""}
                 />
         </>
