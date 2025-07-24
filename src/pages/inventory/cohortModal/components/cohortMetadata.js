@@ -1,21 +1,27 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, memo } from 'react';
 import DEFAULT_CONFIG from '../config';
+import { CohortModalContext } from '../CohortModalContext';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 
 const CohortMetadata = (props) => {
-    const {
-        classes,
-        config,
-        activeCohort,
-        temporaryCohort,
-        handleSetCurrentCohortChanges
-    } = props;
+    const { classes, config } = props;
+
+    // Get data from context instead of props
+    const { selectedCohort, currentCohortChanges, setCurrentCohortChanges } = useContext(CohortModalContext) || {};
+    const { state } = useContext(CohortStateContext) || {};
+    const activeCohort = state && state[selectedCohort];
+
+    // Early return if required data is not available
+    if (!activeCohort) {
+        return null;
+    }
 
     // Get current cohort data (either from changes or original)
     const currentCohort = useMemo(() => {
-        return temporaryCohort && temporaryCohort.cohortId === activeCohort.cohortId 
-            ? temporaryCohort 
+        return currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId 
+            ? currentCohortChanges 
             : activeCohort;
-    }, [temporaryCohort, activeCohort]);
+    }, [currentCohortChanges, activeCohort]);
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
@@ -58,12 +64,16 @@ const CohortMetadata = (props) => {
     // Update context directly on every keystroke
     const handleTextChange = useCallback((e) => {
         const { name, value } = e.target;
-        handleSetCurrentCohortChanges({
-            ...temporaryCohort,
-            ...currentCohort,
+        if (!currentCohort.cohortId) return;
+        
+        setCurrentCohortChanges({
+            cohortId: currentCohort.cohortId,
+            cohortName: currentCohort.cohortName,
+            cohortDescription: currentCohort.cohortDescription,
+            participants: currentCohort.participants,
             [name]: value,
         });
-    }, [temporaryCohort, currentCohort, handleSetCurrentCohortChanges]);
+    }, [currentCohort, setCurrentCohortChanges]);
 
     const handleNameKeyDown = useCallback((e) => {
         if (e.key === 'Enter') {
@@ -136,4 +146,4 @@ const CohortMetadata = (props) => {
     );
 };
 
-export default CohortMetadata;
+export default memo(CohortMetadata);

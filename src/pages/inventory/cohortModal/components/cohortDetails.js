@@ -309,9 +309,6 @@ const CohortDetails = (props) => {
                 <CohortMetadata
                     classes={classes}
                     config={config}
-                    activeCohort={activeCohort}
-                    temporaryCohort={currentCohortChanges}
-                    handleSetCurrentCohortChanges={handleSetCurrentCohortChanges}
                 />
                 <div className={classes.participantViewer}>
                     <div className={classes.participantSearchBarSection}>
