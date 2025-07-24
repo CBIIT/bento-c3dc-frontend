@@ -12,12 +12,23 @@ export const useStyle = makeStyles((theme) => ({
         border: '0.75px solid #679AAA',
         borderRadius: '10px',
         width: '100%',
-        maxWidth: 607,
+        maxWidth: 507,
         height: 523,
         display: 'flex',
 
         flexDirection: 'column',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        [theme.breakpoints.down('lg')]: {
+            maxWidth: '100%',
+            height: '100%',
+            overflow: 'visible',
+            paddingBottom: '24px',
+            alignItems: 'center',
+
+            '& .App': {
+                maxWidth: '60%',
+            }
+        }
     },
     chartContainerHeader: {
         width: '100%',
@@ -266,27 +277,41 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         width: '90%',
         paddingBottom: 10,
-        borderTop: '1.02px #8A7F7C solid'
+        borderTop: '1.02px #8A7F7C solid',
+
+        [theme.breakpoints.down('lg')]: {
+            width: '100%',
+        }
     },
     rightSideAnalyzer: {
-        minWidth: "77%",
-        maxWidth: "77%",
+        minWidth: "81%",
+        maxWidth: "100%",
         height: 1149,
         borderRadius: '35px',
         border: '4px solid #4E8191',
         margin: 100,
-        marginLeft: 30,
+        marginLeft: 10,
         marginTop: 70,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        overflowY: 'hidden'
+        overflowY: 'hidden',
+        [theme.breakpoints.down('lg')]: {
+            alignItems: 'flex-start',
+            padding: '0 24px 24px 24px',
+            overflowY: 'visible',
+            height: '100%',
+        }
+        
     },
     rightSideAnalyzerOuterContainer: {
         display: 'flex',
         marginBottom: 40,
         justifyContent: 'flex-start',
-        width: "90%"
+        width: "98%",
+        [theme.breakpoints.down('lg')]: {
+            flexDirection: 'column',
+        }
     },
     rightSideAnalyzerInnerContainer: {
         display: 'flex',
@@ -315,7 +340,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        minWidth: '50%',
+        minWidth: '30%',
         alignItems: 'flex-start',
         marginBottom: '30px',
         zIndex: 900,
@@ -323,11 +348,14 @@ export const useStyle = makeStyles((theme) => ({
             fontFamily: 'Open Sans',
             fontSize: '15px',
             fontWeight: 400,
-            width: 655,
+            width: 455,
             lineHeight: '20.8px',
             textAlign: 'left',
             color: 'black',
             marginLeft: '10px',
+            [theme.breakpoints.down('lg')]: {
+                width: '100%',
+            }
         }
     },
     alert: {
@@ -414,5 +442,9 @@ export const useStyle = makeStyles((theme) => ({
         '&::-webkit-scrollbar-track': {
             background: '#CECECE',
         },
+        
+        [theme.breakpoints.down('lg')]: {
+            width: '100%',
+        }
     }
 }))

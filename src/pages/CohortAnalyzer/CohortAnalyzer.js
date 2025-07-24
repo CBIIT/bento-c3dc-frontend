@@ -48,6 +48,7 @@ import styled from "styled-components";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
 import store from "../../store";
 import { updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
+import Histogram from "./HistogramPanel/Histogram";
 
 export const CohortAnalyzer = () => {
     const containerRef = useRef(null);
@@ -901,7 +902,7 @@ padding-left: 5px;
                         }
                                 </div>
                         </div>
-
+                                <Histogram />
                         
 
                     </div>

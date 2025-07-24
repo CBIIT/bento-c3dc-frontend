@@ -179,8 +179,8 @@ if(data){
 useEffect(() => {
   if (chartRef.current && canvasRef.current) {
     chartRef.current.destroy();
-    canvasRef.current.width = cohortData.length === 2 ? 800 : 700;
-    canvasRef.current.height =  cohortData.length === 2 ? 200 : 270; 
+    canvasRef.current.width = cohortData.length === 2 ? 1000 : 900;
+    canvasRef.current.height =  cohortData.length === 2 ? 400 : 470; 
   }
   chartRef.current = new VennDiagramChart(canvasRef.current, config);
 
