@@ -82,9 +82,7 @@ const CohortList = (props) => {
         setShowDeleteConfirmation(true);
     }, [setDeleteModalProps, setShowDeleteConfirmation, handleDeleteCohort]);
 
-    const listHeading = config && config.listHeading && typeof config.listHeading === 'string'
-        ? config.listHeading
-        : DEFAULT_CONFIG.config.cohortList.listHeading;
+    const listHeading = (config && config.listHeading) || DEFAULT_CONFIG.config.cohortList.listHeading;
 
     const scrollContainerRef = useRef(null);
 
