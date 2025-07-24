@@ -110,6 +110,17 @@ const CohortDetails = (props) => {
         cohortDescription: matchingCohortID ? currentCohortChanges.cohortDescription : activeCohort.cohortDescription,
         participants: matchingCohortID ? JSON.parse(JSON.stringify(currentCohortChanges.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
     });
+
+    // Update localCohort when selectedCohort changes
+    useEffect(() => {
+        const matchingCohortID = currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
+        setLocalCohort({
+            cohortId: matchingCohortID ? currentCohortChanges.cohortId : activeCohort.cohortId,
+            cohortName: matchingCohortID ? currentCohortChanges.cohortName : activeCohort.cohortName,
+            cohortDescription: matchingCohortID ? currentCohortChanges.cohortDescription : activeCohort.cohortDescription,
+            participants: matchingCohortID ? JSON.parse(JSON.stringify(currentCohortChanges.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
+        });
+    }, [selectedCohort, activeCohort, currentCohortChanges]);
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const [isScrollbarActive, setIsScrollbarActive] = useState(false);
 
