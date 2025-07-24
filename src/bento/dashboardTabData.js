@@ -358,7 +358,7 @@ cohortMetadata(
         participant_id
         race
         sex_at_birth
-
+      
         diagnoses {
             id 
             diagnosis_id
@@ -385,6 +385,14 @@ cohortMetadata(
             event_free_survival_status
             first_event
             last_known_survival_status
+        }
+        synonyms {
+          id
+          associated_id
+          data_location
+          domain_category
+          domain_description
+          repository_of_synonym_id
         }
         treatments {
             id 
