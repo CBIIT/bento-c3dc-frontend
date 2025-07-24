@@ -94,13 +94,19 @@ const CohortList = (props) => {
         });
     }, [state]);
 
-    if (Object.keys(state).length === 0) {
-        closeModal();
-    }
+    // Handle empty state - close modal when no cohorts exist
+    useEffect(() => {
+        if (Object.keys(state).length === 0) {
+            closeModal();
+        }
+    }, [state, closeModal]);
 
-    if (!state[selectedCohort]) {
-        setSelectedCohort(cohortOrderedList[0]);
-    }
+    // Handle invalid selectedCohort - select first cohort if current selection is invalid
+    useEffect(() => {
+        if (!state[selectedCohort] && cohortOrderedList.length > 0) {
+            setSelectedCohort(cohortOrderedList[0]);
+        }
+    }, [selectedCohort, state, cohortOrderedList, setSelectedCohort]);
 
 
     useEffect(() => {
