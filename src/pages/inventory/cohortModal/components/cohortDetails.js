@@ -311,8 +311,6 @@ const CohortDetails = (props) => {
                     config={config}
                     activeCohort={activeCohort}
                     temporaryCohort={currentCohortChanges}
-                    localCohort={localCohort}
-                    setLocalCohort={setLocalCohort}
                     handleSetCurrentCohortChanges={handleSetCurrentCohortChanges}
                 />
                 <div className={classes.participantViewer}>

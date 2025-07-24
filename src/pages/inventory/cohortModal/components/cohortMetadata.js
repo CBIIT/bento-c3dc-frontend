@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import DEFAULT_CONFIG from '../config';
-import { debounce } from '../utils';
 
 const CohortMetadata = (props) => {
     const {
@@ -8,22 +7,28 @@ const CohortMetadata = (props) => {
         config,
         activeCohort,
         temporaryCohort,
-        localCohort,
-        setLocalCohort,
         handleSetCurrentCohortChanges
     } = props;
+
+    // Get current cohort data (either from changes or original)
+    const currentCohort = useMemo(() => {
+        return temporaryCohort && temporaryCohort.cohortId === activeCohort.cohortId 
+            ? temporaryCohort 
+            : activeCohort;
+    }, [temporaryCohort, activeCohort]);
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
     const descriptionRef = useRef(null);
 
-    const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
-        ? config.cohortCountsLabel
-        : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
+    // Memoize configuration values
+    const cohortCountsLabel = useMemo(() => {
+        return (config && config.cohortCountsLabel) || DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
+    }, [config]);
 
-    const datePrefix = config && config.datePrefix && typeof config.datePrefix === 'string'
-        ? config.datePrefix
-        : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
+    const datePrefix = useMemo(() => {
+        return (config && config.datePrefix) || DEFAULT_CONFIG.config.cohortDetails.datePrefix;
+    }, [config]);
 
     useEffect(() => {
         if (isEditingDescription && descriptionRef.current) {
@@ -33,41 +38,39 @@ const CohortMetadata = (props) => {
         }
     }, [isEditingDescription]);
 
-    const handleEditName = () => {
+    // Memoized handlers to prevent unnecessary re-renders
+    const handleEditName = useCallback(() => {
         setIsEditingName(true);
-    };
+    }, []);
 
-    const handleEditDescription = () => {
+    const handleEditDescription = useCallback(() => {
         setIsEditingDescription(true);
-    };
+    }, []);
 
-    const debouncedSave = useRef(
-        debounce((e) => {
-            setIsEditingName(false);
-            handleSetCurrentCohortChanges({
-                ...temporaryCohort,
-                ...localCohort,
-                [e.target.name]: e.target.value,
-            });
-        }, 100) // Adjust debounce delay
-    ).current;
-
-    const handleSaveName = (e) => {
+    const handleFinishEditingName = useCallback(() => {
         setIsEditingName(false);
-        debouncedSave(e);
-    };
+    }, []);
 
-    const handleSaveDescription = (e) => {
+    const handleFinishEditingDescription = useCallback(() => {
         setIsEditingDescription(false);
-        debouncedSave(e);
-    };
+    }, []);
 
-    const handleTextChange = (e) => {
-        setLocalCohort({
-            ...localCohort,
-            [e.target.name]: e.target.value,
+    // Update context directly on every keystroke
+    const handleTextChange = useCallback((e) => {
+        const { name, value } = e.target;
+        handleSetCurrentCohortChanges({
+            ...temporaryCohort,
+            ...currentCohort,
+            [name]: value,
         });
-    };
+    }, [temporaryCohort, currentCohort, handleSetCurrentCohortChanges]);
+
+    const handleNameKeyDown = useCallback((e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleFinishEditingName();
+        }
+    }, [handleFinishEditingName]);
 
     return (
         <>
@@ -78,31 +81,24 @@ const CohortMetadata = (props) => {
                             className={classes.editingCohortName}
                             type="text"
                             name="cohortName"
-                            value={localCohort['cohortName']}
-                            onBlur={(e) => handleSaveName(e)}
-                            onChange={(e) => handleTextChange(e)}
+                            value={currentCohort.cohortName}
+                            onBlur={handleFinishEditingName}
+                            onChange={handleTextChange}
+                            onKeyDown={handleNameKeyDown}
                             maxLength={20}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter') {
-                                    e.preventDefault();
-                                    handleSaveName(e);
-                                }
-                            }}
                             autoFocus
                         />
                     ) : (
-                        <>
-                            <span
-                                onClick={handleEditName}
-                                className={classes.cohortName}
-                            >
-                                {localCohort['cohortName']}
-                            </span>
-                        </>
+                        <span
+                            onClick={handleEditName}
+                            className={classes.cohortName}
+                        >
+                            {currentCohort.cohortName}
+                        </span>
                     )}
                 </div>
                 <span className={classes.cohortItemCounts}>
-                    {cohortCountsLabel} ({localCohort.participants.length})
+                    {cohortCountsLabel} ({currentCohort.participants.length})
                 </span>
             </div>
             <div className={classes.cohortDescription}>
@@ -110,30 +106,26 @@ const CohortMetadata = (props) => {
                     <textarea
                         ref={descriptionRef}
                         className={classes.editingCohortDescription}
-                        value={localCohort['cohortDescription']}
-                        onBlur={(e) => handleSaveDescription(e)}
+                        value={currentCohort.cohortDescription}
+                        onBlur={handleFinishEditingDescription}
                         name="cohortDescription"
-                        onChange={(e) => handleTextChange(e)}
+                        onChange={handleTextChange}
                         rows={4}
                         maxLength={250}
                         placeholder="Enter cohort description..."
                         autoFocus
                     />
-
                 ) : (
-                    <>
-                        <textarea
-                            className={classes.cohortDescriptionBox}
-                            value={localCohort['cohortDescription']}
-                            name="cohortDescription"
-                            onFocus={handleEditDescription}
-                            rows={4}
-                            maxLength={250}
-                            placeholder="Enter cohort description..."
-                            readOnly={true}
-
-                        />
-                    </>
+                    <textarea
+                        className={classes.cohortDescriptionBox}
+                        value={currentCohort.cohortDescription}
+                        name="cohortDescription"
+                        onFocus={handleEditDescription}
+                        rows={4}
+                        maxLength={250}
+                        placeholder="Enter cohort description..."
+                        readOnly={true}
+                    />
                 )}
 
             </div>
