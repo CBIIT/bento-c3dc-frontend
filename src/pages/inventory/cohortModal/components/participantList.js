@@ -3,7 +3,7 @@ import { withStyles, Button } from '@material-ui/core';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
 import { CohortModalContext } from '../CohortModalContext.js';
 import { deletionTypes } from './deleteConfirmationModal';
-import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
+import SearchBar from './searchBar';
 import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
@@ -23,8 +23,8 @@ const ParticipantList = (props) => {
     const matchingCohortID = currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
 
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
-    const [searchText, setSearchText] = useState(matchingCohortID && currentCohortChanges['searchText'] ? currentCohortChanges['searchText'] : '');
     const [isScrollbarActive, setIsScrollbarActive] = useState(false);
+    const [searchText, setSearchText] = useState(matchingCohortID && currentCohortChanges['searchText'] ? currentCohortChanges['searchText'] : '');
 
     const scrollContainerRef = useRef(null);
 
@@ -49,11 +49,15 @@ const ParticipantList = (props) => {
         };
     }, []);
 
-    const handleSetSearch = useCallback((e) => {
+    const handleSearchChange = useCallback((searchValue) => {
+        setSearchText(searchValue);
+    }, []);
+
+    const handleSetSearch = useCallback((searchValue) => {
         handleSetCurrentCohortChanges({
             ...currentCohortChanges,
             ...localCohort,
-            searchText: e.target.value,
+            searchText: searchValue,
         });
     }, [currentCohortChanges, localCohort, handleSetCurrentCohortChanges]);
 
@@ -109,23 +113,11 @@ const ParticipantList = (props) => {
 
     return (
         <div className={classes.participantViewer}>
-            <div className={classes.participantSearchBarSection}>
-                <input
-                    type="text"
-                    placeholder="Search Participant ID here"
-                    className={classes.participantSearchBar}
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    onBlur={(e) => handleSetSearch(e)}
-                    aria-label="Search participants by ID"
-                />
-                <span className={classes.searchIcon}>
-                    <img
-                        src={SearchIcon}
-                        alt="search icon"
-                    />
-                </span>
-            </div>
+            <SearchBar
+                initialSearchText={searchText}
+                onSearchChange={handleSearchChange}
+                onSearchBlur={handleSetSearch}
+            />
             <div className={classes.participantTableSection}>
                 <div className={classes.participantTableHeader + (isScrollbarActive ? ' ' + classes.participantTableHeaderScrollPadding : '')}>
                     <div
@@ -213,51 +205,6 @@ const styles = () => ({
         borderBottomLeftRadius: '10px',
         borderBottomRightRadius: '10px',
         marginTop: '16px',
-    },
-    participantSearchBarSection: {
-        display: 'flex',
-        justifyContent: 'center',
-        borderRadius: '8px',
-        border: '1px solid #8B98AF',
-        width: '92%',
-        height: '31px',
-        marginTop: '10px',
-        marginBottom: '12px',
-        backgroundColor: '#FFFFFF',
-        '&:focus-within': {
-            border: '1px solid #007BFF',
-        },
-    },
-    participantSearchBar: {
-        width: '100%',
-        height: '100%',
-        border: 'none',
-        borderRadius: '8px',
-        margin: '0px',
-        padding: '0px',
-        outline: 'none',
-        paddingLeft: '17px',
-        fontFamily: 'Poppins',
-        fontSize: '15px',
-        fontWeight: '400',
-        lineHeight: '26px',
-        color: '#5D7B87',
-        '&::placeholder': {
-            color: '#5D7B87',
-            fontWeight: '300',
-        },
-    },
-    searchIcon: {
-        height: '100%',
-        width: '14px',
-        marginRight: '8px',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginLeft: '1px',
-        '&:hover': {
-            cursor: 'pointer',
-        },
     },
     headerColumn: {
         display: 'flex',
