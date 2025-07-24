@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback, memo, useRef } from 'react';
 import { withStyles } from '@material-ui/core';
 import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
 
@@ -6,24 +6,47 @@ const SearchBar = (props) => {
     const { classes, initialSearchText, onSearchChange, onSearchBlur } = props;
     
     const [searchText, setSearchText] = useState(initialSearchText || '');
+    const inputRef = useRef(null);
 
-    const handleSearchChange = (e) => {
+    // Sync with prop changes (including clearing when cohorts change)
+    useEffect(() => {
+        setSearchText(initialSearchText || '');
+    }, [initialSearchText]);
+
+    // Memoized event handlers for better performance
+    const handleSearchChange = useCallback((e) => {
         const value = e.target.value;
         setSearchText(value);
         if (onSearchChange) {
             onSearchChange(value);
         }
-    };
+    }, [onSearchChange]);
 
-    const handleSearchBlur = (e) => {
+    const handleSearchBlur = useCallback((e) => {
         if (onSearchBlur) {
             onSearchBlur(e.target.value);
         }
-    };
+    }, [onSearchBlur]);
+
+    // Clear search functionality
+    const handleClear = useCallback(() => {
+        setSearchText('');
+        if (onSearchChange) {
+            onSearchChange('');
+        }
+    }, [onSearchChange]);
+
+    // Focus on search icon click
+    const handleIconClick = useCallback(() => {
+        if (inputRef.current) {
+            inputRef.current.focus();
+        }
+    }, []);
 
     return (
         <div className={classes.participantSearchBarSection}>
             <input
+                ref={inputRef}
                 type="text"
                 placeholder="Search Participant ID here"
                 className={classes.participantSearchBar}
@@ -32,7 +55,17 @@ const SearchBar = (props) => {
                 onBlur={handleSearchBlur}
                 aria-label="Search participants by ID"
             />
-            <span className={classes.searchIcon}>
+            {searchText && (
+                <button
+                    type="button"
+                    className={classes.clearButton}
+                    onClick={handleClear}
+                    aria-label="Clear search"
+                >
+                    ×
+                </button>
+            )}
+            <span className={classes.searchIcon} onClick={handleIconClick}>
                 <img
                     src={SearchIcon}
                     alt="search icon"
@@ -88,6 +121,26 @@ const styles = () => ({
             cursor: 'pointer',
         },
     },
+    clearButton: {
+        background: 'none',
+        border: 'none',
+        fontSize: '18px',
+        color: '#8B98AF',
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '20px',
+        height: '100%',
+        marginRight: '4px',
+        '&:hover': {
+            color: '#5D7B87',
+        },
+        '&:focus': {
+            outline: 'none',
+            color: '#007BFF',
+        },
+    },
 });
 
-export default withStyles(styles, { withTheme: true })(SearchBar);
+export default memo(withStyles(styles, { withTheme: true })(SearchBar));

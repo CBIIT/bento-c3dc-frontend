@@ -1,4 +1,4 @@
-import React, { useState, useContext, useCallback } from 'react';
+import React, { useState, useContext, useCallback, useEffect } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
 import { CohortModalContext } from '../CohortModalContext.js';
@@ -19,6 +19,11 @@ const ParticipantList = (props) => {
     const matchingCohortID = currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
 
     const [searchText, setSearchText] = useState(matchingCohortID && currentCohortChanges['searchText'] ? currentCohortChanges['searchText'] : '');
+
+    // Update searchText when currentCohortChanges changes (including when cleared)
+    useEffect(() => {
+        setSearchText(matchingCohortID && currentCohortChanges['searchText'] ? currentCohortChanges['searchText'] : '');
+    }, [currentCohortChanges, matchingCohortID]);
 
 
     const handleSearchChange = useCallback((searchValue) => {
