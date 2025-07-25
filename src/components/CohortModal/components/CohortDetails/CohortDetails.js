@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useMemo, useCallback, memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
 import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
@@ -63,33 +63,36 @@ const CohortDetails = (props) => {
         return null;
     }
 
-    let matchingCohortID = currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
+    // Memoized matching cohort ID calculation
+    const matchingCohortID = useMemo(() => {
+        return currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
+    }, [currentCohortChanges, activeCohort.cohortId]);
 
-    const [localCohort, setLocalCohort] = useState({
-        cohortId: matchingCohortID ? currentCohortChanges.cohortId : activeCohort.cohortId,
-        cohortName: matchingCohortID ? currentCohortChanges.cohortName : activeCohort.cohortName,
-        cohortDescription: matchingCohortID ? currentCohortChanges.cohortDescription : activeCohort.cohortDescription,
-        participants: matchingCohortID ? JSON.parse(JSON.stringify(currentCohortChanges.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
-    });
-
-    // Update localCohort when selectedCohort changes
-    useEffect(() => {
-        const matchingCohortID = currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
-        setLocalCohort({
+    // Memoized initial cohort state - simple array spread is sufficient for participants
+    const initialCohortState = useMemo(() => {
+        return {
             cohortId: matchingCohortID ? currentCohortChanges.cohortId : activeCohort.cohortId,
             cohortName: matchingCohortID ? currentCohortChanges.cohortName : activeCohort.cohortName,
             cohortDescription: matchingCohortID ? currentCohortChanges.cohortDescription : activeCohort.cohortDescription,
-            participants: matchingCohortID ? JSON.parse(JSON.stringify(currentCohortChanges.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
-        });
-    }, [selectedCohort, activeCohort, currentCohortChanges]);
+            participants: matchingCohortID ? [...currentCohortChanges.participants] : [...activeCohort.participants],
+        };
+    }, [matchingCohortID, currentCohortChanges, activeCohort]);
+
+    const [localCohort, setLocalCohort] = useState(initialCohortState);
+
+    // Update localCohort when selectedCohort changes (optimized)
+    useEffect(() => {
+        setLocalCohort(initialCohortState);
+    }, [initialCohortState]);
     
-    const handleSave = () => {
+    // Memoized save handler to prevent unnecessary re-renders
+    const handleSave = useCallback(() => {
         handleSaveCohort(localCohort)
         handleSetCurrentCohortChanges({
             ...currentCohortChanges,
             ...localCohort,
         });
-    }
+    }, [localCohort, currentCohortChanges, handleSaveCohort, handleSetCurrentCohortChanges]);
 
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
@@ -139,4 +142,4 @@ const styles = () => ({
 
 });
 
-export default withStyles(styles, { withTheme: true })(CohortDetails);
+export default memo(withStyles(styles, { withTheme: true })(CohortDetails));
