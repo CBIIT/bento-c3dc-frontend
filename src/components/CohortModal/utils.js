@@ -123,15 +123,3 @@ export const objectToJsonDownload = (obj, cohortID) => {
     return JSON.stringify(filteredObj1) !== JSON.stringify(filteredObj2);
   };
 
-  export function debounce(func, delay) {
-    let timeoutId;
-    return function (...args) {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-
-        timeoutId = setTimeout(() => {
-            func(...args); 
-        }, delay);
-    };
-}
