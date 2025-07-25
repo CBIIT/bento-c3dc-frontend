@@ -17,41 +17,40 @@ const ActionButtons = (props) => {
     
     const navigate = useNavigate();
     
-    // Download functions
-    const downloadCohortManifest = async () => {
+    // Download functions (memoized for performance)
+    const downloadCohortManifest = useCallback(async () => {
         const participantPKs = localCohort.participants.map(item => item.participant_pk);
         const { data } = await client.query({
             query: GET_COHORT_MANIFEST_QUERY,
             variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
         });
         arrayToCSVDownload(data['diagnosisOverview'], localCohort.cohortId);
-    };
+    }, [localCohort.participants, localCohort.cohortId]);
 
-    const downloadCohortMetadata = async () => {
+    const downloadCohortMetadata = useCallback(async () => {
         const participantPKs = localCohort.participants.map(item => item.participant_pk);
         const { data } = await client.query({
             query: GET_COHORT_METADATA_QUERY,
             variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
         });
         objectToJsonDownload(data['cohortMetadata'], localCohort.cohortId);
-    };
+    }, [localCohort.participants, localCohort.cohortId]);
     
-    // Navigation functions
-    const generateCCDIHub_url = (cohortId) => {
-        const data = cohortId;
-        const participantIds = data.participants.map(p => p.participant_id).join("|");
-        const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
+    // Navigation functions (memoized for performance)
+    const generateCCDIHub_url = useCallback(() => {
+        const participantIds = localCohort.participants.map(p => p.participant_id).join("|");
+        const dbgapAccessions = [...new Set(localCohort.participants.map(p => p.dbgap_accession))].join("|");
         const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
         const dbgapBase = "&dbgap_accession=";
     
         const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
-        window.open(finalUrl,'_blank')
+        window.open(finalUrl,'_blank');
         return finalUrl;
-    }
+    }, [localCohort.participants]);
     
-    const handleViewAnalysisClick = (cohort)=>{
-        navigate(`/cohortAnalyzer`,{state:{cohort}});
-    }
+    const handleViewAnalysisClick = useCallback(() => {
+        navigate(`/cohortAnalyzer`, {state: {cohort: localCohort}});
+    }, [navigate, localCohort]);
     
     // Tooltip content
     const Gap = () => (
@@ -125,15 +124,11 @@ const ActionButtons = (props) => {
         setShowDownloadDropdown(false);
     }, []);
 
-    const handleViewAnalysisClickWrapper = useCallback(() => {
-        handleViewAnalysisClick(localCohort);
-    }, [localCohort]);
-
     const handleCCDIHubClick = useCallback(() => {
         if (localCohort.participants.length <= 600) {
-            generateCCDIHub_url(localCohort);
+            generateCCDIHub_url();
         }
-    }, [localCohort]);
+    }, [localCohort.participants.length, generateCCDIHub_url]);
 
     return (
         <div className={classes.actionButtonsContainer}>
@@ -180,7 +175,7 @@ const ActionButtons = (props) => {
                 <Button 
                     variant="contained" 
                     className={classes.viewCohortAnalyzerButton} 
-                    onClick={handleViewAnalysisClickWrapper}
+                    onClick={handleViewAnalysisClick}
                 >
                     View Cohort <br/> Analyzer
                 </Button>
