@@ -8,7 +8,7 @@ import ParticipantList from './components/ParticipantList';
 import ActionButtons from './components/ActionButtons';
 
 /**
- * A list of cohorts to select from and manage.
+ * CohortDetails component for displaying and editing cohort information
  */
 
 const CohortDetails = (props) => {
@@ -29,7 +29,7 @@ const CohortDetails = (props) => {
     
     const activeCohort = state[selectedCohort];
 
-    const handleSetCurrentCohortChanges = (localCohort) => {
+    const handleSetCurrentCohortChanges = useCallback((localCohort) => {
         if (!localCohort.cohortId) return;
         setCurrentCohortChanges({
             cohortId: localCohort.cohortId,
@@ -37,10 +37,10 @@ const CohortDetails = (props) => {
             cohortDescription: localCohort.cohortDescription,
             participants: localCohort.participants,
             searchText: localCohort.searchText,
-        })
-    };
+        });
+    }, [setCurrentCohortChanges]);
 
-    const handleSaveCohort = (localCohort) => {
+    const handleSaveCohort = useCallback((localCohort) => {
         if (!localCohort.cohortId) return;
         dispatch(onMutateSingleCohort(
             localCohort.cohortId,
@@ -57,7 +57,7 @@ const CohortDetails = (props) => {
                 showAlert('error', `Failed to update cohort: ${error.message}`);
             }
         ));
-    };
+    }, [dispatch, showAlert, clearCurrentCohortChanges]);
 
     if (!activeCohort) {
         return null;
@@ -87,7 +87,7 @@ const CohortDetails = (props) => {
     
     // Memoized save handler to prevent unnecessary re-renders
     const handleSave = useCallback(() => {
-        handleSaveCohort(localCohort)
+        handleSaveCohort(localCohort);
         handleSetCurrentCohortChanges({
             ...currentCohortChanges,
             ...localCohort,
