@@ -182,6 +182,7 @@ const ActionButtons = (props) => {
                     className={showDownloadDropdown ? classes.downloadButtonOpened : classes.downloadButton}
                     onClick={handleDownloadDropdown}
                     disabled={isDownloadingManifest || isDownloadingMetadata}
+                    aria-label="Download cohort data - select format"
                 >
                     <div className={classes.downloadButtonText}>
                         <span>Download Selected</span>
@@ -221,6 +222,7 @@ const ActionButtons = (props) => {
                     variant="contained" 
                     className={classes.viewCohortAnalyzerButton} 
                     onClick={handleViewAnalysisClick}
+                    aria-label="Navigate to Cohort Analyzer page"
                 >
                     View Cohort <br/> Analyzer
                 </Button>
@@ -238,24 +240,57 @@ const ActionButtons = (props) => {
                     variant="contained"
                     className={localCohort.participants.length > COHORT_SIZE_LIMIT ? classes.exploreButtonFaded : classes.exploreButton}
                     onClick={handleCCDIHubClick}
+                    disabled={localCohort.participants.length > COHORT_SIZE_LIMIT}
+                    aria-label={localCohort.participants.length > COHORT_SIZE_LIMIT ? 
+                        `Explore in CCDI Hub (disabled - cohort size ${localCohort.participants.length} exceeds limit of ${COHORT_SIZE_LIMIT})` : 
+                        'Open cohort in CCDI Hub in new tab'
+                    }
                 >
                     <span style={{textAlign: 'left'}}>
                         EXPLORE <br /> IN CCDI Hub
                     </span>
-                    <img src={Linkout} width={14} height={14} alt="Linkout Icon" />
+                    <img src={Linkout} width={14} height={14} alt="External link icon" />
                 </Button>
             </ToolTip>
         </div>
     );
 };
 
-const styles = () => ({
-    actionButtonsContainer: {
+const styles = () => {
+    // Base button style for common properties
+    const baseButtonStyle = {
+        height: '41px',
+        borderRadius: '5px',
+        boxShadow: 'none',
+        fontFamily: 'Poppins',
+        fontWeight: '600',
+        fontSize: '12px',
+        color: '#FFFFFF',
         display: 'flex',
-        flexDirection: 'row',
-        gap: 10,
-        justifyContent: 'flex-end'
-    },
+        '&:hover': {
+            boxShadow: 'none',
+        },
+    };
+
+    // Standard action button style (137px width)
+    const standardActionButtonStyle = {
+        ...baseButtonStyle,
+        width: '137px',
+        lineHeight: '13px',
+        letterSpacing: '2%',
+        verticalAlign: 'middle',
+        textTransform: 'uppercase',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+    };
+
+    return {
+        actionButtonsContainer: {
+            display: 'flex',
+            flexDirection: 'row',
+            gap: 10,
+            justifyContent: 'flex-end'
+        },
     dropdownSection: {
         position: 'relative',
         '& button': {
@@ -268,14 +303,12 @@ const styles = () => ({
         },
     },
     downloadButton: {
+        ...baseButtonStyle,
         backgroundColor: '#4F5D69',
         border: '1.25px solid #4F5D69',
         width: '200px',
-        borderRadius: '5px',
-        display: 'flex',
         justifyContent: 'space-between',
         lineHeight: '13px !important',
-        boxShadow: 'none',
 
         '&:hover': {
             backgroundColor: '#374149',
@@ -283,6 +316,7 @@ const styles = () => ({
         },
     },
     downloadButtonOpened: {
+        ...baseButtonStyle,
         backgroundColor: '#4F5D69',
         border: '1.25px solid #73A9C7',
         width: '200px',
@@ -290,11 +324,9 @@ const styles = () => ({
         borderTopRightRadius: '5px',
         borderBottomLeftRadius: '0px',
         borderBottomRightRadius: '0px',
-        display: 'flex',
         justifyContent: 'space-between',
         lineHeight: '13px !important',
         zIndex: '1',
-        boxShadow: 'none',
         '&:hover': {
             backgroundColor: '#374149',
             boxShadow: 'none',
@@ -340,77 +372,35 @@ const styles = () => ({
         borderBottom: '1px solid #0C534C',
     },
     viewCohortAnalyzerButton: {
+        ...standardActionButtonStyle,
         backgroundColor: '#003F74',
         border: '1.25px solid #73A9C7',
-        width: '137px',
-        height: '41px',
-        borderRadius: '5px',
-        boxShadow: 'none',
-        fontFamily: 'Poppins',
-        fontWeight: '600',
-        fontSize: '12px',
-        lineHeight: '13px',
-        letterSpacing: '2%',
-        verticalAlign: 'middle',
-        textTransform: 'uppercase',
         textAlign: 'left',
-        color: '#FFFFFF',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
         '&:hover': {
             backgroundColor: '#073F60',
             boxShadow: 'none',
         },
     },
     exploreButton: {
+        ...standardActionButtonStyle,
         backgroundColor: '#044249',
         border: '1.25px solid #4EA1A1',
-        width: '137px',
-        height: '41px',
-        borderRadius: '5px',
-        boxShadow: 'none',
-        fontFamily: 'Poppins',
-        fontWeight: '600',
-        fontSize: '12px',
-        lineHeight: '13px',
-        letterSpacing: '2%',
-        verticalAlign: 'middle',
-        textTransform: 'uppercase',
-        color: '#FFFFFF',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
         '&:hover': {
             backgroundColor: '#1d4d67',
             boxShadow: 'none',
         },
     },
     exploreButtonFaded: {
+        ...standardActionButtonStyle,
         backgroundColor: '#BBC1C3',
         border: '1.25px solid #4EA1A1',
-        width: '137px',
-        height: '41px',
-        borderRadius: '5px',
-        boxShadow: 'none',
-        fontFamily: 'Poppins',
-        fontWeight: '600',
-        fontSize: '12px',
-        lineHeight: '13px',
-        letterSpacing: '2%',
-        verticalAlign: 'middle',
-        textTransform: 'uppercase',
-        color: '#FFFFFF',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-between',
         cursor: 'not-allowed',
-
         '&:hover': {
             backgroundColor: '#BBC1C3',
             boxShadow: 'none',
         },
     },
-});
+    };
+};
 
 export default memo(withStyles(styles, { withTheme: true })(ActionButtons));
