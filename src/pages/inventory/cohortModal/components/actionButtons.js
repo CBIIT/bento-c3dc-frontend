@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, memo } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useContext, memo } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
@@ -8,6 +8,7 @@ import ToolTip from '@bento-core/tool-tip';
 import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../bento/dashboardTabData.js';
 import client from '../../../../utils/graphqlClient.js';
 import { arrayToCSVDownload, objectToJsonDownload } from '../utils.js';
+import { CohortModalContext } from '../CohortModalContext.js';
 
 const ActionButtons = (props) => {
     const { 
@@ -16,41 +17,79 @@ const ActionButtons = (props) => {
     } = props;
     
     const navigate = useNavigate();
+    const { showAlert } = useContext(CohortModalContext);
     
-    // Download functions (memoized for performance)
+    // Loading states
+    const [isDownloadingManifest, setIsDownloadingManifest] = useState(false);
+    const [isDownloadingMetadata, setIsDownloadingMetadata] = useState(false);
+    
+    // Download functions (memoized for performance with error handling)
     const downloadCohortManifest = useCallback(async () => {
-        const participantPKs = localCohort.participants.map(item => item.participant_pk);
-        const { data } = await client.query({
-            query: GET_COHORT_MANIFEST_QUERY,
-            variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
-        });
-        arrayToCSVDownload(data['diagnosisOverview'], localCohort.cohortId);
-    }, [localCohort.participants, localCohort.cohortId]);
+        if (isDownloadingManifest) return; // Prevent multiple simultaneous downloads
+        
+        setIsDownloadingManifest(true);
+        try {
+            const participantPKs = localCohort.participants.map(item => item.participant_pk);
+            const { data } = await client.query({
+                query: GET_COHORT_MANIFEST_QUERY,
+                variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
+            });
+            arrayToCSVDownload(data['diagnosisOverview'], localCohort.cohortId);
+            showAlert('success', 'Manifest CSV downloaded successfully!');
+        } catch (error) {
+            console.error('Error downloading cohort manifest:', error);
+            showAlert('error', 'Failed to download manifest. Please try again.');
+        } finally {
+            setIsDownloadingManifest(false);
+        }
+    }, [localCohort.participants, localCohort.cohortId, isDownloadingManifest, showAlert]);
 
     const downloadCohortMetadata = useCallback(async () => {
-        const participantPKs = localCohort.participants.map(item => item.participant_pk);
-        const { data } = await client.query({
-            query: GET_COHORT_METADATA_QUERY,
-            variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
-        });
-        objectToJsonDownload(data['cohortMetadata'], localCohort.cohortId);
-    }, [localCohort.participants, localCohort.cohortId]);
+        if (isDownloadingMetadata) return; // Prevent multiple simultaneous downloads
+        
+        setIsDownloadingMetadata(true);
+        try {
+            const participantPKs = localCohort.participants.map(item => item.participant_pk);
+            const { data } = await client.query({
+                query: GET_COHORT_METADATA_QUERY,
+                variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
+            });
+            objectToJsonDownload(data['cohortMetadata'], localCohort.cohortId);
+            showAlert('success', 'Metadata JSON downloaded successfully!');
+        } catch (error) {
+            console.error('Error downloading cohort metadata:', error);
+            showAlert('error', 'Failed to download metadata. Please try again.');
+        } finally {
+            setIsDownloadingMetadata(false);
+        }
+    }, [localCohort.participants, localCohort.cohortId, isDownloadingMetadata, showAlert]);
     
-    // Navigation functions (memoized for performance)
+    // Navigation functions (memoized for performance with error handling)
     const generateCCDIHub_url = useCallback(() => {
-        const participantIds = localCohort.participants.map(p => p.participant_id).join("|");
-        const dbgapAccessions = [...new Set(localCohort.participants.map(p => p.dbgap_accession))].join("|");
-        const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
-        const dbgapBase = "&dbgap_accession=";
-    
-        const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
-        window.open(finalUrl,'_blank');
-        return finalUrl;
-    }, [localCohort.participants]);
+        try {
+            const participantIds = localCohort.participants.map(p => p.participant_id).join("|");
+            const dbgapAccessions = [...new Set(localCohort.participants.map(p => p.dbgap_accession))].join("|");
+            const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
+            const dbgapBase = "&dbgap_accession=";
+        
+            const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
+            window.open(finalUrl,'_blank');
+            showAlert('success', 'CCDI Hub opened in new tab!');
+            return finalUrl;
+        } catch (error) {
+            console.error('Error generating CCDI Hub URL:', error);
+            showAlert('error', 'Failed to open CCDI Hub. Please try again.');
+        }
+    }, [localCohort.participants, showAlert]);
     
     const handleViewAnalysisClick = useCallback(() => {
-        navigate(`/cohortAnalyzer`, {state: {cohort: localCohort}});
-    }, [navigate, localCohort]);
+        try {
+            navigate(`/cohortAnalyzer`, {state: {cohort: localCohort}});
+        } catch (error) {
+            console.error('Error navigating to cohort analyzer:', error);
+            showAlert('error', 'Failed to navigate to Cohort Analyzer. Please try again.');
+        }
+    }, [navigate, localCohort, showAlert]);
     
     // Tooltip content
     const Gap = () => (
@@ -137,6 +176,7 @@ const ActionButtons = (props) => {
                     variant="contained"
                     className={showDownloadDropdown ? classes.downloadButtonOpened : classes.downloadButton}
                     onClick={handleDownloadDropdown}
+                    disabled={isDownloadingManifest || isDownloadingMetadata}
                 >
                     <div className={classes.downloadButtonText}>
                         <span>Download Selected</span>
