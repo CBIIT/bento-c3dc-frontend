@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, memo, useRef } from 'react';
 import { withStyles } from '@material-ui/core';
-import SearchIcon from '../../../../../../../../assets/icons/Search_Icon.svg';
+import SearchIcon from '../../../../../../../assets/icons/Search_Icon.svg';
 
 const SearchBar = (props) => {
     const { classes, initialSearchText, onSearchChange, onSearchBlur } = props;

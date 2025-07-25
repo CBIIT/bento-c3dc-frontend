@@ -1,5 +1,5 @@
 import { useContext, useMemo } from 'react';
-import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
+import { CohortStateContext } from '../../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalContext } from '../CohortModalContext';
 import { hasUnsavedChanges as checkUnsavedChanges } from '../utils';
 

@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { withStyles } from '@material-ui/core';
-import TrashCanIconWhite from '../../../../../../assets/icons/Trash_Can_Icon_White.svg';
+import TrashCanIconWhite from '../../../../../assets/icons/Trash_Can_Icon_White.svg';
 
 /**
  * Individual cohort list item component

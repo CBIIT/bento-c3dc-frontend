@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withStyles } from '@material-ui/core';
-import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext.js';
-import { onMutateSingleCohort } from '../../../../../components/CohortSelectorState/store/action.js';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
+import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
 import { CohortModalContext } from '../../CohortModalContext.js';
 import CohortMetadata from './components/CohortMetadata';
 import ParticipantList from './components/ParticipantList';

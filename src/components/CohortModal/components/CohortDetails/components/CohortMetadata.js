@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, m
 import { withStyles } from '@material-ui/core';
 import DEFAULT_CONFIG from '../../../config';
 import { CohortModalContext } from '../../../CohortModalContext';
-import { CohortStateContext } from '../../../../../../components/CohortSelectorState/CohortStateContext';
+import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext';
 
 const CohortMetadata = (props) => {
     const { config, classes } = props;

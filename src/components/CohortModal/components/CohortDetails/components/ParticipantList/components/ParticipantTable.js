@@ -2,9 +2,9 @@ import React, { useState, useEffect, useRef, useContext, useCallback, useMemo, m
 import { withStyles } from '@material-ui/core';
 import { CohortModalContext } from '../../../../../CohortModalContext.js';
 import { deletionTypes } from '../../../../shared/DeleteConfirmationModal';
-import TrashCanIconBlue from '../../../../../../../../assets/icons/Trash_Can_Icon_Blue.svg';
-import TrashCanIconRed from '../../../../../../../../assets/icons/Trash_Can_Icon_Red.svg';
-import SortingIcon from '../../../../../../../../assets/icons/Sorting_Icon.svg';
+import TrashCanIconBlue from '../../../../../../../assets/icons/Trash_Can_Icon_Blue.svg';
+import TrashCanIconRed from '../../../../../../../assets/icons/Trash_Can_Icon_Red.svg';
+import SortingIcon from '../../../../../../../assets/icons/Sorting_Icon.svg';
 
 // Constants
 const SCROLLBAR_WIDTH = '6px';
