@@ -5,9 +5,7 @@ import { deletionTypes } from '../../../../shared/DeleteConfirmationModal';
 import TrashCanIconBlue from '../../../../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import SortingIcon from '../../../../../../../assets/icons/Sorting_Icon.svg';
-
-// Constants
-const SCROLLBAR_WIDTH = '6px';
+import { SCROLLBAR_WIDTH } from '../../../../../../../bento/cohortModalData.js';
 
 const ParticipantTable = (props) => {
     const { 

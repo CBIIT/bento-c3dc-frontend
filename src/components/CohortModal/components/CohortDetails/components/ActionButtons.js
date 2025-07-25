@@ -9,11 +9,7 @@ import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../.
 import client from '../../../../../utils/graphqlClient.js';
 import { arrayToCSVDownload, objectToJsonDownload } from '../../../utils.js';
 import { CohortModalContext } from '../../../CohortModalContext.js';
-
-// Constants
-const COHORT_SIZE_LIMIT = 600;
-const CCDI_HUB_BASE_URL = "https://ccdi.cancer.gov/explore?p_id=";
-const DBGAP_PARAM = "&dbgap_accession=";
+import { COHORT_SIZE_LIMIT, CCDI_HUB_BASE_URL, DBGAP_PARAM, TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
 
 const ActionButtons = (props) => {
     const { 
@@ -99,23 +95,23 @@ const ActionButtons = (props) => {
         <div style={{ height: '10px' }} />
     );
     
-    const viewCohortAnalyzerTooltip = "Clicking on this button will take the user to the Cohort Analyzer page, where the user will see the desired cohort and click to proceed with analysis.";
+    const viewCohortAnalyzerTooltip = TOOLTIP_MESSAGES.viewCohortAnalyzer;
 
     // Memoized complex tooltip to prevent unnecessary re-creation
     const exploreCCDIHubTooltip = useMemo(() => (
         <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
-            Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user&apos;s selected cohort.
+            {TOOLTIP_MESSAGES.exploreCCDIHub.mainText}
             <br/>
             <Gap/>
             <b>If cohort size &le; {COHORT_SIZE_LIMIT}:</b>
             <br/> 
-            Proceed with direct export within C3DC.
+            {TOOLTIP_MESSAGES.exploreCCDIHub.smallCohortText}
             <br/>
             <Gap/>
             <b>If cohort size &gt; {COHORT_SIZE_LIMIT}:</b><br/> 
-            Download the manifest and upload it manually to the&nbsp;
-            <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
-                CCDI Hub 
+            {TOOLTIP_MESSAGES.exploreCCDIHub.largeCohortText}&nbsp;
+            <a style={{zIndex: 10000}} target='_blank' href={TOOLTIP_MESSAGES.exploreCCDIHub.ccdiHubUrl} rel="noreferrer">
+                {TOOLTIP_MESSAGES.exploreCCDIHub.ccdiHubText}
                 <img 
                     src={LinkoutBlue} 
                     width={14} 
@@ -128,11 +124,11 @@ const ActionButtons = (props) => {
                     alt="Linkout Icon" 
                 /> 
             </a>
-            &nbsp;by following these steps:
+            &nbsp;{TOOLTIP_MESSAGES.exploreCCDIHub.followingStepsText}
             <ol>
-                <li> Choose the Explore page from the menu.</li>
-                <li> In the Facets side panel, open the Demographic facet.</li>
-                <li> Click on "Upload Participants Set."</li>
+                {TOOLTIP_MESSAGES.exploreCCDIHub.steps.map((step, index) => (
+                    <li key={index}>{step}</li>
+                ))}
             </ol>
         </p>
     ), []);

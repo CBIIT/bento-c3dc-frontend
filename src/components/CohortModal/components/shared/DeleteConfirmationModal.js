@@ -1,12 +1,8 @@
 import React from 'react';
 import { Modal, withStyles } from '@material-ui/core';
+import { deletionTypes } from '../../../../bento/cohortModalData.js';
 
-export const deletionTypes = {
-    DELETE_ALL_COHORTS: 'delete all cohorts?',
-    DELETE_SINGLE_COHORT: 'delete this cohort?',
-    DELETE_ALL_PARTICIPANTS: 'delete all participants?',
-    CLEAR_UNSAVED_CHANGES: 'leave?'
-};
+export { deletionTypes };
 
 const DeleteConfirmationModal = (props) => {
     const {
