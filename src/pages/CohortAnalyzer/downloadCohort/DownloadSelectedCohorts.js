@@ -1,7 +1,7 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
 import ExpandMoreIcon from '../../../assets/icons/Expand_More_Icon.svg'
-import { arrayToCSVDownload, objectToJsonDownload } from '../../inventory/cohortModal/utils';
+import { arrayToCSVDownload, objectToJsonDownload } from '../../inventory/CohortModal/utils';
 import client from '../../../utils/graphqlClient';
 import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../bento/dashboardTabData';
 

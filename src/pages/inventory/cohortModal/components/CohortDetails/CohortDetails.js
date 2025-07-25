@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { withStyles } from '@material-ui/core';
-import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
-import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
-import { CohortModalContext } from '../CohortModalContext.js';
-import CohortMetadata from './cohortMetadata';
-import ParticipantList from './participantList';
-import ActionButtons from './actionButtons';
+import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext.js';
+import { onMutateSingleCohort } from '../../../../../components/CohortSelectorState/store/action.js';
+import { CohortModalContext } from '../../CohortModalContext.js';
+import CohortMetadata from './components/CohortMetadata';
+import ParticipantList from './components/ParticipantList';
+import ActionButtons from './components/ActionButtons';
 
 /**
  * A list of cohorts to select from and manage.

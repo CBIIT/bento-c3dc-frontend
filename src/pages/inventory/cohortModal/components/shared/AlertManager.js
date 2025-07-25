@@ -1,6 +1,6 @@
 import React, { useEffect, useContext } from 'react';
 import Alert from '@material-ui/lab/Alert';
-import { CohortModalContext } from '../CohortModalContext.js';
+import { CohortModalContext } from '../../CohortModalContext.js';
 
 const AlertManager = ({ classes }) => {
     const { alert, clearAlert } = useContext(CohortModalContext);

@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useState, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
-import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
+import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext.js';
 import {
     onDeleteSingleCohort,
     onDeleteAllCohort,
-} from '../../../../components/CohortSelectorState/store/action.js';
-import { CohortModalContext } from '../CohortModalContext.js';
-import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
-import DEFAULT_CONFIG from '../config';
-import { deletionTypes } from './deleteConfirmationModal';
-import CohortListItem from './CohortListItem';
+} from '../../../../../components/CohortSelectorState/store/action.js';
+import { CohortModalContext } from '../../CohortModalContext.js';
+import TrashCanIconGray from '../../../../../assets/icons/Trash_Can_Icon_Gray.svg';
+import DEFAULT_CONFIG from '../../config';
+import { deletionTypes } from '../shared/DeleteConfirmationModal';
+import CohortListItem from './components/CohortListItem';
 
 /**
  * A list of cohorts to select from and manage.

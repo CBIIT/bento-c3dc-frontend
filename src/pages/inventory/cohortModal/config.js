@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-import cohortList from "./components/cohortList";
+import cohortList from "./components/CohortList/CohortList";
 
 /**
  * Default configuration for Cohort Selector Modal

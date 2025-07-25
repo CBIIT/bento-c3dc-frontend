@@ -1,14 +1,14 @@
 import React, { useState, useRef, useEffect, useCallback, useContext, useMemo, memo } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
-import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
-import Linkout from "../../../../assets/about/Export_Icon_White.svg";
-import LinkoutBlue from "../../../../assets/about/Export_Icon.svg";
+import ExpandMoreIcon from '../../../../../../assets/icons/Expand_More_Icon.svg';
+import Linkout from "../../../../../../assets/about/Export_Icon_White.svg";
+import LinkoutBlue from "../../../../../../assets/about/Export_Icon.svg";
 import ToolTip from '@bento-core/tool-tip';
-import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../bento/dashboardTabData.js';
-import client from '../../../../utils/graphqlClient.js';
-import { arrayToCSVDownload, objectToJsonDownload } from '../utils.js';
-import { CohortModalContext } from '../CohortModalContext.js';
+import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../../../bento/dashboardTabData.js';
+import client from '../../../../../../utils/graphqlClient.js';
+import { arrayToCSVDownload, objectToJsonDownload } from '../../../utils.js';
+import { CohortModalContext } from '../../../CohortModalContext.js';
 
 // Constants
 const COHORT_SIZE_LIMIT = 600;
