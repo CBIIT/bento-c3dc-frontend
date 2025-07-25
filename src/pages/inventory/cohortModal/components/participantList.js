@@ -28,8 +28,15 @@ const ParticipantList = (props) => {
 
     // Helper function to update both local and context state
     const updateCohortState = useCallback((updates) => {
-        const newLocalCohort = { ...localCohort, ...updates };
-        const newCohortChanges = { ...currentCohortChanges, ...localCohort, ...updates };
+        const newLocalCohort = { 
+            ...(localCohort || {}), 
+            ...(updates || {}) 
+        };
+        const newCohortChanges = {
+            ...currentCohortChanges,
+            ...(localCohort || {}),
+            ...(updates || {})
+        };
         
         setLocalCohort(newLocalCohort);
         setCurrentCohortChanges(newCohortChanges);
