@@ -245,7 +245,7 @@ const styles = () => ({
     downloadButtonOpened: {
         backgroundColor: '#4F5D69',
         border: '1.25px solid #73A9C7',
-        width: '189px',
+        width: '200px',
         borderTopLeftRadius: '5px',
         borderTopRightRadius: '5px',
         borderBottomLeftRadius: '0px',
@@ -276,7 +276,7 @@ const styles = () => ({
     },
     dropdownMenu: {
         position: 'absolute',
-        width: '189px',
+        width: '200px',
         backgroundColor: '#EFF2F6',
         border: '1px solid #0C534C',
         borderBottomLeftRadius: '5px',
