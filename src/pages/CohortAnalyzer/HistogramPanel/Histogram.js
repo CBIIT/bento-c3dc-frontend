@@ -12,15 +12,22 @@ import {
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolderImage from '../../../assets/vennDigram/placeHolder.svg';
+import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
 import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg';
 
-const Histogram = () => {
-  const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData();
+const Histogram = ({c1,c2,c3}) => {
+  const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({c1,c2,c3});
   const titles = {
     treatmentType: 'Treatment Type',
-    treatmentOutcome: 'Treatment Outcome',
+    //treatmentOutcome: 'Treatment Outcome',
     sexAtBirth: 'Sex at Birth',
     race: 'Race'
+  };
+  const nullImages = {
+    treatmentType: TreatmentTypePlaceHolder,
+    //treatmentOutcome: 'Treatment Outcome',
+    sexAtBirth: PlaceHolder2,
+    race: PlaceHolder2
   };
   // Custom tooltip componen
   const CustomTooltip = ({ active, payload, label }) => {
@@ -142,7 +149,10 @@ const Histogram = () => {
 
               </HeaderSection>
               <div style={{ margin: 0, width: '100%', display: 'flex', flexDirection: 'row' }}>
-                <RadioGroup>
+             
+             {Array.isArray(data[dataset]) && data[dataset].length > 0 ? (
+              <> 
+                 <RadioGroup>
                   <RadioLabel>
                     <RadioInput
                       type="radio"
@@ -164,7 +174,6 @@ const Histogram = () => {
                     % of Cases
                   </RadioLabel>
                 </RadioGroup>
-             {Array.isArray(data[dataset]) && data[dataset].length > 0 ? (
   <ResponsiveContainer width="80%" height="100%">
     <BarChart
       data={graphData[dataset].slice(0, 4)}
@@ -202,9 +211,10 @@ const Histogram = () => {
       </Bar>
     </BarChart>
   </ResponsiveContainer>
+  </>
 ) : (
   <div style={{ width: '100%', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-    <img src={TreatmentTypePlaceHolder} alt="No data" style={{ maxWidth: '100%', maxHeight: '100%' }} />
+    <img src={nullImages[dataset]} alt="No data" style={{ maxWidth: '100%', maxHeight: '100%' }} />
   </div>
 )}
 

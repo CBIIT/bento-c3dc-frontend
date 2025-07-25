@@ -902,8 +902,14 @@ padding-left: 5px;
                         }
                                 </div>
                         </div>
-                                <Histogram />
-                        
+                        {selectedCohorts.length > 0 && (
+                            <Histogram
+                                c1={selectedCohorts[0] && state && state[selectedCohorts[0]] ? state[selectedCohorts[0]].participants.map((item) => item.participant_id) : []}
+                                c2={selectedCohorts[1] && state && state[selectedCohorts[1]] ? state[selectedCohorts[1]].participants.map((item) => item.participant_id) : []}
+                                c3={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].participants.map((item) => item.participant_id) : []}
+                            />
+                        )}
+
 
                     </div>
                     <div className={classes.cohortCountSection}>

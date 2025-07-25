@@ -1,8 +1,21 @@
 import { set } from "lodash";
 import { useState, useRef, useMemo, useEffect } from "react";
+import { gql } from "@apollo/client";
+import { useApolloClient } from "@apollo/client";
 
-export const useHistogramData = () => {
+export const useHistogramData = ({c1=[],c2=[],c3=[]}) => {
+  const viewTypeApiKeys= {
+    treatmentType: 'treatment_type',
+    //treatmentOutcome: 'treatment_outcome',
+    sexAtBirth: 'sex_at_birth',
+    race: 'race'
+  };
+
   const [viewType, setViewType] = useState({
+    treatmentType: "count",
+    //treatmentOutcome: "count",
+    sexAtBirth: "count",
+    race: "count"
   });
 
   const [expandedChart, setExpandedChart] = useState(null);
@@ -10,6 +23,26 @@ export const useHistogramData = () => {
   const [selectedDatasets, setSelectedDatasets] = useState(["treatmentType"]);
   const chartRef = useRef({});
   const [fetchedData, setFetchedData] = useState({});
+
+   const COHORT_CHARTS_QUERY = gql`
+  query cohortCharts(
+    $c1: [String]
+    $c2: [String]
+    $c3: [String]
+    $charts: [CohortChartConfigChart]
+  ) {
+    cohortCharts(c1: $c1, c2: $c2, c3: $c3, charts: $charts) {
+      property
+      cohorts {
+        cohort
+        participantsByGroup {
+          group
+          subjects
+        }
+      }
+    }
+  }
+`;
 
   // Hardcoded data (fallback)
   const treatmentType = [
@@ -157,27 +190,38 @@ const convertGraphQLResponse = (response) => {
   return chartData;
 };
 
+const client = useApolloClient();
 
+const fetchChartData = async () => {
+  try {
+    const charts = [];
+    Object.keys(viewType).forEach((key) => {
+      charts.push({ property: viewTypeApiKeys[key], type: viewType[key] });
+    });
+    const { data } = await client.query({
+      query: COHORT_CHARTS_QUERY,
+      variables: {
+        c1: c1,
+        c2: c2,
+        c3: c3,
+        charts: [
+          ...charts
+        ]
+      }
+    });
 
-  const fetchChartData = async () => {
-    const response = await mockGraphQLResponse(); // Replace with actual GraphQL call
-    const parsed = convertGraphQLResponse(response.data);
-    Object.keys(parsed).forEach((key, index) => {
-        const camelKey = toCamelCase(key);
-       
-        setViewType({
-          ...viewType,
-          [camelKey]: "count",
-        });    
-        
-      });
+    const parsed = convertGraphQLResponse(data);
     setFetchedData(parsed);
-  };
+  } catch (error) {
+    console.error("Failed to fetch chart data:", error);
+  }
+};
 
   
   useEffect(() => {
     fetchChartData(); // Only runs once to fetch simulated data
-  }, []);
+    console.log(viewType)
+  }, [c1, c2, c3, viewType]);
 
   const toCamelCase = (input) => {
   return input
