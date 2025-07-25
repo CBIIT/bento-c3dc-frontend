@@ -65,12 +65,17 @@ const SearchBar = (props) => {
                     ×
                 </button>
             )}
-            <span className={classes.searchIcon} onClick={handleIconClick}>
+            <button
+                type="button"
+                className={classes.searchIcon}
+                onClick={handleIconClick}
+                aria-label="Focus search input"
+            >
                 <img
                     src={SearchIcon}
                     alt="search icon"
                 />
-            </span>
+            </button>
         </div>
     );
 };
@@ -117,6 +122,9 @@ const styles = () => ({
         justifyContent: 'center',
         alignItems: 'center',
         marginLeft: '1px',
+        background: 'none',
+        border: 'none',
+        padding: 0,
         '&:hover': {
             cursor: 'pointer',
         },
