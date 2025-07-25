@@ -1,9 +1,7 @@
-/* eslint-disable no-unused-vars */
-
-import cohortList from "./components/CohortList/CohortList";
 
 /**
  * Default configuration for Cohort Selector Modal
+ * This serves as both a fallback and template for developers.
  */
 export const DEFAULT_CONFIG_COHORTMODAL = {
     // Misc. Configuration Options

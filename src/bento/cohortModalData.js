@@ -23,6 +23,15 @@ export const SCROLLBAR_WIDTH = '6px';
 // Hook Configuration  
 export const IGNORED_FIELDS = ["cohortId"];
 
+// Download Configuration
+export const DOWNLOAD_MANIFEST_KEYS = {
+    'Participant ID': 'participant_id',
+    'dbGaP Accession': 'dbgap_accession',
+    'Sex at Birth': 'sex_at_birth',
+    'Race': 'race',
+    'Diagnosis': 'diagnosis',
+};
+
 // Tooltip Messages
 export const TOOLTIP_MESSAGES = {
     viewCohortAnalyzer: "Clicking on this button will take the user to the Cohort Analyzer page, where the user will see the desired cohort and click to proceed with analysis.",
