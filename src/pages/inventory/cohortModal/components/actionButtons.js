@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback, useContext, memo } from 'react';
+import React, { useState, useRef, useEffect, useCallback, useContext, useMemo, memo } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
@@ -9,6 +9,11 @@ import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../.
 import client from '../../../../utils/graphqlClient.js';
 import { arrayToCSVDownload, objectToJsonDownload } from '../utils.js';
 import { CohortModalContext } from '../CohortModalContext.js';
+
+// Constants
+const COHORT_SIZE_LIMIT = 600;
+const CCDI_HUB_BASE_URL = "https://ccdi.cancer.gov/explore?p_id=";
+const DBGAP_PARAM = "&dbgap_accession=";
 
 const ActionButtons = (props) => {
     const { 
@@ -69,10 +74,8 @@ const ActionButtons = (props) => {
         try {
             const participantIds = localCohort.participants.map(p => p.participant_id).join("|");
             const dbgapAccessions = [...new Set(localCohort.participants.map(p => p.dbgap_accession))].join("|");
-            const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
-            const dbgapBase = "&dbgap_accession=";
         
-            const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
+            const finalUrl = `${CCDI_HUB_BASE_URL}${participantIds}${DBGAP_PARAM}${dbgapAccessions}`;
             window.open(finalUrl,'_blank');
             showAlert('success', 'CCDI Hub opened in new tab!');
             return finalUrl;
@@ -98,17 +101,18 @@ const ActionButtons = (props) => {
     
     const viewCohortAnalyzerTooltip = "Clicking on this button will take the user to the Cohort Analyzer page, where the user will see the desired cohort and click to proceed with analysis.";
 
-    const exploreCCDIHubTooltip = 
+    // Memoized complex tooltip to prevent unnecessary re-creation
+    const exploreCCDIHubTooltip = useMemo(() => (
         <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
             Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user&apos;s selected cohort.
             <br/>
             <Gap/>
-            <b>If cohort size &le; 600:</b>
+            <b>If cohort size &le; {COHORT_SIZE_LIMIT}:</b>
             <br/> 
             Proceed with direct export within C3DC.
             <br/>
             <Gap/>
-            <b>If cohort size &gt; 600:</b><br/> 
+            <b>If cohort size &gt; {COHORT_SIZE_LIMIT}:</b><br/> 
             Download the manifest and upload it manually to the&nbsp;
             <a style={{zIndex: 10000}} target='_blank' href="https://ccdi.cancer.gov/explore" rel="noreferrer">
                 CCDI Hub 
@@ -130,7 +134,8 @@ const ActionButtons = (props) => {
                 <li> In the Facets side panel, open the Demographic facet.</li>
                 <li> Click on "Upload Participants Set."</li>
             </ol>
-        </p>;
+        </p>
+    ), []);
 
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const dropdownRef = useRef(null);
@@ -164,7 +169,7 @@ const ActionButtons = (props) => {
     }, []);
 
     const handleCCDIHubClick = useCallback(() => {
-        if (localCohort.participants.length <= 600) {
+        if (localCohort.participants.length <= COHORT_SIZE_LIMIT) {
             generateCCDIHub_url();
         }
     }, [localCohort.participants.length, generateCCDIHub_url]);
@@ -231,7 +236,7 @@ const ActionButtons = (props) => {
             >
                 <Button 
                     variant="contained"
-                    className={localCohort.participants.length > 600 ? classes.exploreButtonFaded : classes.exploreButton}
+                    className={localCohort.participants.length > COHORT_SIZE_LIMIT ? classes.exploreButtonFaded : classes.exploreButton}
                     onClick={handleCCDIHubClick}
                 >
                     <span style={{textAlign: 'left'}}>
@@ -388,15 +393,17 @@ const styles = () => ({
         height: '41px',
         borderRadius: '5px',
         boxShadow: 'none',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        padding: '0 12px',
-        fontSize: '12px',
-        fontWeight: '600',
-        lineHeight: '16px',
-        color: '#FFFFFF',
         fontFamily: 'Poppins',
+        fontWeight: '600',
+        fontSize: '12px',
+        lineHeight: '13px',
+        letterSpacing: '2%',
+        verticalAlign: 'middle',
+        textTransform: 'uppercase',
+        color: '#FFFFFF',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
         cursor: 'not-allowed',
 
         '&:hover': {
