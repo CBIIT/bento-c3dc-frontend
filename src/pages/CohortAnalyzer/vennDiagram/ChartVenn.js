@@ -148,7 +148,7 @@ if(data){
             ticks: {
                 font: {
                     family: 'Nunito',
-                    size: 15,
+                    size: data.datasets[0].data.filter(item => item.sets.length > 1).reduce((sum, item) => sum + item.values.length, 0 ) > 999? 10: 15,
                     weight: 0,
                 },
                 color: '#000',
