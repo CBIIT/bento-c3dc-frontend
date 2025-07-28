@@ -1,5 +1,6 @@
 // Default threshold for font size adjustment in the chart. 
 // The value 999 was chosen as a high threshold to ensure font size adjustments are only applied in extreme cases.
+// This threshold was determined based on observed data visualization needs. such as overlapping numbers when numbers are above 999
 export const DEFAULT_FONT_SIZE_THRESHOLD = 999;
 export const nodes = ["participant_pk","diagnosis","treatment_type"];
 
@@ -10,4 +11,4 @@ export const hexToRgba = (hex, alpha = 1) => {
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 };
 
-export const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8"].map(color => hexToRgba(color));
+export const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8"].map((color,index) => hexToRgba(color,index === 2 ? 0.85 : 1));
