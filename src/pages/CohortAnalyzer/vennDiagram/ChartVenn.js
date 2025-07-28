@@ -1,11 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
+import { baseColorArray, nodes, DEFAULT_FONT_SIZE_THRESHOLD, hexToRgba } from "./ChartVennConfig";
 
-// Utility Functions
-const hexToRgba = (hex, alpha = 1) => {
-  const rgb = hex.replace("#", "").match(/.{2}/g).map(x => parseInt(x, 16));
-  return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
-};
 
 const intersectionColors = [
   "#000","#000","#cbdfcc",
@@ -24,16 +20,8 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
   return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
 }
 
-
-
 const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo,containerRef,canvasRef }) => {
   const chartRef = useRef(null);
-
-  const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9"].map(color => hexToRgba(color));;
-  const nodes = ["participant_pk","diagnosis","treatment_type"];
-  // Default threshold for font size adjustment in the chart. 
-  // The value 999 was chosen as a high threshold to ensure font size adjustments are only applied in extreme cases.
-  const DEFAULT_FONT_SIZE_THRESHOLD = 999;
 
   const [baseSets, setBaseSets] = useState([]);
   const [data, setData] = useState(null);
