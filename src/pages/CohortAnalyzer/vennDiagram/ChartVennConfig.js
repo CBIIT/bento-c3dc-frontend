@@ -10,4 +10,4 @@ export const hexToRgba = (hex, alpha = 1) => {
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 };
 
-export const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9"].map(color => hexToRgba(color));
+export const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8"].map(color => hexToRgba(color));

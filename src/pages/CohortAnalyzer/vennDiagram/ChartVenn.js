@@ -122,7 +122,7 @@ const fontSizeX = React.useMemo(() => {
 
   const largeDataCount = data.datasets[0].data
     .filter(item => item.sets.length > 1)
-    .reduce((sum, item) => sum + item.values.length, 0);
+    .reduce((sum, item) => sum + (Array.isArray(item.values) ? item.values.length : 0), 0);
 
   return largeDataCount > DEFAULT_FONT_SIZE_THRESHOLD ? 10 : 15;
 }, [data]);
