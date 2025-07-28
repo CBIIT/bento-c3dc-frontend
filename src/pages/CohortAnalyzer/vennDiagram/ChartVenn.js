@@ -29,7 +29,7 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
 const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo,containerRef,canvasRef }) => {
   const chartRef = useRef(null);
 
-  const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;
+  const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9"].map(color => hexToRgba(color));;
   const nodes = ["participant_pk","diagnosis","treatment_type"];
   // Default threshold for font size adjustment in the chart. 
   // The value 999 was chosen as a high threshold to ensure font size adjustments are only applied in extreme cases.
