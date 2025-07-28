@@ -24,6 +24,14 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
   return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
 }
 
+function getFontSize(dataset) {
+  const largeDataCount = dataset.data
+    .filter(item => item.sets.length > 1)
+    .reduce((sum, item) => sum + item.values.length, 0);
+  return largeDataCount > 999 ? 10 : 15;
+}
+
+
 
 const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo,containerRef,canvasRef }) => {
   const chartRef = useRef(null);
@@ -125,7 +133,17 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
     }
   };
 
-  
+const fontSizeX = React.useMemo(() => {
+  if (!data || !data.datasets || !data.datasets[0] || !data.datasets[0].data) return 15;
+
+  const largeDataCount = data.datasets[0].data
+    .filter(item => item.sets.length > 1)
+    .reduce((sum, item) => sum + item.values.length, 0);
+
+  return largeDataCount > 999 ? 10 : 15;
+}, [data]);
+
+
 let config = {};
 if(data){
    config = {
@@ -148,7 +166,7 @@ if(data){
             ticks: {
                 font: {
                     family: 'Nunito',
-                    size: data.datasets[0].data.filter(item => item.sets.length > 1).reduce((sum, item) => sum + item.values.length, 0 ) > 999? 10: 15,
+                    size: fontSizeX,
                     weight: 0,
                 },
                 color: '#000',
