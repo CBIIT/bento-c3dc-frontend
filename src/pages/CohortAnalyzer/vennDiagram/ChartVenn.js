@@ -24,13 +24,6 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
   return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
 }
 
-function getFontSize(dataset) {
-  const largeDataCount = dataset.data
-    .filter(item => item.sets.length > 1)
-    .reduce((sum, item) => sum + item.values.length, 0);
-  return largeDataCount > 999 ? 10 : 15;
-}
-
 
 
 const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo,containerRef,canvasRef }) => {
@@ -38,6 +31,7 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
 
   const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;
   const nodes = ["participant_pk","diagnosis","treatment_type"];
+  const FONT_SIZE_THRESHOLD = 999;
 
   const [baseSets, setBaseSets] = useState([]);
   const [data, setData] = useState(null);
@@ -140,7 +134,7 @@ const fontSizeX = React.useMemo(() => {
     .filter(item => item.sets.length > 1)
     .reduce((sum, item) => sum + item.values.length, 0);
 
-  return largeDataCount > 999 ? 10 : 15;
+  return largeDataCount > FONT_SIZE_THRESHOLD ? 10 : 15;
 }, [data]);
 
 
