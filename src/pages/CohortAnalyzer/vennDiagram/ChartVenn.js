@@ -31,7 +31,9 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
 
   const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;
   const nodes = ["participant_pk","diagnosis","treatment_type"];
-  const FONT_SIZE_THRESHOLD = 999;
+  // Default threshold for font size adjustment in the chart. 
+  // The value 999 was chosen as a high threshold to ensure font size adjustments are only applied in extreme cases.
+  const DEFAULT_FONT_SIZE_THRESHOLD = 999;
 
   const [baseSets, setBaseSets] = useState([]);
   const [data, setData] = useState(null);
@@ -134,7 +136,7 @@ const fontSizeX = React.useMemo(() => {
     .filter(item => item.sets.length > 1)
     .reduce((sum, item) => sum + item.values.length, 0);
 
-  return largeDataCount > FONT_SIZE_THRESHOLD ? 10 : 15;
+  return largeDataCount > DEFAULT_FONT_SIZE_THRESHOLD ? 10 : 15;
 }, [data]);
 
 
