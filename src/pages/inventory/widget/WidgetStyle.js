@@ -25,7 +25,12 @@ const styles = (theme) => ({
     background: theme.palette.widgetBackground.main,
   },
   widgetTitle: {
-    fontSize: '20px',
+    fontSize: '19px !important',
+    fontWeight: '500',
+    fontFamily: 'Lato',
+    color: theme.palette.text.primary,
+    textAlign: "start",
+    width: "100%",
   },
   contentShift: {
     width: `calc(100vw - ${theme.custom.drawerWidth})`,
@@ -109,7 +114,7 @@ const styles = (theme) => ({
   },
   widgetTotalTooltipIcon: {
     width: '10px',
-    transform: 'translateY(-5px)',
+    transform: 'translateY(-10px) translateX(1px)',
   },
 });
 
