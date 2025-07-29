@@ -108,18 +108,11 @@ const WidgetView = ({ classes, data, theme }) => {
                         style={{
                           display: "flex",
                           width: "100%",
-                          flex:1
+                          flex:1,
+                          alignItems: "center"
                         }}
                       >
                         <Typography
-                          size="md"
-                          weight="normal"
-                          family="Nunito"
-                          style={{
-                            textAlign: "start",
-                            width: "100%",
-                          }}
-                          color="lochmara"
                           className={classes.widgetTitle}
                         >
                           {widget.title}
@@ -140,6 +133,7 @@ const WidgetView = ({ classes, data, theme }) => {
                               <Switch
                                 onChange={() => toggleWidgetType(index)}
                                 checked={widgetTypes[index] === "bar"}
+                                inputProps={{ 'aria-label': `Toggle chart type for ${widget.title}` }}
                               />
                             </div>
                           </ToolTip>

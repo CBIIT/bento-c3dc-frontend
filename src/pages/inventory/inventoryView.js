@@ -8,7 +8,7 @@ import StatsView from '../../components/Stats/StatsView';
 import WidgetView from './widget/WidgetView';
 import TabsView from './tabs/TabsView';
 import QueryBarView from './filterQueryBar/QueryBarView';
-import UserGuidButton from './sideBar/UserGuidButton';
+import UserGuidButton from './sideBar/ExploreUserGuide';
 
 const Inventory = ({
   classes,
