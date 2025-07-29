@@ -1,11 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
+import { baseColorArray, nodes, DEFAULT_FONT_SIZE_THRESHOLD, hexToRgba } from "./ChartVennConfig";
 
-// Utility Functions
-const hexToRgba = (hex, alpha = 1) => {
-  const rgb = hex.replace("#", "").match(/.{2}/g).map(x => parseInt(x, 16));
-  return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
-};
 
 const intersectionColors = [
   "#000","#000","#cbdfcc",
@@ -24,12 +20,8 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
   return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
 }
 
-
 const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo,containerRef,canvasRef }) => {
   const chartRef = useRef(null);
-
-  const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;
-  const nodes = ["participant_pk","diagnosis","treatment_type"];
 
   const [baseSets, setBaseSets] = useState([]);
   const [data, setData] = useState(null);
@@ -125,7 +117,17 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
     }
   };
 
-  
+const fontSizeX = React.useMemo(() => {
+  if (!data || !data.datasets || !data.datasets[0] || !data.datasets[0].data) return 15;
+
+  const largeDataCount = data.datasets[0].data
+    .filter(item => item.sets.length > 1)
+    .reduce((sum, item) => sum + (Array.isArray(item.values) ? item.values.length : 0), 0);
+
+  return largeDataCount > DEFAULT_FONT_SIZE_THRESHOLD ? 10 : 15;
+}, [data]);
+
+
 let config = {};
 if(data){
    config = {
@@ -148,7 +150,7 @@ if(data){
             ticks: {
                 font: {
                     family: 'Nunito',
-                    size: 15,
+                    size: fontSizeX,
                     weight: 0,
                 },
                 color: '#000',
