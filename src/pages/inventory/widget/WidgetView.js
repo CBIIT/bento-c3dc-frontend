@@ -140,6 +140,7 @@ const WidgetView = ({ classes, data, theme }) => {
                               <Switch
                                 onChange={() => toggleWidgetType(index)}
                                 checked={widgetTypes[index] === "bar"}
+                                inputProps={{ 'aria-label': `Toggle chart type for ${widget.title}` }}
                               />
                             </div>
                           </ToolTip>
