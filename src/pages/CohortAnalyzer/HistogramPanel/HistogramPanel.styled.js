@@ -24,6 +24,10 @@ export const ChartTitle = styled.h3`
   color: #333;
   margin-bottom: 20px;
   text-align: left;
+
+  &.empty {
+    opacity: 0.3;
+  }
 `;
 
 export const ChartActionButtons = styled.div`
@@ -93,7 +97,7 @@ export const RadioLabel = styled.label`
 
 export const RadioInput = styled.input`
   margin-right: 8px;
-  accent-color: #00E1E1;
+  accent-color: #3A7587
   width: 16px;
   height: 16px;
 `;

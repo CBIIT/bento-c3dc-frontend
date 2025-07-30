@@ -12,7 +12,7 @@ export const useStyle = makeStyles((theme) => ({
         border: '0.75px solid #679AAA',
         borderRadius: '10px',
         width: '100%',
-        maxWidth: 507,
+        maxWidth: 707,
         height: 523,
         display: 'flex',
 
@@ -347,8 +347,8 @@ export const useStyle = makeStyles((theme) => ({
         '& p': {
             fontFamily: 'Open Sans',
             fontSize: '15px',
-            fontWeight: 400,
-            width: 455,
+            
+            width: "100%",
             lineHeight: '20.8px',
             textAlign: 'left',
             color: 'black',

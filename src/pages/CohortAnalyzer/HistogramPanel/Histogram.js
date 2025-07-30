@@ -18,14 +18,14 @@ import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePla
 const Histogram = ({c1,c2,c3}) => {
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({c1,c2,c3});
   const titles = {
-    treatmentType: 'Treatment Type',
-    //treatmentOutcome: 'Treatment Outcome',
     sexAtBirth: 'Sex at Birth',
-    race: 'Race'
+    race: 'Race',
+    treatmentType: 'Treatment Type',
+    response: 'Treatment Outcome',
   };
   const nullImages = {
     treatmentType: TreatmentTypePlaceHolder,
-    //treatmentOutcome: 'Treatment Outcome',
+    response: TreatmentTypePlaceHolder,
     sexAtBirth: PlaceHolder2,
     race: PlaceHolder2
   };
@@ -54,6 +54,9 @@ const Histogram = ({c1,c2,c3}) => {
     return null;
   };
 
+  const allInputsEmpty = [c1, c2, c3].every(arr => !Array.isArray(arr) || arr.length === 0);
+
+
   const CustomTick = ({ x, y, payload }) => {
     const lines = payload.value.split(' ');
     return (
@@ -75,7 +78,6 @@ const Histogram = ({c1,c2,c3}) => {
     );
   };
   let data = graphData;
-
 
   /*
     if(Object.keys(data).length === 0) {
@@ -109,13 +111,23 @@ const Histogram = ({c1,c2,c3}) => {
         <CenterContainer> 
       {/* Multiple Charts */}
       {selectedDatasets.map((dataset, index) => {
+        let valueA = 0;
+        let valueB = 0;
+        let valueC = 0;
+        if (Array.isArray(graphData[dataset])) {
+          graphData[dataset].map((entry) => {
+            valueA += entry.valueA || 0;
+            valueB += entry.valueB || 0;
+            valueC += entry.valueC || 0;
+          });
+        }
         return (
          
             
             <ChartWrapper id={`chart-${dataset}`} ref={(el) => chartRef.current[dataset] + el}>
               <HeaderSection>
 
-                <ChartTitle>
+                <ChartTitle className={`${Array.isArray(data[dataset]) && data[dataset].length > 0  ? '' : 'empty'}`} >
                   {titles[dataset]}
                   {Array.isArray(graphData[dataset]) && graphData[dataset].length > 5 && (
                        <ToolTip
@@ -138,7 +150,10 @@ const Histogram = ({c1,c2,c3}) => {
                 </ChartTitle>
 
                 <ChartActionButtons>
-                  <span onClick={() => setExpandedChart(dataset)} >
+                  <span onClick={() => {
+                    setExpandedChart(dataset);
+                    setActiveTab(dataset);
+                  }} >
                     <img src={ExpandIcon} alt={"expnad"} style={{ width: '23px', height: '23px' }} />
                   </span>
                   <span onClick={() => downloadChart(dataset)}>
@@ -150,7 +165,7 @@ const Histogram = ({c1,c2,c3}) => {
               </HeaderSection>
               <div style={{ margin: 0, width: '100%', display: 'flex', flexDirection: 'row' }}>
              
-             {Array.isArray(data[dataset]) && data[dataset].length > 0 ? (
+             {Array.isArray(data[dataset]) && data[dataset].length > 0  ? (
               <> 
                  <RadioGroup>
                   <RadioLabel>
@@ -194,28 +209,38 @@ const Histogram = ({c1,c2,c3}) => {
         tick={{ fontSize: 12, fill: '#333' }}
       />
       <Tooltip content={<CustomTooltip />} />
-      <Bar dataKey="valueA" opacity={0.8} maxBarSize={60}>
-        {graphData[dataset].map((entry, entryIndex) => (
-          <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorA} />
-        ))}
-      </Bar>
-      <Bar dataKey="valueB" opacity={0.8} maxBarSize={60}>
-        {graphData[dataset].map((entry, entryIndex) => (
-          <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorB} />
-        ))}
-      </Bar>
-      <Bar dataKey="valueC" opacity={0.8} maxBarSize={60}>
-        {graphData[dataset].map((entry, entryIndex) => (
-          <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorC} />
-        ))}
-      </Bar>
+                      {valueA > 0 && (
+                        <Bar dataKey="valueA" opacity={0.8} maxBarSize={60}>
+                          {graphData[dataset].map((entry, entryIndex) => (
+                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorA} />
+                          ))}
+                        </Bar>
+                      )}
+                      {valueB > 0 && (
+                        <Bar dataKey="valueB" opacity={0.8} maxBarSize={60}>
+                          {graphData[dataset].map((entry, entryIndex) => (
+                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorB} />
+                          ))}
+                        </Bar>
+                      )}
+                      {valueC > 0 && (
+                        <Bar dataKey="valueC" opacity={0.8} maxBarSize={60}>
+                          {graphData[dataset].map((entry, entryIndex) => (
+                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorC} />
+                          ))}
+                        </Bar>)}
     </BarChart>
   </ResponsiveContainer>
   </>
 ) : (
+  allInputsEmpty ? (
   <div style={{ width: '100%', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
     <img src={nullImages[dataset]} alt="No data" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-  </div>
+  </div> ) : (
+    <div style={{ width: '100%', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+      <p>No data available</p>
+    </div>
+  )
 )}
 
 
@@ -234,6 +259,7 @@ const Histogram = ({c1,c2,c3}) => {
           setViewType={setViewType}
           data={data}
           titles={titles}
+          downloadChart={downloadChart}
         />
       )}
 

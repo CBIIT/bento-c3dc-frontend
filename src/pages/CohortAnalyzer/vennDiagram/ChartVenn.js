@@ -216,7 +216,7 @@ useEffect(() => {
     )
   }
   return (
-    <div ref={containerRef}  className="App">
+    <div ref={containerRef} style={{minWidth: '80%'}}  className="App">
    <div style={{minHeight: 45}}>
     </div> 
       <canvas  ref={canvasRef} id="canvas"></canvas>

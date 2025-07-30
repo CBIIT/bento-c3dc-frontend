@@ -6,21 +6,21 @@ import { useApolloClient } from "@apollo/client";
 export const useHistogramData = ({c1=[],c2=[],c3=[]}) => {
   const viewTypeApiKeys= {
     treatmentType: 'treatment_type',
-    //treatmentOutcome: 'treatment_outcome',
+    response: 'response',
     sexAtBirth: 'sex_at_birth',
     race: 'race'
   };
 
   const [viewType, setViewType] = useState({
-    treatmentType: "count",
-    //treatmentOutcome: "count",
-    sexAtBirth: "count",
-    race: "count"
+    treatmentType: "percentage",
+    response: "percentage",
+    sexAtBirth: "percentage",
+    race: "percentage"
   });
 
   const [expandedChart, setExpandedChart] = useState(null);
-  const [activeTab, setActiveTab] = useState("");
-  const [selectedDatasets, setSelectedDatasets] = useState(["treatmentType"]);
+  const [activeTab, setActiveTab] = useState("sexAtBirth");
+  const [selectedDatasets, setSelectedDatasets] = useState(["sexAtBirth","race"]);
   const chartRef = useRef({});
   const [fetchedData, setFetchedData] = useState({});
 
@@ -220,7 +220,6 @@ const fetchChartData = async () => {
   
   useEffect(() => {
     fetchChartData(); // Only runs once to fetch simulated data
-    console.log(viewType)
   }, [c1, c2, c3, viewType]);
 
   const toCamelCase = (input) => {
