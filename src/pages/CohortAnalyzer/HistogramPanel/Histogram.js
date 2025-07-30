@@ -153,7 +153,7 @@ const Histogram = ({c1,c2,c3}) => {
                     setExpandedChart(dataset);
                     setActiveTab(dataset);
                   }} >
-                    <img src={ExpandIcon} alt={"expnad"} style={{ width: '23px', height: '23px' }} />
+                    <img src={ExpandIcon} alt={"expand"} style={{ width: '23px', height: '23px' }} />
                   </span>
                   <span onClick={() => downloadChart(dataset)}>
                     <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
