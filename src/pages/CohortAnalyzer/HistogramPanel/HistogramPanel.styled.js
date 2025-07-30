@@ -97,7 +97,7 @@ export const RadioLabel = styled.label`
 
 export const RadioInput = styled.input`
   margin-right: 8px;
-  accent-color: #3A7587
+  accent-color: #3A7587;
   width: 16px;
   height: 16px;
 `;

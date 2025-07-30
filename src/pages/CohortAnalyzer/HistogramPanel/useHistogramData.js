@@ -1,4 +1,3 @@
-import { set } from "lodash";
 import { useState, useRef, useMemo, useEffect } from "react";
 import { gql } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
@@ -117,25 +116,6 @@ export const useHistogramData = ({c1=[],c2=[],c3=[]}) => {
     }
   };
 
-const mergeGroupedBarData = (key, datasets) => {
-  if (!Array.isArray(datasets) || !Array.isArray(datasets[0])) return [];
-
-  return datasets[0].map((item, index) => ({
-    name: item.name,
-    valueA: viewType[key] === "percentage" ? item.percentage : item.count,
-    valueB: viewType[key] === "percentage"
-      ? (datasets[1] && datasets[1][index] && datasets[1][index].percentage)
-      : (datasets[1] && datasets[1][index] && datasets[1][index].count),
-    valueC: viewType[key] === "percentage"
-      ? (datasets[2] && datasets[2][index] && datasets[2][index].percentage)
-      : (datasets[2] && datasets[2][index] && datasets[2][index].count),
-    colorA: item.color || 'red',
-    colorB: (datasets[1] && datasets[1][index] && datasets[1][index].color) || 'blue',
-    colorC: (datasets[2] && datasets[2][index] && datasets[2][index].color) || 'yellow'
-  }));
-};
-
-
 
 const convertGraphQLResponse = (response) => {
   const chartData = {};
@@ -234,7 +214,7 @@ const transformToGroupedValues = (flatData) => {
   const grouped = {};
 
   flatData.forEach((item) => {
-    const { name, cohort, count, color } = item;
+    const { name, cohort, count } = item;
 
     if (!grouped[name]) {
       grouped[name] = { name };
@@ -286,71 +266,4 @@ const graphData = useMemo(() => {
   };
 };
 
-// Mock GraphQL response to simulate server return
-const mockGraphQLResponse = async () => {
-  return {
-    data: {
-      cohortCharts: [
-        {
-          property: "treatment_type",
-          cohorts: [
-            {
-              cohort: "c1",
-              participantsByGroup: [
-                { group: "Chemotherapy", subjects: 30 },
-                { group: "Radiation", subjects: 20 },
-                { group: "Surgery", subjects: 10 }
-              ]
-            },
-            {
-              cohort: "c2",
-              participantsByGroup: [
-                { group: "Chemotherapy", subjects: 25 },
-                { group: "Radiation", subjects: 15 },
-                { group: "Surgery", subjects: 20 }
-              ]
-            },
-            {
-              cohort: "c3",
-              participantsByGroup: [
-                { group: "Chemotherapy", subjects: 20 },
-                { group: "Radiation", subjects: 25 },
-                { group: "Surgery", subjects: 30 }
-              ]
-            }
-          ],
-        },
-        {
-          property: "treatment_outcome",
-          cohorts: [
-            {
-              cohort: "c1",
-              participantsByGroup: [
-                { group: "Chemotherapy", subjects: 430 },
-                { group: "Radiation", subjects: 120 },
-                { group: "Surgery", subjects: 120 }
-              ]
-            },
-            {
-              cohort: "c2",
-              participantsByGroup: [
-                { group: "Chemotherapy", subjects: 55 },
-                { group: "Radiation", subjects: 16 },
-                { group: "Surgery", subjects: 60 }
-              ]
-            },
-            {
-              cohort: "c3",
-              participantsByGroup: [
-                { group: "Chemotherapy", subjects: 20 },
-                { group: "Radiation", subjects: 25 },
-                { group: "Surgery", subjects: 30 }
-              ]
-            }
-          ]
-        }
-      
-      ],
-    }
-  };
-};
+

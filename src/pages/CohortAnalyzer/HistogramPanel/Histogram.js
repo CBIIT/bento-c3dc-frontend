@@ -11,7 +11,6 @@ import {
   CenterContainer,
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
-import PlaceHolderImage from '../../../assets/vennDigram/placeHolder.svg';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
 import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg';
 
@@ -115,7 +114,7 @@ const Histogram = ({c1,c2,c3}) => {
         let valueB = 0;
         let valueC = 0;
         if (Array.isArray(graphData[dataset])) {
-          graphData[dataset].map((entry) => {
+          graphData[dataset].forEach((entry) => {
             valueA += entry.valueA || 0;
             valueB += entry.valueB || 0;
             valueC += entry.valueC || 0;
@@ -124,7 +123,7 @@ const Histogram = ({c1,c2,c3}) => {
         return (
          
             
-            <ChartWrapper id={`chart-${dataset}`} ref={(el) => chartRef.current[dataset] + el}>
+            <ChartWrapper id={`chart-${dataset}`} ref={(el) => chartRef.current[dataset] = el}>
               <HeaderSection>
 
                 <ChartTitle className={`${Array.isArray(data[dataset]) && data[dataset].length > 0  ? '' : 'empty'}`} >

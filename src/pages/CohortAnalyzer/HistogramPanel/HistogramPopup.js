@@ -6,7 +6,6 @@ import {
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
-import { useHistogramData } from "./useHistogramData";
 
 
 const CustomTooltip = ({ active, payload }) => {
@@ -71,7 +70,7 @@ const ExpandedChartModal = ({
   let valueB = 0;
   let valueC = 0;
   if (Array.isArray(data[activeTab])) {
-    data[activeTab].map((entry) => {
+    data[activeTab].forEach((entry) => {
       valueA += entry.valueA || 0;
       valueB += entry.valueB || 0;
       valueC += entry.valueC || 0;
