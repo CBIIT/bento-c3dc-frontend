@@ -43,24 +43,6 @@ export const useHistogramData = ({c1=[],c2=[],c3=[]}) => {
   }
 `;
 
-  // Hardcoded data (fallback)
-  const treatmentType = [
-    { name: 'Surgical Procedure', count: 450, percentage: 75.0, color: '#4A90E2' },
-    { name: 'Pharmaceutical Therapy', count: 300, percentage: 50.0, color: '#7ED321' },
-    { name: 'Radiation Therapy', count: 180, percentage: 30.0, color: '#F5A623' },
-    { name: 'Chemotherapy', count: 150, percentage: 25.0, color: '#50E3C2' },
-    { name: 'Molecular Beam Radiation', count: 120, percentage: 20.0, color: '#B8E986' },
-    { name: 'Proton Beam Radiation', count: 90, percentage: 15.0, color: '#9013FE' },
-    { name: 'Immunotherapy', count: 60, percentage: 10.0, color: '#FF6B6B' },
-    { name: 'Autologous Stem Cell Tx', count: 30, percentage: 5.0, color: '#4ECDC4' }
-  ];
-
-  const treatmentOutcome = [
-    { name: 'Unknown', count: 280, percentage: 46.7, color: '#4A90E2' },
-    { name: 'Complete Remission', count: 280, percentage: 46.7, color: '#7ED321' },
-    { name: 'Not Reported', count: 280, percentage: 46.7, color: '#F5A623' }
-  ];
-
   const handleDatasetChange = (key) => {
     setSelectedDatasets((prev) =>
       prev.includes(key) ? prev.filter((item) => item !== key) : [...prev, key]
@@ -84,8 +66,9 @@ export const useHistogramData = ({c1=[],c2=[],c3=[]}) => {
       canvas.width = width * scaleFactor;
       canvas.height = height * scaleFactor;
       const ctx = canvas.getContext("2d");
+      const TRANSPARENT_COLOR = "#00000000";
 
-      ctx.fillStyle = "#00000000";
+      ctx.fillStyle = TRANSPARENT_COLOR;
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.scale(scaleFactor, scaleFactor);
 
@@ -261,8 +244,6 @@ const graphData = useMemo(() => {
     chartRef,
     handleDatasetChange,
     downloadChart,
-    treatmentOutcome,
-    treatmentType
   };
 };
 

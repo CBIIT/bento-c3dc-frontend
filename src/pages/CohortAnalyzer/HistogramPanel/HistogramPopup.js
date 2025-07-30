@@ -128,7 +128,7 @@ const ExpandedChartModal = ({
               </RadioLabel>
             </RadioGroup>
            {Array.isArray(data[activeTab]) && data[activeTab].length > 0 ? (
-  <ResponsiveContainer id={`chart-${activeTab}`} width="50%"  height="100%">
+  <ResponsiveContainer id={`chart-${activeTab}`} width="100%"  height="100%">
     <BarChart
       data={data[activeTab]}
       margin={{ top: 20, right: 30, left: 10, bottom: 60 }}

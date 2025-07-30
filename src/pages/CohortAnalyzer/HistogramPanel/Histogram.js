@@ -8,7 +8,7 @@ import questionIcon from "../../../assets/icons/Question_icon_2.svg";
 import {
   HistogramContainer, ChartWrapper, HeaderSection, RadioGroup, RadioInput
   , RadioLabel, ChartActionButtons, ChartTitle,
-  CenterContainer,
+  CenterContainer, DatasetSelectionTitle,
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
@@ -77,6 +77,7 @@ const Histogram = ({c1,c2,c3}) => {
     );
   };
   let data = graphData;
+  const MAX_BARS_DISPLAYED = 4;
 
   /*
     if(Object.keys(data).length === 0) {
@@ -88,8 +89,7 @@ const Histogram = ({c1,c2,c3}) => {
   return (
     <HistogramContainer>
       {/* Dataset Selection */}
-      <p style={{fontSize: 17,fontFamily: 'Poppins'
-      }}>View Venn Diagram in set operations:</p>
+      <DatasetSelectionTitle>View Venn Diagram in set operations:</DatasetSelectionTitle>
       <div style={{ marginBottom: '20px' }}>
         {Object.keys(titles).map((key, index) => (
           <label key={key} style={{ marginRight: '20px', fontFamily: 'Nunito', fontSize: '14px', color: '#666' }}>
@@ -190,7 +190,7 @@ const Histogram = ({c1,c2,c3}) => {
                 </RadioGroup>
   <ResponsiveContainer width="80%" height="100%">
     <BarChart
-      data={graphData[dataset].slice(0, 4)}
+      data={graphData[dataset].slice(0, MAX_BARS_DISPLAYED)}
       margin={{ top: 20, right: 30, left: 10, bottom: 0 }}
     >
       <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />

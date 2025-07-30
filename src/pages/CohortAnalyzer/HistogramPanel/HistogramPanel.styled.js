@@ -17,6 +17,13 @@ export const HistogramContainer = styled.div`
 
 `;
 
+
+export const DatasetSelectionTitle = styled.div`
+  font-family: Poppins; 
+  font-size: 19px;
+`;
+
+
 export const ChartTitle = styled.h3`
   font-family: Poppins; 
   font-size: 19px;
