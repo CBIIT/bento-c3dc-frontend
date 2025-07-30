@@ -258,7 +258,6 @@ const Histogram = ({c1,c2,c3}) => {
           setViewType={setViewType}
           data={data}
           titles={titles}
-          downloadChart={downloadChart}
         />
       )}
 

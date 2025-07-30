@@ -1,7 +1,7 @@
 import { useState, useRef, useMemo, useEffect } from "react";
 import { gql } from "@apollo/client";
 import { useApolloClient } from "@apollo/client";
-
+import { barColors } from "./HistogramPanel.styled";
 export const useHistogramData = ({c1=[],c2=[],c3=[]}) => {
   const viewTypeApiKeys= {
     treatmentType: 'treatment_type',
@@ -42,6 +42,12 @@ export const useHistogramData = ({c1=[],c2=[],c3=[]}) => {
     }
   }
 `;
+
+  // assign colors in a round‐robin
+  const colorPalette = [
+    '#4A90E2', '#7ED321', '#F5A623', '#50E3C2',
+    '#B8E986', '#9013FE', '#FF6B6B', '#4ECDC4'
+  ];
 
   const handleDatasetChange = (key) => {
     setSelectedDatasets((prev) =>
@@ -121,11 +127,6 @@ const convertGraphQLResponse = (response) => {
       }
     });
 
-    // assign colors in a round‐robin
-    const colorPalette = [
-      '#4A90E2','#7ED321','#F5A623','#50E3C2',
-      '#B8E986','#9013FE','#FF6B6B','#4ECDC4'
-    ];
     const groupColors = {};
     Array.from(groupSet).forEach((group, i) => {
       groupColors[group] = colorPalette[i % colorPalette.length];
@@ -205,13 +206,13 @@ const transformToGroupedValues = (flatData) => {
 
     if (cohort === "c1") {
       grouped[name].valueA = count;
-      grouped[name].colorA = '#FCF1CC';
+      grouped[name].colorA = barColors.colorA;
     } else if (cohort === "c2") {
       grouped[name].valueB = count;
-      grouped[name].colorB = '#A4E9CB';
+      grouped[name].colorB = barColors.colorB;
     } else if (cohort === "c3") {
       grouped[name].valueC = count;
-      grouped[name].colorC = '#A2CCE8';
+      grouped[name].colorC = barColors.colorC;
     }
   });
 
@@ -244,6 +245,7 @@ const graphData = useMemo(() => {
     chartRef,
     handleDatasetChange,
     downloadChart,
+    barColors
   };
 };
 

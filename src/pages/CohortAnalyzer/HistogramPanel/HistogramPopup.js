@@ -2,7 +2,7 @@ import React from "react";
 import {
   RadioGroup, RadioInput
   , RadioLabel, ModalChartWrapper, ModalContent
-  , ModalOverlay, CloseButton, Tab, TabContainer
+  , ModalOverlay, CloseButton, Tab, TabContainer,
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
@@ -149,14 +149,14 @@ const ExpandedChartModal = ({
       />
       <Tooltip content={<CustomTooltip />} />
       {valueA>0 &&
-      <Bar dataKey="valueA" name="Dataset 1" fill="#FCF1CC" opacity={0.8} maxBarSize={60} />
+      <Bar dataKey="valueA" name="Dataset 1" fill={"#FCF1CC"} opacity={0.8} maxBarSize={60} />
 
       }
       {valueB>0 &&
-      <Bar dataKey="valueB" name="Dataset 2" fill="#A4E9CB" opacity={0.8} maxBarSize={60} />
+      <Bar dataKey="valueB" name="Dataset 2" fill={"#A4E9CB"} opacity={0.8} maxBarSize={60} />
       }
       {valueC>0 &&
-      <Bar dataKey="valueC" name="Dataset 3" fill="#A2CCE8" opacity={0.8} maxBarSize={60} />
+      <Bar dataKey="valueC" name="Dataset 3" fill={"#A2CCE8"} opacity={0.8} maxBarSize={60} />
       }
     </BarChart>
   </ResponsiveContainer>

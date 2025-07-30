@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const barColors = {
+  colorA: '#FCF1CC',
+  colorB: '#A4E9CB',
+  colorC: '#A2CCE8'
+};
+
 export const HistogramContainer = styled.div`
   background: white;
   border: 1px solid #e0e0e0;
