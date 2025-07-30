@@ -11,13 +11,13 @@ export const HistogramContainer = styled.div`
   border: 1px solid #679AAA;
   border-radius: 8px;
   padding: 20px;
-  margin: 20px 0;
+  margin: 20px 0 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   min-width: 50%;
   max-width: 50%;
   margin-left: 10px;
-
-
+  min-height: 682px;
+  height: auto;
   @media (max-width: 1660px) {
     max-width: 100%;
     
@@ -83,7 +83,7 @@ export const ChartWrapper = styled.div`
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
     @media (min-width: 1660px) {
-    width: 90%;
+    width: 100%;
     }
 `;
 

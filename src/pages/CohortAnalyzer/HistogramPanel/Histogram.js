@@ -77,15 +77,8 @@ const Histogram = ({c1,c2,c3}) => {
     );
   };
   let data = graphData;
-  const MAX_BARS_DISPLAYED = 4;
+  const MAX_BARS_DISPLAYED = 5;
 
-  /*
-    if(Object.keys(data).length === 0) {
-      return (
-        <img src={PlaceHolderImage} alt="Placeholder" style={{ width: '100%', height: '100%' }} />
-      )
-  }
-*/
   return (
     <HistogramContainer>
       {/* Dataset Selection */}
@@ -134,7 +127,7 @@ const Histogram = ({c1,c2,c3}) => {
                                         border={'1px solid #598ac5'}
                                         arrowBorder={'1px solid #598AC5'}
                                         title={<div>
-                                            {"you should expand to see the full item"}
+                                            {"You can expand to see the full item"}
                                         </div>}
                                         placement="top-end"
                                         arrow
