@@ -8,17 +8,19 @@ export const barColors = {
 
 export const HistogramContainer = styled.div`
   background: white;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #679AAA;
   border-radius: 8px;
   padding: 20px;
   margin: 20px 0;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  min-width: 60%;
-  max-width: 70%;
+  min-width: 50%;
+  max-width: 50%;
   margin-left: 10px;
 
-  @media (max-width: 1920px) {
+
+  @media (max-width: 1660px) {
     max-width: 100%;
+    
   }
 
 `;
@@ -59,6 +61,10 @@ justify-content: center;
 width: 100%;
 align-items: center;
 align-content: center;
+  @media (min-width: 1660px) {
+  justify-content: flex-start;
+  align-items: flex-start;
+    }
 `;
 
 export const ChartWrapper = styled.div`
@@ -76,6 +82,9 @@ export const ChartWrapper = styled.div`
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
+    @media (min-width: 1660px) {
+    width: 90%;
+    }
 `;
 
 export const HeaderSection = styled.div`

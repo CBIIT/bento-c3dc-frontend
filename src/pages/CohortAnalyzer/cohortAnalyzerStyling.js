@@ -13,7 +13,7 @@ export const useStyle = makeStyles((theme) => ({
         borderRadius: '10px',
         width: '100%',
         maxWidth: 707,
-        height: 523,
+        minHeight: '84%',
         display: 'flex',
 
         flexDirection: 'column',

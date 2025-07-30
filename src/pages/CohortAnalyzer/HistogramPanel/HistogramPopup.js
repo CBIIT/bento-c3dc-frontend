@@ -148,15 +148,15 @@ const ExpandedChartModal = ({
         tick={{ fontSize: 14, fill: '#333' }}
       />
       <Tooltip content={<CustomTooltip />} />
-      {valueA>0 &&
-      <Bar dataKey="valueA" name="Dataset 1" fill={"#FCF1CC"} opacity={0.8} maxBarSize={60} />
+       {valueA>0 &&
+      <Bar dataKey="valueA" name="Dataset 1" fill={"#FCF1CC"} opacity={0.8} maxBarSize={60} barSize={valueC > 0 ? undefined : 40} />
 
       }
       {valueB>0 &&
-      <Bar dataKey="valueB" name="Dataset 2" fill={"#A4E9CB"} opacity={0.8} maxBarSize={60} />
+      <Bar dataKey="valueB" name="Dataset 2" fill={"#A4E9CB"} opacity={0.8} maxBarSize={60} barSize={valueC > 0 ? undefined : 40} />
       }
       {valueC>0 &&
-      <Bar dataKey="valueC" name="Dataset 3" fill={"#A2CCE8"} opacity={0.8} maxBarSize={60} />
+      <Bar dataKey="valueC" name="Dataset 3" fill={"#A2CCE8"} opacity={0.8} maxBarSize={60} barSize={40} />
       }
     </BarChart>
   </ResponsiveContainer>
