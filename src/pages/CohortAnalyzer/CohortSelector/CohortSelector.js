@@ -55,7 +55,7 @@ export const CohortSelector = () => {
                 <div style={{ display: 'flex', margin: 0, alignItems: 'center', cursor: 'pointer' }}>
                     <img onClick={() => {
                         resetSelection(setSelectedCohorts, setNodeIndex);
-                    }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} />
+                    }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} role="button" />
                     <p style={{ fontFamily: 'Nunito', fontSize: '11px', color: sortType === 'alphabet' ? '#646464' : '#646464' }} onClick={() => {
                         sortBy("alphabet", cohortList, setCohortList, state);
                         setSortType("alphabet");
@@ -102,7 +102,7 @@ export const CohortSelector = () => {
                                                     color: '#000'
                                                 }} > {cohortName} </span>
                                         </div>
-                                        <img alt={"Trashcan"} style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={11} height={12} />
+                                        <img alt={"Trashcan"} role="button" style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={11} height={12} />
                                     </div>
                                 </div>
                             </div>
