@@ -62,7 +62,7 @@ export const CohortSelector = () => {
                     }}> Sort Alphabetically </p>
                 </div>
                 <div onClick={() => {
-                    sortBy("", cohortList, setCohortList, state);
+                    sortBy("count", cohortList, setCohortList, state);
                     setSortType("count");
                 }} className={classes.sortCount} style={{ fontFamily: 'Nunito', color: sortType === '#646464' ? 'lightgray' : '#646464' }}>
                     <p style={{ fontSize: 11 }}>Sort by Count</p>

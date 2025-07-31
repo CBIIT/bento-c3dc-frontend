@@ -45,12 +45,11 @@ import { useCohortAnalyzer } from "./CohortAnalyzerContext";
 
 export const CohortAnalyzer = () => {
     //context
-    const { deleteInfo, setDeleteInfo, nodeIndex, setNodeIndex, cohortList, setCohortList, handleCheckbox, } = useCohortAnalyzer();
+    //const { deleteInfo, setDeleteInfo, nodeIndex, setNodeIndex, cohortList, setCohortList, handleCheckbox, } = useCohortAnalyzer();
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
     const classes = useStyle();
     const { state, dispatch } = useContext(CohortStateContext);
-    const [selectedCohorts, setSelectedCohorts] = useState([]);
     const [queryVariable, setQueryVariable] = useState({});
     const [rowData, setRowData] = useState([]);
     const [refershInit] = useState(false);
@@ -68,6 +67,9 @@ export const CohortAnalyzer = () => {
     const { CohortModal } = CohortModalGenerator();
     const { Notification } = useGlobal();
     const navigate = useNavigate();
+
+     const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, setNodeIndex, cohortList, setCohortList, handleCheckbox } = useCohortAnalyzer();
+    
 
     const handleUserRedirect = () => {
         // NOTE: If needed to show in only Autocomplete of Localfind.
