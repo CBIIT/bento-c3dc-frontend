@@ -1,15 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
+import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
+import { CohortModalContext } from '../CohortModalContext.js';
+import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../bento/dashboardTabData.js';
+import client from '../../../../utils/graphqlClient.js';
+import { arrayToCSVDownload, objectToJsonDownload } from '../utils.js';
+import CohortMetadata from './cohortMetadata';
 import DEFAULT_CONFIG from '../config';
-import { debounce } from '../utils';
 //import EditIcon from '../../../../assets/icons/Edit_Icon.svg';
 import SearchIcon from '../../../../assets/icons/Search_Icon.svg';
 import TrashCanIconBlue from '../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import ExpandMoreIcon from '../../../../assets/icons/Expand_More_Icon.svg';
 import SortingIcon from '../../../../assets/icons/Sorting_Icon.svg';
-import DeleteConfirmationModal from './deleteConfirmationModal';
 import Linkout from "../../../../assets/about/Export_Icon_White.svg";
 import LinkoutBlue from "../../../../assets/about/Export_Icon.svg";
 
@@ -24,45 +29,108 @@ const CohortDetails = (props) => {
     const {
         classes,
         config,
-        activeCohort,
-        temporaryCohort,
         closeModal,
-        handleSaveCohort,
-        handleSetCurrentCohortChanges,
-        downloadCohortManifest,
-        downloadCohortMetadata,
-        deleteConfirmationClasses,
-        tooltipOpen
     } = props;
+
+    const { state, dispatch } = useContext(CohortStateContext);
+    const { 
+        selectedCohort, 
+        currentCohortChanges, 
+        setCurrentCohortChanges, 
+        showAlert, 
+        clearCurrentCohortChanges,
+        setShowDeleteConfirmation,
+        setDeleteModalProps
+    } = useContext(CohortModalContext);
+    
+    const activeCohort = state[selectedCohort];
+
+    const handleSetCurrentCohortChanges = (localCohort) => {
+        if (!localCohort.cohortId) return;
+        setCurrentCohortChanges({
+            cohortId: localCohort.cohortId,
+            cohortName: localCohort.cohortName,
+            cohortDescription: localCohort.cohortDescription,
+            participants: localCohort.participants,
+            searchText: localCohort.searchText,
+        })
+    };
+    
+    // Find the selected cohort (activeCohort should match one in state)
+    const selectedCohortId = activeCohort && activeCohort.cohortId;
+
+    const downloadCohortManifest = async () => {
+        const participantPKs = activeCohort.participants.map(item => item.participant_pk);
+        const { data } = await client.query({
+            query: GET_COHORT_MANIFEST_QUERY,
+            variables: { "participant_pk": participantPKs, "first": activeCohort.participants.length },
+        });
+        arrayToCSVDownload(data['diagnosisOverview'], selectedCohortId);
+    };
+
+    const downloadCohortMetadata = async () => {
+        const participantPKs = activeCohort.participants.map(item => item.participant_pk);
+        const { data } = await client.query({
+            query: GET_COHORT_METADATA_QUERY,
+            variables: { "participant_pk": participantPKs, "first": activeCohort.participants.length },
+        });
+        objectToJsonDownload(data['cohortMetadata'], selectedCohortId);
+    };
+
+    const handleSaveCohort = (localCohort) => {
+        if (!localCohort.cohortId) return;
+        dispatch(onMutateSingleCohort(
+            localCohort.cohortId,
+            {
+                cohortName: localCohort.cohortName,
+                cohortDescription: localCohort.cohortDescription,
+                participants: localCohort.participants
+            },
+            () => {
+                showAlert('success', 'Cohort updated successfully!');
+                clearCurrentCohortChanges();        
+            },
+            (error) => {
+                showAlert('error', `Failed to update cohort: ${error.message}`);
+            }
+        ));
+    };
 
     if (!activeCohort) {
         return null;
     }
 
-    let matchingCohortID = temporaryCohort && temporaryCohort.cohortId === activeCohort.cohortId;
+    let matchingCohortID = currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
 
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
-    const [searchText, setSearchText] = useState(matchingCohortID && temporaryCohort['searchText'] ? temporaryCohort['searchText'] : '');
+    const [searchText, setSearchText] = useState(matchingCohortID && currentCohortChanges['searchText'] ? currentCohortChanges['searchText'] : '');
 
     const [localCohort, setLocalCohort] = useState({
-        cohortId: matchingCohortID ? temporaryCohort.cohortId : activeCohort.cohortId,
-        cohortName: matchingCohortID ? temporaryCohort.cohortName : activeCohort.cohortName,
-        cohortDescription: matchingCohortID ? temporaryCohort.cohortDescription : activeCohort.cohortDescription,
-        participants: matchingCohortID ? JSON.parse(JSON.stringify(temporaryCohort.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
+        cohortId: matchingCohortID ? currentCohortChanges.cohortId : activeCohort.cohortId,
+        cohortName: matchingCohortID ? currentCohortChanges.cohortName : activeCohort.cohortName,
+        cohortDescription: matchingCohortID ? currentCohortChanges.cohortDescription : activeCohort.cohortDescription,
+        participants: matchingCohortID ? JSON.parse(JSON.stringify(currentCohortChanges.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
     });
-    const [isEditingName, setIsEditingName] = useState(false);
-    const [isEditingDescription, setIsEditingDescription] = useState(false);
+
+    // Update localCohort when selectedCohort changes
+    useEffect(() => {
+        const matchingCohortID = currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId;
+        setLocalCohort({
+            cohortId: matchingCohortID ? currentCohortChanges.cohortId : activeCohort.cohortId,
+            cohortName: matchingCohortID ? currentCohortChanges.cohortName : activeCohort.cohortName,
+            cohortDescription: matchingCohortID ? currentCohortChanges.cohortDescription : activeCohort.cohortDescription,
+            participants: matchingCohortID ? JSON.parse(JSON.stringify(currentCohortChanges.participants)) : JSON.parse(JSON.stringify(activeCohort.participants)),
+        });
+    }, [selectedCohort, activeCohort, currentCohortChanges]);
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const [isScrollbarActive, setIsScrollbarActive] = useState(false);
 
     const scrollContainerRef = useRef(null);
-    const descriptionRef = useRef(null);
     const dropdownRef = useRef(null);
 
     const navigate = useNavigate();
 
     const generateCCDIHub_url = (cohortId) => {
-        tooltipOpen.current = false;
         const data = cohortId;
         const participantIds = data.participants.map(p => p.participant_id).join("|");
         const dbgapAccessions = [...new Set(data.participants.map(p => p.dbgap_accession))].join("|");
@@ -106,13 +174,6 @@ const CohortDetails = (props) => {
         };
     }, [showDownloadDropdown]);
 
-    useEffect(() => {
-        if (isEditingDescription && descriptionRef.current) {
-            const textarea = descriptionRef.current;
-            descriptionRef.current.focus();
-            textarea.selectionStart = textarea.selectionEnd = textarea.value.length;
-        }
-    }, [isEditingDescription]);
 
     const handleClickOutside = (event) => {
         if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -120,18 +181,11 @@ const CohortDetails = (props) => {
         }
     };
 
-    const handleEditName = () => {
-        setIsEditingName(true);
-    };
-
-    const handleEditDescription = () => {
-        setIsEditingDescription(true);
-    };
     
     const handleSave = () => {
         handleSaveCohort(localCohort)
         handleSetCurrentCohortChanges({
-            ...temporaryCohort,
+            ...currentCohortChanges,
             ...localCohort,
         });
     }
@@ -140,26 +194,6 @@ const CohortDetails = (props) => {
         navigate(`/cohortAnalyzer`,{state:{cohort}});
     }
 
-    const debouncedSave = useRef(
-        debounce((e) => {
-            setIsEditingName(false);
-            handleSetCurrentCohortChanges({
-                ...temporaryCohort,
-                ...localCohort,
-                [e.target.name]: e.target.value,
-            });
-        }, 100) // Adjust debounce delay
-    ).current;
-
-    const handleSaveName = (e) => {
-        setIsEditingName(false);
-        debouncedSave(e);
-    };
-
-    const handleSaveDescription = (e) => {
-        setIsEditingDescription(false);
-        debouncedSave(e);
-    };
 
     const Gap = () => (
         <div style={{ height: '10px' }} />
@@ -167,7 +201,7 @@ const CohortDetails = (props) => {
 
     const handleSetSearch = (e) => {
         handleSetCurrentCohortChanges({
-            ...temporaryCohort,
+            ...currentCohortChanges,
             ...localCohort,
             searchText: e.target.value,
         });
@@ -177,18 +211,7 @@ const CohortDetails = (props) => {
         setShowDownloadDropdown(!showDownloadDropdown);
     };
 
-    const handleTextChange = (e) => {
-        setLocalCohort({
-            ...localCohort,
-            [e.target.name]: e.target.value,
-        });
-    };
 
-    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-    const [deleteModalProps, setDeleteModalProps] = useState({
-        handleDelete: () => { },
-        deletionType: "",
-    });
 
     const handleSort = (column) => {
         if (selectedColumn[0] === column) {
@@ -204,7 +227,7 @@ const CohortDetails = (props) => {
             participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
         });
         handleSetCurrentCohortChanges({
-            ...temporaryCohort,
+            ...currentCohortChanges,
             ...localCohort,
             participants: localCohort.participants.filter(participant => participant.participant_pk !== participant_pk),
         });
@@ -216,7 +239,7 @@ const CohortDetails = (props) => {
             participants: [],
         });
         handleSetCurrentCohortChanges({
-            ...temporaryCohort,
+            ...currentCohortChanges,
             ...localCohort,
             participants: [],
         });
@@ -244,17 +267,6 @@ const CohortDetails = (props) => {
         participant.participant_id.includes(searchText)
     ) : localCohort.participants;
 
-    const datePrefix = config && config.datePrefix && typeof config.datePrefix === 'string'
-        ? config.datePrefix
-        : DEFAULT_CONFIG.config.cohortDetails.datePrefix;
-
-    /*const cohortHeaderLabel = config && config.cohortHeaderLabel && typeof config.cohortHeaderLabel === 'string'
-        ? config.cohortHeaderLabel
-        : DEFAULT_CONFIG.config.cohortDetails.cohortHeaderLabel;*/
-
-    const cohortCountsLabel = config && config.cohortCountsLabel && typeof config.cohortCountsLabel === 'string'
-        ? config.cohortCountsLabel
-        : DEFAULT_CONFIG.config.cohortDetails.cohortCountsLabel;
 
     const viewCohortAnalyzerTooltip = "Clicking on this button will take the user to the Cohort Analyzer page, where the user will see the desired cohort and click to proceed with analysis.";
 
@@ -292,119 +304,24 @@ const CohortDetails = (props) => {
             </ol>
         </p>;
 
+    const datePrefix = (config && config.datePrefix) || DEFAULT_CONFIG.config.cohortDetails.datePrefix;
+
     return (
         <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
-            <DeleteConfirmationModal
-                classes={deleteConfirmationClasses}
-                open={showDeleteConfirmation}
-                setOpen={setShowDeleteConfirmation}
-                handleDelete={deleteModalProps.handleDelete}
-                deletionType={deleteModalProps.deletionType}
-            />
             <div className={classes.cohortDetailsSection}>
-                <div className={classes.cohortHeading}>
-                    <div className={ isEditingName ? classes.editingCohortTitle: classes.cohortTitle }>
-                        {isEditingName ? (
-                            <input
-                                className={classes.editingCohortName}
-                                type="text"
-                                name="cohortName"
-                                value={localCohort['cohortName']}
-                                onBlur={(e) => handleSaveName(e)}
-                                onChange={(e) => handleTextChange(e)}
-                                maxLength={20}
-                                onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        e.preventDefault();
-                                        handleSaveName(e); 
-                                    }
-                                }}
-                                autoFocus
-                            />
-                        ) : (
-                            <>
-                            <span
-                                onClick={(e) => handleEditName(true)}
-                                className={classes.cohortName}
-                            >
-                                {localCohort['cohortName']}
-                            </span>
-                            {/*
-                            <ToolTip title="Edit Cohort ID" placement="top-end" arrow>
-                            <img
-                                src={EditIcon}
-                                alt="edit cohort name icon"
-                                className={classes.editIcon}
-                                onClick={handleEditName}
-                            />
-                            </ToolTip>
-                            */}
-                            </>
-                        )}
-                    </div>
-                    <span className={classes.cohortItemCounts}>
-                        {cohortCountsLabel} ({localCohort.participants.length})
-                    </span>
-                </div>
-                <div className={classes.cohortDescription}>
-                    {isEditingDescription ? (
-                        <textarea
-                            ref={descriptionRef}
-                            className={classes.editingCohortDescription}
-                            value={localCohort['cohortDescription']}
-                            onBlur={(e) => handleSaveDescription(e)}
-                            name="cohortDescription"
-                            onChange={(e) => handleTextChange(e)}
-                            rows={4}
-                            maxLength={250}
-                            placeholder="Enter cohort description..."
-                            autoFocus
-                        />
-                        
-                    ) : (
-                        <>
-                        <textarea
-                            className={classes.cohortDescriptionBox}
-                            value={localCohort['cohortDescription']}
-                            name="cohortDescription"
-                            onFocus={(e) => handleEditDescription(true)}
-                            rows={4}
-                            maxLength={250}
-                            placeholder="Enter cohort description..."
-                            readonly="true"
-                            
-                        />
-                        {/*
-                        <ToolTip title="Edit Cohort description" placement="top-end" arrow>
-                        <img
-                            src={EditIcon}
-                            alt="edit cohort description icon"
-                            className={classes.editIcon}
-                            onClick={handleEditDescription}
-                            />
-                        </ToolTip>
-                        {*
-                        <span
-                            className={classes.cohortDescriptionBox}
-                            >
-                            {localCohort['cohortDescription']}
-                        </span>
-                    */}
-                        </>
-                    )}
-                    
-                </div>
+                <CohortMetadata
+                    config={config}
+                />
                 <div className={classes.participantViewer}>
                     <div className={classes.participantSearchBarSection}>
-                        <lable htmlFor="participantSearch" > </lable> 
                         <input
-                            id="participantSearch"
                             type="text"
                             placeholder="Search Participant ID here"
                             className={classes.participantSearchBar}
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
                             onBlur={(e) => handleSetSearch(e)}
+                            aria-label="Search participants by ID"
                         />
                         <span className={classes.searchIcon}>
                             <img
@@ -485,9 +402,9 @@ const CohortDetails = (props) => {
                         </Button>
 
                     </div>
-                    <span className={classes.cohortLastUpdated}>
+                    <div className={classes.cohortLastUpdated}>
                         {datePrefix} {(new Date(activeCohort.lastUpdated)).toLocaleDateString('en-US')}
-                    </span>
+                    </div>
                 </div>
                 
             </div>
@@ -586,130 +503,6 @@ const styles = () => ({
         borderRadius: '10px',
     },
 
-    cohortHeading: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: '17px 23px 0px 23px',
-    },
-    cohortTitle: {
-        fontFamily: 'Poppins',
-        fontSize: '18px',
-        fontWeight: '500',
-        lineHeight: '20px',
-        letterspacing: '-0.5%',
-        color: '#3A555E',
-        display: 'flex',
-        alignItems: 'center',
-        gap: '10px',
-        height: '29px',
-        paddingLeft: '10px',
-        border: '.5px solid #8B98AF',
-        borderRadius: '5px',
-        width: '250px',
-    },
-    cohortName: {
-        width: '250px',
-    },
-    editingCohortTitle: {
-        fontFamily: 'Poppins',
-        fontSize: '18px',
-        fontWeight: '500',
-        lineHeight: '20px',
-        letterspacing: '-0.5%',
-        color: '#3A555E',
-        height: '29px',
-        margin: '0px',
-        outline: 'none',
-        padding: '0px 10px 0px 10px',
-        boxSize: 'border-box',
-        border: '2px solid #00CBD2',
-        borderRadius: '5px',
-        display: 'flex',
-        alignItems: 'center',
-        width: '250px',
-    },
-    editingCohortName: {
-        fontSize: 'inherit',
-        fontWeight: 'inherit',
-        fontFamily: 'inherit',
-        lineHeight: 'inherit',
-        letterspacing: 'inherit',
-        color: '#3A555E',
-        width: '100%',
-        margin: '0px',
-        outline: 'none',
-        '&:focus-within': {
-            padding: '0px',
-            margin: '0px',
-        },
-        boxSizing: 'border-box',
-        border: 'none',
-    },
-    editIcon: {
-        height: '13px',
-        //paddingLeft: '8px',
-        '&:hover': {
-            cursor: 'pointer',
-        },
-        border: '1px solid #D0D0D0',
-        borderRadius: '2px',
-    },
-    cohortItemCounts: {
-        fontFamily: 'Poppins',
-        fontSize: '11px',
-        fontWeight: '600',
-        lineHeight: '26px',
-        color: '#385C66',
-        flex: '0 0 130px',
-        whiteSpace: 'nowrap'
-    },
-    cohortDescription: {
-        fontFamily: 'Open Sans',
-        fontSize: '13px',
-        fontWeight: '400',
-        lineHeight: '18px',
-        maxHeight: '100px',
-        color: '#343434',
-        padding: '10px 25px 0px 23px',
-        overflowWrap: 'break-word',
-        whiteSpace: 'normal',
-        display: 'flex',
-        alignItems: 'flex-end',
-        gap: '10px',
-    },
-    cohortDescriptionBox: {
-        fontFamily: 'Open Sans',
-        fontSize: '13px',
-        fontWeight: '400',
-        lineHeight: '20px',
-        height: '88px',
-        color: '#343434',
-        padding: '4.5px 10px',
-        margin: '0px',
-        border: '.5px solid #8B98AF',
-        borderRadius: '5px',
-        outline: 'none',
-        width: '100%',
-        resize: 'none',
-        boxSizing: 'border-box',
-        caretColor: 'transparent',
-    },
-    editingCohortDescription: {
-        fontFamily: 'Open Sans',
-        fontSize: '13px',
-        fontWeight: '400',
-        lineHeight: '20px',
-        height: '88px',
-        color: '#343434',
-        padding: '3px 8.5px',
-        margin: '0px',
-        border: '2px solid #00CBD2',
-        borderRadius: '3px',
-        outline: 'none',
-        width: '100%',
-        resize: 'none',
-        boxSizing: 'border-box',
-    },
     participantViewer: {
         display: 'flex',
         flexDirection: 'column',
