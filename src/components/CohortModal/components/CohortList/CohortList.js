@@ -6,11 +6,12 @@ import {
     onDeleteSingleCohort,
     onDeleteAllCohort,
 } from '../../../../components/CohortSelectorState/store/action.js';
-import { CohortModalContext } from '../CohortModalContext.js';
+import { CohortModalContext } from '../../CohortModalContext.js';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
-import DEFAULT_CONFIG from '../config';
-import { deletionTypes } from './deleteConfirmationModal';
-import CohortListItem from './CohortListItem';
+import DEFAULT_CONFIG from '../../config';
+import { deletionTypes } from '../shared/DeleteConfirmationModal';
+import CohortListItem from './components/CohortListItem';
+import { TOOLTIP_MESSAGES } from '../../../../bento/cohortModalData.js';
 
 /**
  * A list of cohorts to select from and manage.
@@ -135,13 +136,13 @@ const CohortList = (props) => {
                         {listHeading} ({cohortOrderedList.length})
                     </span>
                     <span>
-                        <ToolTip title="Remove all Cohorts" placement="top-end" arrow>
+                        <ToolTip title={TOOLTIP_MESSAGES.removeAllCohorts} placement="top-end" arrow>
                             <button
                                 type="button"
                                 className={`${classes.deleteAllButton} ${isScrollbarActive ? classes.grayTrashCanScrollPadding : ''}`}
                                 onClick={handleDeleteAllClick}
                                 aria-label="Delete all cohorts"
-                                title="Remove all Cohorts"
+                                title={TOOLTIP_MESSAGES.removeAllCohorts}
                             >
                                 <img
                                     src={TrashCanIconGray}

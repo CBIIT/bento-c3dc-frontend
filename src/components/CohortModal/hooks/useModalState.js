@@ -1,6 +1,6 @@
 import { useContext, useCallback } from 'react';
 import { CohortModalContext } from '../CohortModalContext';
-import { deletionTypes } from '../components/deleteConfirmationModal';
+import { deletionTypes } from '../components/shared/DeleteConfirmationModal';
 
 /**
  * Custom hook for managing modal state and close operations

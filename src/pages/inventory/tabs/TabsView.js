@@ -3,9 +3,9 @@ import TabPanel from './TabPanel';
 import { tabContainers } from '../../../bento/dashboardTabData';
 import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
-import CohortModal from '../cohortModal/CohortModal';
-import { CohortModalContext } from '../cohortModal/CohortModalContext';
-import DeleteConfirmationModal from '../cohortModal/components/deleteConfirmationModal';
+import CohortModal from '../../../components/CohortModal/CohortModal';
+import { CohortModalContext } from '../../../components/CohortModal/CohortModalContext';
+import DeleteConfirmationModal from '../../../components/CohortModal/components/shared/DeleteConfirmationModal';
 
 
 const Tabs = (props) => {

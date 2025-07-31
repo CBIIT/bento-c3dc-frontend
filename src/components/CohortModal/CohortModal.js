@@ -4,10 +4,9 @@ import {
 } from '@material-ui/core';
 import DEFAULT_STYLES from './styles';
 import DEFAULT_CONFIG from './config';
-import CohortList from './components/cohortList';
-import CohortDetails from './components/cohortDetails';
-import DeleteConfirmationModal from './components/deleteConfirmationModal';
-import AlertManager from './components/AlertManager';
+import CohortList from './components/CohortList/CohortList';
+import CohortDetails from './components/CohortDetails/CohortDetails';
+import { DeleteConfirmationModal, AlertManager } from './components/shared';
 import { CohortModalContext } from './CohortModalContext.js';
 import { useModalState } from './hooks/useModalState';
 import { useUnsavedChanges } from './hooks/useUnsavedChanges';
