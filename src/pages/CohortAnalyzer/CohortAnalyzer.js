@@ -45,7 +45,8 @@ import { useCohortAnalyzer } from "./CohortAnalyzerContext";
 
 export const CohortAnalyzer = () => {
     //context
-    //const { deleteInfo, setDeleteInfo, nodeIndex, setNodeIndex, cohortList, setCohortList, handleCheckbox, } = useCohortAnalyzer();
+    const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, setNodeIndex, cohortList, setCohortList, handleCheckbox } = useCohortAnalyzer();
+     
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
     const classes = useStyle();
@@ -68,7 +69,6 @@ export const CohortAnalyzer = () => {
     const { Notification } = useGlobal();
     const navigate = useNavigate();
 
-     const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, setNodeIndex, cohortList, setCohortList, handleCheckbox } = useCohortAnalyzer();
     
 
     const handleUserRedirect = () => {
