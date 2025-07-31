@@ -3,30 +3,7 @@ import { withStyles } from '@material-ui/core';
 import DEFAULT_CONFIG from '../../../config';
 import { CohortModalContext } from '../../../CohortModalContext';
 import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext';
-
-// Custom hook for debouncing values
-const useDebounce = (value, delay) => {
-    const [debouncedValue, setDebouncedValue] = useState(value);
-    const timeoutRef = useRef(null);
-
-    useEffect(() => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
-        
-        timeoutRef.current = setTimeout(() => {
-            setDebouncedValue(value);
-        }, delay);
-
-        return () => {
-            if (timeoutRef.current) {
-                clearTimeout(timeoutRef.current);
-            }
-        };
-    }, [value, delay]);
-
-    return debouncedValue;
-};
+import { useDebounce } from '../../../hooks/useDebounce';
 
 const CohortMetadata = (props) => {
     const { config, classes } = props;
