@@ -64,7 +64,7 @@ export const CohortSelector = () => {
                 <div onClick={() => {
                     sortBy("count", cohortList, setCohortList, state);
                     setSortType("count");
-                }} className={classes.sortCount} style={{ fontFamily: 'Nunito', color: sortType === '#646464' ? 'lightgray' : '#646464' }}>
+                }} className={classes.sortCount} style={{ fontFamily: 'Nunito', color: sortType === 'count' ? 'lightgray' : '#646464' }}>
                     <p style={{ fontSize: 11 }}>Sort by Count</p>
                 </div>
             </div>
@@ -78,6 +78,7 @@ export const CohortSelector = () => {
                                 background: selectedCohorts.includes(cohort)
                                     ? ['#FAE69C', '#A4E9CB', '#A3CCE8'][selectedCohorts.indexOf(cohort) % 3] : 'transparent'
                             }}
+                            key={state[cohort].cohortName}
                         >
 
                             <div backgroundColor={'white'} zIndex={3000} arrow placement="top">

@@ -163,7 +163,8 @@ export const useStyle = makeStyles((theme) => ({
         borderTop: '1.02px #8A7F7C solid'
     },
     cohortChildContent: {
-        width: '95%', display: 'flex',
+        width: '95%', 
+        display: 'flex',
         height: '100%',
         justifyContent: 'space-between',
         alignItems: 'center',
@@ -197,7 +198,6 @@ export const useStyle = makeStyles((theme) => ({
   font-size: 18px;
 
   & > span:first-child {
-    font-size: 18px;
     font-family: Poppins;
     font-size: 18.5px;
     font-weight: 500;
