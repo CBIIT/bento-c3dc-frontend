@@ -7,7 +7,7 @@ import { getFilters } from '@bento-core/facet-filter';
 import InventoryView from './inventoryView';
 import { DASHBOARD_QUERY_NEW } from '../../bento/dashboardTabData';
 import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
-import { CohortModalProvider } from './cohortModal/CohortModalContext';
+import { CohortModalProvider } from '../../components/CohortModal/CohortModalContext';
 import { setActiveFilterByPathQuery } from './sideBar/BentoFilterUtils';
 
 let latestRequestId = 0;
