@@ -163,7 +163,7 @@ export const useStyle = makeStyles((theme) => ({
         borderTop: '1.02px #8A7F7C solid'
     },
     cohortChildContent: {
-        width: '95%', 
+        width: '95%',
         display: 'flex',
         height: '100%',
         justifyContent: 'space-between',
