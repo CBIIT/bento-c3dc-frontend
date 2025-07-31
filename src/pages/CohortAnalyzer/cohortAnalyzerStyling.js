@@ -74,13 +74,6 @@ export const useStyle = makeStyles((theme) => ({
         all: 'unset',
         display: 'contents',
     },
-    sortCount: {
-        display: 'flex',
-        margin: 0,
-        alignItems: 'center',
-        marginRight: 25,
-        cursor: 'pointer'
-    },
     inputStyleContainer: {
         position: 'relative',
         display: 'flex',
@@ -115,158 +108,6 @@ export const useStyle = makeStyles((theme) => ({
             fontFamily: 'Poppins',
             color: 'red'
         }
-    },
-    leftSideAnalyzer: {
-        minWidth: 268,
-        maxWidth: 268,
-        height: 588,
-        marginTop: 70,
-        overflow: 'hidden',
-        borderRadius: ' 0px 35px 35px 0px',
-        border: '4px solid #4E8191',
-        borderLeft: 'none',
-
-    },
-    leftSideAnalyzerChild: {
-        height: '90%',
-        overflowY: 'scroll',
-        '&::-webkit-scrollbar': {
-            width: "2px"
-        },
-        '&::-webkit-scrollbar-thumb': {
-            width: "2px",
-            backgroundColor: '#003F74'
-        },
-        '&::-webkit-scrollbar-track': {
-            background: '#4E8191',
-        },
-    },
-    cohortSelectionChild: {
-        display: 'flex',
-        alignItems: 'start',
-        width: '100%',
-        '& span': {
-            fontSize: 12,
-            fontFamily: 'Poppins',
-            fontWeight: 500
-        }
-    },
-    cohortChildSelected: {
-        width: '100%',
-        height: 28,
-        display: 'flex',
-        marginBottom: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-    },
-    CohortChild: {
-        background: 'rgba(181, 221, 229, 0.4)',
-        width: '100%',
-        height: 28,
-        display: 'flex',
-        marginBottom: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        '&:nth-child(even)': {
-            background: 'rgba(165, 194, 200, 0.4)'
-        },
-        '& span': {
-            color: 'black'
-        },
-        '& div img': {
-            opacity: 1
-        }
-    },
-    CohortChildOpacity: {
-        background: 'rgba(181, 221, 229, 0.2)',
-        width: '100%',
-        height: 28,
-        display: 'flex',
-        marginBottom: 2,
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        '&:nth-child(even)': {
-            background: 'rgba(165, 194, 200, 0.2)'
-        },
-        '& span': {
-            color: 'black'
-        },
-        '& div img': {
-            opacity: 1
-        }
-    },
-    CohortChildDisabled: {
-        background: '#E2F1F5',
-        width: '100%',
-        height: 28,
-        display: 'flex',
-        marginBottom: 2,
-        alignItems: 'center',
-        opacity: 0.3,
-        pointerEvents: 'auto',
-        justifyContent: 'space-between',
-        '&:nth-child(even)': {
-            background: 'rgba(165, 194, 200, 0.4)'
-        },
-        '& span': {
-            color: 'black'
-        },
-        '& div img': {
-            opacity: 1
-        }
-    },
-    sideHeader: {
-        height: 125,
-        fontFamily: 'Poppins',
-        fontSize: 18.5,
-        fontWeight: 500,
-        color: '#000',
-        letterSpacing: '-0.02em',
-        textAlign: 'left',
-        width: '100%',
-        display: 'flex',
-        paddingTop: 20,
-        flexDirection: 'column',
-        alignSelf: 'center',
-        margin: 'auto',
-        borderBottom: '1px solid #B0B0B0',
-        paddingLeft: 20,
-        justifyContent: 'flex-start',
-        justifyItems: 'flex-start',
-        '& img': {
-            marginRight: 6.5,
-        },
-        '& p': {
-            fontFamily: 'Open Sans',
-            fontSize: 15,
-            fontWeight: 400,
-            color: 'black',
-            padding: 0,
-        }
-    },
-    sortSection: {
-        height: 31,
-        width: '100%',
-        display: 'flex',
-        justifyContent: 'space-between',
-        marginLeft: 20,
-        '& p': {
-            fontSize: 9
-        }
-    },
-    cohortCountSection: {
-        fontFamily: 'Poppins',
-        fontSize: 15,
-        fontWeight: 500,
-        letterSpacing: -0.02,
-        textAlign: 'left',
-        minHeight: 58.94,
-        display: 'flex',
-        alignItems: 'flex-end',
-        justifyContent: 'flex-end',
-        width: '90%',
-        paddingBottom: 10,
-        borderTop: '1.02px #8A7F7C solid'
     },
     rightSideAnalyzer: {
         minWidth: "77%",
@@ -334,24 +175,6 @@ export const useStyle = makeStyles((theme) => ({
         position: 'absolute',
         top: 20,
         margin: 'auto'
-    },
-    cohortChildContent: {
-        width: '95%', display: 'flex',
-        height: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        color: 'black',
-        '& div span': {
-            color: 'black',
-            fontFamily: 'Nunito',
-            fontSize: 14,
-            fontWeight: 300,
-            textAlign: 'left',
-        },
-        '& img': {
-            position: 'relative',
-            zIndex: 10000,
-        }
     },
     catagoryCard: {
         borderRadius: '8px',
