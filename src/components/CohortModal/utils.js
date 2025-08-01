@@ -117,3 +117,26 @@ export const objectToJsonDownload = (obj, cohortID) => {
     return JSON.stringify(filteredObj1) !== JSON.stringify(filteredObj2);
   };
 
+// Helper function to create manifest payload for interop service
+export const getManifestPayload = (participants) => {
+  if (!participants || !Array.isArray(participants)) {
+    return [];
+  }
+  
+  // Group participants by study_id (dbgap_accession)
+  const studyGroups = participants.reduce((acc, participant) => {
+    const studyId = participant.dbgap_accession;
+    if (!acc[studyId]) {
+      acc[studyId] = {
+        study_id: studyId,
+        participant_id: []
+      };
+    }
+    acc[studyId].participant_id.push(participant.participant_id);
+    return acc;
+  }, {});
+  
+  // Convert to array format
+  return Object.values(studyGroups);
+};
+

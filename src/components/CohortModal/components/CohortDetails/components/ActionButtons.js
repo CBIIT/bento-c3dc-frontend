@@ -9,12 +9,15 @@ import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../.
 import client from '../../../../../utils/graphqlClient.js';
 import { arrayToCSVDownload, objectToJsonDownload } from '../../../utils.js';
 import { CohortModalContext } from '../../../CohortModalContext.js';
-import { COHORT_SIZE_LIMIT, CCDI_HUB_BASE_URL, DBGAP_PARAM, TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
+import { COHORT_SIZE_LIMIT, CCDI_HUB_BASE_URL, TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
 
 const ActionButtons = (props) => {
     const { 
         classes, 
-        localCohort
+        localCohort,
+        ccdiHubUrl,
+        isGeneratingUrl,
+        urlGenerationFailed
     } = props;
     
     const navigate = useNavigate();
@@ -68,18 +71,25 @@ const ActionButtons = (props) => {
     // Navigation functions (memoized for performance with error handling)
     const generateCCDIHub_url = useCallback(() => {
         try {
-            const participantIds = localCohort.participants.map(p => p.participant_id).join("|");
-            const dbgapAccessions = [...new Set(localCohort.participants.map(p => p.dbgap_accession))].join("|");
-        
-            const finalUrl = `${CCDI_HUB_BASE_URL}${participantIds}${DBGAP_PARAM}${dbgapAccessions}`;
-            window.open(finalUrl,'_blank');
+            if (urlGenerationFailed) {
+                showAlert('error', 'CCDI Hub URL generation failed. Please try refreshing the page.');
+                return;
+            }
+            
+            if (!ccdiHubUrl) {
+                showAlert('error', 'CCDI Hub URL is not available. Please try again later.');
+                return;
+            }
+            
+            const finalUrl = `${CCDI_HUB_BASE_URL}${ccdiHubUrl}`;
+            window.open(finalUrl, '_blank');
             showAlert('success', 'CCDI Hub opened in new tab!');
             return finalUrl;
         } catch (error) {
-            console.error('Error generating CCDI Hub URL:', error);
+            console.error('Error opening CCDI Hub URL:', error);
             showAlert('error', 'Failed to open CCDI Hub. Please try again.');
         }
-    }, [localCohort.participants, showAlert]);
+    }, [ccdiHubUrl, urlGenerationFailed, showAlert]);
     
     const handleViewAnalysisClick = useCallback(() => {
         try {
@@ -166,9 +176,17 @@ const ActionButtons = (props) => {
 
     const handleCCDIHubClick = useCallback(() => {
         if (localCohort.participants.length <= COHORT_SIZE_LIMIT) {
+            if (isGeneratingUrl) {
+                showAlert('info', 'Please wait while we prepare the CCDI Hub link...');
+                return;
+            }
+            if (urlGenerationFailed) {
+                showAlert('error', 'CCDI Hub URL generation failed. Please try refreshing the page.');
+                return;
+            }
             generateCCDIHub_url();
         }
-    }, [localCohort.participants.length, generateCCDIHub_url]);
+    }, [localCohort.participants.length, isGeneratingUrl, urlGenerationFailed, generateCCDIHub_url, showAlert]);
 
     return (
         <div className={classes.actionButtonsContainer}>
@@ -234,12 +252,13 @@ const ActionButtons = (props) => {
             >
                 <Button 
                     variant="contained"
-                    className={localCohort.participants.length > COHORT_SIZE_LIMIT ? classes.exploreButtonFaded : classes.exploreButton}
+                    className={localCohort.participants.length > COHORT_SIZE_LIMIT || isGeneratingUrl || urlGenerationFailed ? classes.exploreButtonFaded : classes.exploreButton}
                     onClick={handleCCDIHubClick}
-                    disabled={localCohort.participants.length > COHORT_SIZE_LIMIT}
+                    disabled={localCohort.participants.length > COHORT_SIZE_LIMIT || isGeneratingUrl || urlGenerationFailed}
                     aria-label={localCohort.participants.length > COHORT_SIZE_LIMIT ? 
                         `Explore in CCDI Hub (disabled - cohort size ${localCohort.participants.length} exceeds limit of ${COHORT_SIZE_LIMIT})` : 
-                        'Open cohort in CCDI Hub in new tab'
+                        urlGenerationFailed ? 'CCDI Hub URL generation failed' :
+                        isGeneratingUrl ? 'Preparing CCDI Hub link...' : 'Open cohort in CCDI Hub in new tab'
                     }
                 >
                     <span style={{textAlign: 'left'}}>

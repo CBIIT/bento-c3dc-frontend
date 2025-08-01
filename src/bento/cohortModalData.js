@@ -6,8 +6,7 @@
 
 // Action Button Configuration
 export const COHORT_SIZE_LIMIT = 600;
-export const CCDI_HUB_BASE_URL = "https://ccdi.cancer.gov/explore?p_id=";
-export const DBGAP_PARAM = "&dbgap_accession=";
+export const CCDI_HUB_BASE_URL = "https://ccdi.cancer.gov/explore?import_from=";
 
 // Deletion Types Configuration
 export const deletionTypes = {
