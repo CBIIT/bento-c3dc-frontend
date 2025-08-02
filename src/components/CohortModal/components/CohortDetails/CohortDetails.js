@@ -77,7 +77,7 @@ const CohortDetails = (props) => {
                 }
             `;
             
-            const response = await fetch('https://ccdi-stage.cancer.gov/api/interoperation/graphql', {
+            const response = await fetch('https://ccdi-dev.cancer.gov/api/interoperation/graphql', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
