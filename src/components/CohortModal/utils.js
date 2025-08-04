@@ -140,3 +140,15 @@ export const getManifestPayload = (participants) => {
   return Object.values(studyGroups);
 };
 
+// Helper function to truncate signed CloudFront URLs at .json
+export const truncateSignedUrl = (url) => {
+  if (!url || typeof url !== 'string') return url;
+  
+  const jsonIndex = url.indexOf('.json');
+  if (jsonIndex !== -1) {
+    return url.substring(0, jsonIndex + 5); // +5 to include ".json"
+  }
+  
+  return url; // Return original if no .json found
+};
+

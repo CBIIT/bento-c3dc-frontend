@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
 import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
 import { CohortModalContext } from '../../CohortModalContext.js';
-import { getManifestPayload } from '../../utils.js';
+import { getManifestPayload, truncateSignedUrl } from '../../utils.js';
 import CohortMetadata from './components/CohortMetadata';
 import ParticipantList from './components/ParticipantList';
 import ActionButtons from './components/ActionButtons';
@@ -101,7 +101,13 @@ const CohortDetails = (props) => {
                 throw new Error((result.errors[0] && result.errors[0].message) || 'GraphQL error occurred');
             }
 
-            setUrlData(result.data);
+            // Process the URL data to truncate signed URL parameters
+            const processedData = {
+                ...result.data,
+                storeManifest: result.data.storeManifest ? truncateSignedUrl(result.data.storeManifest) : result.data.storeManifest
+            };
+
+            setUrlData(processedData);
             setUrlGenerationFailed(false);
         } catch (error) {
             console.error('Error generating CCDI Hub URL:', error);
