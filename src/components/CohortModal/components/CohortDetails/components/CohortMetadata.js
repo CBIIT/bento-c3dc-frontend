@@ -28,10 +28,16 @@ const CohortMetadata = (props) => {
     // Local state for immediate UI updates
     const [localCohortName, setLocalCohortName] = useState(initialCohort.cohortName);
     const [localCohortDescription, setLocalCohortDescription] = useState(initialCohort.cohortDescription);
-    
+
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
     const descriptionRef = useRef(null);
+
+    // Sync local state when cohort selection changes (use activeCohort to avoid stale context data)
+    useEffect(() => {
+        setLocalCohortName(activeCohort.cohortName);
+        setLocalCohortDescription(activeCohort.cohortDescription);
+    }, [activeCohort.cohortId]);
 
     // Debounce the local values before updating context
     const debouncedName = useDebounce(localCohortName, 1);
@@ -48,12 +54,6 @@ const CohortMetadata = (props) => {
             });
         }
     }, [debouncedName, debouncedDescription, initialCohort, setCurrentCohortChanges]);
-
-    // Sync local state when initialCohort changes (e.g., cohort selection change)
-    useEffect(() => {
-        setLocalCohortName(initialCohort.cohortName);
-        setLocalCohortDescription(initialCohort.cohortDescription);
-    }, [initialCohort.cohortId, initialCohort.cohortName, initialCohort.cohortDescription]);
 
     // Current cohort for display (using local state for immediate updates)
     const currentCohort = useMemo(() => ({
