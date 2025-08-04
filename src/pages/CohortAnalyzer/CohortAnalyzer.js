@@ -898,7 +898,7 @@ padding-left: 5px;
                                 />}
 
                                 {selectedCohorts.length === 0 &&
-                            <img src={placeHolder} alt='placeholder' width={725} style={{ marginTop: 10,alignSelf:'center' }} />
+                            <img src={placeHolder} alt='placeholder' className={classes.chartVennPlaceholder}  style={{ marginTop: 10,alignSelf:'center' }} />
                         }
                                 </div>
                         </div>

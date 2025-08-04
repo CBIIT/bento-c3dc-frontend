@@ -8,7 +8,7 @@ export const barColors = {
 
 export const HistogramContainer = styled.div`
   background: white;
-  border: 1px solid #679AAA;
+  border: 0.75px solid #679AAA;
   border-radius: 8px;
   padding: 20px;
   margin: 20px 0 0;

@@ -16,18 +16,24 @@ export const useStyle = makeStyles((theme) => ({
         minHeight: 615,
         display: 'flex',
         flexDirection: 'column',
-    maxHeight: 585,
+        maxHeight: 585,
         overflow: 'hidden',
         [theme.breakpoints.down('lg')]: {
-            maxWidth: '100%',
+            maxWidth: '99%',
             height: '100%',
             overflow: 'visible',
             paddingBottom: '24px',
             alignItems: 'center',
-
+            marginLeft: 6,
             '& .App': {
                 maxWidth: '60%',
             }
+        }
+    },
+    chartVennPlaceholder: {
+        width: 725,
+        [theme.breakpoints.down('lg')]: {
+            width: '100%',
         }
     },
     chartContainerHeader: {
@@ -286,7 +292,6 @@ export const useStyle = makeStyles((theme) => ({
     rightSideAnalyzer: {
         minWidth: "81%",
         maxWidth: "100%",
-        height: 1549,
         borderRadius: '35px',
         border: '4px solid #4E8191',
         margin: 100,
@@ -295,7 +300,8 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        overflowY: 'hidden',
+        overflowY: 'visible',
+        overflowX: 'hidden',
         [theme.breakpoints.down('lg')]: {
             alignItems: 'flex-start',
             padding: '0 24px 24px 24px',
@@ -322,7 +328,7 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '91%',
+        width: '105%',
         alignSelf: 'center',
         alignItems: 'center',
         borderBottom: '1px solid gray',
@@ -332,7 +338,11 @@ export const useStyle = makeStyles((theme) => ({
             fontWeight: 400,
             textAlign: 'left',
             color: '#0D3A3F',
-            marginLeft: '10px'
+            marginLeft: '65px',
+             [theme.breakpoints.down('lg')]: {
+                marginLeft: '35px'
+            }
+            
         }
 
     },
@@ -429,7 +439,7 @@ export const useStyle = makeStyles((theme) => ({
     },
     rightSideTableContainer: {
         width: '90%',
-        height: 540,
+        maxHeight: 540,
         overflowY: 'scroll',
         borderTop: "3.07px #8A7F7C solid",
         '&::-webkit-scrollbar': {
