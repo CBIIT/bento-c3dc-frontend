@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core';
 import DEFAULT_CONFIG from '../../../config';
 import { CohortModalContext } from '../../../CohortModalContext';
 import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext';
+import { useDebounce } from '../../../hooks/useDebounce';
 
 const CohortMetadata = (props) => {
     const { config, classes } = props;
@@ -17,16 +18,49 @@ const CohortMetadata = (props) => {
         return null;
     }
 
-    // Get current cohort data (either from changes or original)
-    const currentCohort = useMemo(() => {
+    // Get initial cohort data (either from changes or original)
+    const initialCohort = useMemo(() => {
         return currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId 
             ? currentCohortChanges 
             : activeCohort;
     }, [currentCohortChanges, activeCohort]);
 
+    // Local state for immediate UI updates
+    const [localCohortName, setLocalCohortName] = useState(initialCohort.cohortName);
+    const [localCohortDescription, setLocalCohortDescription] = useState(initialCohort.cohortDescription);
+    
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
     const descriptionRef = useRef(null);
+
+    // Debounce the local values before updating context
+    const debouncedName = useDebounce(localCohortName, 1);
+    const debouncedDescription = useDebounce(localCohortDescription, 1);
+
+    // Update context when debounced values change
+    useEffect(() => {
+        if (initialCohort.cohortId && (debouncedName !== initialCohort.cohortName || debouncedDescription !== initialCohort.cohortDescription)) {
+            setCurrentCohortChanges({
+                cohortId: initialCohort.cohortId,
+                cohortName: debouncedName,
+                cohortDescription: debouncedDescription,
+                participants: initialCohort.participants,
+            });
+        }
+    }, [debouncedName, debouncedDescription, initialCohort, setCurrentCohortChanges]);
+
+    // Sync local state when initialCohort changes (e.g., cohort selection change)
+    useEffect(() => {
+        setLocalCohortName(initialCohort.cohortName);
+        setLocalCohortDescription(initialCohort.cohortDescription);
+    }, [initialCohort.cohortId, initialCohort.cohortName, initialCohort.cohortDescription]);
+
+    // Current cohort for display (using local state for immediate updates)
+    const currentCohort = useMemo(() => ({
+        ...initialCohort,
+        cohortName: localCohortName,
+        cohortDescription: localCohortDescription,
+    }), [initialCohort, localCohortName, localCohortDescription]);
 
     // Memoize configuration values
     const cohortCountsLabel = useMemo(() => {
@@ -58,19 +92,15 @@ const CohortMetadata = (props) => {
         setIsEditingDescription(false);
     }, []);
 
-    // Update context directly on every keystroke
+    // Update local state immediately for responsive UI
     const handleTextChange = useCallback((e) => {
         const { name, value } = e.target;
-        if (!currentCohort.cohortId) return;
-        
-        setCurrentCohortChanges({
-            cohortId: currentCohort.cohortId,
-            cohortName: currentCohort.cohortName,
-            cohortDescription: currentCohort.cohortDescription,
-            participants: currentCohort.participants,
-            [name]: value,
-        });
-    }, [currentCohort, setCurrentCohortChanges]);
+        if (name === 'cohortName') {
+            setLocalCohortName(value);
+        } else if (name === 'cohortDescription') {
+            setLocalCohortDescription(value);
+        }
+    }, []);
 
     const handleNameKeyDown = useCallback((e) => {
         if (e.key === 'Enter') {
