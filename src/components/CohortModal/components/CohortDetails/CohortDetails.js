@@ -4,6 +4,7 @@ import { CohortStateContext } from '../../../../components/CohortSelectorState/C
 import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
 import { CohortModalContext } from '../../CohortModalContext.js';
 import { getManifestPayload, truncateSignedUrl } from '../../utils.js';
+import { CCDI_INTEROP_SERVICE_URL } from '../../../../bento/cohortModalData.js';
 import CohortMetadata from './components/CohortMetadata';
 import ParticipantList from './components/ParticipantList';
 import ActionButtons from './components/ActionButtons';
@@ -77,7 +78,7 @@ const CohortDetails = (props) => {
                 }
             `;
             
-            const response = await fetch('https://ccdi-dev.cancer.gov/api/interoperation/graphql', {
+            const response = await fetch(CCDI_INTEROP_SERVICE_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

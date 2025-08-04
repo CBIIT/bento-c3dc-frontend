@@ -6,6 +6,7 @@
 
 // Action Button Configuration
 export const CCDI_HUB_BASE_URL = "https://ccdi.cancer.gov/explore?import_from=";
+export const CCDI_INTEROP_SERVICE_URL = "https://ccdi.cancer.gov/api/interoperation/graphql";
 
 // Deletion Types Configuration
 export const deletionTypes = {
@@ -36,6 +37,5 @@ export const TOOLTIP_MESSAGES = {
     removeAllCohorts: "Remove all Cohorts",
     exploreCCDIHub: {
         mainText: "Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user's selected cohort.",
-        smallCohortText: "Proceed with direct export within C3DC.",
     }
 };
