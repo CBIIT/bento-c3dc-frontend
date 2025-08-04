@@ -13,7 +13,7 @@ export const useStyle = makeStyles((theme) => ({
         borderRadius: '10px',
         width: '100%',
         maxWidth: 707,
-        minHeight: 585,
+        minHeight: 615,
         display: 'flex',
         flexDirection: 'column',
     maxHeight: 585,
@@ -296,7 +296,6 @@ export const useStyle = makeStyles((theme) => ({
         flexDirection: 'column',
         alignItems: 'center',
         overflowY: 'hidden',
-        height: 'auto',
         [theme.breakpoints.down('lg')]: {
             alignItems: 'flex-start',
             padding: '0 24px 24px 24px',
