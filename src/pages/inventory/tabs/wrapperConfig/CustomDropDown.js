@@ -6,14 +6,14 @@ import styled from 'styled-components';
 import { onAddParticipantsToCohort } from '../../../../components/CohortSelectorState/store/action';
 import { onCreateNewCohort } from '../../../../components/CohortSelectorState/store/action';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
-import { CohortModalContext } from '../../cohortModal/CohortModalContext';
+import { CohortModalContext } from '../../../../components/CohortModal/CohortModalContext';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
 import client from "../../../../utils/graphqlClient"
 import { GET_PARTICIPANTS_OVERVIEW_QUERY } from '../../../../bento/dashboardTabData';
 import { connect } from 'react-redux';
 import { getFilters } from '@bento-core/facet-filter';
 import CustomCheckBox from '../../../../components/CustomCheckbox/CustomCheckbox';
-import DeleteConfirmationModal from '../../cohortModal/components/deleteConfirmationModal';
+import DeleteConfirmationModal from '../../../../components/CohortModal/components/shared/DeleteConfirmationModal';
 
 const DropdownContainer = styled.div`
   position: relative;

@@ -12,14 +12,14 @@ import DownloadSelectedCohort from "./downloadCohort/DownloadSelectedCohorts";
 import client from "../../utils/graphqlClient";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import Stats from '../../components/Stats/GlobalStatsController';
-import DeleteConfirmationModal from "../inventory/cohortModal/components/deleteConfirmationModal";
+import DeleteConfirmationModal from "../../components/CohortModal/components/shared/DeleteConfirmationModal";
 import NavigateAwayModal from './navigateAwayModal';
 import sortIcon from "../../assets/icons/sort_icon.svg";
 import placeHolder from "../../assets/vennDigram/placeHolder.png";
 import ChartVenn from "./vennDiagram/ChartVenn";
 import CheckBoxCustom from "./customCheckbox/CustomCheckbox";
-import { CohortModalContext } from "../inventory/cohortModal/CohortModalContext";
-import CohortModalGenerator from "../inventory/cohortModal/cohortModalGenerator";
+import { CohortModalContext } from "../../components/CohortModal/CohortModalContext";
+import CohortModal from "../../components/CohortModal/CohortModal";
 import Alert from '@material-ui/lab/Alert';
 import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
@@ -74,7 +74,6 @@ export const CohortAnalyzer = () => {
     const [showNavigateAwayModal, setShowNavigateAwayModal] = useState(false);
 
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
-    const { CohortModal } = CohortModalGenerator();
     const { Notification } = useGlobal();
     const navigate = useNavigate();
 
