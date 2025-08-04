@@ -126,6 +126,13 @@ export const getManifestPayload = (participants) => {
   // Group participants by study_id (dbgap_accession)
   const studyGroups = participants.reduce((acc, participant) => {
     const studyId = participant.dbgap_accession;
+    
+    // Skip participants with missing or invalid dbgap_accession
+    if (studyId === undefined || studyId === null || studyId === '') {
+      console.warn('Participant missing dbgap_accession:', participant.participant_id || 'Unknown participant');
+      return acc;
+    }
+    
     if (!acc[studyId]) {
       acc[studyId] = {
         study_id: studyId,

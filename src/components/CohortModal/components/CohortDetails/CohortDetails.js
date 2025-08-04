@@ -99,7 +99,9 @@ const CohortDetails = (props) => {
             const result = await response.json();
             
             if (result.errors) {
-                throw new Error((result.errors[0] && result.errors[0].message) || 'GraphQL error occurred');
+                const errorMessage = (result.errors[0] && result.errors[0].message) || 'Unknown GraphQL error';
+                const participantCount = payload ? payload.length : 0;
+                throw new Error(`CCDI Interop Service Error: ${errorMessage} (Processing ${participantCount} study groups)`);
             }
 
             // Process the URL data to truncate signed URL parameters
