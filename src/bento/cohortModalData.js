@@ -5,7 +5,6 @@
  */
 
 // Action Button Configuration
-export const COHORT_SIZE_LIMIT = 600;
 export const CCDI_HUB_BASE_URL = "https://ccdi.cancer.gov/explore?import_from=";
 
 // Deletion Types Configuration
@@ -38,14 +37,5 @@ export const TOOLTIP_MESSAGES = {
     exploreCCDIHub: {
         mainText: "Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user's selected cohort.",
         smallCohortText: "Proceed with direct export within C3DC.",
-        largeCohortText: "Download the manifest and upload it manually to the",
-        ccdiHubUrl: "https://ccdi.cancer.gov/explore",
-        ccdiHubText: "CCDI Hub",
-        followingStepsText: "by following these steps:",
-        steps: [
-            "Choose the Explore page from the menu.",
-            "In the Facets side panel, open the Demographic facet.",
-            'Click on "Upload Participants Set."'
-        ]
     }
 };

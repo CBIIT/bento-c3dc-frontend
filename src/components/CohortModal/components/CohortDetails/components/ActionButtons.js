@@ -3,13 +3,12 @@ import { withStyles, Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '../../../../../assets/icons/Expand_More_Icon.svg';
 import Linkout from "../../../../../assets/about/Export_Icon_White.svg";
-import LinkoutBlue from "../../../../../assets/about/Export_Icon.svg";
 import ToolTip from '@bento-core/tool-tip';
 import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../../bento/dashboardTabData.js';
 import client from '../../../../../utils/graphqlClient.js';
 import { arrayToCSVDownload, objectToJsonDownload } from '../../../utils.js';
 import { CohortModalContext } from '../../../CohortModalContext.js';
-import { COHORT_SIZE_LIMIT, CCDI_HUB_BASE_URL, TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
+import { CCDI_HUB_BASE_URL, TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
 
 const ActionButtons = (props) => {
     const { 
@@ -113,33 +112,9 @@ const ActionButtons = (props) => {
             {TOOLTIP_MESSAGES.exploreCCDIHub.mainText}
             <br/>
             <Gap/>
-            <b>If cohort size &le; {COHORT_SIZE_LIMIT}:</b>
+            <b>All cohorts:</b>
             <br/> 
             {TOOLTIP_MESSAGES.exploreCCDIHub.smallCohortText}
-            <br/>
-            <Gap/>
-            <b>If cohort size &gt; {COHORT_SIZE_LIMIT}:</b><br/> 
-            {TOOLTIP_MESSAGES.exploreCCDIHub.largeCohortText}&nbsp;
-            <a style={{zIndex: 10000}} target='_blank' href={TOOLTIP_MESSAGES.exploreCCDIHub.ccdiHubUrl} rel="noreferrer">
-                {TOOLTIP_MESSAGES.exploreCCDIHub.ccdiHubText}
-                <img 
-                    src={LinkoutBlue} 
-                    width={14} 
-                    height={14} 
-                    style={{
-                        padding: "4px 0px 0px 2px", 
-                        bottom: 0, 
-                        position: 'relative'
-                    }} 
-                    alt="Linkout Icon" 
-                /> 
-            </a>
-            &nbsp;{TOOLTIP_MESSAGES.exploreCCDIHub.followingStepsText}
-            <ol>
-                {TOOLTIP_MESSAGES.exploreCCDIHub.steps.map((step, index) => (
-                    <li key={index}>{step}</li>
-                ))}
-            </ol>
         </p>
     ), []);
 
@@ -175,18 +150,16 @@ const ActionButtons = (props) => {
     }, []);
 
     const handleCCDIHubClick = useCallback(() => {
-        if (localCohort.participants.length <= COHORT_SIZE_LIMIT) {
-            if (isGeneratingUrl) {
-                showAlert('info', 'Please wait while we prepare the CCDI Hub link...');
-                return;
-            }
-            if (urlGenerationFailed) {
-                showAlert('error', 'CCDI Hub URL generation failed. Please try refreshing the page.');
-                return;
-            }
-            generateCCDIHub_url();
+        if (isGeneratingUrl) {
+            showAlert('info', 'Please wait while we prepare the CCDI Hub link...');
+            return;
         }
-    }, [localCohort.participants.length, isGeneratingUrl, urlGenerationFailed, generateCCDIHub_url, showAlert]);
+        if (urlGenerationFailed) {
+            showAlert('error', 'CCDI Hub URL generation failed. Please try refreshing the page.');
+            return;
+        }
+        generateCCDIHub_url();
+    }, [isGeneratingUrl, urlGenerationFailed, generateCCDIHub_url, showAlert]);
 
     return (
         <div className={classes.actionButtonsContainer}>
@@ -252,12 +225,10 @@ const ActionButtons = (props) => {
             >
                 <Button 
                     variant="contained"
-                    className={localCohort.participants.length > COHORT_SIZE_LIMIT || isGeneratingUrl || urlGenerationFailed ? classes.exploreButtonFaded : classes.exploreButton}
+                    className={isGeneratingUrl || urlGenerationFailed ? classes.exploreButtonFaded : classes.exploreButton}
                     onClick={handleCCDIHubClick}
-                    disabled={localCohort.participants.length > COHORT_SIZE_LIMIT || isGeneratingUrl || urlGenerationFailed}
-                    aria-label={localCohort.participants.length > COHORT_SIZE_LIMIT ? 
-                        `Explore in CCDI Hub (disabled - cohort size ${localCohort.participants.length} exceeds limit of ${COHORT_SIZE_LIMIT})` : 
-                        urlGenerationFailed ? 'CCDI Hub URL generation failed' :
+                    disabled={isGeneratingUrl || urlGenerationFailed}
+                    aria-label={urlGenerationFailed ? 'CCDI Hub URL generation failed' :
                         isGeneratingUrl ? 'Preparing CCDI Hub link...' : 'Open cohort in CCDI Hub in new tab'
                     }
                 >
