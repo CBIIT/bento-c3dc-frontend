@@ -110,11 +110,6 @@ const ActionButtons = (props) => {
     const exploreCCDIHubTooltip = useMemo(() => (
         <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
             {TOOLTIP_MESSAGES.exploreCCDIHub.mainText}
-            <br/>
-            <Gap/>
-            <b>All cohorts:</b>
-            <br/> 
-            {TOOLTIP_MESSAGES.exploreCCDIHub.smallCohortText}
         </p>
     ), []);
 
