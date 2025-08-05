@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 import ExpandIcon from "../../../assets/icons/Expand_Histogram_icon.svg";
@@ -28,6 +28,33 @@ const Histogram = ({c1,c2,c3}) => {
     sexAtBirth: PlaceHolder2,
     race: PlaceHolder2
   };
+
+  let data = graphData;
+  const MAX_BARS_DISPLAYED = 5;
+  const MAX_BARS_DISPLAYED_EXPANDED = 20;
+
+  const filteredData = useMemo(() => {
+    if (Object.keys(graphData).length > 0 && selectedDatasets.length > 0) {
+      const otherKey = expandedChart ? 'OtherMany' : 'OtherFew';
+      const maxDisplayed = expandedChart ? MAX_BARS_DISPLAYED_EXPANDED : MAX_BARS_DISPLAYED;
+      const graphDataCopy = JSON.parse(JSON.stringify(graphData));
+
+      selectedDatasets.forEach((dataset) => {
+        const manyOthers = graphDataCopy[dataset].find(item => item.name === otherKey);
+
+        const filteredRegularItems = graphDataCopy[dataset]
+          .filter(item => item.name !== 'OtherFew' && item.name !== 'OtherMany');
+        const regularItems = filteredRegularItems.slice(0, manyOthers ? maxDisplayed - 1 : maxDisplayed);
+        graphDataCopy[dataset] = [...regularItems];
+        if(manyOthers){
+          graphDataCopy[dataset].push(manyOthers);
+        }
+      })
+      return graphDataCopy;
+    }
+    return graphData;
+  }, [graphData, selectedDatasets, expandedChart])
+
   // Custom tooltip componen
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
@@ -76,8 +103,6 @@ const Histogram = ({c1,c2,c3}) => {
       </g>
     );
   };
-  let data = graphData;
-  const MAX_BARS_DISPLAYED = 5;
 
   return (
     <HistogramContainer>
@@ -109,8 +134,8 @@ const Histogram = ({c1,c2,c3}) => {
         let valueA = 0;
         let valueB = 0;
         let valueC = 0;
-        if (Array.isArray(graphData[dataset])) {
-          graphData[dataset].forEach((entry) => {
+        if (Array.isArray(filteredData[dataset])) {
+          filteredData[dataset].forEach((entry) => {
             valueA += entry.valueA || 0;
             valueB += entry.valueB || 0;
             valueC += entry.valueC || 0;
@@ -124,7 +149,7 @@ const Histogram = ({c1,c2,c3}) => {
 
                 <ChartTitle className={`${Array.isArray(data[dataset]) && data[dataset].length > 0  ? '' : 'empty'}`} >
                   {titles[dataset]}
-                  {Array.isArray(graphData[dataset]) && graphData[dataset].length > 5 && (
+                  {Array.isArray(filteredData[dataset]) && filteredData[dataset].length > 5 && (
                        <ToolTip
                                         maxWidth="335px"
                                         border={'1px solid #598ac5'}
@@ -186,7 +211,7 @@ const Histogram = ({c1,c2,c3}) => {
                 </RadioGroup>
   <ResponsiveContainer width="80%" height="100%">
     <BarChart
-      data={graphData[dataset].slice(0, MAX_BARS_DISPLAYED)}
+        data={filteredData[dataset]}
       margin={{ top: 20, right: 30, left: 10, bottom: 0 }}
     >
       <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
@@ -206,21 +231,21 @@ const Histogram = ({c1,c2,c3}) => {
       <Tooltip content={<CustomTooltip />} />
                       {valueA > 0 && (
                         <Bar dataKey="valueA" opacity={0.8} maxBarSize={60}>
-                          {graphData[dataset].map((entry, entryIndex) => (
+                          {filteredData[dataset].map((entry, entryIndex) => (
                             <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorA} />
                           ))}
                         </Bar>
                       )}
                       {valueB > 0 && (
                         <Bar dataKey="valueB" opacity={0.8} maxBarSize={60}>
-                          {graphData[dataset].map((entry, entryIndex) => (
+                          {filteredData[dataset].map((entry, entryIndex) => (
                             <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorB} />
                           ))}
                         </Bar>
                       )}
                       {valueC > 0 && (
                         <Bar dataKey="valueC" opacity={0.8} maxBarSize={60}>
-                          {graphData[dataset].map((entry, entryIndex) => (
+                          {filteredData[dataset].map((entry, entryIndex) => (
                             <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorC} />
                           ))}
                         </Bar>)}
@@ -252,7 +277,7 @@ const Histogram = ({c1,c2,c3}) => {
           setExpandedChart={setExpandedChart}
           viewType={viewType}
           setViewType={setViewType}
-          data={data}
+          data={filteredData}
           titles={titles}
         />
       )}
