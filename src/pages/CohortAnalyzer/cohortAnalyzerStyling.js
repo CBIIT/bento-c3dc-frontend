@@ -18,13 +18,14 @@ export const useStyle = makeStyles((theme) => ({
         flexDirection: 'column',
         maxHeight: 585,
         overflow: 'hidden',
+         marginLeft: 6,
         [theme.breakpoints.down('lg')]: {
             maxWidth: '99%',
             height: '100%',
             overflow: 'visible',
             paddingBottom: '24px',
             alignItems: 'center',
-            marginLeft: 6,
+            marginLeft: 8,
             '& .App': {
                 maxWidth: '60%',
             }
@@ -102,6 +103,7 @@ export const useStyle = makeStyles((theme) => ({
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
+        marginLeft: 15,
         '& img': {
             position: 'relative',
             right: 26,
@@ -281,13 +283,20 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
-        width: '90%',
+        width: '100%',
         paddingBottom: 10,
-        borderTop: '1.02px #8A7F7C solid',
-
+        paddingRight: 0,
+        paddingRight: 15,
         [theme.breakpoints.down('lg')]: {
-            width: '100%',
+            width: '100%'
         }
+    },
+    tableSectionOuterContainer: {
+        width: '97.5%',
+        marginLeft: 10,
+        border: '0.75px solid #679AAA',
+        borderRadius: 10,
+        overflow: 'hidden'
     },
     rightSideAnalyzer: {
         minWidth: "81%",
@@ -438,7 +447,7 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     rightSideTableContainer: {
-        width: '90%',
+        width: '100%',
         maxHeight: 540,
         overflowY: 'scroll',
         borderTop: "3.07px #8A7F7C solid",

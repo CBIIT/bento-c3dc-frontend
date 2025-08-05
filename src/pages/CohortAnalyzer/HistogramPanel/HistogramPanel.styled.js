@@ -20,7 +20,6 @@ export const HistogramContainer = styled.div`
   height: auto;
   @media (max-width: 1660px) {
     max-width: 100%;
-    
   }
 
 `;
@@ -29,6 +28,8 @@ export const HistogramContainer = styled.div`
 export const DatasetSelectionTitle = styled.div`
   font-family: Poppins; 
   font-size: 19px;
+  color: ${props => props.disabled ? '#999999' : '#000000'};
+  opacity: ${props => props.disabled ? 0.8 : 1};
 `;
 
 

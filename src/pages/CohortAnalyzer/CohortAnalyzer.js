@@ -911,6 +911,7 @@ padding-left: 5px;
 
 
                     </div>
+                    <div className={classes.tableSectionOuterContainer}>
                     <div className={classes.cohortCountSection}>
                         <div style={{
                             display: 'flex',
@@ -1013,6 +1014,7 @@ padding-left: 5px;
 
                         
 
+                    </div>
                     </div>
                 </div>
             </div>

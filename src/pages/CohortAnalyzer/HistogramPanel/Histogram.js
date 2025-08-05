@@ -82,7 +82,9 @@ const Histogram = ({c1,c2,c3}) => {
   return (
     <HistogramContainer>
       {/* Dataset Selection */}
-      <DatasetSelectionTitle>View Venn Diagram in set operations:</DatasetSelectionTitle>
+      <DatasetSelectionTitle disabled={allInputsEmpty}>
+        View Venn Diagram in set operations:
+      </DatasetSelectionTitle>
       <div style={{ marginBottom: '20px' }}>
         {Object.keys(titles).map((key, index) => (
           <label key={key} style={{ marginRight: '20px', fontFamily: 'Nunito', fontSize: '14px', color: '#666' }}>
@@ -91,6 +93,7 @@ const Histogram = ({c1,c2,c3}) => {
               value={key}
               checked={selectedDatasets.includes(key)}
               onChange={() => handleDatasetChange(key)}
+              disabled={allInputsEmpty}
               style={{ marginRight: '8px', accentColor: '#6D5F5B' }}
             />
             {titles[key]}
