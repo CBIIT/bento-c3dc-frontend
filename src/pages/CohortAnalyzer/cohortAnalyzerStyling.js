@@ -285,7 +285,7 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'flex-end',
         width: '100%',
         paddingBottom: 10,
-        addingRight: 15,
+        paddingRight: 15,
         [theme.breakpoints.down('lg')]: {
             width: '100%'
         }
