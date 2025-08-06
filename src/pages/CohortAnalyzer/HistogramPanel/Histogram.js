@@ -30,8 +30,8 @@ const Histogram = ({c1,c2,c3}) => {
   };
 
   let data = graphData;
-  const MAX_BARS_DISPLAYED = 5;
-  const MAX_BARS_DISPLAYED_EXPANDED = 20;
+  const MAX_BARS_DISPLAYED = 6;
+  const MAX_BARS_DISPLAYED_EXPANDED = 21;
 
   const filteredData = useMemo(() => {
     if (Object.keys(graphData).length > 0 && selectedDatasets.length > 0) {

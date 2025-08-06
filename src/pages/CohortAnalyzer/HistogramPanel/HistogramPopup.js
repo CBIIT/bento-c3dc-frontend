@@ -105,7 +105,7 @@ const ExpandedChartModal = ({
         </div>
         <ModalChartWrapper>
           <div style={{ display: 'flex', flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
-            <RadioGroup style={{ height: '100px', marginTop: '20px' }}>
+            <RadioGroup style={{ height: '100px', width:'180px', marginTop: '20px' }}>
               <RadioLabel>
                 <RadioInput
                   type="radio"

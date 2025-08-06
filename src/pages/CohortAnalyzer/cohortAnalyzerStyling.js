@@ -339,7 +339,8 @@ export const useStyle = makeStyles((theme) => ({
         width: '105%',
         alignSelf: 'center',
         alignItems: 'center',
-        borderBottom: '1px solid gray',
+        borderBottom: '2.5px solid #679AAA',
+        maxHeight:'70px',
         "& h1": {
             fontFamily: 'Poppins',
             fontSize: '35px',
