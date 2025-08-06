@@ -17,7 +17,16 @@ import { CohortStateContext } from "../../../components/CohortSelectorState/Coho
 export const CohortSelector = () => {
     //context
     const { state } = useContext(CohortStateContext);
-    const { selectedCohorts, setSelectedCohorts, setDeleteInfo, deleteInfo, setNodeIndex, cohortList, setCohortList, handleCheckbox } = useCohortAnalyzer();
+    const {
+      selectedCohorts,
+      setSelectedCohorts,
+      setDeleteInfo,
+      deleteInfo,
+      setNodeIndex,
+      cohortList,
+      setCohortList,
+      handleCheckbox,
+    } = useCohortAnalyzer();
     
     //state
     const [sortType, setSortType] = useState("alphabet");
@@ -56,10 +65,13 @@ export const CohortSelector = () => {
                     <img onClick={() => {
                         resetSelection(setSelectedCohorts, setNodeIndex);
                     }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} role="button" />
-                    <p style={{ fontFamily: 'Nunito', fontSize: '11px', color: sortType === 'alphabet' ? '#646464' : '#646464' }} onClick={() => {
-                        sortBy("alphabet", cohortList, setCohortList, state);
-                        setSortType("alphabet");
-                    }}> Sort Alphabetically </p>
+                    <p 
+                        style={{ fontFamily: 'Nunito', fontSize: '11px', color: sortType === 'alphabet' ? '#646464' : '#646464' }} 
+                        onClick={() => {
+                            sortBy("alphabet", cohortList, setCohortList, state);
+                            setSortType("alphabet");
+                        }}> Sort Alphabetically 
+                    </p>
                 </div>
                 <div onClick={() => {
                     sortBy("count", cohortList, setCohortList, state);
@@ -102,7 +114,10 @@ export const CohortSelector = () => {
                                                     color: '#000'
                                                 }} > {cohortName} </span>
                                         </div>
-                                        <img alt={"Trashcan"} role="button" style={{ cursor: 'pointer', zIndex: 3 }} onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} src={trashCan} width={11} height={12} />
+                                        <img 
+                                            alt={"Trashcan"} role="button" style={{ cursor: 'pointer', zIndex: 3 }} 
+                                            onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }} 
+                                            src={trashCan} width={11} height={12} />
                                     </div>
                                 </div>
                             </div>
