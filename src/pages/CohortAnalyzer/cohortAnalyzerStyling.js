@@ -92,13 +92,6 @@ export const useStyle = makeStyles((theme) => ({
         all: 'unset',
         display: 'contents',
     },
-    sortCount: {
-        display: 'flex',
-        margin: 0,
-        alignItems: 'center',
-        marginRight: 25,
-        cursor: 'pointer'
-    },
     inputStyleContainer: {
         position: 'relative',
         display: 'flex',
@@ -381,24 +374,6 @@ export const useStyle = makeStyles((theme) => ({
         position: 'absolute',
         top: 20,
         margin: 'auto'
-    },
-    cohortChildContent: {
-        width: '95%', display: 'flex',
-        height: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        color: 'black',
-        '& div span': {
-            color: 'black',
-            fontFamily: 'Nunito',
-            fontSize: 14,
-            fontWeight: 300,
-            textAlign: 'left',
-        },
-        '& img': {
-            position: 'relative',
-            zIndex: 10000,
-        }
     },
     catagoryCard: {
         borderRadius: '8px',
