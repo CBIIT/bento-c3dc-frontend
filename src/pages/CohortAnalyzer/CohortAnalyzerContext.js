@@ -16,6 +16,18 @@ export const CohortAnalyzerProvider = ({ children }) => {
     const [nodeIndex, setNodeIndex] = useState(0);
     const [cohortList, setCohortList] = useState(Object.keys(state) || {});
     const [selectedCohorts, setSelectedCohorts] = useState([]);
+    const [queryVariable, setQueryVariable] = useState({});
+    const [rowData, setRowData] = useState([]);
+    const [refershInit, setRefershInit] = useState(false);
+    const [searchValue, setSearchValue] = useState("");
+    const [selectedChart, setSelectedChart] = useState([]);
+    const [refershSelectedChart, setRefershSelectedChart] = useState(false);
+    const [refershTableContent, setRefershTableContent] = useState(false);
+    const [selectedCohortSection, setSelectedCohortSections] = useState([]);
+    const [alert, setAlert] = useState({ type: '', message: '' });
+    const [generalInfo, setGeneralInfo] = useState({});
+    const [cohortData, setCohortData] = useState();
+    const [showNavigateAwayModal, setShowNavigateAwayModal] = useState(false);
 
 
 
@@ -48,7 +60,31 @@ export const CohortAnalyzerProvider = ({ children }) => {
         setCohortList,
         handleCheckbox,
         selectedCohorts,
-        setSelectedCohorts
+        setSelectedCohorts,
+        queryVariable,
+        setQueryVariable,
+        rowData,
+        setRowData,
+        refershInit,
+        setRefershInit,
+        searchValue,
+        setSearchValue,
+        selectedChart,
+        setSelectedChart,
+        refershSelectedChart,
+        setRefershSelectedChart,
+        refershTableContent,
+        setRefershTableContent,
+        selectedCohortSection,
+        setSelectedCohortSections,
+        alert,
+        setAlert,
+        generalInfo,
+        setGeneralInfo,
+        cohortData,
+        setCohortData,
+        showNavigateAwayModal,
+        setShowNavigateAwayModal
     };
 
     return (

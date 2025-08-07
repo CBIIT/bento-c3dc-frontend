@@ -1,26 +1,31 @@
 import React from 'react';
 import CohortAnalyzerHeader from '../components/CohortAnalyzerHeader';
 import ChartVenn from './ChartVenn';
-import placeHolder from '../../../assets/vennDigram/placeholder.png';
+import placeHolder from '../../../assets/vennDigram/placeHolder.png';
+import { useCohortAnalyzer } from '../CohortAnalyzerContext';
 
-const VennDigramContainer = ({
+const VennDiagramContainer = ({
     classes,
-    refershTableContent,
-    selectedCohorts,
-    nodeIndex,
-    cohortData,
     state,
-    setSelectedChart,
-    refershSelectedChart,
-    setRefershSelectedChart,
-    setSelectedCohortSections,
-    selectedCohortSection,
-    setGeneralInfo,
     containerRef,
     canvasRef,
-    setNodeIndex,
-    handleDownload,
 }) => {
+
+    const {
+        refershTableContent,
+        selectedCohorts,
+        nodeIndex,
+        cohortData,
+        setSelectedChart,
+        refershSelectedChart,
+        setRefershSelectedChart,
+        setSelectedCohortSections,
+        selectedCohortSection,
+        setGeneralInfo,
+        setNodeIndex,
+        handleDownload,
+    } = useCohortAnalyzer();
+
     return (
         <div className={classes.chartContainer}>
             <CohortAnalyzerHeader
@@ -53,4 +58,4 @@ const VennDigramContainer = ({
     )
 }
 
-export default VennDigramContainer;
+export default VennDiagramContainer;

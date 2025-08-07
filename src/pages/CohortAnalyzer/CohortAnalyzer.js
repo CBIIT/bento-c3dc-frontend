@@ -41,34 +41,25 @@ import store from "../../store";
 import { updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
 import { CohortSelector } from "./CohortSelector/CohortSelector";
 import { useCohortAnalyzer } from "./CohortAnalyzerContext";
-import VennDigramContainer from "./vennDiagram/VennDigramContainer";
+import VennDiagramContainer from "./vennDiagram/VennDiagramContainer";
+import Histogram from "./HistogramPanel/Histogram";
 
 export const CohortAnalyzer = () => {
     //context
-    const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, setNodeIndex, cohortList, setCohortList, handleCheckbox } = useCohortAnalyzer();
-     
+    const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, setNodeIndex, cohortList
+        , setCohortList, handleCheckbox, rowData, showNavigateAwayModal,setShowNavigateAwayModal,setAlert, cohortData, setCohortData, generalInfo, setGeneralInfo, setSearchValue
+    ,searchValue, queryVariable, setQueryVariable,setRowData,  selectedChart, setSelectedChart, selectedCohortSection, setSelectedCohortSections
+    ,refershTableContent, setRefershTableContent, refershInit} = useCohortAnalyzer();
+
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
     const classes = useStyle();
     const { state, dispatch } = useContext(CohortStateContext);
-    const [queryVariable, setQueryVariable] = useState({});
-    const [rowData, setRowData] = useState([]);
-    const [refershInit] = useState(false);
-    const [searchValue, setSearchValue] = useState("");
-    const [selectedChart, setSelectedChart] = useState([]);
-    const [refershSelectedChart, setRefershSelectedChart] = useState(false);
-    const [refershTableContent, setRefershTableContent] = useState(false);
-    const [selectedCohortSection, setSelectedCohortSections] = useState([]);
-    const [alert, setAlert] = useState({ type: '', message: '' });
-    const [generalInfo, setGeneralInfo] = useState({});
-    const [cohortData, setCohortData] = useState();
-    const [showNavigateAwayModal, setShowNavigateAwayModal] = useState(false);
-
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { Notification } = useGlobal();
     const navigate = useNavigate();
 
-    
+
 
     const handleUserRedirect = () => {
         // NOTE: If needed to show in only Autocomplete of Localfind.
@@ -132,20 +123,20 @@ export const CohortAnalyzer = () => {
 
     }
 
-      const handleDownload = () => {
-    if (containerRef.current && canvasRef.current) {
-      const canvas = canvasRef.current;
-      
-      // Create download link
-      const link = document.createElement('a');
-      link.download = 'venn-diagram.png';
-      link.href = canvas.toDataURL('image/png');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      setAlert({ type: 'success', message: 'Confirmed download of Venn Diagram from the Cohort Analyzer by Participant ID' });
-    }
-  };
+    const handleDownload = () => {
+        if (containerRef.current && canvasRef.current) {
+            const canvas = canvasRef.current;
+
+            // Create download link
+            const link = document.createElement('a');
+            link.download = 'venn-diagram.png';
+            link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setAlert({ type: 'success', message: 'Confirmed download of Venn Diagram from the Cohort Analyzer by Participant ID' });
+        }
+    };
 
     function updatedCohortContent(newParticipantsData) {
         const newState = { ...state };
@@ -362,16 +353,16 @@ export const CohortAnalyzer = () => {
     }, [location]);
 
 
-      useEffect(() => {
-            if (alert.message) {
-                const timer = setTimeout(() => {
-                    setAlert({ type: '', message: '' }); 
-                }, 2500);
-    
-              
-                return () => clearTimeout(timer);
-            }
-        }, [alert]);
+    useEffect(() => {
+        if (alert.message) {
+            const timer = setTimeout(() => {
+                setAlert({ type: '', message: '' });
+            }, 2500);
+
+
+            return () => clearTimeout(timer);
+        }
+    }, [alert]);
 
     useEffect(() => {
         setSearchValue("");
@@ -612,151 +603,144 @@ export const CohortAnalyzer = () => {
             />
             <Stats />
             <div className={classes.container}>
-               
-                <CohortSelector/>
+
+                <CohortSelector />
                 <div className={classes.rightSideAnalyzer}>
-                           {alert.message && (
-                    <Alert severity={alert.type}  className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
-                        {alert.message}
-                    </Alert>
-                )}
+                    {alert.message && (
+                        <Alert severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
+                            {alert.message}
+                        </Alert>
+                    )}
                     <div className={classes.rightSideAnalyzerHeader}>
                         <h1> Cohort Analyzer</h1>
                     </div>
-                   
+
 
                     <div className={classes.rightSideAnalyzerOuterContainer}>
-                    <div className={classes.rightSideAnalyzerInnerContainer}>
-                         <div className={classes.rightSideAnalyzerHeader2}>
-                        <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
+                        <div className={classes.rightSideAnalyzerInnerContainer}>
+                            <div className={classes.rightSideAnalyzerHeader2}>
+                                <p>After selecting cohorts using the Cohort Selector panel (on the left), the Cohort Analyzer Venn diagram will be updated. Click on a Venn diagram segment to view the relevant results. By default, the Venn diagram will use <b>Participant ID</b> to match across cohorts, but other data categories can be selected.
 
-                            <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of selected cohorts. Numbers in parentheses show unique records for the radio button selection, while numbers inside the diagram indicate unique values. The count next to your cohort in the sidebar reflects total participants."} arrow placement="top">
-                                <img alt={"question mark icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
-                            </ToolTip>
-                        </p>
-                    </div>
-                     <VennDigramContainer
-                         refershTableContent={refershTableContent}
-                                selectedCohorts={selectedCohorts}
-                                nodeIndex={nodeIndex}
-                                cohortData={cohortData}
+                                    <ToolTip backgroundColor={'white'} zIndex={3000} title={"The Venn diagram is a stylized representation of selected cohorts. Numbers in parentheses show unique records for the radio button selection, while numbers inside the diagram indicate unique values. The count next to your cohort in the sidebar reflects total participants."} arrow placement="top">
+                                        <img alt={"question mark icon"} src={questionIcon} width={10} style={{ fontSize: 10, position: 'relative', top: -5, left: -3 }} />
+                                    </ToolTip>
+                                </p>
+                            </div>
+                            <VennDiagramContainer
                                 state={state}
-                                setSelectedChart={setSelectedChart}
-                                refershSelectedChart={refershSelectedChart}
-                                setSelectedCohortSections={setSelectedCohortSections}
-                                selectedCohortSection={selectedCohortSection}
-                                setGeneralInfo={setGeneralInfo}
                                 containerRef={containerRef}
                                 canvasRef={canvasRef}
-                                setNodeIndex={setNodeIndex}
-                                handleDownload={handleDownload}
-                     />
-                        </div>
-
-                        
-
-                    </div>
-                    <div className={classes.cohortCountSection}>
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'flex-end',
-                            alignItems: 'center',
-                            gap: '12px', // Adjust gap as needed
-                            marginTop: 10,
-                            flexWrap: 'wrap' // in case of small screens
-                        }}>
-                            {/* Create New Cohort */}
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <CreateNewCOhortButton
-                                    selectedCohortSection={selectedCohortSection}
-                                    classes={classes}
-                                    questionIcon={questionIcon}
-                                    handleClick={handleClick}
-                                    ToolTip={ToolTip}
-                                />
-                            </div>
-
-                            {/* Download Button */}
-                            <div style={{ display: 'flex', alignItems: 'center' }}>
-                                <DownloadSelectedCohort
-                                    queryVariable={queryVariable}
-                                    isSelected={selectedCohorts.length > 0 && rowData.length > 0}
-                                />
-                            </div>
-
-                            {/* BUILD IN EXPLORE DASHBOARD */}
-                            <div style={{ position: "relative", marginRight: '6px' }}>
-                                <button
-                                    onClick={() => selectedCohorts.length > 0 && handleBuildInExplore()}
-                                    className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
-                                >
-                                    BUILD IN EXPLORE DASHBOARD
-                                </button>
-                                <div style={{ position: "absolute", top: -5, right: -13, }}>
-                                    <ToolTip
-                                        maxWidth="335px"
-                                        border={'1px solid #598ac5'}
-                                        arrowBorder={'1px solid #598AC5'}
-                                        title={<div>
-                                            {exploreDashboardTooltip}
-                                        </div>}
-                                        placement="top-end"
-                                        arrow
-                                        interactive
-                                        arrowSize="30px"
-                                    >
-
-                                        <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px" }} />
-
-                                    </ToolTip>
-                                </div>
-                            </div>
-
-                            {/* EXPLORE IN CCDI HUB */}
-                            <div style={{ position: "relative", marginRight: '10px' }}>
-                                <button
-                                    onClick={() => (selectedCohorts.length > 0 && rowData.length <= 600) ? handleExportToCCDIHub() : {}}
-                                    className={(selectedCohorts.length > 0 && rowData.length <= 600) ? classes.exploreButton : classes.exploreButtonFaded}
-                                >
-                                    EXPLORE IN CCDI HUB
-                                    <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
-                                </button>
-                                <div style={{ position: "absolute", top: -5, right: -13, }}>
-                                    <ToolTip
-                                        maxWidth="335px"
-                                        border={'1px solid #598ac5'}
-                                        arrowBorder={'1px solid #598AC5'}
-                                        title={<div >
-                                            {exploreCCDIHubTooltip}
-                                        </div>}
-                                        placement="top-end"
-                                        arrow
-                                        interactive
-                                        arrowSize="30px"
-                                    >
-                                        <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px" }} />
-
-                                    </ToolTip>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className={classes.rightSideTableContainer}>
-
-                        {refershTableContent &&
-
-                            <TableView
-                                initState={refershInit ? initTblState : initTblState}
-                                themeConfig={themeConfig}
-                                tblRows={rowData}
-                                queryVariables={queryVariable}
-                                server={false}
-                                totalRowCount={rowData.length}
-                                activeTab={"Participant"}
+                                classes={classes}
                             />
-                        }
+                        </div>
 
+                        <Histogram
+                            c1={selectedCohorts[0] && state && state[selectedCohorts[0]] ? state[selectedCohorts[0]].participants.map((item) => item.id) : []}
+                            c2={selectedCohorts[1] && state && state[selectedCohorts[1]] ? state[selectedCohorts[1]].participants.map((item) => item.id) : []}
+                            c3={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].participants.map((item) => item.id) : []}
+                        />
+                    </div>
+                    <div className={classes.tableSectionOuterContainer}>
+                        <div className={classes.cohortCountSection}>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'flex-end',
+                                alignItems: 'center',
+                                gap: '12px', // Adjust gap as needed
+                                marginTop: 10,
+                                flexWrap: 'wrap' // in case of small screens
+                            }}>
+                                {/* Create New Cohort */}
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <CreateNewCOhortButton
+                                        selectedCohortSection={selectedCohortSection}
+                                        classes={classes}
+                                        questionIcon={questionIcon}
+                                        handleClick={handleClick}
+                                        ToolTip={ToolTip}
+                                    />
+                                </div>
 
+                                {/* Download Button */}
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                    <DownloadSelectedCohort
+                                        queryVariable={queryVariable}
+                                        isSelected={selectedCohorts.length > 0 && rowData.length > 0}
+                                    />
+                                </div>
+
+                                {/* BUILD IN EXPLORE DASHBOARD */}
+                                <div style={{ position: "relative", marginRight: '6px' }}>
+                                    <button
+                                        onClick={() => selectedCohorts.length > 0 && handleBuildInExplore()}
+                                        className={selectedCohorts.length > 0 ? classes.exploreButton : classes.exploreButtonFaded}
+                                    >
+                                        BUILD IN EXPLORE DASHBOARD
+                                    </button>
+                                    <div style={{ position: "absolute", top: -5, right: -13, }}>
+                                        <ToolTip
+                                            maxWidth="335px"
+                                            border={'1px solid #598ac5'}
+                                            arrowBorder={'1px solid #598AC5'}
+                                            title={<div>
+                                                {exploreDashboardTooltip}
+                                            </div>}
+                                            placement="top-end"
+                                            arrow
+                                            interactive
+                                            arrowSize="30px"
+                                        >
+
+                                            <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px" }} />
+
+                                        </ToolTip>
+                                    </div>
+                                </div>
+
+                                {/* EXPLORE IN CCDI HUB */}
+                                <div style={{ position: "relative", marginRight: '10px' }}>
+                                    <button
+                                        onClick={() => (selectedCohorts.length > 0 && rowData.length <= 600) ? handleExportToCCDIHub() : {}}
+                                        className={(selectedCohorts.length > 0 && rowData.length <= 600) ? classes.exploreButton : classes.exploreButtonFaded}
+                                    >
+                                        EXPLORE IN CCDI HUB
+                                        <img alt="link out icon" src={linkoutIcon} height={13} width={13} />
+                                    </button>
+                                    <div style={{ position: "absolute", top: -5, right: -13, }}>
+                                        <ToolTip
+                                            maxWidth="335px"
+                                            border={'1px solid #598ac5'}
+                                            arrowBorder={'1px solid #598AC5'}
+                                            title={<div >
+                                                {exploreCCDIHubTooltip}
+                                            </div>}
+                                            placement="top-end"
+                                            arrow
+                                            interactive
+                                            arrowSize="30px"
+                                        >
+                                            <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px" }} />
+
+                                        </ToolTip>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={classes.rightSideTableContainer}>
+
+                            {refershTableContent &&
+
+                                <TableView
+                                    initState={refershInit ? initTblState : initTblState}
+                                    themeConfig={themeConfig}
+                                    tblRows={rowData}
+                                    queryVariables={queryVariable}
+                                    server={false}
+                                    totalRowCount={rowData.length}
+                                    activeTab={"Participant"}
+                                />
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
