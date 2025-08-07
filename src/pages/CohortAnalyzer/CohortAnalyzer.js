@@ -42,6 +42,7 @@ import store from "../../store";
 import { updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
 import { CohortSelector } from "./CohortSelector/CohortSelector";
 import { useCohortAnalyzer } from "./CohortAnalyzerContext";
+import Histogram from "./HistogramPanel/Histogram";
 
 export const CohortAnalyzer = () => {
     //context
@@ -733,14 +734,21 @@ export const CohortAnalyzer = () => {
                                 />}
 
                                 {selectedCohorts.length === 0 &&
-                            <img src={placeHolder} alt='placeholder' width={725} style={{ marginTop: 10,alignSelf:'center' }} />
+                            <img src={placeHolder} alt='placeholder' className={classes.chartVennPlaceholder}  style={{ marginTop: 10,alignSelf:'center' }} />
                         }
                                 </div>
                         </div>
-
+                       
+                            <Histogram
+                                c1={selectedCohorts[0] && state && state[selectedCohorts[0]] ? state[selectedCohorts[0]].participants.map((item) => item.id) : []}
+                                c2={selectedCohorts[1] && state && state[selectedCohorts[1]] ? state[selectedCohorts[1]].participants.map((item) => item.id) : []}
+                                c3={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].participants.map((item) => item.id) : []}
+                            />
                         
 
+
                     </div>
+                    <div className={classes.tableSectionOuterContainer}>
                     <div className={classes.cohortCountSection}>
                         <div style={{
                             display: 'flex',
@@ -841,7 +849,9 @@ export const CohortAnalyzer = () => {
                             />
                         }
 
+                        
 
+                    </div>
                     </div>
                 </div>
             </div>
