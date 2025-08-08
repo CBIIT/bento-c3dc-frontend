@@ -117,9 +117,7 @@ const getJoinedCohortData = async ({
 
             }
         } else {
-            if (location && location.state && location.state.cohort && location.state.cohort.cohortId) {
-
-            } else {
+            if (!location || !location.state || !location.state.cohort || !location.state.cohort.cohortId) {
                 setRowData([]);
             }
 

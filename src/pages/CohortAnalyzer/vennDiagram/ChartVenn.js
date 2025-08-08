@@ -138,7 +138,7 @@ if(data){
 }
 
  
-/* LIFECYCLE */
+// useEffect hooks
   useEffect(() => {
     const updatedBaseSets = cohortData.map((cohort) => {
       const seenValues = new Set();

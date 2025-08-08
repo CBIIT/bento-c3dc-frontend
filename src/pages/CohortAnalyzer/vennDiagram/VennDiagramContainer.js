@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import CohortAnalyzerHeader from '../components/CohortAnalyzerHeader';
 import ChartVenn from './ChartVenn';
 import placeHolder from '../../../assets/vennDigram/placeHolder.png';
@@ -26,6 +26,12 @@ const VennDiagramContainer = ({
         setAlert
     } = useCohortAnalyzer();
 
+    const mappedCohortData = useMemo(() => {
+        if(cohortData && selectedCohorts.length > 0 && state) {
+            return cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]));
+        }
+        return [];
+    }, [cohortData, selectedCohorts, state]);
 
     const handleDownload = () => {
         if (containerRef.current && canvasRef.current) {
@@ -42,6 +48,9 @@ const VennDiagramContainer = ({
         }
     };
 
+    const handleSetSelectedChart = (data) => { setSelectedChart(data); setRefreshSelectedChart(!refreshSelectedChart) }
+
+
     return (
         <div className={classes.chartContainer}>
             <CohortAnalyzerHeader
@@ -55,8 +64,8 @@ const VennDiagramContainer = ({
             {refreshTableContent && selectedCohorts.length > 0 &&
                 <ChartVenn
                     intersection={nodeIndex}
-                    cohortData={cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
-                    setSelectedChart={(data) => { setSelectedChart(data); setRefreshSelectedChart(!refreshSelectedChart) }}
+                    cohortData={mappedCohortData}
+                    setSelectedChart={handleSetSelectedChart}
                     setSelectedCohortSections={(data) => {
                         setSelectedCohortSections(data);
                     }}
