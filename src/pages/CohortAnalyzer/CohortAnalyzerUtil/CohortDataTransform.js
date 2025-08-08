@@ -2,6 +2,9 @@ import client from '../../../utils/graphqlClient';
 import { analyzer_query, responseKeys } from '../../../bento/cohortAnalayzerPageData';
 import { generateQueryVariable, getIdsFromCohort, getAllIds, filterAllParticipantWithDiagnosisName, filterAllParticipantWithTreatmentType, addCohortColumn } from './CohortAnalyzerUtil';
 
+const DEFAULT_QUERY_LIMIT = 10000;
+
+
 const getJoinedCohortData = async ({
     nodeIndex,
     selectedCohorts,
@@ -13,7 +16,6 @@ const getJoinedCohortData = async ({
     location,
     setCohortData
 }) => {
-    const DEFAULT_QUERY_LIMIT = 10000;
     function transformData(data, type) {
         if (type === "treatment") {
             return data.map(({ participant, id, ...rest }) => ({
@@ -99,8 +101,9 @@ const getJoinedCohortData = async ({
 
     async function getJoinedCohort(isReset = false) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
-        if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pk": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: DEFAULT_QUERY_LIMIT };
+        if (Object.keys(generalInfo).length > 0) { 
+            const participantPK = isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo);
+            queryVariables = { "participant_pk": participantPK, first: DEFAULT_QUERY_LIMIT };
         }
         setQueryVariable(queryVariables);
         let { data } = await client.query({

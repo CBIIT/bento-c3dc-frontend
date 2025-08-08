@@ -36,10 +36,52 @@ import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
 
 export const CohortAnalyzer = () => {
     //context
-    const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, cohortList
-        , setCohortList, handleCheckbox, rowData, showNavigateAwayModal, setShowNavigateAwayModal, setAlert, cohortData, setCohortData, generalInfo, setGeneralInfo, setSearchValue
-        , searchValue, queryVariable, setQueryVariable, setRowData, selectedChart, selectedCohortSection, setSelectedCohortSections
-        , refreshTableContent, setRefreshTableContent, refreshInit } = useCohortAnalyzer();
+    const cohortAnalyzerContext = useCohortAnalyzer();
+    // Cohort selection and list management
+    const {
+        selectedCohorts,
+        setSelectedCohorts,
+        cohortList,
+        setCohortList,
+        nodeIndex,
+    } = cohortAnalyzerContext;
+    // Cohort data and general info
+    const {
+        cohortData,
+        setCohortData,
+        generalInfo,
+        setGeneralInfo,
+    } = cohortAnalyzerContext;
+    // Row data and table refresh
+    const {
+        rowData,
+        setRowData,
+        refreshTableContent,
+        setRefreshTableContent,
+        refreshInit,
+    } = cohortAnalyzerContext;
+    // Search and query
+    const {
+        searchValue,
+        setSearchValue,
+        queryVariable,
+        setQueryVariable,
+    } = cohortAnalyzerContext;
+    // Chart and cohort section selection
+    const {
+        selectedChart,
+        selectedCohortSection,
+        setSelectedCohortSections,
+    } = cohortAnalyzerContext;
+    // Modal and alert handling
+    const {
+        setDeleteInfo,
+        deleteInfo,
+        handleCheckbox,
+        showNavigateAwayModal,
+        setShowNavigateAwayModal,
+        setAlert,
+    } = cohortAnalyzerContext;
 
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
