@@ -48,7 +48,10 @@ const VennDiagramContainer = ({
         }
     };
 
-    const handleSetSelectedChart = (data) => { setSelectedChart(data); setRefreshSelectedChart(!refreshSelectedChart) }
+    const handleSetSelectedChart = (data) => {
+        setSelectedChart(data);
+        setRefreshSelectedChart(!refreshSelectedChart);
+    }
 
 
     return (

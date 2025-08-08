@@ -13,6 +13,7 @@ const getJoinedCohortData = async ({
     location,
     setCohortData
 }) => {
+    const DEFAULT_QUERY_LIMIT = 10000;
     function transformData(data, type) {
         if (type === "treatment") {
             return data.map(({ participant, id, ...rest }) => ({
@@ -99,7 +100,7 @@ const getJoinedCohortData = async ({
     async function getJoinedCohort(isReset = false) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pk": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: 10000 };
+            queryVariables = { "participant_pk": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: DEFAULT_QUERY_LIMIT };
         }
         setQueryVariable(queryVariables);
         let { data } = await client.query({
@@ -127,7 +128,7 @@ const getJoinedCohortData = async ({
     async function getJoinedCohortByD(selectedCohortSection = null) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
+            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: DEFAULT_QUERY_LIMIT };
         }
         setQueryVariable(queryVariables);
         let { data } = await client.query({
@@ -171,7 +172,7 @@ const getJoinedCohortData = async ({
     async function getJoinedCohortByT(selectedCohortSection = null) {
         let queryVariables = generateQueryVariable(selectedCohorts, state);
         if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
+            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: DEFAULT_QUERY_LIMIT };
         }
         setQueryVariable(queryVariables);
         let { data } = await client.query({
