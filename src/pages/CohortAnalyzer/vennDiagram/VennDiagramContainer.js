@@ -28,7 +28,8 @@ const VennDiagramContainer = ({
 
     const mappedCohortData = useMemo(() => {
         if(cohortData && selectedCohorts.length > 0 && state) {
-            return cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]));
+            const mappingFunction = (cohortId) => (cohortData || state)[cohortId];
+            return selectedCohorts.map(mappingFunction);
         }
         return [];
     }, [cohortData, selectedCohorts, state]);
