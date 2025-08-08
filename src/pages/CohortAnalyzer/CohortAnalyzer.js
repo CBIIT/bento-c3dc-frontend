@@ -39,7 +39,7 @@ export const CohortAnalyzer = () => {
     const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, cohortList
         , setCohortList, handleCheckbox, rowData, showNavigateAwayModal, setShowNavigateAwayModal, setAlert, cohortData, setCohortData, generalInfo, setGeneralInfo, setSearchValue
         , searchValue, queryVariable, setQueryVariable, setRowData, selectedChart, selectedCohortSection, setSelectedCohortSections
-        , refershTableContent, setRefershTableContent, refershInit } = useCohortAnalyzer();
+        , refreshTableContent, setRefreshTableContent, refreshInit } = useCohortAnalyzer();
 
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
@@ -225,8 +225,8 @@ export const CohortAnalyzer = () => {
     }, [nodeIndex])
 
     useEffect(() => {
-        setRefershTableContent(false)
-        setTimeout(() => setRefershTableContent(true), 0)
+        setRefreshTableContent(false)
+        setTimeout(() => setRefreshTableContent(true), 0)
     }, [cohortList, nodeIndex, cohortData])
 
     const handleClick = () => {
@@ -448,10 +448,10 @@ export const CohortAnalyzer = () => {
                         </div>
                         <div className={classes.rightSideTableContainer}>
 
-                            {refershTableContent &&
+                            {refreshTableContent &&
 
                                 <TableView
-                                    initState={refershInit ? initTblState : initTblState}
+                                    initState={refreshInit ? initTblState : initTblState}
                                     themeConfig={themeConfig}
                                     tblRows={rowData}
                                     queryVariables={queryVariable}

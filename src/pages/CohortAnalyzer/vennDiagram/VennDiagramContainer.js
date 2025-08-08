@@ -12,13 +12,13 @@ const VennDiagramContainer = ({
 }) => {
 
     const {
-        refershTableContent,
+        refreshTableContent,
         selectedCohorts,
         nodeIndex,
         cohortData,
         setSelectedChart,
-        refershSelectedChart,
-        setRefershSelectedChart,
+        refreshSelectedChart,
+        setRefreshSelectedChart,
         setSelectedCohortSections,
         selectedCohortSection,
         setGeneralInfo,
@@ -52,11 +52,11 @@ const VennDiagramContainer = ({
                 classes={classes}
             />
 
-            {refershTableContent && selectedCohorts.length > 0 &&
+            {refreshTableContent && selectedCohorts.length > 0 &&
                 <ChartVenn
                     intersection={nodeIndex}
                     cohortData={cohortData ? (selectedCohorts.map(cohortId => cohortData[cohortId])) : (selectedCohorts.map(cohortId => state[cohortId]))}
-                    setSelectedChart={(data) => { setSelectedChart(data); setRefershSelectedChart(!refershSelectedChart) }}
+                    setSelectedChart={(data) => { setSelectedChart(data); setRefreshSelectedChart(!refreshSelectedChart) }}
                     setSelectedCohortSections={(data) => {
                         setSelectedCohortSections(data);
                     }}
