@@ -9,7 +9,7 @@ import {
     resetSelection,
     sortBy,
     sortByReturn,
-} from "../CohortAnalyzerUtil";
+} from "../CohortAnalyzerUtil/CohortAnalyzerUtil";
 import { useCohortAnalyzer } from "../CohortAnalyzerContext";
 import { CohortStateContext } from "../../../components/CohortSelectorState/CohortStateContext";
 

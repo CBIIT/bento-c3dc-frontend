@@ -1,9 +1,7 @@
 import React from 'react';
-//import Tooltip from '../../../components/ToolTipIcon/ToolTipIconView';
-import questionIcon from '../../../assets/icons/Question_Icon.svg';
 import questionIcon3 from '../../../assets/icons/Question_Icon_3.svg';
 import DownloadIcon from '../../../assets/icons/DownloadIcon.svg';
-import { Tooltip } from '@material-ui/core';
+import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 
 const CohortAnalyzerHeader = ({
   selectedCohorts,
@@ -18,12 +16,12 @@ const CohortAnalyzerHeader = ({
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                                     <div style={{display: 'flex',flexDirection: 'row', gap:0,alignItems:'center'}}>
                                         <p style={{ margin: 15, marginTop: 5,marginRight: 0, marginBottom: 0, fontSize: 17, fontFamily: 'Poppins', color: 'white' }}>Select a data category for cohort matching:</p>
-                                        <Tooltip maxWidth="380px"  backgroundColor={'white'} zIndex={3000}  title={"The venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate,"} arrow placement="top">
+                                        <ToolTip maxWidth="380px"   backgroundColor={'white'} zIndex={3000}  title={"The venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate,"} arrow placement="top">
                                            <img alt={"Question mark"} src={questionIcon3} style={{marginTop: -4}} height={10} />
-                                        </Tooltip>
+                                        </ToolTip>
                                     </div>
                                     <div className={classes.chartRadioContainer}>
-                                        <Tooltip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                        <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
                                              <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center',opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
                                                 <input 
                                                  style={{
@@ -42,8 +40,8 @@ const CohortAnalyzerHeader = ({
                                                 }} radioGroup="node_type" name="node_type" aria-label="Participant radio button" />
                                                 Participant ID
                                             </p>
-                                        </Tooltip>
-                                        <Tooltip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                        </ToolTip>
+                                        <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
                                             <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center',opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
                                                 <input 
@@ -63,8 +61,8 @@ const CohortAnalyzerHeader = ({
                                                 }} radioGroup="node_type" name="node_type" aria-label="Diagnosis Radio button" />
                                                 Diagnosis
                                             </p>
-                                        </Tooltip>
-                                        <Tooltip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
+                                        </ToolTip>
+                                        <ToolTip backgroundColor={'white'} zIndex={3000} title={"All Venn diagram selected areas will be cleared when changing buttons"} arrow placement="top">
 
                                               <p style={{ fontSize: 15, fontFamily: 'Poppins', margin: 0, gap: 3, display: 'flex',alignItems: 'center', justifyContent: 'center', opacity: selectedCohorts.length === 0 ? 0.6 : 1 }}>
                                                 <input 
@@ -84,7 +82,7 @@ const CohortAnalyzerHeader = ({
                                                 }} type="radio" radioGroup="node_type" name="node_type" aria-label="Treatment Radio button" />
                                                 Treatment
                                             </p>
-                                        </Tooltip>
+                                        </ToolTip>
                                     </div>
                                 </div>
 

@@ -1,41 +1,30 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
-import { tableConfig, analyzer_query, analyzer_tables, responseKeys } from "../../bento/cohortAnalayzerPageData";
+import { tableConfig, analyzer_tables } from "../../bento/cohortAnalayzerPageData";
 import DownloadSelectedCohort from "./downloadCohort/DownloadSelectedCohorts";
-import client from "../../utils/graphqlClient";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../../components/CohortModal/components/shared/DeleteConfirmationModal";
 import NavigateAwayModal from './navigateAwayModal';
-import placeHolder from "../../assets/vennDigram/placeHolder.png";
-import ChartVenn from "./vennDiagram/ChartVenn";
 import { CohortModalContext } from "../../components/CohortModal/CohortModalContext";
 import CohortModal from "../../components/CohortModal/CohortModal";
 import Alert from '@material-ui/lab/Alert';
 import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
 import linkoutIcon from "../../assets/about/Export_Icon_White.svg";
-import LinkoutBlue from "../../assets/about/Export_Icon.svg";
-import CohortAnalyzerHeader from "./components/CohortAnalyzerHeader"
-
+import { exploreCCDIHubTooltip, exploreDashboardTooltip } from "./CohortAnalyzerConfig";
 import { useStyle } from "./cohortAnalyzerStyling";
 import {
-    addCohortColumn,
-    generateQueryVariable,
     handlePopup,
     handleDelete,
     SearchBox,
     triggerNotification,
-    getAllIds,
-    getIdsFromCohort,
-    filterAllParticipantWithDiagnosisName,
-    filterAllParticipantWithTreatmentType
-} from "./CohortAnalyzerUtil";
+} from "./CohortAnalyzerUtil/CohortAnalyzerUtil";
 import { CreateNewCOhortButton } from "./CreateNewCohortButton/CreateNewCohortButton";
 import store from "../../store";
 import { updateUploadData, updateUploadMetadata } from "@bento-core/local-find";
@@ -43,13 +32,14 @@ import { CohortSelector } from "./CohortSelector/CohortSelector";
 import { useCohortAnalyzer } from "./CohortAnalyzerContext";
 import VennDiagramContainer from "./vennDiagram/VennDiagramContainer";
 import Histogram from "./HistogramPanel/Histogram";
+import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
 
 export const CohortAnalyzer = () => {
     //context
-    const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, setNodeIndex, cohortList
-        , setCohortList, handleCheckbox, rowData, showNavigateAwayModal,setShowNavigateAwayModal,setAlert, cohortData, setCohortData, generalInfo, setGeneralInfo, setSearchValue
-    ,searchValue, queryVariable, setQueryVariable,setRowData,  selectedChart, setSelectedChart, selectedCohortSection, setSelectedCohortSections
-    ,refershTableContent, setRefershTableContent, refershInit} = useCohortAnalyzer();
+    const { selectedCohorts, nodeIndex, setSelectedCohorts, setDeleteInfo, deleteInfo, cohortList
+        , setCohortList, handleCheckbox, rowData, showNavigateAwayModal, setShowNavigateAwayModal, setAlert, cohortData, setCohortData, generalInfo, setGeneralInfo, setSearchValue
+        , searchValue, queryVariable, setQueryVariable, setRowData, selectedChart, selectedCohortSection, setSelectedCohortSections
+        , refershTableContent, setRefershTableContent, refershInit } = useCohortAnalyzer();
 
     const containerRef = useRef(null);
     const canvasRef = useRef(null);
@@ -58,8 +48,6 @@ export const CohortAnalyzer = () => {
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { Notification } = useGlobal();
     const navigate = useNavigate();
-
-
 
     const handleUserRedirect = () => {
         // NOTE: If needed to show in only Autocomplete of Localfind.
@@ -102,9 +90,7 @@ export const CohortAnalyzer = () => {
         return finalUrl;
     }
 
-
     const searchRef = useRef();
-
 
     const handleSearchValue = (e) => {
         setSearchValue(e.target.value)
@@ -123,224 +109,22 @@ export const CohortAnalyzer = () => {
 
     }
 
-    const handleDownload = () => {
-        if (containerRef.current && canvasRef.current) {
-            const canvas = canvasRef.current;
-
-            // Create download link
-            const link = document.createElement('a');
-            link.download = 'venn-diagram.png';
-            link.href = canvas.toDataURL('image/png');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            setAlert({ type: 'success', message: 'Confirmed download of Venn Diagram from the Cohort Analyzer by Participant ID' });
-        }
-    };
-
-    function updatedCohortContent(newParticipantsData) {
-        const newState = { ...state };
-        selectedCohorts.forEach(cohortId => {
-            const existingParticipants = newState[cohortId].participants || [];
-
-            const updatedParticipants = existingParticipants.map(participant => {
-                const matchingNewParticipant = newParticipantsData.find(
-                    newParticipant => newParticipant.participant_pk === participant.participant_pk
-                );
-
-                if (matchingNewParticipant) {
-                    return {
-                        ...participant, ...matchingNewParticipant
-
-                    };
-                }
-
-                return participant;
-            })
-            newState[cohortId] = {
-                ...newState[cohortId],
-                participants: updatedParticipants,
-            };
-
-        });
-        setCohortData(newState);
-    }
-
-    function updatedCohortContentAllowDuplication(newParticipantsData) {
-        const newState = { ...state };
-        selectedCohorts.forEach(cohortId => {
-            const existingParticipants = newState[cohortId].participants || [];
-
-
-            let finalResponse = [];
-            newParticipantsData.forEach((participant) => {
-                const matchingExistingParticipants = existingParticipants.find(
-                    existingParticipant => existingParticipant.participant_pk === participant.participant_pk
-                );
-
-                if (matchingExistingParticipants) {
-                    finalResponse.push({
-                        ...matchingExistingParticipants, ...participant
-                    })
-                }
-
-            })
-
-            newState[cohortId] = {
-                ...newState[cohortId],
-                participants: finalResponse,
-            };
-
-        });
-        setCohortData(newState);
-    }
-
-    function transformData(data, type) {
-        if (type === "treatment") {
-            return data.map(({ participant, id, ...rest }) => ({
-                participant_pk: participant.id,
-                participant_id: participant.participant_id,
-                treatment_pk: id,
-                ...rest,
-            }));
-        } else if (type === "diagnosis") {
-            return data.map(({ participant, id, ...rest }) => ({
-                participant_pk: participant.id,
-                participant_id: participant.participant_id,
-                diagnosis_pk: id,
-                ...rest,
-            }));
-        } else {
-            return data.map(({ id, participant_id, ...rest }) => ({
-                participant_pk: id,
-                participant_id: participant_id,
-                id: id,
-                ...rest,
-            }));
-        }
-
-    }
-
     async function getJoinedCohort(isReset = false) {
-        let queryVariables = generateQueryVariable(selectedCohorts, state);
-        if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pk": isReset ? getIdsFromCohort(state, selectedCohorts) : getAllIds(generalInfo), first: 10000 };
-        }
-        setQueryVariable(queryVariables);
-        let { data } = await client.query({
-            query: analyzer_query[nodeIndex],
-            variables: queryVariables,
+        await getJoinedCohortData({
+            nodeIndex,
+            selectedCohorts,
+            state,
+            generalInfo,
+            searchValue,
+            isReset,
+            setQueryVariable,
+            setRowData,
+            location,
+            setCohortData
         });
-        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "participants") }
-        if (queryVariables.participant_pk.length > 0) {
-            if (searchValue !== "") {
-                let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
-                setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
-            } else {
-                setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts, "participant"));
-                updatedCohortContent(data[responseKeys[nodeIndex]])
-
-            }
-        } else {
-            if (location && location.state && location.state.cohort && location.state.cohort.cohortId) {
-
-            } else {
-                setRowData([]);
-            }
-
-        }
-    }
-
-    async function getJoinedCohortByD(selectedCohortSection = null) {
-        let queryVariables = generateQueryVariable(selectedCohorts, state);
-        if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
-        }
-        setQueryVariable(queryVariables);
-        let { data } = await client.query({
-            query: analyzer_query[nodeIndex],
-            variables: queryVariables,
-        });
-        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "diagnosis") }
-        if (queryVariables.participant_pk.length > 0) {
-            if (searchValue !== "") {
-
-                let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
-
-                if (JSON.stringify(selectedCohortSection) !== "{}") {
-                    filteredRowData = filterAllParticipantWithDiagnosisName(generalInfo, filteredRowData)
-                }
-                setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
-
-            } else {
-
-
-                if (JSON.stringify(selectedCohortSection) !== "{}") {
-
-                    let filterRowData = filterAllParticipantWithDiagnosisName(generalInfo, data[responseKeys[nodeIndex]])
-                    setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
-                } else {
-                    setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
-                    updatedCohortContent(data[responseKeys[nodeIndex]])
-                }
-
-            }
-        } else {
-            if (location && location.state && location.state.cohort && location.state.cohort.cohortId) {
-
-            } else {
-                setRowData([]);
-            }
-
-        }
-    }
-
-    async function getJoinedCohortByT(selectedCohortSection = null) {
-        let queryVariables = generateQueryVariable(selectedCohorts, state);
-        if (Object.keys(generalInfo).length > 0) {
-            queryVariables = { "participant_pk": getIdsFromCohort(state, selectedCohorts), first: 10000 };
-        }
-        setQueryVariable(queryVariables);
-        let { data } = await client.query({
-            query: analyzer_query[nodeIndex],
-            variables: queryVariables,
-        });
-        data = { [responseKeys[nodeIndex]]: transformData(data[responseKeys[nodeIndex]], "treatment") }
-
-        if (queryVariables.participant_pk.length > 0) {
-            if (searchValue !== "") {
-                let filteredRowData = data[responseKeys[nodeIndex]].filter((a, b) => a.participant_id.includes(searchValue))
-                if (JSON.stringify(selectedCohortSection) !== "{}") {
-                    filteredRowData = filterAllParticipantWithTreatmentType(generalInfo, filteredRowData)
-                }
-                setRowData(addCohortColumn(filteredRowData, state, selectedCohorts));
-            } else {
-
-
-                if (JSON.stringify(selectedCohortSection) !== "{}") {
-
-                    let filterRowData = filterAllParticipantWithTreatmentType(generalInfo, data[responseKeys[nodeIndex]])
-                    setRowData(addCohortColumn(filterRowData, state, selectedCohorts));
-                    //updatedCohortContent(filterRowData)
-
-                } else {
-                    setRowData(addCohortColumn(data[responseKeys[nodeIndex]], state, selectedCohorts));
-                    updatedCohortContentAllowDuplication(data[responseKeys[nodeIndex]])
-                }
-
-            }
-        } else {
-            if (location && location.state && location.state.cohort && location.state.cohort.cohortId) {
-
-            } else {
-                setRowData([]);
-            }
-
-        }
     }
 
     const location = useLocation();
-
 
     useEffect(() => {
         if (location) {
@@ -352,13 +136,11 @@ export const CohortAnalyzer = () => {
 
     }, [location]);
 
-
     useEffect(() => {
         if (alert.message) {
             const timer = setTimeout(() => {
                 setAlert({ type: '', message: '' });
             }, 2500);
-
 
             return () => clearTimeout(timer);
         }
@@ -373,17 +155,8 @@ export const CohortAnalyzer = () => {
     }, [selectedChart])
 
     useEffect(() => {
-
-
         if (selectedChart.length >= 0) {
-
-            if (nodeIndex === 0) {
-                getJoinedCohort();
-            } else if (nodeIndex === 1) {
-                getJoinedCohortByD(generalInfo);
-            } else if (nodeIndex === 2) {
-                getJoinedCohortByT(generalInfo)
-            }
+            getJoinedCohort();
         }
 
 
@@ -431,29 +204,12 @@ export const CohortAnalyzer = () => {
         }
     }, [selectedCohorts, selectedChart]);
 
-
-
     useEffect(() => {
-
-        if (nodeIndex === 0) {
-            getJoinedCohort();
-        } else if (nodeIndex === 1) {
-            getJoinedCohortByD(generalInfo);
-        } else if (nodeIndex === 2) {
-            getJoinedCohortByT(generalInfo)
-        }
+        getJoinedCohort();
     }, [searchValue])
 
     useEffect(() => {
-        if (nodeIndex === 0) {
-            getJoinedCohort();
-        } else if (nodeIndex === 1) {
-
-            getJoinedCohortByD(generalInfo);
-        } else if (nodeIndex === 2) {
-            getJoinedCohortByT(generalInfo)
-        }
-
+        getJoinedCohort();
     }, [generalInfo])
 
     useEffect(() => {
@@ -464,14 +220,7 @@ export const CohortAnalyzer = () => {
         if (searchRef.current) {
             searchRef.current.value = "";
         }
-        if (nodeIndex === 0) {
-            getJoinedCohort(true);
-        } else if (nodeIndex === 1) {
-
-            getJoinedCohortByD({});
-        } else if (nodeIndex === 2) {
-            getJoinedCohortByT({})
-        }
+        getJoinedCohort(true);
 
     }, [nodeIndex])
 
@@ -509,7 +258,6 @@ export const CohortAnalyzer = () => {
         return { noMatch: "No data available for the selected segment/segments. Please try a different segment/segments." };
     };
 
-
     const initTblState = (initailState) => ({
         ...initailState,
         title: analyzer_tables[nodeIndex].name,
@@ -535,34 +283,6 @@ export const CohortAnalyzer = () => {
         showSearchBox: true,
         tableMsg: getTableMessage(cohortList, selectedCohortSection, tableConfig)
     });
-
-    const Gap = () => (
-        <div style={{ height: '10px' }} />
-    );
-
-    const exploreCCDIHubTooltip = <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
-        Clicking this button will create a url and open a new tab showing the  CCDI Hub  Explore page with filtered facets based on the user&apos;s selected  cohort.
-        <br />
-        <Gap />
-        <b>If cohort size &le; 600:</b><br />
-        Proceed with direct export within C3DC.
-        <br />
-        <Gap />
-        <b>If cohort size &gt; 600:</b><br />
-        Download the manifest and upload it manually to the <a style={{ zIndex: 10000, color: "#598AC5", fontWeight: "bolder" }} rel="noreferrer" target='_blank' href="https://ccdi.cancer.gov/explore"> CCDI Hub
-            <img src={LinkoutBlue} width={14} height={14} style={{ padding: "4px 0px 0px 2px", bottom: 0, position: 'relative' }} alt="Linkout Icon" />
-        </a> by following these steps:
-        <ol style={{ paddingLeft: "1rem" }}>
-            <li> Choose the Explore page from the menu.</li>
-            <li> In the Facets side panel, open the Demographic facet.</li>
-            <li> Click on “Upload Participants Set.”</li>
-        </ol>
-    </p>;
-
-    const exploreDashboardTooltip = <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
-        Clicking this button will create a pre-filtered facet for further analysis on the Explore Dashboard
-
-    </p>;
 
     return (
         <>

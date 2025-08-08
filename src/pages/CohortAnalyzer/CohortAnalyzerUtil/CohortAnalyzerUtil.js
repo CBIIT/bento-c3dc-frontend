@@ -1,5 +1,5 @@
 import React from "react";
-import search_icon from '../../assets/icons/Search_Icon.svg';
+import search_icon from '../../../assets/icons/Search_Icon.svg';
 
 export const triggerNotification = (count, Notification) => {
     if (count > 1) {
@@ -9,8 +9,6 @@ export const triggerNotification = (count, Notification) => {
     }
 
 };
-
-
 
 export const filterAllParticipantWithDiagnosisName = (generalInfo, allParticipants) => {
     let finalIds = [];

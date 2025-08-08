@@ -23,8 +23,24 @@ const VennDiagramContainer = ({
         selectedCohortSection,
         setGeneralInfo,
         setNodeIndex,
-        handleDownload,
+        setAlert
     } = useCohortAnalyzer();
+
+
+    const handleDownload = () => {
+        if (containerRef.current && canvasRef.current) {
+            const canvas = canvasRef.current;
+
+            // Create download link
+            const link = document.createElement('a');
+            link.download = 'venn-diagram.png';
+            link.href = canvas.toDataURL('image/png');
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            setAlert({ type: 'success', message: 'Confirmed download of Venn Diagram from the Cohort Analyzer by Participant ID' });
+        }
+    };
 
     return (
         <div className={classes.chartContainer}>
@@ -52,7 +68,7 @@ const VennDiagramContainer = ({
                 />}
 
             {selectedCohorts.length === 0 &&
-                <img src={placeHolder} alt='placeholder' width={725} style={{ marginTop: 10, alignSelf: 'center' }} />
+                <img src={placeHolder} alt='placeholder' width={1125} style={{ marginTop: 10, alignSelf: 'center' }} />
             }
         </div>
     )
