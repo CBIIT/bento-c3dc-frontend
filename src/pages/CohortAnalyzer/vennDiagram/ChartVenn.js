@@ -25,42 +25,7 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
 
   const [baseSets, setBaseSets] = useState([]);
   const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const updatedBaseSets = cohortData.map((cohort) => {
-      const seenValues = new Set();
-      return {
-        label: `${cohort.cohortName.length > 15 ? cohort.cohortName.slice(0, 15) + '...' : cohort.cohortName} (${cohort.participants.length})`,
-        values: cohort.participants
-          .map(p => p[nodes[intersection]])
-          .filter(value => {
-            if (value !== null && value !== undefined && !seenValues.has(value)) {
-              seenValues.add(value);
-              return true;
-            }
-            return false;
-          }),
-        size: cohort.participants.length,
-      };
-    });
-   
-
-    setBaseSets(updatedBaseSets);
-  }, [cohortData]);
   
-  useEffect(() => {
-    if (baseSets.length > 0) {
-      const updatedData = extractSets(
-        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size}))
-      );
-
-      
-      setData(updatedData);
-    } 
-  }, [baseSets]);
-
- 
-
   const handleChartClick = (event) => {
     const elementsAtEvent = chartRef.current.getElementsAtEventForMode(
       event,
@@ -93,15 +58,11 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
     }
   };
 
-
-
-  
   const getBorderColor = (item, index ) => {
     return selectedCohortSection.includes(item.label) ? "rgba(0, 0, 0, 0.1)" : "#929292";
   }
 
   const getBorderWidth = (item, index) =>{
-  
     return selectedCohortSection.includes(item.label) ? 4 : 0.5;
   }
 
@@ -177,6 +138,36 @@ if(data){
 }
 
  
+// useEffect hooks
+  useEffect(() => {
+    const updatedBaseSets = cohortData.map((cohort) => {
+      const seenValues = new Set();
+      return {
+        label: `${cohort.cohortName.length > 15 ? cohort.cohortName.slice(0, 15) + '...' : cohort.cohortName} (${cohort.participants.length})`,
+        values: cohort.participants
+          .map(p => p[nodes[intersection]])
+          .filter(value => {
+            if (value !== null && value !== undefined && !seenValues.has(value)) {
+              seenValues.add(value);
+              return true;
+            }
+            return false;
+          }),
+        size: cohort.participants.length,
+      };
+    });
+
+    setBaseSets(updatedBaseSets);
+  }, [cohortData]);
+
+  useEffect(() => {
+    if (baseSets.length > 0) {
+      const updatedData = extractSets(
+        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
+      );
+      setData(updatedData);
+    }
+  }, [baseSets]);
 
 useEffect(() => {
   if (chartRef.current && canvasRef.current) {
@@ -190,8 +181,6 @@ useEffect(() => {
     if (chartRef.current) chartRef.current.destroy();
   };
 }, [selectedCohortSection, data, selectedCohort , cohortData]);
-    
-    
 
   useEffect(() => {
     let updatedStat = {};
