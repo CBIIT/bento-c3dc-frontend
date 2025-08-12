@@ -1,4 +1,4 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useRef} from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 import ExpandIcon from "../../../assets/icons/Expand_Histogram_icon.svg";
@@ -16,8 +16,9 @@ import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePla
 
 const Histogram = ({c1,c2,c3}) => {
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({c1,c2,c3});
+  
   const titles = {
-    sexAtBirth: 'Sex at Birth',
+   sexAtBirth: 'Sex at Birth',
     race: 'Race',
     treatmentType: 'Treatment Type',
     response: 'Treatment Outcome',
@@ -32,7 +33,7 @@ const Histogram = ({c1,c2,c3}) => {
   let data = graphData;
   const MAX_BARS_DISPLAYED = 6;
   const MAX_BARS_DISPLAYED_EXPANDED = 21;
-
+  const cellHover = useRef(null);
   const filteredData = useMemo(() => {
     if (Object.keys(graphData).length > 0 && selectedDatasets.length > 0) {
       const otherKey = expandedChart ? 'OtherMany' : 'OtherFew';
@@ -55,10 +56,25 @@ const Histogram = ({c1,c2,c3}) => {
     return graphData;
   }, [graphData, selectedDatasets, expandedChart])
 
+  // Hover effect for bars
+  const handleMouseEnter = (entry) => {
+    cellHover.current = entry;
+  };
+
+  const handleMouseLeave = () => {
+    cellHover.current = null;
+  };
+
   // Custom tooltip componen
-  const CustomTooltip = ({ active, payload, label }) => {
+   const CustomTooltip = ({ active, payload, label, viewType }) => {
     if (active && payload && payload.length) {
-      const data = payload[0].payload;
+      
+      const isPercentage = viewType === 'percentage';
+      const hoveredEntry = payload.find((entry) => {
+            return entry.dataKey === cellHover.current;
+      });
+      const value = hoveredEntry ? hoveredEntry.payload[cellHover.current] : 0;
+ 
       return (
         <div style={{
           backgroundColor: 'white',
@@ -68,12 +84,12 @@ const Histogram = ({c1,c2,c3}) => {
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
         }}>
           <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
-          <p style={{ margin: 0, color: '#666' }}>
-            Count: {data.count}
-          </p>
-          <p style={{ margin: 0, color: '#666' }}>
-            Percentage: {data.percentage}%
-          </p>
+          {hoveredEntry && (
+            <p style={{ margin: 0, color: '#666' }}>
+              value: {value} {isPercentage ? '%' : ''}
+            </p>
+          )
+          }
         </div>
       );
     }
@@ -171,13 +187,15 @@ const Histogram = ({c1,c2,c3}) => {
 
                 <ChartActionButtons>
                   <span onClick={() => {
+                    if(!allInputsEmpty){
                     setExpandedChart(dataset);
                     setActiveTab(dataset);
+                    }
                   }} >
-                    <img src={ExpandIcon} alt={"expand"} style={{ width: '23px', height: '23px' }} />
+                    <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
                   </span>
-                  <span onClick={() => downloadChart(dataset)}>
-                    <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
+                  <span onClick={() => !allInputsEmpty && downloadChart(dataset)}>
+                    <img src={DownloadIcon} alt={"download"} style={{opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
                   </span>
 
                 </ChartActionButtons>
@@ -210,46 +228,46 @@ const Histogram = ({c1,c2,c3}) => {
                   </RadioLabel>
                 </RadioGroup>
   <ResponsiveContainer width="80%" height="100%">
-    <BarChart
-        data={filteredData[dataset]}
-      margin={{ top: 20, right: 30, left: 10, bottom: 0 }}
-    >
-      <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
-      <XAxis
-        dataKey="name"
-        interval={0}
-        angle={0}
-        textAnchor="middle"
-        height={50}
-        tick={<CustomTick />}
-      />
-      <YAxis
-        domain={[0, viewType[dataset] === 'percentage' ? 100 : 'dataMax']}
-        tickFormatter={(value) => viewType[dataset] === 'percentage' ? `${value}%` : value}
-        tick={{ fontSize: 12, fill: '#333' }}
-      />
-      <Tooltip content={<CustomTooltip />} />
+                    <BarChart
+                      data={filteredData[dataset]}
+                      margin={{ top: 20, right: 30, left: 10, bottom: 0 }}
+                    >
+                      <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
+                      <XAxis
+                        dataKey="name"
+                        interval={0}
+                        angle={0}
+                        textAnchor="middle"
+                        height={50}
+                        tick={<CustomTick />}
+                      />
+                      <YAxis
+                        domain={[0, viewType[dataset] === 'percentage' ? 100 : 'dataMax']}
+                        tickFormatter={(value) => viewType[dataset] === 'percentage' ? `${value}%` : value}
+                        tick={{ fontSize: 12, fill: '#333' }}
+                      />
+                      <Tooltip content={<CustomTooltip viewType={viewType[dataset]} />} />
                       {valueA > 0 && (
-                        <Bar dataKey="valueA" opacity={0.8} maxBarSize={60}>
+                        <Bar dataKey="valueA" maxBarSize={60} stroke="#000" strokeWidth={0.6}>
                           {filteredData[dataset].map((entry, entryIndex) => (
-                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorA} />
+                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorA} onMouseEnter={() => handleMouseEnter("valueA")} onMouseLeave={handleMouseLeave} />
                           ))}
                         </Bar>
                       )}
                       {valueB > 0 && (
-                        <Bar dataKey="valueB" opacity={0.8} maxBarSize={60}>
+                        <Bar dataKey="valueB" maxBarSize={60} stroke="#000" strokeWidth={0.6} >
                           {filteredData[dataset].map((entry, entryIndex) => (
-                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorB} />
+                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorB} onMouseEnter={() => handleMouseEnter("valueB")} onMouseLeave={handleMouseLeave} />
                           ))}
                         </Bar>
                       )}
                       {valueC > 0 && (
-                        <Bar dataKey="valueC" opacity={0.8} maxBarSize={60}>
+                        <Bar dataKey="valueC" maxBarSize={60} stroke="#000" strokeWidth={0.6}>
                           {filteredData[dataset].map((entry, entryIndex) => (
-                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorC} />
+                            <Cell key={`cell-${dataset}-${entryIndex}`} fill={entry.colorC} onMouseEnter={() => handleMouseEnter("valueC")} onMouseLeave={handleMouseLeave} />
                           ))}
                         </Bar>)}
-    </BarChart>
+                    </BarChart>
   </ResponsiveContainer>
   </>
 ) : (

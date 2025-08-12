@@ -22,9 +22,11 @@ export const useStyle = makeStyles((theme) => ({
         [theme.breakpoints.down('lg')]: {
             maxWidth: '99%',
             height: '100%',
+            minHeight: 707,
             overflow: 'visible',
             paddingBottom: '24px',
             alignItems: 'center',
+            justifyContent: 'center',
             marginLeft: 8,
             '& .App': {
                 maxWidth: '60%',

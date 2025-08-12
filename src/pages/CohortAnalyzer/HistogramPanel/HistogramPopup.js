@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useRef } from "react";
 import {
   RadioGroup, RadioInput
   , RadioLabel, ModalChartWrapper, ModalContent
@@ -8,29 +8,36 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 
 
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div style={{
-        backgroundColor: 'white',
-        padding: '10px',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
-        <p style={{ margin: 0, color: '#666' }}>
-          Count: {data.count}
-        </p>
-        <p style={{ margin: 0, color: '#666' }}>
-          Percentage: {data.percentage}%
-        </p>
-      </div>
-    );
-  }
-  return null;
-};
+
+ const CustomTooltip = ({ active, payload, label, viewType, data, cellHover }) => {
+    if (active && payload && payload.length) {
+      
+      const isPercentage = viewType === 'percentage';
+      const hoveredEntry = payload.find((entry) => {
+            return entry.dataKey === cellHover.current;
+      });
+      const value = hoveredEntry ? hoveredEntry.payload[cellHover.current] : 0;
+ 
+      return (
+        <div style={{
+          backgroundColor: 'white',
+          padding: '10px',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        }}>
+          <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
+          {hoveredEntry && (
+            <p style={{ margin: 0, color: '#666' }}>
+              value: {value} {isPercentage ? '%' : ''}
+            </p>
+          )
+          }
+        </div>
+      );
+    }
+    return null;
+  };
 
 const CustomTick = ({ x, y, payload }) => {
   const lines = payload.value.split(' ');
@@ -76,6 +83,17 @@ const ExpandedChartModal = ({
       valueC += entry.valueC || 0;
     });
   }
+
+ const cellHover = useRef(null);
+
+ // Hover effect for bars
+  const handleMouseEnter = (entry) => {
+    cellHover.current = entry;
+  };
+
+  const handleMouseLeave = () => {
+    cellHover.current = null;
+  };
 
   return (
     <ModalOverlay onClick={() => setExpandedChart(null)}>
@@ -147,16 +165,16 @@ const ExpandedChartModal = ({
         tickFormatter={(value) => viewType[activeTab] === 'percentage' ? `${value}%` : value}
         tick={{ fontSize: 14, fill: '#333' }}
       />
-      <Tooltip content={<CustomTooltip />} />
+      <Tooltip content={<CustomTooltip viewType={viewType[activeTab]} data={data[activeTab]} cellHover={cellHover} />} />
        {valueA>0 &&
-      <Bar dataKey="valueA" name="Dataset 1" fill={"#FCF1CC"} opacity={0.8} maxBarSize={60} barSize={valueC > 0 ? undefined : 40} />
+      <Bar dataKey="valueA" name="Dataset 1" fill={"#FAE69C"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueA")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={valueC > 0 ? undefined : 40} />
 
       }
       {valueB>0 &&
-      <Bar dataKey="valueB" name="Dataset 2" fill={"#A4E9CB"} opacity={0.8} maxBarSize={60} barSize={valueC > 0 ? undefined : 40} />
+      <Bar dataKey="valueB" name="Dataset 2" fill={"#A4E9CB"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueB")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={valueC > 0 ? undefined : 40} />
       }
       {valueC>0 &&
-      <Bar dataKey="valueC" name="Dataset 3" fill={"#A2CCE8"} opacity={0.8} maxBarSize={60} barSize={40} />
+      <Bar dataKey="valueC" name="Dataset 3" fill={"#A3CCE8"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueC")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={40} />
       }
     </BarChart>
   </ResponsiveContainer>
