@@ -10,6 +10,8 @@ import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 
 
  const CustomTooltip = ({ active, payload, label, viewType, data, cellHover }) => {
+    if (cellHover.current == null) return null;
+    
     if (active && payload && payload.length) {
       
       const isPercentage = viewType === 'percentage';
@@ -29,7 +31,7 @@ import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
           <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
           {hoveredEntry && (
             <p style={{ margin: 0, color: '#666' }}>
-              value: {value} {isPercentage ? '%' : ''}
+              value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
             </p>
           )
           }
@@ -161,11 +163,15 @@ const ExpandedChartModal = ({
         height={80}
       />
       <YAxis
-        domain={[0, viewType[activeTab] === 'percentage' ? 100 : 'dataMax']}
-        tickFormatter={(value) => viewType[activeTab] === 'percentage' ? `${value}%` : value}
+        domain={[0, 'dataMax']}
+        tickFormatter={(value) => {
+    const num = Number(value);
+    const formatted = num % 1 === 0 ? num : num.toFixed(1);
+    return viewType[activeTab] === 'percentage' ? `${formatted}%` : formatted;
+  }}
         tick={{ fontSize: 14, fill: '#333' }}
       />
-      <Tooltip content={<CustomTooltip viewType={viewType[activeTab]} data={data[activeTab]} cellHover={cellHover} />} />
+      <Tooltip content={(props) => ( <CustomTooltip {...props} viewType={viewType[activeTab]} data={data[activeTab]} cellHover={cellHover} /> )} />
        {valueA>0 &&
       <Bar dataKey="valueA" name="Dataset 1" fill={"#FAE69C"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueA")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={valueC > 0 ? undefined : 40} />
 

@@ -67,6 +67,8 @@ const Histogram = ({c1,c2,c3}) => {
 
   // Custom tooltip componen
    const CustomTooltip = ({ active, payload, label, viewType }) => {
+    if (cellHover.current == null) return null;
+
     if (active && payload && payload.length) {
       
       const isPercentage = viewType === 'percentage';
@@ -86,7 +88,7 @@ const Histogram = ({c1,c2,c3}) => {
           <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
           {hoveredEntry && (
             <p style={{ margin: 0, color: '#666' }}>
-              value: {value} {isPercentage ? '%' : ''}
+              value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
             </p>
           )
           }
@@ -242,9 +244,12 @@ const Histogram = ({c1,c2,c3}) => {
                         tick={<CustomTick />}
                       />
                       <YAxis
-                        domain={[0, viewType[dataset] === 'percentage' ? 100 : 'dataMax']}
-                        tickFormatter={(value) => viewType[dataset] === 'percentage' ? `${value}%` : value}
-                        tick={{ fontSize: 12, fill: '#333' }}
+                        domain={[0, 'dataMax']}
+                        tickFormatter={(value) => {
+                        const num = Number(value);
+                        const formatted = num % 1 === 0 ? num : num.toFixed(1);
+                        return viewType[activeTab] === 'percentage' ? `${formatted}%` : formatted;
+                      }} tick={{ fontSize: 12, fill: '#333' }}
                       />
                       <Tooltip content={<CustomTooltip viewType={viewType[dataset]} />} />
                       {valueA > 0 && (

@@ -84,7 +84,7 @@ export const ChartWrapper = styled.div`
   &:hover {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
-    @media (min-width: 1960px) {
+    @media (min-width: 1560px) {
     min-width: 100%;
     width: 100%;
     }
