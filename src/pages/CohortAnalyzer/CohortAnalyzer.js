@@ -16,7 +16,7 @@ import Alert from '@material-ui/lab/Alert';
 import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
 import { useStyle } from "./cohortAnalyzerStyling";
-import { CohortAnalyzerTableSection } from "./CohortAnalyzerTableSection/CohortAnalyzerTableSection"
+import  { CohortAnalyzerTableSection }  from "./CohortAnalyzerTableSection/CohortAnalyzerTableSection"
 import {
     handlePopup,
     handleDelete,
@@ -399,13 +399,16 @@ export const CohortAnalyzer = () => {
                             c3={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].participants.map((item) => item.id) : []}
                         />
                     </div>
-                   <CohortAnalyzerTableSection
-                       classes={classes}
-                       selectedCohortSection={selectedCohortSection}
-                       questionIcon={questionIcon}
-                       handleClick={handleClick}
-                       ToolTip={ToolTip}
-                   />
+                     <CohortAnalyzerTableSection
+                        classes={classes}
+                        selectedCohortSection={selectedCohortSection}
+                        questionIcon={questionIcon}
+                        handleClick={handleClick} 
+                        handleBuildInExplore={handleBuildInExplore}
+                        handleExportToCCDIHub={handleExportToCCDIHub}
+                        initTblState={initTblState}
+                        themeConfig={themeConfig}
+                    />
                 </div>
             </div>
         </>
