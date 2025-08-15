@@ -13,7 +13,7 @@ export const useStyle = makeStyles((theme) => ({
         borderRadius: '10px',
         flex: 1,
         display: 'flex',
-        maxHeight: 588,
+        maxHeight: 610,
         flexDirection: 'column',
         overflow: 'hidden',
         marginLeft: 6,
@@ -21,12 +21,12 @@ export const useStyle = makeStyles((theme) => ({
             width: "95%",
             maxWidth: '95%',
             minWidth: '95%',
-            height: "100%",
+            height: "80%",
             padding: "24px 0px 36px 0px",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: 'blue',
+            
             [theme.breakpoints.down('lg')]: { 
                 minWidth: '80%'
             }
@@ -35,7 +35,7 @@ export const useStyle = makeStyles((theme) => ({
         '& .chart-container': {
             width: '100%',
             height: "100%",
-            backgroundColor: 'red',
+            
             alignItems: "center",
             justifyContent: "center",
             display: "flex",
@@ -56,6 +56,7 @@ export const useStyle = makeStyles((theme) => ({
     chartContainerHeader: {
         width: '100%',
         height: 69,
+        minHeight: 69,
         backgroundColor: '#3A7587',
         position: 'relative',
         top: 0,
@@ -153,7 +154,9 @@ export const useStyle = makeStyles((theme) => ({
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
         borderLeft: 'none',
-
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
     },
     leftSideAnalyzerChild: {
         height: '90%',
@@ -304,7 +307,10 @@ export const useStyle = makeStyles((theme) => ({
         marginLeft: 10,
         border: '0.75px solid #679AAA',
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
     },
     rightSideAnalyzer: {
         minWidth: "81%",
@@ -319,6 +325,9 @@ export const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         overflowY: 'visible',
         overflowX: 'hidden',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
         [theme.breakpoints.down('lg')]: {
             alignItems: 'flex-start',
             padding: '0 24px 24px 24px',
