@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
-import { TableView } from "@bento-core/paginated-table";
 import { themeConfig } from "../studies/tableConfig/Theme";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
 import { tableConfig, analyzer_tables } from "../../bento/cohortAnalayzerPageData";
@@ -53,15 +52,12 @@ export const CohortAnalyzer = () => {
     const {
         rowData,
         setRowData,
-        refreshTableContent,
         setRefreshTableContent,
-        refreshInit,
     } = cohortAnalyzerContext;
     // Search and query
     const {
         searchValue,
         setSearchValue,
-        queryVariable,
         setQueryVariable,
     } = cohortAnalyzerContext;
     // Chart and cohort section selection
