@@ -194,6 +194,9 @@ const styles = () => ({
     },
     cohortName: {
         width: '250px',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
     },
     editingCohortTitle: {
         fontFamily: 'Poppins',
@@ -229,6 +232,9 @@ const styles = () => ({
         },
         boxSizing: 'border-box',
         border: 'none',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
     },
     editIcon: {
         height: '13px',
