@@ -5,8 +5,7 @@
 
 export const demoCohorts = [
   {
-    cohortId: "demo-ganglioglioma-surgery",
-    cohortName: "Demo Cohort 1: Ganglioglioma Surgery",
+    cohortId: "Demo Cohort 1",
     cohortDescription: "Participants with Ganglioglioma NOS who underwent surgical treatment - demonstrating low-grade tumor characteristics and treatment outcomes",
     participants: [
       { participant_id: "PBBHTY", dbgap_accession: "phs002790", participant_pk: "demo_PBBHTY" },
@@ -38,8 +37,7 @@ export const demoCohorts = [
     lastUpdated: new Date().toISOString(),
   },
   {
-    cohortId: "demo-malignant-chemo-immuno",
-    cohortName: "Demo Cohort 2: Malignant Glioma Chemo/Immuno",
+    cohortId: "Demo Cohort 2",
     cohortDescription: "Participants with malignant Glioma treated with chemotherapy and immunotherapy - representing aggressive treatment approaches for high-grade tumors",
     participants: [
       { participant_id: "PBBJHS", dbgap_accession: "phs002790", participant_pk: "demo_PBBJHS_1" },
@@ -71,8 +69,7 @@ export const demoCohorts = [
     lastUpdated: new Date().toISOString(),
   },
   {
-    cohortId: "demo-malignant-glioma-radiation",
-    cohortName: "Demo Cohort 3: Malignant Glioma Radiation",
+    cohortId: "Demo Cohort 3",
     cohortDescription: "Participants with malignant Glioma treated with radiation therapy - showcasing radiation-based treatment protocols for brain tumors",
     participants: [
       { participant_id: "PBBNIZ", dbgap_accession: "phs002790", participant_pk: "demo_PBBNIZ" },
