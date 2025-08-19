@@ -1,4 +1,5 @@
-import React , { useRef } from "react";
+import React , { useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
   RadioGroup, RadioInput
   , RadioLabel, ModalChartWrapper, ModalContent
@@ -97,7 +98,19 @@ const ExpandedChartModal = ({
     cellHover.current = null;
   };
 
+  //Disable scroll
+  useEffect(() => {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    
+  }, [])
+
+
   return (
+    createPortal(
     <ModalOverlay onClick={() => setExpandedChart(null)}>
             
       <ModalContent onClick={(e) => e.stopPropagation()}>
@@ -125,6 +138,7 @@ const ExpandedChartModal = ({
         </div>
         <ModalChartWrapper>
           <div style={{ display: 'flex', flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
+           <fieldset style={{ border: 'none' }}>
             <RadioGroup style={{ height: '100px', width:'180px', marginTop: '20px' }}>
               <RadioLabel>
                 <RadioInput
@@ -134,7 +148,9 @@ const ExpandedChartModal = ({
                   checked={viewType[activeTab] === 'count'}
                   onChange={(e) => setViewType((prev) => ({ ...prev, [activeTab]: e.target.value }))}
                 />
-                # of Cases
+                    <legend>
+                      # of Cases
+                    </legend>
               </RadioLabel>
               <RadioLabel>
                 <RadioInput
@@ -144,9 +160,12 @@ const ExpandedChartModal = ({
                   checked={viewType[activeTab] === 'percentage'}
                   onChange={(e) => setViewType((prev) => ({ ...prev, [activeTab]: e.target.value }))}
                 />
-                % of Cases
+                <legend>
+                  % of Cases
+                </legend>
               </RadioLabel>
             </RadioGroup>
+             </fieldset>
            {Array.isArray(data[activeTab]) && data[activeTab].length > 0 ? (
   <ResponsiveContainer id={`chart-${activeTab}`} width="100%"  height="100%">
     <BarChart
@@ -203,8 +222,9 @@ const ExpandedChartModal = ({
           </div>
         </ModalChartWrapper>
       </ModalContent>
-    </ModalOverlay>
-  );
+    </ModalOverlay>,
+  document.body
+));
 };
 
 export default ExpandedChartModal;

@@ -34,7 +34,7 @@ export const DatasetSelectionTitle = styled.div`
 `;
 
 
-export const ChartTitle = styled.h3`
+export const ChartTitle = styled.h2`
   font-family: Poppins; 
   font-size: 19px;
   font-weight: 600;
@@ -132,13 +132,14 @@ export const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  bottom: 0;
+  right: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1500;
+  overflow: hidden;
 `;
 
 export const ModalContent = styled.div`

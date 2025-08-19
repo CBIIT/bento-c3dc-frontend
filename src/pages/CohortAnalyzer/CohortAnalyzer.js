@@ -35,6 +35,10 @@ import Histogram from "./HistogramPanel/Histogram";
 import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
 
 export const CohortAnalyzer = () => {
+    useEffect(() => {
+        document.title = "Cohort Analyzer | CCDI Bento";
+    }, []);
+
     //context
     const cohortAnalyzerContext = useCohortAnalyzer();
     // Cohort selection and list management
@@ -364,7 +368,7 @@ export const CohortAnalyzer = () => {
                 onCloseModal={() => setShowCohortModal(false)}
             />
             <Stats />
-            <div className={classes.container}>
+            <div className={classes.container} role={"Main"} >
 
                 <CohortSelector />
                 <div className={classes.rightSideAnalyzer}>
@@ -373,7 +377,7 @@ export const CohortAnalyzer = () => {
                             {alert.message}
                         </Alert>
                     )}
-                    <div className={classes.rightSideAnalyzerHeader}>
+                    <div className={classes.rightSideAnalyzerHeader} role={'Banner'}>
                         <h1> Cohort Analyzer</h1>
                     </div>
 

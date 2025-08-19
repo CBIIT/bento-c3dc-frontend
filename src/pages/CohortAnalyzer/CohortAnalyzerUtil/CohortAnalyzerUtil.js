@@ -171,7 +171,7 @@ export const handleDelete = (cohortId,
 
 export const SearchBox = (classes, handleSearchValue, searchValue, searchReference) => {
     return (
-        <div className={classes.inputStyleContainer}>
+        <div className={classes.inputStyleContainer} role={"Search"}>
                
 
             <input

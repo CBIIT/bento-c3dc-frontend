@@ -207,6 +207,7 @@ const Histogram = ({c1,c2,c3}) => {
              
              {Array.isArray(data[dataset]) && data[dataset].length > 0  ? (
               <> 
+                <fieldset style={{ border: 'none' }}>
                  <RadioGroup>
                   <RadioLabel>
                     <RadioInput
@@ -216,7 +217,9 @@ const Histogram = ({c1,c2,c3}) => {
                       checked={viewType[dataset] === 'count'}
                       onChange={(e) => setViewType({ ...viewType, [dataset]: e.target.value })}
                     />
-                    # of Cases
+                    <legend>
+                      # of Cases
+                    </legend>
                   </RadioLabel>
                   <RadioLabel>
                     <RadioInput
@@ -226,9 +229,12 @@ const Histogram = ({c1,c2,c3}) => {
                       checked={viewType[dataset] === 'percentage'}
                       onChange={(e) => setViewType({ ...viewType, [dataset]: e.target.value })}
                     />
-                    % of Cases
+                    <legend>
+                      % of Cases
+                    </legend>
                   </RadioLabel>
                 </RadioGroup>
+                </fieldset>
   <ResponsiveContainer width="80%" height="100%">
                     <BarChart
                       data={filteredData[dataset]}
