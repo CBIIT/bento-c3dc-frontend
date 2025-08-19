@@ -15,7 +15,7 @@ import Alert from '@material-ui/lab/Alert';
 import { useGlobal } from "../../components/Global/GlobalProvider";
 import questionIcon from "../../assets/icons/Question_icon_2.svg";
 import { useStyle } from "./cohortAnalyzerStyling";
-import  { CohortAnalyzerTableSection }  from "./CohortAnalyzerTableSection/CohortAnalyzerTableSection"
+import { CohortAnalyzerTableSection } from "./CohortAnalyzerTableSection/CohortAnalyzerTableSection"
 import {
     handlePopup,
     handleDelete,

@@ -62,7 +62,7 @@ const CohortAnalyzerTableSection = ({ classes, questionIcon, handleClick, handle
             tooltip={exploreCCDIHubTooltip}
             icon={questionIcon}
           >
-            EXPLORE IN CCDI HUB&nbsp;
+            EXPLORE IN CCDI HUB
             <img alt="link out" src={linkoutIcon} height={13} width={13} />
           </ButtonWithTooltip>
         </div>
