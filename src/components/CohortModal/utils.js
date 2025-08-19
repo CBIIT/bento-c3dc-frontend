@@ -117,3 +117,45 @@ export const objectToJsonDownload = (obj, cohortID) => {
     return JSON.stringify(filteredObj1) !== JSON.stringify(filteredObj2);
   };
 
+// Helper function to create manifest payload for interop service
+export const getManifestPayload = (participants) => {
+  if (!participants || !Array.isArray(participants)) {
+    return [];
+  }
+  
+  // Group participants by study_id (dbgap_accession)
+  const studyGroups = participants.reduce((acc, participant) => {
+    const studyId = participant.dbgap_accession;
+    
+    // Skip participants with missing or invalid dbgap_accession
+    if (studyId === undefined || studyId === null || studyId === '') {
+      console.warn('Participant missing dbgap_accession:', participant.participant_id || 'Unknown participant');
+      return acc;
+    }
+    
+    if (!acc[studyId]) {
+      acc[studyId] = {
+        study_id: studyId,
+        participant_id: []
+      };
+    }
+    acc[studyId].participant_id.push(participant.participant_id);
+    return acc;
+  }, {});
+  
+  // Convert to array format
+  return Object.values(studyGroups);
+};
+
+// Helper function to truncate signed CloudFront URLs at .json
+export const truncateSignedUrl = (url) => {
+  if (!url || typeof url !== 'string') return url;
+  
+  const jsonIndex = url.indexOf('.json');
+  if (jsonIndex !== -1) {
+    return url.substring(0, jsonIndex + 5); // +5 to include ".json"
+  }
+  
+  return url; // Return original if no .json found
+};
+
