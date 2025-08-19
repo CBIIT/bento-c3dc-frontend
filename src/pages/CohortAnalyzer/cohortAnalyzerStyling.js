@@ -88,6 +88,58 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'center'
     },
+    demoButton: {
+        boxSizing: 'border-box',
+        width: '197px',
+        height: '29px',
+        background: '#ECFAFC',
+        border: '1.25px solid #375C67',
+        borderRadius: '5px',
+        color: '#375C67',
+        fontFamily: 'Poppins',
+        fontWeight: 600,
+        fontSize: '12px',
+        lineHeight: '12px',
+        letterSpacing: '0.02em',
+        textTransform: 'uppercase',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: 'pointer'
+    },
+    demoButtonFaded: {
+        boxSizing: 'border-box',
+        width: '197px',
+        height: '29px',
+        background: '#F5F5F5',
+        border: '1.25px solid #CCCCCC',
+        borderRadius: '5px',
+        color: '#999999',
+        fontFamily: 'Poppins',
+        fontWeight: 600,
+        fontSize: '12px',
+        lineHeight: '12px',
+        letterSpacing: '0.02em',
+        textTransform: 'uppercase',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: 'not-allowed'
+    },
+    demoButtonContainer: {
+        position: 'relative',
+        marginLeft: '20px'
+    },
+    demoTooltipContent: {
+        fontFamily: 'Poppins',
+        fontWeight: 400,
+        fontSize: 13,
+        margin: 0,
+        textAlign: 'center',
+        '& p': {
+            margin: 0
+        }
+    },
     fieldsetReset: {
         all: 'unset',
         display: 'contents',

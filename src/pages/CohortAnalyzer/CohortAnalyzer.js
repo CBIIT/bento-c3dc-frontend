@@ -33,6 +33,7 @@ import { useCohortAnalyzer } from "./CohortAnalyzerContext";
 import VennDiagramContainer from "./vennDiagram/VennDiagramContainer";
 import Histogram from "./HistogramPanel/Histogram";
 import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
+import { demoCohorts } from "../../bento/demoCohortData";
 
 export const CohortAnalyzer = () => {
     //context
@@ -290,6 +291,40 @@ export const CohortAnalyzer = () => {
         }
     };
 
+    const handleDemoClick = () => {
+        // Check if adding 3 demo cohorts would exceed the 20-cohort limit
+        if (Object.keys(state).length > 17) {
+            Notification.show('Cannot add demo cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.', 5000);
+            return;
+        }
+
+        let successCount = 0;
+        const totalCohorts = demoCohorts.length;
+        
+
+        const handleDemoSuccess = (count) => {
+            successCount++;
+            if (successCount === totalCohorts) {
+                Notification.show(`Successfully created ${totalCohorts} demo cohorts! Select them from the Cohort Selector to begin analysis.`, 7000);
+            }
+        };
+
+        const handleDemoError = (error) => {
+            Notification.show(`Failed to create demo cohorts: ${error.message}`, 5000);
+        };
+
+        // Create each demo cohort
+        demoCohorts.forEach(cohort => {
+            dispatch(onCreateNewCohort(
+                cohort.cohortId,
+                cohort.cohortDescription,
+                cohort.participants,
+                handleDemoSuccess,
+                handleDemoError
+            ));
+        });
+    };
+
     const getTableMessage = (cohortList, selectedCohortSection, tableConfig) => {
         if (cohortList.length === 0) {
             return { noMatch: 'To proceed, please create your cohort by visiting the Explore Page.' };
@@ -373,8 +408,36 @@ export const CohortAnalyzer = () => {
                             {alert.message}
                         </Alert>
                     )}
-                    <div className={classes.rightSideAnalyzerHeader}>
+                    <div className={classes.rightSideAnalyzerHeader} style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
                         <h1> Cohort Analyzer</h1>
+                        <div className={classes.demoButtonContainer}>
+                            <ToolTip
+                                maxWidth="335px"
+                                border={'1px solid #598ac5'}
+                                arrowBorder={'1px solid #598AC5'}
+                                title={
+                                    <div className={classes.demoTooltipContent}>
+                                        {Object.keys(state).length > 17 ? (
+                                            <p>Cannot add demo cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.</p>
+                                        ) : (
+                                            <p>Launch a demonstration of the Cohort Analyzer by clicking this button.</p>
+                                        )}
+                                    </div>
+                                }
+                                placement="top"
+                                arrow
+                                interactive
+                                arrowSize="30px"
+                            >
+                                <button
+                                    onClick={handleDemoClick}
+                                    disabled={Object.keys(state).length > 17}
+                                    className={Object.keys(state).length > 17 ? classes.demoButtonFaded : classes.demoButton}
+                                >
+                                    Cohort Analyzer Demo
+                                </button>
+                            </ToolTip>
+                        </div>
                     </div>
 
 
