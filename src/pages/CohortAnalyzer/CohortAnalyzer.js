@@ -305,7 +305,16 @@ export const CohortAnalyzer = () => {
         const handleDemoSuccess = (count) => {
             successCount++;
             if (successCount === totalCohorts) {
-                Notification.show(`Successfully created ${totalCohorts} demo cohorts! Select them from the Cohort Selector to begin analysis.`, 7000);
+                // Hardcode the demo cohort keys for automatic selection
+                const demoCohortKeys = [
+                    'demo cohort 1',
+                    'demo cohort 2', 
+                    'demo cohort 3'
+                ];
+                
+                setSelectedCohorts(demoCohortKeys);
+                
+                Notification.show(`Successfully created and selected ${totalCohorts} demo cohorts! View the results in the Venn diagram and histogram below.`, 7000);
             }
         };
 
