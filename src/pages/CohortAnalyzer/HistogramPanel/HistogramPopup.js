@@ -10,7 +10,7 @@ import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 
 
 
- const CustomTooltip = ({ active, payload, label, viewType, data, cellHover }) => {
+ const CustomTooltip = ({ active, payload, viewType, data, cellHover }) => {
     if (cellHover.current == null) return null;
     
     if (active && payload && payload.length) {

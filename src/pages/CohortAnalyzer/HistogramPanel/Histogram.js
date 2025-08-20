@@ -208,6 +208,9 @@ const Histogram = ({c1,c2,c3}) => {
              {Array.isArray(data[dataset]) && data[dataset].length > 0  ? (
               <> 
                 <fieldset style={{ border: 'none' }}>
+                  <legend style={{ position: 'absolute', width: '1px', height: '1px', padding: 0, margin: '-1px', overflow: 'hidden', clip: 'rect(0,0,0,0)', whiteSpace: 'nowrap', border: 0 }}>
+                       Data Type Options
+                  </legend>
                  <RadioGroup>
                   <RadioLabel>
                     <RadioInput
@@ -227,9 +230,7 @@ const Histogram = ({c1,c2,c3}) => {
                       checked={viewType[dataset] === 'percentage'}
                       onChange={(e) => setViewType({ ...viewType, [dataset]: e.target.value })}
                     />
-                    <legend>
-                      % of Cases
-                    </legend>
+                      % of Cases   
                   </RadioLabel>
                 </RadioGroup>
                 </fieldset>
@@ -252,7 +253,7 @@ const Histogram = ({c1,c2,c3}) => {
                         tickFormatter={(value) => {
                         const num = Number(value);
                         const formatted = num % 1 === 0 ? num : num.toFixed(1);
-                        return viewType[activeTab] === 'percentage' ? `${formatted}%` : formatted;
+                        return viewType[dataset] === 'percentage' ? `${formatted}%` : formatted;
                       }} tick={{ fontSize: 12, fill: '#333' }}
                       />
                       <Tooltip content={<CustomTooltip viewType={viewType[dataset]} />} />
