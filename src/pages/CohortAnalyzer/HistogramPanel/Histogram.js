@@ -217,9 +217,7 @@ const Histogram = ({c1,c2,c3}) => {
                       checked={viewType[dataset] === 'count'}
                       onChange={(e) => setViewType({ ...viewType, [dataset]: e.target.value })}
                     />
-                    <legend>
                       # of Cases
-                    </legend>
                   </RadioLabel>
                   <RadioLabel>
                     <RadioInput
