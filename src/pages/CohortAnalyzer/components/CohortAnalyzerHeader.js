@@ -12,7 +12,7 @@ const CohortAnalyzerHeader = ({
 }) => {
   return (
     <>
-       <div className={classes.chartContainerHeader} role={"Complementary"}>
+       <div className={classes.chartContainerHeader} >
                                 <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                                     <div style={{display: 'flex',flexDirection: 'row', gap:0,alignItems:'center'}}>
                                         <p style={{ margin: 15, marginTop: 5,marginRight: 0, marginBottom: 0, fontSize: 17, fontFamily: 'Poppins', color: 'white' }}>Select a data category for cohort matching:</p>

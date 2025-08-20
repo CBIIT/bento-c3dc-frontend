@@ -368,7 +368,7 @@ export const CohortAnalyzer = () => {
                 onCloseModal={() => setShowCohortModal(false)}
             />
             <Stats />
-            <div className={classes.container} role={"Main"} >
+            <div className={classes.container}  >
 
                 <CohortSelector />
                 <div className={classes.rightSideAnalyzer}>
@@ -377,7 +377,7 @@ export const CohortAnalyzer = () => {
                             {alert.message}
                         </Alert>
                     )}
-                    <div className={classes.rightSideAnalyzerHeader} role={'Banner'}>
+                    <div className={classes.rightSideAnalyzerHeader}>
                         <h1> Cohort Analyzer</h1>
                     </div>
 
