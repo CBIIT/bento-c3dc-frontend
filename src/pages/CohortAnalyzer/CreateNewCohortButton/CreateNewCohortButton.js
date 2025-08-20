@@ -1,7 +1,9 @@
 import React from "react";
 import { makeStyles } from '@material-ui/core';
+import ToolTip from '@bento-core/tool-tip/dist/ToolTip';
 
-export const CreateNewCOhortButton = ({ selectedCohortSection, questionIcon, rowData, handleClick, ToolTip }) => {
+
+export const CreateNewCohortButton = ({ selectedCohortSection, questionIcon, rowData, handleClick }) => {
 
     const classes = useStyles();
 
