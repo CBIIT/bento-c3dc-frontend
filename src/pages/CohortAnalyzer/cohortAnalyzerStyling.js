@@ -13,7 +13,7 @@ export const useStyle = makeStyles((theme) => ({
         borderRadius: '10px',
         flex: 1,
         display: 'flex',
-        maxHeight: 610,
+        minHeight: 610,
         flexDirection: 'column',
         overflow: 'hidden',
         marginLeft: 6,
@@ -43,7 +43,6 @@ export const useStyle = makeStyles((theme) => ({
         },
         [theme.breakpoints.down('lg')]: {
             alignItems: 'center',
-            justifyContent: 'center',
             marginLeft: 8,
         }
     },
