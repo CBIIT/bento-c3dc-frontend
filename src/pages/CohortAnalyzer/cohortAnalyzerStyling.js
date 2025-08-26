@@ -11,24 +11,39 @@ export const useStyle = makeStyles((theme) => ({
         backgroundColor: 'white',
         border: '0.75px solid #679AAA',
         borderRadius: '10px',
-        width: '100%',
-        maxWidth: 707,
-        minHeight: 615,
+        flex: 1,
         display: 'flex',
+        minHeight: 610,
         flexDirection: 'column',
-        maxHeight: 585,
         overflow: 'hidden',
-         marginLeft: 6,
+        marginLeft: 6,
+        '& .App': {
+            width: "95%",
+            maxWidth: '95%',
+            minWidth: '95%',
+            height: "80%",
+            padding: "24px 0px 36px 0px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            
+            [theme.breakpoints.down('lg')]: { 
+                minWidth: '80%'
+            }
+           
+        },
+        '& .chart-container': {
+            width: '100%',
+            height: "100%",
+            
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+            
+        },
         [theme.breakpoints.down('lg')]: {
-            maxWidth: '99%',
-            height: '100%',
-            overflow: 'hidden',
-            paddingBottom: '24px',
             alignItems: 'center',
             marginLeft: 8,
-            '& .App': {
-                maxWidth: '60%',
-            }
         }
     },
     chartVennPlaceholder: {
@@ -40,6 +55,7 @@ export const useStyle = makeStyles((theme) => ({
     chartContainerHeader: {
         width: '100%',
         height: 69,
+        minHeight: 69,
         backgroundColor: '#3A7587',
         position: 'relative',
         top: 0,
@@ -189,7 +205,9 @@ export const useStyle = makeStyles((theme) => ({
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
         borderLeft: 'none',
-
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
     },
     leftSideAnalyzerChild: {
         height: '90%',
@@ -340,7 +358,10 @@ export const useStyle = makeStyles((theme) => ({
         marginLeft: 10,
         border: '0.75px solid #679AAA',
         borderRadius: 10,
-        overflow: 'hidden'
+        overflow: 'hidden',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
     },
     rightSideAnalyzer: {
         minWidth: "81%",
@@ -355,13 +376,16 @@ export const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         overflowY: 'visible',
         overflowX: 'hidden',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
         [theme.breakpoints.down('lg')]: {
             alignItems: 'flex-start',
             padding: '0 24px 24px 24px',
             overflowY: 'scroll',
             height: '100%',
         }
-        
+
     },
     rightSideAnalyzerOuterContainer: {
         display: 'flex',
@@ -385,7 +409,7 @@ export const useStyle = makeStyles((theme) => ({
         alignSelf: 'center',
         alignItems: 'center',
         borderBottom: '2.5px solid #679AAA',
-        maxHeight:'70px',
+        maxHeight: '70px',
         "& h1": {
             fontFamily: 'Poppins',
             fontSize: '35px',
@@ -393,10 +417,10 @@ export const useStyle = makeStyles((theme) => ({
             textAlign: 'left',
             color: '#0D3A3F',
             marginLeft: '65px',
-             [theme.breakpoints.down('lg')]: {
+            [theme.breakpoints.down('lg')]: {
                 marginLeft: '35px'
             }
-            
+
         }
 
     },
@@ -411,7 +435,7 @@ export const useStyle = makeStyles((theme) => ({
         '& p': {
             fontFamily: 'Open Sans',
             fontSize: '15px',
-            
+
             width: "100%",
             lineHeight: '20.8px',
             textAlign: 'left',
@@ -488,7 +512,7 @@ export const useStyle = makeStyles((theme) => ({
         '&::-webkit-scrollbar-track': {
             background: '#CECECE',
         },
-        
+
         [theme.breakpoints.down('lg')]: {
             width: '100%',
         }

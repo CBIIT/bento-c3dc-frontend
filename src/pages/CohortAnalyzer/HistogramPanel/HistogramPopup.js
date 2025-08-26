@@ -1,4 +1,5 @@
-import React from "react";
+import React , { useRef, useEffect } from "react";
+import { createPortal } from "react-dom";
 import {
   RadioGroup, RadioInput
   , RadioLabel, ModalChartWrapper, ModalContent
@@ -8,29 +9,38 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 
 
-const CustomTooltip = ({ active, payload }) => {
-  if (active && payload && payload.length) {
-    const data = payload[0].payload;
-    return (
-      <div style={{
-        backgroundColor: 'white',
-        padding: '10px',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
-        <p style={{ margin: 0, color: '#666' }}>
-          Count: {data.count}
-        </p>
-        <p style={{ margin: 0, color: '#666' }}>
-          Percentage: {data.percentage}%
-        </p>
-      </div>
-    );
-  }
-  return null;
-};
+
+ const CustomTooltip = ({ active, payload, viewType, data, cellHover }) => {
+    if (cellHover.current == null) return null;
+    
+    if (active && payload && payload.length) {
+      
+      const isPercentage = viewType === 'percentage';
+      const hoveredEntry = payload.find((entry) => {
+            return entry.dataKey === cellHover.current;
+      });
+      const value = hoveredEntry ? hoveredEntry.payload[cellHover.current] : 0;
+ 
+      return (
+        <div style={{
+          backgroundColor: 'white',
+          padding: '10px',
+          border: '1px solid #ccc',
+          borderRadius: '4px',
+          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+        }}>
+          <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
+          {hoveredEntry && (
+            <p style={{ margin: 0, color: '#666' }}>
+              value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
+            </p>
+          )
+          }
+        </div>
+      );
+    }
+    return null;
+  };
 
 const CustomTick = ({ x, y, payload }) => {
   const lines = payload.value.split(' ');
@@ -77,7 +87,30 @@ const ExpandedChartModal = ({
     });
   }
 
+ const cellHover = useRef(null);
+
+ // Hover effect for bars
+  const handleMouseEnter = (entry) => {
+    cellHover.current = entry;
+  };
+
+  const handleMouseLeave = () => {
+    cellHover.current = null;
+  };
+
+  //Disable scroll
+  useEffect(() => {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      return () => {
+        document.body.style.overflow = original;
+      };
+    
+  }, [])
+
+
   return (
+    createPortal(
     <ModalOverlay onClick={() => setExpandedChart(null)}>
             
       <ModalContent onClick={(e) => e.stopPropagation()}>
@@ -105,6 +138,7 @@ const ExpandedChartModal = ({
         </div>
         <ModalChartWrapper>
           <div style={{ display: 'flex', flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
+           <fieldset style={{ border: 'none' }}>
             <RadioGroup style={{ height: '100px', width:'180px', marginTop: '20px' }}>
               <RadioLabel>
                 <RadioInput
@@ -114,7 +148,9 @@ const ExpandedChartModal = ({
                   checked={viewType[activeTab] === 'count'}
                   onChange={(e) => setViewType((prev) => ({ ...prev, [activeTab]: e.target.value }))}
                 />
-                # of Cases
+                    <legend>
+                      # of Cases
+                    </legend>
               </RadioLabel>
               <RadioLabel>
                 <RadioInput
@@ -124,9 +160,12 @@ const ExpandedChartModal = ({
                   checked={viewType[activeTab] === 'percentage'}
                   onChange={(e) => setViewType((prev) => ({ ...prev, [activeTab]: e.target.value }))}
                 />
-                % of Cases
+                <legend>
+                  % of Cases
+                </legend>
               </RadioLabel>
             </RadioGroup>
+             </fieldset>
            {Array.isArray(data[activeTab]) && data[activeTab].length > 0 ? (
   <ResponsiveContainer id={`chart-${activeTab}`} width="100%"  height="100%">
     <BarChart
@@ -143,20 +182,24 @@ const ExpandedChartModal = ({
         height={80}
       />
       <YAxis
-        domain={[0, viewType[activeTab] === 'percentage' ? 100 : 'dataMax']}
-        tickFormatter={(value) => viewType[activeTab] === 'percentage' ? `${value}%` : value}
+        domain={[0, 'dataMax']}
+        tickFormatter={(value) => {
+    const num = Number(value);
+    const formatted = num % 1 === 0 ? num : num.toFixed(1);
+    return viewType[activeTab] === 'percentage' ? `${formatted}%` : formatted;
+  }}
         tick={{ fontSize: 14, fill: '#333' }}
       />
-      <Tooltip content={<CustomTooltip />} />
+      <Tooltip content={(props) => ( <CustomTooltip {...props} viewType={viewType[activeTab]} data={data[activeTab]} cellHover={cellHover} /> )} />
        {valueA>0 &&
-      <Bar dataKey="valueA" name="Dataset 1" fill={"#FCF1CC"} opacity={0.8} maxBarSize={60} barSize={valueC > 0 ? undefined : 40} />
+      <Bar dataKey="valueA" name="Dataset 1" fill={"#FAE69C"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueA")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={valueC > 0 ? undefined : 40} />
 
       }
       {valueB>0 &&
-      <Bar dataKey="valueB" name="Dataset 2" fill={"#A4E9CB"} opacity={0.8} maxBarSize={60} barSize={valueC > 0 ? undefined : 40} />
+      <Bar dataKey="valueB" name="Dataset 2" fill={"#A4E9CB"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueB")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={valueC > 0 ? undefined : 40} />
       }
       {valueC>0 &&
-      <Bar dataKey="valueC" name="Dataset 3" fill={"#A2CCE8"} opacity={0.8} maxBarSize={60} barSize={40} />
+      <Bar dataKey="valueC" name="Dataset 3" fill={"#A3CCE8"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueC")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={40} />
       }
     </BarChart>
   </ResponsiveContainer>
@@ -179,8 +222,9 @@ const ExpandedChartModal = ({
           </div>
         </ModalChartWrapper>
       </ModalContent>
-    </ModalOverlay>
-  );
+    </ModalOverlay>,
+  document.body
+));
 };
 
 export default ExpandedChartModal;

@@ -64,7 +64,7 @@ const VennDiagramContainer = ({
                 handleDownload={handleDownload}
                 classes={classes}
             />
-
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', width: '100%' }}>
             {refreshTableContent && selectedCohorts.length > 0 &&
                 <ChartVenn
                     intersection={nodeIndex}
@@ -79,10 +79,11 @@ const VennDiagramContainer = ({
                     containerRef={containerRef}
                     canvasRef={canvasRef}
                 />}
-
+                
             {selectedCohorts.length === 0 &&
-                <img src={placeHolder} alt='placeholder' width={1125} style={{ marginTop: 10, alignSelf: 'center' }} />
+                <img src={placeHolder} alt='placeholder' width={"100%"} style={{ marginTop: 10, alignSelf: 'center', flex: 1 }} />
             }
+            </div>
         </div>
     )
 }

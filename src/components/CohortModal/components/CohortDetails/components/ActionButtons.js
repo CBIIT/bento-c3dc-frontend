@@ -99,10 +99,6 @@ const ActionButtons = (props) => {
         }
     }, [navigate, localCohort, showAlert]);
     
-    // Tooltip content
-    const Gap = () => (
-        <div style={{ height: '10px' }} />
-    );
     
     const viewCohortAnalyzerTooltip = TOOLTIP_MESSAGES.viewCohortAnalyzer;
 
