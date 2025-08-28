@@ -129,7 +129,7 @@ const ExpandedChartModal = ({
           </TabContainer>
 
           <div style={{ minWidth: 300, right: 10, top:2, position:'absolute', justifyContent: 'flex-end', display: 'flex', gap: 5 }}>
-            <span style={{ marginTop: 5 }} onClick={() => downloadChart(activeTab,true)}>
+            <span style={{ marginTop: 5, cursor: 'pointer' }} onClick={() => downloadChart(activeTab,true)}>
               <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
             </span>
             <CloseButton onClick={() => setExpandedChart(null)}>×</CloseButton>
