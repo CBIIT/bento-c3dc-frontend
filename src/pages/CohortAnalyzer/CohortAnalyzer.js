@@ -32,6 +32,10 @@ import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
 import { demoCohorts } from "../../bento/demoCohortData";
 
 export const CohortAnalyzer = () => {
+    useEffect(() => {
+        document.title = "Cohort Analyzer | CCDI Bento";
+    }, []);
+
     //context
     const cohortAnalyzerContext = useCohortAnalyzer();
     // Cohort selection and list management
@@ -401,7 +405,7 @@ export const CohortAnalyzer = () => {
                 onCloseModal={() => setShowCohortModal(false)}
             />
             <Stats />
-            <div className={classes.container}>
+            <div className={classes.container}  >
 
                 <CohortSelector />
                 <div className={classes.rightSideAnalyzer}>

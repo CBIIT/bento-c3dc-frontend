@@ -99,6 +99,7 @@ const ActionButtons = (props) => {
         }
     }, [navigate, localCohort, showAlert]);
     
+    
     const viewCohortAnalyzerTooltip = TOOLTIP_MESSAGES.viewCohortAnalyzer;
 
     // Memoized complex tooltip to prevent unnecessary re-creation

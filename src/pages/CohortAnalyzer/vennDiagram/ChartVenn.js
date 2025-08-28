@@ -143,7 +143,7 @@ if(data){
     const updatedBaseSets = cohortData.map((cohort) => {
       const seenValues = new Set();
       return {
-        label: `${cohort.cohortName.length > 15 ? cohort.cohortName.slice(0, 15) + '...' : cohort.cohortName} (${cohort.participants.length})`,
+        label: `${cohort.cohortName.length > 13 ? cohort.cohortName.slice(0, 13) + '...' : cohort.cohortName} (${cohort.participants.length})`,
         values: cohort.participants
           .map(p => p[nodes[intersection]])
           .filter(value => {
@@ -172,8 +172,8 @@ if(data){
 useEffect(() => {
   if (chartRef.current && canvasRef.current) {
     chartRef.current.destroy();
-    canvasRef.current.width = cohortData.length === 2 ? 1000 : 900;
-    canvasRef.current.height =  cohortData.length === 2 ? 400 : 470; 
+    canvasRef.current.width = cohortData.length === 2 ? 900 : 800;
+    canvasRef.current.height =  cohortData.length === 2 ? 300 : 370;  
   }
   chartRef.current = new VennDiagramChart(canvasRef.current, config);
 
@@ -205,11 +205,11 @@ useEffect(() => {
     )
   }
   return (
-    <div ref={containerRef} style={{minWidth: '80%'}}  className="App">
-   <div style={{minHeight: 45}}>
-    </div> 
-      <canvas  ref={canvasRef} id="canvas"></canvas>
-    
+    <div ref={containerRef} style={{ paddingTop: 20, paddingBottom: 30}} className="App">
+      <div className="chart-container">
+        <canvas ref={canvasRef} id="canvas"></canvas>
+      </div>
+
     </div>
   );
 };
