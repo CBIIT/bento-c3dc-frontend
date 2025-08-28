@@ -129,7 +129,7 @@ const ExpandedChartModal = ({
           </TabContainer>
 
           <div style={{ minWidth: 300, right: 10, top:2, position:'absolute', justifyContent: 'flex-end', display: 'flex', gap: 5 }}>
-            <span style={{ marginTop: 5 }} onClick={() => downloadChart(activeTab)}>
+            <span style={{ marginTop: 5 }} onClick={() => downloadChart(activeTab,true)}>
               <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
             </span>
             <CloseButton onClick={() => setExpandedChart(null)}>×</CloseButton>
@@ -167,7 +167,7 @@ const ExpandedChartModal = ({
             </RadioGroup>
              </fieldset>
            {Array.isArray(data[activeTab]) && data[activeTab].length > 0 ? (
-  <ResponsiveContainer id={`chart-${activeTab}`} width="100%"  height="100%">
+  <ResponsiveContainer id={`expanded-chart-${activeTab}`} width="100%"  height="100%">
     <BarChart
       data={data[activeTab]}
       margin={{ top: 20, right: 30, left: 10, bottom: 60 }}
