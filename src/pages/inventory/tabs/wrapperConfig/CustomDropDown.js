@@ -73,8 +73,8 @@ const Arrow = styled.span`
 
 const DropdownList = styled.ul`
   position: absolute;
-  min-width: 189px;
-  max-width: 189px;
+  min-width: 179px;
+  max-width: 179px;
   left: 0;
   scrollbar-color: #003F74 #003F74;
   right: 0;
@@ -87,6 +87,7 @@ const DropdownList = styled.ul`
   border:  1px #73A9C7 solid;
   z-index: 1;
   overflow-y: scroll;
+  overflow-x: hidden;
   max-height: 200px;
 `;
 
@@ -100,6 +101,9 @@ const DropdownItem = styled.li`
   padding: 4px;
   max-height: 27px;
   padding-left: 18px;
+  padding-right: 18px;
+  word-break: break-word;
+  overflow-wrap: break-word;
   border: 0px 1px 1px 1px;
   border-color: #73A9C7;
   background-color: ${(props) =>
