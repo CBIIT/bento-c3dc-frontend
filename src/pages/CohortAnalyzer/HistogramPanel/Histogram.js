@@ -196,7 +196,7 @@ const Histogram = ({c1,c2,c3}) => {
                   }} >
                     <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
                   </span>
-                  <span onClick={() => !allInputsEmpty && downloadChart(dataset)}>
+                  <span onClick={() => !allInputsEmpty && downloadChart(dataset, false)}>
                     <img src={DownloadIcon} alt={"download"} style={{opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
                   </span>
 
@@ -307,6 +307,7 @@ const Histogram = ({c1,c2,c3}) => {
           setViewType={setViewType}
           data={filteredData}
           titles={titles}
+          downloadChart={downloadChart}
         />
       )}
 

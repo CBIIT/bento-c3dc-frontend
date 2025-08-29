@@ -55,9 +55,10 @@ export const useHistogramData = ({c1=[],c2=[],c3=[]}) => {
     );
   };
 
-  const downloadChart = (dataset) => {
+  const downloadChart = (dataset, isExpanded) => {
     try {
-      const chartElement = document.getElementById(`chart-${dataset}`);
+      const elementId = isExpanded ? `expanded-chart-${dataset}` : `chart-${dataset}`;
+      const chartElement = document.getElementById(elementId);
       if (!chartElement) return;
 
       const svgElement = chartElement.querySelector("svg");
