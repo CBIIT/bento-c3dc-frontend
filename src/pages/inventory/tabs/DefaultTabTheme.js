@@ -58,7 +58,6 @@ export const customTheme = {
           color: '#000000',
           borderTop: '6px solid #006B57',
         },
-        },
         '&.MuiTypography-body1': {
           color: 'red',
         },
@@ -94,5 +93,66 @@ export const customTheme = {
         fontWeight: '300',
       },
     },
-  };
-;
+  },
+  MuiList: {
+    root: {
+      '&.popover-list': {
+        padding: 0,
+      },
+    },
+  },
+  MuiListItem: {
+    root: {
+      '&.popover-list-item': {
+        minWidth: '200px',
+        padding: '13px 16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        '& .popover-tab-name': {
+          fontFamily: 'Poppins',
+          fontWeight: 300,
+          fontSize: '14px',
+          color: 'black',
+          lineHeight: '107%',
+          letterSpacing: '-2%',
+          textTransform: 'capitalize',
+          flex: 1,
+          textAlign: 'left',
+        },
+        '& .popover-tab-count': {
+          fontFamily: 'Poppins',
+          fontWeight: 300,
+          fontSize: '14px',
+          color: 'black',
+          lineHeight: '107%',
+          letterSpacing: '-2%',
+          textAlign: 'right',
+          marginLeft: '16px',
+        },
+      },
+    },
+  },
+  MuiButton: {
+    root: {
+      '&.more-button': {
+        minWidth: '70px',
+        height: '45px',
+        marginRight: '10px',
+        fontSize: '14px',
+        textTransform: 'none',
+        color: '#6E6E6E',
+        borderColor: '#8B8B8B',
+        fontFamily: 'Poppins',
+        background: '#EAEAEA',
+        border: '1px solid #8B8B8B',
+        borderTop: '1px solid black',
+        borderLeft: '1px solid black',
+        borderRight: '1px solid black',
+        '&:hover': {
+          background: '#D5D5D5',
+        },
+      },
+    },
+  },
+};

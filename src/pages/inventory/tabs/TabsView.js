@@ -53,6 +53,8 @@ const Tabs = (props) => {
         currentTab={currentTab}
         handleTabChange={handleTabChange}
         customTheme={customTheme}
+        enableGrouping={true}
+        maxVisibleTabs={2}
       />
       {
         tabContainers.map((tab, index) => (
