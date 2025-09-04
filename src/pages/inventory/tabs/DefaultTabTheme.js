@@ -152,6 +152,14 @@ export const customTheme = {
         '&:hover': {
           background: 'transparent',
         },
+        '& span': {
+          display: 'flex',
+          alignItems: 'center',
+          gap: '10px',
+        },
+        '& img': {
+          height: '15px',
+        },
       },
     },
   },
