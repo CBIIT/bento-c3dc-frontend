@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import TabPanel from './TabPanel';
-import { tabContainers } from '../../../bento/dashboardTabData';
+import { tabContainers, tabResponsiveBreakpoints } from '../../../bento/dashboardTabData';
 import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
 import CohortModal from '../../../components/CohortModal/CohortModal';
@@ -10,7 +10,7 @@ import DeleteConfirmationModal from '../../../components/CohortModal/components/
 
 const Tabs = (props) => {
   const [currentTab, setCurrentTab] = tabContainers.length > 0 ? useState(1) : useState(0);
-  const handleTabChange = (event, value) => {
+  const handleTabChange = (_, value) => {
     setCurrentTab(value);
   };
 
@@ -54,7 +54,7 @@ const Tabs = (props) => {
         handleTabChange={handleTabChange}
         customTheme={customTheme}
         enableGrouping={true}
-        maxVisibleTabs={2}
+        responsiveBreakpoints={tabResponsiveBreakpoints}
       />
       {
         tabContainers.map((tab, index) => (
