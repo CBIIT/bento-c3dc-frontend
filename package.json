@@ -12,7 +12,7 @@
     "@bento-core/paginated-table": "^1.0.0-c3dc.35",
     "@bento-core/query-bar": "^1.0.0-c3dc.7",
     "@bento-core/stats-bar": "1.0.1-ccdihub.2",
-    "@bento-core/tab": "^1.0.0-c3dc.1",
+    "@bento-core/tab": "^1.0.0-c3dc.2",
     "@bento-core/table": "^1.0.0-c3dc.29",
     "@bento-core/tool-tip": "^1.0.0-c3dc.0",
     "@bento-core/util": "^1.0.0-ccdihub.0",
