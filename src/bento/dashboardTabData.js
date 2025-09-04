@@ -1925,5 +1925,168 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
+  },
+  {
+    name: 'Genetic Analysis',
+    dataField: 'dataDiagnosis',
+    api: GET_DIAGNOSIS_OVERVIEW_QUERY,
+    paginationAPIField: 'diagnosisOverview',
+    defaultSortField: 'participant.participant_id',
+    defaultSortDirection: 'asc',
+    count: 'numberOfDiagnoses',
+    fileCount: 'diagnosisFileCount',
+    toolTipText: 'Count of Diagnosis Record',
+    dataKey: "id",
+    hiddenDataKeys: ['participant', 'participant_pk', 'dbgap_accession'],
+    tableID: 'diagnosis_tab_table',
+    extendedViewConfig: {
+      pagination: true,
+      manageViewColumns: false,
+      download: true,
+      downloadButtonConfig: {
+        title: 'DOWNLOAD DATA',
+        cloudIcon: true,
+      },
+    },
+    columns: [
+      {
+        cellType: cellTypes.CHECKBOX,
+        display: true,
+        role: cellTypes.CHECKBOX,
+      },
+      {
+        // dataField: 'genetic_analysis_id', // TODO: Uncomment when backend API is ready
+        dataField: 'participant', // Temporary placeholder
+        sortField: 'participant.participant_id',
+        header: 'Genetic Analysis ID',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+        cellType: cellTypes.CUSTOM_ELEM
+      },
+      {
+        // dataField: 'participant.participant_id', // TODO: Uncomment when backend API is ready
+        dataField: 'diagnosis_id', // Temporary placeholder
+        header: 'Participant ID',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'test', // TODO: Uncomment when backend API is ready
+        dataField: 'diagnosis', // Temporary placeholder
+        header: 'Test',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'gene_symbol', // TODO: Uncomment when backend API is ready
+        dataField: 'diagnosis_classification_system', // Temporary placeholder
+        header: 'Gene Symbol',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'status', // TODO: Uncomment when backend API is ready
+        dataField: 'diagnosis_basis', // Temporary placeholder
+        header: 'Status',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'cytoband', // TODO: Uncomment when backend API is ready
+        dataField: 'diagnosis_comment', // Temporary placeholder
+        header: 'Cytoband',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'hgvs_genome', // TODO: Uncomment when backend API is ready
+        dataField: 'disease_phase', // Temporary placeholder
+        header: 'HGVS Genome',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'hgvs_coding', // TODO: Uncomment when backend API is ready
+        dataField: 'tumor_classification', // Temporary placeholder
+        header: 'HGVS Coding',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'hgvs_protein', // TODO: Uncomment when backend API is ready
+        dataField: 'anatomic_site', // Temporary placeholder
+        header: 'HGVS Protein',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'alteration', // TODO: Uncomment when backend API is ready
+        dataField: 'age_at_diagnosis', // Temporary placeholder
+        header: 'Alteration',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'genomic_source_category', // TODO: Uncomment when backend API is ready
+        dataField: 'toronto_childhood_cancer_staging', // Temporary placeholder
+        header: 'Genomic Source Category',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'reported_significance', // TODO: Uncomment when backend API is ready
+        dataField: 'tumor_grade', // Temporary placeholder
+        header: 'Reported Significance',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        // dataField: 'reported_significance_system', // TODO: Uncomment when backend API is ready
+        dataField: 'tumor_stage_clinical_t', // Temporary placeholder
+        header: 'Reported Significance System',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'dbgap_accession',
+        header: 'dbGaP Accession',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+        linkAttr: {
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+        },
+        cellType: cellTypes.CUSTOM_ELEM,
+        doNotDownload: true,
+      },
+    ],
+    id: 'genetic_analysis_tab',
+    tabIndex: '6',
+    tableDownloadCSV: {},
+    downloadFileName: 'C3DC Genetic Analysis Download',
+    tableMsg: {
+      noMatch: 'No Matching Records Found',
+    },
+    /*
+    // TODO: Uncomment and update when backend API is ready
+    addFilesRequestVariableKey: 'genetic_analysis_ids',
+    addFilesResponseKeys: ['fileIDsFromList'],
+    addAllFilesResponseKeys: ['geneticAnalysisOverview', 'files'],
+    addAllFileQuery: GET_ALL_FILEIDS_FROM_GENETIC_ANALYSIS_TAB_FOR_ADD_ALL_CART,
+    addSelectedFilesQuery: GET_ALL_FILEIDS_GENETIC_ANALYSIS_TAB_FOR_SELECT_ALL,
+    */
   }
 ];
