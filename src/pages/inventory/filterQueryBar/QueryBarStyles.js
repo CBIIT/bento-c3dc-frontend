@@ -114,41 +114,48 @@ export  const customStyles = {
       color: '#006A8F',
     },
     facetSectionStudyBackground: {
-      backgroundColor: '#E2F1F5',
+      backgroundColor: '#B5DDE5',
       border: '2px solid #646464',
     },
     facetSectionDemographics: {
-      color: '#794900',
+      color: '#E39520',
     },
     facetSectionDemographicsBackground: {
       backgroundColor: '#FFF2DF',
       border: '2px solid #646464',
     },
     facetSectionDiagnosis: {
-      color: '#008566',
+      color: '#35B899',
     },
     facetSectionDiagnosisBackground: {
-      backgroundColor: '#E6FFF9',
+      backgroundColor: '#C2FFF1',
       border: '2px solid #646464',
     },
     facetSectionTreatment: {
-      color: '#501166',
+      color: '#268CEA',
     },
     facetSectionTreatmentBackground: {
-      backgroundColor: '#F6F0FB',
+      backgroundColor: '#B5D8F9',
       border: '2px solid #646464',
     },
     facetSectionTreatmentresponse: {
-      color: '#00614F',
+      color: '#9664C7',
     },
     facetSectionTreatmentresponseBackground: {
-      backgroundColor: '##E0ECEA',
+      backgroundColor: '#E8D8F5',
       border: '2px solid #646464',
     },
     facetSectionSurvival: {
-      color: '#862405',
+      color: '#006B57',
     },
     facetSectionSurvivalBackground: {
+      backgroundColor: '#E0ECEA',
+      border: '2px solid #646464',
+    },
+    facetSectionGeneticanalysis: {
+      color: '#862405',
+    },
+    facetSectionGeneticanalysisBackground: {
       backgroundColor: '#FFEDE7',
       border: '2px solid #646464',
     },
