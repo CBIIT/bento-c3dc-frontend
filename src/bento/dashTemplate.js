@@ -11,6 +11,7 @@ const SURVIVAL = 'Survival';
 const GROUP = 'group';
 const TREATMENT = 'Treatment';
 const TREATMENTRESPONSE = 'Treatmentresponse';
+const GENETICANALYSIS = 'Geneticanalysis';
 
 // --------------- Facet resetIcon link configuration --------------
 // Ideal size for resetIcon is 16x16 px
@@ -24,6 +25,7 @@ export const resetIcon = {
 
 export const sectionLabel = {
   Treatmentresponse: "Treatment Response",
+  Geneticanalysis: "Genetic Analysis",
 };
 
 // --------------- Dashboard Sidebar Sections styling --------------
@@ -45,6 +47,9 @@ export const facetSectionVariables = {
     isExpanded: false,
   },
   Survival: {
+    isExpanded: false,
+  },
+  Geneticanalysis: {
     isExpanded: false,
   },
 };
@@ -467,6 +472,85 @@ export const facetsConfig = [
     apiPath: 'participantCountByFirstEvent',
     apiForFiltering: 'filterParticipantCountByFirstEvent',
     datafield: 'first_event',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Reported Significance',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByDiagnosis', // TODO: 'filterParticipantCountByReportedSignificance'
+    datafield: 'diagnosis', // TODO: 'reported_significance'
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Reported Significance System',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByDiagnosisClassificationSystem', // TODO: 'filterParticipantCountByReportedSignificanceSystem'
+    datafield: 'diagnosis_classification_system', // TODO: 'reported_significance_system'
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Gene Symbol',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByAnatomicSite', // TODO: 'filterParticipantCountByGeneSymbol'
+    datafield: 'anatomic_site', // TODO: 'gene_symbol'
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+    search: true,
+    searchPlaceholder: 'e.g. BRCA1, TP53',
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Alteration',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByDiagnosis', // TODO: 'filterParticipantCountByAlteration'
+    datafield: 'diagnosis', // TODO: 'alteration'
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Fusion Partner Gene',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByDiagnosisBasis', // TODO: 'filterParticipantCountByFusionPartnerGene'
+    datafield: 'diagnosis_basis', // TODO: 'fusion_partner_gene'
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Alteration Type',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByDiseasePhase', // TODO: 'filterParticipantCountByAlterationType'
+    datafield: 'disease_phase', // TODO: 'alteration_type'
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Status',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByTreatmentType', // TODO: 'filterParticipantCountByStatus'
+    datafield: 'treatment_type', // TODO: 'status'
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
