@@ -24,6 +24,7 @@ export const useStyle = makeStyles((theme) => ({
     leftSideAnalyzerChild: {
         height: '90%',
         overflowY: 'scroll',
+        paddingBottom: '100px',
         '&::-webkit-scrollbar': {
             width: "2px"
         },
