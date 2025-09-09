@@ -36,6 +36,7 @@ export const tooltipContentAddToNewCohort = {
     Treatment: newCohortToolTip,
     Survival: newCohortToolTip,
     "Treatment Response": newCohortToolTip,
+    "Genetic Analysis": newCohortToolTip,
     arrow: true,
 }
 
@@ -49,6 +50,7 @@ export const tooltipContentAddToExistingCohort = {
   Survival: existingCohortToolTip,
   Treatment: existingCohortToolTip,
   "Treatment Response": existingCohortToolTip,
+  "Genetic Analysis": existingCohortToolTip,
   arrow: true,
 }
 
@@ -61,22 +63,9 @@ export const tooltipContentListAll = {
   Treatment: 'Click to view the complete list of all cohorts',
   Survival: 'Click to view the complete list of all cohorts',
   "Treatment Response": 'Click to view the complete list of all cohorts',
+  "Genetic Analysis": 'Click to view the complete list of all cohorts',
   arrow: true,
 }
-
-export const tooltipContent = {
-  icon: questionIcon,
-  alt: 'tooltipIcon',
-  Participants: 'Click button to add files associated with the selected row(s).',
-  Diagnosis: 'Click button to add files associated with the selected row(s).',
-  Studies: 'Click button to add files associated with the selected row(s).',
-  Samples: 'Click button to add files associated with the selected row(s).',
-  Files: 'Click button to add files associated with the selected row(s).',
-  arrow: true,
-  styles: {
-    border: '#03A383 1px solid',
-  }
-};
 
 // --------------- Dahboard Table external link configuration --------------
 // Ideal size for externalLinkIcon is 16x16 px
@@ -1148,6 +1137,117 @@ survivalOverview(
 }}
 `;
 
+export const GET_GENETIC_ANALYSIS_OVERVIEW_QUERY = gql`query geneticAnalysisOverview(
+    # Demographics
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
+    # Diagnoses
+    $age_at_diagnosis: [Int],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
+    # Studies
+    $dbgap_accession: [String],
+    $study_name: [String],
+
+    # Survivals
+    $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
+    # Treatments
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
+    # Treatment Responses
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String],
+
+    # Table config
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
+    $sort_direction: String
+) {
+geneticAnalysisOverview(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
+
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
+
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status,
+
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
+
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system,
+
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+) {
+    # Participant
+    participant {
+        id
+        participant_id
+    }
+
+    # Genetic Analysis
+    id
+    genetic_analysis_id
+    alteration
+    cytoband
+    gene_symbol
+    genomic_source_category
+    hgvs_coding
+    hgvs_genome
+    hgvs_protein
+    status
+    test
+    reported_significance
+    reported_significance_system
+
+    __typename
+}}
+`;
+
 export const GET_ALL_FILEIDS_PARTICIPANTSTAB_FOR_SELECT_ALL = gql`
 query search (          
   $participant_id: [String],
@@ -1928,17 +2028,18 @@ export const tabContainers = [
   },
   {
     name: 'Genetic Analysis',
-    dataField: 'dataDiagnosis',
-    api: GET_DIAGNOSIS_OVERVIEW_QUERY,
-    paginationAPIField: 'diagnosisOverview',
+    dataField: 'dataGeneticAnalysis',
+    api: GET_GENETIC_ANALYSIS_OVERVIEW_QUERY,
+    paginationAPIField: 'geneticAnalysisOverview',
     defaultSortField: 'participant.participant_id',
     defaultSortDirection: 'asc',
     count: 'numberOfDiagnoses',
-    fileCount: 'diagnosisFileCount',
-    toolTipText: 'Count of Diagnosis Record',
+    //count: 'numberOfGeneticAnalyses',
+    fileCount: 'geneticAnalysisFileCount',
+    toolTipText: 'Count of Genetic Analysis Record',
     dataKey: "id",
-    hiddenDataKeys: ['participant', 'participant_pk', 'dbgap_accession'],
-    tableID: 'diagnosis_tab_table',
+    hiddenDataKeys: ['participant', 'participant_pk'],
+    tableID: 'genetic_analysis_tab_table',
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: false,
@@ -1955,107 +2056,94 @@ export const tabContainers = [
         role: cellTypes.CHECKBOX,
       },
       {
-        // dataField: 'genetic_analysis_id', // TODO: Uncomment when backend API is ready
-        dataField: 'participant', // Temporary placeholder
+        dataField: 'participant',
         sortField: 'participant.participant_id',
-        header: 'Genetic Analysis ID',
+        header: 'Participant ID',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM
       },
       {
-        // dataField: 'participant.participant_id', // TODO: Uncomment when backend API is ready
-        dataField: 'diagnosis_id', // Temporary placeholder
-        header: 'Participant ID',
+        dataField: 'genetic_analysis_id',
+        header: 'Genetic Analysis ID',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        // dataField: 'test', // TODO: Uncomment when backend API is ready
-        dataField: 'diagnosis', // Temporary placeholder
-        header: 'Test',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        // dataField: 'gene_symbol', // TODO: Uncomment when backend API is ready
-        dataField: 'diagnosis_classification_system', // Temporary placeholder
+        dataField: 'gene_symbol',
         header: 'Gene Symbol',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        // dataField: 'status', // TODO: Uncomment when backend API is ready
-        dataField: 'diagnosis_basis', // Temporary placeholder
+        dataField: 'status',
         header: 'Status',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        // dataField: 'cytoband', // TODO: Uncomment when backend API is ready
-        dataField: 'diagnosis_comment', // Temporary placeholder
+        dataField: 'cytoband',
         header: 'Cytoband',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        // dataField: 'hgvs_genome', // TODO: Uncomment when backend API is ready
-        dataField: 'disease_phase', // Temporary placeholder
-        header: 'HGVS Genome',
+        dataField: 'test',
+        header: 'Test',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        // dataField: 'hgvs_coding', // TODO: Uncomment when backend API is ready
-        dataField: 'tumor_classification', // Temporary placeholder
-        header: 'HGVS Coding',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        // dataField: 'hgvs_protein', // TODO: Uncomment when backend API is ready
-        dataField: 'anatomic_site', // Temporary placeholder
-        header: 'HGVS Protein',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        // dataField: 'alteration', // TODO: Uncomment when backend API is ready
-        dataField: 'age_at_diagnosis', // Temporary placeholder
-        header: 'Alteration',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        // dataField: 'genomic_source_category', // TODO: Uncomment when backend API is ready
-        dataField: 'toronto_childhood_cancer_staging', // Temporary placeholder
-        header: 'Genomic Source Category',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        // dataField: 'reported_significance', // TODO: Uncomment when backend API is ready
-        dataField: 'tumor_grade', // Temporary placeholder
+        dataField: 'reported_significance',
         header: 'Reported Significance',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
-        // dataField: 'reported_significance_system', // TODO: Uncomment when backend API is ready
-        dataField: 'tumor_stage_clinical_t', // Temporary placeholder
+        dataField: 'reported_significance_system',
         header: 'Reported Significance System',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'hgvs_genome',
+        header: 'HGVS Genome',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'hgvs_coding',
+        header: 'HGVS Coding',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'hgvs_protein',
+        header: 'HGVS Protein',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'alteration',
+        header: 'Alteration',
+        display: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'genomic_source_category',
+        header: 'Genomic Source Category',
         display: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
