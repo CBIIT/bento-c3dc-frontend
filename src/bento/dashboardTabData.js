@@ -77,245 +77,303 @@ export const externalLinkIcon = {
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
-    # Demographics
-    $participant_id: [String],
-    $race: [String],
-    $sex_at_birth: [String],
+  # Demographics
+  $participant_pk: [String],
+  $participant_id: [String],
+  $race: [String],
+  $sex_at_birth: [String],
 
-    # Diagnoses
-    $age_at_diagnosis: [Int],
-    $anatomic_site: [String],
-    $diagnosis: [String],
-    $diagnosis_classification_system: [String],
-    $diagnosis_basis: [String],
-    $disease_phase: [String],
+  # Diagnoses
+  $age_at_diagnosis: [Int],
+  $anatomic_site: [String],
+  $diagnosis: [String],
+  $diagnosis_classification_system: [String],
+  $diagnosis_basis: [String],
+  $disease_phase: [String],
 
-    # Studies
-    $dbgap_accession: [String],
-    $study_name: [String],
+  # Genetic Analyses
+  $alteration: [String],
+  $alteration_type: [String],
+  $fusion_partner_gene: [String],
+  $gene_symbol: [String],
+  $reported_significance: [String],
+  $reported_significance_system: [String],
+  $status: [String],
 
-    # Survivals
-    $age_at_last_known_survival_status: [Int],
-    $cause_of_death: [String],
-    $first_event: [String],
-    $last_known_survival_status: [String],
+  # Studies
+  $dbgap_accession: [String],
+  $study_name: [String],
 
-    # Treatments
-    $age_at_treatment_start: [Int],
-    $age_at_treatment_end: [Int],
-    $treatment_type: [String],
-    $treatment_agent: [String],
+  # Survivals
+  $age_at_last_known_survival_status: [Int],
+  $cause_of_death: [String],
+  $first_event: [String],
+  $last_known_survival_status: [String],
 
-    # Treatment Responses
-    $response: [String],
-    $age_at_response: [Int],
-    $response_category: [String],
-    $response_system: [String]
+  # Treatments
+  $age_at_treatment_start: [Int],
+  $age_at_treatment_end: [Int],
+  $treatment_type: [String],
+  $treatment_agent: [String],
+
+  # Treatment Responses
+  $response: [String],
+  $age_at_response: [Int],
+  $response_category: [String],
+  $response_system: [String]
 ) {
 getParticipants(
-    # Demographics
-    participant_id: $participant_id,
-    race: $race,
-    sex_at_birth: $sex_at_birth,
+  # Demographics
+  participant_pk: $participant_pk,
+  participant_id: $participant_id,
+  race: $race,
+  sex_at_birth: $sex_at_birth,
 
-    # Diagnoses
-    age_at_diagnosis: $age_at_diagnosis,
-    anatomic_site: $anatomic_site,
-    diagnosis: $diagnosis,
-    diagnosis_classification_system: $diagnosis_classification_system,
-    diagnosis_basis: $diagnosis_basis,
-    disease_phase: $disease_phase,
-    
-    # Studies
-    dbgap_accession: $dbgap_accession,
-    study_name: $study_name,
+  # Diagnoses
+  age_at_diagnosis: $age_at_diagnosis,
+  anatomic_site: $anatomic_site,
+  diagnosis: $diagnosis,
+  diagnosis_classification_system: $diagnosis_classification_system,
+  diagnosis_basis: $diagnosis_basis,
+  disease_phase: $disease_phase,
 
-    # Survivals
-    age_at_last_known_survival_status: $age_at_last_known_survival_status,
-    cause_of_death: $cause_of_death,
-    first_event: $first_event,
-    last_known_survival_status: $last_known_survival_status
+  # Genetic Analyses
+  alteration: $alteration,
+  alteration_type: $alteration_type,
+  fusion_partner_gene: $fusion_partner_gene,
+  gene_symbol: $gene_symbol,
+  reported_significance: $reported_significance,
+  reported_significance_system: $reported_significance_system,
+  status: $status,
+  
+  # Studies
+  dbgap_accession: $dbgap_accession,
+  study_name: $study_name,
 
-    # Treatments
-    age_at_treatment_start: $age_at_treatment_start,
-    age_at_treatment_end: $age_at_treatment_end,
-    treatment_type: $treatment_type,
-    treatment_agent: $treatment_agent,
+  # Survivals
+  age_at_last_known_survival_status: $age_at_last_known_survival_status,
+  cause_of_death: $cause_of_death,
+  first_event: $first_event,
+  last_known_survival_status: $last_known_survival_status
 
-    # Treatment Responses
-    response: $response,
-    age_at_response: $age_at_response,
-    response_category: $response_category,
-    response_system: $response_system
+  # Treatments
+  age_at_treatment_start: $age_at_treatment_start,
+  age_at_treatment_end: $age_at_treatment_end,
+  treatment_type: $treatment_type,
+  treatment_agent: $treatment_agent,
+
+  # Treatment Responses
+  response: $response,
+  age_at_response: $age_at_response,
+  response_category: $response_category,
+  response_system: $response_system
 ) {
-    numberOfParticipants
-    numberOfDiagnoses
-    numberOfDiseases
-    numberOfStudies
-    numberOfSurvivals
-    numberOfTreatments
-    numberOfTreatmentResponses
+  numberOfParticipants
+  numberOfDiagnoses
+  numberOfDiseases
+  numberOfGeneticAnalyses
+  numberOfStudies
+  numberOfSurvivals
+  numberOfTreatments
+  numberOfTreatmentResponses
 
-    # Widget counts
-    participantCountByRace {
-      group
-      subjects
-      __typename
-    }
-    participantCountBySexAtBirth {
-      group
-      subjects
-      __typename
-    }
-    participantCountByAgeAtDiagnosis {
-      group
-      subjects
-      __typename
-    }
-    participantCountByAnatomicSite {
-      group
-      subjects
-      __typename
-    }
-    participantCountByDiagnosis {
-      group
-      subjects
-      __typename
-    }
-    participantCountByTreatmentType {
-      group
-      subjects
-      __typename
-    }
-
-    # Demographic filter counts
-    filterParticipantCountByRace {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountBySexAtBirth {
-      group
-      subjects
-      __typename
-    }
-
-    # Diagnosis filter counts
-    filterParticipantCountByAgeAtDiagnosis {
-      lowerBound
-      upperBound
-      subjects
-      __typename
-    }
-    filterParticipantCountByAnatomicSite {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiagnosis {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiagnosisClassificationSystem {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiagnosisBasis {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByDiseasePhase {
-      group
-      subjects
-      __typename
-    }
-
-    # Study filter counts
-    filterParticipantCountByDbgapAccession {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByStudyName {
-      group
-      subjects
-      __typename
-    }
-
-    # Survival filter counts
-    filterParticipantCountByAgeAtLastKnownSurvivalStatus {
-      lowerBound
-      upperBound
-      subjects
-      __typename
-    }
-    filterParticipantCountByCauseOfDeath {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByFirstEvent {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByLastKnownSurvivalStatus {
-      group
-      subjects
-      __typename
-    }
-
-    # Treatment filter counts
-    filterParticipantCountByAgeAtTreatmentStart {
-      lowerBound
-      upperBound
-      subjects
-      __typename
-    }
-    filterParticipantCountByAgeAtTreatmentEnd {
-      lowerBound
-      upperBound
-      subjects
-      __typename
-    }
-    filterParticipantCountByTreatmentType {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByTreatmentAgent {
-      group
-      subjects
-      __typename
-    }
-
-    # Treatment Response filter counts
-    filterParticipantCountByResponse {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByAgeAtResponse {
-      lowerBound
-      upperBound
-      subjects
-      __typename
-    }
-    filterParticipantCountByResponseCategory {
-      group
-      subjects
-      __typename
-    }
-    filterParticipantCountByResponseSystem {
-      group
-      subjects
-      __typename
-    }
-
+  # Widget counts
+  participantCountByRace {
+    group
+    subjects
     __typename
+  }
+  participantCountBySexAtBirth {
+    group
+    subjects
+    __typename
+  }
+  participantCountByAgeAtDiagnosis {
+    group
+    subjects
+    __typename
+  }
+  participantCountByAnatomicSite {
+    group
+    subjects
+    __typename
+  }
+  participantCountByDiagnosis {
+    group
+    subjects
+    __typename
+  }
+  participantCountByTreatmentType {
+    group
+    subjects
+    __typename
+  }
+
+  # Demographic filter counts
+  filterParticipantCountByRace {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountBySexAtBirth {
+    group
+    subjects
+    __typename
+  }
+
+  # Diagnosis filter counts
+  filterParticipantCountByAgeAtDiagnosis {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByAnatomicSite {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosis {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosisClassificationSystem {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiagnosisBasis {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByDiseasePhase {
+    group
+    subjects
+    __typename
+  }
+
+  # Genetic Analysis filter counts
+  filterParticipantCountByAlteration {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByAlterationType {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByFusionPartnerGene {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByGeneSymbol {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByReportedSignificance {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByReportedSignificanceSystem {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByStatus {
+    group
+    subjects
+    __typename
+  }
+
+  # Study filter counts
+  filterParticipantCountByDbgapAccession {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByStudyName {
+    group
+    subjects
+    __typename
+  }
+
+  # Survival filter counts
+  filterParticipantCountByAgeAtLastKnownSurvivalStatus {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByCauseOfDeath {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByFirstEvent {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByLastKnownSurvivalStatus {
+    group
+    subjects
+    __typename
+  }
+
+  # Treatment filter counts
+  filterParticipantCountByAgeAtTreatmentStart {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByAgeAtTreatmentEnd {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByTreatmentType {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByTreatmentAgent {
+    group
+    subjects
+    __typename
+  }
+
+  # Treatment Response filter counts
+  filterParticipantCountByResponse {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByAgeAtResponse {
+    lowerBound
+    upperBound
+    subjects
+    __typename
+  }
+  filterParticipantCountByResponseCategory {
+    group
+    subjects
+    __typename
+  }
+  filterParticipantCountByResponseSystem {
+    group
+    subjects
+    __typename
+  }
+
+  __typename
 }}
 `;
 
@@ -2040,8 +2098,7 @@ export const tabContainers = [
     paginationAPIField: 'geneticAnalysisOverview',
     defaultSortField: 'participant.participant_id',
     defaultSortDirection: 'asc',
-    count: 'numberOfDiagnoses',
-    //count: 'numberOfGeneticAnalyses',
+    count: 'numberOfGeneticAnalyses',
     fileCount: 'geneticAnalysisFileCount',
     toolTipText: 'Count of Genetic Analysis Record',
     dataKey: "id",
