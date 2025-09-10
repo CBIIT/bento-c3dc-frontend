@@ -1811,7 +1811,7 @@ export const tabContainers = [
     count: 'numberOfSurvivals',
     fileCount: 'samplesFileCount',
     paginationAPIField: 'survivalOverview',
-    dataKey: ['participnat','id'],
+    dataKey:  'id',
     hiddenDataKeys: ['participant', 'participant_pk', 'dbgap_accession'],
     defaultSortField: 'participant.participant_id',
     defaultSortDirection: 'asc',
