@@ -509,8 +509,6 @@ export const facetsConfig = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    search: true,
-    searchPlaceholder: 'e.g. BRCA1, TP53',
   },
   {
     section: GENETICANALYSIS,
@@ -538,8 +536,8 @@ export const facetsConfig = [
     section: GENETICANALYSIS,
     label: 'Alteration Type',
     apiPath: '',
-    apiForFiltering: 'filterParticipantCountByAlterationType', // TODO: 'filterParticipantCountByAlterationType'
-    datafield: 'alteration_type', // TODO: 'alteration_type'
+    apiForFiltering: 'filterParticipantCountByAlterationType',
+    datafield: 'alteration_type',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -549,8 +547,8 @@ export const facetsConfig = [
     section: GENETICANALYSIS,
     label: 'Status',
     apiPath: '',
-    apiForFiltering: 'filterParticipantCountByStatus', // TODO: 'filterParticipantCountByStatus'
-    datafield: 'status', // TODO: 'status'
+    apiForFiltering: 'filterParticipantCountByStatus',
+    datafield: 'status',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
