@@ -4,6 +4,37 @@ import { cellTypes, headerTypes } from '@bento-core/table';
 import ReactHtmlParser from "html-react-parser";
 import ToolTip from "@bento-core/tool-tip";
 
+const ExpandableArrayCell = ({ label, newStyle }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  return (
+    <Typography>
+      {isExpanded ? (
+        <>
+          {label.join(", ")}
+          {" "}
+          <span 
+            onClick={() => setIsExpanded(false)} 
+            style={newStyle}
+          >
+            (show less)
+          </span>
+        </>
+      ) : (
+        <>
+          {label.slice(0,5).join(", ")}
+          <span 
+            onClick={() => setIsExpanded(true)} 
+            style={newStyle}
+          >
+            <span style={{ whiteSpace: 'nowrap' }}>, ...</span>
+          </span>
+        </>
+      )}
+    </Typography>
+  );
+};
+
 export const CustomCellView = (props) => {
   const {
     dataField, dataFormatter, cellStyle, label,
@@ -72,34 +103,7 @@ export const CustomCellView = (props) => {
     }
     
     if (label.length > 5){
-      const [isExpanded, setIsExpanded] = useState(false);
-      
-      return (
-        <Typography>
-          {isExpanded ? (
-            <>
-              {label.join(", ")}
-              {" "}
-              <span 
-                onClick={() => setIsExpanded(false)} 
-                style={newStyle}
-              >
-                (show less)
-              </span>
-            </>
-          ) : (
-            <>
-              {label.slice(0,5).join(", ")}
-              <span 
-                onClick={() => setIsExpanded(true)} 
-                style={newStyle}
-              >
-                <span style={{ whiteSpace: 'nowrap' }}>, ...</span>
-              </span>
-            </>
-          )}
-        </Typography>
-      );
+      return <ExpandableArrayCell label={label} newStyle={newStyle} />;
     }
     return (<Typography>{label.join(", ")}</Typography>);
   }
