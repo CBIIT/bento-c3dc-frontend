@@ -9,7 +9,6 @@ export const CustomCellView = (props) => {
     dataField, dataFormatter, cellStyle, label,
   } = props;
   const [top5, setTop5] = useState(true);
-  const [isExpanded, setIsExpanded] = useState(false);
   const newStyle = {
     color: "#60797B",
     fontSize: "12px",
@@ -73,6 +72,8 @@ export const CustomCellView = (props) => {
     }
     
     if (label.length > 5){
+      const [isExpanded, setIsExpanded] = useState(false);
+      
       return (
         <Typography>
           {isExpanded ? (
