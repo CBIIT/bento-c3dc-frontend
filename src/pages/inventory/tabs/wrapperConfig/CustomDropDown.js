@@ -113,6 +113,7 @@ const DropdownItem = styled.li`
   border-bottom: 1px solid #ccc;
 
   &:nth-child(even) {
+    /* Reduce right padding for even-numbered items to improve visual alignment with icons/text. */
     padding-right: 2px;
     background-color: ${(props) =>
       props.isDisabled ? "#F0F0F0" : "#CCD5E1"};
