@@ -101,7 +101,6 @@ export const landingPageData = {
 export const GLOBAL_STATS_BAR_QUERY = gql`{
   numberOfDiseases,
   numberOfParticipants,
-  numberOfReferenceFiles,
   numberOfStudies,
   numberOfSurvivals
   }
