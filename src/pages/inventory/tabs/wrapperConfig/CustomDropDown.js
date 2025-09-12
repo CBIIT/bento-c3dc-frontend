@@ -74,7 +74,7 @@ const Arrow = styled.span`
 const DropdownList = styled.ul`
   position: absolute;
   min-width: 179px;
-  max-width: 179px;
+  max-width: 189px;
   left: 0;
   scrollbar-color: #003F74 #003F74;
   right: 0;
@@ -113,6 +113,7 @@ const DropdownItem = styled.li`
   border-bottom: 1px solid #ccc;
 
   &:nth-child(even) {
+    padding-right: 2px;
     background-color: ${(props) =>
       props.isDisabled ? "#F0F0F0" : "#CCD5E1"};
   }
