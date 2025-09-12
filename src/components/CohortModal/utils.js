@@ -1,4 +1,4 @@
-import { DOWNLOAD_MANIFEST_KEYS } from '../../bento/cohortModalData.js';
+import { DOWNLOAD_MANIFEST_KEYS } from '../../bento/cohortModalData';
 
 function generateDownloadFileName(isManifest, cohortID) {
     const date = new Date();

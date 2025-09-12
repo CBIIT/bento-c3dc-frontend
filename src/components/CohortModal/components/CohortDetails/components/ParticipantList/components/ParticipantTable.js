@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useRef, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
-import { CohortModalContext } from '../../../../../CohortModalContext.js';
+import { CohortModalContext } from '../../../../../CohortModalContext';
 import { deletionTypes } from '../../../../shared/DeleteConfirmationModal';
 import TrashCanIconBlue from '../../../../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import SortingIcon from '../../../../../../../assets/icons/Sorting_Icon.svg';
-import { SCROLLBAR_WIDTH } from '../../../../../../../bento/cohortModalData.js';
+import { SCROLLBAR_WIDTH } from '../../../../../../../bento/cohortModalData';
 
 const ParticipantTable = (props) => {
     const { 

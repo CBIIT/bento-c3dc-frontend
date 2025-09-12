@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { resourceIntroduction, availableResources } from '../../bento/resourcesPageData.js';
+import { resourceIntroduction, availableResources } from '../../bento/resourcesPageData';
 import resourcesBanner from '../../assets/resources/Resources_Banner.png';
 import resourcesImg from '../../assets/resources/Resources_Img.png';
 import exportIcon from '../../assets/about/Export_Icon.svg';

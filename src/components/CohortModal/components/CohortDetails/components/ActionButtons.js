@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '../../../../../assets/icons/Expand_More_Icon.svg';
 import Linkout from "../../../../../assets/about/Export_Icon_White.svg";
 import ToolTip from '@bento-core/tool-tip';
-import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../../bento/dashboardTabData.js';
-import client from '../../../../../utils/graphqlClient.js';
-import { arrayToCSVDownload, objectToJsonDownload } from '../../../utils.js';
-import { CohortModalContext } from '../../../CohortModalContext.js';
-import { CCDI_HUB_BASE_URL, TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
+import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../../bento/dashboardTabData';
+import client from '../../../../../utils/graphqlClient';
+import { arrayToCSVDownload, objectToJsonDownload } from '../../../utils';
+import { CohortModalContext } from '../../../CohortModalContext';
+import { CCDI_HUB_BASE_URL, TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData';
 
 const ActionButtons = (props) => {
     const { 

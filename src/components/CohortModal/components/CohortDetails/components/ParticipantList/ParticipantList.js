@@ -1,7 +1,7 @@
 import React, { useState, useContext, useCallback, useEffect, useMemo, memo } from 'react';
 import { withStyles, Button } from '@material-ui/core';
-import { CohortStateContext } from '../../../../../../components/CohortSelectorState/CohortStateContext.js';
-import { CohortModalContext } from '../../../../CohortModalContext.js';
+import { CohortStateContext } from '../../../../../../components/CohortSelectorState/CohortStateContext';
+import { CohortModalContext } from '../../../../CohortModalContext';
 import SearchBar from './components/SearchBar';
 import ParticipantTable from './components/ParticipantTable';
 import DEFAULT_CONFIG from '../../../../config';

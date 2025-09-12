@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal, withStyles } from '@material-ui/core';
-import { deletionTypes } from '../../../../bento/cohortModalData.js';
+import { deletionTypes } from '../../../../bento/cohortModalData';
 
 export { deletionTypes };
 
