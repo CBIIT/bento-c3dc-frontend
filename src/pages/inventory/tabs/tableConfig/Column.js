@@ -9,6 +9,7 @@ export const CustomCellView = (props) => {
     dataField, dataFormatter, cellStyle, label,
   } = props;
   const [top5, setTop5] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
   const newStyle = {
     color: "#60797B",
     fontSize: "12px",
@@ -16,12 +17,6 @@ export const CustomCellView = (props) => {
     textDecoration: 'underline',
     height: '23px',
   };
-
-
-  if (Array.isArray(label) && dataField === "treatment_agent") {
-   
-    return (<Typography>{label.join(", ")}</Typography>);
-  }
 
   if (Array.isArray(label) && dataField === "cohort") {
     return (
@@ -59,8 +54,50 @@ export const CustomCellView = (props) => {
         }
       </div>
     )
-
   }
+
+  if (Array.isArray(label)) {
+    if (props.linkAttr) {
+      const { rootPath } = props.linkAttr;
+      return (
+        <Typography>
+          {label.map((item, idx) => {
+            return (
+              <Link href={`#${rootPath}/`.concat(item)} className={cellTypes.LINK}>
+                <Typography key={idx}>{item}{idx !== label.length - 1 && ", "}</Typography>
+              </Link>
+            );
+          })}
+        </Typography>
+      );
+    }
+    
+    if (label.length > 5){
+      return (
+        <Typography>
+          {isExpanded ? label.join(", ") : label.slice(0,5).join(", ")}
+          {!isExpanded && (
+            <span 
+              onClick={() => setIsExpanded(true)} 
+              style={newStyle}
+            >
+              , ...
+            </span>
+          )}
+          {isExpanded && (
+            <span 
+              onClick={() => setIsExpanded(false)} 
+              style={newStyle}
+            >
+              {" "}(show less)
+            </span>
+          )}
+        </Typography>
+      );
+    }
+    return (<Typography>{label.join(", ")}</Typography>);
+  }
+
 
   if( typeof label === 'object'){
     return (<Typography>{label["participant_id"] }</Typography>)
