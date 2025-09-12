@@ -75,22 +75,27 @@ export const CustomCellView = (props) => {
     if (label.length > 5){
       return (
         <Typography>
-          {isExpanded ? label.join(", ") : label.slice(0,5).join(", ")}
-          {!isExpanded && (
-            <span 
-              onClick={() => setIsExpanded(true)} 
-              style={newStyle}
-            >
-              , ...
-            </span>
-          )}
-          {isExpanded && (
-            <span 
-              onClick={() => setIsExpanded(false)} 
-              style={newStyle}
-            >
-              {" "}(show less)
-            </span>
+          {isExpanded ? (
+            <>
+              {label.join(", ")}
+              {" "}
+              <span 
+                onClick={() => setIsExpanded(false)} 
+                style={newStyle}
+              >
+                (show less)
+              </span>
+            </>
+          ) : (
+            <>
+              {label.slice(0,5).join(", ")}
+              <span 
+                onClick={() => setIsExpanded(true)} 
+                style={newStyle}
+              >
+                <span style={{ whiteSpace: 'nowrap' }}>, ...</span>
+              </span>
+            </>
           )}
         </Typography>
       );
