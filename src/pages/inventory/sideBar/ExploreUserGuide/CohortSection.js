@@ -114,8 +114,7 @@ const CohortSection = ({ classes }) => (
           </a>
         </li>
         <li>
-          <strong>Explore in CCDI Hub</strong>: Exports cohorts (up to 600
-          participants) to the{" "}
+          <strong>Explore in CCDI Hub</strong>: Exports cohorts to the{" "}
           <a
             href="https://ccdi.cancer.gov/explore"
             target="_blank"

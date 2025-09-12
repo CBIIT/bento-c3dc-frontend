@@ -2,7 +2,7 @@ import { useContext, useMemo } from 'react';
 import { CohortStateContext } from '../../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalContext } from '../CohortModalContext';
 import { hasUnsavedChanges as checkUnsavedChanges } from '../utils';
-import { IGNORED_FIELDS } from '../../../bento/cohortModalData.js';
+import { IGNORED_FIELDS } from '../../../bento/cohortModalData';
 
 /**
  * Custom hook for detecting unsaved changes in the cohort modal

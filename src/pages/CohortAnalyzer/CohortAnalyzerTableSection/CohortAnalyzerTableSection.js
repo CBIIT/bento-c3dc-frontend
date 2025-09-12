@@ -18,7 +18,7 @@ const CohortAnalyzerTableSection = ({ classes, questionIcon, handleClick, handle
   const hasSel = useMemo(() => selectedCohorts.length > 0, [selectedCohorts]);
   const hasRows = useMemo(() => rowData.length > 0, [rowData]);
   const canBuild = hasSel;
-  const canHub = hasSel && hasRows && rowData.length <= 600;
+  const canHub = hasSel && hasRows;
 
 
   const onBuild = useCallback(() => canBuild && handleBuildInExplore(), [canBuild, handleBuildInExplore]);

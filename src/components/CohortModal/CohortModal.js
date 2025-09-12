@@ -7,7 +7,7 @@ import DEFAULT_CONFIG from './config';
 import CohortList from './components/CohortList/CohortList';
 import CohortDetails from './components/CohortDetails/CohortDetails';
 import { DeleteConfirmationModal, AlertManager } from './components/shared';
-import { CohortModalContext } from './CohortModalContext.js';
+import { CohortModalContext } from './CohortModalContext';
 import { useModalState } from './hooks/useModalState';
 import { useUnsavedChanges } from './hooks/useUnsavedChanges';
 

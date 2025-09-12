@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext, useMemo, useCallback, memo } from 'react';
 import { withStyles } from '@material-ui/core';
-import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
-import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action.js';
-import { CohortModalContext } from '../../CohortModalContext.js';
-import { getManifestPayload, truncateSignedUrl } from '../../utils.js';
-import { CCDI_INTEROP_SERVICE_URL } from '../../../../bento/cohortModalData.js';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
+import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action';
+import { CohortModalContext } from '../../CohortModalContext';
+import { getManifestPayload, truncateSignedUrl } from '../../utils';
+import { CCDI_INTEROP_SERVICE_URL } from '../../../../bento/cohortModalData';
 import CohortMetadata from './components/CohortMetadata';
 import ParticipantList from './components/ParticipantList';
 import ActionButtons from './components/ActionButtons';
