@@ -99,7 +99,7 @@ const DropdownItem = styled.li`
   letter-spacing: 0.02em;
   text-align: left;
   padding: 4px;
-  max-height: 27px;
+  max-height: 38px;
   padding-left: 18px;
   padding-right: 18px;
   word-break: break-word;
