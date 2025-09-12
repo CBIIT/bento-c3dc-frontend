@@ -2303,14 +2303,14 @@ export const tabContainers = [
       {
         dataField: 'cytoband',
         header: 'Cytoband',
-        display: true,
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: 'test',
         header: 'Test',
-        display: true,
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2345,14 +2345,14 @@ export const tabContainers = [
       {
         dataField: 'hgvs_coding',
         header: 'HGVS Coding',
-        display: true,
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
       {
         dataField: 'hgvs_protein',
         header: 'HGVS Protein',
-        display: true,
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2401,7 +2401,7 @@ export const tabContainers = [
       {
         dataField: 'genomic_source_category',
         header: 'Genomic Source Category',
-        display: true,
+        display: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
