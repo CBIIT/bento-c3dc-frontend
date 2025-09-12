@@ -74,6 +74,17 @@ export const externalLinkIcon = {
   alt: 'External link icon',
 };
 
+// --------------- Responsive Tab Breakpoint Configuration --------------
+export const tabResponsiveBreakpoints = {
+  breakpoints: [
+    { maxWidth: 1249, tabLimit: 2 },
+    { maxWidth: 1399, tabLimit: 3 },
+    { maxWidth: 1549, tabLimit: 4 },
+    { maxWidth: 1699, tabLimit: 5 },
+  ],
+  defaultTabLimit: 6, // >= 1700px
+};
+
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
 export const DASHBOARD_QUERY_NEW = gql`
 query search(
@@ -2108,7 +2119,7 @@ export const tabContainers = [
     count: 'numberOfSurvivals',
     fileCount: 'samplesFileCount',
     paginationAPIField: 'survivalOverview',
-    dataKey: ['participnat','id'],
+    dataKey: 'id',
     hiddenDataKeys: ['participant', 'participant_pk', 'dbgap_accession'],
     defaultSortField: 'participant.participant_id',
     defaultSortDirection: 'asc',

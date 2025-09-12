@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
-import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext.js';
+import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 import {
     onDeleteSingleCohort,
     onDeleteAllCohort,
-} from '../../../../components/CohortSelectorState/store/action.js';
-import { CohortModalContext } from '../../CohortModalContext.js';
+} from '../../../../components/CohortSelectorState/store/action';
+import { CohortModalContext } from '../../CohortModalContext';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import DEFAULT_CONFIG from '../../config';
 import { deletionTypes } from '../shared/DeleteConfirmationModal';
 import CohortListItem from './components/CohortListItem';
-import { TOOLTIP_MESSAGES } from '../../../../bento/cohortModalData.js';
+import { TOOLTIP_MESSAGES } from '../../../../bento/cohortModalData';
 
 /**
  * A list of cohorts to select from and manage.
