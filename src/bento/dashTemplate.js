@@ -253,7 +253,7 @@ export const facetsConfig = [
   {
     section: DIAGNOSIS,
     label: 'Anatomic Site',
-    apiPath: 'participantCountByDiagnosis',
+    apiPath: 'participantCountByAnatomicSite',
     apiForFiltering: 'filterParticipantCountByAnatomicSite',
     datafield: 'anatomic_site',
     field: GROUP,
