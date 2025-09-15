@@ -2437,7 +2437,6 @@ export const tabContainers = [
       noMatch: 'No Matching Records Found',
     },
     /*
-    // TODO: Uncomment and update when backend API is ready
     addFilesRequestVariableKey: 'genetic_analysis_ids',
     addFilesResponseKeys: ['fileIDsFromList'],
     addAllFilesResponseKeys: ['geneticAnalysisOverview', 'files'],
