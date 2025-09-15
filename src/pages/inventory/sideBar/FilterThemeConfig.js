@@ -56,28 +56,34 @@ const theme = {
           backgroundColor: '#F0DCBE',
         },
         '&.diagnosisCheckedEven': {
-          backgroundColor: '#E6FFF9',
+          backgroundColor: '#C2FFF1',
         },
         '&.diagnosisCheckedOdd': {
           backgroundColor: '#BCE1D8',
         },
         '&.treatmentCheckedEven': {
-          backgroundColor: '#F6F0FB',
+          backgroundColor: '#B5D8F9',
         },
         '&.treatmentCheckedOdd': {
-          backgroundColor: '#D3BFE8',
+          backgroundColor: '#92BADF',
         },
         '&.treatmentresponseCheckedEven': {
-          backgroundColor: '#E9F5F3',
+          backgroundColor: '#E8D8F5',
         },
         '&.treatmentresponseCheckedOdd': {
-          backgroundColor: '#E0ECEA',
+          backgroundColor: '#D3BFE8',
         },
         '&.survivalCheckedEven': {
-          backgroundColor: '#FFF6F3',
+          backgroundColor: '#E0ECEA',
         },
         '&.survivalCheckedOdd': {
+          backgroundColor: '#E9F5F3',
+        },
+        '&.geneticanalysisCheckedEven': {
           backgroundColor: '#FFEDE7',
+        },
+        '&.geneticanalysisCheckedOdd': {
+          backgroundColor: '#FFF6F3',
         },
       },
     },
@@ -114,12 +120,15 @@ const theme = {
           backgroundColor: '#35B899',
         },
         '&.divider3': {
-          backgroundColor: '#9664C7',
+          backgroundColor: '#268CEA',
         },
         '&.divider4': {
-          backgroundColor: '#006B57',
+          backgroundColor: '#9664C7',
         },
         '&.divider5': {
+          backgroundColor: '#006B57',
+        },
+        '&.divider6': {
           backgroundColor: '#862405',
         },
       },

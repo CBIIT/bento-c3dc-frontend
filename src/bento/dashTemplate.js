@@ -11,6 +11,7 @@ const SURVIVAL = 'Survival';
 const GROUP = 'group';
 const TREATMENT = 'Treatment';
 const TREATMENTRESPONSE = 'Treatmentresponse';
+const GENETICANALYSIS = 'Geneticanalysis';
 
 // --------------- Facet resetIcon link configuration --------------
 // Ideal size for resetIcon is 16x16 px
@@ -24,6 +25,7 @@ export const resetIcon = {
 
 export const sectionLabel = {
   Treatmentresponse: "Treatment Response",
+  Geneticanalysis: "Genetic Analysis",
 };
 
 // --------------- Dashboard Sidebar Sections styling --------------
@@ -45,6 +47,9 @@ export const facetSectionVariables = {
     isExpanded: false,
   },
   Survival: {
+    isExpanded: false,
+  },
+  Geneticanalysis: {
     isExpanded: false,
   },
 };
@@ -248,7 +253,7 @@ export const facetsConfig = [
   {
     section: DIAGNOSIS,
     label: 'Anatomic Site',
-    apiPath: '',
+    apiPath: 'participantCountByAnatomicSite',
     apiForFiltering: 'filterParticipantCountByAnatomicSite',
     datafield: 'anatomic_site',
     field: GROUP,
@@ -261,7 +266,7 @@ export const facetsConfig = [
    {
     section: DIAGNOSIS,
     label: 'Diagnosis',
-    apiPath: '',
+    apiPath: 'participantCountByDiagnosis',
     apiForFiltering: 'filterParticipantCountByDiagnosis',
     datafield: 'diagnosis',
     field: GROUP,
@@ -353,7 +358,7 @@ export const facetsConfig = [
   {
     section: TREATMENT,
     label: 'Treatment Type',
-    apiPath: '',
+    apiPath: 'participantCountByTreatmentType',
     apiForFiltering: 'filterParticipantCountByTreatmentType',
     datafield: 'treatment_type',
     field: GROUP,
@@ -425,7 +430,7 @@ export const facetsConfig = [
   {
     section: SURVIVAL,
     label: 'Last Known Survival Status',
-    apiPath: 'participantCountByLastKnownSurvivalStatus',
+    apiPath: '',
     apiForFiltering: 'filterParticipantCountByLastKnownSurvivalStatus',
     datafield: 'last_known_survival_status',
     field: GROUP,
@@ -453,7 +458,7 @@ export const facetsConfig = [
   {
     section: SURVIVAL,
     label: 'Cause Of Death',
-    apiPath: 'participantCountByCauseOfDeath',
+    apiPath: '',
     apiForFiltering: 'filterParticipantCountByCauseOfDeath',
     datafield: 'cause_of_death',
     field: GROUP,
@@ -464,9 +469,86 @@ export const facetsConfig = [
   {
     section: SURVIVAL,
     label: 'First Event',
-    apiPath: 'participantCountByFirstEvent',
+    apiPath: '',
     apiForFiltering: 'filterParticipantCountByFirstEvent',
     datafield: 'first_event',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Reported Significance',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByReportedSignificance',
+    datafield: 'reported_significance',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Reported Significance System',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByReportedSignificanceSystem',
+    datafield: 'reported_significance_system',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Gene Symbol',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByGeneSymbol', 
+    datafield: 'gene_symbol',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Alteration',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByAlteration',
+    datafield: 'alteration',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Fusion Partner Gene',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByFusionPartnerGene',
+    datafield: 'fusion_partner_gene',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Alteration Type',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByAlterationType',
+    datafield: 'alteration_type',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Status',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByStatus',
+    datafield: 'status',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,

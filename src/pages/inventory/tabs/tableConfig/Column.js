@@ -4,6 +4,37 @@ import { cellTypes, headerTypes } from '@bento-core/table';
 import ReactHtmlParser from "html-react-parser";
 import ToolTip from "@bento-core/tool-tip";
 
+const ExpandableArrayCell = ({ label, newStyle }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  return (
+    <Typography>
+      {isExpanded ? (
+        <>
+          {label.join(", ")}
+          {" "}
+          <span 
+            onClick={() => setIsExpanded(false)} 
+            style={newStyle}
+          >
+            (show less)
+          </span>
+        </>
+      ) : (
+        <>
+          {label.slice(0,5).join(", ")}
+          <span 
+            onClick={() => setIsExpanded(true)} 
+            style={newStyle}
+          >
+            <span style={{ whiteSpace: 'nowrap' }}>, ...</span>
+          </span>
+        </>
+      )}
+    </Typography>
+  );
+};
+
 export const CustomCellView = (props) => {
   const {
     dataField, dataFormatter, cellStyle, label,
@@ -16,12 +47,6 @@ export const CustomCellView = (props) => {
     textDecoration: 'underline',
     height: '23px',
   };
-
-
-  if (Array.isArray(label) && dataField === "treatment_agent") {
-   
-    return (<Typography>{label.join(", ")}</Typography>);
-  }
 
   if (Array.isArray(label) && dataField === "cohort") {
     return (
@@ -59,8 +84,30 @@ export const CustomCellView = (props) => {
         }
       </div>
     )
-
   }
+
+  if (Array.isArray(label)) {
+    if (props.linkAttr) {
+      const { rootPath } = props.linkAttr;
+      return (
+        <Typography>
+          {label.map((item, idx) => {
+            return (
+              <Link href={`#${rootPath}/`.concat(item)} className={cellTypes.LINK}>
+                <Typography key={idx}>{item}{idx !== label.length - 1 && ", "}</Typography>
+              </Link>
+            );
+          })}
+        </Typography>
+      );
+    }
+    
+    if (label.length > 5){
+      return <ExpandableArrayCell label={label} newStyle={newStyle} />;
+    }
+    return (<Typography>{label.join(", ")}</Typography>);
+  }
+
 
   if( typeof label === 'object'){
     return (<Typography>{label["participant_id"] }</Typography>)
