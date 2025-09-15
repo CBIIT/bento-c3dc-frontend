@@ -2436,12 +2436,5 @@ export const tabContainers = [
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
-    /*
-    addFilesRequestVariableKey: 'genetic_analysis_ids',
-    addFilesResponseKeys: ['fileIDsFromList'],
-    addAllFilesResponseKeys: ['geneticAnalysisOverview', 'files'],
-    addAllFileQuery: GET_ALL_FILEIDS_FROM_GENETIC_ANALYSIS_TAB_FOR_ADD_ALL_CART,
-    addSelectedFilesQuery: GET_ALL_FILEIDS_GENETIC_ANALYSIS_TAB_FOR_SELECT_ALL,
-    */
   }
 ];
