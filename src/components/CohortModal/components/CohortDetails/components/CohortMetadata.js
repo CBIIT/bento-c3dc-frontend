@@ -122,7 +122,7 @@ const CohortMetadata = (props) => {
                             onBlur={handleFinishEditingName}
                             onChange={handleTextChange}
                             onKeyDown={handleNameKeyDown}
-                            maxLength={20}
+                            maxLength={18}
                             autoFocus
                         />
                     ) : (

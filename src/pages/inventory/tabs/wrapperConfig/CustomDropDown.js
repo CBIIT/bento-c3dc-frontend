@@ -74,7 +74,7 @@ const Arrow = styled.span`
 const DropdownList = styled.ul`
   position: absolute;
   min-width: 179px;
-  max-width: 179px;
+  max-width: 189px;
   left: 0;
   scrollbar-color: #003F74 #003F74;
   right: 0;
@@ -99,7 +99,7 @@ const DropdownItem = styled.li`
   letter-spacing: 0.02em;
   text-align: left;
   padding: 4px;
-  max-height: 27px;
+  max-height: 38px;
   padding-left: 18px;
   padding-right: 18px;
   word-break: break-word;
@@ -113,6 +113,8 @@ const DropdownItem = styled.li`
   border-bottom: 1px solid #ccc;
 
   &:nth-child(even) {
+    /* Reduce right padding for even-numbered items to improve visual alignment with icons/text. */
+    padding-right: 2px;
     background-color: ${(props) =>
       props.isDisabled ? "#F0F0F0" : "#CCD5E1"};
   }
