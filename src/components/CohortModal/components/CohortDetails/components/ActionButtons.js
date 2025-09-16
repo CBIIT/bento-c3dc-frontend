@@ -6,17 +6,14 @@ import Linkout from "../../../../../assets/about/Export_Icon_White.svg";
 import ToolTip from '@bento-core/tool-tip';
 import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../../bento/dashboardTabData';
 import client from '../../../../../utils/graphqlClient';
-import { arrayToCSVDownload, objectToJsonDownload } from '../../../utils';
+import { arrayToCSVDownload, objectToJsonDownload, exportToCCDIHub } from '../../../utils';
 import { CohortModalContext } from '../../../CohortModalContext';
-import { CCDI_HUB_BASE_URL, TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData';
+import { TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData';
 
 const ActionButtons = (props) => {
-    const { 
-        classes, 
-        localCohort,
-        ccdiHubUrl,
-        isGeneratingUrl,
-        urlGenerationFailed
+    const {
+        classes,
+        localCohort
     } = props;
     
     const navigate = useNavigate();
@@ -25,6 +22,7 @@ const ActionButtons = (props) => {
     // Loading states
     const [isDownloadingManifest, setIsDownloadingManifest] = useState(false);
     const [isDownloadingMetadata, setIsDownloadingMetadata] = useState(false);
+    const [isExportingToCCDI, setIsExportingToCCDI] = useState(false);
     
     // Download functions (memoized for performance with error handling)
     const downloadCohortManifest = useCallback(async () => {
@@ -67,28 +65,16 @@ const ActionButtons = (props) => {
         }
     }, [localCohort.participants, localCohort.cohortId, isDownloadingMetadata, showAlert]);
     
-    // Navigation functions (memoized for performance with error handling)
-    const generateCCDIHub_url = useCallback(() => {
-        try {
-            if (urlGenerationFailed) {
-                showAlert('error', 'CCDI Hub URL generation failed. Please try refreshing the page.');
-                return;
-            }
-            
-            if (!ccdiHubUrl) {
-                showAlert('error', 'CCDI Hub URL is not available. Please try again later.');
-                return;
-            }
-            
-            const finalUrl = `${CCDI_HUB_BASE_URL}${ccdiHubUrl}`;
-            window.open(finalUrl, '_blank');
-            showAlert('success', 'CCDI Hub opened in new tab!');
-            return finalUrl;
-        } catch (error) {
-            console.error('Error opening CCDI Hub URL:', error);
-            showAlert('error', 'Failed to open CCDI Hub. Please try again.');
-        }
-    }, [ccdiHubUrl, urlGenerationFailed, showAlert]);
+    // CCDI Hub export function using centralized utility
+    const handleExportToCCDIHub = useCallback(async () => {
+        if (isExportingToCCDI) return; // Prevent multiple simultaneous exports
+
+        await exportToCCDIHub(localCohort.participants, {
+            showAlert,
+            useInteropService: true,
+            onLoadingStateChange: setIsExportingToCCDI
+        });
+    }, [localCohort.participants, isExportingToCCDI, showAlert]);
     
     const handleViewAnalysisClick = useCallback(() => {
         try {
@@ -141,16 +127,12 @@ const ActionButtons = (props) => {
     }, []);
 
     const handleCCDIHubClick = useCallback(() => {
-        if (isGeneratingUrl) {
+        if (isExportingToCCDI) {
             showAlert('info', 'Please wait while we prepare the CCDI Hub link...');
             return;
         }
-        if (urlGenerationFailed) {
-            showAlert('error', 'CCDI Hub URL generation failed. Please try refreshing the page.');
-            return;
-        }
-        generateCCDIHub_url();
-    }, [isGeneratingUrl, urlGenerationFailed, generateCCDIHub_url, showAlert]);
+        handleExportToCCDIHub();
+    }, [isExportingToCCDI, handleExportToCCDIHub, showAlert]);
 
     return (
         <div className={classes.actionButtonsContainer}>
@@ -214,14 +196,12 @@ const ActionButtons = (props) => {
                 arrow
                 arrowSize="30px"
             >
-                <Button 
+                <Button
                     variant="contained"
-                    className={isGeneratingUrl || urlGenerationFailed ? classes.exploreButtonFaded : classes.exploreButton}
+                    className={isExportingToCCDI ? classes.exploreButtonFaded : classes.exploreButton}
                     onClick={handleCCDIHubClick}
-                    disabled={isGeneratingUrl || urlGenerationFailed}
-                    aria-label={urlGenerationFailed ? 'CCDI Hub URL generation failed' :
-                        isGeneratingUrl ? 'Preparing CCDI Hub link...' : 'Open cohort in CCDI Hub in new tab'
-                    }
+                    disabled={isExportingToCCDI}
+                    aria-label={isExportingToCCDI ? 'Preparing CCDI Hub link...' : 'Open cohort in CCDI Hub in new tab'}
                 >
                     <span style={{textAlign: 'left'}}>
                         EXPLORE <br /> IN CCDI Hub
