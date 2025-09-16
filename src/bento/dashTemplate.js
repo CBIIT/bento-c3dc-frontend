@@ -509,6 +509,8 @@ export const facetsConfig = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    search: true,
+    searchPlaceholder: 'e.g. MLL, TP53, BRAF',
   },
   {
     section: GENETICANALYSIS,
@@ -520,6 +522,8 @@ export const facetsConfig = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    search: true,
+    searchPlaceholder: 'e.g. LOH, Gain, Heterozygosity',
   },
   {
     section: GENETICANALYSIS,
