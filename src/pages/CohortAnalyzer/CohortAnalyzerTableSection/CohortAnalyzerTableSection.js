@@ -22,7 +22,11 @@ const CohortAnalyzerTableSection = ({ classes, questionIcon, handleClick, handle
 
 
   const onBuild = useCallback(() => canBuild && handleBuildInExplore(), [canBuild, handleBuildInExplore]);
-  const onHub = useCallback(() => canHub && handleExportToCCDIHub(), [canHub, handleExportToCCDIHub]);
+  const onHub = useCallback(async () => {
+    if (canHub) {
+      await handleExportToCCDIHub();
+    }
+  }, [canHub, handleExportToCCDIHub]);
 
 
   return (

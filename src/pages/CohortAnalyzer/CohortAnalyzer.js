@@ -30,6 +30,7 @@ import VennDiagramContainer from "./vennDiagram/VennDiagramContainer";
 import Histogram from "./HistogramPanel/Histogram";
 import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
 import { demoCohorts } from "../../bento/demoCohortData";
+import { exportToCCDIHub } from "../../components/CohortModal/utils";
 
 export const CohortAnalyzer = () => {
     useEffect(() => {
@@ -117,17 +118,19 @@ export const CohortAnalyzer = () => {
         }
     }
 
-    const handleExportToCCDIHub = () => {
-        const participantIds = rowData.map(p => p.participant_id).join("|");
-        const dbgapAccessions = [...new Set(rowData.map(p => p.dbgap_accession))].join("|");
-
-        const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
-        const dbgapBase = "&dbgap_accession=";
-
-        const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
-        window.open(finalUrl, '_blank');
-
-        return finalUrl;
+    const handleExportToCCDIHub = async () => {
+        // Use centralized export function with Cohort Analyzer context
+        await exportToCCDIHub(rowData, {
+            showAlert: (type, message) => {
+                // Convert to Cohort Analyzer's notification system
+                if (type === 'success') {
+                    Notification.show(message, 3000);
+                } else if (type === 'error' || type === 'warning') {
+                    Notification.show(message, 5000);
+                }
+            },
+            useInteropService: true
+        });
     }
 
     const searchRef = useRef();
