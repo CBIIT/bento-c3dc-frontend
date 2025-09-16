@@ -1,4 +1,4 @@
-import { DOWNLOAD_MANIFEST_KEYS } from '../../bento/cohortModalData';
+import { DOWNLOAD_MANIFEST_KEYS, CCDI_HUB_BASE_URL, CCDI_INTEROP_SERVICE_URL, CCDI_HUB_LEGACY_BASE_URL, CCDI_HUB_DBGAP_PARAM } from '../../bento/cohortModalData';
 
 function generateDownloadFileName(isManifest, cohortID) {
     const date = new Date();
@@ -150,12 +150,112 @@ export const getManifestPayload = (participants) => {
 // Helper function to truncate signed CloudFront URLs at .json
 export const truncateSignedUrl = (url) => {
   if (!url || typeof url !== 'string') return url;
-  
+
   const jsonIndex = url.indexOf('.json');
   if (jsonIndex !== -1) {
     return url.substring(0, jsonIndex + 5); // +5 to include ".json"
   }
-  
+
   return url; // Return original if no .json found
+};
+
+// Centralized CCDI Hub export utility
+export const exportToCCDIHub = async (participants, options = {}) => {
+  const {
+    showAlert,
+    useInteropService = true,
+    onLoadingStateChange
+  } = options;
+
+  // Validate input
+  if (!participants || !Array.isArray(participants) || participants.length === 0) {
+    if (showAlert) showAlert('error', 'No participants available for export.');
+    return null;
+  }
+
+  // Configuration constants are now imported at module level for better performance
+
+  try {
+    if (useInteropService) {
+      // Use the robust interop service approach (recommended)
+      if (onLoadingStateChange) onLoadingStateChange(true);
+
+      const manifestPayload = getManifestPayload(participants);
+      if (!manifestPayload || manifestPayload.length === 0) {
+        throw new Error('Unable to generate manifest payload from participants');
+      }
+
+      const query = `
+        query storeManifest($manifestString: String!, $type: String!) {
+          storeManifest(manifest: $manifestString, type: $type)
+        }
+      `;
+
+      const response = await fetch(CCDI_INTEROP_SERVICE_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query,
+          variables: {
+            manifestString: JSON.stringify(manifestPayload),
+            type: "json"
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      if (result.errors) {
+        const errorMessage = (result.errors[0] && result.errors[0].message) || 'Unknown GraphQL error';
+        const participantCount = manifestPayload ? manifestPayload.length : 0;
+        throw new Error(`CCDI Interop Service Error: ${errorMessage} (Processing ${participantCount} study groups)`);
+      }
+
+      // Process and open the URL
+      const processedUrl = result.data.storeManifest ? truncateSignedUrl(result.data.storeManifest) : null;
+      if (!processedUrl) {
+        throw new Error('No valid URL returned from interop service');
+      }
+
+      const finalUrl = `${CCDI_HUB_BASE_URL}${processedUrl}`;
+      window.open(finalUrl, '_blank');
+
+      if (showAlert) showAlert('success', 'CCDI Hub opened in new tab!');
+      return finalUrl;
+
+    } else {
+      // Fallback to direct URL construction (legacy approach)
+      console.warn('Using legacy direct URL construction. Consider updating to interop service approach.');
+
+      const participantIds = participants.map(p => p.participant_id).join("|");
+      const dbgapAccessions = [...new Set(participants.map(p => p.dbgap_accession))].join("|");
+
+      const finalUrl = `${CCDI_HUB_LEGACY_BASE_URL}${participantIds}${CCDI_HUB_DBGAP_PARAM}${dbgapAccessions}`;
+
+      // Check for potential URL length issues
+      if (finalUrl.length > 2000) {
+        console.warn('Generated URL may be too long for some browsers. Consider using interop service approach.');
+      }
+
+      window.open(finalUrl, '_blank');
+      if (showAlert) showAlert('success', 'CCDI Hub opened in new tab!');
+      return finalUrl;
+    }
+
+  } catch (error) {
+    console.error('Error exporting to CCDI Hub:', error);
+    if (showAlert) {
+      showAlert('error', `Failed to export to CCDI Hub: ${error.message}`);
+    }
+    return null;
+  } finally {
+    if (onLoadingStateChange) onLoadingStateChange(false);
+  }
 };
 

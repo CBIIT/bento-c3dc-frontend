@@ -3,8 +3,6 @@ import { withStyles } from '@material-ui/core';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 import { onMutateSingleCohort } from '../../../../components/CohortSelectorState/store/action';
 import { CohortModalContext } from '../../CohortModalContext';
-import { getManifestPayload, truncateSignedUrl } from '../../utils';
-import { CCDI_INTEROP_SERVICE_URL } from '../../../../bento/cohortModalData';
 import CohortMetadata from './components/CohortMetadata';
 import ParticipantList from './components/ParticipantList';
 import ActionButtons from './components/ActionButtons';
@@ -55,82 +53,6 @@ const CohortDetails = (props) => {
     }, [matchingCohortID, currentCohortChanges, activeCohort]);
 
     const [localCohort, setLocalCohort] = useState(initialCohortState);
-
-    // Interop service state for CCDI Hub integration
-    const [urlData, setUrlData] = useState(null);
-    const [isGeneratingUrl, setIsGeneratingUrl] = useState(false);
-    const [urlGenerationFailed, setUrlGenerationFailed] = useState(false);
-
-    const manifestPayload = useMemo(() => {
-        return getManifestPayload(localCohort.participants);
-    }, [localCohort.participants]);
-
-    // Function to call interop service
-    const fetchCCDIHubUrl = useCallback(async (payload) => {
-        if (!payload || payload.length === 0) return;
-        
-        setIsGeneratingUrl(true);
-        setUrlGenerationFailed(false);
-        try {
-            const query = `
-                query storeManifest($manifestString: String!, $type: String!) {
-                    storeManifest(manifest: $manifestString, type: $type)
-                }
-            `;
-            
-            const response = await fetch(CCDI_INTEROP_SERVICE_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    query,
-                    variables: {
-                        manifestString: JSON.stringify(payload),
-                        type: "json"
-                    }
-                })
-            });
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            const result = await response.json();
-            
-            if (result.errors) {
-                const errorMessage = (result.errors[0] && result.errors[0].message) || 'Unknown GraphQL error';
-                const participantCount = payload ? payload.length : 0;
-                throw new Error(`CCDI Interop Service Error: ${errorMessage} (Processing ${participantCount} study groups)`);
-            }
-
-            // Process the URL data to truncate signed URL parameters
-            const processedData = {
-                ...result.data,
-                storeManifest: result.data.storeManifest ? truncateSignedUrl(result.data.storeManifest) : result.data.storeManifest
-            };
-
-            setUrlData(processedData);
-            setUrlGenerationFailed(false);
-        } catch (error) {
-            console.error('Error generating CCDI Hub URL:', error);
-            showAlert('error', 'Failed to generate CCDI Hub URL. Some features may not work properly.');
-            setUrlData(null);
-            setUrlGenerationFailed(true);
-        } finally {
-            setIsGeneratingUrl(false);
-        }
-    }, [showAlert]);
-
-    // Trigger URL generation when manifest payload changes
-    useEffect(() => {
-        if (manifestPayload && manifestPayload.length > 0) {
-            fetchCCDIHubUrl(manifestPayload);
-        } else {
-            setUrlData(null);
-            setUrlGenerationFailed(false);
-        }
-    }, [manifestPayload, fetchCCDIHubUrl]);
 
     const handleSetCurrentCohortChanges = useCallback((localCohort) => {
         if (!localCohort.cohortId) return;
@@ -197,9 +119,6 @@ const CohortDetails = (props) => {
             </div>
             <ActionButtons
                 localCohort={localCohort}
-                ccdiHubUrl={urlData && urlData.storeManifest}
-                isGeneratingUrl={isGeneratingUrl}
-                urlGenerationFailed={urlGenerationFailed}
             />
         </div>
     );
