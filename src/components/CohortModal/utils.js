@@ -1,4 +1,4 @@
-import { DOWNLOAD_MANIFEST_KEYS } from '../../bento/cohortModalData';
+import { DOWNLOAD_MANIFEST_KEYS, CCDI_HUB_BASE_URL, CCDI_INTEROP_SERVICE_URL, CCDI_HUB_LEGACY_BASE_URL, CCDI_HUB_DBGAP_PARAM } from '../../bento/cohortModalData';
 
 function generateDownloadFileName(isManifest, cohortID) {
     const date = new Date();
@@ -173,8 +173,7 @@ export const exportToCCDIHub = async (participants, options = {}) => {
     return null;
   }
 
-  // Extract configuration constants
-  const { CCDI_HUB_BASE_URL, CCDI_INTEROP_SERVICE_URL } = await import('../../bento/cohortModalData');
+  // Configuration constants are now imported at module level for better performance
 
   try {
     if (useInteropService) {
@@ -237,10 +236,7 @@ export const exportToCCDIHub = async (participants, options = {}) => {
       const participantIds = participants.map(p => p.participant_id).join("|");
       const dbgapAccessions = [...new Set(participants.map(p => p.dbgap_accession))].join("|");
 
-      const baseUrl = "https://ccdi.cancer.gov/explore?p_id=";
-      const dbgapBase = "&dbgap_accession=";
-
-      const finalUrl = `${baseUrl}${participantIds}${dbgapBase}${dbgapAccessions}`;
+      const finalUrl = `${CCDI_HUB_LEGACY_BASE_URL}${participantIds}${CCDI_HUB_DBGAP_PARAM}${dbgapAccessions}`;
 
       // Check for potential URL length issues
       if (finalUrl.length > 2000) {

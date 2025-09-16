@@ -8,6 +8,10 @@
 export const CCDI_HUB_BASE_URL = "https://ccdi.cancer.gov/explore?import_from=";
 export const CCDI_INTEROP_SERVICE_URL = "https://ccdi.cancer.gov/api/interoperation/graphql";
 
+// Legacy/Fallback URL Configuration (for direct URL construction)
+export const CCDI_HUB_LEGACY_BASE_URL = "https://ccdi.cancer.gov/explore?p_id=";
+export const CCDI_HUB_DBGAP_PARAM = "&dbgap_accession=";
+
 // Deletion Types Configuration
 export const deletionTypes = {
     DELETE_ALL_COHORTS: 'delete all cohorts?',
