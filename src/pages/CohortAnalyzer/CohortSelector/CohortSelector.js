@@ -1,5 +1,6 @@
 import React, {useState, useContext} from "react";
 import { useStyle, Wrapper, CohortSelectionChild, TrashCanIcon, InstructionsWrapper, Instructions } from "./cohortSelectorStyling";
+import { useStyle as useMainStyle } from "../cohortAnalyzerStyling";
 import trashCan from "../../../assets/icons/trash_can.svg";
 import trashCanBlack from "../../../assets/icons/trash_can_black.svg";
 import sortIcon from "../../../assets/icons/sort_icon.svg";
@@ -12,9 +13,10 @@ import {
 } from "../CohortAnalyzerUtil/CohortAnalyzerUtil";
 import { useCohortAnalyzer } from "../CohortAnalyzerContext";
 import { CohortStateContext } from "../../../components/CohortSelectorState/CohortStateContext";
+import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 
 
-export const CohortSelector = () => {
+export const CohortSelector = ({ handleDemoClick, state: propState }) => {
     //context
     const { state } = useContext(CohortStateContext);
     const {
@@ -30,8 +32,9 @@ export const CohortSelector = () => {
     
     //state
     const [sortType, setSortType] = useState("alphabet");
-     
+
     const classes = useStyle();
+    const mainClasses = useMainStyle();
      
     return (
         <div className={classes.leftSideAnalyzer}>
@@ -58,6 +61,37 @@ export const CohortSelector = () => {
                             {"to view in the Cohort Analyzer"}
                         </Instructions>
                     </InstructionsWrapper>
+
+                    {handleDemoClick && (
+                        <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-start', paddingLeft: '5px' }}>
+                            <ToolTip
+                                maxWidth="335px"
+                                border={'1px solid #598ac5'}
+                                arrowBorder={'1px solid #598AC5'}
+                                title={
+                                    <div className={mainClasses.demoTooltipContent}>
+                                        {Object.keys(state).length > 17 ? (
+                                            <p>Cannot add demo cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.</p>
+                                        ) : (
+                                            <p>Launch a demonstration of the Cohort Analyzer by clicking this button.</p>
+                                        )}
+                                    </div>
+                                }
+                                placement="top"
+                                arrow
+                                interactive
+                                arrowSize="30px"
+                            >
+                                <button
+                                    onClick={handleDemoClick}
+                                    disabled={Object.keys(state).length > 17}
+                                    className={Object.keys(state).length > 17 ? mainClasses.demoButtonFaded : mainClasses.demoButton}
+                                >
+                                    Cohort Analyzer Demo
+                                </button>
+                            </ToolTip>
+                        </div>
+                    )}
                 </>
             </div>
             <div className={classes.sortSection}>

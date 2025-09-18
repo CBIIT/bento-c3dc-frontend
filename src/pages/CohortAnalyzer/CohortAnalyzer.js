@@ -308,12 +308,10 @@ export const CohortAnalyzer = () => {
                 // Hardcode the demo cohort keys for automatic selection
                 const demoCohortKeys = [
                     'demo cohort 1',
-                    'demo cohort 2', 
+                    'demo cohort 2',
                     'demo cohort 3'
                 ];
-                
                 setSelectedCohorts(demoCohortKeys);
-                
                 Notification.show(`Successfully created and selected ${totalCohorts} demo cohorts! View the results in the Venn diagram and histogram below.`, 7000);
             }
         };
@@ -410,7 +408,10 @@ export const CohortAnalyzer = () => {
             <Stats />
             <div className={classes.container}  >
 
-                <CohortSelector />
+                <CohortSelector
+                    handleDemoClick={handleDemoClick}
+                    state={state}
+                />
                 <div className={classes.rightSideAnalyzer}>
                     {alert.message && (
                         <Alert severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
@@ -419,34 +420,6 @@ export const CohortAnalyzer = () => {
                     )}
                     <div className={classes.rightSideAnalyzerHeader} style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
                         <h1> Cohort Analyzer</h1>
-                        <div className={classes.demoButtonContainer}>
-                            <ToolTip
-                                maxWidth="335px"
-                                border={'1px solid #598ac5'}
-                                arrowBorder={'1px solid #598AC5'}
-                                title={
-                                    <div className={classes.demoTooltipContent}>
-                                        {Object.keys(state).length > 17 ? (
-                                            <p>Cannot add demo cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.</p>
-                                        ) : (
-                                            <p>Launch a demonstration of the Cohort Analyzer by clicking this button.</p>
-                                        )}
-                                    </div>
-                                }
-                                placement="top"
-                                arrow
-                                interactive
-                                arrowSize="30px"
-                            >
-                                <button
-                                    onClick={handleDemoClick}
-                                    disabled={Object.keys(state).length > 17}
-                                    className={Object.keys(state).length > 17 ? classes.demoButtonFaded : classes.demoButton}
-                                >
-                                    Cohort Analyzer Demo
-                                </button>
-                            </ToolTip>
-                        </div>
                     </div>
 
 
