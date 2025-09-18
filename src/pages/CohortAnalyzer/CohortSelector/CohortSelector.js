@@ -1,5 +1,6 @@
 import React, {useState, useContext} from "react";
 import { useStyle, Wrapper, CohortSelectionChild, TrashCanIcon, InstructionsWrapper, Instructions } from "./cohortSelectorStyling";
+import { useStyle as useMainStyle } from "../cohortAnalyzerStyling";
 import trashCan from "../../../assets/icons/trash_can.svg";
 import trashCanBlack from "../../../assets/icons/trash_can_black.svg";
 import sortIcon from "../../../assets/icons/sort_icon.svg";
@@ -12,9 +13,11 @@ import {
 } from "../CohortAnalyzerUtil/CohortAnalyzerUtil";
 import { useCohortAnalyzer } from "../CohortAnalyzerContext";
 import { CohortStateContext } from "../../../components/CohortSelectorState/CohortStateContext";
+import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
+import { exampleButtonConfig, getExampleCohortKeys } from "../../../bento/exampleCohortData";
 
 
-export const CohortSelector = () => {
+export const CohortSelector = ({ handleDemoClick, state: propState }) => {
     //context
     const { state } = useContext(CohortStateContext);
     const {
@@ -30,8 +33,9 @@ export const CohortSelector = () => {
     
     //state
     const [sortType, setSortType] = useState("alphabet");
-     
+
     const classes = useStyle();
+    const mainClasses = useMainStyle();
      
     return (
         <div className={classes.leftSideAnalyzer}>
@@ -58,6 +62,46 @@ export const CohortSelector = () => {
                             {"to view in the Cohort Analyzer"}
                         </Instructions>
                     </InstructionsWrapper>
+
+                    {handleDemoClick && (() => {
+                        const exampleCohortKeys = getExampleCohortKeys();
+                        const nonExampleCohorts = Object.keys(state).filter(key => !exampleCohortKeys.includes(key));
+                        const isDisabled = nonExampleCohorts.length > 17;
+                        const hasExistingExampleCohorts = exampleCohortKeys.some(key => state[key]);
+
+                        const tooltipText = isDisabled
+                            ? exampleButtonConfig.tooltip.disabled
+                            : hasExistingExampleCohorts
+                                ? exampleButtonConfig.tooltip.replacement
+                                : exampleButtonConfig.tooltip.enabled;
+
+                        return (
+                            <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-start', paddingLeft: '5px' }}>
+                                <ToolTip
+                                    maxWidth="335px"
+                                    border={'1px solid #598ac5'}
+                                    arrowBorder={'1px solid #598AC5'}
+                                    title={
+                                        <div className={mainClasses.demoTooltipContent}>
+                                            <p>{tooltipText}</p>
+                                        </div>
+                                    }
+                                    placement="top"
+                                    arrow
+                                    interactive
+                                    arrowSize="30px"
+                                >
+                                    <button
+                                        onClick={handleDemoClick}
+                                        disabled={isDisabled}
+                                        className={isDisabled ? mainClasses.demoButtonFaded : mainClasses.demoButton}
+                                    >
+                                        {exampleButtonConfig.buttonText}
+                                    </button>
+                                </ToolTip>
+                            </div>
+                        );
+                    })()}
                 </>
             </div>
             <div className={classes.sortSection}>

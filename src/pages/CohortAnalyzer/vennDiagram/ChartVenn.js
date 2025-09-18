@@ -140,7 +140,7 @@ if(data){
  
 // useEffect hooks
   useEffect(() => {
-    const updatedBaseSets = cohortData.map((cohort) => {
+    const updatedBaseSets = cohortData.filter(cohort => cohort && cohort.cohortName).map((cohort) => {
       const seenValues = new Set();
       return {
         label: `${cohort.cohortName.length > 13 ? cohort.cohortName.slice(0, 13) + '...' : cohort.cohortName} (${cohort.participants.length})`,

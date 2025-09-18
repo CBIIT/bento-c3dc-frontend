@@ -29,7 +29,7 @@ import { useCohortAnalyzer } from "./CohortAnalyzerContext";
 import VennDiagramContainer from "./vennDiagram/VennDiagramContainer";
 import Histogram from "./HistogramPanel/Histogram";
 import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
-import { demoCohorts } from "../../bento/demoCohortData";
+import { exampleCohorts, getExampleCohortKeys } from "../../bento/exampleCohortData";
 import { exportToCCDIHub } from "../../components/CohortModal/utils";
 
 export const CohortAnalyzer = () => {
@@ -292,44 +292,52 @@ export const CohortAnalyzer = () => {
     };
 
     const handleDemoClick = () => {
-        // Check if adding 3 demo cohorts would exceed the 20-cohort limit
-        if (Object.keys(state).length > 17) {
-            Notification.show('Cannot add demo cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.', 5000);
+        // First, clear any existing example cohorts from the state
+        const exampleCohortKeys = getExampleCohortKeys();
+
+        // Remove existing example cohorts from selected cohorts
+        setSelectedCohorts(prev => prev.filter(cohortId => !exampleCohortKeys.includes(cohortId)));
+
+        // Delete existing example cohorts from state
+        exampleCohortKeys.forEach(cohortId => {
+            if (state[cohortId]) {
+                dispatch(onDeleteSingleCohort(cohortId));
+            }
+        });
+
+        // Check if adding 3 example cohorts would exceed the 20-cohort limit
+        // Only count non-example cohorts since example cohorts will be cleared/replaced
+        const nonExampleCohorts = Object.keys(state).filter(key => !exampleCohortKeys.includes(key));
+        if (nonExampleCohorts.length > 17) {
+            Notification.show('Cannot add example cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.', 5000);
             return;
         }
 
         let successCount = 0;
-        const totalCohorts = demoCohorts.length;
-        
+        const totalCohorts = exampleCohorts.length;
 
-        const handleDemoSuccess = (count) => {
+
+        const handleExampleSuccess = (count) => {
             successCount++;
             if (successCount === totalCohorts) {
-                // Hardcode the demo cohort keys for automatic selection
-                const demoCohortKeys = [
-                    'demo cohort 1',
-                    'demo cohort 2', 
-                    'demo cohort 3'
-                ];
-                
-                setSelectedCohorts(demoCohortKeys);
-                
-                Notification.show(`Successfully created and selected ${totalCohorts} demo cohorts! View the results in the Venn diagram and histogram below.`, 7000);
+                // Auto-select the newly created example cohorts
+                setSelectedCohorts(getExampleCohortKeys());
+                Notification.show(`Successfully created and selected ${totalCohorts} example cohorts! View the results in the Venn diagram and histogram below.`, 7000);
             }
         };
 
-        const handleDemoError = (error) => {
-            Notification.show(`Failed to create demo cohorts: ${error.message}`, 5000);
+        const handleExampleError = (error) => {
+            Notification.show(`Failed to create example cohorts: ${error.message}`, 5000);
         };
 
-        // Create each demo cohort
-        demoCohorts.forEach(cohort => {
+        // Create each example cohort
+        exampleCohorts.forEach(cohort => {
             dispatch(onCreateNewCohort(
                 cohort.cohortId,
                 cohort.cohortDescription,
                 cohort.participants,
-                handleDemoSuccess,
-                handleDemoError
+                handleExampleSuccess,
+                handleExampleError
             ));
         });
     };
@@ -410,7 +418,10 @@ export const CohortAnalyzer = () => {
             <Stats />
             <div className={classes.container}  >
 
-                <CohortSelector />
+                <CohortSelector
+                    handleDemoClick={handleDemoClick}
+                    state={state}
+                />
                 <div className={classes.rightSideAnalyzer}>
                     {alert.message && (
                         <Alert severity={alert.type} className={classes.alert} onClose={() => setAlert({ type: '', message: '' })}>
@@ -419,34 +430,6 @@ export const CohortAnalyzer = () => {
                     )}
                     <div className={classes.rightSideAnalyzerHeader} style={{ justifyContent: 'flex-start', alignItems: 'center' }}>
                         <h1> Cohort Analyzer</h1>
-                        <div className={classes.demoButtonContainer}>
-                            <ToolTip
-                                maxWidth="335px"
-                                border={'1px solid #598ac5'}
-                                arrowBorder={'1px solid #598AC5'}
-                                title={
-                                    <div className={classes.demoTooltipContent}>
-                                        {Object.keys(state).length > 17 ? (
-                                            <p>Cannot add demo cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.</p>
-                                        ) : (
-                                            <p>Launch a demonstration of the Cohort Analyzer by clicking this button.</p>
-                                        )}
-                                    </div>
-                                }
-                                placement="top"
-                                arrow
-                                interactive
-                                arrowSize="30px"
-                            >
-                                <button
-                                    onClick={handleDemoClick}
-                                    disabled={Object.keys(state).length > 17}
-                                    className={Object.keys(state).length > 17 ? classes.demoButtonFaded : classes.demoButton}
-                                >
-                                    Cohort Analyzer Demo
-                                </button>
-                            </ToolTip>
-                        </div>
                     </div>
 
 

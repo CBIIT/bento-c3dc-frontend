@@ -19,21 +19,22 @@ export const useStyle = makeStyles((theme) => ({
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
         borderLeft: 'none',
+        display: 'flex',
+        flexDirection: 'column',
 
     },
     leftSideAnalyzerChild: {
-        height: '90%',
+        flex: 1,
         overflowY: 'scroll',
-        paddingBottom: '100px',
         '&::-webkit-scrollbar': {
-            width: "2px"
+            width: "6px"
         },
         '&::-webkit-scrollbar-thumb': {
             width: "2px",
             backgroundColor: '#003F74'
         },
         '&::-webkit-scrollbar-track': {
-            background: '#4E8191',
+            background: '#CECECE',
         },
     },
     cohortSelectionChild: {
@@ -111,7 +112,6 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     sideHeader: {
-        height: 125,
         fontFamily: 'Poppins',
         fontSize: 18.5,
         fontWeight: 500,
@@ -126,6 +126,7 @@ export const useStyle = makeStyles((theme) => ({
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
         paddingLeft: 20,
+        paddingBottom: 12,
         justifyContent: 'flex-start',
         justifyItems: 'flex-start',
         '& img': {
