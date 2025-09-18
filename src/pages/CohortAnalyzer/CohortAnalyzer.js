@@ -306,9 +306,9 @@ export const CohortAnalyzer = () => {
         });
 
         // Check if adding 3 example cohorts would exceed the 20-cohort limit
-        // Calculate remaining slots after clearing existing example cohorts
-        const remainingCohorts = Object.keys(state).filter(key => !exampleCohortKeys.includes(key)).length;
-        if (remainingCohorts > 17) {
+        // Only count non-example cohorts since example cohorts will be cleared/replaced
+        const nonExampleCohorts = Object.keys(state).filter(key => !exampleCohortKeys.includes(key));
+        if (nonExampleCohorts.length > 17) {
             Notification.show('Cannot add example cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.', 5000);
             return;
         }

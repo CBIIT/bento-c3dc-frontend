@@ -63,43 +63,45 @@ export const CohortSelector = ({ handleDemoClick, state: propState }) => {
                         </Instructions>
                     </InstructionsWrapper>
 
-                    {handleDemoClick && (
-                        <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-start', paddingLeft: '5px' }}>
-                            <ToolTip
-                                maxWidth="335px"
-                                border={'1px solid #598ac5'}
-                                arrowBorder={'1px solid #598AC5'}
-                                title={
-                                    <div className={mainClasses.demoTooltipContent}>
-                                        <p>{(() => {
-                                            if (Object.keys(state).length > 17) {
-                                                return exampleButtonConfig.tooltip.disabled;
-                                            }
+                    {handleDemoClick && (() => {
+                        const exampleCohortKeys = getExampleCohortKeys();
+                        const nonExampleCohorts = Object.keys(state).filter(key => !exampleCohortKeys.includes(key));
+                        const isDisabled = nonExampleCohorts.length > 17;
+                        const hasExistingExampleCohorts = exampleCohortKeys.some(key => state[key]);
 
-                                            const exampleCohortKeys = getExampleCohortKeys();
-                                            const hasExistingExampleCohorts = exampleCohortKeys.some(key => state[key]);
+                        const tooltipText = isDisabled
+                            ? exampleButtonConfig.tooltip.disabled
+                            : hasExistingExampleCohorts
+                                ? exampleButtonConfig.tooltip.replacement
+                                : exampleButtonConfig.tooltip.enabled;
 
-                                            return hasExistingExampleCohorts
-                                                ? exampleButtonConfig.tooltip.replacement
-                                                : exampleButtonConfig.tooltip.enabled;
-                                        })()}</p>
-                                    </div>
-                                }
-                                placement="top"
-                                arrow
-                                interactive
-                                arrowSize="30px"
-                            >
-                                <button
-                                    onClick={handleDemoClick}
-                                    disabled={Object.keys(state).length > 17}
-                                    className={Object.keys(state).length > 17 ? mainClasses.demoButtonFaded : mainClasses.demoButton}
+                        return (
+                            <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-start', paddingLeft: '5px' }}>
+                                <ToolTip
+                                    maxWidth="335px"
+                                    border={'1px solid #598ac5'}
+                                    arrowBorder={'1px solid #598AC5'}
+                                    title={
+                                        <div className={mainClasses.demoTooltipContent}>
+                                            <p>{tooltipText}</p>
+                                        </div>
+                                    }
+                                    placement="top"
+                                    arrow
+                                    interactive
+                                    arrowSize="30px"
                                 >
-                                    {exampleButtonConfig.buttonText}
-                                </button>
-                            </ToolTip>
-                        </div>
-                    )}
+                                    <button
+                                        onClick={handleDemoClick}
+                                        disabled={isDisabled}
+                                        className={isDisabled ? mainClasses.demoButtonFaded : mainClasses.demoButton}
+                                    >
+                                        {exampleButtonConfig.buttonText}
+                                    </button>
+                                </ToolTip>
+                            </div>
+                        );
+                    })()}
                 </>
             </div>
             <div className={classes.sortSection}>
