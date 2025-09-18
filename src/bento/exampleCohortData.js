@@ -114,7 +114,7 @@ export const getExampleCohortKeys = () => {
 export const exampleButtonConfig = {
   buttonText: "Add Example Cohorts",
   tooltip: {
-    enabled: "Generate a set of example cohorts to explore the Cohort Analyzer",
+    enabled: "Generate a set of example cohorts to explore the Cohort Analyzer.",
     replacement: "Clicking this will generate a new set of example cohorts and remove the existing example cohorts.",
     disabled: "Cannot add example cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first."
   }
