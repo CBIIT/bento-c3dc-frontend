@@ -14,6 +14,7 @@ import {
 import { useCohortAnalyzer } from "../CohortAnalyzerContext";
 import { CohortStateContext } from "../../../components/CohortSelectorState/CohortStateContext";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
+import { exampleButtonConfig } from "../../../bento/exampleCohortData";
 
 
 export const CohortSelector = ({ handleDemoClick, state: propState }) => {
@@ -70,11 +71,7 @@ export const CohortSelector = ({ handleDemoClick, state: propState }) => {
                                 arrowBorder={'1px solid #598AC5'}
                                 title={
                                     <div className={mainClasses.demoTooltipContent}>
-                                        {Object.keys(state).length > 17 ? (
-                                            <p>Cannot add demo cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.</p>
-                                        ) : (
-                                            <p>Launch a demonstration of the Cohort Analyzer by clicking this button.</p>
-                                        )}
+                                        <p>{Object.keys(state).length > 17 ? exampleButtonConfig.tooltip.disabled : exampleButtonConfig.tooltip.enabled}</p>
                                     </div>
                                 }
                                 placement="top"
@@ -87,7 +84,7 @@ export const CohortSelector = ({ handleDemoClick, state: propState }) => {
                                     disabled={Object.keys(state).length > 17}
                                     className={Object.keys(state).length > 17 ? mainClasses.demoButtonFaded : mainClasses.demoButton}
                                 >
-                                    Cohort Analyzer Demo
+                                    {exampleButtonConfig.buttonText}
                                 </button>
                             </ToolTip>
                         </div>

@@ -1,11 +1,11 @@
 /**
- * Demo cohort data for Cohort Analyzer demonstration
+ * Example cohort data for Cohort Analyzer exploration
  * Contains 3 pre-configured cohorts with interesting biological/clinical comparisons
  */
 
-export const demoCohorts = [
+export const exampleCohorts = [
   {
-    cohortId: "Demo Cohort 1",
+    cohortId: "Example Cohort 1",
     cohortDescription: "Participants with Ganglioglioma NOS who underwent surgical treatment - demonstrating low-grade tumor characteristics and treatment outcomes",
     participants: [
       { participant_id: "PBBPGL", dbgap_accession: "phs002790", participant_pk: "1166d3b5-d1be-516b-8c6b-98814ea4539b", id: "1166d3b5-d1be-516b-8c6b-98814ea4539b"},
@@ -36,7 +36,7 @@ export const demoCohorts = [
     lastUpdated: new Date().toISOString(),
   },
   {
-    cohortId: "Demo Cohort 2",
+    cohortId: "Example Cohort 2",
     cohortDescription: "Participants with malignant Glioma treated with chemotherapy and immunotherapy - representing aggressive treatment approaches for high-grade tumors",
     participants: [
       {participant_id: "PBBIXN", dbgap_accession: "phs002790", participant_pk: "c0e4cb27-aee6-5850-9ce4-855af1cf09e3", id: "c0e4cb27-aee6-5850-9ce4-855af1cf09e3"},
@@ -68,7 +68,7 @@ export const demoCohorts = [
     lastUpdated: new Date().toISOString(),
   },
   {
-    cohortId: "Demo Cohort 3",
+    cohortId: "Example Cohort 3",
     cohortDescription: "Participants with malignant Glioma treated with radiation therapy - showcasing radiation-based treatment protocols for brain tumors",
     participants: [
       {participant_id: "PBBVDX", dbgap_accession: "phs002790", participant_pk: "78903a20-6f74-5fc6-922b-c6e7b0757664", id: "78903a20-6f74-5fc6-922b-c6e7b0757664"},
@@ -100,3 +100,13 @@ export const demoCohorts = [
   }
 ];
 
+/**
+ * Example button configuration for UI text and tooltips
+ */
+export const exampleButtonConfig = {
+  buttonText: "Add Example Cohorts",
+  tooltip: {
+    enabled: "Generate a set of example cohorts to explore the Cohort Analyzer",
+    disabled: "Cannot add example cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first."
+  }
+};

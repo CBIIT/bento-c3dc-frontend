@@ -29,7 +29,7 @@ import { useCohortAnalyzer } from "./CohortAnalyzerContext";
 import VennDiagramContainer from "./vennDiagram/VennDiagramContainer";
 import Histogram from "./HistogramPanel/Histogram";
 import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
-import { demoCohorts } from "../../bento/demoCohortData";
+import { exampleCohorts } from "../../bento/exampleCohortData";
 import { exportToCCDIHub } from "../../components/CohortModal/utils";
 
 export const CohortAnalyzer = () => {
@@ -292,42 +292,42 @@ export const CohortAnalyzer = () => {
     };
 
     const handleDemoClick = () => {
-        // Check if adding 3 demo cohorts would exceed the 20-cohort limit
+        // Check if adding 3 example cohorts would exceed the 20-cohort limit
         if (Object.keys(state).length > 17) {
-            Notification.show('Cannot add demo cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.', 5000);
+            Notification.show('Cannot add example cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.', 5000);
             return;
         }
 
         let successCount = 0;
-        const totalCohorts = demoCohorts.length;
+        const totalCohorts = exampleCohorts.length;
         
 
-        const handleDemoSuccess = (count) => {
+        const handleExampleSuccess = (count) => {
             successCount++;
             if (successCount === totalCohorts) {
-                // Hardcode the demo cohort keys for automatic selection
-                const demoCohortKeys = [
-                    'demo cohort 1',
-                    'demo cohort 2',
-                    'demo cohort 3'
+                // Hardcode the example cohort keys for automatic selection
+                const exampleCohortKeys = [
+                    'example cohort 1',
+                    'example cohort 2',
+                    'example cohort 3'
                 ];
-                setSelectedCohorts(demoCohortKeys);
-                Notification.show(`Successfully created and selected ${totalCohorts} demo cohorts! View the results in the Venn diagram and histogram below.`, 7000);
+                setSelectedCohorts(exampleCohortKeys);
+                Notification.show(`Successfully created and selected ${totalCohorts} example cohorts! View the results in the Venn diagram and histogram below.`, 7000);
             }
         };
 
-        const handleDemoError = (error) => {
-            Notification.show(`Failed to create demo cohorts: ${error.message}`, 5000);
+        const handleExampleError = (error) => {
+            Notification.show(`Failed to create example cohorts: ${error.message}`, 5000);
         };
 
-        // Create each demo cohort
-        demoCohorts.forEach(cohort => {
+        // Create each example cohort
+        exampleCohorts.forEach(cohort => {
             dispatch(onCreateNewCohort(
                 cohort.cohortId,
                 cohort.cohortDescription,
                 cohort.participants,
-                handleDemoSuccess,
-                handleDemoError
+                handleExampleSuccess,
+                handleExampleError
             ));
         });
     };
