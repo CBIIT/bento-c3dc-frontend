@@ -292,25 +292,39 @@ export const CohortAnalyzer = () => {
     };
 
     const handleDemoClick = () => {
+        // First, clear any existing example cohorts from the state
+        const exampleCohortKeys = [
+            'example cohort 1',
+            'example cohort 2',
+            'example cohort 3'
+        ];
+
+        // Remove existing example cohorts from selected cohorts
+        setSelectedCohorts(prev => prev.filter(cohortId => !exampleCohortKeys.includes(cohortId)));
+
+        // Delete existing example cohorts from state
+        exampleCohortKeys.forEach(cohortId => {
+            if (state[cohortId]) {
+                dispatch(onDeleteSingleCohort(cohortId));
+            }
+        });
+
         // Check if adding 3 example cohorts would exceed the 20-cohort limit
-        if (Object.keys(state).length > 17) {
+        // Calculate remaining slots after clearing existing example cohorts
+        const remainingCohorts = Object.keys(state).filter(key => !exampleCohortKeys.includes(key)).length;
+        if (remainingCohorts > 17) {
             Notification.show('Cannot add example cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first.', 5000);
             return;
         }
 
         let successCount = 0;
         const totalCohorts = exampleCohorts.length;
-        
+
 
         const handleExampleSuccess = (count) => {
             successCount++;
             if (successCount === totalCohorts) {
-                // Hardcode the example cohort keys for automatic selection
-                const exampleCohortKeys = [
-                    'example cohort 1',
-                    'example cohort 2',
-                    'example cohort 3'
-                ];
+                // Auto-select the newly created example cohorts
                 setSelectedCohorts(exampleCohortKeys);
                 Notification.show(`Successfully created and selected ${totalCohorts} example cohorts! View the results in the Venn diagram and histogram below.`, 7000);
             }
