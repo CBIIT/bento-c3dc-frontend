@@ -101,12 +101,21 @@ export const exampleCohorts = [
 ];
 
 /**
+ * Utility function to extract example cohort keys from the exampleCohorts array
+ * Returns cohort IDs in lowercase format as used by the application
+ */
+export const getExampleCohortKeys = () => {
+  return exampleCohorts.map(cohort => cohort.cohortId.toLowerCase());
+};
+
+/**
  * Example button configuration for UI text and tooltips
  */
 export const exampleButtonConfig = {
   buttonText: "Add Example Cohorts",
   tooltip: {
     enabled: "Generate a set of example cohorts to explore the Cohort Analyzer",
+    replacement: "Clicking this will generate a new set of example cohorts and remove the existing example cohorts.",
     disabled: "Cannot add example cohorts. You have reached the maximum limit of 20 cohorts. Please delete some cohorts first."
   }
 };

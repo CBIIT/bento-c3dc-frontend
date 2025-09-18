@@ -14,7 +14,7 @@ import {
 import { useCohortAnalyzer } from "../CohortAnalyzerContext";
 import { CohortStateContext } from "../../../components/CohortSelectorState/CohortStateContext";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
-import { exampleButtonConfig } from "../../../bento/exampleCohortData";
+import { exampleButtonConfig, getExampleCohortKeys } from "../../../bento/exampleCohortData";
 
 
 export const CohortSelector = ({ handleDemoClick, state: propState }) => {
@@ -71,7 +71,18 @@ export const CohortSelector = ({ handleDemoClick, state: propState }) => {
                                 arrowBorder={'1px solid #598AC5'}
                                 title={
                                     <div className={mainClasses.demoTooltipContent}>
-                                        <p>{Object.keys(state).length > 17 ? exampleButtonConfig.tooltip.disabled : exampleButtonConfig.tooltip.enabled}</p>
+                                        <p>{(() => {
+                                            if (Object.keys(state).length > 17) {
+                                                return exampleButtonConfig.tooltip.disabled;
+                                            }
+
+                                            const exampleCohortKeys = getExampleCohortKeys();
+                                            const hasExistingExampleCohorts = exampleCohortKeys.some(key => state[key]);
+
+                                            return hasExistingExampleCohorts
+                                                ? exampleButtonConfig.tooltip.replacement
+                                                : exampleButtonConfig.tooltip.enabled;
+                                        })()}</p>
                                     </div>
                                 }
                                 placement="top"

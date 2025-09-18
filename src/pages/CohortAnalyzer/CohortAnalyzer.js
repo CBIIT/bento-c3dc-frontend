@@ -29,7 +29,7 @@ import { useCohortAnalyzer } from "./CohortAnalyzerContext";
 import VennDiagramContainer from "./vennDiagram/VennDiagramContainer";
 import Histogram from "./HistogramPanel/Histogram";
 import { getJoinedCohortData } from "./CohortAnalyzerUtil/CohortDataTransform";
-import { exampleCohorts } from "../../bento/exampleCohortData";
+import { exampleCohorts, getExampleCohortKeys } from "../../bento/exampleCohortData";
 import { exportToCCDIHub } from "../../components/CohortModal/utils";
 
 export const CohortAnalyzer = () => {
@@ -293,11 +293,7 @@ export const CohortAnalyzer = () => {
 
     const handleDemoClick = () => {
         // First, clear any existing example cohorts from the state
-        const exampleCohortKeys = [
-            'example cohort 1',
-            'example cohort 2',
-            'example cohort 3'
-        ];
+        const exampleCohortKeys = getExampleCohortKeys();
 
         // Remove existing example cohorts from selected cohorts
         setSelectedCohorts(prev => prev.filter(cohortId => !exampleCohortKeys.includes(cohortId)));
@@ -325,7 +321,7 @@ export const CohortAnalyzer = () => {
             successCount++;
             if (successCount === totalCohorts) {
                 // Auto-select the newly created example cohorts
-                setSelectedCohorts(exampleCohortKeys);
+                setSelectedCohorts(getExampleCohortKeys());
                 Notification.show(`Successfully created and selected ${totalCohorts} example cohorts! View the results in the Venn diagram and histogram below.`, 7000);
             }
         };
