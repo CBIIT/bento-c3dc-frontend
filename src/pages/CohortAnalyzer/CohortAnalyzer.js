@@ -33,10 +33,6 @@ import { exampleCohorts, getExampleCohortKeys } from "../../bento/exampleCohortD
 import { exportToCCDIHub } from "../../components/CohortModal/utils";
 
 export const CohortAnalyzer = () => {
-    useEffect(() => {
-        document.title = "Cohort Analyzer | CCDI Bento";
-    }, []);
-
     //context
     const cohortAnalyzerContext = useCohortAnalyzer();
     // Cohort selection and list management
