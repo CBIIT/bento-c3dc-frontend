@@ -2256,7 +2256,7 @@ export const tabContainers = [
     fileCount: 'geneticAnalysisFileCount',
     toolTipText: 'Count of Genetic Analysis Record',
     dataKey: "id",
-    hiddenDataKeys: ['participant', 'participant_pk'],
+    hiddenDataKeys: ['participant', 'participant_pk', 'dbgap_accession'],
     tableID: 'genetic_analysis_tab_table',
     extendedViewConfig: {
       pagination: true,
