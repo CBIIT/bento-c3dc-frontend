@@ -60,7 +60,7 @@ function cleanGraphQLTypenames(obj) {
   const formatArrayForCSV = (value) => {
     if (Array.isArray(value)) {
       // Join array elements with semicolon separator to avoid comma conflicts in CSV
-      const joinedValue = value.filter(item => item != null && item !== '').join('; ');
+      const joinedValue = value.filter(item => item !== null && item !== undefined && item !== '').join('; ');
       return joinedValue || '';
     }
     return value || '';
