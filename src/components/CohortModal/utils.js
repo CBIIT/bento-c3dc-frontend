@@ -87,11 +87,11 @@ function cleanGraphQLTypenames(obj) {
                 } else if (k === 'Sex at Birth') {
                     value = row.participant.sex_at_birth || '';
                 } else if (k === 'Race') {
-                    value = formatArrayForCSV(row.participant.race);
+                    value = row.participant.race || '';
                 }
             }
 
-            // Handle other potential array fields
+            // Handle all potential array fields uniformly
             value = formatArrayForCSV(value);
 
             // Escape CSV special characters
