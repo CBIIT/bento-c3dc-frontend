@@ -27,6 +27,8 @@ export const SCROLLBAR_WIDTH = '6px';
 export const IGNORED_FIELDS = ["cohortId"];
 
 // Download Configuration
+export const DEFAULT_QUERY_LIMIT = 60000;
+
 export const DOWNLOAD_MANIFEST_KEYS = {
     'Participant ID': 'participant_id',
     'dbGaP Accession': 'dbgap_accession',

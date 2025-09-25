@@ -1,9 +1,7 @@
 import { Button, makeStyles } from '@material-ui/core';
 import React, { useEffect, useRef, useState } from 'react';
 import ExpandMoreIcon from '../../../assets/icons/Expand_More_Icon.svg'
-import { arrayToCSVDownload, objectToJsonDownload } from '../../../components/CohortModal/utils';
-import client from '../../../utils/graphqlClient';
-import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../bento/dashboardTabData';
+import { downloadCohortManifest, downloadCohortMetadata } from '../../../components/CohortModal/utils';
 
 export default function DownloadSelectedCohort({ queryVariable, isSelected }) {
 
@@ -20,20 +18,20 @@ export default function DownloadSelectedCohort({ queryVariable, isSelected }) {
         }
     }
 
-    const downloadCohortManifest = async () => {
-        const { data } = await client.query({
-            query: GET_COHORT_MANIFEST_QUERY,
-            variables: queryVariable,
-        });
-        arrayToCSVDownload(data['diagnosisOverview'], "analyzed");
+    const handleDownloadManifest = async () => {
+        // Extract participant PKs from queryVariable for centralized function
+        const participants = queryVariable.participant_pk ?
+            queryVariable.participant_pk.map(pk => ({ participant_pk: pk })) : [];
+
+        await downloadCohortManifest(participants, "analyzed");
     };
 
-    const downloadCohortMetadata = async () => {
-        const { data } = await client.query({
-            query: GET_COHORT_METADATA_QUERY,
-            variables: queryVariable,
-        });
-        objectToJsonDownload(data['cohortMetadata'], "Analyzed");
+    const handleDownloadMetadata = async () => {
+        // Extract participant PKs from queryVariable for centralized function
+        const participants = queryVariable.participant_pk ?
+            queryVariable.participant_pk.map(pk => ({ participant_pk: pk })) : [];
+
+        await downloadCohortMetadata(participants, "Analyzed");
     };
     
     useEffect(() => {
@@ -76,13 +74,13 @@ export default function DownloadSelectedCohort({ queryVariable, isSelected }) {
                 <div className={classes.dropdownMenu}>
                     <div
                         className={classes.dropdownItem + ' ' + classes.firstDropdownItem}
-                        onClick={() => { handleDownloadFile(downloadCohortManifest) }}
+                        onClick={() => { handleDownloadFile(handleDownloadManifest) }}
                     >
                         Manifest CSV
                     </div>
                     <div
                         className={classes.dropdownItem}
-                        onClick={() => { handleDownloadFile(downloadCohortMetadata) }}
+                        onClick={() => { handleDownloadFile(handleDownloadMetadata) }}
                     >
                         Metadata JSON
                     </div>

@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '../../../../../assets/icons/Expand_More_Icon.svg';
 import Linkout from "../../../../../assets/about/Export_Icon_White.svg";
 import ToolTip from '@bento-core/tool-tip';
-import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../../bento/dashboardTabData';
-import client from '../../../../../utils/graphqlClient';
-import { arrayToCSVDownload, objectToJsonDownload, exportToCCDIHub } from '../../../utils';
+import { downloadCohortManifest, downloadCohortMetadata, exportToCCDIHub } from '../../../utils';
 import { CohortModalContext } from '../../../CohortModalContext';
 import { TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData';
 
@@ -25,44 +23,22 @@ const ActionButtons = (props) => {
     const [isExportingToCCDI, setIsExportingToCCDI] = useState(false);
     
     // Download functions (memoized for performance with error handling)
-    const downloadCohortManifest = useCallback(async () => {
+    const handleDownloadManifest = useCallback(async () => {
         if (isDownloadingManifest) return; // Prevent multiple simultaneous downloads
-        
-        setIsDownloadingManifest(true);
-        try {
-            const participantPKs = localCohort.participants.map(item => item.participant_pk);
-            const { data } = await client.query({
-                query: GET_COHORT_MANIFEST_QUERY,
-                variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
-            });
-            arrayToCSVDownload(data['diagnosisOverview'], localCohort.cohortId);
-            showAlert('success', 'Manifest CSV downloaded successfully!');
-        } catch (error) {
-            console.error('Error downloading cohort manifest:', error);
-            showAlert('error', 'Failed to download manifest. Please try again.');
-        } finally {
-            setIsDownloadingManifest(false);
-        }
+
+        await downloadCohortManifest(localCohort.participants, localCohort.cohortId, {
+            showAlert,
+            onLoadingStateChange: setIsDownloadingManifest
+        });
     }, [localCohort.participants, localCohort.cohortId, isDownloadingManifest, showAlert]);
 
-    const downloadCohortMetadata = useCallback(async () => {
+    const handleDownloadMetadata = useCallback(async () => {
         if (isDownloadingMetadata) return; // Prevent multiple simultaneous downloads
-        
-        setIsDownloadingMetadata(true);
-        try {
-            const participantPKs = localCohort.participants.map(item => item.participant_pk);
-            const { data } = await client.query({
-                query: GET_COHORT_METADATA_QUERY,
-                variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
-            });
-            objectToJsonDownload(data['cohortMetadata'], localCohort.cohortId);
-            showAlert('success', 'Metadata JSON downloaded successfully!');
-        } catch (error) {
-            console.error('Error downloading cohort metadata:', error);
-            showAlert('error', 'Failed to download metadata. Please try again.');
-        } finally {
-            setIsDownloadingMetadata(false);
-        }
+
+        await downloadCohortMetadata(localCohort.participants, localCohort.cohortId, {
+            showAlert,
+            onLoadingStateChange: setIsDownloadingMetadata
+        });
     }, [localCohort.participants, localCohort.cohortId, isDownloadingMetadata, showAlert]);
     
     // CCDI Hub export function using centralized utility
@@ -158,13 +134,13 @@ const ActionButtons = (props) => {
                     <div className={classes.dropdownMenu}>
                         <div
                             className={classes.dropdownItem + ' ' + classes.firstDropdownItem}
-                            onClick={() => { handleDownloadFile(downloadCohortManifest) }}
+                            onClick={() => { handleDownloadFile(handleDownloadManifest) }}
                         >
                             Manifest CSV
                         </div>
                         <div
                             className={classes.dropdownItem}
-                            onClick={() => { handleDownloadFile(downloadCohortMetadata) }}
+                            onClick={() => { handleDownloadFile(handleDownloadMetadata) }}
                         >
                             Metadata JSON
                         </div>
