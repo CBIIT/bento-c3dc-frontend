@@ -114,7 +114,7 @@ export default function DownloadSelectedCohort({ queryVariable, isSelected }) {
 
 const useStyles = makeStyles(() => ({
     downloadButton: (props) => ({
-        backgroundColor: props.isSelected && !props.isDownloading ? '#556469' : '#556469',
+        backgroundColor: '#556469',
         border: '1.25px solid #73A9C7',
         height: '41px',
         width: '199px',
@@ -128,10 +128,10 @@ const useStyles = makeStyles(() => ({
         lineHeight: '13px !important',
         zIndex: '1',
         boxShadow: 'none',
-        opacity: props.isSelected && !props.isDownloading ? 1 : 0.4,
-        cursor: props.isSelected && !props.isDownloading ? 'pointer' : 'default',
+        opacity: props.isSelected ? 1 : 0.4,
+        cursor: props.isSelected ? 'pointer' : 'default',
         '&:hover': {
-            backgroundColor: props.isSelected && !props.isDownloading ? '#003B35' : '#556469',
+            backgroundColor: props.isSelected ? '#003B35' : '#556469',
             boxShadow: 'none',
         },
         '&:disabled': {
@@ -157,9 +157,8 @@ const useStyles = makeStyles(() => ({
         lineHeight: '13px !important',
         zIndex: '1',
         boxShadow: 'none',
-        opacity: props.isDownloading ? 0.4 : 1,
         '&:hover': {
-            backgroundColor: props.isDownloading ? '#0C534C' : '#003B35',
+            backgroundColor: '#003B35',
             boxShadow: 'none',
         },
         '&:disabled': {
@@ -175,8 +174,6 @@ const useStyles = makeStyles(() => ({
         fontFamily: 'Poppins',
         fontSize: '12px',
         fontWeight: 600,
-
-
     },
     dropdownSection: {
         position: 'relative',
