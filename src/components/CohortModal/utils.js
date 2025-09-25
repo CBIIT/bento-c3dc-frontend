@@ -47,6 +47,33 @@ function cleanGraphQLTypenames(obj) {
     return obj; 
   };
 
+  /**
+   * Helper function to format array values for CSV export
+   * Handles GraphQL response arrays (like race, diagnosis, etc.) by flattening them
+   * into single CSV cell values using semicolon separation.
+   *
+   * @param {*} value - The value to format (may be array or primitive)
+   * @returns {string} - Formatted value safe for CSV export
+   *
+   * Example: ['White', 'Asian'] -> 'White; Asian'
+   */
+  const formatArrayForCSV = (value) => {
+    if (Array.isArray(value)) {
+      // Join array elements with semicolon separator to avoid comma conflicts in CSV
+      const joinedValue = value.filter(item => item !== null && item !== undefined && item !== '').join('; ');
+      return joinedValue || '';
+    }
+    return value || '';
+  };
+
+  /**
+   * Downloads cohort data as CSV file with proper handling of array fields.
+   * Automatically flattens array values (like race) into semicolon-separated strings
+   * to prevent CSV parsing issues with multiple columns.
+   *
+   * @param {Array} arr - Array of data objects to export
+   * @param {string} cohortID - Cohort identifier for filename
+   */
   export const arrayToCSVDownload = (arr, cohortID) => {
     const keys = Object.keys(DOWNLOAD_MANIFEST_KEYS);
     const header = keys.join(',');
@@ -64,8 +91,12 @@ function cleanGraphQLTypenames(obj) {
                 }
             }
 
-            if (typeof value === 'string' && (value.includes(',') || value.includes('"'))) {
-                value = `"${value.replace(/"/g, '""')}"`; 
+            // Handle all potential array fields uniformly
+            value = formatArrayForCSV(value);
+
+            // Escape CSV special characters
+            if (typeof value === 'string' && (value.includes(',') || value.includes('"') || value.includes('\n'))) {
+                value = `"${value.replace(/"/g, '""')}"`;
             }
 
             return value;
@@ -76,7 +107,7 @@ function cleanGraphQLTypenames(obj) {
 
     const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8' });
     const JsonURL = window.URL.createObjectURL(blob);
-    
+
     let tempLink = document.createElement('a');
     tempLink.setAttribute('href', JsonURL);
     tempLink.setAttribute('download', generateDownloadFileName(true, cohortID));
