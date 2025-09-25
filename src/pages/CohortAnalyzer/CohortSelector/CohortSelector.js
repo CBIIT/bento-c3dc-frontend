@@ -26,6 +26,7 @@ export const CohortSelector = ({ handleDemoClick, state: propState }) => {
       setDeleteInfo,
       deleteInfo,
       setNodeIndex,
+      setRowData,
       cohortList,
       setCohortList,
       handleCheckbox,
@@ -107,7 +108,7 @@ export const CohortSelector = ({ handleDemoClick, state: propState }) => {
             <div className={classes.sortSection}>
                 <div style={{ display: 'flex', margin: 0, alignItems: 'center', cursor: 'pointer' }}>
                     <img onClick={() => {
-                        resetSelection(setSelectedCohorts, setNodeIndex);
+                        resetSelection(setSelectedCohorts, setNodeIndex, setRowData);
                     }} alt={"sortIcon"} src={sortIcon} width={14} height={14} style={{ margin: 5 }} role="button" />
                     <p 
                         style={{ fontFamily: 'Nunito', fontSize: '11px', color: sortType === 'alphabet' ? '#646464' : '#646464' }} 

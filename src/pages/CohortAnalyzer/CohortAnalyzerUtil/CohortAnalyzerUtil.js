@@ -99,8 +99,9 @@ const getCohortName = (pk, state, selectedCohorts) => {
     return finalResponse;
 }
 
-export const resetSelection = (setSelectedCohorts, setNodeIndex) => {
+export const resetSelection = (setSelectedCohorts, setNodeIndex, setRowData) => {
     setSelectedCohorts([]);
+    setRowData([]);
     setNodeIndex(0);
 }
 

@@ -1,5 +1,5 @@
 import client from '../../../utils/graphqlClient';
-import { analyzer_query, responseKeys } from '../../../bento/cohortAnalayzerPageData';
+import { analyzer_query, responseKeys } from '../../../bento/cohortAnalyzerPageData';
 import { generateQueryVariable, getIdsFromCohort, getAllIds, filterAllParticipantWithDiagnosisName, filterAllParticipantWithTreatmentType, addCohortColumn } from './CohortAnalyzerUtil';
 
 const DEFAULT_QUERY_LIMIT = 10000;

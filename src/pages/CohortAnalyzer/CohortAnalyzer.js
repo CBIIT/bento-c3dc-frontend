@@ -4,7 +4,7 @@ import { CohortStateContext } from "../../components/CohortSelectorState/CohortS
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
 import { themeConfig } from "../studies/tableConfig/Theme";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
-import { tableConfig, analyzer_tables } from "../../bento/cohortAnalayzerPageData";
+import { tableConfig, analyzer_tables } from "../../bento/cohortAnalyzerPageData";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import Stats from '../../components/Stats/GlobalStatsController';
 import DeleteConfirmationModal from "../../components/CohortModal/components/shared/DeleteConfirmationModal";
