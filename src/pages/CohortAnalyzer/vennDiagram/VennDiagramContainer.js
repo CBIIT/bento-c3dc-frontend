@@ -23,6 +23,7 @@ const VennDiagramContainer = ({
         selectedCohortSection,
         setGeneralInfo,
         setNodeIndex,
+        setRowData,
         setAlert
     } = useCohortAnalyzer();
 
@@ -61,6 +62,7 @@ const VennDiagramContainer = ({
                 selectedCohorts={selectedCohorts}
                 nodeIndex={nodeIndex}
                 setNodeIndex={setNodeIndex}
+                setRowData={setRowData}
                 handleDownload={handleDownload}
                 classes={classes}
             />

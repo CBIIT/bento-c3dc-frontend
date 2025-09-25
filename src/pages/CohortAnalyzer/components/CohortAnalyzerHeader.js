@@ -7,6 +7,7 @@ const CohortAnalyzerHeader = ({
   selectedCohorts,
   nodeIndex,
   setNodeIndex,
+  setRowData,
   handleDownload,
   classes
 }) => {
@@ -39,6 +40,7 @@ const CohortAnalyzerHeader = ({
                                                     border: '1px solid black'
                                                 }}
                                                 disabled={selectedCohorts.length === 0} type="radio" value={"1"} checked={nodeIndex === 0} onClick={() => {
+                                                    setRowData([]);
                                                     setNodeIndex(0);
                                                 }} name="node_type" aria-label="Participant radio button" />
                                                 Participant ID
@@ -60,6 +62,7 @@ const CohortAnalyzerHeader = ({
                                                     border: '1px solid black'
                                                 }}
                                                 disabled={selectedCohorts.length === 0} type="radio" value={"2"} onClick={() => {
+                                                    setRowData([]);
                                                     setNodeIndex(1);
                                                 }} name="node_type" aria-label="Diagnosis Radio button" />
                                                 Diagnosis
@@ -81,6 +84,7 @@ const CohortAnalyzerHeader = ({
                                                     border: '1px solid black'
                                                 }}
                                                 disabled={selectedCohorts.length === 0} value={"3"} onClick={() => {
+                                                    setRowData([]);
                                                     setNodeIndex(2);
                                                 }} type="radio" name="node_type" aria-label="Treatment Radio button" />
                                                 Treatment
