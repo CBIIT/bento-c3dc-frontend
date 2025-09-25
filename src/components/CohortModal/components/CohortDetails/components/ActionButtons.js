@@ -18,28 +18,27 @@ const ActionButtons = (props) => {
     const { showAlert } = useContext(CohortModalContext);
     
     // Loading states
-    const [isDownloadingManifest, setIsDownloadingManifest] = useState(false);
-    const [isDownloadingMetadata, setIsDownloadingMetadata] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
     const [isExportingToCCDI, setIsExportingToCCDI] = useState(false);
     
     // Download functions (memoized for performance with error handling)
     const handleDownloadManifest = useCallback(async () => {
-        if (isDownloadingManifest) return; // Prevent multiple simultaneous downloads
+        if (isDownloading) return; // Prevent multiple simultaneous downloads
 
         await downloadCohortManifest(localCohort.participants, localCohort.cohortId, {
             showAlert,
-            onLoadingStateChange: setIsDownloadingManifest
+            onLoadingStateChange: setIsDownloading
         });
-    }, [localCohort.participants, localCohort.cohortId, isDownloadingManifest, showAlert]);
+    }, [localCohort.participants, localCohort.cohortId, isDownloading, showAlert]);
 
     const handleDownloadMetadata = useCallback(async () => {
-        if (isDownloadingMetadata) return; // Prevent multiple simultaneous downloads
+        if (isDownloading) return; // Prevent multiple simultaneous downloads
 
         await downloadCohortMetadata(localCohort.participants, localCohort.cohortId, {
             showAlert,
-            onLoadingStateChange: setIsDownloadingMetadata
+            onLoadingStateChange: setIsDownloading
         });
-    }, [localCohort.participants, localCohort.cohortId, isDownloadingMetadata, showAlert]);
+    }, [localCohort.participants, localCohort.cohortId, isDownloading, showAlert]);
     
     // CCDI Hub export function using centralized utility
     const handleExportToCCDIHub = useCallback(async () => {
@@ -117,7 +116,7 @@ const ActionButtons = (props) => {
                     variant="contained"
                     className={showDownloadDropdown ? classes.downloadButtonOpened : classes.downloadButton}
                     onClick={handleDownloadDropdown}
-                    disabled={isDownloadingManifest || isDownloadingMetadata}
+                    disabled={isDownloading}
                     aria-label="Download cohort data - select format"
                 >
                     <div className={classes.downloadButtonText}>
