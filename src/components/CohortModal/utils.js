@@ -1,4 +1,6 @@
-import { DOWNLOAD_MANIFEST_KEYS, CCDI_HUB_BASE_URL, CCDI_INTEROP_SERVICE_URL, CCDI_HUB_LEGACY_BASE_URL, CCDI_HUB_DBGAP_PARAM } from '../../bento/cohortModalData';
+import { DOWNLOAD_MANIFEST_KEYS, CCDI_HUB_BASE_URL, CCDI_INTEROP_SERVICE_URL, CCDI_HUB_LEGACY_BASE_URL, CCDI_HUB_DBGAP_PARAM, DEFAULT_QUERY_LIMIT } from '../../bento/cohortModalData';
+import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../bento/dashboardTabData';
+import client from '../../utils/graphqlClient';
 
 function generateDownloadFileName(isManifest, cohortID) {
     const date = new Date();
@@ -285,6 +287,63 @@ export const exportToCCDIHub = async (participants, options = {}) => {
       showAlert('error', `Failed to export to CCDI Hub: ${error.message}`);
     }
     return null;
+  } finally {
+    if (onLoadingStateChange) onLoadingStateChange(false);
+  }
+};
+
+// Centralized download functions for cohort data
+export const downloadCohortManifest = async (participants, cohortId, options = {}) => {
+  const { showAlert, onLoadingStateChange } = options;
+
+  try {
+    if (onLoadingStateChange) onLoadingStateChange(true);
+
+    const participantPKs = participants.map(item => item.participant_pk);
+    const { data } = await client.query({
+      query: GET_COHORT_MANIFEST_QUERY,
+      variables: {
+        "participant_pk": participantPKs,
+        "first": DEFAULT_QUERY_LIMIT
+      },
+    });
+
+    arrayToCSVDownload(data['diagnosisOverview'], cohortId);
+    if (showAlert) showAlert('success', 'Manifest CSV downloaded successfully!');
+
+    return data;
+  } catch (error) {
+    console.error('Error downloading cohort manifest:', error);
+    if (showAlert) showAlert('error', 'Failed to download manifest. Please try again.');
+    throw error;
+  } finally {
+    if (onLoadingStateChange) onLoadingStateChange(false);
+  }
+};
+
+export const downloadCohortMetadata = async (participants, cohortId, options = {}) => {
+  const { showAlert, onLoadingStateChange } = options;
+
+  try {
+    if (onLoadingStateChange) onLoadingStateChange(true);
+
+    const participantPKs = participants.map(item => item.participant_pk);
+    const { data } = await client.query({
+      query: GET_COHORT_METADATA_QUERY,
+      variables: {
+        "participant_pk": participantPKs,
+        "first": DEFAULT_QUERY_LIMIT
+      },
+    });
+
+    objectToJsonDownload(data['cohortMetadata'], cohortId);
+    if (showAlert) showAlert('success', 'Metadata JSON downloaded successfully!');
+
+    return data;
+  } catch (error) {
+    console.error('Error downloading cohort metadata:', error);
+    if (showAlert) showAlert('error', 'Failed to download metadata. Please try again.');
+    throw error;
   } finally {
     if (onLoadingStateChange) onLoadingStateChange(false);
   }

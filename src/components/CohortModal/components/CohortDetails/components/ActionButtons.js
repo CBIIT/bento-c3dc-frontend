@@ -4,9 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import ExpandMoreIcon from '../../../../../assets/icons/Expand_More_Icon.svg';
 import Linkout from "../../../../../assets/about/Export_Icon_White.svg";
 import ToolTip from '@bento-core/tool-tip';
-import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../../../../bento/dashboardTabData';
-import client from '../../../../../utils/graphqlClient';
-import { arrayToCSVDownload, objectToJsonDownload, exportToCCDIHub } from '../../../utils';
+import { downloadCohortManifest, downloadCohortMetadata, exportToCCDIHub } from '../../../utils';
 import { CohortModalContext } from '../../../CohortModalContext';
 import { TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData';
 
@@ -20,50 +18,27 @@ const ActionButtons = (props) => {
     const { showAlert } = useContext(CohortModalContext);
     
     // Loading states
-    const [isDownloadingManifest, setIsDownloadingManifest] = useState(false);
-    const [isDownloadingMetadata, setIsDownloadingMetadata] = useState(false);
+    const [isDownloading, setIsDownloading] = useState(false);
     const [isExportingToCCDI, setIsExportingToCCDI] = useState(false);
     
     // Download functions (memoized for performance with error handling)
-    const downloadCohortManifest = useCallback(async () => {
-        if (isDownloadingManifest) return; // Prevent multiple simultaneous downloads
-        
-        setIsDownloadingManifest(true);
-        try {
-            const participantPKs = localCohort.participants.map(item => item.participant_pk);
-            const { data } = await client.query({
-                query: GET_COHORT_MANIFEST_QUERY,
-                variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
-            });
-            arrayToCSVDownload(data['diagnosisOverview'], localCohort.cohortId);
-            showAlert('success', 'Manifest CSV downloaded successfully!');
-        } catch (error) {
-            console.error('Error downloading cohort manifest:', error);
-            showAlert('error', 'Failed to download manifest. Please try again.');
-        } finally {
-            setIsDownloadingManifest(false);
-        }
-    }, [localCohort.participants, localCohort.cohortId, isDownloadingManifest, showAlert]);
+    const handleDownloadManifest = useCallback(async () => {
+        if (isDownloading) return; // Prevent multiple simultaneous downloads
 
-    const downloadCohortMetadata = useCallback(async () => {
-        if (isDownloadingMetadata) return; // Prevent multiple simultaneous downloads
-        
-        setIsDownloadingMetadata(true);
-        try {
-            const participantPKs = localCohort.participants.map(item => item.participant_pk);
-            const { data } = await client.query({
-                query: GET_COHORT_METADATA_QUERY,
-                variables: { "participant_pk": participantPKs, "first": localCohort.participants.length },
-            });
-            objectToJsonDownload(data['cohortMetadata'], localCohort.cohortId);
-            showAlert('success', 'Metadata JSON downloaded successfully!');
-        } catch (error) {
-            console.error('Error downloading cohort metadata:', error);
-            showAlert('error', 'Failed to download metadata. Please try again.');
-        } finally {
-            setIsDownloadingMetadata(false);
-        }
-    }, [localCohort.participants, localCohort.cohortId, isDownloadingMetadata, showAlert]);
+        await downloadCohortManifest(localCohort.participants, localCohort.cohortId, {
+            showAlert,
+            onLoadingStateChange: setIsDownloading
+        });
+    }, [localCohort.participants, localCohort.cohortId, isDownloading, showAlert]);
+
+    const handleDownloadMetadata = useCallback(async () => {
+        if (isDownloading) return; // Prevent multiple simultaneous downloads
+
+        await downloadCohortMetadata(localCohort.participants, localCohort.cohortId, {
+            showAlert,
+            onLoadingStateChange: setIsDownloading
+        });
+    }, [localCohort.participants, localCohort.cohortId, isDownloading, showAlert]);
     
     // CCDI Hub export function using centralized utility
     const handleExportToCCDIHub = useCallback(async () => {
@@ -141,7 +116,7 @@ const ActionButtons = (props) => {
                     variant="contained"
                     className={showDownloadDropdown ? classes.downloadButtonOpened : classes.downloadButton}
                     onClick={handleDownloadDropdown}
-                    disabled={isDownloadingManifest || isDownloadingMetadata}
+                    disabled={isDownloading}
                     aria-label="Download cohort data - select format"
                 >
                     <div className={classes.downloadButtonText}>
@@ -158,13 +133,13 @@ const ActionButtons = (props) => {
                     <div className={classes.dropdownMenu}>
                         <div
                             className={classes.dropdownItem + ' ' + classes.firstDropdownItem}
-                            onClick={() => { handleDownloadFile(downloadCohortManifest) }}
+                            onClick={() => { handleDownloadFile(handleDownloadManifest) }}
                         >
                             Manifest CSV
                         </div>
                         <div
                             className={classes.dropdownItem}
-                            onClick={() => { handleDownloadFile(downloadCohortMetadata) }}
+                            onClick={() => { handleDownloadFile(handleDownloadMetadata) }}
                         >
                             Metadata JSON
                         </div>
