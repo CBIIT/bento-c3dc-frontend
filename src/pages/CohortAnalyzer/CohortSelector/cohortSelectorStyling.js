@@ -120,12 +120,12 @@ export const useStyle = makeStyles((theme) => ({
         textAlign: 'left',
         width: '100%',
         display: 'flex',
-        paddingTop: 20,
+        paddingTop: 16,
         flexDirection: 'column',
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-        paddingLeft: 20,
+        paddingLeft: 26,
         paddingBottom: 12,
         justifyContent: 'flex-start',
         justifyItems: 'flex-start',
@@ -189,7 +189,7 @@ export const useStyle = makeStyles((theme) => ({
   display: flex;
   position: relative;
   width: 100%;
-  padding: 5px;
+  padding: 0px;
   margin-bottom: 0;
   justify-content: space-between;
 `;
@@ -225,13 +225,13 @@ export const useStyle = makeStyles((theme) => ({
   font-size: 15px;
   padding: 0;
   margin: 0;
-  margin-top: 7px;
+  margin-top: 13px;
   font-weight: 400;
   font-family: 'Open Sans';
   
 `;
 
  export const InstructionsWrapper = styled.div`
-padding-left: 5px;
+padding-left: 0px;
 `;
 
