@@ -12,7 +12,6 @@ export const HistogramContainer = styled.div`
   border-radius: 8px;
   padding: 20px;
   margin: 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   min-width: 50%;
   max-width: 50%;
   margin-left: 0px;

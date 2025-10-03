@@ -173,7 +173,7 @@ export const useStyle = makeStyles((theme) => ({
         '& img': {
             position: 'relative',
             right: 26,
-            width: 12,
+            width: 14,
             height: 13
         }
     },
@@ -187,6 +187,7 @@ export const useStyle = makeStyles((theme) => ({
     inputStyle: {
         fontFamily: 'Poppins',
         fontWeight: 300,
+        fontSize: '15px',
         width: '349px',
         height: '26px',
         gap: '0px',
@@ -196,16 +197,16 @@ export const useStyle = makeStyles((theme) => ({
         paddingLeft: 13,
         border: '1px solid #8B98AF',
         textDecoration: 'none',
-        "&::placeolder": {
+        "&::placeholder": {
             fontFamily: 'Poppins',
-            color: 'red'
+            color: '#5D7B87 !important'
         }
     },
     leftSideAnalyzer: {
         minWidth: 268,
         maxWidth: 268,
         height: 588,
-        marginTop: 70,
+        marginTop: 40,
         overflow: 'hidden',
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
@@ -352,7 +353,8 @@ export const useStyle = makeStyles((theme) => ({
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
         width: '100%',
-        paddingBottom: 10,
+        paddingBottom: 15,
+        paddingTop: 5,
         paddingRight: 15,
         [theme.breakpoints.down('lg')]: {
             width: '100%'
@@ -371,10 +373,11 @@ export const useStyle = makeStyles((theme) => ({
         maxWidth: "100%",
         borderRadius: '35px',
         border: '4px solid #4E8191',
+        paddingBottom: 55,
         margin: 100,
         marginLeft: 33,
         marginRight: 33,
-        marginTop: 70,
+        marginTop: 40,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
