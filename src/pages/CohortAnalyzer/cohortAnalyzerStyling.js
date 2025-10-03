@@ -9,7 +9,7 @@ export const useStyle = makeStyles((theme) => ({
     },
     chartContainer: {
         backgroundColor: 'white',
-        border: '0.75px solid #679AAA',
+        border: '1px solid #679AAA',
         borderRadius: '10px',
         flex: 1,
         display: 'flex',
@@ -39,11 +39,11 @@ export const useStyle = makeStyles((theme) => ({
             alignItems: "center",
             justifyContent: "center",
             display: "flex",
-            
+            marginLeft: 0,      
         },
         [theme.breakpoints.down('lg')]: {
             alignItems: 'center',
-            marginLeft: 8,
+            marginLeft: 0,
         }
     },
     chartVennPlaceholder: {
@@ -71,6 +71,7 @@ export const useStyle = makeStyles((theme) => ({
         flexDirection: 'row',
         marginTop: 0,
         color: 'white',
+        marginLeft: 30.5,
         padding: 0,
         fontSize: 15,
         gap: 15
@@ -83,23 +84,25 @@ export const useStyle = makeStyles((theme) => ({
         border: '1.25px solid #4EA1A1',
         borderRadius: '5px',
         color: 'white',
-        fontWeight: '400',
+        fontWeight: '600',
         display: 'flex',
         flexDirection: 'row',
         gap: '6px',
         justifyContent: 'center',
         alignItems: 'center',
-        cursor: "pointer"
+        cursor: "pointer",
+        fontFamily: 'Poppins',
     },
     exploreButtonFaded: {
         boxSizing: 'border-box',
+        fontFamily: 'Poppins',
         minWidth: '189px',
         height: '41px',
         background: '#BBC1C3',
         border: '1.25px solid #4EA1A1',
         borderRadius: '5px',
         color: 'white',
-        fontWeight: '400',
+        fontWeight: '600',
         display: 'flex',
         flexDirection: 'row',
         gap: '6px',
@@ -357,8 +360,7 @@ export const useStyle = makeStyles((theme) => ({
     },
     tableSectionOuterContainer: {
         width: '97.5%',
-        marginLeft: 10,
-        border: '0.75px solid #679AAA',
+        border: '1px solid #679AAA',
         borderRadius: 10,
         overflow: 'hidden',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -366,48 +368,56 @@ export const useStyle = makeStyles((theme) => ({
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
     },
     rightSideAnalyzer: {
-        minWidth: "81%",
         maxWidth: "100%",
         borderRadius: '35px',
         border: '4px solid #4E8191',
         margin: 100,
-        marginLeft: 10,
+        marginLeft: 33,
+        marginRight: 33,
         marginTop: 70,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         overflowY: 'visible',
-        overflowX: 'hidden',
+        overflowX: 'visible',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(10px)',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
         [theme.breakpoints.down('lg')]: {
             alignItems: 'flex-start',
-            padding: '0 24px 24px 24px',
             overflowY: 'scroll',
+            padding: '0 0 24px 0',
             height: '100%',
         }
 
     },
+   rightSideContentContainer: {
+    padding: '0 44.5px',
+   } ,
     rightSideAnalyzerOuterContainer: {
         display: 'flex',
-        marginBottom: 40,
+        marginBottom: 45,
         justifyContent: 'flex-start',
-        width: "98%",
+        width: "100%",
+        marginTop: '45px',
+        gap: 20,
         [theme.breakpoints.down('lg')]: {
             flexDirection: 'column',
+            gap: 0,
+            marginTop: '0px',
         }
     },
     rightSideAnalyzerInnerContainer: {
         display: 'flex',
         marginBottom: 0,
-        flexDirection: "column"
+        flexDirection: "column",
+
     },
     rightSideAnalyzerHeader: {
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '105%',
+        width: '100%',
         alignSelf: 'center',
         alignItems: 'center',
         borderBottom: '2.5px solid #679AAA',
@@ -418,10 +428,7 @@ export const useStyle = makeStyles((theme) => ({
             fontWeight: 400,
             textAlign: 'left',
             color: '#0D3A3F',
-            marginLeft: '65px',
-            [theme.breakpoints.down('lg')]: {
-                marginLeft: '35px'
-            }
+            marginLeft: '44.5px',
 
         }
 
@@ -433,7 +440,6 @@ export const useStyle = makeStyles((theme) => ({
         minWidth: '30%',
         alignItems: 'flex-start',
         marginBottom: '27px',
-        backgroundColor: 'red',
         paddingBottom: 0,
         zIndex: 900,
         '& p': {
@@ -446,7 +452,7 @@ export const useStyle = makeStyles((theme) => ({
             color: 'black',
             margin: 1,
             marginTop: 17,
-            marginLeft: '10px',
+            marginLeft: '20px',
             [theme.breakpoints.down('lg')]: {
                 width: '100%',
             }

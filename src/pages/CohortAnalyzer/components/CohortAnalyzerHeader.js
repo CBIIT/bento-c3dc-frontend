@@ -16,7 +16,7 @@ const CohortAnalyzerHeader = ({
           <div className={classes.chartContainerHeader} >
               <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                   <div style={{ display: 'flex', flexDirection: 'row', gap: 0, alignItems: 'center' }}>
-                      <p style={{ margin: 5, marginTop: 5, marginRight: 0, marginBottom: 0, fontSize: 17, fontFamily: 'Poppins', color: 'white' }}>Select a data category for cohort matching:</p>
+                      <p style={{ margin: 30.5, marginTop: 5, marginRight: 0, marginBottom: 0, fontSize: 17, fontFamily: 'Poppins', color: 'white' }}>Select a data category for cohort matching:</p>
                       <ToolTip maxWidth="380px" backgroundColor={'white'} zIndex={3000} title={"The venn diagram is a stylized representation of the selected cohorts and their shared Participant IDs, and are not proportionally accurate,"} arrow placement="top">
                           <img alt={"Question mark"} src={questionIcon3} style={{ marginTop: -4 }} height={10} />
                       </ToolTip>

@@ -53,8 +53,10 @@ const CustomTick = ({ x, y, payload }) => {
           y={index * 12}
           dy={16}
           textAnchor="middle"
-          fill="#333"
-          fontSize="10"
+          fill="#666666"
+          fontSize="11"
+          fontFamily='Nunito'
+          fontWeight={500}
         >
           {line}
         </text>
@@ -188,7 +190,7 @@ const ExpandedChartModal = ({
     const formatted = num % 1 === 0 ? num : num.toFixed(1);
     return viewType[activeTab] === 'percentage' ? `${formatted}%` : formatted;
   }}
-        tick={{ fontSize: 14, fill: '#333' }}
+        tick={{ fontSize: 11, fill: '#666666', fontFamily: 'Nunito', fontWeight: 500 }}
       />
       <Tooltip content={(props) => ( <CustomTooltip {...props} viewType={viewType[activeTab]} data={data[activeTab]} cellHover={cellHover} /> )} />
        {valueA>0 &&

@@ -428,7 +428,7 @@ export const CohortAnalyzer = () => {
                         <h1> Cohort Analyzer</h1>
                     </div>
 
-
+                    <div className={classes.rightSideContentContainer}>
                     <div className={classes.rightSideAnalyzerOuterContainer}>
                         <div className={classes.rightSideAnalyzerInnerContainer}>
                             <div className={classes.rightSideAnalyzerHeader2}>
@@ -463,6 +463,7 @@ export const CohortAnalyzer = () => {
                         initTblState={initTblState}
                         themeConfig={themeConfig}
                     />
+                    </div>
                 </div>
             </div>
         </>
