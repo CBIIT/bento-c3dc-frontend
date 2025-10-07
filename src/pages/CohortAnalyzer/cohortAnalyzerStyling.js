@@ -391,11 +391,13 @@ export const useStyle = makeStyles((theme) => ({
             overflowY: 'scroll',
             padding: '0 0 24px 0',
             height: '100%',
+            minWidth: "0"
         }
 
     },
    rightSideContentContainer: {
     padding: '0 44.5px',
+    width: '100%',
    } ,
     rightSideAnalyzerOuterContainer: {
         display: 'flex',

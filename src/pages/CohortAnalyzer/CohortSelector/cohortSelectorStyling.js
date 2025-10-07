@@ -14,7 +14,7 @@ export const useStyle = makeStyles((theme) => ({
         minWidth: 268,
         maxWidth: 268,
         height: 588,
-        marginTop: 70,
+        marginTop: 40,
         overflow: 'hidden',
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
