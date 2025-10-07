@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
-import { themeConfig } from "../studies/tableConfig/Theme";
+import { tblBody, themeConfig } from "../studies/tableConfig/Theme";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
 import { tableConfig, analyzer_tables } from "../../bento/cohortAnalyzerPageData";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
@@ -85,7 +85,33 @@ export const CohortAnalyzer = () => {
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { Notification } = useGlobal();
     const navigate = useNavigate();
+    const cohortAnalyzerThemeConfig = {
+        ...themeConfig, tblHeader: {
+            ...themeConfig.tblHeader, 
+            MuiTableRow: {
+                head: {
+                    height: '40px',
+                    borderTop: '3px solid #679AAA',
+                    borderBottom: '1px solid #000000',
+                },
+            },
+        },
+        tblBody: {
+            ...themeConfig.tblBody,
+            MuiTableCell: {
+                ...themeConfig.tblBody.MuiTableCell,
+                body: {
+                    ...themeConfig.tblBody.MuiTableCell.body,
+                    '&:first-of-type': {
+                        color: '#004C73',
+                        textDecoration: 'underline',
+                    },
+                }
 
+            },
+        },
+    };
+    console.log(cohortAnalyzerThemeConfig);
     const handleUserRedirect = () => {
         // NOTE: If needed to show in only Autocomplete of Localfind.
         // const data = rowData.map(r=>({type: 'participantIds', title: r.participant_id}))
@@ -364,6 +390,13 @@ export const CohortAnalyzer = () => {
         sortBy: tableConfig.defaultSortField,
         sortOrder: tableConfig.defaultSortDirection,
         extendedViewConfig: tableConfig.extendedViewConfig,
+        paginationCustomStyle: {
+            topPagination: {
+                display: 'flex',
+                borderTop: 'none',
+                paddingRight: '41px',
+            }
+        },
         rowsPerPage: 10,
         page: 0,
         onPageChange: (somevalue) => alert("ok ok"),
@@ -461,7 +494,7 @@ export const CohortAnalyzer = () => {
                         handleBuildInExplore={handleBuildInExplore}
                         handleExportToCCDIHub={handleExportToCCDIHub}
                         initTblState={initTblState}
-                        themeConfig={themeConfig}
+                        themeConfig={cohortAnalyzerThemeConfig}
                     />
                     </div>
                 </div>
