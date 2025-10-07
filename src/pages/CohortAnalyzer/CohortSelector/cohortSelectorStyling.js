@@ -219,6 +219,8 @@ export const useStyle = makeStyles((theme) => ({
   cursor: ${(props) => (Object.keys(props.state).length === 0 ? 'not-allowed' : 'pointer')};
     position: relative;
     bottom: -2px;
+    margin: 0;
+    right: 13px;
 `;
 
    export const Instructions = styled.p`

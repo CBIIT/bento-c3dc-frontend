@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from 'react-router-dom';
 import { CohortStateContext } from "../../components/CohortSelectorState/CohortStateContext";
 import { configColumn } from "../inventory/tabs/tableConfig/Column";
-import { tblBody, themeConfig } from "../studies/tableConfig/Theme";
+import { themeConfig } from "../studies/tableConfig/Theme";
 import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../../components/CohortSelectorState/store/action";
 import { tableConfig, analyzer_tables } from "../../bento/cohortAnalyzerPageData";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
