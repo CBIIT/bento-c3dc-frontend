@@ -361,7 +361,7 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     tableSectionOuterContainer: {
-        width: '97.5%',
+        width: '100%',
         border: '1px solid #679AAA',
         borderRadius: 10,
         overflow: 'hidden',
