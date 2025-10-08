@@ -12,9 +12,11 @@ const CustomChartTooltip = ({ active, payload, label, viewType, cellHoverRef }) 
 
     // Format special labels
     const formatLabel = (rawLabel) => {
-      if (rawLabel === 'OtherFew') return 'Other Few';
-      if (rawLabel === 'OtherMany') return 'Other Many';
-      return rawLabel;
+      const labelMap = {
+        'OtherFew': 'Other Few',
+        'OtherMany': 'Other Many'
+      };
+      return labelMap[rawLabel] || rawLabel;
     };
 
     return (
