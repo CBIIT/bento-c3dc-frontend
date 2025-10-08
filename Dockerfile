@@ -10,7 +10,7 @@ RUN NODE_OPTIONS="--max-old-space-size=4096" npm ci --legacy-peer-deps
 RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build --silent
 
 # FROM nginx:1.23.3-alpine
-FROM nginx:1.27.1-alpine3.20-slim AS fnl_base_image
+FROM nginx:1.29.2-alpine3.22-slim AS fnl_base_image
 
 #RUN apt-get update && apt-get -y upgrade
 
