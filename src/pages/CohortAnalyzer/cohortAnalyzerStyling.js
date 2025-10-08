@@ -55,7 +55,7 @@ export const useStyle = makeStyles((theme) => ({
     chartContainerHeader: {
         width: '100%',
         height: 69,
-        paddingLeft: 15,
+        paddingLeft: 30.5,
         paddingRight: 15,
         minHeight: 69,
         backgroundColor: '#3A7587',
@@ -71,7 +71,6 @@ export const useStyle = makeStyles((theme) => ({
         flexDirection: 'row',
         marginTop: 0,
         color: 'white',
-        marginLeft: 30.5,
         padding: 0,
         fontSize: 15,
         gap: 15
@@ -353,8 +352,8 @@ export const useStyle = makeStyles((theme) => ({
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
         width: '100%',
-        paddingBottom: 15,
-        paddingTop: 5,
+        paddingBottom: 16,
+        paddingTop: 16,
         paddingRight: 15,
         [theme.breakpoints.down('lg')]: {
             width: '100%'
@@ -404,12 +403,12 @@ export const useStyle = makeStyles((theme) => ({
         marginBottom: 45,
         justifyContent: 'flex-start',
         width: "100%",
-        marginTop: '45px',
-        gap: 20,
+        marginTop: '20px',
+        gap: 26,
         [theme.breakpoints.down('lg')]: {
             flexDirection: 'column',
             gap: 0,
-            marginTop: '0px',
+            marginTop: '20px',
         }
     },
     rightSideAnalyzerInnerContainer: {
@@ -456,10 +455,11 @@ export const useStyle = makeStyles((theme) => ({
             textAlign: 'left',
             color: 'black',
             margin: 1,
-            marginTop: 17,
+            marginTop: 0,
             marginLeft: '20px',
             [theme.breakpoints.down('lg')]: {
                 width: '100%',
+                marginLeft: 0,
             }
         }
     },
