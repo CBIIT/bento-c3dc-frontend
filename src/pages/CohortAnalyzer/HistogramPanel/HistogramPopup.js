@@ -10,17 +10,17 @@ import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 
 
 
- const CustomTooltip = ({ active, payload, viewType, data, cellHover }) => {
+ const CustomTooltip = ({ active, payload, label, viewType, data, cellHover }) => {
     if (cellHover.current == null) return null;
-    
+
     if (active && payload && payload.length) {
-      
+
       const isPercentage = viewType === 'percentage';
       const hoveredEntry = payload.find((entry) => {
             return entry.dataKey === cellHover.current;
       });
       const value = hoveredEntry ? hoveredEntry.payload[cellHover.current] : 0;
- 
+
       return (
         <div style={{
           backgroundColor: 'white',
@@ -29,7 +29,7 @@ import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
           borderRadius: '4px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
         }}>
-          <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
+          <p style={{ margin: 0, fontWeight: 'bold' }}>{label}</p>
           {hoveredEntry && (
             <p style={{ margin: 0, color: '#666' }}>
               value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}

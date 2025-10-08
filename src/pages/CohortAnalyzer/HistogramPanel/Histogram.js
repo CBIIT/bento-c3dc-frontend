@@ -85,7 +85,7 @@ const Histogram = ({c1,c2,c3}) => {
           borderRadius: '4px',
           boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
         }}>
-          <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
+          <p style={{ margin: 0, fontWeight: 'bold' }}>{label}</p>
           {hoveredEntry && (
             <p style={{ margin: 0, color: '#666' }}>
               value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
