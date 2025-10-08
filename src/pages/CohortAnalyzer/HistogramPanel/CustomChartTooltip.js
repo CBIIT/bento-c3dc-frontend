@@ -10,6 +10,13 @@ const CustomChartTooltip = ({ active, payload, label, viewType, cellHoverRef }) 
     });
     const value = hoveredEntry ? hoveredEntry.payload[cellHoverRef.current] : 0;
 
+    // Format special labels
+    const formatLabel = (rawLabel) => {
+      if (rawLabel === 'OtherFew') return 'Other Few';
+      if (rawLabel === 'OtherMany') return 'Other Many';
+      return rawLabel;
+    };
+
     return (
       <div style={{
         backgroundColor: 'white',
@@ -18,7 +25,7 @@ const CustomChartTooltip = ({ active, payload, label, viewType, cellHoverRef }) 
         borderRadius: '4px',
         boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
       }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{label}</p>
+        <p style={{ margin: 0, fontWeight: 'bold' }}>{formatLabel(label)}</p>
         {hoveredEntry && (
           <p style={{ margin: 0, color: '#666' }}>
             value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
