@@ -7,40 +7,9 @@ import {
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
+import CustomChartTooltip from './CustomChartTooltip';
 
 
-
- const CustomTooltip = ({ active, payload, label, viewType, data, cellHover }) => {
-    if (cellHover.current == null) return null;
-
-    if (active && payload && payload.length) {
-
-      const isPercentage = viewType === 'percentage';
-      const hoveredEntry = payload.find((entry) => {
-            return entry.dataKey === cellHover.current;
-      });
-      const value = hoveredEntry ? hoveredEntry.payload[cellHover.current] : 0;
-
-      return (
-        <div style={{
-          backgroundColor: 'white',
-          padding: '10px',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        }}>
-          <p style={{ margin: 0, fontWeight: 'bold' }}>{label}</p>
-          {hoveredEntry && (
-            <p style={{ margin: 0, color: '#666' }}>
-              value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
-            </p>
-          )
-          }
-        </div>
-      );
-    }
-    return null;
-  };
 
 const CustomTick = ({ x, y, payload }) => {
   const lines = payload.value.split(' ');
@@ -190,7 +159,7 @@ const ExpandedChartModal = ({
   }}
         tick={{ fontSize: 14, fill: '#333' }}
       />
-      <Tooltip content={(props) => ( <CustomTooltip {...props} viewType={viewType[activeTab]} data={data[activeTab]} cellHover={cellHover} /> )} />
+      <Tooltip content={(props) => ( <CustomChartTooltip {...props} viewType={viewType[activeTab]} cellHoverRef={cellHover} /> )} />
        {valueA>0 &&
       <Bar dataKey="valueA" name="Dataset 1" fill={"#FAE69C"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueA")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={valueC > 0 ? undefined : 40} />
 
