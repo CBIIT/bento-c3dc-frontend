@@ -111,7 +111,7 @@ export const CohortAnalyzer = () => {
             },
         },
     };
-    console.log(cohortAnalyzerThemeConfig);
+   
     const handleUserRedirect = () => {
         // NOTE: If needed to show in only Autocomplete of Localfind.
         // const data = rowData.map(r=>({type: 'participantIds', title: r.participant_id}))
