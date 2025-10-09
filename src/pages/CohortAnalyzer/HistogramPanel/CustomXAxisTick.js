@@ -17,7 +17,7 @@ const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
 
   // Calculate max characters based on available width
   // Approximate that each character takes about 6-7 pixels at fontSize 8, 7-8 at fontSize 10
-  const charWidth = fontSize === 8 ? 6.5 : 7.5;
+  const charWidth = fontSize === 8 ? 4 : 5;
   const maxLength = width ? Math.floor(width / charWidth) : 10;
 
   // Function to truncate text
@@ -47,13 +47,13 @@ const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
     : [displayText];
 
   const handleMouseEnter = (e) => {
-    if (isTruncated) {
-      setShowTooltip(true);
+    if (isTruncated && !showTooltip) {  // Only set position if tooltip isn't already showing
       const rect = e.currentTarget.getBoundingClientRect();
       setMousePos({
         x: rect.left + (rect.width / 2),
-        y: rect.top - 10
+        y: rect.top - 50  // Increased offset to push tooltip further above
       });
+      setShowTooltip(true);  // Set this after position to ensure position is set first
     }
   };
 
@@ -66,6 +66,20 @@ const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
       <g transform={`translate(${x},${y})`}>
         {/* Add title element for native browser tooltip as fallback */}
         <title>{fullText}</title>
+
+        {/* Invisible rectangle for consistent hover area */}
+        {isTruncated && (
+          <rect
+            x={-width / 2}  // Center the rectangle
+            y={0}
+            width={width}
+            height={lines.length * 12 + 20}  // Cover all lines plus some padding
+            fill="transparent"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          />
+        )}
+
         {lines.map((line, index) => (
           <text
             key={index}
@@ -75,8 +89,9 @@ const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
             textAnchor="middle"
             fill="#333"
             fontSize={fontSize}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            style={{
+              pointerEvents: isTruncated ? 'none' : 'auto'  // Disable pointer events on text when using rect
+            }}
           >
             {/* Add title to each text element as well for better browser support */}
             <title>{fullText}</title>

@@ -198,7 +198,7 @@ const Histogram = ({c1,c2,c3}) => {
                           // Assuming chart is about 80% of container width (from ResponsiveContainer)
                           // and leaving some padding between ticks
                           const dataLength = (filteredData[dataset] && filteredData[dataset].length) || 1;
-                          const estimatedChartWidth = 1000; // Approximate width of chart area
+                          const estimatedChartWidth = 400; // Approximate width of chart area
                           const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
                           return <CustomXAxisTick {...props} width={availableWidth} fontSize={8} />;
                         }}

@@ -130,7 +130,7 @@ const ExpandedChartModal = ({
           // Calculate available width per tick based on chart width and data points
           // Modal has more space, so we use a larger estimated width
           const dataLength = (data[activeTab] && data[activeTab].length) || 1;
-          const estimatedChartWidth = 1200; // Larger width for expanded modal
+          const estimatedChartWidth = 800; // Larger width for expanded modal
           const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
           return <CustomXAxisTick {...props} width={availableWidth} fontSize={10} />;
         }}
