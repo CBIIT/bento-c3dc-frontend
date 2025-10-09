@@ -8,29 +8,11 @@ import {
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 import CustomChartTooltip from './CustomChartTooltip';
+import CustomXAxisTick from './CustomXAxisTick';
 
 
 
-const CustomTick = ({ x, y, payload }) => {
-  const lines = payload.value.split(' ');
-  return (
-    <g transform={`translate(${x},${y})`}>
-      {lines.map((line, index) => (
-        <text
-          key={index}
-          x={0}
-          y={index * 12}
-          dy={16}
-          textAnchor="middle"
-          fill="#333"
-          fontSize="10"
-        >
-          {line}
-        </text>
-      ))}
-    </g>
-  );
-};
+// CustomTick removed - using CustomXAxisTick instead
 
 
 
@@ -144,7 +126,14 @@ const ExpandedChartModal = ({
       <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
       <XAxis
         dataKey="name"
-        tick={<CustomTick />}
+        tick={(props) => {
+          // Calculate available width per tick based on chart width and data points
+          // Modal has more space, so we use a larger estimated width
+          const dataLength = (data[activeTab] && data[activeTab].length) || 1;
+          const estimatedChartWidth = 1200; // Larger width for expanded modal
+          const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
+          return <CustomXAxisTick {...props} width={availableWidth} fontSize={10} />;
+        }}
         interval={0}
         angle={0}
         textAnchor="middle"
