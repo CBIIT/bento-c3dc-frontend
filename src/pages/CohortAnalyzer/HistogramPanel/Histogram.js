@@ -5,6 +5,8 @@ import ExpandIcon from "../../../assets/icons/Expand_Histogram_icon.svg";
 import { useHistogramData } from './useHistogramData';
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import questionIcon from "../../../assets/icons/Question_icon_2.svg";
+import CustomChartTooltip from './CustomChartTooltip';
+import CustomXAxisTick from './CustomXAxisTick';
 import {
   HistogramContainer, ChartWrapper, HeaderSection, RadioGroup, RadioInput
   , RadioLabel, ChartActionButtons, ChartTitle,
@@ -65,62 +67,7 @@ const Histogram = ({c1,c2,c3}) => {
     cellHover.current = null;
   };
 
-  // Custom tooltip componen
-   const CustomTooltip = ({ active, payload, label, viewType }) => {
-    if (cellHover.current == null) return null;
-
-    if (active && payload && payload.length) {
-      
-      const isPercentage = viewType === 'percentage';
-      const hoveredEntry = payload.find((entry) => {
-            return entry.dataKey === cellHover.current;
-      });
-      const value = hoveredEntry ? hoveredEntry.payload[cellHover.current] : 0;
- 
-      return (
-        <div style={{
-          backgroundColor: 'white',
-          padding: '10px',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        }}>
-          <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
-          {hoveredEntry && (
-            <p style={{ margin: 0, color: '#666' }}>
-              value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
-            </p>
-          )
-          }
-        </div>
-      );
-    }
-    return null;
-  };
-
   const allInputsEmpty = [c1, c2, c3].every(arr => !Array.isArray(arr) || arr.length === 0);
-
-
-  const CustomTick = ({ x, y, payload }) => {
-    const lines = payload.value.split(' ');
-    return (
-      <g transform={`translate(${x},${y})`}>
-        {lines.map((line, index) => (
-          <text
-            key={index}
-            x={0}
-            y={index * 12}
-            dy={16}
-            textAnchor="middle"
-            fill="#333"
-            fontSize="8"
-          >
-            {line}
-          </text>
-        ))}
-      </g>
-    );
-  };
 
   return (
     <HistogramContainer>
@@ -246,7 +193,15 @@ const Histogram = ({c1,c2,c3}) => {
                         angle={0}
                         textAnchor="middle"
                         height={50}
-                        tick={<CustomTick />}
+                        tick={(props) => {
+                          // Calculate available width per tick based on chart width and data points
+                          // Assuming chart is about 80% of container width (from ResponsiveContainer)
+                          // and leaving some padding between ticks
+                          const dataLength = (filteredData[dataset] && filteredData[dataset].length) || 1;
+                          const estimatedChartWidth = 400; // Approximate width of chart area
+                          const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
+                          return <CustomXAxisTick {...props} width={availableWidth} fontSize={8} />;
+                        }}
                       />
                       <YAxis
                         domain={[0, 'dataMax']}
@@ -256,7 +211,7 @@ const Histogram = ({c1,c2,c3}) => {
                         return viewType[dataset] === 'percentage' ? `${formatted}%` : formatted;
                       }} tick={{ fontSize: 12, fill: '#333' }}
                       />
-                      <Tooltip content={<CustomTooltip viewType={viewType[dataset]} />} />
+                      <Tooltip content={<CustomChartTooltip viewType={viewType[dataset]} cellHoverRef={cellHover} />} />
                       {valueA > 0 && (
                         <Bar dataKey="valueA" maxBarSize={60} stroke="#000" strokeWidth={0.6}>
                           {filteredData[dataset].map((entry, entryIndex) => (
