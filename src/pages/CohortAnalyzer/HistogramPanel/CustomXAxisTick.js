@@ -1,6 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import ReactDOM from 'react-dom';
+import CustomChartTooltip from './CustomChartTooltip';
 
 const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
   // Format special labels
   const formatLabel = (rawLabel) => {
     if (rawLabel === 'OtherFew') return 'Other Few';
@@ -33,6 +38,7 @@ const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
   };
 
   const displayText = truncateText(fullText, maxLength);
+  const isTruncated = displayText !== fullText;
 
   // Split text into lines for multi-line display
   // If text is short enough and has spaces, split on spaces for better readability
@@ -40,27 +46,64 @@ const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
     ? displayText.split(' ')
     : [displayText];
 
+  const handleMouseEnter = (e) => {
+    if (isTruncated) {
+      setShowTooltip(true);
+      const rect = e.currentTarget.getBoundingClientRect();
+      setMousePos({
+        x: rect.left + (rect.width / 2),
+        y: rect.top - 10
+      });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
   return (
-    <g transform={`translate(${x},${y})`}>
-      {/* Add title element for tooltip */}
-      <title>{fullText}</title>
-      {lines.map((line, index) => (
-        <text
-          key={index}
-          x={0}
-          y={index * 12}
-          dy={16}
-          textAnchor="middle"
-          fill="#333"
-          fontSize={fontSize}
-          style={{ cursor: 'default' }}
-        >
-          {/* Add title to each text element as well for better browser support */}
-          <title>{fullText}</title>
-          {line}
-        </text>
-      ))}
-    </g>
+    <>
+      <g transform={`translate(${x},${y})`}>
+        {/* Add title element for native browser tooltip as fallback */}
+        <title>{fullText}</title>
+        {lines.map((line, index) => (
+          <text
+            key={index}
+            x={0}
+            y={index * 12}
+            dy={16}
+            textAnchor="middle"
+            fill="#333"
+            fontSize={fontSize}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {/* Add title to each text element as well for better browser support */}
+            <title>{fullText}</title>
+            {line}
+          </text>
+        ))}
+      </g>
+
+      {/* Render tooltip using portal to document body */}
+      {showTooltip && isTruncated && ReactDOM.createPortal(
+        <div style={{
+          position: 'fixed',
+          left: mousePos.x,
+          top: mousePos.y,
+          transform: 'translateX(-50%)',
+          pointerEvents: 'none',
+          zIndex: 9999
+        }}>
+          <CustomChartTooltip
+            active={true}
+            label={fullText}
+            showValue={false}
+          />
+        </div>,
+        document.body
+      )}
+    </>
   );
 };
 
