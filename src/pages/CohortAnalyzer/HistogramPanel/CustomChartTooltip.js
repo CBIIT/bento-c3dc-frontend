@@ -1,5 +1,23 @@
 import React from 'react';
 
+// Tooltip styles
+const tooltipStyles = {
+  container: {
+    backgroundColor: 'white',
+    padding: '10px',
+    border: '1px solid #ccc',
+    borderRadius: '4px',
+    boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+  },
+  text: {
+    margin: 0,
+    fontFamily: 'Poppins',
+    fontSize: '13px',
+    fontWeight: 400,
+    color: '#000000'
+  }
+};
+
 const CustomChartTooltip = ({ active, payload, label, viewType, cellHoverRef, showValue = true }) => {
   // For X-axis labels (showValue=false), we don't need cellHoverRef
   if (showValue && (!cellHoverRef || cellHoverRef.current == null)) return null;
@@ -24,17 +42,13 @@ const CustomChartTooltip = ({ active, payload, label, viewType, cellHoverRef, sh
     };
 
     return (
-      <div style={{
-        backgroundColor: 'white',
-        padding: '10px',
-        border: '1px solid #ccc',
-        borderRadius: '4px',
-        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-      }}>
-        <p style={{ margin: 0, fontWeight: 'bold' }}>{formatLabel(label)}</p>
+      <div style={tooltipStyles.container}>
+        <p style={tooltipStyles.text}>
+          {formatLabel(label)}
+        </p>
         {showValue && hoveredEntry && (
-          <p style={{ margin: 0, color: '#666' }}>
-            value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
+          <p style={tooltipStyles.text}>
+            {Number(value).toFixed(1)}{isPercentage ? '%' : ''}
           </p>
         )}
       </div>
