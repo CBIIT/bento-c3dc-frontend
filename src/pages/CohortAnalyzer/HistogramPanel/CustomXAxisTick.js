@@ -47,13 +47,13 @@ const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
     : [displayText];
 
   const handleMouseEnter = (e) => {
-    if (isTruncated && !showTooltip) {  // Only set position if tooltip isn't already showing
+    if (isTruncated) {
       const rect = e.currentTarget.getBoundingClientRect();
       setMousePos({
         x: rect.left + (rect.width / 2),
         y: rect.top - 50  // Increased offset to push tooltip further above
       });
-      setShowTooltip(true);  // Set this after position to ensure position is set first
+      setShowTooltip(true);
     }
   };
 
