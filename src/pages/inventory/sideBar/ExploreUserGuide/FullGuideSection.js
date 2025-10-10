@@ -6,7 +6,7 @@ const FullGuideSection = ({ classes }) => (
       <p>Full User Guide</p>
     </div>
     <div className={classes.contentContainer}>
-      <p>
+      <p  style={{ paddingBottom: '100px' }}>
         To learn more about the{" "}
         <a href="/explore">
           C3DC Explore Dashboard

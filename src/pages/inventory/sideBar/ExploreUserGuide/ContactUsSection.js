@@ -6,7 +6,7 @@ const ContactUsSection = ({ classes }) => (
       <p>Contact Information</p>
     </div>
     <div className={classes.contentContainer}>
-      <p style={{ paddingBottom: '100px' }}>
+      <p style={{ paddingBottom: '10px' }}>
         Please direct any questions or requests for further information to the{' '}
         <a
           href="mailto:NCIChildhoodCancerDataInitiative@mail.nih.gov"
