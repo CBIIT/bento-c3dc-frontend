@@ -1,6 +1,7 @@
 import React from "react";
-import figure5 from "./images/figure5.png";
 import figure6 from "./images/figure6.png";
+import figure7 from "./images/figure7.png";
+import figure8 from "./images/figure8.png";
 
 const CohortSection = ({ classes }) => (
   <div>
@@ -9,123 +10,96 @@ const CohortSection = ({ classes }) => (
     </div>
     <div className={classes.contentContainer}>
       <p>
-        The Cohort Selector enables users to create and manage up to{" "}
-        <strong>20 cohorts</strong>. This feature offers flexibility to
-        researchers by allowing them to create and update cohort groups
-        according to their specific requirements.
+        The Cohort Selector enables users to create a cohort with a size up to 4000 and manage up to{" "}
+        <strong>20 cohorts</strong>. This feature offers flexibility in managing groups of filtered results to researchers, allowing them to create and update cohort groups according to their specific requirements.
       </p>
 
       <h4>
         <strong>Creating a New Cohort</strong>
       </h4>
+      <p>
+        Using the process described in Finding Participants and Studies, apply any filters of interest from the lefthand facet menu.
+      </p>
+      <p>
+        To add participants to a new cohort, users can either:
+      </p>
       <ul>
         <li>
-          Using the process described in Finding Participants and Studies, apply
-          any filters of interest from the lefthand facet menu.
+          Select rows from the results table by selecting checkmark boxes in the leftmost column of results table (Figure 6A) and then select 'Selected Participants' from drop down menu (Figure 6C),
         </li>
         <li>
-          Users can then select rows from the results table using the checkmark
-          boxes in the leftmost column. Alternatively, select{" "}
-          <strong>“All Participants”</strong> from the “Create New Cohort”
-          button to include all participants matching the filters (Figure 5). A
-          "View of All Cohorts" pop-up window will open when at least one
-          participant row is selected. A cohort can include up to{" "}
-          <strong>4,000 participants</strong>.
+          Toggle the "select all visible rows" checkbox in the upper left-hand corner of the table to select participants or participants from data currently displayed in table (Figure 6B) and then select 'Selected Participants' from drop down menu (Figure 6C),
+        </li>
+        <li>
+          Or choose to add all participants returned based on the faceted results by selecting the "All Participants" option from the "Create New Cohort" button (Figure 6C). Note that a user can add up to 4,000 participants to each cohort.
         </li>
       </ul>
-      <div className={classes.figureContainer}>
-        <img src={figure5} style={{ width: "80%" }} alt="Figure 5" />
-      </div>
-      <div className={classes.figureText}>
-        Figure 5: Cohort creation with either Selected Participants or All
-        Participants from faceted filters
-      </div>
-
-      <p>From the "View of All Cohorts" window, users can:</p>
-      <ul>
-        <li>
-          Update the <strong>Cohort ID</strong> and <strong>Description</strong>{" "}
-          (Figure 6A)
-        </li>
-        <li>
-          View and delete <strong>Participants</strong> (Figure 6B)
-        </li>
-        <li>
-          Delete entire <strong>Cohorts</strong> (Figure 6C)
-        </li>
-        <li>
-          Click <strong>“Save Changes”</strong> to save all modifications
-          (Figure 6D)
-        </li>
-      </ul>
-
       <div className={classes.figureContainer}>
         <img src={figure6} style={{ width: "80%" }} alt="Figure 6" />
       </div>
       <div className={classes.figureText}>
-        Figure 6: Cohort management in View of All Cohorts
+        Figure 6: Cohort creation with either Selected Participants or All
+        Participants from faceted filters
+      </div>
+
+    <p> Alternatively, users can add selected participants or all participants in a facet filter to an existing cohort by selecting the “Add Participants to Existing Cohort” drop down menu, then selecting the target cohort and finally selecting from “All Participants” or “Selected Participants” (Figure 7).</p> 
+
+      <div className={classes.figureContainer}>
+        <img src={figure7} style={{ width: "80%" }} alt="Figure 7" />
+      </div>
+      <div className={classes.figureText}>
+        Figure 7: Cohort management in View of All Cohorts
       </div>
 
       <h4>
         <strong>View All and Update Cohorts</strong>
       </h4>
       <p>
-        Selecting the <strong>“View All Cohorts”</strong> button in the{" "}
-        <a href="/explore">C3DC Explore Dashboard</a> opens a management window
-        for all saved cohorts. Features include:
+        Selecting the <strong>"View All Cohort"</strong> Button in the C3DC Explore Dashboard will display a pop-up window to manage saved cohorts (Figure 8):
       </p>
       <ul>
         <li>
-          <strong>Cohort ID</strong>: Create a unique ID to identify your cohort
-          (Figure 6A)
+          <strong>Cohort ID</strong>: Create your own ID to identify saved cohorts (Figure 8A)
         </li>
         <li>
-          <strong>Cohort Description</strong>: Add descriptive context (Figure
-          6A)
+          <strong>Cohort Description</strong>: Create a description for saved cohorts (Figure 8A)
         </li>
         <li>
-          <strong>Save Changes</strong>: Apply updates (Figure 6D)
+          Remove participants from a selected cohort by selecting trash can icon (Figure 8B)
         </li>
         <li>
-          <strong>Participant ID Search</strong>: Look up participant presence
-          in cohort (Figure 6E)
+          Remove all or individual cohorts from created cohorts list by selecting trash can icon (Figure 8C)
         </li>
         <li>
-          <strong>Download Selected Cohort</strong>:
+          <strong>Save Changes</strong>: Save the changes made to the selected cohort. This includes changes to cohort ID, cohort description, and any participants removed (Figure 8D).
+        </li>
+        <li>
+          <strong>Participant ID Search bar</strong>: Check if a participant ID has been added to cohort (Figure 8E)
+        </li>
+        <li>
+          <strong>Download Selected Cohort</strong>: Download the selected cohort in one of two formats (Figure 8F).
           <ul>
             <li>
-              <strong>Manifest CSV</strong>: Contains participant IDs and
-              high-level data
+              <strong>Manifest CSV</strong>: a list of participant IDs and high-level data.
             </li>
             <li>
-              <strong>Metadata JSON</strong>: Full metadata for the cohort
+              <strong>Metadata JSON</strong>: a JSON file containing all metadata information for the participants in the selected cohort.
             </li>
           </ul>
         </li>
         <li>
-          <strong>View Cohort Analyzer</strong>: Launches the{" "}
-          <a
-            href="/cohortAnalyzer"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={classes.link}
-          >
-            C3DC Cohort Analyzer
-          </a>
+          <strong>View Cohort Analyzer</strong>: Navigate to the C3DC Cohort Analyzer from the cohort list (Figure 8F).
         </li>
         <li>
-          <strong>Explore in CCDI Hub</strong>: Exports cohorts to the{" "}
-          <a
-            href="https://ccdi.cancer.gov/explore"
-            target="_blank"
-            rel="noopener noreferrer"
-            className={classes.link}
-          >
-            CCDI Hub Explore Dashboard
-          </a>{" "}
-          with pre-filtered data (Figure 6F)
+          <strong>Explore in CCDI Hub</strong>: Export cohorts (up to 4000 participants each cohort) that open the CCDI Hub with pre-filtered data based on selected participants (Figure 8F)
         </li>
       </ul>
+      <div className={classes.figureContainer}>
+        <img src={figure8} style={{ width: "80%" }} alt="Figure 8" />
+      </div>
+      <div className={classes.figureText}>
+        Figure 8: Cohort management in View of All Cohorts
+      </div>
     </div>
   </div>
 );

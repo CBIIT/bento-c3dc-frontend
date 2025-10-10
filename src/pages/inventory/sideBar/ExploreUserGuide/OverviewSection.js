@@ -23,15 +23,15 @@ const OverviewSection = ({ classes }) => (
         Upon interaction with these filters (Figure 1A), users can review
         clinical information through visual summaries (Figure 1B) and browse the
         row-level data in tabs organized by studies and participants as well as
-        participant-associated diagnosis, treatment, treatment response, and
-        survival data (Figure 1C) to determine which data sets are applicable to
-        their research questions.
-      </p>
-      <p>
-        Users can then download tabular data for the currently selected tabs in
+        participant-associated diagnosis, treatment, treatment response, survival
+        data, and genetic analysis (Figure 1C) to determine which data sets are
+        applicable to their research questions. Users can then download tabular
+        metadata in the format of CSV or JSON at the currently selected tabs in
         the data table (Figure 1D). A statistics bar at the top reflects current
         numbers of diagnoses, participants, and studies filtered (Figure 1E).
-        Users can also build and compare synthetic cohorts with the{" "}
+        Users can also build synthetic cohort (up to 4000 participants each
+        cohort) and manage up to 20 cohorts. Users can further compare synthetic
+        cohorts in the{" "}
         <a href="/cohortAnalyzer" className={classes.link} target="_blank" rel="noopener noreferrer">
           C3DC Cohort Analyzer
         </a>
@@ -40,13 +40,14 @@ const OverviewSection = ({ classes }) => (
         <a href="https://ccdi.cancer.gov/explore" className={classes.link} target="_blank" rel="noopener noreferrer">
           CCDI Hub Explore Dashboard
         </a>
-        .
+        . For additional help and guidance on the Explore Page features, users
+        can click the User Guide button for the quick access (Figure 1F).
       </p>
       <div className={classes.figureContainer}>
         <img src={figure1} style={{ width: "85%" }} alt="Figure1" />
       </div>
       <div className={classes.figureText}>
-        Figure 1: CCDI Hub Explore Dashboard and Cart features
+        Figure 1: C3DC Explore Dashboard Features
       </div>
     </div>
   </>
