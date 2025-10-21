@@ -112,8 +112,10 @@ const Histogram = ({c1,c2,c3}) => {
             y={index * 12}
             dy={16}
             textAnchor="middle"
-            fill="#333"
-            fontSize="8"
+            fill="#666666"
+            fontSize="11"
+            fontFamily= 'Nunito' 
+            fontWeight={500}
           >
             {line}
           </text>
@@ -128,7 +130,7 @@ const Histogram = ({c1,c2,c3}) => {
       <DatasetSelectionTitle disabled={allInputsEmpty}>
         View Venn Diagram in set operations:
       </DatasetSelectionTitle>
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: '15px' }}>
         {Object.keys(titles).map((key, index) => (
           <label key={key} style={{ marginRight: '20px', fontFamily: 'Nunito', fontSize: '14px', color: '#666' }}>
             <input
@@ -254,7 +256,7 @@ const Histogram = ({c1,c2,c3}) => {
                         const num = Number(value);
                         const formatted = num % 1 === 0 ? num : num.toFixed(1);
                         return viewType[dataset] === 'percentage' ? `${formatted}%` : formatted;
-                      }} tick={{ fontSize: 12, fill: '#333' }}
+                      }} tick={{ fontSize: 11, fill: '#666666', fontFamily: 'Nunito', fontWeight: 500 }}
                       />
                       <Tooltip content={<CustomTooltip viewType={viewType[dataset]} />} />
                       {valueA > 0 && (

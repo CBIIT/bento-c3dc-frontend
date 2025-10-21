@@ -8,19 +8,19 @@ export const barColors = {
 
 export const HistogramContainer = styled.div`
   background: white;
-  border: 0.75px solid #679AAA;
+  border: 1px solid #679AAA;
   border-radius: 8px;
   padding: 20px;
-  margin: 20px 0 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin: 0;
   min-width: 50%;
   max-width: 50%;
-  margin-left: 10px;
+  margin-left: 0px;
   min-height: 682px;
   height: auto;
   @media (max-width: 1960px) {
     max-width: 100%;
     max-height: 100%;
+    margin: 45px 0 0;
   }
 
 `;
@@ -104,7 +104,7 @@ export const RadioGroup = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 15px;
-  gap: 20px;
+  gap: 5px;
   justify-content: flex-end;
   flex-direction: column;
   width: 110px;
