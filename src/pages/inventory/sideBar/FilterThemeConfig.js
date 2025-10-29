@@ -103,6 +103,118 @@ const theme = {
         lineHeight: '19.1px',
       },
     },
+    MuiSlider: {
+      thumb: {
+        height: 16,
+        width: 16,
+        "&.invalidThumb": {
+          height: "16px !important",
+          width: "16px !important",
+        },
+        "&.thumbStudy": {
+          background: '#006A8F',
+        },
+        "&.thumbDemographics": {
+          background: '#E39520',
+        },
+        "&.thumbDiagnosis": {
+          background: '#35B899',
+        },
+        "&.thumbTreatment": {
+          background: '#268CEA',
+        },
+        "&.thumbTreatmentresponse": {
+          background: '#9664C7',
+        },
+        "&.thumbSurvival": {
+          background: '#006B57',
+        },
+        "&.thumbGeneticanalysis": {
+          background: '#862405',
+        }
+      },
+      track: {
+        borderRadius: 4,
+        height: 6,
+        "&.invalidTrack": {
+          borderRadius: "4px !important",
+          height: "6px !important",
+        },
+        '&~&': {
+          background: '#142D64',
+        },
+        "&.trackStudy": {
+          background: '#006A8F',
+        },
+        "&.trackDemographics": {
+          background: '#E39520',
+        },
+        "&.trackDiagnosis": {
+          background: '#35B899',
+        },
+        "&.trackTreatment": {
+          background: '#268CEA',
+        },
+        "&.trackTreatmentresponse": {
+          background: '#9664C7',
+        },
+        "&.trackSurvival": {
+          background: '#006B57',
+        },
+        "&.trackGeneticanalysis": {
+          background: '#862405',
+        }
+      },
+      colorPrimary: {
+        "&.colorPrimaryStudy": {
+          color: '#006A8F',
+        },
+        "&.colorPrimaryDemographics": {
+          color: '#E39520',
+        },
+        "&.colorPrimaryDiagnosis": {
+          color: '#35B899',
+        },
+        "&.colorPrimaryTreatment": {
+          color: '#268CEA',
+        },
+        "&.colorPrimaryTreatmentresponse": {
+          color: '#9664C7',
+        },
+        "&.colorPrimarySurvival": {
+          color: '#006B57',
+        },
+        "&.colorPrimaryGeneticanalysis": {
+          color: '#862405',
+        }
+      },
+      rail: {
+        borderRadius: 4,
+        height: 6,
+        "&.railStudy": {
+          background: '#006A8F',
+        },
+        "&.railDemographics": {
+          background: '#E39520',
+        },
+        "&.railDiagnosis": {
+          background: '#35B899',
+        },
+        "&.railTreatment": {
+          background: '#268CEA',
+        },
+        "&.railTreatmentresponse": {
+          background: '#9664C7',
+        },
+        "&.railSurvival": {
+          background: '#006B57',
+        },
+        "&.railGeneticanalysis": {
+          background: '#862405',
+        }
+      }
+
+    },
     MuiDivider: {
       middle: {
         marginLeft: '0px',
