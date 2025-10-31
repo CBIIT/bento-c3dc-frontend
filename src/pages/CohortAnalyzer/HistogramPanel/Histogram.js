@@ -69,13 +69,37 @@ const Histogram = ({c1,c2,c3}) => {
 
   const allInputsEmpty = [c1, c2, c3].every(arr => !Array.isArray(arr) || arr.length === 0);
 
+
+  const CustomTick = ({ x, y, payload }) => {
+    const lines = payload.value.split(' ');
+    return (
+      <g transform={`translate(${x},${y})`}>
+        {lines.map((line, index) => (
+          <text
+            key={index}
+            x={0}
+            y={index * 12}
+            dy={16}
+            textAnchor="middle"
+            fill="#666666"
+            fontSize="11"
+            fontFamily= 'Nunito' 
+            fontWeight={500}
+          >
+            {line}
+          </text>
+        ))}
+      </g>
+    );
+  };
+
   return (
     <HistogramContainer>
       {/* Dataset Selection */}
       <DatasetSelectionTitle disabled={allInputsEmpty}>
         View Venn Diagram in set operations:
       </DatasetSelectionTitle>
-      <div style={{ marginBottom: '20px' }}>
+      <div style={{ marginBottom: '15px' }}>
         {Object.keys(titles).map((key, index) => (
           <label key={key} style={{ marginRight: '20px', fontFamily: 'Nunito', fontSize: '14px', color: '#666' }}>
             <input
@@ -209,7 +233,7 @@ const Histogram = ({c1,c2,c3}) => {
                         const num = Number(value);
                         const formatted = num % 1 === 0 ? num : num.toFixed(1);
                         return viewType[dataset] === 'percentage' ? `${formatted}%` : formatted;
-                      }} tick={{ fontSize: 12, fill: '#333' }}
+                      }} tick={{ fontSize: 11, fill: '#666666', fontFamily: 'Nunito', fontWeight: 500 }}
                       />
                       <Tooltip content={<CustomChartTooltip viewType={viewType[dataset]} cellHoverRef={cellHover} />} />
                       {valueA > 0 && (

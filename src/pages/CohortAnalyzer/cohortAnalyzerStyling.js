@@ -9,11 +9,11 @@ export const useStyle = makeStyles((theme) => ({
     },
     chartContainer: {
         backgroundColor: 'white',
-        border: '0.75px solid #679AAA',
+        border: '1px solid #679AAA',
         borderRadius: '10px',
         flex: 1,
         display: 'flex',
-        minHeight: 610,
+        minHeight: 310,
         flexDirection: 'column',
         overflow: 'hidden',
         marginLeft: 6,
@@ -39,11 +39,11 @@ export const useStyle = makeStyles((theme) => ({
             alignItems: "center",
             justifyContent: "center",
             display: "flex",
-            
+            marginLeft: 0,      
         },
         [theme.breakpoints.down('lg')]: {
             alignItems: 'center',
-            marginLeft: 8,
+            marginLeft: 0,
         }
     },
     chartVennPlaceholder: {
@@ -55,19 +55,21 @@ export const useStyle = makeStyles((theme) => ({
     chartContainerHeader: {
         width: '100%',
         height: 69,
+        paddingLeft: 30.5,
+        paddingRight: 15,
         minHeight: 69,
         backgroundColor: '#3A7587',
         position: 'relative',
         top: 0,
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     chartRadioContainer: {
         display: 'flex',
         flexDirection: 'row',
         marginTop: 0,
-        marginLeft: 11,
         color: 'white',
         padding: 0,
         fontSize: 15,
@@ -81,23 +83,25 @@ export const useStyle = makeStyles((theme) => ({
         border: '1.25px solid #4EA1A1',
         borderRadius: '5px',
         color: 'white',
-        fontWeight: '400',
+        fontWeight: '600',
         display: 'flex',
         flexDirection: 'row',
         gap: '6px',
         justifyContent: 'center',
         alignItems: 'center',
-        cursor: "pointer"
+        cursor: "pointer",
+        fontFamily: 'Poppins',
     },
     exploreButtonFaded: {
         boxSizing: 'border-box',
+        fontFamily: 'Poppins',
         minWidth: '189px',
         height: '41px',
         background: '#BBC1C3',
         border: '1.25px solid #4EA1A1',
         borderRadius: '5px',
         color: 'white',
-        fontWeight: '400',
+        fontWeight: '600',
         display: 'flex',
         flexDirection: 'row',
         gap: '6px',
@@ -183,7 +187,7 @@ export const useStyle = makeStyles((theme) => ({
         '& img': {
             position: 'relative',
             right: 26,
-            width: 12,
+            width: 14,
             height: 13
         }
     },
@@ -197,6 +201,7 @@ export const useStyle = makeStyles((theme) => ({
     inputStyle: {
         fontFamily: 'Poppins',
         fontWeight: 300,
+        fontSize: '15px',
         width: '349px',
         height: '26px',
         gap: '0px',
@@ -206,16 +211,16 @@ export const useStyle = makeStyles((theme) => ({
         paddingLeft: 13,
         border: '1px solid #8B98AF',
         textDecoration: 'none',
-        "&::placeolder": {
+        "&::placeholder": {
             fontFamily: 'Poppins',
-            color: 'red'
+            color: '#5D7B87 !important'
         }
     },
     leftSideAnalyzer: {
         minWidth: 268,
         maxWidth: 268,
         height: 588,
-        marginTop: 70,
+        marginTop: 40,
         overflow: 'hidden',
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
@@ -362,16 +367,16 @@ export const useStyle = makeStyles((theme) => ({
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
         width: '100%',
-        paddingBottom: 10,
+        paddingBottom: 16,
+        paddingTop: 16,
         paddingRight: 15,
         [theme.breakpoints.down('lg')]: {
             width: '100%'
         }
     },
     tableSectionOuterContainer: {
-        width: '97.5%',
-        marginLeft: 10,
-        border: '0.75px solid #679AAA',
+        width: '100%',
+        border: '1px solid #679AAA',
         borderRadius: 10,
         overflow: 'hidden',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
@@ -379,48 +384,59 @@ export const useStyle = makeStyles((theme) => ({
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
     },
     rightSideAnalyzer: {
-        minWidth: "81%",
         maxWidth: "100%",
         borderRadius: '35px',
         border: '4px solid #4E8191',
+        paddingBottom: 55,
         margin: 100,
-        marginLeft: 10,
-        marginTop: 70,
+        marginLeft: 33,
+        marginRight: 33,
+        marginTop: 40,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
         overflowY: 'visible',
-        overflowX: 'hidden',
+        overflowX: 'visible',
         backgroundColor: 'rgba(255, 255, 255, 0.95)',
         backdropFilter: 'blur(10px)',
         boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
         [theme.breakpoints.down('lg')]: {
             alignItems: 'flex-start',
-            padding: '0 24px 24px 24px',
             overflowY: 'scroll',
+            padding: '0 0 24px 0',
             height: '100%',
+            minWidth: "0"
         }
 
     },
+   rightSideContentContainer: {
+    padding: '0 44.5px',
+    width: '100%',
+   } ,
     rightSideAnalyzerOuterContainer: {
         display: 'flex',
-        marginBottom: 40,
+        marginBottom: 45,
         justifyContent: 'flex-start',
-        width: "98%",
+        width: "100%",
+        marginTop: '20px',
+        gap: 26,
         [theme.breakpoints.down('lg')]: {
             flexDirection: 'column',
+            gap: 0,
+            marginTop: '20px',
         }
     },
     rightSideAnalyzerInnerContainer: {
         display: 'flex',
         marginBottom: 0,
-        flexDirection: "column"
+        flexDirection: "column",
+
     },
     rightSideAnalyzerHeader: {
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '105%',
+        width: '100%',
         alignSelf: 'center',
         alignItems: 'center',
         borderBottom: '2.5px solid #679AAA',
@@ -431,10 +447,7 @@ export const useStyle = makeStyles((theme) => ({
             fontWeight: 400,
             textAlign: 'left',
             color: '#0D3A3F',
-            marginLeft: '65px',
-            [theme.breakpoints.down('lg')]: {
-                marginLeft: '35px'
-            }
+            marginLeft: '44.5px',
 
         }
 
@@ -445,19 +458,23 @@ export const useStyle = makeStyles((theme) => ({
         position: 'relative',
         minWidth: '30%',
         alignItems: 'flex-start',
-        marginBottom: '30px',
+        marginBottom: '27px',
+        paddingBottom: 0,
         zIndex: 900,
         '& p': {
             fontFamily: 'Open Sans',
             fontSize: '15px',
-
+            paddingBottom: 0,
             width: "100%",
             lineHeight: '20.8px',
             textAlign: 'left',
             color: 'black',
-            marginLeft: '10px',
+            margin: 1,
+            marginTop: 0,
+            marginLeft: '20px',
             [theme.breakpoints.down('lg')]: {
                 width: '100%',
+                marginLeft: 0,
             }
         }
     },
@@ -516,7 +533,7 @@ export const useStyle = makeStyles((theme) => ({
         width: '100%',
         maxHeight: 540,
         overflowY: 'scroll',
-        borderTop: "3.07px #8A7F7C solid",
+        borderTop: "3px #679AAA solid",
         '&::-webkit-scrollbar': {
             width: "6px"
         },

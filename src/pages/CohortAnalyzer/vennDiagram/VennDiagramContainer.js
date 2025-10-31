@@ -39,10 +39,23 @@ const VennDiagramContainer = ({
         if (containerRef.current && canvasRef.current) {
             const canvas = canvasRef.current;
 
+            // Create a temporary canvas with white background
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            // Fill with white background
+            tempCtx.fillStyle = 'white';
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+            // Draw the original canvas content on top
+            tempCtx.drawImage(canvas, 0, 0);
+
             // Create download link
             const link = document.createElement('a');
             link.download = 'venn-diagram.png';
-            link.href = canvas.toDataURL('image/png');
+            link.href = tempCanvas.toDataURL('image/png');
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);

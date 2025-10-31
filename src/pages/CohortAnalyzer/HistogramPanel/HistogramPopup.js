@@ -146,7 +146,7 @@ const ExpandedChartModal = ({
     const formatted = num % 1 === 0 ? num : num.toFixed(1);
     return viewType[activeTab] === 'percentage' ? `${formatted}%` : formatted;
   }}
-        tick={{ fontSize: 14, fill: '#333' }}
+        tick={{ fontSize: 11, fill: '#666666', fontFamily: 'Nunito', fontWeight: 500 }}
       />
       <Tooltip content={(props) => ( <CustomChartTooltip {...props} viewType={viewType[activeTab]} cellHoverRef={cellHover} /> )} />
        {valueA>0 &&

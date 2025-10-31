@@ -14,7 +14,7 @@ export const useStyle = makeStyles((theme) => ({
         minWidth: 268,
         maxWidth: 268,
         height: 588,
-        marginTop: 70,
+        marginTop: 40,
         overflow: 'hidden',
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
@@ -120,12 +120,12 @@ export const useStyle = makeStyles((theme) => ({
         textAlign: 'left',
         width: '100%',
         display: 'flex',
-        paddingTop: 20,
+        paddingTop: 16,
         flexDirection: 'column',
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-        paddingLeft: 20,
+        paddingLeft: 26,
         paddingBottom: 12,
         justifyContent: 'flex-start',
         justifyItems: 'flex-start',
@@ -189,7 +189,7 @@ export const useStyle = makeStyles((theme) => ({
   display: flex;
   position: relative;
   width: 100%;
-  padding: 5px;
+  padding: 0px;
   margin-bottom: 0;
   justify-content: space-between;
 `;
@@ -219,19 +219,21 @@ export const useStyle = makeStyles((theme) => ({
   cursor: ${(props) => (Object.keys(props.state).length === 0 ? 'not-allowed' : 'pointer')};
     position: relative;
     bottom: -2px;
+    margin: 0;
+    right: 13px;
 `;
 
    export const Instructions = styled.p`
   font-size: 15px;
   padding: 0;
   margin: 0;
-  margin-top: 7px;
+  margin-top: 13px;
   font-weight: 400;
   font-family: 'Open Sans';
   
 `;
 
  export const InstructionsWrapper = styled.div`
-padding-left: 5px;
+padding-left: 0px;
 `;
 

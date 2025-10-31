@@ -77,7 +77,7 @@ export const CohortSelector = ({ handleDemoClick, state: propState }) => {
                                 : exampleButtonConfig.tooltip.enabled;
 
                         return (
-                            <div style={{ marginTop: '8px', display: 'flex', justifyContent: 'flex-start', paddingLeft: '5px' }}>
+                            <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'flex-start', paddingLeft: '0px' }}>
                                 <ToolTip
                                     maxWidth="335px"
                                     border={'1px solid #598ac5'}
