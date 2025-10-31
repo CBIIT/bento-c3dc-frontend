@@ -44,11 +44,11 @@ const ExploreUserGuide = ({ classes }) => {
   const titleList = [
     'Overview',
     'Finding Participants, Studies, Samples, and Files',
-    'Creating and managing cohorts',
     'Downloading Metadata from the Studies tab',
+    'Creating and managing cohorts',
     'Analyzing Cohorts',
-    'Full User Guide',
     'Contact Us',
+    'Full User Guide',
   ];
 
   const handleClickEvent = (event) => {
@@ -122,11 +122,11 @@ const ExploreUserGuide = ({ classes }) => {
                 <div className={classes.contentTitle}>C3DC Explore Dashboard & Cohort(s) Analyzer</div>
                 <OverviewSection classes={classes} />
                 <FindDataSection classes={classes} />
-                <CohortSection classes={classes} />
                 <StudyMetadataSection classes={classes} />
+                <CohortSection classes={classes} />
                 <AnalyzingCohortsSection classes={classes} />
-                <FullGuideSection classes={classes} />
                 <ContactUsSection classes={classes} />
+                <FullGuideSection classes={classes} />
               </div>
             </div>
           </div>

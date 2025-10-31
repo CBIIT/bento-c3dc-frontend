@@ -160,6 +160,21 @@ export const useStyle = makeStyles((theme) => ({
             margin: 0
         }
     },
+    // Chart tooltip styles
+    chartTooltipContainer: {
+        backgroundColor: 'white',
+        padding: '10px',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    },
+    chartTooltipText: {
+        margin: 0,
+        fontFamily: 'Poppins',
+        fontSize: '13px',
+        fontWeight: 400,
+        color: '#000000'
+    },
     fieldsetReset: {
         all: 'unset',
         display: 'contents',

@@ -7,63 +7,12 @@ import {
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
+import CustomChartTooltip from './CustomChartTooltip';
+import CustomXAxisTick from './CustomXAxisTick';
 
 
 
- const CustomTooltip = ({ active, payload, viewType, data, cellHover }) => {
-    if (cellHover.current == null) return null;
-    
-    if (active && payload && payload.length) {
-      
-      const isPercentage = viewType === 'percentage';
-      const hoveredEntry = payload.find((entry) => {
-            return entry.dataKey === cellHover.current;
-      });
-      const value = hoveredEntry ? hoveredEntry.payload[cellHover.current] : 0;
- 
-      return (
-        <div style={{
-          backgroundColor: 'white',
-          padding: '10px',
-          border: '1px solid #ccc',
-          borderRadius: '4px',
-          boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
-        }}>
-          <p style={{ margin: 0, fontWeight: 'bold' }}>{data.name}</p>
-          {hoveredEntry && (
-            <p style={{ margin: 0, color: '#666' }}>
-              value: {Number(value).toFixed(1)} {isPercentage ? '%' : ''}
-            </p>
-          )
-          }
-        </div>
-      );
-    }
-    return null;
-  };
-
-const CustomTick = ({ x, y, payload }) => {
-  const lines = payload.value.split(' ');
-  return (
-    <g transform={`translate(${x},${y})`}>
-      {lines.map((line, index) => (
-        <text
-          key={index}
-          x={0}
-          y={index * 12}
-          dy={16}
-          textAnchor="middle"
-          fill="#666666"
-          fontSize="11"
-          fontFamily='Nunito'
-          fontWeight={500}
-        >
-          {line}
-        </text>
-      ))}
-    </g>
-  );
-};
+// CustomTick removed - using CustomXAxisTick instead
 
 
 
@@ -177,7 +126,14 @@ const ExpandedChartModal = ({
       <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
       <XAxis
         dataKey="name"
-        tick={<CustomTick />}
+        tick={(props) => {
+          // Calculate available width per tick based on chart width and data points
+          // Modal has more space, so we use a larger estimated width
+          const dataLength = (data[activeTab] && data[activeTab].length) || 1;
+          const estimatedChartWidth = 800; // Larger width for expanded modal
+          const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
+          return <CustomXAxisTick {...props} width={availableWidth} fontSize={10} />;
+        }}
         interval={0}
         angle={0}
         textAnchor="middle"
@@ -192,7 +148,7 @@ const ExpandedChartModal = ({
   }}
         tick={{ fontSize: 11, fill: '#666666', fontFamily: 'Nunito', fontWeight: 500 }}
       />
-      <Tooltip content={(props) => ( <CustomTooltip {...props} viewType={viewType[activeTab]} data={data[activeTab]} cellHover={cellHover} /> )} />
+      <Tooltip content={(props) => ( <CustomChartTooltip {...props} viewType={viewType[activeTab]} cellHoverRef={cellHover} /> )} />
        {valueA>0 &&
       <Bar dataKey="valueA" name="Dataset 1" fill={"#FAE69C"}  maxBarSize={60}  stroke="#000"  onMouseEnter={() => handleMouseEnter("valueA")} onMouseLeave={handleMouseLeave} strokeWidth={0.6} barSize={valueC > 0 ? undefined : 40} />
 

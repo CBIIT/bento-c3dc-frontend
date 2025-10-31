@@ -12,7 +12,7 @@ RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm set p
 RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm ci --legacy-peer-deps
 RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm run build --silent
 
-FROM nginx:1.28.0-alpine3.21 AS fnl_base_image
+FROM nginx:1.29.2-alpine3.22-slim AS fnl_base_image
 
 RUN apk update && apk upgrade libxml2
 
