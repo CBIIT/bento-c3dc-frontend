@@ -85,7 +85,33 @@ export const CohortAnalyzer = () => {
     const { setShowCohortModal, showCohortModal, setCurrentCohortChanges, setWarningMessage, warningMessage } = useContext(CohortModalContext);
     const { Notification } = useGlobal();
     const navigate = useNavigate();
+    const cohortAnalyzerThemeConfig = {
+        ...themeConfig, tblHeader: {
+            ...themeConfig.tblHeader, 
+            MuiTableRow: {
+                head: {
+                    height: '40px',
+                    borderTop: '3px solid #679AAA',
+                    borderBottom: '1px solid #000000',
+                },
+            },
+        },
+        tblBody: {
+            ...themeConfig.tblBody,
+            MuiTableCell: {
+                ...themeConfig.tblBody.MuiTableCell,
+                body: {
+                    ...themeConfig.tblBody.MuiTableCell.body,
+                    '&:first-of-type': {
+                        color: '#004C73',
+                        textDecoration: 'underline',
+                    },
+                }
 
+            },
+        },
+    };
+   
     const handleUserRedirect = () => {
         // NOTE: If needed to show in only Autocomplete of Localfind.
         // const data = rowData.map(r=>({type: 'participantIds', title: r.participant_id}))
@@ -364,6 +390,13 @@ export const CohortAnalyzer = () => {
         sortBy: tableConfig.defaultSortField,
         sortOrder: tableConfig.defaultSortDirection,
         extendedViewConfig: tableConfig.extendedViewConfig,
+        paginationCustomStyle: {
+            topPagination: {
+                display: 'flex',
+                borderTop: 'none',
+                paddingRight: '41px',
+            }
+        },
         rowsPerPage: 10,
         page: 0,
         onPageChange: (somevalue) => alert("ok ok"),
@@ -428,7 +461,7 @@ export const CohortAnalyzer = () => {
                         <h1> Cohort Analyzer</h1>
                     </div>
 
-
+                    <div className={classes.rightSideContentContainer}>
                     <div className={classes.rightSideAnalyzerOuterContainer}>
                         <div className={classes.rightSideAnalyzerInnerContainer}>
                             <div className={classes.rightSideAnalyzerHeader2}>
@@ -448,9 +481,9 @@ export const CohortAnalyzer = () => {
                         </div>
 
                         <Histogram
-                            c1={selectedCohorts[0] && state && state[selectedCohorts[0]] ? state[selectedCohorts[0]].participants.map((item) => item.id) : []}
-                            c2={selectedCohorts[1] && state && state[selectedCohorts[1]] ? state[selectedCohorts[1]].participants.map((item) => item.id) : []}
-                            c3={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].participants.map((item) => item.id) : []}
+                            c1={selectedCohorts[0] && state && state[selectedCohorts[0]] ? state[selectedCohorts[0]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
+                            c2={selectedCohorts[1] && state && state[selectedCohorts[1]] ? state[selectedCohorts[1]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
+                            c3={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
                         />
                     </div>
                      <CohortAnalyzerTableSection
@@ -461,8 +494,9 @@ export const CohortAnalyzer = () => {
                         handleBuildInExplore={handleBuildInExplore}
                         handleExportToCCDIHub={handleExportToCCDIHub}
                         initTblState={initTblState}
-                        themeConfig={themeConfig}
+                        themeConfig={cohortAnalyzerThemeConfig}
                     />
+                    </div>
                 </div>
             </div>
         </>
