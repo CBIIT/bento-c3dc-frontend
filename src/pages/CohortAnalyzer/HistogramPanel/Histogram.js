@@ -69,30 +69,6 @@ const Histogram = ({c1,c2,c3}) => {
 
   const allInputsEmpty = [c1, c2, c3].every(arr => !Array.isArray(arr) || arr.length === 0);
 
-
-  const CustomTick = ({ x, y, payload }) => {
-    const lines = payload.value.split(' ');
-    return (
-      <g transform={`translate(${x},${y})`}>
-        {lines.map((line, index) => (
-          <text
-            key={index}
-            x={0}
-            y={index * 12}
-            dy={16}
-            textAnchor="middle"
-            fill="#666666"
-            fontSize="11"
-            fontFamily= 'Nunito' 
-            fontWeight={500}
-          >
-            {line}
-          </text>
-        ))}
-      </g>
-    );
-  };
-
   return (
     <HistogramContainer>
       {/* Dataset Selection */}
