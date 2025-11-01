@@ -90,8 +90,8 @@ const styles = () => ({
         lineHeight: '15px',
         backgroundColor: '#4B7B8B',
         borderBottom: '1px solid #FFF',
-        '&:first-child': {
-            borderTop: '1px solid #FFF',
+        '&:last-child': {
+            borderBottom: 'none',
         },
         cursor: 'pointer',
     },
