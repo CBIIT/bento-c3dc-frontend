@@ -72,10 +72,6 @@ const WidgetView = ({ classes, data, theme }) => {
               };
             });
             dataset = newDataset;
-            
-            if (!dataset || dataset.length === 0) {
-              return <></>;
-            }
             const datasetLength = dataset.length;
             if (widget.countType === "discrete") {
               dataset = dataset.sort((a, b) => b.subjects - a.subjects);
