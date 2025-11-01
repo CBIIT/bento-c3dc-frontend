@@ -16,7 +16,8 @@ const CohortListItem = ({
     isSelected,
     onCohortSelect,
     onCohortDelete,
-    onCohortDuplicate
+    onCohortDuplicate,
+    cohortLimitReached
 }) => {
     // Additional safety check in case invalid data gets through
     if (!cohortData || !cohortData.cohortId) {
@@ -36,13 +37,14 @@ const CohortListItem = ({
                 {cohortData.cohortName || 'Unnamed Cohort'}
             </span>
             <span className={classes.actionButtons}>
-                <ToolTip title={TOOLTIP_MESSAGES.duplicateCohort} placement="top" arrow>
+                <ToolTip title={cohortLimitReached ? TOOLTIP_MESSAGES.cohortLimit : TOOLTIP_MESSAGES.duplicateCohort} placement="top" arrow>
                     <button
                         type="button"
-                        className={classes.duplicateButton}
-                        onClick={(e) => onCohortDuplicate && onCohortDuplicate(e, cohortData.cohortId)}
-                        aria-label={`Duplicate cohort ${cohortData.cohortName || 'Unnamed Cohort'}`}
-                        title={TOOLTIP_MESSAGES.duplicateCohort}
+                        className={`${classes.duplicateButton} ${cohortLimitReached ? classes.duplicateButtonDisabled : ''}`}
+                        onClick={(e) => !cohortLimitReached && onCohortDuplicate && onCohortDuplicate(e, cohortData.cohortId)}
+                        aria-label={cohortLimitReached ? TOOLTIP_MESSAGES.cohortLimit : `Duplicate cohort ${cohortData.cohortName || 'Unnamed Cohort'}`}
+                        title={cohortLimitReached ? TOOLTIP_MESSAGES.cohortLimit : TOOLTIP_MESSAGES.duplicateCohort}
+                        disabled={cohortLimitReached}
                     >
                         <img
                             src={DuplicateIcon}
@@ -119,6 +121,13 @@ const styles = () => ({
         '&:focus': {
             outline: '2px solid #598AC5',
             outlineOffset: '2px',
+        },
+    },
+    duplicateButtonDisabled: {
+        opacity: 0.3,
+        cursor: 'not-allowed',
+        '&:focus': {
+            outline: 'none',
         },
     },
     duplicateIcon: {

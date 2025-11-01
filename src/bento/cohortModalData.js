@@ -43,6 +43,7 @@ export const TOOLTIP_MESSAGES = {
     removeAllCohorts: "Remove all Cohorts",
     removeCohort: "Remove Cohort",
     duplicateCohort: "Duplicate Cohort",
+    cohortLimit: "Cohort limit reached",
     exploreCCDIHub: {
         mainText: "Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user's selected cohort.",
     }

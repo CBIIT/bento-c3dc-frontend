@@ -155,6 +155,10 @@ const CohortList = (props) => {
         });
     }, [state]);
 
+    const isAtCohortLimit = useMemo(() => {
+        return Object.keys(state).length >= 20;
+    }, [state]);
+
     // Handle empty state - close modal when no cohorts exist
     useEffect(() => {
         if (Object.keys(state).length === 0) {
@@ -244,6 +248,7 @@ const CohortList = (props) => {
                                 onCohortSelect={handleCohortSelection}
                                 onCohortDelete={handleSingleCohortDelete}
                                 onCohortDuplicate={handleSingleCohortDuplicate}
+                                cohortLimitReached={isAtCohortLimit}
                             />
                         );
                     })}
