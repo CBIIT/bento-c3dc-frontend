@@ -39,11 +39,16 @@ const CohortList = (props) => {
 
     const handleDeleteCohort = useCallback((cohortId) => {
         dispatch(onDeleteSingleCohort(cohortId));
-    }, [dispatch]);
+        // Only clear unsaved changes if we're deleting the currently selected cohort
+        if (cohortId === selectedCohort) {
+            clearCurrentCohortChanges();
+        }
+    }, [dispatch, selectedCohort, clearCurrentCohortChanges]);
 
     const handleDeleteAllCohorts = useCallback(() => {
         dispatch(onDeleteAllCohort());
-    }, [dispatch]);
+        clearCurrentCohortChanges();
+    }, [dispatch, clearCurrentCohortChanges]);
 
     const handleDuplicateCohort = useCallback((cohortId) => {
         const cohortToDuplicate = state[cohortId];
