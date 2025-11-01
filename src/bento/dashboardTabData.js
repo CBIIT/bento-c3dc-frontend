@@ -1659,6 +1659,7 @@ export const tabContainers = [
     api: GET_STUDY_OVERVIEW_QUERY,
     statsQuery: DASHBOARD_QUERY_STATS,
     statsQueryName: 'getParticipants',
+    //asyncDownload: true,
     paginationAPIField: 'studyOverview',
     defaultSortField: 'dbgap_accession',
     defaultSortDirection: 'asc',
@@ -1674,7 +1675,7 @@ export const tabContainers = [
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
         cloudIcon: true,
-        downloadLimit: 2000,
+        //downloadLimit: 5000,
       },
     },
     columns: [
@@ -1759,6 +1760,7 @@ export const tabContainers = [
     api: GET_PARTICIPANTS_OVERVIEW_QUERY,
     statsQuery: DASHBOARD_QUERY_STATS,
     statsQueryName: 'getParticipants',
+    //asyncDownload: true,
     paginationAPIField: 'participantOverview',
     count: 'numberOfParticipants',
     fileCount: 'participantsFileCount',
@@ -1777,7 +1779,7 @@ export const tabContainers = [
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
         cloudIcon: true,
-        downloadLimit: 2000,
+        //downloadLimit: 5000,
       },
     },
     columns: [
@@ -1845,6 +1847,7 @@ export const tabContainers = [
     api: GET_DIAGNOSIS_OVERVIEW_QUERY,
     statsQuery: DASHBOARD_QUERY_STATS,
     statsQueryName: 'getParticipants',
+    //asyncDownload: true,
     paginationAPIField: 'diagnosisOverview',
     defaultSortField: 'participant.participant_id',
     defaultSortDirection: 'asc',
@@ -1861,7 +1864,7 @@ export const tabContainers = [
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
         cloudIcon: true,
-        downloadLimit: 2000,
+        //downloadLimit: 5000,
       },
     },
     columns: [
@@ -2023,6 +2026,7 @@ export const tabContainers = [
     api: GET_TREATMENT_OVERVIEW_QUERY,
     statsQuery: DASHBOARD_QUERY_STATS,
     statsQueryName: 'getParticipants',
+    //asyncDownload: true,
     paginationAPIField: 'treatmentOverview',
     defaultSortField: 'participant.participant_id',
     sortBy: 'participant.participant_id',
@@ -2040,7 +2044,7 @@ export const tabContainers = [
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
         cloudIcon: true,
-        downloadLimit: 2000,
+        //downloadLimit: 5000,
       },
     },
     columns: [
@@ -2135,6 +2139,7 @@ export const tabContainers = [
     api: GET_TREATMENT_RESPONSE_OVERVIEW_QUERY,
     statsQuery: DASHBOARD_QUERY_STATS,
     statsQueryName: 'getParticipants',
+    //asyncDownload: true,
     paginationAPIField: 'treatmentResponseOverview',
     defaultSortField: 'participant.participant_id',
     defaultSortDirection: 'asc',
@@ -2151,7 +2156,7 @@ export const tabContainers = [
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
         cloudIcon: true,
-        downloadLimit: 2000,
+        //downloadLimit: 5000,
       },
     },
     columns: [
@@ -2242,6 +2247,7 @@ export const tabContainers = [
     api: GET_SURVIVAL_OVERVIEW_QUERY,
     statsQuery: DASHBOARD_QUERY_STATS,
     statsQueryName: 'getParticipants',
+    //asyncDownload: true,
     count: 'numberOfSurvivals',
     fileCount: 'samplesFileCount',
     paginationAPIField: 'survivalOverview',
@@ -2258,7 +2264,7 @@ export const tabContainers = [
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
         cloudIcon: true,
-        downloadLimit: 2000,
+        //downloadLimit: 5000,
       },
     },
     saveButtonDefaultStyle: {
@@ -2378,6 +2384,7 @@ export const tabContainers = [
     api: GET_GENETIC_ANALYSIS_OVERVIEW_QUERY,
     statsQuery: DASHBOARD_QUERY_STATS,
     statsQueryName: 'getParticipants',
+    //asyncDownload: true,
     paginationAPIField: 'geneticAnalysisOverview',
     defaultSortField: 'participant.participant_id',
     defaultSortDirection: 'asc',
@@ -2394,7 +2401,7 @@ export const tabContainers = [
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
         cloudIcon: true,
-        downloadLimit: 2000,
+        //downloadLimit: 5000,
       },
     },
     columns: [

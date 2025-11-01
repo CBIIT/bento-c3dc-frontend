@@ -71,6 +71,7 @@ const TabView = (props) => {
     rowsPerPage: 10,
     page: 0,
     downloadFileName: tab.downloadFileName,
+    asyncDownload: config.asyncDownload,
   });
 
   return (
