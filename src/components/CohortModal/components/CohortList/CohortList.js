@@ -242,7 +242,7 @@ const styles = () => ({
         pointerEvents: 'none', // Prevent img from intercepting clicks
     },
     grayTrashCanScrollPadding: {
-        paddingRight: '6px;', //matches scrollbar width
+        marginRight: '6px;', //matches scrollbar width
     },
     cohortListing: {
         height: '100%',

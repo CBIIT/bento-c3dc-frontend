@@ -1,6 +1,10 @@
 import React, { memo } from 'react';
 import { withStyles } from '@material-ui/core';
+import ToolTip from '@bento-core/tool-tip';
 import TrashCanIconWhite from '../../../../../assets/icons/Trash_Can_Icon_White.svg';
+import DuplicateIcon from '../../../../../assets/icons/Duplicate.svg';
+import { TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
+
 
 /**
  * Individual cohort list item component
@@ -11,7 +15,8 @@ const CohortListItem = ({
     cohortData,
     isSelected,
     onCohortSelect,
-    onCohortDelete
+    onCohortDelete,
+    onCohortDuplicate
 }) => {
     // Additional safety check in case invalid data gets through
     if (!cohortData || !cohortData.cohortId) {
@@ -30,21 +35,39 @@ const CohortListItem = ({
             <span className={classes.cohortListItemText}>
                 {cohortData.cohortName || 'Unnamed Cohort'}
             </span>
-            <span>
-                <button
-                    type="button"
-                    className={classes.deleteButton}
-                    onClick={(e) => onCohortDelete && onCohortDelete(e, cohortData.cohortId)}
-                    aria-label={`Delete cohort ${cohortData.cohortName || 'Unnamed Cohort'}`}
-                    title={`Delete cohort ${cohortData.cohortName || 'Unnamed Cohort'}`}
-                >
-                    <img
-                        src={TrashCanIconWhite}
-                        alt=""
-                        className={classes.whiteTrashCan}
-                        aria-hidden="true"
-                    />
-                </button>
+            <span className={classes.actionButtons}>
+                <ToolTip title={TOOLTIP_MESSAGES.duplicateCohort} placement="top" arrow>
+                    <button
+                        type="button"
+                        className={classes.duplicateButton}
+                        onClick={(e) => onCohortDuplicate && onCohortDuplicate(e, cohortData.cohortId)}
+                        aria-label={`Duplicate cohort ${cohortData.cohortName || 'Unnamed Cohort'}`}
+                        title={TOOLTIP_MESSAGES.duplicateCohort}
+                    >
+                        <img
+                            src={DuplicateIcon}
+                            alt=""
+                            className={classes.duplicateIcon}
+                            aria-hidden="true"
+                        />
+                    </button>
+                </ToolTip>
+                <ToolTip title={TOOLTIP_MESSAGES.removeCohort} placement="top-end" arrow>
+                    <button
+                        type="button"
+                        className={classes.deleteButton}
+                        onClick={(e) => onCohortDelete && onCohortDelete(e, cohortData.cohortId)}
+                        aria-label={`Delete cohort ${cohortData.cohortName || 'Unnamed Cohort'}`}
+                        title={TOOLTIP_MESSAGES.removeCohort}
+                    >
+                        <img
+                            src={TrashCanIconWhite}
+                            alt=""
+                            className={classes.whiteTrashCan}
+                            aria-hidden="true"
+                        />
+                    </button>
+                </ToolTip>
             </span>
         </div>
     );
@@ -79,6 +102,30 @@ const styles = () => ({
     },
     selectedCohort: {
         backgroundColor: '#3A555E',
+    },
+    actionButtons: {
+        display: 'flex',
+        alignItems: 'center',
+        gap: '16px',
+    },
+    duplicateButton: {
+        background: 'transparent',
+        border: 'none',
+        padding: 0,
+        cursor: 'pointer',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        '&:focus': {
+            outline: '2px solid #598AC5',
+            outlineOffset: '2px',
+        },
+    },
+    duplicateIcon: {
+        width: 14,
+        height: 14,
+        pointerEvents: 'none', // Prevent img from intercepting clicks
+        filter: 'brightness(0) invert(1)', // Makes the icon white
     },
     deleteButton: {
         background: 'transparent',
