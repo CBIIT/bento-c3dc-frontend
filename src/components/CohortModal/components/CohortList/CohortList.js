@@ -204,7 +204,7 @@ const CohortList = (props) => {
         <div className={classes.cohortListSection}>
                 <div className={classes.cohortListHeading}>
                     <span>
-                        {listHeading} ({cohortOrderedList.length})
+                        {listHeading} ({cohortOrderedList.length}/20)
                     </span>
                     <span>
                         <ToolTip title={TOOLTIP_MESSAGES.removeAllCohorts} placement="top-end" arrow>
