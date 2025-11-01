@@ -5,6 +5,7 @@ import { CohortStateContext } from '../../../../components/CohortSelectorState/C
 import {
     onDeleteSingleCohort,
     onDeleteAllCohort,
+    onCreateNewCohort,
 } from '../../../../components/CohortSelectorState/store/action';
 import { CohortModalContext } from '../../CohortModalContext';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
@@ -32,7 +33,8 @@ const CohortList = (props) => {
         clearCurrentCohortChanges,
         setShowDeleteConfirmation,
         setDeleteModalProps,
-        clearAlert
+        clearAlert,
+        showAlert
     } = useContext(CohortModalContext);
 
     const handleDeleteCohort = useCallback((cohortId) => {
@@ -42,6 +44,61 @@ const CohortList = (props) => {
     const handleDeleteAllCohorts = useCallback(() => {
         dispatch(onDeleteAllCohort());
     }, [dispatch]);
+
+    const handleDuplicateCohort = useCallback((cohortId) => {
+        const cohortToDuplicate = state[cohortId];
+        if (!cohortToDuplicate) return;
+        
+        // Extract the base name by removing existing copy suffixes
+        let baseName = cohortToDuplicate.cohortName;
+        
+        // Remove existing " (Copy)" or " (Copy N)" patterns
+        baseName = baseName.replace(/\s*\(Copy(?:\s+\d+)?\)$/, '');
+        
+        // Find the highest copy number for this base name
+        let highestCopyNumber = 0;
+        const existingCohortNames = Object.values(state).map(cohort => cohort.cohortName);
+        
+        existingCohortNames.forEach(name => {
+            if (name === baseName) {
+                // Original exists, so we need at least Copy
+                highestCopyNumber = Math.max(highestCopyNumber, 0);
+            } else if (name === `${baseName} (Copy)`) {
+                // First copy exists
+                highestCopyNumber = Math.max(highestCopyNumber, 1);
+            } else {
+                // Check for numbered copies
+                const match = name.match(new RegExp(`^${baseName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\(Copy\\s+(\\d+)\\)$`));
+                if (match) {
+                    const copyNumber = parseInt(match[1], 10);
+                    highestCopyNumber = Math.max(highestCopyNumber, copyNumber);
+                }
+            }
+        });
+        
+        // Generate the new name
+        let newCohortName;
+        if (highestCopyNumber === 0) {
+            newCohortName = `${baseName} (Copy)`;
+        } else {
+            newCohortName = `${baseName} (Copy ${highestCopyNumber + 1})`;
+        }
+        
+        dispatch(onCreateNewCohort(
+            newCohortName, // Use the new cohort name as the ID (createNewCohort will normalize it)
+            cohortToDuplicate.cohortDescription,
+            cohortToDuplicate.participants,
+            () => {
+                showAlert('success', 'Cohort duplicated successfully!');
+                // The new cohort ID will be the normalized version of newCohortName
+                const normalizedCohortId = newCohortName.trim().toLowerCase();
+                setSelectedCohort(normalizedCohortId);
+            },
+            (error) => {
+                showAlert('error', `Failed to duplicate cohort: ${error.message}`);
+            }
+        ));
+    }, [state, dispatch, showAlert, setSelectedCohort]);
 
     const handleDeleteAllClick = useCallback(() => {
         setDeleteModalProps({
@@ -82,6 +139,11 @@ const CohortList = (props) => {
         });
         setShowDeleteConfirmation(true);
     }, [setDeleteModalProps, setShowDeleteConfirmation, handleDeleteCohort]);
+
+    const handleSingleCohortDuplicate = useCallback((e, cohortId) => {
+        e.stopPropagation();
+        handleDuplicateCohort(cohortId);
+    }, [handleDuplicateCohort]);
 
     const listHeading = (config && config.listHeading) || DEFAULT_CONFIG.config.cohortList.listHeading;
 
@@ -181,6 +243,7 @@ const CohortList = (props) => {
                                 isSelected={isSelected}
                                 onCohortSelect={handleCohortSelection}
                                 onCohortDelete={handleSingleCohortDelete}
+                                onCohortDuplicate={handleSingleCohortDuplicate}
                             />
                         );
                     })}
