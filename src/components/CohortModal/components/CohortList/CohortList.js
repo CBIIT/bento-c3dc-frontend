@@ -53,17 +53,17 @@ const CohortList = (props) => {
     const handleDuplicateCohort = useCallback((cohortId) => {
         const cohortToDuplicate = state[cohortId];
         if (!cohortToDuplicate) return;
-        
+
         // Extract the base name by removing existing copy suffixes
         let baseName = cohortToDuplicate.cohortName;
-        
+
         // Remove existing " (Copy)" or " (Copy N)" patterns
         baseName = baseName.replace(/\s*\(Copy(?:\s+\d+)?\)$/, '');
-        
+
         // Find the highest copy number for this base name
         let highestCopyNumber = 0;
         const existingCohortNames = Object.values(state).map(cohort => cohort.cohortName);
-        
+
         existingCohortNames.forEach(name => {
             if (name === baseName) {
                 // Original exists, so we need at least Copy
@@ -80,7 +80,7 @@ const CohortList = (props) => {
                 }
             }
         });
-        
+
         // Generate the new name
         let newCohortName;
         if (highestCopyNumber === 0) {
@@ -88,10 +88,24 @@ const CohortList = (props) => {
         } else {
             newCohortName = `${baseName} (Copy ${highestCopyNumber + 1})`;
         }
-        
+
+        // Prepend "Copy of [NAME]" to the description
+        const originalDescription = cohortToDuplicate.cohortDescription || '';
+        let newDescription;
+
+        // Check if the first line already starts with "Copy of"
+        const firstLineMatch = originalDescription.match(/^Copy of .+/);
+        if (firstLineMatch) {
+            // Replace the existing "Copy of" line with the new one
+            const remainingDescription = originalDescription.substring(firstLineMatch[0].length).replace(/^\n/, '');
+            newDescription = `Copy of ${cohortToDuplicate.cohortName}\n${remainingDescription}`;
+        } else {
+            newDescription = `Copy of ${cohortToDuplicate.cohortName}\n${originalDescription}`;
+        }
+
         dispatch(onCreateNewCohort(
             newCohortName, // Use the new cohort name as the ID (createNewCohort will normalize it)
-            cohortToDuplicate.cohortDescription,
+            newDescription,
             cohortToDuplicate.participants,
             () => {
                 showAlert('success', 'Cohort duplicated successfully!');
