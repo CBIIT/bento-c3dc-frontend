@@ -489,6 +489,7 @@ getParticipants(
   numberOfSurvivals
   numberOfTreatments
   numberOfTreatmentResponses
+  pageSize
 
   __typename
 }}
