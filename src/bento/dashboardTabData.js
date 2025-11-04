@@ -1717,20 +1717,6 @@ export const tabContainers = [
         role: cellTypes.DISPLAY
       },
       {
-        dataField: "consent",
-        header: "Consent",
-        display: false,
-        tooltipText: "sort",
-        role: cellTypes.DISPLAY
-      },
-      {
-        dataField: "consent_number",
-        header: "Consent Number",
-        display: false,
-        tooltipText: "sort",
-        role: cellTypes.DISPLAY
-      },
-      {
         dataField: "external_url",
         header: "External URL",
         display: false,

@@ -17,7 +17,7 @@ const FindDataSection = ({ classes }) => (
         The <a href="/explore">C3DC Explore Dashboard</a> provides row-level
         metadata and harmonized clinical data for participants with features
         including faceted filters, select visualizations, and an exportable
-        table of results. The dashboard is participant-centric, meaning that
+        table of results. The C3DC Explore Dashboard is participant-centric, meaning that
         filtering criteria and results return de-identified information about a
         participant and their related studies and harmonized clinical data.
       </p>
@@ -31,21 +31,7 @@ const FindDataSection = ({ classes }) => (
       <ol>
         <li>
           Available facets to filter are displayed in the left panel (Figure
-          2A). Filtering options include:
-          <ul>
-            <li>
-              Upload list of participant IDs (in “DEMOGRAPHICS”, Figure 2B)
-            </li>
-            <li>
-              Text searches (e.g., “DIAGNOSIS”, “DIAGNOSIS ANATOMIC SITE”,
-              Figure 2C)
-            </li>
-            <li>Numerical sliders (e.g., “AGE AT DIAGNOSIS”, Figure 2D)</li>
-            <li>Checkbox selections for other properties</li>
-          </ul>
-          Multiple criteria can be applied simultaneously. Selections can be
-          viewed or cleared in the query summary above the visual widgets
-          (Figure 2E).
+          2A). Faceted filtering may be done by uploading a list of participant IDs (in "DEMOGRAPHICS" Figure 2B), text searches ("DIAGNOSIS," "DIAGNOSIS ANATOMIC SITE" Figure 2C), numerical sliders for age properties (e.g. "AGE AT DIAGNOSIS", Figure 2D), or checkbox selections for the remaining properties. You can apply multiple filtering criteria at the same time in a search. You can view and clear your current selection(s) in the query summary above the visualization widgets (Figure 2E).
           <div className={classes.figureContainer}>
             <img src={figure2} style={{ width: "85%" }} alt="Figure 2" />
           </div>
@@ -56,52 +42,28 @@ const FindDataSection = ({ classes }) => (
         </li>
 
         <li>
-          Filtering will update the visualizations and result tables in the
-          dashboard (Figure 3). Note: only the top 20 values are shown for
-          visualizations like Diagnosis and Anatomic Site when more than 20
-          values are returned.
-          <br />
-          Each results table includes:
+          Filtering your search will update the C3DC Explore Dashboard's visualizations and the results tables (Figure 3). Please note that for the Diagnosis and Anatomic Site visualizations, only the top 20 values will be displayed when there are &gt; 20 values returned from the faceted filer set. Users can easily switch between pie chart and histogram to explore the visual summaries. Each visual summary can be downloaded as PNG file with the download button. Each results table will be updated with information on the studies and participants that meet the filtered criteria. Information displayed in each table is described below:
           <ul>
             <li>
-              <strong>Studies:</strong> Displays links to C3DC studies’ pages on{" "}
-              <a
-                href="https://dbgap.ncbi.nlm.nih.gov/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={classes.link}
-              >
-                dbGaP
-              </a>
-              .
+              <strong>"Studies":</strong> The Study tab displays links for C3DC studies to their associated study page in dbGaP. Participants, diagnosis, treatment, treatment outcome and survival data all belong to a C3DC study.
             </li>
             <li>
-              <strong>Participants:</strong> De-identified information with
-              mappings via the{" "}
-              <a
-                href="https://ccdi.cancer.gov/ccdi-participant-index"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={classes.link}
-              >
-                CCDI Participant Index (CPI)
-              </a>
-              .
+              <strong>"Participants":</strong> Characteristics of a participant in the C3DC Explore Dashboard. Participants belong to a study, and they may have one or more diagnoses, treatment, treatment outcome or survival entries associated with them. Participants with mappings through the CCDI Participant Index (CPI) have a summary of these mappings available from this view. To view CPI synonym mappings, users can hover over the participant of interest, and a tooltip would appear for user to click on.
             </li>
             <li>
-              <strong>Diagnosis:</strong> Metadata and harmonized
-              diagnosis-related data.
+              <strong>"Diagnosis":</strong> Metadata and harmonized clinical data related to the participant diagnosis entries.
             </li>
             <li>
-              <strong>Treatment:</strong> Metadata and harmonized
-              treatment-related data.
+              <strong>"Treatment":</strong> Metadata and harmonized clinical data related to the participant treatment entries.
             </li>
             <li>
-              <strong>Treatment Outcome:</strong> Data related to treatment
-              results.
+              <strong>"Treatment Outcome":</strong> Metadata and harmonized clinical data related to the participant treatment outcome entries.
             </li>
             <li>
-              <strong>Survival:</strong> Participant survival information.
+              <strong>"Survival":</strong> Metadata and harmonized clinical data related to the participant survival entries.
+            </li>
+            <li>
+              <strong>"Genetic Analysis":</strong> Metadata and harmonized clinical data related to the participant genetic analysis entries.
             </li>
           </ul>
           <div className={classes.figureContainer}>
