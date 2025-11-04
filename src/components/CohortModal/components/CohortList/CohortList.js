@@ -89,23 +89,9 @@ const CohortList = (props) => {
             newCohortName = `${baseName} (Copy ${highestCopyNumber + 1})`;
         }
 
-        // Prepend "Copy of [NAME]" to the description
-        const originalDescription = cohortToDuplicate.cohortDescription || '';
-        let newDescription;
-
-        // Check if the first line already starts with "Copy of"
-        const firstLineMatch = originalDescription.match(/^Copy of .+/);
-        if (firstLineMatch) {
-            // Replace the existing "Copy of" line with the new one
-            const remainingDescription = originalDescription.substring(firstLineMatch[0].length).replace(/^\n/, '');
-            newDescription = `Copy of ${cohortToDuplicate.cohortName}\n${remainingDescription}`;
-        } else {
-            newDescription = `Copy of ${cohortToDuplicate.cohortName}\n${originalDescription}`;
-        }
-
         dispatch(onCreateNewCohort(
             newCohortName, // Use the new cohort name as the ID (createNewCohort will normalize it)
-            newDescription,
+            cohortToDuplicate.cohortDescription,
             cohortToDuplicate.participants,
             () => {
                 showAlert('success', 'Cohort duplicated successfully!');
