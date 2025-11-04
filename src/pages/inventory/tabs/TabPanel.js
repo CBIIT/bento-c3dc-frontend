@@ -52,6 +52,9 @@ const TabView = (props) => {
     ...initailState,
     title: config.name,
     query: config.api,
+    statsQuery: config.statsQuery,
+    statsQueryName: config.statsQueryName,
+    statsField: config.count,
     downloadButtonTooltipText: "Download data in CSV or JSON format",
     paginationAPIField: config.paginationAPIField,
     dataKey: config.dataKey,
@@ -68,6 +71,7 @@ const TabView = (props) => {
     rowsPerPage: 10,
     page: 0,
     downloadFileName: tab.downloadFileName,
+    asyncDownload: config.asyncDownload,
   });
 
   return (
