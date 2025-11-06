@@ -15,6 +15,13 @@ import CohortListItem from './components/CohortListItem';
 import { TOOLTIP_MESSAGES } from '../../../../bento/cohortModalData';
 
 /**
+ * Helper function to escape special regex characters in a string
+ */
+const escapeRegExp = (string) => {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
+
+/**
  * A list of cohorts to select from and manage.
  */
 
@@ -73,7 +80,7 @@ const CohortList = (props) => {
                 highestCopyNumber = Math.max(highestCopyNumber, 1);
             } else {
                 // Check for numbered copies
-                const match = name.match(new RegExp(`^${baseName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s*\\(Copy\\s+(\\d+)\\)$`));
+                const match = name.match(new RegExp(`^${escapeRegExp(baseName)}\\s*\\(Copy\\s+(\\d+)\\)$`));
                 if (match) {
                     const copyNumber = parseInt(match[1], 10);
                     highestCopyNumber = Math.max(highestCopyNumber, copyNumber);
