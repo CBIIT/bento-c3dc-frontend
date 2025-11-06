@@ -218,7 +218,22 @@ export const reducer = (state, action) => {
         return state;
     }
 
-    localStorage.setItem('cohortState', JSON.stringify(newState));
+    try {
+      localStorage.setItem('cohortState', JSON.stringify(newState));
+    } catch (storageError) {
+      // Check if it's a quota exceeded error
+      const isQuotaExceeded = storageError && (
+        storageError.name === 'QuotaExceededError' ||
+        storageError.code === 22 ||
+        storageError.code === 1014 ||
+        storageError.message.toLowerCase().includes('quota')
+      );
+
+      if (isQuotaExceeded) {
+        throw new Error('Cannot save cohort: Storage limit exceeded. Please delete some cohorts or remove participants to free up space.');
+      }
+      throw storageError;
+    }
 
     if (payload.success) {
       payload.success(count);
