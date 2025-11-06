@@ -230,7 +230,7 @@ export const reducer = (state, action) => {
       );
 
       if (isQuotaExceeded) {
-        throw new Error('Cannot save cohort: Storage limit exceeded. Please delete some cohorts or remove participants to free up space.');
+        throw new Error('Cannot save cohort: Storage limit reached. Please delete cohorts or participants and try again.');
       }
       throw storageError;
     }
