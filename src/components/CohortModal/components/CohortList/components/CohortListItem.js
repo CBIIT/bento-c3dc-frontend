@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useRef, useState, useLayoutEffect } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import TrashCanIconWhite from '../../../../../assets/icons/Trash_Can_Icon_White.svg';
@@ -19,10 +19,38 @@ const CohortListItem = ({
     onCohortDuplicate,
     cohortLimitReached
 }) => {
+    const nameRef = useRef(null);
+    const [isNameOverflowing, setIsNameOverflowing] = useState(false);
+
     // Additional safety check in case invalid data gets through
     if (!cohortData || !cohortData.cohortId) {
         return null;
     }
+
+    // Check if text is overflowing after layout
+    useLayoutEffect(() => {
+        const checkOverflow = () => {
+            if (nameRef.current) {
+                const element = nameRef.current;
+                const isOverflowing = element.scrollWidth > element.clientWidth;
+                setIsNameOverflowing(isOverflowing);
+            }
+        };
+
+        // Check immediately
+        checkOverflow();
+
+        // Also check after a small delay to ensure layout is complete
+        const timeoutId = setTimeout(checkOverflow, 0);
+
+        return () => clearTimeout(timeoutId);
+    }, [cohortData.cohortName, isSelected]);
+
+    const nameElement = (
+        <span ref={nameRef} className={classes.cohortListItemText}>
+            {cohortData.cohortName || 'Unnamed Cohort'}
+        </span>
+    );
 
     return (
         <div
@@ -33,9 +61,13 @@ const CohortListItem = ({
             aria-selected={isSelected}
             aria-label={`Cohort: ${cohortData.cohortName || 'Unnamed Cohort'}`}
         >
-            <span className={classes.cohortListItemText}>
-                {cohortData.cohortName || 'Unnamed Cohort'}
-            </span>
+            {isNameOverflowing ? (
+                <ToolTip title={cohortData.cohortName || 'Unnamed Cohort'} placement="top" arrow>
+                    {nameElement}
+                </ToolTip>
+            ) : (
+                nameElement
+            )}
             <span className={classes.actionButtons}>
                 <ToolTip title={cohortLimitReached ? TOOLTIP_MESSAGES.cohortLimit : TOOLTIP_MESSAGES.duplicateCohort} placement="top" arrow>
                     <button
