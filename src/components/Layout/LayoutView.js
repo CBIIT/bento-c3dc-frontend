@@ -21,7 +21,7 @@ import CohortManager from "../../pages/CohortManager/CohortManagerController";
 import ReleaseNoteController from "../../pages/releaseNote/releaseNoteController";
 import  CohortAnalyzerController  from "../../pages/CohortAnalyzer/CohortAnalyzerController";
 import DataModelNavigator from '../../pages/dmn';
-import KaplanMeierDemo from '../demo/kaplan_meier_chart_jsx_react_17_chart';
+import { KaplanMeierDemo } from '@bento-core/kmplot';
 // import NewsDetail from '../../pages/news/newsDetailView';
 
 const Layout = () => {

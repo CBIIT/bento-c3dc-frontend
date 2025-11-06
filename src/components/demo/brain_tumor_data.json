@@ -1486,5 +1486,17 @@
     "time": 523,
     "event": 0,
     "group": "Pilocytic astrocytoma"
+  },
+  {
+    "id": "PBCBKR",
+    "time": 523,
+    "event": 0,
+    "group": "ABC"
+  },
+  {
+    "id": "PBCBKR",
+    "time": 523,
+    "event": 0,
+    "group": "PQR"
   }
 ]

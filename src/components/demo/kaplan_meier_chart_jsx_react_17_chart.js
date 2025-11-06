@@ -286,7 +286,7 @@ function KaplanMeierChart({ data, width = 700, height = 420, margin = 48, groupK
             </g>
           );
         })}
-        <text x={14} y={margin - 10} fontSize={12} style={{ opacity: 0.85 }}>Survival Probability</text>
+        <text x={14} y={margin - 30} fontSize={12} style={{ opacity: 0.85, transform: 'rotate(90deg) translateX(-420px) translateY(42px)' }}>Survival Probability</text>
 
         {/* Curves and censor marks */}
         {groupKeys.map((k, gi) => {
@@ -329,7 +329,8 @@ function KaplanMeierChart({ data, width = 700, height = 420, margin = 48, groupK
           ))}
         </g>
       </svg>
-      <div style={{ fontSize: 12, opacity: 0.7, marginTop: 6 }}>■ marks are step lines; small "+" markers denote right-censored observations at their last known times.</div>
+      <div style={{ fontSize: 12, opacity: 0.7, marginTop: 6 }} >
+        ■ marks are step lines; small "+" markers denote right-censored observations at their last known times.</div>
     </div>
   );
 }
