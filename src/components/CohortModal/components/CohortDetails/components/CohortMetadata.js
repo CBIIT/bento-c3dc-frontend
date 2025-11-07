@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, memo } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, memo, useLayoutEffect } from 'react';
 import { withStyles } from '@material-ui/core';
+import ToolTip from '@bento-core/tool-tip';
 import DEFAULT_CONFIG from '../../../config';
 import { CohortModalContext } from '../../../CohortModalContext';
 import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext';
@@ -20,8 +21,8 @@ const CohortMetadata = (props) => {
 
     // Get initial cohort data (either from changes or original)
     const initialCohort = useMemo(() => {
-        return currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId 
-            ? currentCohortChanges 
+        return currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId
+            ? currentCohortChanges
             : activeCohort;
     }, [currentCohortChanges, activeCohort]);
 
@@ -31,13 +32,34 @@ const CohortMetadata = (props) => {
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
+    const [isNameOverflowing, setIsNameOverflowing] = useState(false);
     const descriptionRef = useRef(null);
+    const nameRef = useRef(null);
 
     // Sync local state when cohort selection changes (use activeCohort to avoid stale context data)
     useEffect(() => {
         setLocalCohortName(activeCohort.cohortName);
         setLocalCohortDescription(activeCohort.cohortDescription);
     }, [activeCohort.cohortId]);
+
+    // Check if name text is overflowing
+    useLayoutEffect(() => {
+        const checkOverflow = () => {
+            if (nameRef.current) {
+                const element = nameRef.current;
+                const isOverflowing = element.scrollWidth > element.clientWidth;
+                setIsNameOverflowing(isOverflowing);
+            }
+        };
+
+        // Check immediately
+        checkOverflow();
+
+        // Also check after a small delay to ensure layout is complete
+        const timeoutId = setTimeout(checkOverflow, 0);
+
+        return () => clearTimeout(timeoutId);
+    }, [localCohortName, isEditingName]);
 
     // Debounce the local values before updating context
     const debouncedName = useDebounce(localCohortName, 1);
@@ -122,16 +144,29 @@ const CohortMetadata = (props) => {
                             onBlur={handleFinishEditingName}
                             onChange={handleTextChange}
                             onKeyDown={handleNameKeyDown}
-                            maxLength={18}
+                            maxLength={150}
                             autoFocus
                         />
                     ) : (
-                        <span
-                            onClick={handleEditName}
-                            className={classes.cohortName}
-                        >
-                            {currentCohort.cohortName}
-                        </span>
+                        isNameOverflowing ? (
+                            <ToolTip title={currentCohort.cohortName} placement="top" arrow>
+                                <span
+                                    ref={nameRef}
+                                    onClick={handleEditName}
+                                    className={classes.cohortName}
+                                >
+                                    {currentCohort.cohortName}
+                                </span>
+                            </ToolTip>
+                        ) : (
+                            <span
+                                ref={nameRef}
+                                onClick={handleEditName}
+                                className={classes.cohortName}
+                            >
+                                {currentCohort.cohortName}
+                            </span>
+                        )
                     )}
                 </div>
                 <span className={classes.cohortItemCounts}>

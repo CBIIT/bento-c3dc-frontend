@@ -5,6 +5,7 @@ import { CohortStateContext } from '../../../../components/CohortSelectorState/C
 import {
     onDeleteSingleCohort,
     onDeleteAllCohort,
+    onCreateNewCohort,
 } from '../../../../components/CohortSelectorState/store/action';
 import { CohortModalContext } from '../../CohortModalContext';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
@@ -12,6 +13,13 @@ import DEFAULT_CONFIG from '../../config';
 import { deletionTypes } from '../shared/DeleteConfirmationModal';
 import CohortListItem from './components/CohortListItem';
 import { TOOLTIP_MESSAGES } from '../../../../bento/cohortModalData';
+
+/**
+ * Helper function to escape special regex characters in a string
+ */
+const escapeRegExp = (string) => {
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+};
 
 /**
  * A list of cohorts to select from and manage.
@@ -32,16 +40,77 @@ const CohortList = (props) => {
         clearCurrentCohortChanges,
         setShowDeleteConfirmation,
         setDeleteModalProps,
-        clearAlert
+        clearAlert,
+        showAlert
     } = useContext(CohortModalContext);
 
     const handleDeleteCohort = useCallback((cohortId) => {
         dispatch(onDeleteSingleCohort(cohortId));
-    }, [dispatch]);
+        // Only clear unsaved changes if we're deleting the currently selected cohort
+        if (cohortId === selectedCohort) {
+            clearCurrentCohortChanges();
+        }
+    }, [dispatch, selectedCohort, clearCurrentCohortChanges]);
 
     const handleDeleteAllCohorts = useCallback(() => {
         dispatch(onDeleteAllCohort());
-    }, [dispatch]);
+        clearCurrentCohortChanges();
+    }, [dispatch, clearCurrentCohortChanges]);
+
+    const handleDuplicateCohort = useCallback((cohortId) => {
+        const cohortToDuplicate = state[cohortId];
+        if (!cohortToDuplicate) return;
+
+        // Extract the base name by removing existing copy suffixes
+        let baseName = cohortToDuplicate.cohortName;
+
+        // Remove existing " (Copy)" or " (Copy N)" patterns
+        baseName = baseName.replace(/\s*\(Copy(?:\s+\d+)?\)$/, '');
+
+        // Find the highest copy number for this base name
+        let highestCopyNumber = 0;
+        const existingCohortNames = Object.values(state).map(cohort => cohort.cohortName);
+
+        existingCohortNames.forEach(name => {
+            if (name === baseName) {
+                // Original exists, so we need at least Copy
+                highestCopyNumber = Math.max(highestCopyNumber, 0);
+            } else if (name === `${baseName} (Copy)`) {
+                // First copy exists
+                highestCopyNumber = Math.max(highestCopyNumber, 1);
+            } else {
+                // Check for numbered copies
+                const match = name.match(new RegExp(`^${escapeRegExp(baseName)}\\s*\\(Copy\\s+(\\d+)\\)$`));
+                if (match) {
+                    const copyNumber = parseInt(match[1], 10);
+                    highestCopyNumber = Math.max(highestCopyNumber, copyNumber);
+                }
+            }
+        });
+
+        // Generate the new name
+        let newCohortName;
+        if (highestCopyNumber === 0) {
+            newCohortName = `${baseName} (Copy)`;
+        } else {
+            newCohortName = `${baseName} (Copy ${highestCopyNumber + 1})`;
+        }
+
+        dispatch(onCreateNewCohort(
+            newCohortName, // Use the new cohort name as the ID (createNewCohort will normalize it)
+            cohortToDuplicate.cohortDescription,
+            cohortToDuplicate.participants,
+            () => {
+                showAlert('success', 'Cohort duplicated successfully!');
+                // The new cohort ID will be the normalized version of newCohortName
+                const normalizedCohortId = newCohortName.trim().toLowerCase();
+                setSelectedCohort(normalizedCohortId);
+            },
+            (error) => {
+                showAlert('error', `Failed to duplicate cohort: ${error.message}`);
+            }
+        ));
+    }, [state, dispatch, showAlert, setSelectedCohort]);
 
     const handleDeleteAllClick = useCallback(() => {
         setDeleteModalProps({
@@ -83,6 +152,11 @@ const CohortList = (props) => {
         setShowDeleteConfirmation(true);
     }, [setDeleteModalProps, setShowDeleteConfirmation, handleDeleteCohort]);
 
+    const handleSingleCohortDuplicate = useCallback((e, cohortId) => {
+        e.stopPropagation();
+        handleDuplicateCohort(cohortId);
+    }, [handleDuplicateCohort]);
+
     const listHeading = (config && config.listHeading) || DEFAULT_CONFIG.config.cohortList.listHeading;
 
     const scrollContainerRef = useRef(null);
@@ -91,6 +165,10 @@ const CohortList = (props) => {
         return Object.keys(state).sort((a, b) => {
             return new Date(state[b].lastUpdated) - new Date(state[a].lastUpdated);
         });
+    }, [state]);
+
+    const isAtCohortLimit = useMemo(() => {
+        return Object.keys(state).length >= 20;
     }, [state]);
 
     // Handle empty state - close modal when no cohorts exist
@@ -133,7 +211,7 @@ const CohortList = (props) => {
         <div className={classes.cohortListSection}>
                 <div className={classes.cohortListHeading}>
                     <span>
-                        {listHeading} ({cohortOrderedList.length})
+                        {listHeading} ({cohortOrderedList.length}/20)
                     </span>
                     <span>
                         <ToolTip title={TOOLTIP_MESSAGES.removeAllCohorts} placement="top-end" arrow>
@@ -181,6 +259,8 @@ const CohortList = (props) => {
                                 isSelected={isSelected}
                                 onCohortSelect={handleCohortSelection}
                                 onCohortDelete={handleSingleCohortDelete}
+                                onCohortDuplicate={handleSingleCohortDuplicate}
+                                cohortLimitReached={isAtCohortLimit}
                             />
                         );
                     })}
@@ -242,7 +322,7 @@ const styles = () => ({
         pointerEvents: 'none', // Prevent img from intercepting clicks
     },
     grayTrashCanScrollPadding: {
-        paddingRight: '6px;', //matches scrollbar width
+        marginRight: '6px;', //matches scrollbar width
     },
     cohortListing: {
         height: '100%',
