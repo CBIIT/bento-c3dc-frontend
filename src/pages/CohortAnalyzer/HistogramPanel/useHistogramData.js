@@ -189,7 +189,7 @@ const fetchChartData = async () => {
 
   // Reset checkboxes to default when all cohorts are empty
   useEffect(() => {
-    const allInputsEmpty = [c1, c2, c3].every(arr => !Array.isArray(arr) || arr.length === 0);
+    const allInputsEmpty = [c1, c2, c3].every(arr => arr.length === 0);
     if (allInputsEmpty) {
       setSelectedDatasets(["sexAtBirth", "race"]);
     }
