@@ -52,7 +52,6 @@ const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDe
                 background: selectedCohorts.includes(cohort)
                     ? ['#FAE69C', '#A4E9CB', '#A3CCE8'][selectedCohorts.indexOf(cohort) % 3] : 'transparent'
             }}
-            key={cohortData.cohortName}
         >
             <div
                 className={
