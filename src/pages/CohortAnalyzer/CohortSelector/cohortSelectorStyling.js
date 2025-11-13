@@ -183,6 +183,13 @@ export const useStyle = makeStyles((theme) => ({
             zIndex: 10000,
         }
     },
+    cardContent: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        maxWidth: '160px',
+        display: 'inline-block',
+    },
 }))
 
   export const Wrapper = styled.div`
