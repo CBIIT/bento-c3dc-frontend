@@ -449,7 +449,6 @@ export const CohortAnalyzer = () => {
 
                 <CohortSelector
                     handleDemoClick={handleDemoClick}
-                    state={state}
                 />
                 <div className={classes.rightSideAnalyzer}>
                     {alert.message && (
