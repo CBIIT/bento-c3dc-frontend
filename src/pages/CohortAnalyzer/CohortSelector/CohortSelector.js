@@ -18,7 +18,7 @@ import { exampleButtonConfig, getExampleCohortKeys } from "../../../bento/exampl
 
 
 // Component to handle individual cohort item with overflow detection
-const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDeleteInfo, deleteInfo, classes }) => {
+const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDeleteInfo, deleteInfo, state, classes }) => {
     const nameRef = useRef(null);
     const [isNameOverflowing, setIsNameOverflowing] = useState(false);
 
@@ -33,8 +33,6 @@ const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDe
             }
         };
         checkOverflow();
-        const timeoutId = setTimeout(checkOverflow, 0);
-        return () => clearTimeout(timeoutId);
     }, [cohortName]);
 
     const nameElement = (
@@ -85,7 +83,7 @@ const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDe
                             alt={"Trashcan"}
                             role="button"
                             style={{ cursor: 'pointer', zIndex: 3 }}
-                            onClick={() => { handlePopup(cohort, cohortData, setDeleteInfo, deleteInfo) }}
+                            onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }}
                             src={trashCan}
                             width={11}
                             height={12}
@@ -215,6 +213,7 @@ export const CohortSelector = ({ handleDemoClick, state: propState }) => {
                         handleCheckbox={handleCheckbox}
                         setDeleteInfo={setDeleteInfo}
                         deleteInfo={deleteInfo}
+                        state={state}
                         classes={classes}
                     />
                 ))}
