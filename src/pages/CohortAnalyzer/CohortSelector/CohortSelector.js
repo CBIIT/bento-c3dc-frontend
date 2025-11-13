@@ -54,48 +54,46 @@ const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDe
             }}
             key={cohortData.cohortName}
         >
-            <div backgroundColor={'white'} zIndex={3000} arrow placement="top">
-                <div
-                    className={
-                        selectedCohorts.includes(cohort)
-                            ? classes.cohortChildSelected
-                            : selectedCohorts.length === 3 && !selectedCohorts.includes(cohort)
-                                ? classes.CohortChildOpacity
-                                : classes.CohortChild
-                    }
-                >
-                    <div className={classes.cohortChildContent}>
-                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 20 }}>
-                            <CheckBoxCustom
-                                selectedCohorts={selectedCohorts}
-                                cohort={cohort}
-                                handleCheckbox={handleCheckbox}
-                            />
-                            {isNameOverflowing ? (
-                                <ToolTip title={cohortName} placement="top" arrow>
-                                    {nameElement}
-                                </ToolTip>
-                            ) : (
-                                nameElement
-                            )}
-                        </div>
-                        <img
-                            alt={"Trashcan"}
-                            role="button"
-                            style={{ cursor: 'pointer', zIndex: 3 }}
-                            onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }}
-                            src={trashCan}
-                            width={11}
-                            height={12}
+            <div
+                className={
+                    selectedCohorts.includes(cohort)
+                        ? classes.cohortChildSelected
+                        : selectedCohorts.length === 3 && !selectedCohorts.includes(cohort)
+                            ? classes.CohortChildOpacity
+                            : classes.CohortChild
+                }
+            >
+                <div className={classes.cohortChildContent}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%', marginLeft: 20 }}>
+                        <CheckBoxCustom
+                            selectedCohorts={selectedCohorts}
+                            cohort={cohort}
+                            handleCheckbox={handleCheckbox}
                         />
+                        {isNameOverflowing ? (
+                            <ToolTip title={cohortName} placement="top" arrow>
+                                {nameElement}
+                            </ToolTip>
+                        ) : (
+                            nameElement
+                        )}
                     </div>
+                    <img
+                        alt={"Trashcan"}
+                        role="button"
+                        style={{ cursor: 'pointer', zIndex: 3 }}
+                        onClick={() => { handlePopup(cohort, state, setDeleteInfo, deleteInfo) }}
+                        src={trashCan}
+                        width={11}
+                        height={12}
+                    />
                 </div>
             </div>
         </div>
     );
 };
 
-export const CohortSelector = ({ handleDemoClick, state: propState }) => {
+export const CohortSelector = ({ handleDemoClick }) => {
     //context
     const { state } = useContext(CohortStateContext);
     const {
