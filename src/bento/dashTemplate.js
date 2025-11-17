@@ -2,6 +2,7 @@ import { sortType, InputTypes } from '@bento-core/facet-filter';
 import clearButton from '../assets/icons/Clear_Icon.svg';
 import clearButtonActive from '../assets/icons/Clear_Icon_Active.svg';
 import clearButtonActiveHover from '../assets/icons/Clear_Icon_White.svg';
+import questionIcon from '../assets/icons/Question_Icon.svg';
 
 const DEMOGRAPHICS = 'Demographics';
 const DIAGNOSIS = 'Diagnosis';
@@ -10,6 +11,7 @@ const SURVIVAL = 'Survival';
 const GROUP = 'group';
 const TREATMENT = 'Treatment';
 const TREATMENTRESPONSE = 'Treatmentresponse';
+const GENETICANALYSIS = 'Geneticanalysis';
 
 // --------------- Facet resetIcon link configuration --------------
 // Ideal size for resetIcon is 16x16 px
@@ -23,6 +25,7 @@ export const resetIcon = {
 
 export const sectionLabel = {
   Treatmentresponse: "Treatment Response",
+  Geneticanalysis: "Genetic Analysis",
 };
 
 // --------------- Dashboard Sidebar Sections styling --------------
@@ -44,6 +47,9 @@ export const facetSectionVariables = {
     isExpanded: false,
   },
   Survival: {
+    isExpanded: false,
+  },
+  Geneticanalysis: {
     isExpanded: false,
   },
 };
@@ -128,7 +134,7 @@ export const facetSectionVariables = {
     upperBound: {
       fontFamily: 'Montserrat',
       fontWeight: 500,
-      fontSize: '10px',
+      fontSize: '11px !important',
       color: '#000000',
       float: 'right',
       marginLeft: 'Auto',
@@ -138,7 +144,7 @@ export const facetSectionVariables = {
     lowerBound: {
       fontFamily: 'Montserrat',
       fontWeight: 500,
-      fontSize: '10px',
+      fontSize: '11px !important',
       color: '#000000',
       float: 'left',
       marginLeft: 'Auto',
@@ -149,12 +155,14 @@ export const facetSectionVariables = {
       color: '#000',
       lineHeight: '120%',
       fontFamily: 'Nunito',
-      fontSize: '16px',
-      padding: '5px 15px 5px 0px',
+      fontSize: '16px !important',
+      padding: '5px 15px 5px 20px',
       width: '100%',
       textAlign: 'left',
       background: '#F3F9FB',
       marginTop: '10px',
+      display: 'flex',
+      justifyContent: 'start',
     },
     invalidSliderText: {
       color: '#D32F2F',
@@ -245,24 +253,28 @@ export const facetsConfig = [
   {
     section: DIAGNOSIS,
     label: 'Anatomic Site',
-    apiPath: '',
+    apiPath: 'participantCountByAnatomicSite',
     apiForFiltering: 'filterParticipantCountByAnatomicSite',
     datafield: 'anatomic_site',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    search: true,
+    searchPlaceholder: 'e.g. Neuroblastoma, NOS',
   },
    {
     section: DIAGNOSIS,
     label: 'Diagnosis',
-    apiPath: '',
+    apiPath: 'participantCountByDiagnosis',
     apiForFiltering: 'filterParticipantCountByDiagnosis',
-  datafield: 'diagnosis',
+    datafield: 'diagnosis',
     field: GROUP,
-     type: InputTypes.CHECKBOX,
-   sort_type: sortType.ALPHABET,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
     show: true,
+    search: true,
+    searchPlaceholder: 'e.g. Abdomen, NOS',
    },
    {
     section: DIAGNOSIS,
@@ -346,7 +358,7 @@ export const facetsConfig = [
   {
     section: TREATMENT,
     label: 'Treatment Type',
-    apiPath: '',
+    apiPath: 'participantCountByTreatmentType',
     apiForFiltering: 'filterParticipantCountByTreatmentType',
     datafield: 'treatment_type',
     field: GROUP,
@@ -418,7 +430,7 @@ export const facetsConfig = [
   {
     section: SURVIVAL,
     label: 'Last Known Survival Status',
-    apiPath: 'participantCountByLastKnownSurvivalStatus',
+    apiPath: '',
     apiForFiltering: 'filterParticipantCountByLastKnownSurvivalStatus',
     datafield: 'last_known_survival_status',
     field: GROUP,
@@ -446,7 +458,7 @@ export const facetsConfig = [
   {
     section: SURVIVAL,
     label: 'Cause Of Death',
-    apiPath: 'participantCountByCauseOfDeath',
+    apiPath: '',
     apiForFiltering: 'filterParticipantCountByCauseOfDeath',
     datafield: 'cause_of_death',
     field: GROUP,
@@ -457,9 +469,90 @@ export const facetsConfig = [
   {
     section: SURVIVAL,
     label: 'First Event',
-    apiPath: 'participantCountByFirstEvent',
+    apiPath: '',
     apiForFiltering: 'filterParticipantCountByFirstEvent',
     datafield: 'first_event',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Reported Significance',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByReportedSignificance',
+    datafield: 'reported_significance',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Reported Significance System',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByReportedSignificanceSystem',
+    datafield: 'reported_significance_system',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Gene Symbol',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByGeneSymbol', 
+    datafield: 'gene_symbol',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+    search: true,
+    searchPlaceholder: 'e.g. MLL, TP53, BRAF',
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Alteration',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByAlteration',
+    datafield: 'alteration',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+    search: true,
+    searchPlaceholder: 'e.g. LOH, Gain, Heterozygosity',
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Fusion Partner Gene',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByFusionPartnerGene',
+    datafield: 'fusion_partner_gene',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Alteration Type',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByAlterationType',
+    datafield: 'alteration_type',
+    field: GROUP,
+    type: InputTypes.CHECKBOX,
+    sort_type: sortType.ALPHABET,
+    show: true,
+  },
+  {
+    section: GENETICANALYSIS,
+    label: 'Status',
+    apiPath: '',
+    apiForFiltering: 'filterParticipantCountByStatus',
+    datafield: 'status',
     field: GROUP,
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
@@ -504,38 +597,112 @@ export const widgetConfig = [
     title: 'Race',
     dataName: 'participantCountByRace',
     sliceTitle: 'Participants',
-    chartTitleAlignment: 'center'
+    width: '100%',
+    height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
   {
     type: 'bar',
     title: 'Sex at Birth',
     dataName: 'participantCountBySexAtBirth',
+    sliceTitle: 'Participants',
     width: '100%',
     height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
   {
     type: 'donut',
     title: 'Diagnosis',
     dataName: 'participantCountByDiagnosis',
     sliceTitle: 'Participants',
+    width: '100%',
+    height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
   {
     type: 'donut',
     title: 'Anatomic Site',
     dataName: 'participantCountByAnatomicSite',
     sliceTitle: 'Participants',
+    width: '100%',
+    height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
   {
     type: 'bar',
     title: 'Age at Diagnosis (years)',
     dataName: 'participantCountByAgeAtDiagnosis',
+    sliceTitle: 'Participants',
     width: '100%',
     height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
+    countType: 'continuous',
   },
   {
     type: 'donut',
     title: 'Treatment Type',
     dataName: 'participantCountByTreatmentType',
     sliceTitle: 'Participants',
+    width: '100%',
+    height: 210,
+    tooltip: 'Switch displays between pie and bar charts',
+    countType: 'discrete',
   },
 ];
+
+export const WIDGET_DATASET_LIMIT = 20;
+
+export const widgetToolTipConfig = {
+  'Race': {
+    icon: questionIcon,
+    alt: 'race tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'races',
+  },
+  'Sex at Birth': {
+    icon: questionIcon,
+    alt: 'sex tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'sexes',
+  },
+  'Diagnosis': {
+    icon: questionIcon,
+    alt: 'diagnosis tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'diagnoses',
+  },
+  'Anatomic Site': {
+    icon: questionIcon,
+    alt: 'anatomic site tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'anatomic sites',
+  },
+  'Age at Diagnosis (years)': {
+    icon: questionIcon,
+    alt: 'age at diagnosis tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'age groups',
+  },
+  'Treatment Type': {
+    icon: questionIcon,
+    alt: 'treatment type tooltip question mark icon',
+    arrow: true,
+    maxWidth: '230px',
+    clsName: 'widgetTotalTooltipIcon',
+    plural: 'treatment types',
+  },
+};

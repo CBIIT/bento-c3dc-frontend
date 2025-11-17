@@ -84,7 +84,6 @@ export const GET_GLOBAL_STATS_DATA_QUERY = gql`
 {
   numberOfDiseases,
   numberOfParticipants,
-  numberOfReferenceFiles,
   numberOfStudies,
   numberOfSurvivals
   }

@@ -33,9 +33,10 @@ import { toUpper } from 'lodash';
 const CustomExpansionPanelSummary = withStyles({
   root: {
     marginBottom: -1,
-    paddingTop: 6,
+    paddingTop: (props) => (props.hasSearch ? 12 : 18),
     paddingLeft: 14,
     paddingRight: 14,
+    paddingBottom: 15,
     minHeight: 48,
     '&$expanded': {
       minHeight: 48,
@@ -44,6 +45,7 @@ const CustomExpansionPanelSummary = withStyles({
   content: {
     display: 'block',
     textTransform: 'uppercase',
+    margin: "0px !important"
     // '&$expanded': {
     //   margin: '4px 0px 15px 0px',
     // },
@@ -56,15 +58,23 @@ const { SearchBox } = SearchBoxGenerator({
   config: {
     inputPlaceholder: 'Participant ID Search',
     noOptionsText: 'No matching items found',
-    searchType: 'participantIds',
+    searchType: ['participantIds', 'associatedIds'],
   },
   functions: {
     getSuggestions: async (searchType) => {
       try {
         const response = await getAllIds(searchType).catch(() => []);
-        return response && response[searchType] instanceof Array
-          ? response[searchType].map((id) => ({ type: searchType, title: id }))
+        // console.log(response)
+
+        const participantSuggestions = response && response[searchType[0]] instanceof Array 
+          ? response[searchType[0]].map((id) => ({ type: searchType[0], title: id }))
           : [];
+
+        const associatedIdsSuggestions = response && response[searchType[1]] instanceof Object 
+          ? response[searchType[1]].map((item) => ({ type: searchType[1], title: item.participant_id, synonym: item.associated_id }))
+          : [];
+
+        return [...participantSuggestions, ...associatedIdsSuggestions];
       } catch (e) {
         return [];
       }
@@ -184,7 +194,7 @@ const BentoFacetFilter = ({
 
     return (
       <>
-        <CustomExpansionPanelSummary onClick={collapseHandler} id={section}>
+        <CustomExpansionPanelSummary onClick={collapseHandler} id={section.name} hasSearch={hasSearch}>
           <div className={classes.sectionSummaryTextContainer}>
             {sectionLabel[name] !== undefined ? sectionLabel[name] : name}
             {hasSearch && (
@@ -223,7 +233,9 @@ const BentoFacetFilter = ({
             />
           )}
           id={facet.label}
-          className={classes.customExpansionPanelSummaryRoot}
+          className={
+            facet.slider ? classes.customExpansionPanelSummaryRootSlider : classes.customExpansionPanelSummaryRoot
+          }
         >
           <div
             id={facet.label}

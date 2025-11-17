@@ -7,51 +7,187 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row'
     },
-    createCohort: {
-        width: "199px",
-        height: "41px",
-        padding: "12px 30px 12px 30px",
-        gap: "10px",
-        borderRadius: "5px",
-        opacity: "0px",
-        border: "1.25px solid #73C7BE",
-        background: "#375C67",
-        color: 'white',
-        fontFamily: "Poppins",
-        fontSize: "12px",
-        fontWeight: 600,
-        cursor: 'pointer',
-
-    },
-    createCohortOpacity: {
-        width: "199px",
-        height: "41px",
-        padding: "12px 30px 12px 30px",
-        gap: "10px",
-        borderRadius: "5px",
-        border: "1.25px solid #73C7BE",
-        background: "#375C67",
-        color: 'white',
-        opacity: 0.4,
-        fontFamily: "Poppins",
-        fontSize: "12px",
-        fontWeight: 600,
-    },
-    sortCount: {
+    chartContainer: {
+        backgroundColor: 'white',
+        border: '1px solid #679AAA',
+        borderRadius: '10px',
+        flex: 1,
         display: 'flex',
-        margin: 0,
+        minHeight: 310,
+        flexDirection: 'column',
+        overflow: 'hidden',
+        marginLeft: 6,
+        '& .App': {
+            width: "95%",
+            maxWidth: '95%',
+            minWidth: '95%',
+            height: "80%",
+            padding: "24px 0px 36px 0px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            
+            [theme.breakpoints.down('lg')]: { 
+                minWidth: '80%'
+            }
+           
+        },
+        '& .chart-container': {
+            width: '100%',
+            height: "100%",
+            
+            alignItems: "center",
+            justifyContent: "center",
+            display: "flex",
+            marginLeft: 0,      
+        },
+        [theme.breakpoints.down('lg')]: {
+            alignItems: 'center',
+            marginLeft: 0,
+        }
+    },
+    chartVennPlaceholder: {
+        width: 725,
+        [theme.breakpoints.down('lg')]: {
+            width: '100%',
+        }
+    },
+    chartContainerHeader: {
+        width: '100%',
+        height: 69,
+        paddingLeft: 30.5,
+        paddingRight: 15,
+        minHeight: 69,
+        backgroundColor: '#3A7587',
+        position: 'relative',
+        top: 0,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        marginRight: 25,
+    },
+    chartRadioContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        marginTop: 0,
+        color: 'white',
+        padding: 0,
+        fontSize: 15,
+        gap: 15
+    },
+    exploreButton: {
+        boxSizing: 'border-box',
+        minWidth: '189px',
+        height: '41px',
+        background: '#086C78',
+        border: '1.25px solid #4EA1A1',
+        borderRadius: '5px',
+        color: 'white',
+        fontWeight: '600',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '6px',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: "pointer",
+        fontFamily: 'Poppins',
+    },
+    exploreButtonFaded: {
+        boxSizing: 'border-box',
+        fontFamily: 'Poppins',
+        minWidth: '189px',
+        height: '41px',
+        background: '#BBC1C3',
+        border: '1.25px solid #4EA1A1',
+        borderRadius: '5px',
+        color: 'white',
+        fontWeight: '600',
+        display: 'flex',
+        flexDirection: 'row',
+        gap: '6px',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    demoButton: {
+        boxSizing: 'border-box',
+        width: '197px',
+        height: '29px',
+        background: '#ECFAFC',
+        border: '1.25px solid #375C67',
+        borderRadius: '5px',
+        color: '#375C67',
+        fontFamily: 'Poppins',
+        fontWeight: 600,
+        fontSize: '12px',
+        lineHeight: '12px',
+        letterSpacing: '0.02em',
+        textTransform: 'uppercase',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
         cursor: 'pointer'
+    },
+    demoButtonFaded: {
+        boxSizing: 'border-box',
+        width: '197px',
+        height: '29px',
+        background: '#F5F5F5',
+        border: '1.25px solid #CCCCCC',
+        borderRadius: '5px',
+        color: '#999999',
+        fontFamily: 'Poppins',
+        fontWeight: 600,
+        fontSize: '12px',
+        lineHeight: '12px',
+        letterSpacing: '0.02em',
+        textTransform: 'uppercase',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        cursor: 'not-allowed'
+    },
+    demoButtonContainer: {
+        position: 'relative',
+        marginLeft: '20px'
+    },
+    demoTooltipContent: {
+        fontFamily: 'Poppins',
+        fontWeight: 400,
+        fontSize: 13,
+        margin: 0,
+        textAlign: 'center',
+        '& p': {
+            margin: 0
+        }
+    },
+    // Chart tooltip styles
+    chartTooltipContainer: {
+        backgroundColor: 'white',
+        padding: '10px',
+        border: '1px solid #ccc',
+        borderRadius: '4px',
+        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+    },
+    chartTooltipText: {
+        margin: 0,
+        fontFamily: 'Poppins',
+        fontSize: '13px',
+        fontWeight: 400,
+        color: '#000000'
+    },
+    fieldsetReset: {
+        all: 'unset',
+        display: 'contents',
     },
     inputStyleContainer: {
         position: 'relative',
         display: 'flex',
         alignItems: 'center',
+        marginLeft: 15,
         '& img': {
             position: 'relative',
             right: 26,
-            width: 12,
+            width: 14,
             height: 13
         }
     },
@@ -63,24 +199,35 @@ export const useStyle = makeStyles((theme) => ({
         textAlign: 'left',
     },
     inputStyle: {
+        fontFamily: 'Poppins',
+        fontWeight: 300,
+        fontSize: '15px',
         width: '349px',
-        height: '29px',
+        height: '26px',
         gap: '0px',
         borderRadius: '8px',
         margin: 'auto',
         marginLeft: '0px',
         paddingLeft: 13,
         border: '1px solid #8B98AF',
-        textDecoration: 'none'
+        textDecoration: 'none',
+        "&::placeholder": {
+            fontFamily: 'Poppins',
+            color: '#5D7B87 !important'
+        }
     },
     leftSideAnalyzer: {
-        width: 268,
+        minWidth: 268,
+        maxWidth: 268,
         height: 588,
-        marginTop: 70,
-        overflowY: 'hidden',
+        marginTop: 40,
+        overflow: 'hidden',
         borderRadius: ' 0px 35px 35px 0px',
         border: '4px solid #4E8191',
-
+        borderLeft: 'none',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
     },
     leftSideAnalyzerChild: {
         height: '90%',
@@ -115,7 +262,7 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'space-between',
     },
     CohortChild: {
-        background: '#E2F1F5',
+        background: 'rgba(181, 221, 229, 0.4)',
         width: '100%',
         height: 28,
         display: 'flex',
@@ -123,7 +270,25 @@ export const useStyle = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         '&:nth-child(even)': {
-            backgroundColor: '#DAE7E9'
+            background: 'rgba(165, 194, 200, 0.4)'
+        },
+        '& span': {
+            color: 'black'
+        },
+        '& div img': {
+            opacity: 1
+        }
+    },
+    CohortChildOpacity: {
+        background: 'rgba(181, 221, 229, 0.2)',
+        width: '100%',
+        height: 28,
+        display: 'flex',
+        marginBottom: 2,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        '&:nth-child(even)': {
+            background: 'rgba(165, 194, 200, 0.2)'
         },
         '& span': {
             color: 'black'
@@ -143,7 +308,7 @@ export const useStyle = makeStyles((theme) => ({
         pointerEvents: 'auto',
         justifyContent: 'space-between',
         '&:nth-child(even)': {
-            backgroundColor: '#DAE7E9'
+            background: 'rgba(165, 194, 200, 0.4)'
         },
         '& span': {
             color: 'black'
@@ -153,7 +318,7 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     sideHeader: {
-        height: 112,
+        height: 125,
         fontFamily: 'Poppins',
         fontSize: 18.5,
         fontWeight: 500,
@@ -167,15 +332,18 @@ export const useStyle = makeStyles((theme) => ({
         alignSelf: 'center',
         margin: 'auto',
         borderBottom: '1px solid #B0B0B0',
-
+        paddingLeft: 20,
+        justifyContent: 'flex-start',
+        justifyItems: 'flex-start',
         '& img': {
-            marginRight: 6.5
+            marginRight: 6.5,
         },
         '& p': {
             fontFamily: 'Open Sans',
             fontSize: 15,
             fontWeight: 400,
-            color: '#8A7F7C'
+            color: 'black',
+            padding: 0,
         }
     },
     sortSection: {
@@ -183,8 +351,7 @@ export const useStyle = makeStyles((theme) => ({
         width: '100%',
         display: 'flex',
         justifyContent: 'space-between',
-        marginLeft: 10,
-        marginRight: 25,
+        marginLeft: 20,
         '& p': {
             fontSize: 9
         }
@@ -199,37 +366,89 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'flex-end',
-        width: '90%',
-        paddingBottom: 10,
-        borderTop: '1.02px #8A7F7C solid'
+        width: '100%',
+        paddingBottom: 16,
+        paddingTop: 16,
+        paddingRight: 15,
+        [theme.breakpoints.down('lg')]: {
+            width: '100%'
+        }
+    },
+    tableSectionOuterContainer: {
+        width: '100%',
+        border: '1px solid #679AAA',
+        borderRadius: 10,
+        overflow: 'hidden',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)'
     },
     rightSideAnalyzer: {
-        width: 1327,
-        height: 1149,
+        maxWidth: "100%",
         borderRadius: '35px',
         border: '4px solid #4E8191',
+        paddingBottom: 55,
         margin: 100,
-        marginLeft: 50,
-        marginTop: 70,
+        marginLeft: 33,
+        marginRight: 33,
+        marginTop: 40,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        overflowY: 'hidden'
+        overflowY: 'visible',
+        overflowX: 'visible',
+        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+        backdropFilter: 'blur(10px)',
+        boxShadow: '0 8px 32px rgba(0, 0, 0, 0.1)',
+        [theme.breakpoints.down('lg')]: {
+            alignItems: 'flex-start',
+            overflowY: 'scroll',
+            padding: '0 0 24px 0',
+            height: '100%',
+            minWidth: "0"
+        }
+
+    },
+   rightSideContentContainer: {
+    padding: '0 44.5px',
+    width: '100%',
+   } ,
+    rightSideAnalyzerOuterContainer: {
+        display: 'flex',
+        marginBottom: 45,
+        justifyContent: 'flex-start',
+        width: "100%",
+        marginTop: '20px',
+        gap: 26,
+        [theme.breakpoints.down('lg')]: {
+            flexDirection: 'column',
+            gap: 0,
+            marginTop: '20px',
+        }
+    },
+    rightSideAnalyzerInnerContainer: {
+        display: 'flex',
+        marginBottom: 0,
+        flexDirection: "column",
+
     },
     rightSideAnalyzerHeader: {
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '90%',
+        width: '100%',
         alignSelf: 'center',
         alignItems: 'center',
-        borderBottom: '1px solid gray',
+        borderBottom: '2.5px solid #679AAA',
+        maxHeight: '70px',
         "& h1": {
             fontFamily: 'Poppins',
             fontSize: '35px',
             fontWeight: 400,
             textAlign: 'left',
-            color: '#0D3A3F'
+            color: '#0D3A3F',
+            marginLeft: '44.5px',
+
         }
 
     },
@@ -237,49 +456,40 @@ export const useStyle = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         position: 'relative',
-        width: '90%',
-        alignSelf: 'center',
+        minWidth: '30%',
         alignItems: 'flex-start',
-        marginBottom: '30px',
+        marginBottom: '27px',
+        paddingBottom: 0,
         zIndex: 900,
         '& p': {
             fontFamily: 'Open Sans',
             fontSize: '15px',
-            fontWeight: 400,
-            width: 655,
+            paddingBottom: 0,
+            width: "100%",
             lineHeight: '20.8px',
             textAlign: 'left',
-            color: '#8A7F7C'
+            color: 'black',
+            margin: 1,
+            marginTop: 0,
+            marginLeft: '20px',
+            [theme.breakpoints.down('lg')]: {
+                width: '100%',
+                marginLeft: 0,
+            }
         }
     },
-    cohortChildContent: {
-        width: '95%', display: 'flex',
-        height: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        color: 'black',
-        '& div span': {
-            color: 'black',
-            opacity: 1,
-            fontFamily: 'Nunito',
-            fontSize: 14,
-            fontWeight: 300,
-            textAlign: 'left',
-        },
-        '& img': {
-            opacity: 1,
-            position: 'relative',
-            zIndex: 10000,
-        }
+    alert: {
+        position: 'absolute',
+        top: 20,
+        margin: 'auto'
     },
     catagoryCard: {
         borderRadius: '8px',
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'center',
-       minWidth: 297,
+        minWidth: 297,
         height: 194,
-        
         marginLeft: 0,
         paddingBottom: 30,
         border: '1px solid #8B98AF',
@@ -290,12 +500,12 @@ export const useStyle = makeStyles((theme) => ({
             fontSize: '18px',
             fontWeight: 400,
             textAlign: 'center',
-            color: '#000'
+            color: '#000',
         },
     },
     catagoryCardChildren: {
         width: '50%',
-        height: 150,
+        minHeight: 75,
         alignSelf: 'center',
         display: 'flex',
         overflow: 'hidden',
@@ -303,6 +513,7 @@ export const useStyle = makeStyles((theme) => ({
         justifyContent: 'center',
         alignItems: 'flex-start',
         color: '#5D7B87',
+
         '& p': {
             top: 325,
             gap: 9,
@@ -319,10 +530,10 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     rightSideTableContainer: {
-        width: '90%',
-        height: 540,
+        width: '100%',
+        maxHeight: 540,
         overflowY: 'scroll',
-        borderTop: "3.07px #8A7F7C solid",
+        borderTop: "3px #679AAA solid",
         '&::-webkit-scrollbar': {
             width: "6px"
         },
@@ -333,5 +544,9 @@ export const useStyle = makeStyles((theme) => ({
         '&::-webkit-scrollbar-track': {
             background: '#CECECE',
         },
+
+        [theme.breakpoints.down('lg')]: {
+            width: '100%',
+        }
     }
 }))

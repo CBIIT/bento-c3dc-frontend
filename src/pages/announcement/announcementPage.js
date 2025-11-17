@@ -238,7 +238,7 @@ const AnnouncementPage = () => {
   };
 
   useEffect(() => {
-
+    setCurrentPage(1)
     let filteredAnnouncementPageData = [];
     if (selectedOption === 0) {
       filteredAnnouncementPageData = announcementPageData;
@@ -273,6 +273,11 @@ const AnnouncementPage = () => {
       setCurrentPage(page);
     }
   };
+
+
+  useEffect(()=>{
+  calculatePageInfo(announcementPageData)
+  },[currentPage,resultsPerPage])
 
   return (
     <AnnouncementContainer>

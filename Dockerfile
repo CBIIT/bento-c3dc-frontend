@@ -1,18 +1,20 @@
-FROM node:16-bullseye  as build
-
+FROM node:20.11.1-alpine3.19 as build
 
 WORKDIR /usr/src/app
 
 COPY . .
 
-RUN NODE_OPTIONS="--max-old-space-size=4096" npm set progress=false
-RUN NODE_OPTIONS="--max-old-space-size=4096" npm ci --legacy-peer-deps
-RUN NODE_OPTIONS="--max-old-space-size=4096" npm run build --silent
+RUN apk upgrade --update && apk --no-cache add git
 
-# FROM nginx:1.23.3-alpine
+
+RUN NODE_OPTIONS="--openssl-legacy-provider"
+RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm set progress=false
+RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm ci --legacy-peer-deps
+RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm run build --silent
+
 FROM nginx:1.29.2-alpine3.22-slim AS fnl_base_image
 
-#RUN apt-get update && apt-get -y upgrade
+RUN apk update && apk upgrade libxml2
 
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/config/inject.template.js /usr/share/nginx/html/inject.template.js

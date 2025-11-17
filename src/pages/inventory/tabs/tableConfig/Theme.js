@@ -151,20 +151,21 @@ export const extendedView = {
     MuiTablePagination: {
       root: {
         paddingRight: '50px',
-        // borderTop: '1px solid #8A7F7C',
-        marginLeft: 'auto',
+        width: '100%',
       },
       caption: {
         textTransform: 'uppercase',
         fontFamily: 'Open Sans',
-        fontSize: '14px',
+        fontSize: '12px',
       },
       select: {
         fontFamily: 'Open Sans',
-        fontSize: '14px',
+        fontSize: '12px',
       },
       toolbar: {
-        minHeight: '40px',
+        minHeight: '45px',
+        display: 'flex',
+        alignItems: 'center',
       },
     },
     MuiSelect: {
@@ -239,23 +240,21 @@ export const tblPgn = {
   MuiTablePagination: {
     root: {
       paddingRight: '50px',
-      marginLeft: 'auto',
-      // borderBottom: '1px solid #8A7F7C',
-      '&:last-child': {
-        paddingRight: '50px',
-      }
+      width: '100%',
     },
     toolbar: {
-      minHeight: '40px',
+      minHeight: '45px',
+      display: 'flex',
+      alignItems: 'center',
     },
     caption: {
       textTransform: 'uppercase',
       fontFamily: 'Open Sans',
-      fontSize: '14px',
+      fontSize: '12px',
     },
     select: {
       fontFamily: 'Open Sans',
-      fontSize: '14px',
+      fontSize: '12px',
     },
   },
   MuiSelect: {

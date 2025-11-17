@@ -1,11 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { VennDiagramChart, extractSets } from "chartjs-chart-venn";
+import { baseColorArray, nodes, DEFAULT_FONT_SIZE_THRESHOLD, hexToRgba } from "./ChartVennConfig";
 
-// Utility Functions
-const hexToRgba = (hex, alpha = 1) => {
-  const rgb = hex.replace("#", "").match(/.{2}/g).map(x => parseInt(x, 16));
-  return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
-};
 
 const intersectionColors = [
   "#000","#000","#cbdfcc",
@@ -19,57 +15,17 @@ function reduceOpacity(rgbaColor, reductionPercentage) {
   const matches = rgbaColor.match(/rgba?\((\d+), (\d+), (\d+),? ([\d.]+)?\)/);
   if (!matches) throw new Error("Invalid RGBA color format");
 
-  const [_, r, g, b, a = 1] = matches.map(Number); 
+  const [, r, g, b, a = 1] = matches.map(Number); 
   const newAlpha = a * (1 - reductionPercentage / 100);
   return `rgba(${r}, ${g}, ${b}, ${newAlpha})`;
 }
 
-
-const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo }) => {
-  const canvasRef = useRef(null);
+const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCohortSections,selectedCohortSection,selectedCohort,setGeneralInfo,containerRef,canvasRef }) => {
   const chartRef = useRef(null);
-
-  const baseColorArray = ["#F9E28B", "#86E2B9", "#5198C8D9", ].map(color => hexToRgba(color));;
-  const nodes = ["participant_pk","diagnosis","treatment_type"];
 
   const [baseSets, setBaseSets] = useState([]);
   const [data, setData] = useState(null);
-
-  useEffect(() => {
-    const updatedBaseSets = cohortData.map((cohort) => {
-      const seenValues = new Set();
-      return {
-        label: `${cohort.cohortName} (${cohort.participants.length})`,
-        values: cohort.participants
-          .map(p => p[nodes[intersection]])
-          .filter(value => {
-            if (value !== null && value !== undefined && !seenValues.has(value)) {
-              seenValues.add(value);
-              return true;
-            }
-            return false;
-          }),
-        size: cohort.participants.length,
-      };
-    });
-   
-
-    setBaseSets(updatedBaseSets);
-  }, [cohortData]);
   
-  useEffect(() => {
-    if (baseSets.length > 0) {
-      const updatedData = extractSets(
-        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size}))
-      );
-
-      
-      setData(updatedData);
-    } 
-  }, [baseSets]);
-
- 
-
   const handleChartClick = (event) => {
     const elementsAtEvent = chartRef.current.getElementsAtEventForMode(
       event,
@@ -102,15 +58,11 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
     }
   };
 
-
-
-  
   const getBorderColor = (item, index ) => {
-    return selectedCohortSection.includes(item.label) ? "white" : "#929292";
+    return selectedCohortSection.includes(item.label) ? "rgba(0, 0, 0, 0.1)" : "#929292";
   }
 
   const getBorderWidth = (item, index) =>{
-  
     return selectedCohortSection.includes(item.label) ? 4 : 0.5;
   }
 
@@ -126,7 +78,17 @@ const ChartVenn = ({ intersection, cohortData, setSelectedChart, setSelectedCoho
     }
   };
 
-  
+const fontSizeX = React.useMemo(() => {
+  if (!data || !data.datasets || !data.datasets[0] || !data.datasets[0].data) return 15;
+
+  const largeDataCount = data.datasets[0].data
+    .filter(item => item.sets.length > 1)
+    .reduce((sum, item) => sum + (Array.isArray(item.values) ? item.values.length : 0), 0);
+
+  return largeDataCount > DEFAULT_FONT_SIZE_THRESHOLD ? 10 : 15;
+}, [data]);
+
+
 let config = {};
 if(data){
    config = {
@@ -149,7 +111,7 @@ if(data){
             ticks: {
                 font: {
                     family: 'Nunito',
-                    size: 15,
+                    size: fontSizeX,
                     weight: 0,
                 },
                 color: '#000',
@@ -169,19 +131,49 @@ if(data){
     hover: {
       mode: null,
       animationDuration: 0 
-    }
+    },
     },
   };
 
 }
 
  
+// useEffect hooks
+  useEffect(() => {
+    const updatedBaseSets = cohortData.filter(cohort => cohort && cohort.cohortName).map((cohort) => {
+      const seenValues = new Set();
+      return {
+        label: `${cohort.cohortName.length > 13 ? cohort.cohortName.slice(0, 13) + '...' : cohort.cohortName} (${cohort.participants.length})`,
+        values: cohort.participants
+          .map(p => p[nodes[intersection]])
+          .filter(value => {
+            if (value !== null && value !== undefined && !seenValues.has(value)) {
+              seenValues.add(value);
+              return true;
+            }
+            return false;
+          }),
+        size: cohort.participants.length,
+      };
+    });
+
+    setBaseSets(updatedBaseSets);
+  }, [cohortData]);
+
+  useEffect(() => {
+    if (baseSets.length > 0) {
+      const updatedData = extractSets(
+        baseSets.map(set => ({ label: set.label, values: set.values, value: set.size }))
+      );
+      setData(updatedData);
+    }
+  }, [baseSets]);
 
 useEffect(() => {
   if (chartRef.current && canvasRef.current) {
     chartRef.current.destroy();
-    canvasRef.current.width = cohortData.length === 2 ? 800 : 700;
-    canvasRef.current.height =  cohortData.length === 2 ? 200 : 270; 
+    canvasRef.current.width = cohortData.length === 2 ? 900 : 800;
+    canvasRef.current.height =  cohortData.length === 2 ? 380 : 370;  
   }
   chartRef.current = new VennDiagramChart(canvasRef.current, config);
 
@@ -189,8 +181,6 @@ useEffect(() => {
     if (chartRef.current) chartRef.current.destroy();
   };
 }, [selectedCohortSection, data, selectedCohort , cohortData]);
-    
-    
 
   useEffect(() => {
     let updatedStat = {};
@@ -215,9 +205,11 @@ useEffect(() => {
     )
   }
   return (
-    <div className="App">
-      <canvas  ref={canvasRef} id="canvas"></canvas>
-    
+    <div ref={containerRef} style={{ paddingTop: 20, paddingBottom: 30}} className="App">
+      <div className="chart-container">
+        <canvas ref={canvasRef} id="canvas"></canvas>
+      </div>
+
     </div>
   );
 };

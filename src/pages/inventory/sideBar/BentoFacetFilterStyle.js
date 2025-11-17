@@ -9,6 +9,11 @@ export default () => ({
     '& fieldset': {
       borderWidth: '1px !important',
       borderColor: '#003F74 !important',
+      '& legend': {
+          '& span': {
+              fontSize: '11px',
+          },
+        },
     },
   },
   clearAllButtonRoot: {
@@ -72,7 +77,7 @@ export default () => ({
     lineHeight: '24px',
     marginLeft: '5px',
     letterSpacing: '-0.02em',
-    textTransform: 'uppercase',
+    textTransform: 'capitalize',
   },
   dropDownIconSubSection: {
     marginLeft: '0px',
@@ -84,6 +89,12 @@ export default () => ({
     flexDirection: 'row-reverse',
     paddingLeft: 0,
     borderBottom: '1px solid #D2D2D2',
+  },
+  customExpansionPanelSummaryRootSlider: {
+    height: '42px',
+    padding: '0',
+    flexDirection: 'row-reverse',
+    paddingLeft: 0,
   },
   sortGroup: {
     padding: '10px',
@@ -127,22 +138,26 @@ export default () => ({
     fontWeight: 600,
   },
   activeFacetDemographics: {
-    color: '#794900',
+    color: '#E39520',
     fontWeight: 600,
   },
   activeFacetDiagnosis: {
-    color: '#008566',
+    color: '#35B899',
     fontWeight: 600,
   },
   activeFacetTreatment: {
-    color: '#6B2DA7',
+    color: '#268CEA',
     fontWeight: 600,
   },
   activeFacetTreatmentresponse: {
-    color: '#006B57',
+    color: '#9664C7',
     fontWeight: 600,
   },
   activeFacetSurvival: {
+    color: '#006B57',
+    fontWeight: 600,
+  },
+  activeFacetGeneticanalysis: {
     color: '#862405',
     fontWeight: 600,
   },

@@ -28,7 +28,8 @@ export const landingPageData = {
   heartbeatAnimation: {
     heartlineFull: heartlineFull,
     tracker: heartlineTracker,
-    alt: 'Heartbeat Animation',
+    lineAlt: 'Heartbeat Line Animation',
+    trackerAlt: 'Heartbeat Tracker Animation',
   },
   landingPageStatsIcons: {
     diagnosesIcon: diagnosesIcon,
@@ -100,7 +101,6 @@ export const landingPageData = {
 export const GLOBAL_STATS_BAR_QUERY = gql`{
   numberOfDiseases,
   numberOfParticipants,
-  numberOfReferenceFiles,
   numberOfStudies,
   numberOfSurvivals
   }

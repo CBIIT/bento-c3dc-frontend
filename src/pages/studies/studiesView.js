@@ -8,6 +8,7 @@ import {
   TableView,
 } from '@bento-core/paginated-table';
 import { table } from '../../bento/studiesData';
+import { configColumn } from '../inventory/tabs/tableConfig/Column';
 import Stats from '../../components/Stats/GlobalStatsController';
 import { Typography } from '../../components/Wrappers/Wrappers';
 import { themeConfig } from './tableConfig/Theme';
@@ -17,7 +18,7 @@ import studiesListingBackground from '../../assets/studies/studiesListingBackgro
 const initTblState = (initailState) => ({
   ...initailState,
   title: table.name,
-  columns: table.columns,
+  columns: configColumn(table.columns),
   selectedRows: [],
   hiddenSelectedRows: [],
   tableMsg: table.tableMsg,
@@ -128,6 +129,7 @@ const styles = (theme) => ({
     color: '#FFFFFF',
     fontSize: '35px',
     lineHeight: '45px',
+    background: '#52979d',
   },
   headerTitle: {
     maxWidth: '1440px',
