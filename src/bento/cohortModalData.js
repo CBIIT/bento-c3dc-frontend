@@ -6,7 +6,7 @@
 
 // Action Button Configuration
 export const CCDI_HUB_BASE_URL = "https://ccdi.cancer.gov/explore?import_from=";
-export const CCDI_INTEROP_SERVICE_URL = "https://ccdi.cancer.gov/api/interoperation/graphql";
+export const CCDI_INTEROP_SERVICE_URL = "https://ccdi-dev.cancer.gov/api/interoperation/graphql";
 
 // Legacy/Fallback URL Configuration (for direct URL construction)
 export const CCDI_HUB_LEGACY_BASE_URL = "https://ccdi.cancer.gov/explore?p_id=";
