@@ -7,7 +7,7 @@ import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import questionIcon from "../../../assets/icons/Question_icon_2.svg";
 import CustomChartTooltip from './CustomChartTooltip';
 import CustomXAxisTick from './CustomXAxisTick';
-import  {KaplanMeierDemo, KaplanMeierChart} from '@bento-core/kmplot';
+import  {KaplanMeierChart} from '@bento-core/kmplot';
 import datas from "./brain_tumor_data.json";
 import {
   HistogramContainer, ChartWrapper, HeaderSection, RadioGroup, RadioInput
@@ -17,10 +17,37 @@ import {
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
 import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg';
+ import RiskTable from '@bento-core/risk-table';
 
 const Histogram = ({ c1, c2, c3 }) => {
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({ c1, c2, c3 });
+  const cohorts = [
+    {
+      id: '1',
+      name: 'Cohort 12345...',
+      color: '#ADD8E6',
+      data: {
+        '0 Months': 122,
+        '6 Months': 119,
+        '12 Months': 95,
+        '18 Months': 17,
+        '24 Months': 10,
+        '30 Months': 1,
+        '36 Months': 0,
+      },
+    },
+    // ... more cohorts
+  ];
 
+  const timeIntervals = [
+    '0 Months',
+    '6 Months',
+    '12 Months',
+    '18 Months',
+    '24 Months',
+    '30 Months',
+    '36 Months',
+  ];
   const titles = {
     sexAtBirth: 'Sex at Birth',
     race: 'Race',
@@ -260,10 +287,20 @@ const Histogram = ({ c1, c2, c3 }) => {
  <KaplanMeierChart
         data={datas}
         title="Overall Survival by Diagnosis (Demo)"
-        width={760}
-        height={480}
+        width={560}
+        height={200}
       />
+
+      <RiskTable
+  cohorts={cohorts}
+  percentage="80.0%"
+  timeIntervals={timeIntervals}
+/>
         </ChartWrapper>
+
+       
+
+
 
       </CenterContainer>
       {expandedChart && (

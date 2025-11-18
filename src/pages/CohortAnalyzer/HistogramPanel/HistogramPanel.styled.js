@@ -73,7 +73,7 @@ export const ChartWrapper = styled.div`
   position: relative;
   width: 66%;
   min-height: 261px;
-  max-height: 261px;
+  max-height: auto;
   margin-bottom: 10px;
   padding: 0px;
   border: 1px solid #D4D4D4;
