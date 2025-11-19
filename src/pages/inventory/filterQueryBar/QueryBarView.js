@@ -7,6 +7,7 @@ import { facetsConfig } from '../../../bento/dashTemplate';
 import { customStyles } from './QueryBarStyles';
 import { Container, createTheme, ThemeProvider } from '@material-ui/core';
 import theme from './QueryBarTheme';
+import { generateUrl } from './QueryBarUtils';
 
 /**
  * Generate the Explore Tab Query Bar
@@ -76,6 +77,7 @@ const QueryBarView = ({ data, statusReducer, localFind }) => {
           name: checkbox,
         }));
       },
+      generateUrl,
     },
     customStyles,
   });
