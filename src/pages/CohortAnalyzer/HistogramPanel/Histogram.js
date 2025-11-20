@@ -36,6 +36,20 @@ const Histogram = ({ c1, c2, c3 }) => {
         '36 Months': 0,
       },
     },
+     {
+      id: '2',
+      name: 'Cohort 2..',
+      color: '#e61d0bff',
+      data: {
+        '0 Months': 122,
+        '6 Months': 119,
+        '12 Months': 95,
+        '18 Months': 17,
+        '24 Months': 10,
+        '30 Months': 1,
+        '36 Months': 0,
+      },
+    },
     // ... more cohorts
   ];
 
