@@ -193,3 +193,39 @@ export const Tab = styled.button`
     background: #ffffff;
   }
 `;
+
+export const DownloadDropdown = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const DownloadDropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background: white;
+  border: 1px solid #D4D4D4;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 200px;
+  overflow: hidden;
+`;
+
+export const DownloadDropdownItem = styled.div`
+  padding: 10px 15px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #e0e0e0;
+  }
+`;

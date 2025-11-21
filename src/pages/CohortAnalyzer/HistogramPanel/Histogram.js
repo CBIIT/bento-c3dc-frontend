@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 import ExpandIcon from "../../../assets/icons/Expand_Histogram_icon.svg";
@@ -7,20 +7,51 @@ import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import questionIcon from "../../../assets/icons/Question_icon_2.svg";
 import CustomChartTooltip from './CustomChartTooltip';
 import CustomXAxisTick from './CustomXAxisTick';
-import  {KaplanMeierChart} from '@bento-core/kmplot';
-import datas from "./brain_tumor_data.json";
+import { KaplanMeierChart } from '@bento-core/kmplot';
+import useKmplot from './useKmplot';
 import {
   HistogramContainer, ChartWrapper, HeaderSection, RadioGroup, RadioInput
   , RadioLabel, ChartActionButtons, ChartTitle,
-  CenterContainer, DatasetSelectionTitle,
+  CenterContainer, DatasetSelectionTitle, DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem,
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
 import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg';
- import RiskTable from '@bento-core/risk-table';
+import RiskTable from '@bento-core/risk-table';
 
 const Histogram = ({ c1, c2, c3 }) => {
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({ c1, c2, c3 });
+  const { 
+    data: kmPlotData, 
+    loading: kmLoading, 
+    error: kmError,
+    downloadKaplanMeierChart,
+    downloadRiskTable,
+    downloadBoth,
+    showDownloadDropdown,
+    setShowDownloadDropdown,
+    dropdownRef
+  } = useKmplot({ c1, c2, c3 });
+  const kmChartRef = useRef(null);
+  const riskTableRef = useRef(null);
+  
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDownloadDropdown(false);
+      }
+    };
+
+    if (showDownloadDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDownloadDropdown, setShowDownloadDropdown]);
+
   const cohorts = [
     {
       id: '1',
@@ -36,7 +67,7 @@ const Histogram = ({ c1, c2, c3 }) => {
         '36 Months': 0,
       },
     },
-     {
+    {
       id: '2',
       name: 'Cohort 2..',
       color: '#e61d0bff',
@@ -297,22 +328,59 @@ const Histogram = ({ c1, c2, c3 }) => {
         })}
 
         <ChartWrapper>
-         
- <KaplanMeierChart
-        data={datas}
-        title="Overall Survival by Diagnosis (Demo)"
-        width={560}
-        height={200}
-      />
+          <div style={{ width: '100%',display: 'flex', flexDirection: 'column', justifyContent: 'center',alignItems: 'center' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', width: '100%', padding: 3 }}>
+              <p style={{fontSize: 19, fontWeight: 400 , fontFamily: 'Poppins', margin:2, padding: 3}}>
+                Overall Survival by Diagnosis
+              </p>
+              <ChartActionButtons>
+                <span >
+                  <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
+                </span>
+                <DownloadDropdown ref={dropdownRef}>
+                  <span 
+                    onClick={() => !allInputsEmpty && setShowDownloadDropdown(!showDownloadDropdown)}
+                    style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}
+                  >
+                    <img src={DownloadIcon} alt={"download"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
+                  </span>
+                  {showDownloadDropdown && !allInputsEmpty && (
+                    <DownloadDropdownMenu>
+                      <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
+                        Download Kaplan-Meier Chart
+                      </DownloadDropdownItem>
+                      <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
+                        Download Risk Table Chart
+                      </DownloadDropdownItem>
+                      <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
+                        Download Both
+                      </DownloadDropdownItem>
+                    </DownloadDropdownMenu>
+                  )}
+                </DownloadDropdown>
+              </ChartActionButtons>
+            </div>
 
-      <RiskTable
-  cohorts={cohorts}
-  percentage="80.0%"
-  timeIntervals={timeIntervals}
-/>
+            <div ref={kmChartRef}>
+              <KaplanMeierChart
+                data={kmPlotData}
+                title=""
+                width={560}
+                height={200}
+                loading={kmLoading}
+                error={kmError}
+              />
+            </div>
+            <div ref={riskTableRef}>
+              <RiskTable
+                cohorts={cohorts}
+                timeIntervals={timeIntervals}
+              />
+            </div>
+          </div>
         </ChartWrapper>
 
-       
+
 
 
 
