@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useEffect } from 'react';
+import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
 import ExpandIcon from "../../../assets/icons/Expand_Histogram_icon.svg";
@@ -24,16 +24,12 @@ const Histogram = ({ c1, c2, c3 }) => {
   const { 
     data: kmPlotData, 
     loading: kmLoading, 
-    error: kmError,
-    downloadKaplanMeierChart,
-    downloadRiskTable,
-    downloadBoth,
-    showDownloadDropdown,
-    setShowDownloadDropdown,
-    dropdownRef
+    error: kmError
   } = useKmplot({ c1, c2, c3 });
   const kmChartRef = useRef(null);
   const riskTableRef = useRef(null);
+  const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
+  const dropdownRef = useRef(null);
   
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -50,7 +46,253 @@ const Histogram = ({ c1, c2, c3 }) => {
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [showDownloadDropdown, setShowDownloadDropdown]);
+  }, [showDownloadDropdown]);
+
+  // Download function for Kaplan-Meier chart
+  const downloadKaplanMeierChart = (kmChartRef) => {
+    try {
+      if (!kmChartRef.current) return;
+      
+      const svgElement = kmChartRef.current.querySelector("svg");
+      if (!svgElement) return;
+
+      const scaleFactor = 2;
+      const bbox = svgElement.getBoundingClientRect();
+      const width = bbox.width;
+      const height = bbox.height;
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width * scaleFactor;
+      canvas.height = height * scaleFactor;
+      const ctx = canvas.getContext("2d");
+      const TRANSPARENT_COLOR = "#00000000";
+
+      ctx.fillStyle = TRANSPARENT_COLOR;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.scale(scaleFactor, scaleFactor);
+
+      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(svgBlob);
+
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+
+        canvas.toBlob((blob) => {
+          const downloadUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = downloadUrl;
+          a.download = `kaplan_meier_chart.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(downloadUrl);
+        }, "image/png");
+      };
+
+      img.src = url;
+      setShowDownloadDropdown(false);
+    } catch (error) {
+      console.error("Error downloading Kaplan-Meier chart:", error);
+    }
+  };
+
+  // Download function for Risk table
+  const downloadRiskTable = (riskTableRef) => {
+    try {
+      if (!riskTableRef.current) return;
+      
+      const tableElement = riskTableRef.current;
+      if (!tableElement) return;
+
+      // First, try to find SVG element (if RiskTable renders SVG)
+      const svgElement = tableElement.querySelector("svg");
+      if (svgElement) {
+        const scaleFactor = 2;
+        const bbox = svgElement.getBoundingClientRect();
+        const width = bbox.width;
+        const height = bbox.height;
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width * scaleFactor;
+        canvas.height = height * scaleFactor;
+        const ctx = canvas.getContext("2d");
+        const TRANSPARENT_COLOR = "#00000000";
+
+        ctx.fillStyle = TRANSPARENT_COLOR;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.scale(scaleFactor, scaleFactor);
+
+        const svgData = new XMLSerializer().serializeToString(svgElement);
+        const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+        const url = URL.createObjectURL(svgBlob);
+
+        const img = new Image();
+        img.onload = () => {
+          ctx.drawImage(img, 0, 0, width, height);
+          URL.revokeObjectURL(url);
+
+          canvas.toBlob((blob) => {
+            const downloadUrl = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = `risk_table.png`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(downloadUrl);
+          }, "image/png");
+        };
+        img.src = url;
+      } else {
+        // If no SVG, try html2canvas if available
+        if (window.html2canvas) {
+          window.html2canvas(tableElement, { 
+            scale: 2,
+            backgroundColor: '#ffffff',
+            logging: false
+          }).then(canvas => {
+            canvas.toBlob((blob) => {
+              const downloadUrl = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = downloadUrl;
+              a.download = `risk_table.png`;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(downloadUrl);
+            }, "image/png");
+          }).catch(error => {
+            console.error("Error using html2canvas:", error);
+          });
+        } else {
+          console.warn("Risk table download requires html2canvas library or SVG rendering");
+        }
+      }
+      setShowDownloadDropdown(false);
+    } catch (error) {
+      console.error("Error downloading Risk table:", error);
+    }
+  };
+
+  // Download both charts
+  const downloadBoth = (kmChartRef, riskTableRef) => {
+    try {
+      setShowDownloadDropdown(false);
+      
+      // Download Kaplan-Meier chart first
+      if (kmChartRef.current) {
+        const svgElement = kmChartRef.current.querySelector("svg");
+        if (svgElement) {
+          const scaleFactor = 2;
+          const bbox = svgElement.getBoundingClientRect();
+          const width = bbox.width;
+          const height = bbox.height;
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width * scaleFactor;
+          canvas.height = height * scaleFactor;
+          const ctx = canvas.getContext("2d");
+          const TRANSPARENT_COLOR = "#00000000";
+
+          ctx.fillStyle = TRANSPARENT_COLOR;
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+          ctx.scale(scaleFactor, scaleFactor);
+
+          const svgData = new XMLSerializer().serializeToString(svgElement);
+          const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+          const url = URL.createObjectURL(svgBlob);
+
+          const img = new Image();
+          img.onload = () => {
+            ctx.drawImage(img, 0, 0, width, height);
+            URL.revokeObjectURL(url);
+
+            canvas.toBlob((blob) => {
+              const downloadUrl = URL.createObjectURL(blob);
+              const a = document.createElement("a");
+              a.href = downloadUrl;
+              a.download = `kaplan_meier_chart.png`;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+              URL.revokeObjectURL(downloadUrl);
+            }, "image/png");
+          };
+          img.src = url;
+        }
+      }
+      
+      // Wait a bit before downloading the second file to avoid browser blocking multiple downloads
+      setTimeout(() => {
+        if (riskTableRef.current) {
+          const tableElement = riskTableRef.current;
+          const svgElement = tableElement.querySelector("svg");
+          if (svgElement) {
+            const scaleFactor = 2;
+            const bbox = svgElement.getBoundingClientRect();
+            const width = bbox.width;
+            const height = bbox.height;
+
+            const canvas = document.createElement("canvas");
+            canvas.width = width * scaleFactor;
+            canvas.height = height * scaleFactor;
+            const ctx = canvas.getContext("2d");
+            const TRANSPARENT_COLOR = "#00000000";
+
+            ctx.fillStyle = TRANSPARENT_COLOR;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.scale(scaleFactor, scaleFactor);
+
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+            const url = URL.createObjectURL(svgBlob);
+
+            const img = new Image();
+            img.onload = () => {
+              ctx.drawImage(img, 0, 0, width, height);
+              URL.revokeObjectURL(url);
+
+              canvas.toBlob((blob) => {
+                const downloadUrl = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = downloadUrl;
+                a.download = `risk_table.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+              }, "image/png");
+            };
+            img.src = url;
+          } else if (window.html2canvas) {
+            window.html2canvas(tableElement, { 
+              scale: 2,
+              backgroundColor: '#ffffff',
+              logging: false
+            }).then(canvas => {
+              canvas.toBlob((blob) => {
+                const downloadUrl = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = downloadUrl;
+                a.download = `risk_table.png`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(downloadUrl);
+              }, "image/png");
+            }).catch(error => {
+              console.error("Error using html2canvas:", error);
+            });
+          }
+        }
+      }, 500);
+    } catch (error) {
+      console.error("Error downloading both charts:", error);
+    }
+  };
 
   const cohorts = [
     {
@@ -98,12 +340,14 @@ const Histogram = ({ c1, c2, c3 }) => {
     race: 'Race',
     treatmentType: 'Treatment Type',
     response: 'Treatment Outcome',
+    survivalAnalysis: 'Survival Analysis',
   };
   const nullImages = {
     treatmentType: TreatmentTypePlaceHolder,
     response: TreatmentTypePlaceHolder,
     sexAtBirth: PlaceHolder2,
-    race: PlaceHolder2
+    race: PlaceHolder2,
+    survivalAnalysis: PlaceHolder2
   };
 
   let data = graphData;
@@ -117,6 +361,10 @@ const Histogram = ({ c1, c2, c3 }) => {
       const graphDataCopy = JSON.parse(JSON.stringify(graphData));
 
       selectedDatasets.forEach((dataset) => {
+        // Skip survivalAnalysis as it doesn't have data in graphData
+        if (dataset === 'survivalAnalysis' || !graphDataCopy[dataset]) {
+          return;
+        }
         const manyOthers = graphDataCopy[dataset].find(item => item.name === otherKey);
 
         const filteredRegularItems = graphDataCopy[dataset]
@@ -169,7 +417,9 @@ const Histogram = ({ c1, c2, c3 }) => {
 
       <CenterContainer>
         {/* Multiple Charts */}
-        {selectedDatasets.map((dataset, index) => {
+        {selectedDatasets
+          .filter(dataset => dataset !== 'survivalAnalysis') // Filter out survivalAnalysis as it's rendered separately
+          .map((dataset, index) => {
           let valueA = 0;
           let valueB = 0;
           let valueC = 0;
@@ -327,58 +577,60 @@ const Histogram = ({ c1, c2, c3 }) => {
           );
         })}
 
-        <ChartWrapper>
-          <div style={{ width: '100%',display: 'flex', flexDirection: 'column', justifyContent: 'center',alignItems: 'center' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', width: '100%', padding: 3 }}>
-              <p style={{fontSize: 19, fontWeight: 400 , fontFamily: 'Poppins', margin:2, padding: 3}}>
-                Overall Survival by Diagnosis
-              </p>
-              <ChartActionButtons>
-                <span >
-                  <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
-                </span>
-                <DownloadDropdown ref={dropdownRef}>
-                  <span 
-                    onClick={() => !allInputsEmpty && setShowDownloadDropdown(!showDownloadDropdown)}
-                    style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}
-                  >
-                    <img src={DownloadIcon} alt={"download"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
+        {selectedDatasets.includes('survivalAnalysis') && (
+          <ChartWrapper>
+            <div style={{ width: '100%',display: 'flex', flexDirection: 'column', justifyContent: 'center',alignItems: 'center' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', width: '100%', padding: 3 }}>
+                <p style={{fontSize: 19, fontWeight: 400 , fontFamily: 'Poppins', margin:2, padding: 3}}>
+                  Overall Survival by Diagnosis
+                </p>
+                <ChartActionButtons>
+                  <span >
+                    <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
                   </span>
-                  {showDownloadDropdown && !allInputsEmpty && (
-                    <DownloadDropdownMenu>
-                      <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
-                        Download Kaplan-Meier Chart
-                      </DownloadDropdownItem>
-                      <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
-                        Download Risk Table Chart
-                      </DownloadDropdownItem>
-                      <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
-                        Download Both
-                      </DownloadDropdownItem>
-                    </DownloadDropdownMenu>
-                  )}
-                </DownloadDropdown>
-              </ChartActionButtons>
-            </div>
+                  <DownloadDropdown ref={dropdownRef}>
+                    <span 
+                      onClick={() => !allInputsEmpty && setShowDownloadDropdown(!showDownloadDropdown)}
+                      style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}
+                    >
+                      <img src={DownloadIcon} alt={"download"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
+                    </span>
+                    {showDownloadDropdown && !allInputsEmpty && (
+                      <DownloadDropdownMenu>
+                        <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
+                          Download Kaplan-Meier Chart
+                        </DownloadDropdownItem>
+                        <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
+                          Download Risk Table Chart
+                        </DownloadDropdownItem>
+                        <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
+                          Download Both
+                        </DownloadDropdownItem>
+                      </DownloadDropdownMenu>
+                    )}
+                  </DownloadDropdown>
+                </ChartActionButtons>
+              </div>
 
-            <div ref={kmChartRef}>
-              <KaplanMeierChart
-                data={kmPlotData}
-                title=""
-                width={560}
-                height={200}
-                loading={kmLoading}
-                error={kmError}
-              />
+              <div ref={kmChartRef}>
+                <KaplanMeierChart
+                  data={kmPlotData}
+                  title=""
+                  width={460}
+                  height={200}
+                  loading={kmLoading}
+                  error={kmError}
+                />
+              </div>
+              <div ref={riskTableRef} style={{ width: 460, height: 200 }}>
+                <RiskTable
+                  cohorts={cohorts}
+                  timeIntervals={timeIntervals}
+                />
+              </div>
             </div>
-            <div ref={riskTableRef}>
-              <RiskTable
-                cohorts={cohorts}
-                timeIntervals={timeIntervals}
-              />
-            </div>
-          </div>
-        </ChartWrapper>
+          </ChartWrapper>
+        )}
 
 
 
