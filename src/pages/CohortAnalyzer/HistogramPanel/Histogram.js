@@ -1,6 +1,7 @@
 import React, { useMemo, useRef, useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
+import DownloadIconBorderless from "../../../assets/icons/download-icon-borderless.svg";
 import ExpandIcon from "../../../assets/icons/Expand_Histogram_icon.svg";
 import { useHistogramData } from './useHistogramData';
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
@@ -593,17 +594,20 @@ const Histogram = ({ c1, c2, c3 }) => {
                       onClick={() => !allInputsEmpty && setShowDownloadDropdown(!showDownloadDropdown)}
                       style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}
                     >
-                      <img src={DownloadIcon} alt={"download"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
+                      <img src={DownloadIcon} alt={"download"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />    
                     </span>
                     {showDownloadDropdown && !allInputsEmpty && (
                       <DownloadDropdownMenu>
                         <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
-                          Download Kaplan-Meier Chart
+                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                          Kaplan-Meier 
                         </DownloadDropdownItem>
                         <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
-                          Download Risk Table Chart
+                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                          Risk Table 
                         </DownloadDropdownItem>
                         <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
+                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                           Download Both
                         </DownloadDropdownItem>
                       </DownloadDropdownMenu>
@@ -616,13 +620,13 @@ const Histogram = ({ c1, c2, c3 }) => {
                 <KaplanMeierChart
                   data={kmPlotData}
                   title=""
-                  width={460}
+                  width={560}
                   height={200}
                   loading={kmLoading}
                   error={kmError}
                 />
               </div>
-              <div ref={riskTableRef} style={{ width: 460, height: 200 }}>
+              <div ref={riskTableRef} style={{ width: 660, height: 200 }}>
                 <RiskTable
                   cohorts={cohorts}
                   timeIntervals={timeIntervals}

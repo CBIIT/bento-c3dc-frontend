@@ -220,6 +220,9 @@ export const DownloadDropdownItem = styled.div`
   color: #333;
   cursor: pointer;
   transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 
   &:hover {
     background-color: #f5f5f5;
