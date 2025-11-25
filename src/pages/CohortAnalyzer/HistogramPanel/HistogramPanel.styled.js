@@ -214,7 +214,7 @@ export const DownloadDropdownMenu = styled.div`
 `;
 
 export const DownloadDropdownItem = styled.div`
-  padding: 10px 15px;
+  padding: 2px;
   font-family: 'Nunito', sans-serif;
   font-size: 14px;
   color: #333;
@@ -222,7 +222,7 @@ export const DownloadDropdownItem = styled.div`
   transition: background-color 0.2s;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 3px;
 
   &:hover {
     background-color: #f5f5f5;

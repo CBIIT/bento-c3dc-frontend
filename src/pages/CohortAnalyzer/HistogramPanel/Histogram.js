@@ -620,13 +620,13 @@ const Histogram = ({ c1, c2, c3 }) => {
                 <KaplanMeierChart
                   data={kmPlotData}
                   title=""
-                  width={560}
+                  width={690}
                   height={200}
                   loading={kmLoading}
                   error={kmError}
                 />
               </div>
-              <div ref={riskTableRef} style={{ width: 660, height: 200 }}>
+              <div ref={riskTableRef} style={{ width: 760, height: 200, marginLeft: -165 }}>
                 <RiskTable
                   cohorts={cohorts}
                   timeIntervals={timeIntervals}
