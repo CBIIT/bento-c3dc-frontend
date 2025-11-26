@@ -112,14 +112,21 @@ const Histogram = ({ c1, c2, c3 }) => {
 
       // Use the ref directly to capture the Risk Table element
       const tableElement = riskTableRef.current;
-      console.log(tableElement);
+    
+
+      // Store original margin and temporarily remove it
+      const originalMargin = tableElement.style.marginLeft;
+      tableElement.style.marginLeft = '0';
 
       // Generate image from the ref element using html-to-image
       htmlToImage.toPng(tableElement, {
         backgroundColor: 'transparent',
-        pixelRatio: 2,
+        pixelRatio: 4,
         quality: 1.0
       }).then((dataUrl) => {
+        // Restore original margin
+        tableElement.style.marginLeft = originalMargin;
+        
         const a = document.createElement("a");
         a.href = dataUrl;
         a.download = `risk_table.png`;
@@ -129,6 +136,8 @@ const Histogram = ({ c1, c2, c3 }) => {
           document.body.removeChild(a);
         }, 100);
       }).catch(error => {
+        // Restore original margin even on error
+        tableElement.style.marginLeft = originalMargin;
         console.error("Error using html-to-image:", error);
         alert("Error downloading Risk table. Please check the console for details.");
       });
@@ -212,6 +221,10 @@ const Histogram = ({ c1, c2, c3 }) => {
 
           // Use the ref directly to capture the Risk Table element
           const tableElement = riskTableRef.current;
+          
+          // Store original margin and temporarily remove it
+          const originalMargin = tableElement.style.marginLeft;
+          tableElement.style.marginLeft = '0';
 
           htmlToImage.toCanvas(tableElement, {
             backgroundColor: 'transparent',
@@ -219,15 +232,22 @@ const Histogram = ({ c1, c2, c3 }) => {
             quality: 1.0
           }).then(tableCanvas => {
             try {
+              // Restore original margin
+              tableElement.style.marginLeft = originalMargin;
+              
               // Draw at the correct position (canvas is already scaled, but ctx is also scaled)
               // So we need to divide by scaleFactor to get the correct size
               ctx.drawImage(tableCanvas, x, y, tableCanvas.width / scaleFactor, tableCanvas.height / scaleFactor);
               resolve();
             } catch (err) {
+              // Restore original margin even on error
+              tableElement.style.marginLeft = originalMargin;
               console.error("Error drawing table canvas:", err);
               reject(err);
             }
           }).catch(error => {
+            // Restore original margin even on error
+            tableElement.style.marginLeft = originalMargin;
             console.error("Error using html-to-image:", error);
             reject(error);
           });
@@ -276,6 +296,20 @@ const Histogram = ({ c1, c2, c3 }) => {
       id: '2',
       name: 'Cohort 2..',
       color: '#e61d0bff',
+      data: {
+        '0 Months': 122,
+        '6 Months': 119,
+        '12 Months': 95,
+        '18 Months': 17,
+        '24 Months': 10,
+        '30 Months': 1,
+        '36 Months': 0,
+      },
+    },
+    {
+      id: '2',
+      name: 'Cohort 2..',
+      color: '#fdea10ff',
       data: {
         '0 Months': 122,
         '6 Months': 119,

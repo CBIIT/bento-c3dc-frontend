@@ -205,12 +205,15 @@ export const DownloadDropdownMenu = styled.div`
   right: 0;
   margin-top: 5px;
   background: white;
-  border: 1px solid #D4D4D4;
+  border: 1.5px solid #4E8191
   border-radius: 4px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   z-index: 1000;
   min-width: 200px;
   overflow: hidden;
+  padding-left: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 `;
 
 export const DownloadDropdownItem = styled.div`
@@ -228,7 +231,5 @@ export const DownloadDropdownItem = styled.div`
     background-color: #f5f5f5;
   }
 
-  &:not(:last-child) {
-    border-bottom: 1px solid #e0e0e0;
-  }
+
 `;
