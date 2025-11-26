@@ -617,21 +617,23 @@ const Histogram = ({ c1, c2, c3 }) => {
                 </ChartActionButtons>
               </div>
 
-              <div ref={kmChartRef}>
-                <KaplanMeierChart
-                  data={kmPlotData}
-                  title=""
-                  width={690}
-                  height={200}
-                  loading={kmLoading}
-                  error={kmError}
-                />
-              </div>
-              <div ref={riskTableRef} style={{ width: 760, height: 200, marginLeft: -165 }}>
-                <RiskTable
-                  cohorts={cohorts}
-                  timeIntervals={timeIntervals}
-                />
+              <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+                <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px'}}>
+                  <KaplanMeierChart
+                    data={kmPlotData}
+                    title=""
+                    width={"100%"}
+                    height={200}
+                    loading={kmLoading}
+                    error={kmError}
+                  />
+                </div>
+                <div ref={riskTableRef} style={{width: '100%', paddingLeft: '30px', paddingRight: '50px'}}>
+                  <RiskTable
+                    cohorts={cohorts}
+                    timeIntervals={timeIntervals}
+                  />
+                </div>
               </div>
             </div>
           </ChartWrapper>
