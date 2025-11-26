@@ -20,6 +20,8 @@ import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
 import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg';
 import RiskTable from '@bento-core/risk-table';
 
+const htmlToImage = require('html-to-image');
+
 const Histogram = ({ c1, c2, c3 }) => {
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({ c1, c2, c3 });
   const { 
@@ -103,195 +105,155 @@ const Histogram = ({ c1, c2, c3 }) => {
   // Download function for Risk table
   const downloadRiskTable = (riskTableRef) => {
     try {
-      if (!riskTableRef.current) return;
-      
-      const tableElement = riskTableRef.current;
-      if (!tableElement) return;
-
-      // First, try to find SVG element (if RiskTable renders SVG)
-      const svgElement = tableElement.querySelector("svg");
-      if (svgElement) {
-        const scaleFactor = 2;
-        const bbox = svgElement.getBoundingClientRect();
-        const width = bbox.width;
-        const height = bbox.height;
-
-        const canvas = document.createElement("canvas");
-        canvas.width = width * scaleFactor;
-        canvas.height = height * scaleFactor;
-        const ctx = canvas.getContext("2d");
-        const TRANSPARENT_COLOR = "#00000000";
-
-        ctx.fillStyle = TRANSPARENT_COLOR;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.scale(scaleFactor, scaleFactor);
-
-        const svgData = new XMLSerializer().serializeToString(svgElement);
-        const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-        const url = URL.createObjectURL(svgBlob);
-
-        const img = new Image();
-        img.onload = () => {
-          ctx.drawImage(img, 0, 0, width, height);
-          URL.revokeObjectURL(url);
-
-          canvas.toBlob((blob) => {
-            const downloadUrl = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = downloadUrl;
-            a.download = `risk_table.png`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(downloadUrl);
-          }, "image/png");
-        };
-        img.src = url;
-      } else {
-        // If no SVG, try html2canvas if available
-        if (window.html2canvas) {
-          window.html2canvas(tableElement, { 
-            scale: 2,
-            backgroundColor: '#ffffff',
-            logging: false
-          }).then(canvas => {
-            canvas.toBlob((blob) => {
-              const downloadUrl = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = downloadUrl;
-              a.download = `risk_table.png`;
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              URL.revokeObjectURL(downloadUrl);
-            }, "image/png");
-          }).catch(error => {
-            console.error("Error using html2canvas:", error);
-          });
-        } else {
-          console.warn("Risk table download requires html2canvas library or SVG rendering");
-        }
+      if (!riskTableRef || !riskTableRef.current) {
+        console.error("Risk table ref not available");
+        return;
       }
+
+      // Use the ref directly to capture the Risk Table element
+      const tableElement = riskTableRef.current;
+      console.log(tableElement);
+
+      // Generate image from the ref element using html-to-image
+      htmlToImage.toPng(tableElement, {
+        backgroundColor: 'transparent',
+        pixelRatio: 2,
+        quality: 1.0
+      }).then((dataUrl) => {
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `risk_table.png`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+        }, 100);
+      }).catch(error => {
+        console.error("Error using html-to-image:", error);
+        alert("Error downloading Risk table. Please check the console for details.");
+      });
+
       setShowDownloadDropdown(false);
     } catch (error) {
       console.error("Error downloading Risk table:", error);
+      alert("Error downloading Risk table. Please check the console for details.");
     }
   };
 
-  // Download both charts
+  // Download both charts as a single combined image
   const downloadBoth = (kmChartRef, riskTableRef) => {
     try {
       setShowDownloadDropdown(false);
       
-      // Download Kaplan-Meier chart first
-      if (kmChartRef.current) {
-        const svgElement = kmChartRef.current.querySelector("svg");
-        if (svgElement) {
-          const scaleFactor = 2;
-          const bbox = svgElement.getBoundingClientRect();
-          const width = bbox.width;
-          const height = bbox.height;
+      if (!kmChartRef.current || !riskTableRef.current) return;
+      
+      const kmSvgElement = kmChartRef.current.querySelector("svg");
+      
+      if (!kmSvgElement) {
+        console.error("Could not find Kaplan-Meier SVG element");
+        return;
+      }
 
-          const canvas = document.createElement("canvas");
-          canvas.width = width * scaleFactor;
-          canvas.height = height * scaleFactor;
-          const ctx = canvas.getContext("2d");
-          const TRANSPARENT_COLOR = "#00000000";
+      const scaleFactor = 2;
+      
+      // Get dimensions of KM chart
+      const kmBbox = kmSvgElement.getBoundingClientRect();
+      const kmWidth = kmBbox.width;
+      const kmHeight = kmBbox.height;
+      
+      // Get dimensions of Risk Table element using the ref directly
+      const tableElement = riskTableRef.current;
+      const tableBbox = tableElement.getBoundingClientRect();
+      const tableWidth = tableBbox.width;
+      const tableHeight = tableBbox.height;
+      
+      // Create a canvas that fits both charts vertically
+      const combinedWidth = Math.max(kmWidth, tableWidth);
+      const combinedHeight = kmHeight + tableHeight + 20; // 20px spacing between charts
+      
+      const canvas = document.createElement("canvas");
+      canvas.width = combinedWidth * scaleFactor;
+      canvas.height = combinedHeight * scaleFactor;
+      const ctx = canvas.getContext("2d");
+      const TRANSPARENT_COLOR = "#00000000";
 
-          ctx.fillStyle = TRANSPARENT_COLOR;
-          ctx.fillRect(0, 0, canvas.width, canvas.height);
-          ctx.scale(scaleFactor, scaleFactor);
+      ctx.fillStyle = TRANSPARENT_COLOR;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.scale(scaleFactor, scaleFactor);
 
+      // Helper function to draw SVG to canvas
+      const drawSvgToCanvas = (svgElement, x, y) => {
+        return new Promise((resolve) => {
           const svgData = new XMLSerializer().serializeToString(svgElement);
           const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
           const url = URL.createObjectURL(svgBlob);
 
           const img = new Image();
           img.onload = () => {
-            ctx.drawImage(img, 0, 0, width, height);
+            ctx.drawImage(img, x, y, svgElement.getBoundingClientRect().width, svgElement.getBoundingClientRect().height);
             URL.revokeObjectURL(url);
-
-            canvas.toBlob((blob) => {
-              const downloadUrl = URL.createObjectURL(blob);
-              const a = document.createElement("a");
-              a.href = downloadUrl;
-              a.download = `kaplan_meier_chart.png`;
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
-              URL.revokeObjectURL(downloadUrl);
-            }, "image/png");
+            resolve();
+          };
+          img.onerror = () => {
+            URL.revokeObjectURL(url);
+            resolve();
           };
           img.src = url;
-        }
-      }
-      
-      // Wait a bit before downloading the second file to avoid browser blocking multiple downloads
-      setTimeout(() => {
-        if (riskTableRef.current) {
-          const tableElement = riskTableRef.current;
-          const svgElement = tableElement.querySelector("svg");
-          if (svgElement) {
-            const scaleFactor = 2;
-            const bbox = svgElement.getBoundingClientRect();
-            const width = bbox.width;
-            const height = bbox.height;
+        });
+      };
 
-            const canvas = document.createElement("canvas");
-            canvas.width = width * scaleFactor;
-            canvas.height = height * scaleFactor;
-            const ctx = canvas.getContext("2d");
-            const TRANSPARENT_COLOR = "#00000000";
-
-            ctx.fillStyle = TRANSPARENT_COLOR;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.scale(scaleFactor, scaleFactor);
-
-            const svgData = new XMLSerializer().serializeToString(svgElement);
-            const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-            const url = URL.createObjectURL(svgBlob);
-
-            const img = new Image();
-            img.onload = () => {
-              ctx.drawImage(img, 0, 0, width, height);
-              URL.revokeObjectURL(url);
-
-              canvas.toBlob((blob) => {
-                const downloadUrl = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = downloadUrl;
-                a.download = `risk_table.png`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(downloadUrl);
-              }, "image/png");
-            };
-            img.src = url;
-          } else if (window.html2canvas) {
-            window.html2canvas(tableElement, { 
-              scale: 2,
-              backgroundColor: '#ffffff',
-              logging: false
-            }).then(canvas => {
-              canvas.toBlob((blob) => {
-                const downloadUrl = URL.createObjectURL(blob);
-                const a = document.createElement("a");
-                a.href = downloadUrl;
-                a.download = `risk_table.png`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(downloadUrl);
-              }, "image/png");
-            }).catch(error => {
-              console.error("Error using html2canvas:", error);
-            });
+      // Helper function to draw Risk Table using the ref with html-to-image
+      const drawRiskTableToCanvas = (riskTableRef, x, y) => {
+        return new Promise((resolve, reject) => {
+          if (!riskTableRef || !riskTableRef.current) {
+            reject(new Error("Risk table ref not available"));
+            return;
           }
-        }
-      }, 500);
+
+          // Use the ref directly to capture the Risk Table element
+          const tableElement = riskTableRef.current;
+
+          htmlToImage.toCanvas(tableElement, {
+            backgroundColor: 'transparent',
+            pixelRatio: scaleFactor,
+            quality: 1.0
+          }).then(tableCanvas => {
+            try {
+              // Draw at the correct position (canvas is already scaled, but ctx is also scaled)
+              // So we need to divide by scaleFactor to get the correct size
+              ctx.drawImage(tableCanvas, x, y, tableCanvas.width / scaleFactor, tableCanvas.height / scaleFactor);
+              resolve();
+            } catch (err) {
+              console.error("Error drawing table canvas:", err);
+              reject(err);
+            }
+          }).catch(error => {
+            console.error("Error using html-to-image:", error);
+            reject(error);
+          });
+        });
+      };
+
+      // Draw both charts sequentially
+      const promises = [
+        drawSvgToCanvas(kmSvgElement, 0, 0),
+        drawRiskTableToCanvas(riskTableRef, 0, kmHeight + 20)
+      ];
+      
+      Promise.all(promises).then(() => {
+        canvas.toBlob((blob) => {
+          const downloadUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = downloadUrl;
+          a.download = `survival_analysis_combined.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(downloadUrl);
+        }, "image/png");
+      });
     } catch (error) {
-      console.error("Error downloading both charts:", error);
+      console.error("Error downloading combined chart:", error);
     }
   };
 
@@ -586,7 +548,12 @@ const Histogram = ({ c1, c2, c3 }) => {
                   Overall Survival by Diagnosis
                 </p>
                 <ChartActionButtons>
-                  <span >
+                  <span onClick={() => {
+                    if (!allInputsEmpty) {
+                      setExpandedChart('survivalAnalysis');
+                      setActiveTab('survivalAnalysis');
+                    }
+                  }} style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}>
                     <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
                   </span>
                   <DownloadDropdown ref={dropdownRef}>
@@ -651,6 +618,13 @@ const Histogram = ({ c1, c2, c3 }) => {
           data={filteredData}
           titles={titles}
           downloadChart={downloadChart}
+          kmPlotData={kmPlotData}
+          kmLoading={kmLoading}
+          kmError={kmError}
+          kmChartRef={kmChartRef}
+          riskTableRef={riskTableRef}
+          cohorts={cohorts}
+          timeIntervals={timeIntervals}
         />
       )}
 

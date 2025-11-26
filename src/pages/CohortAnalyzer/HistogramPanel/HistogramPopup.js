@@ -7,8 +7,14 @@ import {
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
+import DownloadIconBorderless from "../../../assets/icons/download-icon-borderless.svg";
 import CustomChartTooltip from './CustomChartTooltip';
 import CustomXAxisTick from './CustomXAxisTick';
+import { KaplanMeierChart } from '@bento-core/kmplot';
+import RiskTable from '@bento-core/risk-table';
+import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem } from './HistogramPanel.styled';
+
+const htmlToImage = require('html-to-image');
 
 
 
@@ -24,8 +30,281 @@ const ExpandedChartModal = ({
   setViewType,
   data,
   titles,
-  downloadChart
+  downloadChart,
+  kmPlotData,
+  kmLoading,
+  kmError,
+  kmChartRef,
+  riskTableRef,
+  cohorts,
+  timeIntervals
 }) => {
+  const [showDownloadDropdown, setShowDownloadDropdown] = React.useState(false);
+  const dropdownRef = useRef(null);
+  
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDownloadDropdown(false);
+      }
+    };
+
+    if (showDownloadDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showDownloadDropdown]);
+
+  // Download functions for survival analysis
+  const downloadKaplanMeierChart = (kmChartRef) => {
+    try {
+      if (!kmChartRef || !kmChartRef.current) {
+        console.error("KM chart ref not available");
+        return;
+      }
+      
+      const svgElement = kmChartRef.current.querySelector("svg");
+      if (!svgElement) {
+        console.error("Could not find SVG element in KM chart");
+        return;
+      }
+
+      const scaleFactor = 2;
+      const bbox = svgElement.getBoundingClientRect();
+      const width = bbox.width;
+      const height = bbox.height;
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width * scaleFactor;
+      canvas.height = height * scaleFactor;
+      const ctx = canvas.getContext("2d");
+      const TRANSPARENT_COLOR = "#00000000";
+
+      ctx.fillStyle = TRANSPARENT_COLOR;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.scale(scaleFactor, scaleFactor);
+
+      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(svgBlob);
+
+      const img = new Image();
+      img.onload = () => {
+        ctx.drawImage(img, 0, 0, width, height);
+        URL.revokeObjectURL(url);
+
+        canvas.toBlob((blob) => {
+          const downloadUrl = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = downloadUrl;
+          a.download = `kaplan_meier_chart.png`;
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          URL.revokeObjectURL(downloadUrl);
+        }, "image/png");
+      };
+
+      img.src = url;
+      setShowDownloadDropdown(false);
+    } catch (error) {
+      console.error("Error downloading Kaplan-Meier chart:", error);
+      alert("Error downloading Kaplan-Meier chart. Please check the console for details.");
+    }
+  };
+
+  const downloadRiskTable = (riskTableRef) => {
+    try {
+      if (!riskTableRef || !riskTableRef.current) {
+        console.error("Risk table ref not available");
+        return;
+      }
+
+      // Use the ref directly to capture the Risk Table element
+      const tableElement = riskTableRef.current;
+
+      // Generate image from the ref element using html-to-image
+      htmlToImage.toPng(tableElement, {
+        backgroundColor: 'transparent',
+        pixelRatio: 2,
+        quality: 1.0
+      }).then((dataUrl) => {
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `risk_table.png`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+        }, 100);
+      }).catch(error => {
+        console.error("Error using html-to-image:", error);
+        alert("Error downloading Risk table. Please check the console for details.");
+      });
+
+      setShowDownloadDropdown(false);
+    } catch (error) {
+      console.error("Error downloading Risk table:", error);
+      alert("Error downloading Risk table. Please check the console for details.");
+    }
+  };
+
+  const downloadBoth = (kmChartRef, riskTableRef) => {
+    try {
+      if (!kmChartRef || !kmChartRef.current) {
+        console.error("KM chart ref not available");
+        return;
+      }
+      
+      if (!riskTableRef || !riskTableRef.current) {
+        console.error("Risk table ref not available");
+        return;
+      }
+      
+      const kmSvgElement = kmChartRef.current.querySelector("svg");
+      const tableElement = riskTableRef.current;
+      
+      if (!kmSvgElement) {
+        console.error("Could not find Kaplan-Meier SVG element");
+        return;
+      }
+
+      const scaleFactor = 2;
+      
+      // Get dimensions of KM chart
+      const kmBbox = kmSvgElement.getBoundingClientRect();
+      const kmWidth = kmBbox.width || 800;
+      const kmHeight = kmBbox.height || 300;
+      
+      // Get dimensions of Risk Table element (it's HTML, not SVG)
+      const tableBbox = tableElement.getBoundingClientRect();
+      const tableWidth = tableBbox.width || 760;
+      const tableHeight = tableBbox.height || 200;
+      
+      // Create a canvas that fits both charts vertically
+      const combinedWidth = Math.max(kmWidth, tableWidth);
+      const combinedHeight = kmHeight + tableHeight + 20; // 20px spacing between charts
+      
+      const canvas = document.createElement("canvas");
+      canvas.width = combinedWidth * scaleFactor;
+      canvas.height = combinedHeight * scaleFactor;
+      const ctx = canvas.getContext("2d");
+      
+      // Fill with white background
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.scale(scaleFactor, scaleFactor);
+
+      // Helper function to draw SVG to canvas
+      const drawSvgToCanvas = (svgElement, x, y) => {
+        return new Promise((resolve, reject) => {
+          try {
+            const svgData = new XMLSerializer().serializeToString(svgElement);
+            const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
+            const url = URL.createObjectURL(svgBlob);
+
+            const img = new Image();
+            img.onload = () => {
+              try {
+                const width = svgElement.getBoundingClientRect().width || svgElement.width.baseVal.value || 800;
+                const height = svgElement.getBoundingClientRect().height || svgElement.height.baseVal.value || 300;
+                ctx.drawImage(img, x, y, width, height);
+                URL.revokeObjectURL(url);
+                resolve();
+              } catch (err) {
+                console.error("Error drawing image:", err);
+                URL.revokeObjectURL(url);
+                reject(err);
+              }
+            };
+            img.onerror = (err) => {
+              console.error("Error loading image:", err);
+              URL.revokeObjectURL(url);
+              reject(err);
+            };
+            img.src = url;
+          } catch (err) {
+            console.error("Error serializing SVG:", err);
+            reject(err);
+          }
+        });
+      };
+
+      // Helper function to draw Risk Table using the ref with html-to-image
+      const drawRiskTableToCanvas = (riskTableRef, x, y) => {
+        return new Promise((resolve, reject) => {
+          if (!riskTableRef || !riskTableRef.current) {
+            reject(new Error("Risk table ref not available"));
+            return;
+          }
+
+          // Use the ref directly to capture the Risk Table element
+          const tableElement = riskTableRef.current;
+
+          htmlToImage.toCanvas(tableElement, {
+            backgroundColor: 'transparent',
+            pixelRatio: scaleFactor,
+            quality: 1.0
+          }).then(tableCanvas => {
+            try {
+              // Draw at the correct position (canvas is already scaled, but ctx is also scaled)
+              // So we need to divide by scaleFactor to get the correct size
+              ctx.drawImage(tableCanvas, x, y, tableCanvas.width / scaleFactor, tableCanvas.height / scaleFactor);
+              resolve();
+            } catch (err) {
+              console.error("Error drawing table canvas:", err);
+              reject(err);
+            }
+          }).catch(error => {
+            console.error("Error using html-to-image:", error);
+            reject(error);
+          });
+        });
+      };
+
+      // Draw both charts sequentially
+      const promises = [];
+      
+      // Always draw KM chart (SVG)
+      promises.push(drawSvgToCanvas(kmSvgElement, 0, 0));
+      
+      // Draw Risk Table using the ref directly
+      promises.push(drawRiskTableToCanvas(riskTableRef, 0, kmHeight + 20));
+      
+      Promise.all(promises)
+        .then(() => {
+          canvas.toBlob((blob) => {
+            if (!blob) {
+              console.error("Failed to create blob");
+              return;
+            }
+            const downloadUrl = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = downloadUrl;
+            a.download = `survival_analysis_combined.png`;
+            document.body.appendChild(a);
+            a.click();
+            setTimeout(() => {
+              document.body.removeChild(a);
+              URL.revokeObjectURL(downloadUrl);
+            }, 100);
+          }, "image/png");
+        })
+        .catch((error) => {
+          console.error("Error drawing charts to canvas:", error);
+          alert("Error downloading combined chart. Please check the console for details.");
+        });
+
+      setShowDownloadDropdown(false);
+    } catch (error) {
+      console.error("Error downloading combined chart:", error);
+      alert("Error downloading combined chart. Please check the console for details.");
+    }
+  };
 
   let valueA = 0;
   let valueB = 0;
@@ -77,47 +356,102 @@ const ExpandedChartModal = ({
                 {titles[dataset]}
               </Tab>
             ))}
+            {titles.survivalAnalysis && (
+              <Tab
+                active={activeTab === 'survivalAnalysis'}
+                onClick={() => setActiveTab('survivalAnalysis')}
+              >
+                {titles.survivalAnalysis}
+              </Tab>
+            )}
           </TabContainer>
 
           <div style={{ minWidth: 300, right: 10, top:2, position:'absolute', justifyContent: 'flex-end', display: 'flex', gap: 5 }}>
-            <span style={{ marginTop: 5, cursor: 'pointer' }} onClick={() => downloadChart(activeTab,true)}>
-              <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
-            </span>
+            {activeTab === 'survivalAnalysis' ? (
+              <DownloadDropdown ref={dropdownRef}>
+                <span 
+                  onClick={() => setShowDownloadDropdown(!showDownloadDropdown)}
+                  style={{ cursor: 'pointer', marginTop: 5 }}
+                >
+                  <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
+                </span>
+                {showDownloadDropdown && (
+                  <DownloadDropdownMenu>
+                    <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
+                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                      Kaplan-Meier 
+                    </DownloadDropdownItem>
+                    <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
+                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                      Risk Table 
+                    </DownloadDropdownItem>
+                    <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
+                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                      Download Both
+                    </DownloadDropdownItem>
+                  </DownloadDropdownMenu>
+                )}
+              </DownloadDropdown>
+            ) : (
+              <span style={{ marginTop: 5, cursor: 'pointer' }} onClick={() => downloadChart(activeTab,true)}>
+                <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
+              </span>
+            )}
             <CloseButton onClick={() => setExpandedChart(null)}>×</CloseButton>
           </div>
 
         </div>
         <ModalChartWrapper>
-          <div style={{ display: 'flex', flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
-           <fieldset style={{ border: 'none' }}>
-            <RadioGroup style={{ height: '100px', width:'180px', marginTop: '20px' }}>
-              <RadioLabel>
-                <RadioInput
-                  type="radio"
-                  name={`modalViewType-${activeTab}`}
-                  value="count"
-                  checked={viewType[activeTab] === 'count'}
-                  onChange={(e) => setViewType((prev) => ({ ...prev, [activeTab]: e.target.value }))}
+          {activeTab === 'survivalAnalysis' ? (
+            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+              <div ref={kmChartRef} style={{ width: '100%', marginBottom: '20px' }}>
+                <KaplanMeierChart
+                  data={kmPlotData}
+                  title="Overall Survival by Diagnosis"
+                  width={800}
+                  height={300}
+                  loading={kmLoading}
+                  error={kmError}
                 />
-                    <legend>
-                      # of Cases
-                    </legend>
-              </RadioLabel>
-              <RadioLabel>
-                <RadioInput
-                  type="radio"
-                  name={`modalViewType-${activeTab}`}
-                  value="percentage"
-                  checked={viewType[activeTab] === 'percentage'}
-                  onChange={(e) => setViewType((prev) => ({ ...prev, [activeTab]: e.target.value }))}
+              </div>
+              <div ref={riskTableRef} style={{ width: '100%', height: '300px' }}>
+                <RiskTable
+                  cohorts={cohorts}
+                  timeIntervals={timeIntervals}
                 />
-                <legend>
-                  % of Cases
-                </legend>
-              </RadioLabel>
-            </RadioGroup>
-             </fieldset>
-           {Array.isArray(data[activeTab]) && data[activeTab].length > 0 ? (
+              </div>
+            </div>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
+             <fieldset style={{ border: 'none' }}>
+              <RadioGroup style={{ height: '100px', width:'180px', marginTop: '20px' }}>
+                <RadioLabel>
+                  <RadioInput
+                    type="radio"
+                    name={`modalViewType-${activeTab}`}
+                    value="count"
+                    checked={viewType[activeTab] === 'count'}
+                    onChange={(e) => setViewType((prev) => ({ ...prev, [activeTab]: e.target.value }))}
+                  />
+                      <legend>
+                        # of Cases
+                      </legend>
+                </RadioLabel>
+                <RadioLabel>
+                  <RadioInput
+                    type="radio"
+                    name={`modalViewType-${activeTab}`}
+                    value="percentage"
+                    checked={viewType[activeTab] === 'percentage'}
+                    onChange={(e) => setViewType((prev) => ({ ...prev, [activeTab]: e.target.value }))}
+                  />
+                  <legend>
+                    % of Cases
+                  </legend>
+                </RadioLabel>
+              </RadioGroup>
+               </fieldset>
+             {Array.isArray(data[activeTab]) && data[activeTab].length > 0 ? (
   <ResponsiveContainer id={`expanded-chart-${activeTab}`} width="100%"  height="100%">
     <BarChart
       data={data[activeTab]}
@@ -177,7 +511,8 @@ const ExpandedChartModal = ({
   </div>
 )}
 
-          </div>
+            </div>
+          )}
         </ModalChartWrapper>
       </ModalContent>
     </ModalOverlay>,
