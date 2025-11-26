@@ -31,6 +31,7 @@ const Histogram = ({ c1, c2, c3 }) => {
   } = useKmplot({ c1, c2, c3 });
   const kmChartRef = useRef(null);
   const riskTableRef = useRef(null);
+  const survivalAnalysisContainerRef = useRef(null);
   const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
   const dropdownRef = useRef(null);
   
@@ -60,9 +61,24 @@ const Histogram = ({ c1, c2, c3 }) => {
       if (!svgElement) return;
 
       const scaleFactor = 2;
-      const bbox = svgElement.getBoundingClientRect();
-      const width = bbox.width;
-      const height = bbox.height;
+      
+      // Get SVG dimensions from viewBox or width/height attributes, fallback to bounding rect
+      let width, height;
+      const viewBox = svgElement.getAttribute('viewBox');
+      if (viewBox) {
+        const [, , vw, vh] = viewBox.split(/\s+/).map(parseFloat);
+        width = vw || svgElement.width.baseVal.value || svgElement.getBoundingClientRect().width;
+        height = vh || svgElement.height.baseVal.value || svgElement.getBoundingClientRect().height;
+      } else {
+        width = svgElement.width.baseVal.value || svgElement.getBoundingClientRect().width;
+        height = svgElement.height.baseVal.value || svgElement.getBoundingClientRect().height;
+      }
+
+      // Clone SVG and set explicit dimensions to ensure proper rendering
+      const clonedSvg = svgElement.cloneNode(true);
+      clonedSvg.setAttribute('width', width);
+      clonedSvg.setAttribute('height', height);
+      clonedSvg.removeAttribute('style'); // Remove any inline styles that might affect size
 
       const canvas = document.createElement("canvas");
       canvas.width = width * scaleFactor;
@@ -74,7 +90,7 @@ const Histogram = ({ c1, c2, c3 }) => {
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.scale(scaleFactor, scaleFactor);
 
-      const svgData = new XMLSerializer().serializeToString(svgElement);
+      const svgData = new XMLSerializer().serializeToString(clonedSvg);
       const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
       const url = URL.createObjectURL(svgBlob);
 
@@ -154,126 +170,36 @@ const Histogram = ({ c1, c2, c3 }) => {
     try {
       setShowDownloadDropdown(false);
       
-      if (!kmChartRef.current || !riskTableRef.current) return;
-      
-      const kmSvgElement = kmChartRef.current.querySelector("svg");
-      
-      if (!kmSvgElement) {
-        console.error("Could not find Kaplan-Meier SVG element");
+      if (!survivalAnalysisContainerRef.current) {
+        console.error("Survival analysis container ref not available");
+        alert("Container not available for download.");
         return;
       }
 
-      const scaleFactor = 2;
-      
-      // Get dimensions of KM chart
-      const kmBbox = kmSvgElement.getBoundingClientRect();
-      const kmWidth = kmBbox.width;
-      const kmHeight = kmBbox.height;
-      
-      // Get dimensions of Risk Table element using the ref directly
-      const tableElement = riskTableRef.current;
-      const tableBbox = tableElement.getBoundingClientRect();
-      const tableWidth = tableBbox.width;
-      const tableHeight = tableBbox.height;
-      
-      // Create a canvas that fits both charts vertically
-      const combinedWidth = Math.max(kmWidth, tableWidth);
-      const combinedHeight = kmHeight + tableHeight + 20; // 20px spacing between charts
-      
-      const canvas = document.createElement("canvas");
-      canvas.width = combinedWidth * scaleFactor;
-      canvas.height = combinedHeight * scaleFactor;
-      const ctx = canvas.getContext("2d");
-      const TRANSPARENT_COLOR = "#00000000";
+      const containerElement = survivalAnalysisContainerRef.current;
 
-      ctx.fillStyle = TRANSPARENT_COLOR;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.scale(scaleFactor, scaleFactor);
-
-      // Helper function to draw SVG to canvas
-      const drawSvgToCanvas = (svgElement, x, y) => {
-        return new Promise((resolve) => {
-          const svgData = new XMLSerializer().serializeToString(svgElement);
-          const svgBlob = new Blob([svgData], { type: "image/svg+xml;charset=utf-8" });
-          const url = URL.createObjectURL(svgBlob);
-
-          const img = new Image();
-          img.onload = () => {
-            ctx.drawImage(img, x, y, svgElement.getBoundingClientRect().width, svgElement.getBoundingClientRect().height);
-            URL.revokeObjectURL(url);
-            resolve();
-          };
-          img.onerror = () => {
-            URL.revokeObjectURL(url);
-            resolve();
-          };
-          img.src = url;
-        });
-      };
-
-      // Helper function to draw Risk Table using the ref with html-to-image
-      const drawRiskTableToCanvas = (riskTableRef, x, y) => {
-        return new Promise((resolve, reject) => {
-          if (!riskTableRef || !riskTableRef.current) {
-            reject(new Error("Risk table ref not available"));
-            return;
-          }
-
-          // Use the ref directly to capture the Risk Table element
-          const tableElement = riskTableRef.current;
-          
-          // Store original margin and temporarily remove it
-          const originalMargin = tableElement.style.marginLeft;
-          tableElement.style.marginLeft = '0';
-
-          htmlToImage.toCanvas(tableElement, {
-            backgroundColor: 'transparent',
-            pixelRatio: scaleFactor,
-            quality: 1.0
-          }).then(tableCanvas => {
-            try {
-              // Restore original margin
-              tableElement.style.marginLeft = originalMargin;
-              
-              // Draw at the correct position (canvas is already scaled, but ctx is also scaled)
-              // So we need to divide by scaleFactor to get the correct size
-              ctx.drawImage(tableCanvas, x, y, tableCanvas.width / scaleFactor, tableCanvas.height / scaleFactor);
-              resolve();
-            } catch (err) {
-              // Restore original margin even on error
-              tableElement.style.marginLeft = originalMargin;
-              console.error("Error drawing table canvas:", err);
-              reject(err);
-            }
-          }).catch(error => {
-            // Restore original margin even on error
-            tableElement.style.marginLeft = originalMargin;
-            console.error("Error using html-to-image:", error);
-            reject(error);
-          });
-        });
-      };
-
-      // Draw both charts sequentially
-      const promises = [
-        drawSvgToCanvas(kmSvgElement, 0, 0),
-        drawRiskTableToCanvas(riskTableRef, 0, kmHeight + 20)
-      ];
-      
-      Promise.all(promises).then(() => {
-        canvas.toBlob((blob) => {
-          const downloadUrl = URL.createObjectURL(blob);
-          const a = document.createElement("a");
-          a.href = downloadUrl;
-          a.download = `survival_analysis_combined.png`;
-          document.body.appendChild(a);
-          a.click();
+      htmlToImage.toPng(containerElement, {
+        backgroundColor: 'transparent',
+        pixelRatio: 2,
+        quality: 1.0,
+        useCORS: true,
+        allowTaint: true
+      }).then((dataUrl) => {
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `survival_analysis_combined.png`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
           document.body.removeChild(a);
-          URL.revokeObjectURL(downloadUrl);
-        }, "image/png");
+        }, 100);
+      }).catch((error) => {
+        console.error("Error downloading combined chart:", error);
+        alert("Error downloading combined chart. Please check the console for details.");
       });
     } catch (error) {
       console.error("Error downloading combined chart:", error);
+      alert("Error downloading combined chart. Please check the console for details.");
     }
   };
 
@@ -617,7 +543,7 @@ const Histogram = ({ c1, c2, c3 }) => {
                 </ChartActionButtons>
               </div>
 
-              <div style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
+              <div ref={survivalAnalysisContainerRef} style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                 <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px'}}>
                   <KaplanMeierChart
                     data={kmPlotData}
