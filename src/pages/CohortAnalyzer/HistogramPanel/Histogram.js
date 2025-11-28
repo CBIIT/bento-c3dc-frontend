@@ -14,6 +14,7 @@ import {
   HistogramContainer, ChartWrapper, HeaderSection, RadioGroup, RadioInput
   , RadioLabel, ChartActionButtons, ChartTitle,
   CenterContainer, DatasetSelectionTitle, DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem,
+  SurvivalAnalysisWrapper, SurvivalAnalysisHeader, SurvivalAnalysisContainer, KmChartWrapper, RiskTableWrapper,
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
@@ -502,11 +503,28 @@ const Histogram = ({ c1, c2, c3 }) => {
 
         {selectedDatasets.includes('survivalAnalysis') && (
           <ChartWrapper>
-            <div style={{ width: '100%',display: 'flex', flexDirection: 'column', justifyContent: 'center',alignItems: 'center' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', width: '100%', padding: 3 }}>
-                <p style={{fontSize: 19, fontWeight: 400 , fontFamily: 'Poppins', margin:2, padding: 3}}>
-                  Overall Survival by Diagnosis
-                </p>
+            <SurvivalAnalysisWrapper>
+              <SurvivalAnalysisHeader>
+                <ChartTitle>
+                  {' Overall Survival by Diagnosis'}
+                       <ToolTip
+                      maxWidth="235px"
+                      border={'1px solid #598ac5'}
+                      arrowBorder={'1px solid #598AC5'}
+                      title={<div>
+                        {"Participants whose last diagnosis age is later than their last survival follow-up age are excluded to ensure valid survival timelines."}
+                      </div>}
+                      placement="top-end"
+                      arrow
+                      interactive
+                      arrowSize="30px"
+                    >
+
+                      <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px", top: -3, position: 'relative', marginLeft: 3 }} />
+
+                    </ToolTip>
+                </ChartTitle>
+            
                 <ChartActionButtons>
                   <span onClick={() => {
                     if (!allInputsEmpty) {
@@ -541,10 +559,10 @@ const Histogram = ({ c1, c2, c3 }) => {
                     )}
                   </DownloadDropdown>
                 </ChartActionButtons>
-              </div>
+              </SurvivalAnalysisHeader>
 
-              <div ref={survivalAnalysisContainerRef} style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
-                <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px'}}>
+              <SurvivalAnalysisContainer ref={survivalAnalysisContainerRef}>
+                <KmChartWrapper ref={kmChartRef}>
                   <KaplanMeierChart
                     data={kmPlotData}
                     title=""
@@ -553,15 +571,15 @@ const Histogram = ({ c1, c2, c3 }) => {
                     loading={kmLoading}
                     error={kmError}
                   />
-                </div>
-                <div ref={riskTableRef} style={{width: '100%', paddingLeft: '30px', paddingRight: '50px'}}>
+                </KmChartWrapper>
+                <RiskTableWrapper ref={riskTableRef}>
                   <RiskTable
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
                   />
-                </div>
-              </div>
-            </div>
+                </RiskTableWrapper>
+              </SurvivalAnalysisContainer>
+            </SurvivalAnalysisWrapper>
           </ChartWrapper>
         )}
 

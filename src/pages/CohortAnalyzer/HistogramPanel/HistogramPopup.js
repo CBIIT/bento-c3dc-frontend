@@ -325,7 +325,7 @@ const ExpandedChartModal = ({
                     error={kmError}
                   />
                 </div>
-                <div ref={riskTableRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px'}}>
+                <div ref={riskTableRef} style={{width: '95%',marginLeft: '15px', marginRight: '100px'}}>
                   <RiskTable
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}

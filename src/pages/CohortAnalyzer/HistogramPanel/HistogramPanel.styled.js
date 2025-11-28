@@ -41,7 +41,7 @@ export const ChartTitle = styled.h2`
   color: #333;
   margin-bottom: 20px;
   text-align: left;
-
+  margin-left: 3px;
   &.empty {
     opacity: 0.3;
   }
@@ -232,4 +232,38 @@ export const DownloadDropdownItem = styled.div`
   }
 
 
+`;
+export const SurvivalAnalysisWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SurvivalAnalysisHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 3px;
+  padding-left: 12px;
+`;
+
+export const SurvivalAnalysisContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const KmChartWrapper = styled.div`
+  width: 100%;
+  padding-left: 160px;
+  margin-right: 100px;
+`;
+
+export const RiskTableWrapper = styled.div`
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 50px;
 `;
