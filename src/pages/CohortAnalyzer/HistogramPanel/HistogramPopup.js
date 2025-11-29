@@ -4,6 +4,7 @@ import {
   RadioGroup, RadioInput
   , RadioLabel, ModalChartWrapper, ModalContent
   , ModalOverlay, CloseButton, Tab, TabContainer,
+  barColors,
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
@@ -37,7 +38,10 @@ const ExpandedChartModal = ({
   kmChartRef,
   riskTableRef,
   cohorts,
-  timeIntervals
+  timeIntervals,
+  c1,
+  c2,
+  c3
 }) => {
   const [showDownloadDropdown, setShowDownloadDropdown] = React.useState(false);
   const dropdownRef = useRef(null);
@@ -317,12 +321,41 @@ const ExpandedChartModal = ({
               <div ref={survivalAnalysisContainerRef} style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
                 <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px'}}>
                   <KaplanMeierChart
-                    data={kmPlotData}
+                    data={React.useMemo(() => {
+                      if (!kmPlotData || !Array.isArray(kmPlotData)) return [];
+                      
+                      const selectedGroups = [];
+                      if (c1 && c1.length > 0) selectedGroups.push('c1');
+                      if (c2 && c2.length > 0) selectedGroups.push('c2');
+                      if (c3 && c3.length > 0) selectedGroups.push('c3');
+                      
+                      return kmPlotData.filter(item => {
+                        const group = item.group || item.group_id || '';
+                        return selectedGroups.some(selectedGroup => {
+                          const groupStr = String(group).toLowerCase();
+                          const selectedStr = selectedGroup.toLowerCase();
+                          return groupStr.includes(selectedStr) || 
+                                 groupStr.includes(selectedStr.replace('c', '')) ||
+                                 (selectedGroup === 'c1' && (groupStr === '1' || groupStr === 'cohort 1' || groupStr === 'cohort1')) ||
+                                 (selectedGroup === 'c2' && (groupStr === '2' || groupStr === 'cohort 2' || groupStr === 'cohort2')) ||
+                                 (selectedGroup === 'c3' && (groupStr === '3' || groupStr === 'cohort 3' || groupStr === 'cohort3'));
+                        });
+                      });
+                    }, [kmPlotData, c1, c2, c3])}
                     title="Overall Survival by Diagnosis"
                     width={"100%"}
                     height={300}
                     loading={kmLoading}
                     error={kmError}
+                    colors={React.useMemo(() => {
+                      const colors = [];
+                      if (c1 && c1.length > 0) colors.push(barColors.colorA);
+                      if (c2 && c2.length > 0) colors.push(barColors.colorB);
+                      if (c3 && c3.length > 0) colors.push(barColors.colorC);
+                      return colors;
+                    }, [c1, c2, c3])}
+                    showLabels={false}
+                    showLegend={false}
                   />
                 </div>
                 <div ref={riskTableRef} style={{width: '95%',marginLeft: '15px', marginRight: '100px'}}>

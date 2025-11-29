@@ -15,6 +15,7 @@ import {
   , RadioLabel, ChartActionButtons, ChartTitle,
   CenterContainer, DatasetSelectionTitle, DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem,
   SurvivalAnalysisWrapper, SurvivalAnalysisHeader, SurvivalAnalysisContainer, KmChartWrapper, RiskTableWrapper,
+  barColors,
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
@@ -30,6 +31,42 @@ const Histogram = ({ c1, c2, c3 }) => {
     loading: kmLoading, 
     error: kmError
   } = useKmplot({ c1, c2, c3 });
+
+  // Map cohort colors based on which cohorts are selected - memoized to update when cohorts change
+  const cohortColors = useMemo(() => {
+    const colors = [];
+    if (c1 && c1.length > 0) colors.push(barColors.colorA);
+    if (c2 && c2.length > 0) colors.push(barColors.colorB);
+    if (c3 && c3.length > 0) colors.push(barColors.colorC);
+    return colors;
+  }, [c1, c2, c3]);
+
+  // Filter KM plot data to only include selected cohorts
+  const filteredKmPlotData = useMemo(() => {
+    if (!kmPlotData || !Array.isArray(kmPlotData)) return [];
+    
+    const selectedGroups = [];
+    if (c1 && c1.length > 0) selectedGroups.push('c1');
+    if (c2 && c2.length > 0) selectedGroups.push('c2');
+    if (c3 && c3.length > 0) selectedGroups.push('c3');
+    
+    // Filter data to only include groups that match selected cohorts
+    return kmPlotData.filter(item => {
+      // Check if the item's group matches any selected cohort
+      // The group field might be 'c1', 'c2', 'c3' or '1', '2', '3' or similar
+      const group = item.group || item.group_id || '';
+      return selectedGroups.some(selectedGroup => {
+        // Handle different group formats: 'c1', '1', 'Cohort 1', etc.
+        const groupStr = String(group).toLowerCase();
+        const selectedStr = selectedGroup.toLowerCase();
+        return groupStr.includes(selectedStr) || 
+               groupStr.includes(selectedStr.replace('c', '')) ||
+               (selectedGroup === 'c1' && (groupStr === '1' || groupStr === 'cohort 1' || groupStr === 'cohort1')) ||
+               (selectedGroup === 'c2' && (groupStr === '2' || groupStr === 'cohort 2' || groupStr === 'cohort2')) ||
+               (selectedGroup === 'c3' && (groupStr === '3' || groupStr === 'cohort 3' || groupStr === 'cohort3'));
+      });
+    });
+  }, [kmPlotData, c1, c2, c3]);
   const kmChartRef = useRef(null);
   const riskTableRef = useRef(null);
   const survivalAnalysisContainerRef = useRef(null);
@@ -260,11 +297,11 @@ const Histogram = ({ c1, c2, c3 }) => {
     '36 Months',
   ];
   const titles = {
+    survivalAnalysis: 'Survival Analysis',
     sexAtBirth: 'Sex at Birth',
     race: 'Race',
     treatmentType: 'Treatment Type',
     response: 'Treatment Outcome',
-    survivalAnalysis: 'Survival Analysis',
   };
   const nullImages = {
     treatmentType: TreatmentTypePlaceHolder,
@@ -341,6 +378,90 @@ const Histogram = ({ c1, c2, c3 }) => {
 
       <CenterContainer>
         {/* Multiple Charts */}
+        {selectedDatasets.includes('survivalAnalysis') && (
+          <ChartWrapper>
+            <SurvivalAnalysisWrapper>
+              <SurvivalAnalysisHeader>
+                <ChartTitle>
+                  {' Overall Survival by Diagnosis'}
+                       <ToolTip
+                      maxWidth="235px"
+                      border={'1px solid #598ac5'}
+                      arrowBorder={'1px solid #598AC5'}
+                      title={<div>
+                        {"Participants whose last diagnosis age is later than their last survival follow-up age are excluded to ensure valid survival timelines."}
+                      </div>}
+                      placement="top-end"
+                      arrow
+                      interactive
+                      arrowSize="30px"
+                    >
+
+                      <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px", top: -3, position: 'relative', marginLeft: 3 }} />
+
+                    </ToolTip>
+                </ChartTitle>
+            
+                <ChartActionButtons>
+                  <span onClick={() => {
+                    if (!allInputsEmpty) {
+                      setExpandedChart('survivalAnalysis');
+                      setActiveTab('survivalAnalysis');
+                    }
+                  }} style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}>
+                    <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
+                  </span>
+                  <DownloadDropdown ref={dropdownRef}>
+                    <span 
+                      onClick={() => !allInputsEmpty && setShowDownloadDropdown(!showDownloadDropdown)}
+                      style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}
+                    >
+                      <img src={DownloadIcon} alt={"download"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />    
+                    </span>
+                    {showDownloadDropdown && !allInputsEmpty && (
+                      <DownloadDropdownMenu>
+                        <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
+                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                          Kaplan-Meier 
+                        </DownloadDropdownItem>
+                        <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
+                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                          Risk Table 
+                        </DownloadDropdownItem>
+                        <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
+                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                          Download Both
+                        </DownloadDropdownItem>
+                      </DownloadDropdownMenu>
+                    )}
+                  </DownloadDropdown>
+                </ChartActionButtons>
+              </SurvivalAnalysisHeader>
+
+              <SurvivalAnalysisContainer ref={survivalAnalysisContainerRef}>
+                <KmChartWrapper ref={kmChartRef}>
+                  <KaplanMeierChart
+                    data={filteredKmPlotData}
+                    title=""
+                    width={"100%"}
+                    height={200}
+                    loading={kmLoading}
+                    error={kmError}
+                    colors={cohortColors}
+                    showLabels={false}
+                    showLegend={false}
+                  />
+                </KmChartWrapper>
+                <RiskTableWrapper ref={riskTableRef}>
+                  <RiskTable
+                    cohorts={cohorts}
+                    timeIntervals={timeIntervals}
+                  />
+                </RiskTableWrapper>
+              </SurvivalAnalysisContainer>
+            </SurvivalAnalysisWrapper>
+          </ChartWrapper>
+        )}
         {selectedDatasets
           .filter(dataset => dataset !== 'survivalAnalysis') // Filter out survivalAnalysis as it's rendered separately
           .map((dataset, index) => {
@@ -501,87 +622,7 @@ const Histogram = ({ c1, c2, c3 }) => {
           );
         })}
 
-        {selectedDatasets.includes('survivalAnalysis') && (
-          <ChartWrapper>
-            <SurvivalAnalysisWrapper>
-              <SurvivalAnalysisHeader>
-                <ChartTitle>
-                  {' Overall Survival by Diagnosis'}
-                       <ToolTip
-                      maxWidth="235px"
-                      border={'1px solid #598ac5'}
-                      arrowBorder={'1px solid #598AC5'}
-                      title={<div>
-                        {"Participants whose last diagnosis age is later than their last survival follow-up age are excluded to ensure valid survival timelines."}
-                      </div>}
-                      placement="top-end"
-                      arrow
-                      interactive
-                      arrowSize="30px"
-                    >
-
-                      <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px", top: -3, position: 'relative', marginLeft: 3 }} />
-
-                    </ToolTip>
-                </ChartTitle>
-            
-                <ChartActionButtons>
-                  <span onClick={() => {
-                    if (!allInputsEmpty) {
-                      setExpandedChart('survivalAnalysis');
-                      setActiveTab('survivalAnalysis');
-                    }
-                  }} style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}>
-                    <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
-                  </span>
-                  <DownloadDropdown ref={dropdownRef}>
-                    <span 
-                      onClick={() => !allInputsEmpty && setShowDownloadDropdown(!showDownloadDropdown)}
-                      style={{ cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}
-                    >
-                      <img src={DownloadIcon} alt={"download"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />    
-                    </span>
-                    {showDownloadDropdown && !allInputsEmpty && (
-                      <DownloadDropdownMenu>
-                        <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
-                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
-                          Kaplan-Meier 
-                        </DownloadDropdownItem>
-                        <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
-                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
-                          Risk Table 
-                        </DownloadDropdownItem>
-                        <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
-                          <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
-                          Download Both
-                        </DownloadDropdownItem>
-                      </DownloadDropdownMenu>
-                    )}
-                  </DownloadDropdown>
-                </ChartActionButtons>
-              </SurvivalAnalysisHeader>
-
-              <SurvivalAnalysisContainer ref={survivalAnalysisContainerRef}>
-                <KmChartWrapper ref={kmChartRef}>
-                  <KaplanMeierChart
-                    data={kmPlotData}
-                    title=""
-                    width={"100%"}
-                    height={200}
-                    loading={kmLoading}
-                    error={kmError}
-                  />
-                </KmChartWrapper>
-                <RiskTableWrapper ref={riskTableRef}>
-                  <RiskTable
-                    cohorts={cohorts}
-                    timeIntervals={timeIntervals}
-                  />
-                </RiskTableWrapper>
-              </SurvivalAnalysisContainer>
-            </SurvivalAnalysisWrapper>
-          </ChartWrapper>
-        )}
+        
 
 
 
@@ -605,6 +646,9 @@ const Histogram = ({ c1, c2, c3 }) => {
           riskTableRef={riskTableRef}
           cohorts={cohorts}
           timeIntervals={timeIntervals}
+          c1={c1}
+          c2={c2}
+          c3={c3}
         />
       )}
 

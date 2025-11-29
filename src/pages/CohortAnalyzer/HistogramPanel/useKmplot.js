@@ -1,5 +1,27 @@
-import { useEffect, useState } from 'react';
-import mocData from './brain_tumor_data.json';
+import { useEffect, useState, useRef } from 'react';
+import { gql } from '@apollo/client';
+import { useApolloClient } from '@apollo/client';
+
+const KM_PLOT_QUERY = gql`
+  query kMPlot(
+    $c1: [String],
+    $c2: [String],
+    $c3: [String]
+  ) {
+    kMPlot(
+      c1: $c1,
+      c2: $c2,
+      c3: $c3
+    ) {
+      id
+      time
+      event
+      group
+      __typename
+    }
+  }
+`;
+
 /**
  * Custom hook to fetch and manage KM plot data
  * @param {Array} c1 - Cohort 1 array
@@ -8,59 +30,76 @@ import mocData from './brain_tumor_data.json';
  * @returns {Object} { data, loading, error }
  */
 export default function useKmplot({ c1, c2, c3 }) {
-  const [data, setData] = useState(mocData);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const client = useApolloClient();
+  const isMountedRef = useRef(true);
+  const fetchInProgressRef = useRef(false);
 
   useEffect(() => {
-    // Only fetch if at least one cohort is provided
-    if ((!c1 || c1.length === 0) && (!c2 || c2.length === 0) && (!c3 || c3.length === 0)) {
-      setData(mocData);
+    isMountedRef.current = true;
+    
+    return () => {
+      isMountedRef.current = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    // Don't fetch if no cohorts are selected
+    const hasCohorts = (c1 && c1.length > 0) || (c2 && c2.length > 0) || (c3 && c3.length > 0);
+    
+    if (!hasCohorts) {
+      setData([]);
+      setLoading(false);
+      setError(null);
       return;
     }
     
-    // TODO: Uncomment when API is ready
-    // setLoading(true);
-    // setError(null);
-
-    // FAKE API RESPONSE - Commented out until API is ready
-    // const fetchKmPlot = async () => {
-    //   try {
-    //     const response = await fetch('/graphql', {
-    //       method: 'POST',
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //       body: JSON.stringify({
-    //         query: `query kmPlot($c1: [String], $c2: [String], $c3: [String]) {\n  kmPlot(c1: $c1, c2: $c2, c3: $c3) {\n    id\n    time\n    event\n    group\n    __typename\n  }\n}`,
-    //         variables: { c1, c2, c3 },
-    //       }),
-    //     });
-    //     const result = await response.json();
-    //     if (result.errors) {
-    //       throw new Error(result.errors[0]? result.errors[0].message : "" || 'Unknown error');
-    //     }
-    //     setData(result.data.kmPlot || mocData);
-    //   } catch (err) {
-    //     setError(err);
-    //     setData();
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
-
-    // fetchKmPlot();
-
-    // TEMPORARY: Simulate API call with mock data
-    // Simulating async behavior with setTimeout
-    setLoading(true);
-    setTimeout(() => {
-      // Fake successful response - using mock data
-      setData(mocData);
-      setLoading(false);
+    // Prevent double fetch calls
+    if (fetchInProgressRef.current) {
+      return;
+    }
+    
+    const fetchKmPlot = async () => {
+      fetchInProgressRef.current = true;
+      setLoading(true);
       setError(null);
-    }, 500); // Simulate 500ms API delay
-  }, [c1, c2, c3]);
+      
+      try {
+        const result = await client.query({
+          query: KM_PLOT_QUERY,
+          variables: { c1, c2, c3 },
+        });
+
+        // Only update state if component is still mounted
+        if (!isMountedRef.current) {
+          return;
+        }
+
+        if (result.errors) {
+          throw new Error((result.errors[0] && result.errors[0].message) || 'Unknown error');
+        }
+
+        // Use the fetched data from GraphQL
+        setData((result.data && result.data.kMPlot) || []);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching KM plot data:', err);
+        if (isMountedRef.current) {
+          setError(err);
+          setData([]);
+        }
+      } finally {
+        if (isMountedRef.current) {
+          setLoading(false);
+        }
+        fetchInProgressRef.current = false;
+      }
+    };
+
+    fetchKmPlot();
+  }, [c1, c2, c3, client]);
 
   return { data, loading, error };
 }
