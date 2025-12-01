@@ -162,9 +162,41 @@ export default () => ({
     fontWeight: 600,
   },
   searchContainer: {
-    paddingTop: '15px',
+    paddingTop: '7px',
     margin: '0 2px',
     marginRight: 6,
+  },
+  expandedDisplayButton: {
+    border: '1px solid #535353',
+    borderRadius: 8,
+    fontFamily: 'Raleway',
+    fontWeight: 600,
+    lineHeight: '100%',
+    letterSpacing: '2%',
+    textTransform: 'uppercase',
+    color: '#ffffff',
+    justifyContent: 'center',
+  },
+  expandedDisplayButtonStudy: {
+    backgroundColor: '#006A8F !important',
+  },
+  expandedDisplayButtonDemographics: {
+    backgroundColor: '#E39520 !important',
+  },
+  expandedDisplayButtonDiagnosis: {
+    backgroundColor: '#35B899 !important',
+  },
+  expandedDisplayButtonTreatment: {
+    backgroundColor: '#268CEA !important',
+  },
+  expandedDisplayButtonTreatmentresponse: {
+    backgroundColor: '#9664C7 !important',
+  },
+  expandedDisplayButtonSurvival: {
+    backgroundColor: '#006B57 !important',
+  },
+  expandedDisplayButtonGeneticanalysis: {
+    backgroundColor: '#862405 !important',
   },
   findCaseButton: {
     // marginLeft: '105px',

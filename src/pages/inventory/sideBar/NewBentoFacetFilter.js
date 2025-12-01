@@ -215,6 +215,7 @@ const NewBentoFacetFilter = ({
               CustomFacetView={CustomFacetView}
               queryParams={queryParams}
               unknownAgesState={unknownAgesState}
+              searchFacetClasses={classes}
             />
           </FacetFilterThemeProvider>
         )
