@@ -23,7 +23,7 @@ import WidgetView from './widget/WidgetView';
 import StatsView from '../../components/Stats/StatsView';
 import TabsView from './tabs/TabsView';
 import QueryBarView from './filterQueryBar/QueryBarView';
-import UseGuideButton from './sideBar/ExploreUserGuide';
+import UserGuideButton from './sideBar/ExploreUserGuide';
 import { CircularProgress } from '@material-ui/core';
 import vectorIcon from '../../assets/icons/Vector_icon.svg';
 import closeIcon from '../../assets/icons/Window_Close_Icon.svg';
@@ -276,7 +276,7 @@ const Inventory = ({
             <div className={classes.sideBarCover} />
             <label htmlFor="local_find_input" style={{ display: 'none' }}>Participant ID Text Search box</label>
             <div className={classes.sideBarMenuSider}>
-              <UseGuideButton />
+              <UserGuideButton />
               <ClearAllFiltersBtn
                 Component={CustomClearAllFiltersBtn}
                 activeFilters={activeFilters}

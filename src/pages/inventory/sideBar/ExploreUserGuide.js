@@ -20,13 +20,14 @@ import ContactUsSection from './ExploreUserGuide/ContactUsSection';
 const UseGuideButtonContainer = styled.div`
   .buttonContainer {
     display: flex;
-    margin-left: 19px;
-    margin-top: 17px;
+    margin-left: 12.5px;
+    margin-top: 15px;
   }
 
   .buttonText {
-    color: #627B7A;
+    color: #FFFFFF;
     font-weight: 400;
+    font-family: 'Open Sans';
     font-size: 14px;
     line-height: 30px;
     margin-left: 8px;
@@ -89,7 +90,7 @@ const ExploreUserGuide = ({ classes }) => {
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
         >
-          <img src={isHover ? userguideIconWhite : userguideIcon} alt="user guide icon" />
+          <img src={isHover ? userguideIcon : userguideIconWhite} alt="user guide icon" />
         </Button>
         <div className='buttonText'>Explore the C3DC User Guide</div>
       </div>

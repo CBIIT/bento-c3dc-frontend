@@ -1,22 +1,21 @@
 export default () => ({
     customButton: {
-    borderRadius: '9px',
-    maxWidth: '30px',
-    maxHeight: '30px',
-    minWidth: '30px',
-    minHeight: '30px',
-    marginTop: '0px',
-    fontSize: 9,
-    textTransform: 'none',
-    color: '#3d4241',
-    marginLeft: '0px',
-    border: '1px solid #ffffff',
-    backgroundColor: 'transparent',
-
-    '&:hover': {
-      backgroundColor: '#ffffff',
-      border: '1px solid #063134',
-    },
+      borderRadius: '9px',
+      maxWidth: '30px',
+      maxHeight: '30px',
+      minWidth: '30px',
+      minHeight: '30px',
+      marginTop: '0px',
+      fontSize: 9,
+      textTransform: 'none',
+      color: '#3d4241',
+      marginLeft: '0px',
+      border: '1px solid #ffffff',
+      backgroundColor: 'transparent',
+      '&:hover': {
+        backgroundColor: '#ffffff',
+        border: '1px solid #063134',
+      },
   },
   divider: {
     marginLeft: '0px',
@@ -48,13 +47,15 @@ export default () => ({
   floatRight: {
     display: 'flex',
     backgroundColor: '#4F7C7F',
-    padding: '7px 0px 10px 6px',
+    padding: '8px 0px 8px 12.5px',
   },
   resetText: {
     marginTop: '0px',
     marginLeft: '8px',
     color: '#ffffff',
     fontSize: 14,
+    fontFamily: 'Open Sans',
+    fontWeight: 400,
     lineHeight: '30px',
   },
   resetTextDisabled: {
@@ -62,6 +63,8 @@ export default () => ({
     marginLeft: '8px',
     color: '#ffffff',
     fontSize: 14,
+    fontFamily: 'Open Sans',
+    fontWeight: 400,
     lineHeight: '30px',
   },
   backdrop: {
