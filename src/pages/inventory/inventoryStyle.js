@@ -11,9 +11,11 @@ export default () => ({
     color: '#3d4241',
     marginLeft: '0px',
     border: '1px solid #ffffff',
+    backgroundColor: 'transparent',
+
     '&:hover': {
       backgroundColor: '#ffffff',
-      color: '#337478',
+      border: '1px solid #063134',
     },
   },
   divider: {

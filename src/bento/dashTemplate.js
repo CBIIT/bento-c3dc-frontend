@@ -1,7 +1,6 @@
 import { sortType, InputTypes } from '@bento-core/facet-filter';
-import clearButton from '../assets/icons/Clear_Icon.svg';
-import clearButtonActive from '../assets/icons/Clear_Icon_Active.svg';
-import clearButtonActiveHover from '../assets/icons/Clear_Icon_White.svg';
+import clearButtonHover from '../assets/icons/Clear_Icon_Filled.svg';
+import clearButton from '../assets/icons/Clear_Icon_White.svg';
 import questionIcon from '../assets/icons/Question_Icon.svg';
 
 const DEMOGRAPHICS = 'Demographics';
@@ -17,8 +16,7 @@ const GENETICANALYSIS = 'Geneticanalysis';
 // Ideal size for resetIcon is 16x16 px
 export const resetIcon = {
   src: clearButton,
-  srcActive: clearButtonActive,
-  srcActiveHover: clearButtonActiveHover,
+  srcHover: clearButtonHover,
   alt: 'Reset icon',
   size: '12px',
 };
@@ -706,3 +704,16 @@ export const widgetToolTipConfig = {
     plural: 'treatment types',
   },
 };
+
+// --------------- query url configuration --------------
+// Facets, tab, pagination paramters
+export const queryParams = [
+  'import_from', 'p_id', 'u', 'u_fc', 'u_um', 'sex_at_birth', 'race',
+  'age_at_diagnosis', 'age_at_diagnosis_unknownAges', 'diagnosis', 'diagnosis_anatomic_site', 'diagnosis_classification_system', 'diagnosis_basis', 'diagnosis_category', 'disease_phase',
+  'treatment_type', 'treatment_agent', 'age_at_treatment_start', 'age_at_treatment_start_unknownAges', 'response_category', 'age_at_response', 'age_at_response_unknownAges',
+  'age_at_last_known_survival_status', 'age_at_last_known_survival_status_unknownAges', 'first_event', 'last_known_survival_status', 
+  'participant_age_at_collection', 'participant_age_at_collection_unknownAges', 'sample_anatomic_site', 'sample_tumor_status', 'tumor_classification', 
+  'data_category', 'file_type', 'file_mapping_level', 'dbgap_accession', 'study_name', 'study_status',
+  'library_selection', 'library_strategy', 'library_source_material', 'library_source_molecule',
+  'tab'
+];

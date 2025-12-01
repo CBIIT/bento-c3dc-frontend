@@ -235,7 +235,7 @@ const Inventory = ({
           style={disable ? { border: '1px solid #ffffff' } : {}}
         >
           <img
-            src={disable ? resetIcon.src : (isHover ? resetIcon.srcActiveHover : resetIcon.srcActive)}
+            src={isHover ? resetIcon.srcHover : resetIcon.src}
             height={resetIcon.size}
             width={resetIcon.size}
             alt={resetIcon.alt}
