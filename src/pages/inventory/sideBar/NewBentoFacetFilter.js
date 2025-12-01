@@ -174,7 +174,7 @@ const NewBentoFacetFilter = ({
   * 1. Config local search input for Case
   * 2. Facet Section Name
   */
-  const CustomFacetView = ({ facet, facetClasses }) => {
+  const CustomFacetView = ({ facet, facetClasses, expanded }) => {
     return (
       <>
         <CustomExpansionPanelSummary
@@ -185,8 +185,7 @@ const NewBentoFacetFilter = ({
             />
           )}
           id={facet.label}
-          className={classes.customExpansionPanelSummaryRoot}
-        >
+          className={(facet.slider || facet.search) && expanded ? classes.customExpansionPanelSummaryRootSpecial : classes.customExpansionPanelSummaryRoot}      >
           <div
             id={facet.label}
             className={

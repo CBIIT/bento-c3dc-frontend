@@ -90,6 +90,12 @@ export default () => ({
     paddingLeft: 0,
     borderBottom: '1px solid #D2D2D2',
   },
+  customExpansionPanelSummaryRootSpecial:{
+    height: '42px',
+    padding: '0',
+    flexDirection: 'row-reverse',
+    paddingLeft: 0,
+  },
   customExpansionPanelSummaryRootSlider: {
     height: '42px',
     padding: '0',
@@ -97,7 +103,18 @@ export default () => ({
     paddingLeft: 0,
   },
   sortGroup: {
-    padding: '10px',
+    padding: '10px 10px 10px 10px',
+  },
+  sortGroupIconSearchFacet: {
+    cursor: 'pointer',
+    fontFamily: 'Nunito',
+    fontSize: '10px',
+    marginRight: '12px',
+    marginLeft: '20px',
+  },
+  sortGroupSearchFacet: {
+    padding: '12px 4px 6px 0px',
+    display: 'flex',
   },
   sectionSummaryTextContainer: {
     display: 'flex',
@@ -162,9 +179,20 @@ export default () => ({
     fontWeight: 600,
   },
   searchContainer: {
-    paddingTop: '7px',
+    paddingTop: '0px',
     margin: '0 2px',
     marginRight: 6,
+  },
+  searchBox: {
+    fontSize: '14px',
+    fontFamily: 'Nunito',
+    width: 'calc(100% - 26px)',
+    height: '30px',
+    marginTop: '0px',
+    borderRadius: '5px',
+    marginLeft: '6px',
+    border: '1px solid',
+    padding: '5px',
   },
   expandedDisplayButton: {
     border: '1px solid #535353',
