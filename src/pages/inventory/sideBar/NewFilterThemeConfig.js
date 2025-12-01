@@ -39,62 +39,50 @@ const theme = {
     },
     MuiListItem: {
       root: {
-        '&.diagnosisCheckedEven': {
-          backgroundColor: '#E4F6F5',
-        },
-        '&.diagnosisCheckedOdd': {
-          backgroundColor: '#EAFFFE',
-        },
-        '&.demographicsCheckedEven': {
-          backgroundColor: '#E4F6F5',
-        },
-        '&.demographicsCheckedOdd': {
-          backgroundColor: '#EAFFFE',
-        },
-        '&.treatmentCheckedEven': {
-          backgroundColor: '#E4F6F5',
-        },
-        '&.treatmentCheckedOdd': {
-          backgroundColor: '#EAFFFE',
-        },
-        '&.treatmentresponseCheckedEven': {
-          backgroundColor: '#E4F6F5',
-        },
-        '&.treatmentresponseCheckedOdd': {
-          backgroundColor: '#EAFFFE',
-        },
-        '&.survivalCheckedEven': {
-          backgroundColor: '#E4F6F5',
-        },
-        '&.survivalCheckedOdd': {
-          backgroundColor: '#EAFFFE',
-        },
-        '&.samplesCheckedEven': {
-          backgroundColor: '#E4F6F5',
-        },
-        '&.samplesCheckedOdd': {
-          backgroundColor: '#EAFFFE',
-        },
-        '&.datacategoryCheckedEven': {
-          backgroundColor: '#E4F6F5',
-        },
-        '&.datacategoryCheckedOdd': {
-          backgroundColor: '#EAFFFE',
-        },
         '&.studyCheckedEven': {
-          backgroundColor: '#E4F6F5',
+          backgroundColor: '#EFF3F1',
         },
         '&.studyCheckedOdd': {
-          backgroundColor: '#EAFFFE',
+          backgroundColor: '#F9FAFA',
         },
-        '&.sequencinglibraryCheckedEven': {
-          backgroundColor: '#E4F6F5',
+        '&.demographicsCheckedEven': {
+          backgroundColor: '#EFF3F1',
         },
-        '&.sequencinglibraryCheckedOdd': {
-          backgroundColor: '#EAFFFE',
+        '&.demographicsCheckedOdd': {
+          backgroundColor: '#F9FAFA',
+        },
+        '&.diagnosisCheckedEven': {
+          backgroundColor: '#EFF3F1',
+        },
+        '&.diagnosisCheckedOdd': {
+          backgroundColor: '#F9FAFA',
+        },
+        '&.treatmentCheckedEven': {
+          backgroundColor: '#EFF3F1',
+        },
+        '&.treatmentCheckedOdd': {
+          backgroundColor: '#F9FAFA',
+        },
+        '&.treatmentresponseCheckedEven': {
+          backgroundColor: '#EFF3F1',
+        },
+        '&.treatmentresponseCheckedOdd': {
+          backgroundColor: '#F9FAFA',
+        },
+        '&.survivalCheckedEven': {
+          backgroundColor: '#EFF3F1',
+        },
+        '&.survivalCheckedOdd': {
+          backgroundColor: '#F9FAFA',
+        },
+        '&.geneticanalysisCheckedEven': {
+          backgroundColor: '#EFF3F1',
+        },
+        '&.geneticanalysisCheckedOdd': {
+          backgroundColor: '#F9FAFA',
         },
       },
-    },
+    },/*
     MuiSvgIcon: {
       root: {
         '&.demographicsCheckedIcon': {
@@ -116,91 +104,77 @@ const theme = {
           color: '#6D5F5B',
         },
       },
-    },
+    },*/
     MuiTypography: {
       root: {
-        '&.diagnosisSubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
+        '&.studySubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
           fontSize: '11px',
           fontFamily: 'Nunito',
           marginRight: '0px',
+          marginTop: 'auto',
           fontWeight: '600',
-
         },
         '&.demographicsSubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
           fontSize: '11px',
           fontFamily: 'Nunito',
           marginRight: '0px',
+          marginTop: 'auto',
           fontWeight: '600',
-
+        },
+        '&.diagnosisSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
         },
         '&.treatmentSubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
           fontSize: '11px',
           fontFamily: 'Nunito',
           marginRight: '0px',
+          marginTop: 'auto',
           fontWeight: '600',
-
         },
         '&.treatmentresponseSubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
           fontSize: '11px',
           fontFamily: 'Nunito',
           marginRight: '0px',
+          marginTop: 'auto',
           fontWeight: '600',
         },
         '&.survivalSubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
           fontSize: '11px',
           fontFamily: 'Nunito',
           marginRight: '0px',
+          marginTop: 'auto',
           fontWeight: '600',
         },
-        '&.samplesSubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
+        '&.geneticanalysisSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
           fontSize: '11px',
           fontFamily: 'Nunito',
           marginRight: '0px',
-          fontWeight: '600',
-        },
-        '&.datacategorySubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
-          fontSize: '11px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-          fontWeight: '600',
-        },
-        '&.studySubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
-          fontSize: '11px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-          fontWeight: '600',
-        },
-        '&.sequencinglibrarySubjects': {
-          color: '#325A67',
-          backgroundColor: '#CEECEB',
-          padding: '1px 2px',
-          fontSize: '11px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
+          marginTop: 'auto',
           fontWeight: '600',
         },
       },
