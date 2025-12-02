@@ -12,7 +12,6 @@ import DownloadIconBorderless from "../../../assets/icons/download-icon-borderle
 import CustomChartTooltip from './CustomChartTooltip';
 import CustomXAxisTick from './CustomXAxisTick';
 import { KaplanMeierChart } from '@bento-core/kmplot';
-import RiskTable from '@bento-core/risk-table';
 import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem } from './HistogramPanel.styled';
 
 const htmlToImage = require('html-to-image');
@@ -364,12 +363,12 @@ const ExpandedChartModal = ({
                     showLegend={false}
                   />
                 </div>
-                <div ref={riskTableRef} style={{width: '95%',marginLeft: '15px', marginRight: '100px'}}>
+                {/*<div ref={riskTableRef} style={{width: '95%',marginLeft: '15px', marginRight: '100px'}}>
                   <RiskTable
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
                   />
-                </div>
+                </div>*/}
               </div>
             </div>
           ) : (

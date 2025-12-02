@@ -14,13 +14,12 @@ import {
   HistogramContainer, ChartWrapper, HeaderSection, RadioGroup, RadioInput
   , RadioLabel, ChartActionButtons, ChartTitle,
   CenterContainer, DatasetSelectionTitle, DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem,
-  SurvivalAnalysisWrapper, SurvivalAnalysisHeader, SurvivalAnalysisContainer, KmChartWrapper, RiskTableWrapper,
+  SurvivalAnalysisWrapper, SurvivalAnalysisHeader, SurvivalAnalysisContainer, KmChartWrapper, 
   barColors,
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
-import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg';
-import RiskTable from '@bento-core/risk-table';
+import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg'
 
 const htmlToImage = require('html-to-image');
 
@@ -389,7 +388,7 @@ const Histogram = ({ c1, c2, c3 }) => {
                       border={'1px solid #598ac5'}
                       arrowBorder={'1px solid #598AC5'}
                       title={<div>
-                        {"Participants whose last diagnosis age is later than their last survival follow-up age are excluded to ensure valid survival timelines."}
+                        {"Participants with unreported age values or whose last diagnosis age is later than their last survival follow-up were excluded to ensure valid survival timelines. "}
                       </div>}
                       placement="top-end"
                       arrow
@@ -452,12 +451,12 @@ const Histogram = ({ c1, c2, c3 }) => {
                     showLegend={false}
                   />
                 </KmChartWrapper>
-                <RiskTableWrapper ref={riskTableRef}>
+                {/*<RiskTableWrapper ref={riskTableRef}>
                   <RiskTable
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
                   />
-                </RiskTableWrapper>
+                </RiskTableWrapper> */}
               </SurvivalAnalysisContainer>
             </SurvivalAnalysisWrapper>
           </ChartWrapper>
