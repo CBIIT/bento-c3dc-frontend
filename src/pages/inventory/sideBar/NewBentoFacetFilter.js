@@ -158,6 +158,7 @@ const NewBentoFacetFilter = ({
 
     let searchConfig = {
       title: 'Participants',
+      searchLabel: 'Demographics',
     }
 
     return (
