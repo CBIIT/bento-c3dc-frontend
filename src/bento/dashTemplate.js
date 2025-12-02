@@ -56,6 +56,9 @@ export const facetSectionVariables = {
     colorPrimary: {
       color: '#794900',
     },
+    colorPrimaryTreatment: {
+      color: '#057ebd !important',
+    },
     sliderRoot: {
       marginTop: '1px',
       marginLeft: '20px',
@@ -186,6 +189,39 @@ export const facetSectionVariables = {
     },
   }
 
+// Helper function to create section-specific slider styles
+const createSliderStylesForSection = (color) => ({
+  ...sliderStyles,
+  colorPrimary: {
+    color: color,
+  },
+  rail: {
+    ...sliderStyles.rail,
+    background: '#CECECE',
+    opacity: 1,
+    top: '11px',
+  },
+  track: {
+    ...sliderStyles.track,
+    background: color,
+    height: '6px',
+    top: '11px',
+  },
+  thumb: {
+    ...sliderStyles.thumb,
+    background: color,
+  },
+});
+
+// Section-specific slider styles
+//const studySliderStyles = createSliderStylesForSection('#006A8F');
+//const demographicsSliderStyles = createSliderStylesForSection('#E39520');
+const diagnosisSliderStyles = createSliderStylesForSection('#35B899');
+const treatmentSliderStyles = createSliderStylesForSection('#268CEA');
+const treatmentresponseSliderStyles = createSliderStylesForSection('#9664C7');
+const survivalSliderStyles = createSliderStylesForSection('#006B57');
+//const geneticanalysisSliderStyles = createSliderStylesForSection('#862405');
+
 export const facetsConfig = [
   {
     section: STUDY,
@@ -246,7 +282,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: sliderStyles,
+    style: diagnosisSliderStyles,
   },
   {
     section: DIAGNOSIS,
@@ -334,7 +370,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: sliderStyles,
+    style: treatmentSliderStyles,
   },
   {
     section: TREATMENT,
@@ -351,7 +387,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: sliderStyles,
+    style: treatmentSliderStyles,
   },
   {
     section: TREATMENT,
@@ -401,7 +437,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: sliderStyles,
+    style: treatmentresponseSliderStyles,
   },
   {
     section: TREATMENTRESPONSE,
@@ -451,7 +487,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: sliderStyles,
+    style: survivalSliderStyles,
   },
   {
     section: SURVIVAL,
