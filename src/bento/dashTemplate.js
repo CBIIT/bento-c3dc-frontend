@@ -211,6 +211,22 @@ const createSliderStylesForSection = (color) => ({
     ...sliderStyles.thumb,
     background: color,
   },
+  toggleButton: {
+    height: 24,
+    border: '1px solid #535353', 
+    fontFamily: 'Raleway',
+    fontWeight: 600,
+    fontSize: 11,
+    '&:not(:first-of-type)': {
+      borderLeft: 'none',
+      borderTopLeftRadius: 0,
+      borderBottomLeftRadius: 0,
+    },
+    '&:not(:last-of-type)': {
+      borderTopRightRadius: 0,
+      borderBottomRightRadius: 0,
+    },
+  }
 });
 
 // Section-specific slider styles
