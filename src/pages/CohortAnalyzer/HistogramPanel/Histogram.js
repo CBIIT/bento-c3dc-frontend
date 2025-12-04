@@ -67,7 +67,9 @@ const Histogram = ({ c1, c2, c3 }) => {
     });
   }, [kmPlotData, c1, c2, c3]);
   const kmChartRef = useRef(null);
+  const kmChartRefExpanded = useRef(null);
   const riskTableRef = useRef(null);
+  const riskTableRefExpanded = useRef(null);
   const survivalAnalysisContainerRef = useRef(null);
   const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -641,8 +643,8 @@ const Histogram = ({ c1, c2, c3 }) => {
           kmPlotData={kmPlotData}
           kmLoading={kmLoading}
           kmError={kmError}
-          kmChartRef={kmChartRef}
-          riskTableRef={riskTableRef}
+          kmChartRef={kmChartRefExpanded}
+          riskTableRef={riskTableRefExpanded}
           cohorts={cohorts}
           timeIntervals={timeIntervals}
           c1={c1}
