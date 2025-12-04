@@ -2196,7 +2196,7 @@ export const tabContainers = [
       },
     ],
     id: 'genetic_analysis_tab',
-    tabIndex: '6',
+    tabIndex: '3',
     tableDownloadCSV: {},
     downloadFileName: 'C3DC Genetic Analysis Download',
     tableMsg: {
