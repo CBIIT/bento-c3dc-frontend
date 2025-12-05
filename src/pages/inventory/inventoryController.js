@@ -10,6 +10,7 @@ import { CohortStateProvider } from '../../components/CohortSelectorState/Cohort
 import { CohortModalProvider } from '../../components/CohortModal/CohortModalContext';
 import { setActiveFilterByPathQuery } from './sideBar/BentoFilterUtils';
 
+
 let latestRequestId = 0;
 
 const getDashData = (states) => {
@@ -63,15 +64,33 @@ const getDashData = (states) => {
 
 const InventoryController = ((props) => {
   const [searchParams] = useSearchParams();
-  const filterQuery = searchParams.get("filterQuery")
+  const filterQuery = searchParams.get("filterQuery");
+  const [loadingFilterQuery, setLoadingFilterQuery] = useState(false);
+
 
   const navigate = useNavigate();
 
-  if (filterQuery) {
-    setActiveFilterByPathQuery(filterQuery);
-    const redirectUrl = '/explore';
-    navigate(redirectUrl, { replace: true })
-  }
+  useEffect(() => {
+    if (filterQuery) {
+      // Fetch filter string from backend using the id in URL
+      setLoadingFilterQuery(true); // start loading
+
+      fetch(`${filterQuery}`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch filterQuery");
+          return res.json();
+        })
+        .then((data) => {
+          setActiveFilterByPathQuery(data.key);
+          const redirectUrl = "/explore";
+          navigate(redirectUrl, { replace: true });
+        })
+        .catch((err) => {
+          console.error("Error loading filterQuery:", err);
+        }).finally(() => setLoadingFilterQuery(false));
+    }
+  }, [filterQuery]);
+
   const { dashData, activeFilters, loading } = getDashData(props);
   if (!dashData) {
     return (<div style={{"height": "1200px","paddingTop": "10px"}}><div style={{"margin": "auto","display": "flex","maxWidth": "1800px"}}><CircularProgress /></div></div>);
@@ -84,7 +103,7 @@ const InventoryController = ((props) => {
           {...props}
           dashData={dashData}
           activeFilters={activeFilters}
-          loading={loading}
+          loading={loading || loadingFilterQuery}
         />
       </CohortModalProvider>
     </CohortStateProvider>
