@@ -1,4 +1,4 @@
-name: ESLint
+name: Test
 
 on:
   workflow_dispatch:
@@ -14,8 +14,8 @@ permissions:
   contents: read
 
 jobs:
-  lint:
-    name: Lint Changes
+  test:
+    name: Test Changes
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -30,5 +30,9 @@ jobs:
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
-      - name: Run ESLint
-        run: npm run lint:ci
+      - name: Run Jest
+        run: npm run test:ci
+
+      - name: Coveralls GitHub Action
+        uses: coverallsapp/github-action@v2
+        continue-on-error: true

@@ -83,6 +83,7 @@
     "start": "npm run lint && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
+    "test:ci": "TZ=UTC node scripts/test.js --ci --passWithNoTests --coverage --maxWorkers=2 --logHeapUsage",
     "lint": "eslint src --max-warnings=0",
     "lint:ci": "eslint src --ignore-path .gitignore --max-warnings=0",
     "lint:fix": "eslint src --fix"
@@ -101,7 +102,6 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
     ],
-    "resolver": "jest-pnp-resolver",
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
@@ -136,10 +136,7 @@
       "jsx",
       "node"
     ],
-    "watchPlugins": [
-      "/Users/doddapanenis2/Desktop/Develop/icdc-frontend/node_modules/jest-watch-typeahead/filename.js",
-      "/Users/doddapanenis2/Desktop/Develop/icdc-frontend/node_modules/jest-watch-typeahead/testname.js"
-    ]
+    "watchPlugins": []
   },
   "babel": {
     "presets": [
