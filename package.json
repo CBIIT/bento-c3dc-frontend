@@ -84,7 +84,8 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "lint": "eslint src --max-warnings=0",
-    "lint-fix": "eslint src --fix"
+    "lint:ci": "eslint src --ignore-path .gitignore --max-warnings=0",
+    "lint:fix": "eslint src --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
