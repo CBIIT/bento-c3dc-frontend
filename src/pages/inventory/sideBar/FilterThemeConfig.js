@@ -220,7 +220,7 @@ const theme = {
         marginLeft: '0px',
         marginRight: '0px',
       },
-      root: {
+        root: {
         height: '8px',
         '&.divider0': {
           backgroundColor: '#006A8F',
@@ -232,18 +232,18 @@ const theme = {
           backgroundColor: '#35B899',
         },
         '&.divider3': {
-          backgroundColor: '#268CEA',
-        },
-        '&.divider4': {
-          backgroundColor: '#9664C7',
-        },
-        '&.divider5': {
-          backgroundColor: '#006B57',
-        },
-        '&.divider6': {
           backgroundColor: '#862405',
         },
-      },
+        '&.divider4': {
+          backgroundColor: '#268CEA', 
+        },
+        '&.divider5': {
+          backgroundColor: '#9664C7', 
+        },
+        '&.divider6': {
+          backgroundColor: '#006B57',
+        },
+      }
     },
     checkboxRoot: {
       color: 'inherit',
