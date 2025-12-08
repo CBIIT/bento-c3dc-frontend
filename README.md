@@ -1,4 +1,8 @@
-CCDI Portal frontend code base.
+# CCDI C3DC Frontend Codebase
+
+[![Coverage Status](https://coveralls.io/repos/github/CBIIT/bento-c3dc-frontend/badge.svg)](https://coveralls.io/github/CBIIT/bento-c3dc-frontend)
+[![Test](https://github.com/CBIIT/bento-c3dc-frontend/actions/workflows/test.yml/badge.svg)](https://github.com/CBIIT/bento-c3dc-frontend/actions/workflows/test.yml)
+[![ESLint](https://github.com/CBIIT/bento-c3dc-frontend/actions/workflows/lint.yml/badge.svg)](https://github.com/CBIIT/bento-c3dc-frontend/actions/workflows/lint.yml)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
