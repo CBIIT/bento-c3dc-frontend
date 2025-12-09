@@ -84,7 +84,7 @@ const Histogram = ({c1,c2,c3}) => {
               checked={selectedDatasets.includes(key)}
               onChange={() => handleDatasetChange(key)}
               disabled={allInputsEmpty}
-              style={{ marginRight: '8px', accentColor: '#6D5F5B' }}
+              style={{ marginRight: '8px', accentColor: '#6D5F5B', cursor: allInputsEmpty ? 'not-allowed' : 'pointer' }}
             />
             {titles[key]}
           </label>
@@ -135,7 +135,9 @@ const Histogram = ({c1,c2,c3}) => {
                 </ChartTitle>
 
                 <ChartActionButtons>
-                  <span onClick={() => {
+                  <span 
+                  style={{cursor: allInputsEmpty ? 'default' : 'pointer'}}
+                  onClick={() => {
                     if(!allInputsEmpty){
                     setExpandedChart(dataset);
                     setActiveTab(dataset);
@@ -143,7 +145,9 @@ const Histogram = ({c1,c2,c3}) => {
                   }} >
                     <img src={ExpandIcon} alt={"expand"} style={{ opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
                   </span>
-                  <span onClick={() => !allInputsEmpty && downloadChart(dataset, false)}>
+                  <span 
+                  style={{cursor: allInputsEmpty ? 'default' : 'pointer'}}
+                  onClick={() => !allInputsEmpty && downloadChart(dataset, false)}>
                     <img src={DownloadIcon} alt={"download"} style={{opacity: allInputsEmpty ? 0.5 : 1, width: '23px', height: '23px' }} />
                   </span>
 
@@ -166,6 +170,7 @@ const Histogram = ({c1,c2,c3}) => {
                       value="count"
                       checked={viewType[dataset] === 'count'}
                       onChange={(e) => setViewType({ ...viewType, [dataset]: e.target.value })}
+                      style={{cursor: allInputsEmpty ? 'default' : 'pointer'}}
                     />
                       # of Cases
                   </RadioLabel>
@@ -176,6 +181,7 @@ const Histogram = ({c1,c2,c3}) => {
                       value="percentage"
                       checked={viewType[dataset] === 'percentage'}
                       onChange={(e) => setViewType({ ...viewType, [dataset]: e.target.value })}
+                      style={{cursor: allInputsEmpty ? 'default' : 'pointer'}}
                     />
                       % of Cases   
                   </RadioLabel>
