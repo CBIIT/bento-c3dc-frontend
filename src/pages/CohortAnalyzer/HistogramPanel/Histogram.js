@@ -19,7 +19,7 @@ import {
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
-import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg'
+import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg';
 
 import * as htmlToImage from 'html-to-image';
 

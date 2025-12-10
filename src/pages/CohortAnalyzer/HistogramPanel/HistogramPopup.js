@@ -13,8 +13,7 @@ import CustomChartTooltip from './CustomChartTooltip';
 import CustomXAxisTick from './CustomXAxisTick';
 import { KaplanMeierChart } from '@bento-core/kmplot';
 import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem } from './HistogramPanel.styled';
-
-const htmlToImage = require('html-to-image');
+import * as htmlToImage from 'html-to-image';
 
 const ExpandedChartModal = ({
   activeTab,
