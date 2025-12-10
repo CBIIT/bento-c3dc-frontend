@@ -23,15 +23,8 @@ export const tableConfig = {
   hasToolTip: true,
   extendedViewConfig: {
     pagination: true,
-    manageViewColumns: false,
-    download: true,
-    downloadButtonConfig: {
-      title: 'DOWNLOAD DATA',
-      cloudIcon: true,
-    },
   },
   columns: [
-  
     {
       dataField: 'participant_id',
       header: 'Participant ID',
@@ -110,12 +103,6 @@ export const diagnosesTableConfig =
   hasToolTip: true,
   extendedViewConfig: {
     pagination: true,
-    manageViewColumns: false,
-    download: true,
-    downloadButtonConfig: {
-      title: 'DOWNLOAD DATA',
-      cloudIcon: true,
-    },
   },
   columns: [
     {
@@ -180,12 +167,6 @@ export const treatmentTableConfig = {
   hasToolTip: true,
   extendedViewConfig: {
     pagination: true,
-    manageViewColumns: false,
-    download: true,
-    downloadButtonConfig: {
-      title: 'DOWNLOAD DATA',
-      cloudIcon: true,
-    },
   },
   columns: [
     {
