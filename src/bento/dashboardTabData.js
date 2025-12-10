@@ -1765,6 +1765,7 @@ const studyTab = {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -1776,6 +1777,7 @@ const studyTab = {
         dataField: 'study_name',
         header: 'Study Name',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
