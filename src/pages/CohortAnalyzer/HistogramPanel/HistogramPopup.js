@@ -16,12 +16,6 @@ import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem } from './
 
 const htmlToImage = require('html-to-image');
 
-
-
-// CustomTick removed - using CustomXAxisTick instead
-
-
-
 const ExpandedChartModal = ({
   activeTab,
   setActiveTab,
@@ -36,8 +30,6 @@ const ExpandedChartModal = ({
   kmError,
   kmChartRef,
   riskTableRef,
-  cohorts,
-  timeIntervals,
   c1,
   c2,
   c3
@@ -313,13 +305,15 @@ const ExpandedChartModal = ({
 
           <div style={{ minWidth: 300, right: 10, top:2, position:'absolute', justifyContent: 'flex-end', display: 'flex', gap: 5 }}>
             {activeTab === 'survivalAnalysis' ? (
-              <DownloadDropdown ref={dropdownRef}>
-                <span 
+              <div style={{marginRight: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+               <span 
                   onClick={() => setShowDownloadDropdown(!showDownloadDropdown)}
                   style={{ cursor: 'pointer', marginTop: 5 }}
                 >
-                  <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
+                  <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px'}} />
                 </span>
+              <DownloadDropdown ref={dropdownRef}>
+               
                 {showDownloadDropdown && (
                   <DownloadDropdownMenu>
                     <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
@@ -337,6 +331,7 @@ const ExpandedChartModal = ({
                   </DownloadDropdownMenu>
                 )}
               </DownloadDropdown>
+              </div>
             ) : (
               <span style={{ marginTop: 5, cursor: 'pointer' }} onClick={() => downloadChart(activeTab,true)}>
                 <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
@@ -363,12 +358,6 @@ const ExpandedChartModal = ({
                     showLegend={false}
                   />
                 </div>
-                {/*<div ref={riskTableRef} style={{width: '95%',marginLeft: '15px', marginRight: '100px'}}>
-                  <RiskTable
-                    cohorts={cohorts}
-                    timeIntervals={timeIntervals}
-                  />
-                </div>*/}
               </div>
             </div>
           ) : (

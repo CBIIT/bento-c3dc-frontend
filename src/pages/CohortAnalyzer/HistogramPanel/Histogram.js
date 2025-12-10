@@ -21,7 +21,7 @@ import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
 import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg'
 
-const htmlToImage = require('html-to-image');
+import * as htmlToImage from 'html-to-image';
 
 const Histogram = ({ c1, c2, c3 }) => {
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({ c1, c2, c3 });
@@ -167,7 +167,6 @@ const Histogram = ({ c1, c2, c3 }) => {
 
       // Use the ref directly to capture the Risk Table element
       const tableElement = riskTableRef.current;
-    
 
       // Store original margin and temporarily remove it
       const originalMargin = tableElement.style.marginLeft;
@@ -205,7 +204,7 @@ const Histogram = ({ c1, c2, c3 }) => {
   };
 
   // Download both charts as a single combined image
-  const downloadBoth = (kmChartRef, riskTableRef) => {
+  const downloadBoth = () => {
     try {
       setShowDownloadDropdown(false);
       
@@ -242,61 +241,6 @@ const Histogram = ({ c1, c2, c3 }) => {
     }
   };
 
-  const cohorts = [
-    {
-      id: '1',
-      name: 'Cohort 12345...',
-      color: '#ADD8E6',
-      data: {
-        '0 Months': 122,
-        '6 Months': 119,
-        '12 Months': 95,
-        '18 Months': 17,
-        '24 Months': 10,
-        '30 Months': 1,
-        '36 Months': 0,
-      },
-    },
-    {
-      id: '2',
-      name: 'Cohort 2..',
-      color: '#e61d0bff',
-      data: {
-        '0 Months': 122,
-        '6 Months': 119,
-        '12 Months': 95,
-        '18 Months': 17,
-        '24 Months': 10,
-        '30 Months': 1,
-        '36 Months': 0,
-      },
-    },
-    {
-      id: '2',
-      name: 'Cohort 2..',
-      color: '#fdea10ff',
-      data: {
-        '0 Months': 122,
-        '6 Months': 119,
-        '12 Months': 95,
-        '18 Months': 17,
-        '24 Months': 10,
-        '30 Months': 1,
-        '36 Months': 0,
-      },
-    },
-    // ... more cohorts
-  ];
-
-  const timeIntervals = [
-    '0 Months',
-    '6 Months',
-    '12 Months',
-    '18 Months',
-    '24 Months',
-    '30 Months',
-    '36 Months',
-  ];
   const titles = {
     survivalAnalysis: 'Survival Analysis',
     sexAtBirth: 'Sex at Birth',
@@ -429,7 +373,7 @@ const Histogram = ({ c1, c2, c3 }) => {
                           <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                           Risk Table 
                         </DownloadDropdownItem>
-                        <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
+                        <DownloadDropdownItem onClick={() => downloadBoth()}>
                           <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                           Download Both
                         </DownloadDropdownItem>
@@ -453,12 +397,6 @@ const Histogram = ({ c1, c2, c3 }) => {
                     showLegend={false}
                   />
                 </KmChartWrapper>
-                {/*<RiskTableWrapper ref={riskTableRef}>
-                  <RiskTable
-                    cohorts={cohorts}
-                    timeIntervals={timeIntervals}
-                  />
-                </RiskTableWrapper> */}
               </SurvivalAnalysisContainer>
             </SurvivalAnalysisWrapper>
           </ChartWrapper>
@@ -477,11 +415,8 @@ const Histogram = ({ c1, c2, c3 }) => {
             });
           }
           return (
-
-
             <ChartWrapper id={`chart-${dataset}`} ref={(el) => chartRef.current[dataset] = el}>
               <HeaderSection>
-
                 <ChartTitle className={`${Array.isArray(data[dataset]) && data[dataset].length > 0 ? '' : 'empty'}`} >
                   {titles[dataset]}
                   {Array.isArray(filteredData[dataset]) && filteredData[dataset].length > 5 && (
@@ -497,9 +432,7 @@ const Histogram = ({ c1, c2, c3 }) => {
                       interactive
                       arrowSize="30px"
                     >
-
                       <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px", top: -3, position: 'relative' }} />
-
                     </ToolTip>
                   )}
                 </ChartTitle>
@@ -616,20 +549,13 @@ const Histogram = ({ c1, c2, c3 }) => {
                   )
                 )}
 
-
               </div>
             </ChartWrapper>
 
           );
         })}
 
-        
-
-
-
-
-
-      </CenterContainer>
+           </CenterContainer>
       {expandedChart && (
         <ExpandedChartModal
           activeTab={activeTab}
@@ -645,8 +571,6 @@ const Histogram = ({ c1, c2, c3 }) => {
           kmError={kmError}
           kmChartRef={kmChartRefExpanded}
           riskTableRef={riskTableRefExpanded}
-          cohorts={cohorts}
-          timeIntervals={timeIntervals}
           c1={c1}
           c2={c2}
           c3={c3}
