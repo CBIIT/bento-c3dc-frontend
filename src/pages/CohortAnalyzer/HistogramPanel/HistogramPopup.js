@@ -29,7 +29,6 @@ const ExpandedChartModal = ({
   kmLoading,
   kmError,
   kmChartRef,
-  riskTableRef,
   c1,
   c2,
   c3
@@ -160,53 +159,7 @@ const ExpandedChartModal = ({
     }
   };
 
-  const downloadRiskTable = (riskTableRef) => {
-    try {
-      if (!riskTableRef || !riskTableRef.current) {
-        console.error("Risk table ref not available");
-        return;
-      }
-
-      // Use the ref directly to capture the Risk Table element
-      const tableElement = riskTableRef.current;
-     
-
-      // Store original margin and temporarily remove it
-      const originalMargin = tableElement.style.marginLeft;
-      tableElement.style.marginLeft = '0';
-
-      // Generate image from the ref element using html-to-image
-      htmlToImage.toPng(tableElement, {
-        backgroundColor: 'transparent',
-        pixelRatio: 4,
-        quality: 1.0
-      }).then((dataUrl) => {
-        // Restore original margin
-        tableElement.style.marginLeft = originalMargin;
-        
-        const a = document.createElement("a");
-        a.href = dataUrl;
-        a.download = `risk_table.png`;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-        }, 100);
-      }).catch(error => {
-        // Restore original margin even on error
-        tableElement.style.marginLeft = originalMargin;
-        console.error("Error using html-to-image:", error);
-        alert("Error downloading Risk table. Please check the console for details.");
-      });
-
-      setShowDownloadDropdown(false);
-    } catch (error) {
-      console.error("Error downloading Risk table:", error);
-      alert("Error downloading Risk table. Please check the console for details.");
-    }
-  };
-
-  const downloadBoth = (kmChartRef, riskTableRef) => {
+  const downloadBoth = () => {
     try {
       setShowDownloadDropdown(false);
       
@@ -320,11 +273,11 @@ const ExpandedChartModal = ({
                       <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                       Kaplan-Meier 
                     </DownloadDropdownItem>
-                    <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
+                    <DownloadDropdownItem >
                       <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                       Risk Table 
                     </DownloadDropdownItem>
-                    <DownloadDropdownItem onClick={() => downloadBoth(kmChartRef, riskTableRef)}>
+                    <DownloadDropdownItem onClick={() => downloadBoth()}>
                       <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                       Download Both
                     </DownloadDropdownItem>
@@ -345,12 +298,12 @@ const ExpandedChartModal = ({
           {activeTab === 'survivalAnalysis' ? (
             <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
               <div ref={survivalAnalysisContainerRef} style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
-                <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px'}}>
+                <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px',marginTop: -20}}>
                   <KaplanMeierChart
                     data={filteredKmPlotData}
-                    title="Overall Survival by Diagnosis"
+                    title=""
                     width={"100%"}
-                    height={300}
+                    height={400}
                     loading={kmLoading}
                     error={kmError}
                     colors={cohortColors}

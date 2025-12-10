@@ -68,8 +68,6 @@ const Histogram = ({ c1, c2, c3 }) => {
   }, [kmPlotData, c1, c2, c3]);
   const kmChartRef = useRef(null);
   const kmChartRefExpanded = useRef(null);
-  const riskTableRef = useRef(null);
-  const riskTableRefExpanded = useRef(null);
   const survivalAnalysisContainerRef = useRef(null);
   const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
   const dropdownRef = useRef(null);
@@ -154,52 +152,6 @@ const Histogram = ({ c1, c2, c3 }) => {
       setShowDownloadDropdown(false);
     } catch (error) {
       console.error("Error downloading Kaplan-Meier chart:", error);
-    }
-  };
-
-  // Download function for Risk table
-  const downloadRiskTable = (riskTableRef) => {
-    try {
-      if (!riskTableRef || !riskTableRef.current) {
-        console.error("Risk table ref not available");
-        return;
-      }
-
-      // Use the ref directly to capture the Risk Table element
-      const tableElement = riskTableRef.current;
-
-      // Store original margin and temporarily remove it
-      const originalMargin = tableElement.style.marginLeft;
-      tableElement.style.marginLeft = '0';
-
-      // Generate image from the ref element using html-to-image
-      htmlToImage.toPng(tableElement, {
-        backgroundColor: 'transparent',
-        pixelRatio: 4,
-        quality: 1.0
-      }).then((dataUrl) => {
-        // Restore original margin
-        tableElement.style.marginLeft = originalMargin;
-        
-        const a = document.createElement("a");
-        a.href = dataUrl;
-        a.download = `risk_table.png`;
-        document.body.appendChild(a);
-        a.click();
-        setTimeout(() => {
-          document.body.removeChild(a);
-        }, 100);
-      }).catch(error => {
-        // Restore original margin even on error
-        tableElement.style.marginLeft = originalMargin;
-        console.error("Error using html-to-image:", error);
-        alert("Error downloading Risk table. Please check the console for details.");
-      });
-
-      setShowDownloadDropdown(false);
-    } catch (error) {
-      console.error("Error downloading Risk table:", error);
-      alert("Error downloading Risk table. Please check the console for details.");
     }
   };
 
@@ -369,7 +321,7 @@ const Histogram = ({ c1, c2, c3 }) => {
                           <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                           Kaplan-Meier 
                         </DownloadDropdownItem>
-                        <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
+                        <DownloadDropdownItem >
                           <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                           Risk Table 
                         </DownloadDropdownItem>
@@ -389,7 +341,7 @@ const Histogram = ({ c1, c2, c3 }) => {
                     data={filteredKmPlotData}
                     title=""
                     width={"100%"}
-                    height={200}
+                    height={230}
                     loading={kmLoading}
                     error={kmError}
                     colors={cohortColors}
@@ -570,7 +522,6 @@ const Histogram = ({ c1, c2, c3 }) => {
           kmLoading={kmLoading}
           kmError={kmError}
           kmChartRef={kmChartRefExpanded}
-          riskTableRef={riskTableRefExpanded}
           c1={c1}
           c2={c2}
           c3={c3}

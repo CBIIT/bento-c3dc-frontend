@@ -260,6 +260,7 @@ export const KmChartWrapper = styled.div`
   width: 100%;
   padding-left: 160px;
   margin-right: 100px;
+  margin-top: -20px;
 `;
 
 export const RiskTableWrapper = styled.div`
