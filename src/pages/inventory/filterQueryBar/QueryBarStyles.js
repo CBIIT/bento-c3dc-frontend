@@ -132,31 +132,31 @@ export  const customStyles = {
       border: '2px solid #646464',
     },
     facetSectionTreatment: {
-      color: '#268CEA',
-    },
-    facetSectionTreatmentBackground: {
-      backgroundColor: '#B5D8F9',
-      border: '2px solid #646464',
-    },
-    facetSectionTreatmentresponse: {
       color: '#9664C7',
     },
-    facetSectionTreatmentresponseBackground: {
+    facetSectionTreatmentBackground: {
       backgroundColor: '#E8D8F5',
       border: '2px solid #646464',
     },
-    facetSectionSurvival: {
+    facetSectionTreatmentresponse: {
       color: '#006B57',
     },
-    facetSectionSurvivalBackground: {
+    facetSectionTreatmentresponseBackground: {
       backgroundColor: '#E0ECEA',
       border: '2px solid #646464',
     },
-    facetSectionGeneticanalysis: {
+    facetSectionSurvival: {
       color: '#862405',
     },
-    facetSectionGeneticanalysisBackground: {
+    facetSectionSurvivalBackground: {
       backgroundColor: '#FFEDE7',
+      border: '2px solid #646464',
+    },
+    facetSectionGeneticanalysis: {
+      color: '#268CEA',
+    },
+    facetSectionGeneticanalysisBackground: {
+      backgroundColor: '#B5D8F9',
       border: '2px solid #646464',
     },
     localFindAssociatedIdsBackground: {
