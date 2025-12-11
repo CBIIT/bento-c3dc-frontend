@@ -1,6 +1,6 @@
 // CohortComponent.js
 import React, { useContext, useState } from 'react';
-import { CohortContext } from '../../components/CohortSelector/CohortContext.js';
+import { CohortContext } from '../../components/CohortSelector/CohortContext';
 
 const CohortComponent = () => {
   const { state, dispatch } = useContext(CohortContext);

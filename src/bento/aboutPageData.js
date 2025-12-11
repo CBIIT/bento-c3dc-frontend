@@ -1,12 +1,15 @@
-import userGuide from '../assets/releaseNotes/C3DC User Guide -R4-V3.pdf';
-import latestRelease from '../assets/releaseNotes/C3DC_Release_Notes.pdf';
+import userGuide from '../assets/releaseNotes/C3DC User Guide-R7-V1.pdf';
+import latestRelease from'../assets/releaseNotes/C3DC_Release_Notes_R7.pdf';
 
 export const aboutData = {
+  aboutHeaderText:
+    "About the Childhood Cancer <br />Clinical Data Commons",
   introParagraph:
     "<a className='sectionTitle'>Childhood Cancer Data Initiative</a><br/>" +
     "The <a className='aboutLink' href='https://www.cancer.gov/research/areas/childhood/childhood-cancer-data-initiative' target='_blank' rel='noopener noreferrer'>NCI’s Childhood Cancer Data Initiative (CCDI)</a>, " +
     "which the Childhood Cancer Clinical Data Commons is part of, is an initiative seeking to build a community centered around childhood cancer care and research. " +
     "Through enhanced data sharing, the initiative works to improve understanding of cancer biology, preventive measures, treatment, quality of life, and survivorship, as well as ensure that the community can learn from every child with cancer. " +
+    "C3DC is part of the CCDI Data Ecosystem. Learn more about other CCDI data and resources on the CCDI Hub. " +
     "<a className='aboutLink' href='https://public.govdelivery.com/accounts/USNIHNCI/subscriber/new?topic_id=USNIHNCI_223' target='_blank' rel='noopener noreferrer'>Sign-up for email updates</a> from NCI about CCDI.",
   secondParagraph:
     "<a className='sectionTitle'>Childhood Cancer Clinical Data Commons</a><br/>" +
@@ -21,6 +24,23 @@ export const aboutData = {
     "  <li>Facilitates longitudinal data analyses.</li>" +
     "  <li>Enables custom/synthetic cohort creation and data downloading for subsequent local analyses.</li>" +
     "</ul>",
+  fourthParagraph:
+    "<a className='sectionTitle'>Citing the C3DC</a><br/>" +
+    "NCI expects users to acknowledge CCDI data use as follows:",
+  fifthParagraph:
+    "\"The results published here are, in whole or in part, derived from the analysis of data listed in the C3DC " +
+    "(<a className='aboutLinkNoIcon' href='https://clinicalcommons.ccdi.cancer.gov/' target='_blank' rel='noopener noreferrer'>clinicalcommons.ccdi.cancer.gov</a>), " +
+    "established by the National Cancer Institute’s Childhood Cancer Data Initiative (CCDI).\"",
+  sixthParagraph:
+    "To cite individual studies, note the CCDI study ID (e.g., phs002790) and include the name and URL or link for the C3DC " +
+    "(<a className='aboutLinkNoIcon' href='https://clinicalcommons.ccdi.cancer.gov/' target='_blank' rel='noopener noreferrer'>clinicalcommons.ccdi.cancer.gov</a>), " +
+    "along with the phrase, \"established by the National Cancer Institute’s Childhood Cancer Data Initiative (CCDI).\"",
+  seventhParaph:
+    "Example: \"The results analyzed and &lt;published or shown&gt; here are based in whole or in part from analyzing the Molecular Characterization Initiative data listed in the C3DC " +
+    "(<a className='aboutLinkNoIcon' href='https://clinicalcommons.ccdi.cancer.gov/' target='_blank' rel='noopener noreferrer'>clinicalcommons.ccdi.cancer.gov</a>) " + 
+    "under study ID phs002790. The data were accessed from the NCI’s Cancer Research Data Commons " + 
+    "(<a className='aboutLinkNoIcon' href='https://datacommons.cancer.gov/' target='_blank' rel='noopener noreferrer'>datacommons.cancer.gov</a>). " + 
+    "The C3DC was established by the National Cancer Institute’s Childhood Cancer Data Initiative (CCDI)\".",
   /* These paragraphs were originally in the about page when we had one large about page. Their content are now in separate pages.
   fourthParagraph:
     "<a className='sectionTitle'>C3DC Studies</a><br/>" +
@@ -82,10 +102,14 @@ export const aboutData = {
     ":  Stay informed about the latest updates. <br> " +
     "<a className='aboutLink' href='https://github.com/CBIIT/c3dc-releases/blob/main/User_Guide.md' target='_blank' rel='noopener noreferrer'>User Guide</a>" +
     ": Whether you are new or aiming to expand your knowledge about C3DC, </br> our user guide is your resource.",*/
-  lastParagraph:
-    "The CCDI welcomes input from the community to enhance usability. " +
-    "Please send your <br> feedback and comments to " +
-    "<a className='aboutLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>.",
+
+
+  aboutFooterTitle:
+    "Questions for C3DC?",
+  aboutFooterText:
+    "The Childhood Cancer Data Initiative (CCDI) welcomes community input to improve this web application usability. Please send your feedback and suggestions to " +
+    "<a className='aboutFooterLink' href='mailto:ncichildhoodcancerdatainitiative@mail.nih.gov'>ncichildhoodcancerdatainitiative@mail.nih.gov</a>. " +
+    "Your contributions are valuable to enhancing the user experience.",
 };
 
 

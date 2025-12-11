@@ -236,7 +236,7 @@ margin-bottom: 2px;
   color: #000000;
  }
  .version:nth-child(even){
-   background-color: #DBE7E980;
+   background-color: #A5C2C880;
  }
 .descriptionDate {
       font-family: Inter;

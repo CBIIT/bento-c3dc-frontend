@@ -13,9 +13,18 @@ import { CustomDropDown } from './CustomDropDown';
 import { CustomButton } from './customButton';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
 
-const GetOptions = () => {
+const GetOptions = () => { //This function has been updated to return the name field instead of the ID field
   const { state } = useContext(CohortStateContext);
-  return Object.keys(state);
+  return Object.values(state).map(cohort => cohort.cohortName);
+}
+
+const getParticipants = () => { 
+  const { state } = useContext(CohortStateContext);
+  return ["All Participants", "Selected Participants", ...Object.values(state).map(cohort => ({cohortId:cohort.cohortId, cohortName:cohort.cohortName}))];
+}
+
+const getParticipantOptions = () => { 
+  return ["All Participants", "Selected Participants"];
 }
 
 export const layoutConfig = [{
@@ -45,8 +54,9 @@ export const wrapperConfig = [
         tooltipCofig: tooltipContentAddToNewCohort,
         conditional: false,
         CustomViewElem: () => {
+          const options = getParticipantOptions();
           return (
-            <CustomButton borderColor={"#73C7BE"} label={"CREATE COHORT"} backgroundColor={"#375C67"} type={"CREATE"} hoverColor={"#375C67"} />
+            <CustomDropDown borderColor={"#73C7BE"} label={"CREATE NEW COHORT"} backgroundColor={"#375C67"} type={"new"} options={options} enabledWithoutSelect={true}/>
           )
         },
         alertMessage,
@@ -61,9 +71,9 @@ export const wrapperConfig = [
         tooltipCofig: tooltipContentAddToExistingCohort,
         conditional: true,
         CustomViewElem: () => {
-          let options = GetOptions();
+          let options = getParticipants();
           return (
-            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} />
+            <CustomDropDown label={"ADD PARTICIPANTS TO EXISTING COHORT"} backgroundColor={"#0B4E75"} borderColor={"#73A9C7"} options={options} type={"existing"} enabledWithoutSelect={true}/>
           )
         }
       },

@@ -241,6 +241,8 @@ const BottomFooter = styled.div`
 
   .contactUs {
     margin: 0;
+    font-weight: bold;
+    font-size: 22.88px;
   }
 `;
 
@@ -270,6 +272,7 @@ const FooterDesktop = () => {
   }
   return (
     <>
+      <h1 style={{visibility:"hidden", height:"0",margin:"0"}}>t</h1>
       <FooterStyled role="contentinfo">
           <FooterContainer>
             <FooterLinksContainer>
@@ -278,14 +281,14 @@ const FooterDesktop = () => {
                         const linkkey =  `link_${linkidx}`;
                         return (
                             <div className='footItem' key={linkkey}>
-                                <h6 className='footItemTitle'>{linkItem.title}</h6>
+                                <div className='footItemTitle'>{linkItem.title}</div>
                                 {
                                     linkItem.items.map((item, itemidx) => {
                                         const itemkey =  `item_${itemidx}`;
                                         return (
                                             <div className='footItemSubtitle' key={itemkey}>
                                                 {
-                                                    item.link.includes('http') ? 
+                                                    item.link.includes('http') || item.openNewTab === 'true' ? 
                                                     <a className='footItemLink' href={item.link} target="_blank" rel="noopener noreferrer">{item.text}</a>
                                                     :
                                                     <a className='footItemLink' href={item.link}>{item.text}</a>
@@ -301,9 +304,9 @@ const FooterDesktop = () => {
             </FooterLinksContainer>
             <FooterEmailSignupContainer  onSubmit={handleSubmit} ref={emailForm} action="https://public.govdelivery.com/accounts/USNIHNCI/subscribers/qualify" ariaLabel="Footer subscribe" method="post" target="_blank" id="signup_desktop" noValidate>
               <input type="hidden" name="topic_id" id="topic_id" value="USNIHNCI_223" />
-              <h4 className='signUpTitle'>
+              <div className='signUpTitle'>
                 Sign up for email updates
-              </h4>
+              </div>
               <div className={errorClass !== "" ? 'ErrorBorder' : null}>
                 <div className='enterTitle'>
                   <label htmlFor="email_desktop"> Enter your email address</label>
@@ -323,12 +326,12 @@ const FooterDesktop = () => {
         <div className="bottom-footer-container">
           <div id="bottom-footer-header">
             <a className='logoText' href="https://www.cancer.gov" target="_blank" rel="noopener noreferrer">
-              <h4 className='logoUpperText'>National Cancer Institute</h4>
+              <div className='logoUpperText'>National Cancer Institute</div>
               <div className='logoLowerText'>at the National Institutes of Health</div>
             </a>
           </div>
           <div id="bottom-footer-contact-us">
-            <h4 className='contactUs'>Contact Us</h4>
+            <div className='contactUs'>Contact Us</div>
             <div id="bottom-footer-contact-links">
               {
                 FooterData.contact_links.map((contactItem, contactidx) => {

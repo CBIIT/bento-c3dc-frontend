@@ -1,9 +1,15 @@
 export default () => ({
+  backdrop: {
+    width: '100%',
+    zIndex: 99999,
+    background: 'rgba(0, 0, 0, 0.1)',
+  },
   dashboardContainer: {
     backgroundColor: '#FFFFFF',
   },
   contentBox: {
     paddingTop: '0px',
+    borderTop: '1px solid #B0B0B0',
   },
   content: {
     display: 'flex',
@@ -19,6 +25,16 @@ export default () => ({
     borderBottom: 'thin solid #B1B1B1',
     overflow: 'auto',
     zIndex: '99',
+    '&::-webkit-scrollbar': {
+      width: "7px"
+    },
+    '&::-webkit-scrollbar-thumb': {
+      width: "7px",
+      backgroundColor: '#003F74'
+    },
+    '&::-webkit-scrollbar-track': {
+      background: '#CECECE',
+    },
   },
   rightContent: {
     width: 'calc(100% - 270px)',

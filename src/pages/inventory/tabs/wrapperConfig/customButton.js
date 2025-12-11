@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { useGlobal } from '../../../../components/Global/GlobalProvider';
 import { onCreateNewCohort } from '../../../../components/CohortSelectorState/store/action';
 import { CohortStateContext } from '../../../../components/CohortSelectorState/CohortStateContext';
-import { CohortModalContext } from '../../cohortModal/CohortModalContext';
+import { CohortModalContext } from '../../../../components/CohortModal/CohortModalContext';
 import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/Actions';
 
 const ButtonContainer = styled.div`
@@ -53,7 +53,7 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
 
   const tableContext = useContext(TableContext);
   const { dispatch } = useContext(CohortStateContext);
-  const { setShowCohortModal} = useContext(CohortModalContext);
+  const { setShowCohortModal, setWarningMessage, setCurrentCohortChanges} = useContext(CohortModalContext);
   const { Notification } = useGlobal();
   const [isActive, setIsActive] = useState(false);
 
@@ -89,30 +89,44 @@ export const CustomButton = ({ label, backgroundColor, type, hoverColor, cohorts
     dispatch(onRowSelectHidden([]));
   }
 
+  const buildCohortFormat = (jsonArray) => {
+    return jsonArray.map(item => ({
+      ...item,
+      participant_id: typeof item.participant === 'object' ? item.participant.participant_id : item.participant_id,
+      participant_pk:  typeof item.participant === 'object' ? item.participant.id : item.id,
+    }));
+  };
+
   const handleClick = () => {
     if (isActive) {
       if (type === "VIEW") {
         setShowCohortModal(true);
+        setCurrentCohortChanges(null);
       } else {
         const { context } = tableContext;
         const {
           hiddenSelectedRows = []
         } = context;
         clearSelection();
+        setCurrentCohortChanges(null);
         dispatch(onCreateNewCohort(
           "",
           "",
-          hiddenSelectedRows,
+         buildCohortFormat(hiddenSelectedRows),
           (count) => { 
             triggerNotification(count);
             setShowCohortModal(true);
           },
-          (error) => alert("Something Went Wrong")
+          (error) => {
+          
+          setWarningMessage(error.toString().replace("Error:",""));
+          }
         ));
       }
 
     }
   };
+
 
   return (
     <ButtonContainer>

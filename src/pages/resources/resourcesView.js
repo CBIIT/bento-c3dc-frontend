@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { resourceIntroduction, availableResources } from '../../bento/resourcesPageData.js';
+import { resourceIntroduction, availableResources } from '../../bento/resourcesPageData';
 import resourcesBanner from '../../assets/resources/Resources_Banner.png';
 import resourcesImg from '../../assets/resources/Resources_Img.png';
 import exportIcon from '../../assets/about/Export_Icon.svg';
@@ -21,7 +21,22 @@ const ResourcesContainer = styled.div`
     display: flex;
     margin-bottom: 32px;
     background-image: url(${resourcesBanner});
-    background-size: cover;
+    background-size: cover; 
+    position: relative;
+   
+  }
+
+  .resourcesHeaderText{
+     position: absolute;
+     top: 0;
+     left: 0;
+     right: 0;
+     bottom: 0;
+     background: rgba(0,0,0,0.2); 
+     width:100%;
+     display: flex;
+     justify-content: center;
+     align-items: center;
   }
   
   .resourceBody {
@@ -61,6 +76,7 @@ const ResourcesContainer = styled.div`
     font-family: 'Inter';
     font-weight: 400;
     font-size: 16px;
+    widows: 3;
   }
 
   .upperImg {
@@ -111,7 +127,7 @@ const ResourcesView = () => {
                     }
                   </div>
                     <div className='textParagraph'>{ReactHtmlParser(data.text)}</div>
-                    {!data.urlInTitle &&
+                    {!data.urlInTitle && data.url &&
                       <a className='linkBlock' href={data.url}  target="_blank" rel="noopener noreferrer"><span className='resourceLink'>{data.url}</span></a>
                     }
                     {data.postParagraph && <div className='textParagraph'>{ReactHtmlParser(data.postParagraph)}</div>}

@@ -13,15 +13,14 @@ import Inventory from '../../pages/inventory/inventoryController';
 import Studies from '../../pages/studies/studiesController';
 //import Cart from '../../pages/cart/cartController';
 import ScrollButton from '../ScrollButton/ScrollButtonView';
-import DataModel from "../../pages/DataModel/dataModel";
 import PdfReader from "../../pages/pdfReader/pdfReader";
 import StudyDetail from "../../pages/studyDetail/studyDetailController";
 import OverlayWindow from "../OverlayWindow/OverlayWindow";
 import AnnouncementPage from "../../pages/announcement/announcementPage";
-import ReleaseNotePage from "../../pages/releaseNote/releaseNote";
 import CohortManager from "../../pages/CohortManager/CohortManagerController";
 import ReleaseNoteController from "../../pages/releaseNote/releaseNoteController";
-
+import  CohortAnalyzerController  from "../../pages/CohortAnalyzer/CohortAnalyzerController";
+import DataModelNavigator from '../../pages/dmn';
 // import NewsDetail from '../../pages/news/newsDetailView';
 
 const Layout = () => {
@@ -33,18 +32,21 @@ const Layout = () => {
         <Routes>
           <Route exact path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/studies" element={<Studies />} />
-          <Route path="/:studyId" element={<StudyDetail />} />          
+          <Route path="/studies"  >
+            <Route index={true} element={<Studies />}></Route>
+            <Route path=":studyId" element={<StudyDetail />} />          
+          </ Route>
           <Route path="/resources" element={<Resources />} />
           <Route path="/about" element={<About />} />
           <Route path="/announcements" element={<AnnouncementPage />} />
           <Route path="/sitesearch" element={<Search />} />
           <Route path="/explore" element={<Inventory />} />
           <Route path="/user_guide" element={<PdfReader />} />
-          <Route path="/data_model" element={<DataModel />} />
+          <Route path="/data_model" element={<DataModelNavigator />} />
           <Route path="/release_notes" element={<ReleaseNoteController />} />
           <Route path="/release_notes_pdf" element={<PdfReader />} />
           <Route path="/cohort_Manager" element={<CohortManager />} />
+          <Route path="/cohortAnalyzer" element={<CohortAnalyzerController />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer />

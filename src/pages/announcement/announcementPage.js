@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import header from '../../assets/announcement/header.svg';
@@ -237,7 +238,7 @@ const AnnouncementPage = () => {
   };
 
   useEffect(() => {
-
+    setCurrentPage(1)
     let filteredAnnouncementPageData = [];
     if (selectedOption === 0) {
       filteredAnnouncementPageData = announcementPageData;
@@ -248,7 +249,6 @@ const AnnouncementPage = () => {
     calculatePageInfo(filteredAnnouncementPageData);
 
   }, [selectedOption])
-
 
   useEffect(() => {
     calculatePageInfo(announcementPageData);
@@ -273,6 +273,11 @@ const AnnouncementPage = () => {
       setCurrentPage(page);
     }
   };
+
+
+  useEffect(()=>{
+  calculatePageInfo(announcementPageData)
+  },[currentPage,resultsPerPage])
 
   return (
     <AnnouncementContainer>

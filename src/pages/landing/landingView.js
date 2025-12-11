@@ -17,12 +17,12 @@ const LandingView = ({ classes, statsData }) => (
             <div className={classes.heroFrame}>
               <div className={classes.heroTextContainer}>
                 <div className={classes.heroTextWrapper}>
-                  <div className={classes.headerTitle}>
+                  <h1 className={classes.headerTitle}>
                     { landingPageData.callToActionTitle }
-                  </div>
-                  <div className={classes.headerContent}>
+                  </h1>
+                  <h2 className={classes.headerContent}>
                     { landingPageData.callToActionDescription}
-                  </div>
+                  </h2>
                   <div className={classes.statsBubbleContainer}>
                     <div className={classes.statsBubbleDiagnoses}>
                       <div className={classes.statsBubbleDiagnosesCount}>
@@ -97,14 +97,14 @@ const LandingView = ({ classes, statsData }) => (
                   <img
                     src={landingPageData.heartbeatAnimation.heartlineFull}
                     className={classes.heartbeatPulseImage}
-                    alt={landingPageData.heartbeatAnimation.alt}
+                    alt={landingPageData.heartbeatAnimation.lineAlt}
                     />
               </div>
               <div className={classes.heartlineTracker}>
                   <img
                     src={landingPageData.heartbeatAnimation.tracker}
                     className={classes.heartlineTrackerImage}
-                    alt={landingPageData.heartbeatAnimation.alt}
+                    alt={landingPageData.heartbeatAnimation.trackerAlt}
                     />
               </div>
             </div>
@@ -128,14 +128,14 @@ const LandingView = ({ classes, statsData }) => (
                     id="tile1_image"
                   />
                 </div>
-                <div className={classes.DCWords} id="tile1_title">
+                <h3 className={classes.DCWords} id="tile1_title">
                 {landingPageData.tile1.titleText}
                   {/* {landingPageData.tile1.titleText.match(/\b(\w+)\b/g).map((word) => (
                     <>
                       {word} 
                     </>
                   ))} */}
-                </div>
+                </h3>
                 <div className={classes.aboutContent} id="tile1_description">
                   {landingPageData.tile1.descriptionText}
                 </div>
@@ -167,9 +167,9 @@ const LandingView = ({ classes, statsData }) => (
                     />
                   </div>
                   <div className={classes.content}>
-                    <div className={classes.contentHeader} id="tile2_title">
+                    <h3 className={classes.contentHeader} id="tile2_title">
                       {landingPageData.tile2.titleText}
-                    </div>
+                    </h3>
                     <div className={classes.contentContainer} id="tile2_description">
                       {landingPageData.tile2.descriptionText}
                     </div>
@@ -202,9 +202,9 @@ const LandingView = ({ classes, statsData }) => (
                     />
                   </div>
                   <div className={classes.tile3Content}>
-                    <div className={classes.contentHeader} id="tile3_title">
+                    <h3 className={classes.contentHeader} id="tile3_title">
                       {landingPageData.tile3.titleText}
-                    </div>
+                    </h3>
                     <div className={classes.contentContainer} id="tile3_description">
                       {landingPageData.tile3.descriptionText}
                     </div>
@@ -230,9 +230,9 @@ const LandingView = ({ classes, statsData }) => (
               </div>
               <div className={classes.contentRightBottom}>
                 <div className={classes.cases} id="tile4_image">
-                  <div className={classes.mountainMeadowContentHeader} id="tile4_title">
+                  <h3 className={classes.mountainMeadowContentHeader} id="tile4_title">
                     {landingPageData.tile4.titleText}
-                  </div>
+                  </h3>
                   <div className={classes.mountainMeadowContent} id="tile4_description">
                     {landingPageData.tile4.descriptionText}
                   </div>
@@ -308,68 +308,68 @@ const styles = () => ({
     position: 'absolute',
     left: '50%',
     marginLeft: '-720px',
-    top: '690px',
+    top: '515px',
     animation: '6s $heartbeatPulse infinite linear',
   },
   "@keyframes heartlineTracking": {
     "0%": {
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "-726px", 
     },
     "32.33%": { //left
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "47px",  
     },
     "39.67%": { //peak
-      top: '685px',
+      top: '510px',
       left: '50%',
       marginLeft: "77px", 
     },
     "47%": { //drop
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "107px",  
     },
     "51.56%": { //left
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "284px",
     },
     "58.89%": { //peak
-      top: '685px',
+      top: '510px',
       left: '50%',
       marginLeft: "314px", 
     },
     "66.22%": { //drop
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "344px", 
     },
     "70.78%": { //left
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "520px", 
     },
     "78.11%": { //peak
-      top: '685px',
+      top: '510px',
       left: '50%',
       marginLeft: "550px", 
     },
     "85.44%": { //drop
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "580px", 
     },
     "88%": {
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "711px", 
       opacity: '1'
     },
     "100%": {
-      top: '745px',
+      top: '570px',
       left: '50%',
       marginLeft: "711px", 
       opacity: '0'
@@ -377,7 +377,7 @@ const styles = () => ({
   },
   heartlineTracker:{
     position: 'absolute',
-    top: '745px',
+    top: '570px',
     left: '50%',
     marginLeft: "-726px",
     animation: '6s $heartlineTracking infinite linear'
@@ -396,6 +396,7 @@ const styles = () => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    position: 'relative',
   },
   heroFrame: {
     height: '614px',
@@ -436,6 +437,7 @@ const styles = () => ({
     color: '#009485',
     textAlign: 'center',
     whiteSpace: 'pre-line',
+    margin: '0',
   },
   paddingLeft50: {
     paddingLeft: '50px',
@@ -449,6 +451,7 @@ const styles = () => ({
     textAlign: 'center',
     whiteSpace: 'pre-line',
     paddingTop: '14px',
+    margin: '0',
   },
   headerLink: {
     textDecoration: 'none',
@@ -721,6 +724,7 @@ const styles = () => ({
     lineHeight: '33px',
     fontWeight: '500',    
     padding: '20px 28px 28px 24px',
+    margin: '0',
   },
   landingContainer: {
     alignItems: 'center',
@@ -806,6 +810,7 @@ const styles = () => ({
     fontWeight: '500',
     lineHeight: '32px',
     padding: '12px 0 6px 0',
+    margin: '0',
   },
   contentContainer: {
     width: '245px',
@@ -841,8 +846,9 @@ const styles = () => ({
   },
   cases: {
     height: '436px',
-    paddingLeft: '390px',
-    paddingTop: '70px',
+    marginLeft: '395px',
+    marginTop: '70px',
+    background: '#0d4545'
   },
   mountainMeadowButtonSection: {
     height: '44px',
@@ -882,6 +888,7 @@ const styles = () => ({
     fontWeight: '500',
     lineHeight: '32px',
     padding: '15px 0',
+    margin: '0',
   },
   mountainMeadowContent: {
     width: '197px',

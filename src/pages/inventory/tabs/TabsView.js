@@ -1,19 +1,20 @@
 import React, { useState, useContext } from 'react';
 import TabPanel from './TabPanel';
-import { tabContainers } from '../../../bento/dashboardTabData';
+import { tabContainers, tabResponsiveBreakpoints } from '../../../bento/dashboardTabData';
 import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
-import CohortModalGenerator from '../cohortModal/cohortModalGenerator';
-import { CohortModalContext } from '../cohortModal/CohortModalContext';
+import CohortModal from '../../../components/CohortModal/CohortModal';
+import { CohortModalContext } from '../../../components/CohortModal/CohortModalContext';
+import DeleteConfirmationModal from '../../../components/CohortModal/components/shared/DeleteConfirmationModal';
 
 
 const Tabs = (props) => {
   const [currentTab, setCurrentTab] = tabContainers.length > 0 ? useState(1) : useState(0);
-  const handleTabChange = (event, value) => {
+  const handleTabChange = (_, value) => {
     setCurrentTab(value);
   };
 
-  const { showCohortModal, setShowCohortModal} = useContext(CohortModalContext);
+  const { showCohortModal, setShowCohortModal , setWarningMessage, warningMessage } = useContext(CohortModalContext);
 
   /**
   * 1. change <name> to <display> as array item
@@ -30,7 +31,6 @@ const Tabs = (props) => {
     tooltipStyles: {border: '1px solid #2D5380', arrowBorder: '1px solid #598AC5'}
   }));
 
-  const { CohortModal } = CohortModalGenerator();
 
   return (
     <>
@@ -38,11 +38,23 @@ const Tabs = (props) => {
         open={showCohortModal}
         onCloseModal={() => setShowCohortModal(false)}
         />
+
+      <DeleteConfirmationModal
+           classes={""}
+           open={warningMessage}
+           setOpen={() => { setWarningMessage("") }}
+           handleDelete={() => { setWarningMessage("") }}
+           deletionType={false}
+           message={warningMessage}
+       />
+       
       <BentoTabs
         tabItems={getTabs(tabContainers)}
         currentTab={currentTab}
         handleTabChange={handleTabChange}
         customTheme={customTheme}
+        enableGrouping={true}
+        responsiveBreakpoints={tabResponsiveBreakpoints}
       />
       {
         tabContainers.map((tab, index) => (

@@ -36,8 +36,6 @@ export const availableResources = [
     id: 'caDSR',
     urlInTitle: false,
     title: 'caDSR',
-    text: 'The Cancer Data Standards Repository is one of the largest CDE registries developed by the National Cancer Institute (NCI) and contains over <b>70,000 CDEs</b> covering many aspects of cancer research. Access it here: ',
-    postParagraph: 'There are over 400 pediatric CDEs used by various entities like CCDI Data Ecosystem and Pediatric Clinical Data commons. The <b>CCDI Pediatric Cancer Core Common Data Elements</b> (CDEs) were created to standardize data collection and sharing for pediatric cancer research. To explore these standards, visit the caDSR homepage and select "Pediatric Cancer Core CDEs" under the Favorites column for a custom report of key CDEs. For feedback or suggestions, email the <a href= "mailto: ncichildhoodcancerdatainitiative@mail.nih.gov">CCDI mailbox.</a>',
-    url: 'https://cadsr.cancer.gov/onedata/Home.jsp',
+    text: 'The Cancer Data Standards Repository is one of the largest CDE registries developed by the National Cancer Institute (NCI) and contains over <b>76,600 CDEs</b> covering many aspects of cancer research. Access it here: <a href= "https://cadsr.cancer.gov/onedata/Home.jsp"  target="_blank" class="resourceLink">https://cadsr.cancer.gov/onedata/Home.jsp</a>. There are over 490 pediatric CDEs used by various entities like CCDI Data Ecosystem and Pediatric Clinical Data commons. The <b>Pediatric Cancer Core Common Data Elements</b> (CDEs) were created to standardize data collection and sharing for pediatric cancer research. To explore these standards, visit the caDSR homepage and select "Pediatric Cancer Core CDEs" under the Favorites column for a custom report of key CDEs. For feedback or suggestions, email the <a href= "mailto: ncichildhoodcancerdatainitiative@mail.nih.gov">CCDI mailbox.</a>',
   },
 ];

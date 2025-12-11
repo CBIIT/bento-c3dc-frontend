@@ -2,6 +2,38 @@ import React, { useState } from 'react';
 import { Link, Typography } from '@material-ui/core';
 import { cellTypes, headerTypes } from '@bento-core/table';
 import ReactHtmlParser from "html-react-parser";
+import ToolTip from "@bento-core/tool-tip";
+
+const ExpandableArrayCell = ({ label, newStyle }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  
+  return (
+    <Typography>
+      {isExpanded ? (
+        <>
+          {label.join(", ")}
+          {" "}
+          <span 
+            onClick={() => setIsExpanded(false)} 
+            style={newStyle}
+          >
+            (show less)
+          </span>
+        </>
+      ) : (
+        <>
+          {label.slice(0,5).join(", ")}
+          <span 
+            onClick={() => setIsExpanded(true)} 
+            style={newStyle}
+          >
+            <span style={{ whiteSpace: 'nowrap' }}>, ...</span>
+          </span>
+        </>
+      )}
+    </Typography>
+  );
+};
 
 export const CustomCellView = (props) => {
   const {
@@ -16,19 +48,97 @@ export const CustomCellView = (props) => {
     height: '23px',
   };
 
+  if (Array.isArray(label) && dataField === "cohort") {
+    return (
+      <div style={{ display: 'flex', gap: 10, justifyContent:'center', width: 67 }}>
+        {
+          label.map((cohort, index) => (
+            <ToolTip title={<div>
+            
+              {label.map((coh,innerIndex) => (
+                <div style={{display:'flex',gap:10,marginBottom:5}}>
+                  <div style={{
+                    backgroundColor: coh["color"],
+                    width: 17,
+                    height: 17,
+                    border: '1px solid #686868',
+                    borderRadius: 4
+                  }}>
+                  </div>
+                  {coh["cohort"]}
+                  </div>
+              ))
+              }
+
+            </div>} arrow placement="top">
+              <div style={{
+                backgroundColor: cohort["color"],
+                width: 17,
+                height: 17,
+                border: '1px solid #686868',
+                borderRadius: 4
+              }}>
+              </div>
+            </ToolTip>
+          ))
+        }
+      </div>
+    )
+  }
+
+  if (Array.isArray(label)) {
+    if (props.linkAttr) {
+      const { rootPath } = props.linkAttr;
+      return (
+        <Typography>
+          {label.map((item, idx) => {
+            return (
+              <Link href={`#${rootPath}/`.concat(item)} className={cellTypes.LINK}>
+                <Typography key={idx}>{item}{idx !== label.length - 1 && ", "}</Typography>
+              </Link>
+            );
+          })}
+        </Typography>
+      );
+    }
+    
+    if (label.length > 5){
+      return <ExpandableArrayCell label={label} newStyle={newStyle} />;
+    }
+    return (<Typography>{label.join(", ")}</Typography>);
+  }
+
+
+  if( typeof label === 'object'){
+    return (<Typography>{label["participant_id"] }</Typography>)
+  }
+
   if (props.linkAttr) {
-    const { rootPath } = props.linkAttr;
-    return(
-      <Link 
-        className={cellTypes.LINK}
-        href={`${rootPath}${label}`}
-        target="_blank" 
-        rel="noopener noreferrer"
+    const { rootPath, linkField } = props.linkAttr;
+    //If the link requires another field, provide it in the linkField otherwise will use current field (label)
+    if (rootPath.startsWith('http://') || rootPath.startsWith('https://')) {
+      return (
+        <Link
+          className={cellTypes.LINK}
+          href={`${rootPath}${linkField ? props[linkField] : label}`}
+          target="_blank"
+          rel="noopener noreferrer"
         >
 
-        <Typography >{label}</Typography>
-      </Link>
-    )
+          <Typography >{label}</Typography>
+        </Link>
+      );
+    }
+    else {
+      return (
+        <Link
+          className={cellTypes.LINK}
+          href={`${rootPath}${linkField ? props[linkField] : label}`}
+        >
+          <Typography >{label}</Typography>
+        </Link>
+      );
+    }
   }
 
   if (Array.isArray(label)) {
