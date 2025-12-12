@@ -267,4 +267,7 @@ export const RiskTableWrapper = styled.div`
   width: 100%;
   padding-left: 30px;
   padding-right: 50px;
+  margin-top: 10px;
+  overflow-x: auto;
+  min-width: 0;
 `;
