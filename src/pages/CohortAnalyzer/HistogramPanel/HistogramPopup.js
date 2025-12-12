@@ -37,6 +37,7 @@ const ExpandedChartModal = ({
   c3
 }) => {
   const [showDownloadDropdown, setShowDownloadDropdown] = React.useState(false);
+  const [chartHeight, setChartHeight] = React.useState(350);
   const dropdownRef = useRef(null);
   const survivalAnalysisContainerRef = useRef(null);
   
@@ -275,7 +276,24 @@ const ExpandedChartModal = ({
         document.body.style.overflow = original;
       };
     
-  }, [])
+  }, []);
+
+  // Calculate height for KM chart and risk table to share space equally
+  useEffect(() => {
+    const updateHeight = () => {
+      if (survivalAnalysisContainerRef.current && activeTab === 'survivalAnalysis') {
+        const containerHeight = survivalAnalysisContainerRef.current.clientHeight;
+        // Divide space equally, accounting for gap (10px) and margins
+        const availableHeight = containerHeight - 10; // gap between elements
+        const halfHeight = Math.floor(availableHeight / 2);
+        setChartHeight(Math.max(250, halfHeight - 20)); // min 250px, account for padding
+      }
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, [activeTab]);
 
 
   return (
@@ -345,14 +363,14 @@ const ExpandedChartModal = ({
         </div>
         <ModalChartWrapper>
           {activeTab === 'survivalAnalysis' ? (
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
-              <div ref={survivalAnalysisContainerRef} style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
-                <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px',marginTop: -20}}>
+            <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', padding: '20px', overflow: 'hidden', boxSizing: 'border-box' }}>
+              <div ref={survivalAnalysisContainerRef} style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', boxSizing: 'border-box', gap: '10px'}}>
+                <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px', marginTop: -20, flex: '1 1 0', minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
                   <KaplanMeierChart
                     data={filteredKmPlotData}
                     title=""
                     width={"100%"}
-                    height={400}
+                    height={chartHeight}
                     loading={kmLoading}
                     error={kmError}
                     colors={cohortColors}
@@ -360,7 +378,7 @@ const ExpandedChartModal = ({
                     showLegend={false}
                   />
                 </div>
-                <div ref={riskTableRef} style={{width: '95%',marginLeft: '15px', marginRight: '100px'}}>
+                <div ref={riskTableRef} style={{width: '100%', paddingLeft: '160px', paddingRight: '100px', flex: '1 1 0', minHeight: 0, overflowX: 'auto', overflowY: 'auto'}}>
                   <RiskTable
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
