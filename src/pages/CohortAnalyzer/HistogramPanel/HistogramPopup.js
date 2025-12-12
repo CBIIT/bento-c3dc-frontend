@@ -4,7 +4,11 @@ import {
   RadioGroup, RadioInput
   , RadioLabel, ModalChartWrapper, ModalContent
   , ModalOverlay, CloseButton, Tab, TabContainer,
-  barColors,
+  barColors, SurvivalAnalysisModalContainer, SurvivalAnalysisModalContent,
+  KmChartModalWrapper, RiskTableModalWrapper, ModalHeaderContainer,
+  ModalActionButtons, DownloadButtonWrapper, DownloadButton,
+  DownloadIconImage, DownloadIconSmall, ModalChartContainer,
+  ModalRadioFieldset, ModalRadioGroup, ModalNoDataContainer,
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
@@ -301,7 +305,7 @@ const ExpandedChartModal = ({
     <ModalOverlay onClick={() => setExpandedChart(null)}>
             
       <ModalContent onClick={(e) => e.stopPropagation()}>
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', position: 'relative',width:"100%"}}>
+          <ModalHeaderContainer>
           {/* Tab Navigation */}
           <TabContainer>
             {Object.keys(data).map(dataset => (
@@ -323,49 +327,48 @@ const ExpandedChartModal = ({
             )}
           </TabContainer>
 
-          <div style={{ minWidth: 300, right: 10, top:2, position:'absolute', justifyContent: 'flex-end', display: 'flex', gap: 5 }}>
+          <ModalActionButtons>
             {activeTab === 'survivalAnalysis' ? (
-              <div style={{marginRight: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-               <span 
+              <DownloadButtonWrapper>
+               <DownloadButton 
                   onClick={() => setShowDownloadDropdown(!showDownloadDropdown)}
-                  style={{ cursor: 'pointer', marginTop: 5 }}
                 >
-                  <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px'}} />
-                </span>
+                  <DownloadIconImage src={DownloadIcon} alt={"download"} />
+                </DownloadButton>
               <DownloadDropdown ref={dropdownRef}>
                
                 {showDownloadDropdown && (
                   <DownloadDropdownMenu>
                     <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
-                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                      <DownloadIconSmall src={DownloadIconBorderless} alt="download" />
                       Kaplan-Meier 
                     </DownloadDropdownItem>
                     <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
-                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                      <DownloadIconSmall src={DownloadIconBorderless} alt="download" />
                       Risk Table 
                     </DownloadDropdownItem>
                     <DownloadDropdownItem onClick={() => downloadBoth()}>
-                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                      <DownloadIconSmall src={DownloadIconBorderless} alt="download" />
                       Download Both
                     </DownloadDropdownItem>
                   </DownloadDropdownMenu>
                 )}
               </DownloadDropdown>
-              </div>
+              </DownloadButtonWrapper>
             ) : (
-              <span style={{ marginTop: 5, cursor: 'pointer' }} onClick={() => downloadChart(activeTab,true)}>
-                <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
-              </span>
+              <DownloadButton onClick={() => downloadChart(activeTab,true)}>
+                <DownloadIconImage src={DownloadIcon} alt={"download"} />
+              </DownloadButton>
             )}
             <CloseButton onClick={() => setExpandedChart(null)}>×</CloseButton>
-          </div>
+          </ModalActionButtons>
 
-        </div>
+        </ModalHeaderContainer>
         <ModalChartWrapper>
           {activeTab === 'survivalAnalysis' ? (
-            <div style={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'center', padding: '20px', overflow: 'hidden', boxSizing: 'border-box' }}>
-              <div ref={survivalAnalysisContainerRef} style={{width: '100%', height: '100%', display: 'flex', flexDirection: 'column', overflow: 'hidden', boxSizing: 'border-box', gap: '10px'}}>
-                <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px', marginTop: -20, flex: '1 1 0', minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', overflow: 'hidden'}}>
+            <SurvivalAnalysisModalContainer>
+              <SurvivalAnalysisModalContent ref={survivalAnalysisContainerRef}>
+                <KmChartModalWrapper ref={kmChartRef}>
                   <KaplanMeierChart
                     data={filteredKmPlotData}
                     title=""
@@ -377,19 +380,19 @@ const ExpandedChartModal = ({
                     showLabels={false}
                     showLegend={false}
                   />
-                </div>
-                <div ref={riskTableRef} style={{width: '100%', paddingLeft: '160px', paddingRight: '100px', flex: '1 1 0', minHeight: 0, overflowX: 'auto', overflowY: 'auto'}}>
+                </KmChartModalWrapper>
+                <RiskTableModalWrapper ref={riskTableRef}>
                   <RiskTable
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
                   />
-                </div>
-              </div>
-            </div>
+                </RiskTableModalWrapper>
+              </SurvivalAnalysisModalContent>
+            </SurvivalAnalysisModalContainer>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
-             <fieldset style={{ border: 'none' }}>
-              <RadioGroup style={{ height: '100px', width:'180px', marginTop: '20px' }}>
+            <ModalChartContainer>
+             <ModalRadioFieldset>
+              <ModalRadioGroup>
                 <RadioLabel>
                   <RadioInput
                     type="radio"
@@ -414,8 +417,8 @@ const ExpandedChartModal = ({
                     % of Cases
                   </legend>
                 </RadioLabel>
-              </RadioGroup>
-               </fieldset>
+              </ModalRadioGroup>
+               </ModalRadioFieldset>
              {Array.isArray(data[activeTab]) && data[activeTab].length > 0 ? (
   <ResponsiveContainer id={`expanded-chart-${activeTab}`} width="100%"  height="100%">
     <BarChart
@@ -461,22 +464,12 @@ const ExpandedChartModal = ({
     </BarChart>
   </ResponsiveContainer>
 ) : (
-  <div style={{
-    width: '90%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '16px',
-    fontFamily: 'Poppins',
-    color: '#999',
-    padding: '2rem'
-  }}>
+  <ModalNoDataContainer>
     No data available
-  </div>
+  </ModalNoDataContainer>
 )}
 
-            </div>
+            </ModalChartContainer>
           )}
         </ModalChartWrapper>
       </ModalContent>
