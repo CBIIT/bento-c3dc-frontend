@@ -271,3 +271,118 @@ export const RiskTableWrapper = styled.div`
   overflow-x: auto;
   min-width: 0;
 `;
+
+export const SurvivalAnalysisModalContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+`;
+
+export const SurvivalAnalysisModalContent = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-sizing: border-box;
+  gap: 10px;
+`;
+
+export const KmChartModalWrapper = styled.div`
+  width: 100%;
+  padding-left: 160px;
+  margin-right: 100px;
+  margin-top: -20px;
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+`;
+
+export const RiskTableModalWrapper = styled.div`
+  width: 100%;
+  padding-left: 160px;
+  padding-right: 100px;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow-x: auto;
+  overflow-y: auto;
+`;
+
+export const ModalHeaderContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  position: relative;
+  width: 100%;
+`;
+
+export const ModalActionButtons = styled.div`
+  min-width: 300px;
+  right: 10px;
+  top: 2px;
+  position: absolute;
+  justify-content: flex-end;
+  display: flex;
+  gap: 5px;
+`;
+
+export const DownloadButtonWrapper = styled.div`
+  margin-right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const DownloadButton = styled.span`
+  cursor: pointer;
+  margin-top: 5px;
+`;
+
+export const DownloadIconImage = styled.img`
+  width: 23px;
+  height: 23px;
+`;
+
+export const DownloadIconSmall = styled.img`
+  width: 16px;
+  height: 16px;
+`;
+
+export const ModalChartContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const ModalRadioFieldset = styled.fieldset`
+  border: none;
+`;
+
+export const ModalRadioGroup = styled(RadioGroup)`
+  height: 100px;
+  width: 180px;
+  margin-top: 20px;
+`;
+
+export const ModalNoDataContainer = styled.div`
+  width: 90%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-family: Poppins;
+  color: #999;
+  padding: 2rem;
+`;
