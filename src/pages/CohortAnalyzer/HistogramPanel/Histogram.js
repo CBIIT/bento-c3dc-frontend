@@ -10,16 +10,18 @@ import CustomChartTooltip from './CustomChartTooltip';
 import CustomXAxisTick from './CustomXAxisTick';
 import { KaplanMeierChart } from '@bento-core/kmplot';
 import useKmplot from './useKmplot';
+import useRiskTable from './useRiskTable';
 import {
   HistogramContainer, ChartWrapper, HeaderSection, RadioGroup, RadioInput
   , RadioLabel, ChartActionButtons, ChartTitle,
   CenterContainer, DatasetSelectionTitle, DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem,
   SurvivalAnalysisWrapper, SurvivalAnalysisHeader, SurvivalAnalysisContainer, KmChartWrapper, 
-  barColors,
+  barColors, RiskTableWrapper,
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
 import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePlaceHolder.svg';
+import RiskTable from '@bento-core/risk-table';
 
 import * as htmlToImage from 'html-to-image';
 
@@ -30,6 +32,12 @@ const Histogram = ({ c1, c2, c3 }) => {
     loading: kmLoading, 
     error: kmError
   } = useKmplot({ c1, c2, c3 });
+  
+  const {
+    data: riskTableData,
+    loading: riskTableLoading,
+    error: riskTableError
+  } = useRiskTable({ c1, c2, c3 });
 
   // Map cohort colors based on which cohorts are selected - memoized to update when cohorts change
   const cohortColors = useMemo(() => {
@@ -69,6 +77,8 @@ const Histogram = ({ c1, c2, c3 }) => {
   const kmChartRef = useRef(null);
   const kmChartRefExpanded = useRef(null);
   const survivalAnalysisContainerRef = useRef(null);
+  const riskTableRef = useRef(null);
+  const riskTableRefExpanded = useRef(null);
   const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
   const dropdownRef = useRef(null);
   
@@ -155,6 +165,53 @@ const Histogram = ({ c1, c2, c3 }) => {
     }
   };
 
+
+  // Download function for Risk table
+  const downloadRiskTable = (riskTableRef) => {
+    try {
+      if (!riskTableRef || !riskTableRef.current) {
+        console.error("Risk table ref not available");
+        return;
+      }
+
+      // Use the ref directly to capture the Risk Table element
+      const tableElement = riskTableRef.current;
+
+      // Store original margin and temporarily remove it
+      const originalMargin = tableElement.style.marginLeft;
+      tableElement.style.marginLeft = '0';
+
+      // Generate image from the ref element using html-to-image
+      htmlToImage.toPng(tableElement, {
+        backgroundColor: 'transparent',
+        pixelRatio: 4,
+        quality: 1.0
+      }).then((dataUrl) => {
+        // Restore original margin
+        tableElement.style.marginLeft = originalMargin;
+
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `risk_table.png`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+        }, 100);
+      }).catch(error => {
+        // Restore original margin even on error
+        tableElement.style.marginLeft = originalMargin;
+        console.error("Error using html-to-image:", error);
+        alert("Error downloading Risk table. Please check the console for details.");
+      });
+
+      setShowDownloadDropdown(false);
+    } catch (error) {
+      console.error("Error downloading Risk table:", error);
+      alert("Error downloading Risk table. Please check the console for details.");
+    }
+  };
+
   // Download both charts as a single combined image
   const downloadBoth = () => {
     try {
@@ -207,6 +264,50 @@ const Histogram = ({ c1, c2, c3 }) => {
     race: PlaceHolder2,
     survivalAnalysis: PlaceHolder2
   };
+
+  // Transform risk table data to match RiskTable component format
+  const { cohorts, timeIntervals } = useMemo(() => {
+    if (!riskTableData || !riskTableData.cohorts) {
+      return { cohorts: [], timeIntervals: [] };
+    }
+
+    const cohortColors = {
+      'c1': barColors.colorA,
+      'c2': barColors.colorB,
+      'c3': barColors.colorC,
+    };
+
+    const transformedCohorts = riskTableData.cohorts
+      .filter(cohort => {
+        // Only include cohorts that have data and match selected cohorts
+        const cohortKey = cohort.cohort.toLowerCase();
+        return (
+          (cohortKey === 'c1' && c1 && c1.length > 0) ||
+          (cohortKey === 'c2' && c2 && c2.length > 0) ||
+          (cohortKey === 'c3' && c3 && c3.length > 0)
+        );
+      })
+      .map((cohort, index) => {
+        // Convert survivalData array to data object format
+        const data = {};
+        cohort.survivalData.forEach(item => {
+          // Convert float subjects to integer (e.g., 2.0 -> 2)
+          data[item.group] = Math.round(item.subjects || 0);
+        });
+
+        return {
+          id: String(index + 1),
+          name: `Cohort ${cohort.cohort.toUpperCase()}`,
+          color: cohortColors[cohort.cohort.toLowerCase()] || '#ADD8E6',
+          data: data,
+        };
+      });
+
+    return {
+      cohorts: transformedCohorts,
+      timeIntervals: riskTableData.timeIntervals || [],
+    };
+  }, [riskTableData, c1, c2, c3]);
 
   let data = graphData;
   const MAX_BARS_DISPLAYED = 6;
@@ -321,7 +422,7 @@ const Histogram = ({ c1, c2, c3 }) => {
                           <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                           Kaplan-Meier 
                         </DownloadDropdownItem>
-                        <DownloadDropdownItem >
+                        <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
                           <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                           Risk Table 
                         </DownloadDropdownItem>
@@ -349,6 +450,12 @@ const Histogram = ({ c1, c2, c3 }) => {
                     showLegend={false}
                   />
                 </KmChartWrapper>
+                <RiskTableWrapper ref={riskTableRef}>
+                  <RiskTable
+                    cohorts={cohorts}
+                    timeIntervals={timeIntervals}
+                  />
+                </RiskTableWrapper>
               </SurvivalAnalysisContainer>
             </SurvivalAnalysisWrapper>
           </ChartWrapper>
@@ -526,6 +633,9 @@ const Histogram = ({ c1, c2, c3 }) => {
           kmLoading={kmLoading}
           kmError={kmError}
           kmChartRef={kmChartRefExpanded}
+          riskTableRef={riskTableRefExpanded}
+          cohorts={cohorts}
+          timeIntervals={timeIntervals}
           c1={c1}
           c2={c2}
           c3={c3}

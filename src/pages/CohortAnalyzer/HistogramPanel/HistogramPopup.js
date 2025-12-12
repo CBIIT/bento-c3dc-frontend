@@ -12,7 +12,8 @@ import DownloadIconBorderless from "../../../assets/icons/download-icon-borderle
 import CustomChartTooltip from './CustomChartTooltip';
 import CustomXAxisTick from './CustomXAxisTick';
 import { KaplanMeierChart } from '@bento-core/kmplot';
-import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem } from './HistogramPanel.styled';
+import RiskTable from '@bento-core/risk-table';
+import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem, } from './HistogramPanel.styled';
 import * as htmlToImage from 'html-to-image';
 
 const ExpandedChartModal = ({
@@ -28,6 +29,9 @@ const ExpandedChartModal = ({
   kmLoading,
   kmError,
   kmChartRef,
+  riskTableRef,
+  cohorts,
+  timeIntervals,
   c1,
   c2,
   c3
@@ -158,6 +162,52 @@ const ExpandedChartModal = ({
     }
   };
 
+  const downloadRiskTable = (riskTableRef) => {
+    try {
+      if (!riskTableRef || !riskTableRef.current) {
+        console.error("Risk table ref not available");
+        return;
+      }
+
+      // Use the ref directly to capture the Risk Table element
+      const tableElement = riskTableRef.current;
+
+
+      // Store original margin and temporarily remove it
+      const originalMargin = tableElement.style.marginLeft;
+      tableElement.style.marginLeft = '0';
+
+      // Generate image from the ref element using html-to-image
+      htmlToImage.toPng(tableElement, {
+        backgroundColor: 'transparent',
+        pixelRatio: 4,
+        quality: 1.0
+      }).then((dataUrl) => {
+        // Restore original margin
+        tableElement.style.marginLeft = originalMargin;
+
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `risk_table.png`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+        }, 100);
+      }).catch(error => {
+        // Restore original margin even on error
+        tableElement.style.marginLeft = originalMargin;
+        console.error("Error using html-to-image:", error);
+        alert("Error downloading Risk table. Please check the console for details.");
+      });
+
+      setShowDownloadDropdown(false);
+    } catch (error) {
+      console.error("Error downloading Risk table:", error);
+      alert("Error downloading Risk table. Please check the console for details.");
+    }
+  };
+
   const downloadBoth = () => {
     try {
       setShowDownloadDropdown(false);
@@ -272,7 +322,7 @@ const ExpandedChartModal = ({
                       <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                       Kaplan-Meier 
                     </DownloadDropdownItem>
-                    <DownloadDropdownItem >
+                    <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
                       <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
                       Risk Table 
                     </DownloadDropdownItem>
@@ -308,6 +358,12 @@ const ExpandedChartModal = ({
                     colors={cohortColors}
                     showLabels={false}
                     showLegend={false}
+                  />
+                </div>
+                <div ref={riskTableRef} style={{width: '95%',marginLeft: '15px', marginRight: '100px'}}>
+                  <RiskTable
+                    cohorts={cohorts}
+                    timeIntervals={timeIntervals}
                   />
                 </div>
               </div>
