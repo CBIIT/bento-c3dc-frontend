@@ -1,4 +1,5 @@
 import React, { useRef, useState, useLayoutEffect } from 'react';
+import { withStyles } from '@material-ui/core';
 
 /**
  * EllipsisText Component
@@ -8,7 +9,7 @@ import React, { useRef, useState, useLayoutEffect } from 'react';
  *
  * @param {string} text - The text to display
  * @param {string} className - Optional CSS class name
- * @param {object} style - Optional inline styles
+ * @param {object} classes - Material-UI classes object
  * @param {function} onTruncate - Optional callback called with true when text is truncated, false when not
  * @param {string} mode - Ellipsis mode: 'middle' or 'end' (default: 'middle')
  *
@@ -18,7 +19,7 @@ import React, { useRef, useState, useLayoutEffect } from 'react';
  * Example (end mode):
  * "My Very Long Cohort Name That Exceeds For Display..."
  */
-const EllipsisText = ({ text, className, style, onTruncate, mode = 'middle' }) => {
+const EllipsisText = ({ text, className, classes, onTruncate, mode = 'middle' }) => {
     const containerRef = useRef(null);
     const measureRef = useRef(null);
     const [displayText, setDisplayText] = useState(text);
@@ -130,15 +131,7 @@ const EllipsisText = ({ text, className, style, onTruncate, mode = 'middle' }) =
         return (
             <span
                 ref={containerRef}
-                className={className}
-                style={{
-                    ...style,
-                    overflow: 'hidden',
-                    textOverflow: 'ellipsis',
-                    whiteSpace: 'nowrap',
-                    display: 'inline-block',
-                    maxWidth: '100%'
-                }}
+                className={`${classes.endContainer} ${className || ''}`}
             >
                 {displayText}
             </span>
@@ -147,13 +140,39 @@ const EllipsisText = ({ text, className, style, onTruncate, mode = 'middle' }) =
 
     // Middle mode: Custom truncation with measurement span
     return (
-        <span ref={containerRef} className={className} style={{ ...style, position: 'relative', display: 'inline-block', maxWidth: '100%' }}>
-            <span style={{ visibility: 'hidden', position: 'absolute', whiteSpace: 'nowrap' }} ref={measureRef} />
-            <span style={{ display: 'inline-block', maxWidth: '100%' }}>{displayText}</span>
+        <span ref={containerRef} className={`${classes.middleContainer} ${className || ''}`}>
+            <span className={classes.measureSpan} ref={measureRef} />
+            <span className={classes.displaySpan}>{displayText}</span>
         </span>
     );
 };
 
+const styles = () => ({
+    endContainer: {
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        whiteSpace: 'nowrap',
+        display: 'inline-block',
+        maxWidth: '100%',
+    },
+    middleContainer: {
+        position: 'relative',
+        display: 'inline-block',
+        maxWidth: '100%',
+    },
+    measureSpan: {
+        visibility: 'hidden',
+        position: 'absolute',
+        whiteSpace: 'nowrap',
+    },
+    displaySpan: {
+        display: 'inline-block',
+        maxWidth: '100%',
+    },
+});
+
+const StyledEllipsisText = withStyles(styles)(EllipsisText);
+
 // Export convenient named variants
-export const MiddleEllipsisText = (props) => <EllipsisText {...props} mode="middle" />;
-export const EndEllipsisText = (props) => <EllipsisText {...props} mode="end" />;
+export const MiddleEllipsisText = (props) => <StyledEllipsisText {...props} mode="middle" />;
+export const EndEllipsisText = (props) => <StyledEllipsisText {...props} mode="end" />;
