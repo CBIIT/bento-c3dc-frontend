@@ -1,7 +1,7 @@
 import { onRowSeclect, TableContext } from '@bento-core/paginated-table';
 import { onRowSelectHidden } from '@bento-core/paginated-table/dist/table/state/Actions';
 import { KeyboardArrowDownOutlined } from '@material-ui/icons';
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useContext, useEffect, useState, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import { onAddParticipantsToCohort } from '../../../../components/CohortSelectorState/store/action';
 import { onCreateNewCohort } from '../../../../components/CohortSelectorState/store/action';
@@ -170,6 +170,95 @@ const DropdownItem = styled.li`
     border-bottom: none;
   }
 `;
+
+const CohortNameText = styled.span`
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  min-width: 0;
+`;
+
+const MiddleEllipsisText = ({ text }) => {
+  const containerRef = useRef(null);
+  const measureRef = useRef(null);
+  const [displayText, setDisplayText] = useState(text);
+
+  useLayoutEffect(() => {
+    if (!containerRef.current || !measureRef.current || !text) {
+      setDisplayText(text);
+      return;
+    }
+
+    const container = containerRef.current;
+    const measureSpan = measureRef.current;
+    const availableWidth = container.offsetWidth;
+
+    if (availableWidth === 0) {
+      setDisplayText(text);
+      return;
+    }
+
+    // Measure full text width
+    measureSpan.textContent = text;
+    const fullWidth = measureSpan.offsetWidth;
+
+    // If text fits, no truncation needed
+    if (fullWidth <= availableWidth) {
+      setDisplayText(text);
+      return;
+    }
+
+    // Text needs truncation with middle ellipsis
+    const ellipsis = '...';
+    measureSpan.textContent = ellipsis;
+    const ellipsisWidth = measureSpan.offsetWidth;
+    const targetWidth = availableWidth - ellipsisWidth;
+
+    let bestFit = '';
+
+    // Try to split roughly in the middle, favoring showing more at the start
+    for (let startLen = Math.floor(text.length * 0.6); startLen > 5; startLen--) {
+      for (let endLen = Math.floor(text.length * 0.35); endLen > 5; endLen--) {
+        const start = text.substring(0, startLen);
+        const end = text.substring(text.length - endLen);
+        const combined = start + end;
+
+        measureSpan.textContent = combined;
+        const combinedWidth = measureSpan.offsetWidth;
+
+        if (combinedWidth <= targetWidth) {
+          bestFit = start + ellipsis + end;
+          break;
+        }
+      }
+      if (bestFit) break;
+    }
+
+    if (bestFit) {
+      setDisplayText(bestFit);
+    } else {
+      // Fallback: just show first part with ellipsis
+      let truncateLen = Math.floor(text.length * 0.5);
+      while (truncateLen > 1) {
+        const truncated = text.substring(0, truncateLen) + ellipsis;
+        measureSpan.textContent = truncated;
+        if (measureSpan.offsetWidth <= availableWidth) {
+          setDisplayText(truncated);
+          return;
+        }
+        truncateLen--;
+      }
+      setDisplayText(text.substring(0, 1) + ellipsis);
+    }
+  }, [text]);
+
+  return (
+    <span ref={containerRef} style={{ position: 'relative', display: 'inline-block', maxWidth: '100%' }}>
+      <span style={{ visibility: 'hidden', position: 'absolute', whiteSpace: 'nowrap' }} ref={measureRef} />
+      <span style={{ display: 'inline-block', maxWidth: '100%' }}>{displayText}</span>
+    </span>
+  );
+};
 
 
 const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, type, borderColor, enabledWithoutSelect = null, filterState, localFindUpload, localFindAutocomplete }) => {
@@ -360,7 +449,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
 
       if (participantCount) {
         triggerNotification(participantCount);
-        setShowCohortModal((prev)=>true);
+        setShowCohortModal(true);
       }
     }
   };
@@ -445,7 +534,9 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       return (
         <DropdownItem key={index} className='existing-cohort-item' >
           <CustomCheckBox selectedItems={checkedItems} item={option.cohortId} handleCheckbox={handleCheckbox} />
-          <span>{option.cohortName}</span>
+          <CohortNameText>
+            <MiddleEllipsisText text={option.cohortName} />
+          </CohortNameText>
         </DropdownItem>
       )
     }
