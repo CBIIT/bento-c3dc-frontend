@@ -1,10 +1,10 @@
-import React, { memo, useRef, useState, useLayoutEffect } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import TrashCanIconWhite from '../../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DuplicateIcon from '../../../../../assets/icons/Duplicate.svg';
 import { TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
-import { MiddleEllipsisText } from '../../../../MiddleEllipsisText';
+import { MiddleEllipsisText } from '../../../../EllipsisText';
 
 /**
  * Individual cohort list item component
@@ -19,7 +19,6 @@ const CohortListItem = ({
     cohortLimitReached
 }) => {
     const nameRef = useRef(null);
-    const measureRef = useRef(null);
     const [isNameOverflowing, setIsNameOverflowing] = useState(false);
 
     // Additional safety check in case invalid data gets through
@@ -29,35 +28,12 @@ const CohortListItem = ({
 
     const cohortName = cohortData.cohortName || 'Unnamed Cohort';
 
-    // Check if original text would overflow before truncation
-    useLayoutEffect(() => {
-        const checkOverflow = () => {
-            if (nameRef.current && measureRef.current) {
-                const container = nameRef.current;
-                const measureSpan = measureRef.current;
-
-                // Measure the original full text
-                measureSpan.textContent = cohortName;
-                const fullWidth = measureSpan.offsetWidth;
-                const availableWidth = container.offsetWidth;
-
-                setIsNameOverflowing(fullWidth > availableWidth);
-            }
-        };
-
-        // Check immediately
-        checkOverflow();
-
-        // Also check after a small delay to ensure layout is complete
-        const timeoutId = setTimeout(checkOverflow, 100);
-
-        return () => clearTimeout(timeoutId);
-    }, [cohortName, isSelected]);
-
     const nameElement = (
         <span ref={nameRef} className={classes.cohortListItemText}>
-            <span style={{ visibility: 'hidden', position: 'absolute', whiteSpace: 'nowrap' }} ref={measureRef} />
-            <MiddleEllipsisText text={cohortName} />
+            <MiddleEllipsisText
+                text={cohortName}
+                onTruncate={setIsNameOverflowing}
+            />
         </span>
     );
 

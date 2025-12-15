@@ -1,30 +1,50 @@
 import React, { useRef, useState, useLayoutEffect } from 'react';
 
 /**
- * MiddleEllipsisText Component
- * Displays text with ellipsis in the middle when it overflows, showing both
- * the beginning and end of the text. Uses pixel-based measurement to handle
- * variable-width fonts correctly.
+ * EllipsisText Component
+ * Displays text with ellipsis when it overflows. Supports two modes:
+ * - 'middle': Shows beginning and end with ellipsis in the middle
+ * - 'end': Standard end truncation (uses CSS text-overflow: ellipsis)
  *
  * @param {string} text - The text to display
  * @param {string} className - Optional CSS class name
  * @param {object} style - Optional inline styles
+ * @param {function} onTruncate - Optional callback called with true when text is truncated, false when not
+ * @param {string} mode - Ellipsis mode: 'middle' or 'end' (default: 'middle')
  *
- * Example:
+ * Example (middle mode):
  * "My Very Long Cohort Name That Exceeds...For Display Copy (3)"
+ *
+ * Example (end mode):
+ * "My Very Long Cohort Name That Exceeds For Display..."
  */
-export const MiddleEllipsisText = ({ text, className, style }) => {
+const EllipsisText = ({ text, className, style, onTruncate, mode = 'middle' }) => {
     const containerRef = useRef(null);
     const measureRef = useRef(null);
     const [displayText, setDisplayText] = useState(text);
 
     useLayoutEffect(() => {
-        if (!containerRef.current || !measureRef.current || !text) {
+        if (!containerRef.current || !text) {
             setDisplayText(text);
             return;
         }
 
         const container = containerRef.current;
+
+        // End mode: Simple overflow detection, CSS handles truncation
+        if (mode === 'end') {
+            const isOverflowing = container.scrollWidth > container.clientWidth;
+            if (onTruncate) onTruncate(isOverflowing);
+            setDisplayText(text);
+            return;
+        }
+
+        // Middle mode: Custom truncation logic
+        if (!measureRef.current) {
+            setDisplayText(text);
+            return;
+        }
+
         const measureSpan = measureRef.current;
         const availableWidth = container.offsetWidth;
 
@@ -40,6 +60,7 @@ export const MiddleEllipsisText = ({ text, className, style }) => {
         // If text fits, no truncation needed
         if (fullWidth <= availableWidth) {
             setDisplayText(text);
+            if (onTruncate) onTruncate(false);
             return;
         }
 
@@ -85,6 +106,7 @@ export const MiddleEllipsisText = ({ text, className, style }) => {
 
         if (bestFit) {
             setDisplayText(bestFit);
+            if (onTruncate) onTruncate(true);
         } else {
             // Fallback: just show first part with ellipsis
             let truncateLen = Math.floor(text.length * 0.5);
@@ -93,14 +115,37 @@ export const MiddleEllipsisText = ({ text, className, style }) => {
                 measureSpan.textContent = truncated;
                 if (measureSpan.offsetWidth <= availableWidth) {
                     setDisplayText(truncated);
+                    if (onTruncate) onTruncate(true);
                     return;
                 }
                 truncateLen--;
             }
             setDisplayText(text.substring(0, 1) + ellipsis);
+            if (onTruncate) onTruncate(true);
         }
-    }, [text]);
+    }, [text, mode]);
 
+    // End mode: Simple span with CSS truncation
+    if (mode === 'end') {
+        return (
+            <span
+                ref={containerRef}
+                className={className}
+                style={{
+                    ...style,
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                    display: 'inline-block',
+                    maxWidth: '100%'
+                }}
+            >
+                {displayText}
+            </span>
+        );
+    }
+
+    // Middle mode: Custom truncation with measurement span
     return (
         <span ref={containerRef} className={className} style={{ ...style, position: 'relative', display: 'inline-block', maxWidth: '100%' }}>
             <span style={{ visibility: 'hidden', position: 'absolute', whiteSpace: 'nowrap' }} ref={measureRef} />
@@ -108,3 +153,7 @@ export const MiddleEllipsisText = ({ text, className, style }) => {
         </span>
     );
 };
+
+// Export convenient named variants
+export const MiddleEllipsisText = (props) => <EllipsisText {...props} mode="middle" />;
+export const EndEllipsisText = (props) => <EllipsisText {...props} mode="end" />;

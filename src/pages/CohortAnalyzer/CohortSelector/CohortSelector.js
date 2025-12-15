@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef, useLayoutEffect} from "react";
+import React, {useState, useContext, useRef} from "react";
 import { useStyle, Wrapper, CohortSelectionChild, TrashCanIcon, InstructionsWrapper, Instructions } from "./cohortSelectorStyling";
 import { useStyle as useMainStyle } from "../cohortAnalyzerStyling";
 import trashCan from "../../../assets/icons/trash_can.svg";
@@ -15,37 +15,14 @@ import { useCohortAnalyzer } from "../CohortAnalyzerContext";
 import { CohortStateContext } from "../../../components/CohortSelectorState/CohortStateContext";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import { exampleButtonConfig, getExampleCohortKeys } from "../../../bento/exampleCohortData";
-import { MiddleEllipsisText } from "../../../components/MiddleEllipsisText";
+import { MiddleEllipsisText } from "../../../components/EllipsisText";
 
 // Component to handle individual cohort item with overflow detection
 const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDeleteInfo, deleteInfo, state, classes }) => {
     const nameRef = useRef(null);
-    const measureRef = useRef(null);
     const [isNameOverflowing, setIsNameOverflowing] = useState(false);
 
     const cohortName = cohortData.cohortName + " (" + cohortData.participants.length + ")";
-
-    useLayoutEffect(() => {
-        const checkOverflow = () => {
-            if (nameRef.current && measureRef.current) {
-                const container = nameRef.current;
-                const measureSpan = measureRef.current;
-
-                // Measure the original full text
-                measureSpan.textContent = cohortName;
-                const fullWidth = measureSpan.offsetWidth;
-                const availableWidth = container.offsetWidth;
-
-                setIsNameOverflowing(fullWidth > availableWidth);
-            }
-        };
-        checkOverflow();
-
-        // Also check after a small delay to ensure layout is complete
-        const timeoutId = setTimeout(checkOverflow, 100);
-
-        return () => clearTimeout(timeoutId);
-    }, [cohortName]);
 
     const nameElement = (
         <span
@@ -53,8 +30,10 @@ const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDe
             className={classes.cardContent}
             style={{ color: '#000' }}
         >
-            <span style={{ visibility: 'hidden', position: 'absolute', whiteSpace: 'nowrap' }} ref={measureRef} />
-            <MiddleEllipsisText text={cohortName} />
+            <MiddleEllipsisText
+                text={cohortName}
+                onTruncate={setIsNameOverflowing}
+            />
         </span>
     );
 
