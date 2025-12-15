@@ -186,6 +186,8 @@ export const useStyle = makeStyles((theme) => ({
     cardContent: {
         maxWidth: '160px',
         display: 'inline-block',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
     },
 }))
 

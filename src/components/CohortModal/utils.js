@@ -53,44 +53,37 @@ export const MiddleEllipsisText = ({ text, className, style }) => {
         const targetWidth = availableWidth - ellipsisWidth;
 
         let bestFit = '';
-        let maxTotalChars = 0;
 
-        // Try different total character counts, starting high and going down
-        // For each total, try to split as evenly as possible
-        for (let totalChars = text.length - 5; totalChars > 10; totalChars--) {
-            // Try splits around 50/50 of the total characters
-            const mid = Math.floor(totalChars / 2);
+        // Use binary search to find the maximum number of characters that fit (O(log n) complexity)
+        let left = 10;
+        let right = text.length - 5;
 
-            // Try variations around the midpoint to find balanced split
-            for (let offset = 0; offset <= 5; offset++) {
-                const splits = [
-                    [mid + offset, totalChars - (mid + offset)],
-                    [mid - offset, totalChars - (mid - offset)]
-                ];
+        while (left <= right) {
+            const totalChars = Math.floor((left + right) / 2);
 
-                for (let i = 0; i < splits.length; i++) {
-                    const startLen = splits[i][0];
-                    const endLen = splits[i][1];
+            // Split as evenly as possible (50/50)
+            const startLen = Math.floor(totalChars / 2);
+            const endLen = totalChars - startLen;
 
-                    if (startLen < 5 || endLen < 5) continue;
-
-                    const start = text.substring(0, startLen);
-                    const end = text.substring(text.length - endLen);
-
-                    measureSpan.textContent = start + end;
-                    const combinedWidth = measureSpan.offsetWidth;
-
-                    if (combinedWidth <= targetWidth) {
-                        if (startLen + endLen > maxTotalChars) {
-                            maxTotalChars = startLen + endLen;
-                            bestFit = start + ellipsis + end;
-                        }
-                    }
-                }
+            if (startLen < 5 || endLen < 5) {
+                right = totalChars - 1;
+                continue;
             }
 
-            // If we found a good fit, stop searching
-            if (bestFit) break;
+            const start = text.substring(0, startLen);
+            const end = text.substring(text.length - endLen);
+
+            measureSpan.textContent = start + end;
+            const combinedWidth = measureSpan.offsetWidth;
+
+            if (combinedWidth <= targetWidth) {
+                // This fits, try to fit more characters
+                bestFit = start + ellipsis + end;
+                left = totalChars + 1;
+            } else {
+                // Too wide, try fewer characters
+                right = totalChars - 1;
+            }
         }
 
         if (bestFit) {
