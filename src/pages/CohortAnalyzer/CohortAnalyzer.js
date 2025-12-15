@@ -483,6 +483,9 @@ export const CohortAnalyzer = () => {
                             c1={selectedCohorts[0] && state && state[selectedCohorts[0]] ? state[selectedCohorts[0]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
                             c2={selectedCohorts[1] && state && state[selectedCohorts[1]] ? state[selectedCohorts[1]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
                             c3={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
+                            c1Name={selectedCohorts[0] || ''}
+                            c2Name={selectedCohorts[1] || ''}
+                            c3Name={selectedCohorts[2] || ''}
                         />
                     </div>
                      <CohortAnalyzerTableSection

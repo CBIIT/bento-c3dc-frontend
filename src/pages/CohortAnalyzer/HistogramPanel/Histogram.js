@@ -25,7 +25,7 @@ import RiskTable from '@bento-core/risk-table';
 
 import * as htmlToImage from 'html-to-image';
 
-const Histogram = ({ c1, c2, c3 }) => {
+const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({ c1, c2, c3 });
   const { 
     data: kmPlotData, 
@@ -35,8 +35,6 @@ const Histogram = ({ c1, c2, c3 }) => {
   
   const {
     data: riskTableData,
-    loading: riskTableLoading,
-    error: riskTableError
   } = useRiskTable({ c1, c2, c3 });
 
   // Map cohort colors based on which cohorts are selected - memoized to update when cohorts change
@@ -287,7 +285,7 @@ const Histogram = ({ c1, c2, c3 }) => {
           (cohortKey === 'c3' && c3 && c3.length > 0)
         );
       })
-      .map((cohort, index) => {
+      .map((cohort) => {
         // Convert survivalData array to data object format
         const data = {};
         cohort.survivalData.forEach(item => {
@@ -295,9 +293,16 @@ const Histogram = ({ c1, c2, c3 }) => {
           data[item.group] = Math.round(item.subjects || 0);
         });
 
+        // Determine the cohort name based on which cohort it is
+        const cohortKey = cohort.cohort.toLowerCase();
+        let cohortName;
+        if (cohortKey === 'c1') cohortName = c1Name || 'Cohort A';
+        else if (cohortKey === 'c2') cohortName = c2Name || 'Cohort B';
+        else if (cohortKey === 'c3') cohortName = c3Name || 'Cohort C';
+
         return {
-          id: String(index + 1),
-          name: `Cohort ${cohort.cohort.toUpperCase()}`,
+          id: cohortKey,
+          name: cohortName,
           color: cohortColors[cohort.cohort.toLowerCase()] || '#ADD8E6',
           data: data,
         };
@@ -307,7 +312,7 @@ const Histogram = ({ c1, c2, c3 }) => {
       cohorts: transformedCohorts,
       timeIntervals: riskTableData.timeIntervals || [],
     };
-  }, [riskTableData, c1, c2, c3]);
+  }, [riskTableData, c1, c2, c3, c1Name, c2Name, c3Name]);
 
   let data = graphData;
   const MAX_BARS_DISPLAYED = 6;
