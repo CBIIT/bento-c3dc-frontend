@@ -24,6 +24,10 @@ const EllipsisText = ({ text, className, classes, onTruncate, mode = 'middle' })
     const measureRef = useRef(null);
     const [displayText, setDisplayText] = useState(text);
 
+    // Constants for middle ellipsis truncation
+    const MIN_CHARS_PER_SIDE = 5; // Minimum characters to show on each side of ellipsis
+    const MIN_TOTAL_CHARS = MIN_CHARS_PER_SIDE * 2; // Minimum total characters (start + end)
+
     useLayoutEffect(() => {
         if (!containerRef.current || !text) {
             setDisplayText(text);
@@ -74,8 +78,8 @@ const EllipsisText = ({ text, className, classes, onTruncate, mode = 'middle' })
         let bestFit = '';
 
         // Use binary search to find the maximum number of characters that fit (O(log n) complexity)
-        let left = 10;
-        let right = text.length - 5;
+        let left = MIN_TOTAL_CHARS;
+        let right = text.length - MIN_CHARS_PER_SIDE;
 
         while (left <= right) {
             const totalChars = Math.floor((left + right) / 2);
@@ -84,7 +88,7 @@ const EllipsisText = ({ text, className, classes, onTruncate, mode = 'middle' })
             const startLen = Math.floor(totalChars / 2);
             const endLen = totalChars - startLen;
 
-            if (startLen < 5 || endLen < 5) {
+            if (startLen < MIN_CHARS_PER_SIDE || endLen < MIN_CHARS_PER_SIDE) {
                 right = totalChars - 1;
                 continue;
             }
@@ -124,7 +128,7 @@ const EllipsisText = ({ text, className, classes, onTruncate, mode = 'middle' })
             setDisplayText(text.substring(0, 1) + ellipsis);
             if (onTruncate) onTruncate(true);
         }
-    }, [text, mode]);
+    }, [text, mode, onTruncate]);
 
     // End mode: Simple span with CSS truncation
     if (mode === 'end') {
