@@ -15,7 +15,7 @@ import { useCohortAnalyzer } from "../CohortAnalyzerContext";
 import { CohortStateContext } from "../../../components/CohortSelectorState/CohortStateContext";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import { exampleButtonConfig, getExampleCohortKeys } from "../../../bento/exampleCohortData";
-import { MiddleEllipsisText } from "../../../components/CohortModal/utils";
+import { MiddleEllipsisText } from "../../../components/MiddleEllipsisText";
 
 // Component to handle individual cohort item with overflow detection
 const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDeleteInfo, deleteInfo, state, classes }) => {

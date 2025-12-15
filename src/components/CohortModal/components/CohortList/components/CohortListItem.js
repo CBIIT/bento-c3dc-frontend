@@ -4,7 +4,7 @@ import ToolTip from '@bento-core/tool-tip';
 import TrashCanIconWhite from '../../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DuplicateIcon from '../../../../../assets/icons/Duplicate.svg';
 import { TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
-import { MiddleEllipsisText } from '../../../utils';
+import { MiddleEllipsisText } from '../../../../MiddleEllipsisText';
 
 /**
  * Individual cohort list item component

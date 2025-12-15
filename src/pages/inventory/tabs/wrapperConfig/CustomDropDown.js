@@ -14,7 +14,7 @@ import { connect } from 'react-redux';
 import { getFilters } from '@bento-core/facet-filter';
 import CustomCheckBox from '../../../../components/CustomCheckbox/CustomCheckbox';
 import DeleteConfirmationModal from '../../../../components/CohortModal/components/shared/DeleteConfirmationModal';
-import { MiddleEllipsisText } from '../../../../components/CohortModal/utils';
+import { MiddleEllipsisText } from '../../../../components/MiddleEllipsisText';
 
 const DropdownContainer = styled.div`
   position: relative;

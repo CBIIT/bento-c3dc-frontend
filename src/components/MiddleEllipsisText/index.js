@@ -1,0 +1,1 @@
+export { MiddleEllipsisText } from './MiddleEllipsisText';
