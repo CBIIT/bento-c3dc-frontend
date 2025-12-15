@@ -1,7 +1,7 @@
 import React , { useRef, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import {
-  RadioGroup, RadioInput
+   RadioInput
   , RadioLabel, ModalChartWrapper, ModalContent
   , ModalOverlay, CloseButton, Tab, TabContainer,
   barColors, SurvivalAnalysisModalContainer, SurvivalAnalysisModalContent,
