@@ -186,6 +186,9 @@ const DropdownItem = styled.li`
 const CohortNameText = styled.span`
   flex: 1;
   min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-right: 5px;
 `;
 
 const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, type, borderColor, enabledWithoutSelect = null, filterState, localFindUpload, localFindAutocomplete }) => {
