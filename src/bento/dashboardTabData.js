@@ -1765,7 +1765,6 @@ const studyTab = {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
-        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -1777,7 +1776,6 @@ const studyTab = {
         dataField: 'study_name',
         header: 'Study Name',
         display: true,
-        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -1999,6 +1997,19 @@ const diagnosisTab = {
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM,
+      },
+      {
+        dataField: 'dbgap_accession',
+        header: 'dbGaP Accession',
+        display: true,
+        hideable: false,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+        linkAttr: {
+          rootPath: 'https://www.ncbi.nlm.nih.gov/projects/gap/cgi-bin/study.cgi?study_id=',
+        },
+        cellType: cellTypes.CUSTOM_ELEM,
+        doNotDownload: true,
       },
       {
         dataField: 'dbgap_accession',
