@@ -1,6 +1,123 @@
+import React, { useRef, useState, useLayoutEffect } from 'react';
 import { DOWNLOAD_MANIFEST_KEYS, CCDI_HUB_BASE_URL, CCDI_INTEROP_SERVICE_URL, CCDI_HUB_LEGACY_BASE_URL, CCDI_HUB_DBGAP_PARAM, DEFAULT_QUERY_LIMIT } from '../../bento/cohortModalData';
 import { GET_COHORT_MANIFEST_QUERY, GET_COHORT_METADATA_QUERY } from '../../bento/dashboardTabData';
 import client from '../../utils/graphqlClient';
+
+/**
+ * MiddleEllipsisText Component
+ * Displays text with ellipsis in the middle when it overflows, showing both
+ * the beginning and end of the text. Uses pixel-based measurement to handle
+ * variable-width fonts correctly.
+ *
+ * @param {string} text - The text to display
+ * @param {string} className - Optional CSS class name
+ * @param {object} style - Optional inline styles
+ *
+ * Example:
+ * "My Very Long Cohort Name That Exceeds...For Display Copy (3)"
+ */
+export const MiddleEllipsisText = ({ text, className, style }) => {
+    const containerRef = useRef(null);
+    const measureRef = useRef(null);
+    const [displayText, setDisplayText] = useState(text);
+
+    useLayoutEffect(() => {
+        if (!containerRef.current || !measureRef.current || !text) {
+            setDisplayText(text);
+            return;
+        }
+
+        const container = containerRef.current;
+        const measureSpan = measureRef.current;
+        const availableWidth = container.offsetWidth;
+
+        if (availableWidth === 0) {
+            setDisplayText(text);
+            return;
+        }
+
+        // Measure full text width
+        measureSpan.textContent = text;
+        const fullWidth = measureSpan.offsetWidth;
+
+        // If text fits, no truncation needed
+        if (fullWidth <= availableWidth) {
+            setDisplayText(text);
+            return;
+        }
+
+        // Text needs truncation with middle ellipsis
+        const ellipsis = '...';
+        measureSpan.textContent = ellipsis;
+        const ellipsisWidth = measureSpan.offsetWidth;
+        const targetWidth = availableWidth - ellipsisWidth;
+
+        let bestFit = '';
+        let maxTotalChars = 0;
+
+        // Try different total character counts, starting high and going down
+        // For each total, try to split as evenly as possible
+        for (let totalChars = text.length - 5; totalChars > 10; totalChars--) {
+            // Try splits around 50/50 of the total characters
+            const mid = Math.floor(totalChars / 2);
+
+            // Try variations around the midpoint to find balanced split
+            for (let offset = 0; offset <= 5; offset++) {
+                const splits = [
+                    [mid + offset, totalChars - (mid + offset)],
+                    [mid - offset, totalChars - (mid - offset)]
+                ];
+
+                for (let i = 0; i < splits.length; i++) {
+                    const startLen = splits[i][0];
+                    const endLen = splits[i][1];
+
+                    if (startLen < 5 || endLen < 5) continue;
+
+                    const start = text.substring(0, startLen);
+                    const end = text.substring(text.length - endLen);
+
+                    measureSpan.textContent = start + end;
+                    const combinedWidth = measureSpan.offsetWidth;
+
+                    if (combinedWidth <= targetWidth) {
+                        if (startLen + endLen > maxTotalChars) {
+                            maxTotalChars = startLen + endLen;
+                            bestFit = start + ellipsis + end;
+                        }
+                    }
+                }
+            }
+
+            // If we found a good fit, stop searching
+            if (bestFit) break;
+        }
+
+        if (bestFit) {
+            setDisplayText(bestFit);
+        } else {
+            // Fallback: just show first part with ellipsis
+            let truncateLen = Math.floor(text.length * 0.5);
+            while (truncateLen > 1) {
+                const truncated = text.substring(0, truncateLen) + ellipsis;
+                measureSpan.textContent = truncated;
+                if (measureSpan.offsetWidth <= availableWidth) {
+                    setDisplayText(truncated);
+                    return;
+                }
+                truncateLen--;
+            }
+            setDisplayText(text.substring(0, 1) + ellipsis);
+        }
+    }, [text]);
+
+    return (
+        <span ref={containerRef} className={className} style={{ ...style, position: 'relative', display: 'inline-block', maxWidth: '100%' }}>
+            <span style={{ visibility: 'hidden', position: 'absolute', whiteSpace: 'nowrap' }} ref={measureRef} />
+            <span style={{ display: 'inline-block', maxWidth: '100%' }}>{displayText}</span>
+        </span>
+    );
+};
 
 function generateDownloadFileName(isManifest, cohortID) {
     const date = new Date();

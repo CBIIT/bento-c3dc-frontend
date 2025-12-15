@@ -4,14 +4,13 @@ import ToolTip from '@bento-core/tool-tip';
 import TrashCanIconWhite from '../../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DuplicateIcon from '../../../../../assets/icons/Duplicate.svg';
 import { TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
-
+import { MiddleEllipsisText } from '../../../utils';
 
 /**
  * Individual cohort list item component
  */
 const CohortListItem = ({
     classes,
-    cohort,
     cohortData,
     isSelected,
     onCohortSelect,
@@ -20,6 +19,7 @@ const CohortListItem = ({
     cohortLimitReached
 }) => {
     const nameRef = useRef(null);
+    const measureRef = useRef(null);
     const [isNameOverflowing, setIsNameOverflowing] = useState(false);
 
     // Additional safety check in case invalid data gets through
@@ -27,13 +27,21 @@ const CohortListItem = ({
         return null;
     }
 
-    // Check if text is overflowing after layout
+    const cohortName = cohortData.cohortName || 'Unnamed Cohort';
+
+    // Check if original text would overflow before truncation
     useLayoutEffect(() => {
         const checkOverflow = () => {
-            if (nameRef.current) {
-                const element = nameRef.current;
-                const isOverflowing = element.scrollWidth > element.clientWidth;
-                setIsNameOverflowing(isOverflowing);
+            if (nameRef.current && measureRef.current) {
+                const container = nameRef.current;
+                const measureSpan = measureRef.current;
+
+                // Measure the original full text
+                measureSpan.textContent = cohortName;
+                const fullWidth = measureSpan.offsetWidth;
+                const availableWidth = container.offsetWidth;
+
+                setIsNameOverflowing(fullWidth > availableWidth);
             }
         };
 
@@ -41,14 +49,15 @@ const CohortListItem = ({
         checkOverflow();
 
         // Also check after a small delay to ensure layout is complete
-        const timeoutId = setTimeout(checkOverflow, 0);
+        const timeoutId = setTimeout(checkOverflow, 100);
 
         return () => clearTimeout(timeoutId);
-    }, [cohortData.cohortName, isSelected]);
+    }, [cohortName, isSelected]);
 
     const nameElement = (
         <span ref={nameRef} className={classes.cohortListItemText}>
-            {cohortData.cohortName || 'Unnamed Cohort'}
+            <span style={{ visibility: 'hidden', position: 'absolute', whiteSpace: 'nowrap' }} ref={measureRef} />
+            <MiddleEllipsisText text={cohortName} />
         </span>
     );
 
@@ -128,11 +137,9 @@ const styles = () => ({
         cursor: 'pointer',
     },
     cohortListItemText: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
         color: 'white',
         width: '85%',
+        paddingRight: '10px',
     },
     selectedCohort: {
         backgroundColor: '#3A555E',
