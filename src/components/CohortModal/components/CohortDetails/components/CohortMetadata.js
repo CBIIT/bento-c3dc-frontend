@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, memo, useLayoutEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import DEFAULT_CONFIG from '../../../config';
 import { CohortModalContext } from '../../../CohortModalContext';
 import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext';
 import { useDebounce } from '../../../hooks/useDebounce';
+import { EndEllipsisText } from '../../../../../components/EllipsisText';
 
 const CohortMetadata = (props) => {
     const { config, classes } = props;
@@ -41,25 +42,6 @@ const CohortMetadata = (props) => {
         setLocalCohortName(activeCohort.cohortName);
         setLocalCohortDescription(activeCohort.cohortDescription);
     }, [activeCohort.cohortId]);
-
-    // Check if name text is overflowing
-    useLayoutEffect(() => {
-        const checkOverflow = () => {
-            if (nameRef.current) {
-                const element = nameRef.current;
-                const isOverflowing = element.scrollWidth > element.clientWidth;
-                setIsNameOverflowing(isOverflowing);
-            }
-        };
-
-        // Check immediately
-        checkOverflow();
-
-        // Also check after a small delay to ensure layout is complete
-        const timeoutId = setTimeout(checkOverflow, 0);
-
-        return () => clearTimeout(timeoutId);
-    }, [localCohortName, isEditingName]);
 
     // Debounce the local values before updating context
     const debouncedName = useDebounce(localCohortName, 1);
@@ -155,7 +137,10 @@ const CohortMetadata = (props) => {
                                     onClick={handleEditName}
                                     className={classes.cohortName}
                                 >
-                                    {currentCohort.cohortName}
+                                    <EndEllipsisText
+                                        text={currentCohort.cohortName}
+                                        onTruncate={setIsNameOverflowing}
+                                    />
                                 </span>
                             </ToolTip>
                         ) : (
@@ -164,7 +149,10 @@ const CohortMetadata = (props) => {
                                 onClick={handleEditName}
                                 className={classes.cohortName}
                             >
-                                {currentCohort.cohortName}
+                                <EndEllipsisText
+                                    text={currentCohort.cohortName}
+                                    onTruncate={setIsNameOverflowing}
+                                />
                             </span>
                         )
                     )}
