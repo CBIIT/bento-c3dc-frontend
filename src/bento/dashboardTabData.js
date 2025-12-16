@@ -1698,7 +1698,7 @@ const participantTab = {
   extendedViewConfig: {
     pagination: true,
     manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -1791,7 +1791,7 @@ const diagnosisTab = {
   extendedViewConfig: {
     pagination: true,
     manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -1992,7 +1992,7 @@ const geneticAnalysisTab = {
   extendedViewConfig: {
     pagination: true,
     manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -2224,7 +2224,7 @@ const treatmentTab = {
   extendedViewConfig: {
     pagination: true,
     manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -2350,7 +2350,7 @@ const treatmentTab = {
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -2468,7 +2468,7 @@ const treatmentTab = {
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
