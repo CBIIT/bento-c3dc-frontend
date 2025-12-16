@@ -27,7 +27,18 @@ import RiskTable from '@bento-core/risk-table';
 
 import * as htmlToImage from 'html-to-image';
 
+const useStyles = makeStyles({
+  cohortNameEllipsis: {
+    maxWidth: '120px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    display: 'block',
+  },
+});
+
 const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
+  const riskTableClasses = useStyles();
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({ c1, c2, c3 });
   const {
     data: kmPlotData,
@@ -81,17 +92,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
   const riskTableRefExpanded = useRef(null);
   const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
   const dropdownRef = useRef(null);
-const useStyles = makeStyles({
-  cohortNameEllipsis: {
-    maxWidth: '120px',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    display: 'block',
-  },
-});
-
-const riskTableClasses = useStyles();
+  
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -468,8 +469,7 @@ const riskTableClasses = useStyles();
               </KmChartWrapper>
               <RiskTableWrapper ref={riskTableRef}>
                   <RiskTable
-                     classes={{ container: riskTableClasses.customContainer, cohortName: riskTableClasses.cohortNameEllipsis }}
-     
+                     classes={{ cohortName: riskTableClasses.cohortNameEllipsis }}
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
                   />
