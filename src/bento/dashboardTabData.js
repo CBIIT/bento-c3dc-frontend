@@ -1761,7 +1761,7 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -1853,7 +1853,7 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -2054,7 +2054,7 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -2285,7 +2285,7 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -2411,7 +2411,7 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {
@@ -2529,7 +2529,7 @@ export const tabContainers = [
     extendedViewConfig: {
       pagination: true,
       manageViewColumns: {
-        title: 'View Columns',
+        title: 'Displayed Columns',
       },
       download: true,
       downloadButtonConfig: {

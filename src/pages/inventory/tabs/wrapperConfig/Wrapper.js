@@ -99,13 +99,14 @@ export const wrapperConfig = [
     paginatedTable: true,
   },
   /* Unused Footer Button Container currently renders empty container */
+  /*
   {
     container: 'buttons',
     size: 'xl',
     clsName: 'container_footer',
     items: [
     ],
-  },
+  },*/
 ];
 
 export const configWrapper = (tab, configs) => {
