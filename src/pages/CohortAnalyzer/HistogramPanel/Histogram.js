@@ -82,11 +82,6 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
   const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
   const dropdownRef = useRef(null);
 const useStyles = makeStyles({
-  customContainer: {
-    width: 640, 
-    padding: 40,
-    maxWidth: '1200px',
-  },
   cohortNameEllipsis: {
     maxWidth: '120px',
     overflow: 'hidden',
@@ -472,14 +467,12 @@ const riskTableClasses = useStyles();
                 />
               </KmChartWrapper>
               <RiskTableWrapper ref={riskTableRef}>
-                <div style={{ width: 680 }}>
                   <RiskTable
                      classes={{ container: riskTableClasses.customContainer, cohortName: riskTableClasses.cohortNameEllipsis }}
      
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
                   />
-                </div>
 
               </RiskTableWrapper>
             </SurvivalAnalysisContainer>

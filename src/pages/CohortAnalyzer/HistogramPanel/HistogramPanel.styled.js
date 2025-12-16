@@ -17,7 +17,7 @@ export const HistogramContainer = styled.div`
   margin-left: 0px;
   min-height: 682px;
   height: auto;
-  @media (max-width: 1960px) {
+  @media (max-width: 1900px) {
     max-width: 100%;
     max-height: 100%;
     margin: 45px 0 0;
@@ -63,7 +63,7 @@ justify-content: center;
 width: 100%;
 align-items: center;
 align-content: center;
-  @media (min-width: 1960px) {
+  @media (min-width: 1900px) {
   justify-content: flex-start;
   align-items: flex-start;
     }
@@ -262,7 +262,7 @@ export const SurvivalAnalysisContainer = styled.div`
 export const KmChartWrapper = styled.div`
   width: 100%;
   padding-left: 160px;
-  margin-right: 100px;
+  margin-right: 0px;
   margin-top: -20px;
 `;
 
@@ -299,7 +299,8 @@ export const SurvivalAnalysisModalContent = styled.div`
 export const KmChartModalWrapper = styled.div`
   width: 100%;
   padding-left: 160px;
-  margin-right: 100px;
+  padding-right: 100px;
+  margin-right: 0px;
   margin-top: -20px;
   flex: 1 1 0;
   min-height: 0;
@@ -312,7 +313,7 @@ export const KmChartModalWrapper = styled.div`
 export const RiskTableModalWrapper = styled.div`
   width: 100%;
   padding-left: 160px;
-  padding-right: 100px;
+  padding-right: 150px;
   flex: 1 1 0;
   min-height: 0;
   overflow-x: auto;
