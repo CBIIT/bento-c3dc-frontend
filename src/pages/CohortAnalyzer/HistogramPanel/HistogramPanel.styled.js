@@ -261,7 +261,7 @@ export const SurvivalAnalysisContainer = styled.div`
 
 export const KmChartWrapper = styled.div`
   width: 100%;
-  padding-left: 160px;
+  padding-left: 100px;
   margin-right: 0px;
   margin-top: -20px;
 `;
