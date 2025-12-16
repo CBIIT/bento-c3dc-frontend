@@ -254,6 +254,9 @@ export const SurvivalAnalysisContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 `;
 
 export const KmChartWrapper = styled.div`
@@ -268,7 +271,6 @@ export const RiskTableWrapper = styled.div`
   padding-left: 30px;
   padding-right: 50px;
   margin-top: 10px;
-  overflow-x: auto;
   min-width: 0;
 `;
 
