@@ -1,14 +1,29 @@
-import React , { useRef, useEffect, useMemo } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import {
-   RadioInput
-  , RadioLabel, ModalChartWrapper, ModalContent
-  , ModalOverlay, CloseButton, Tab, TabContainer,
-  barColors, SurvivalAnalysisModalContainer, SurvivalAnalysisModalContent,
-  KmChartModalWrapper, RiskTableModalWrapper, ModalHeaderContainer,
-  ModalActionButtons, DownloadButtonWrapper, DownloadButton,
-  DownloadIconImage, DownloadIconSmall, ModalChartContainer,
-  ModalRadioFieldset, ModalRadioGroup, ModalNoDataContainer,
+  RadioInput,
+  RadioLabel,
+  ModalChartWrapper,
+  ModalContent,
+  ModalOverlay,
+  CloseButton,
+  Tab,
+  TabContainer,
+  barColors,
+  SurvivalAnalysisModalContainer,
+  SurvivalAnalysisModalContent,
+  KmChartModalWrapper,
+  RiskTableModalWrapper,
+  ModalHeaderContainer,
+  ModalActionButtons,
+  DownloadButtonWrapper,
+  DownloadButton,
+  DownloadIconImage,
+  DownloadIconSmall,
+  ModalChartContainer,
+  ModalRadioFieldset,
+  ModalRadioGroup,
+  ModalNoDataContainer,
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
