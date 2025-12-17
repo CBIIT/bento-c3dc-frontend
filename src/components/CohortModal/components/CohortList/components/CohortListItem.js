@@ -116,6 +116,8 @@ const styles = () => ({
         color: 'white',
         width: '85%',
         paddingRight: '10px',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
     },
     selectedCohort: {
         backgroundColor: '#3A555E',
