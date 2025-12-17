@@ -62,28 +62,28 @@ const theme = {
           backgroundColor: '#BCE1D8',
         },
         '&.treatmentCheckedEven': {
-          backgroundColor: '#B5D8F9',
-        },
-        '&.treatmentCheckedOdd': {
-          backgroundColor: '#92BADF',
-        },
-        '&.treatmentresponseCheckedEven': {
           backgroundColor: '#E8D8F5',
         },
-        '&.treatmentresponseCheckedOdd': {
+        '&.treatmentCheckedOdd': {
           backgroundColor: '#D3BFE8',
         },
-        '&.survivalCheckedEven': {
+        '&.treatmentresponseCheckedEven': {
           backgroundColor: '#E0ECEA',
         },
-        '&.survivalCheckedOdd': {
+        '&.treatmentresponseCheckedOdd': {
           backgroundColor: '#E9F5F3',
         },
-        '&.geneticanalysisCheckedEven': {
+        '&.survivalCheckedEven': {
           backgroundColor: '#FFEDE7',
         },
-        '&.geneticanalysisCheckedOdd': {
+        '&.survivalCheckedOdd': {
           backgroundColor: '#FFF6F3',
+        },
+        '&.geneticanalysisCheckedEven': {
+          backgroundColor: '#B5D8F9',
+        },
+        '&.geneticanalysisCheckedOdd': {
+          backgroundColor: '#92BADF',
         },
       },
     },
@@ -121,16 +121,16 @@ const theme = {
           background: '#35B899',
         },
         "&.thumbTreatment": {
-          background: '#268CEA',
-        },
-        "&.thumbTreatmentresponse": {
           background: '#9664C7',
         },
-        "&.thumbSurvival": {
+        "&.thumbTreatmentresponse": {
           background: '#006B57',
         },
-        "&.thumbGeneticanalysis": {
+        "&.thumbSurvival": {
           background: '#862405',
+        },
+        "&.thumbGeneticanalysis": {
+          background: '#268CEA',
         }
       },
       track: {
@@ -153,16 +153,16 @@ const theme = {
           background: '#35B899',
         },
         "&.trackTreatment": {
-          background: '#268CEA',
-        },
-        "&.trackTreatmentresponse": {
           background: '#9664C7',
         },
-        "&.trackSurvival": {
+        "&.trackTreatmentresponse": {
           background: '#006B57',
         },
-        "&.trackGeneticanalysis": {
+        "&.trackSurvival": {
           background: '#862405',
+        },
+        "&.trackGeneticanalysis": {
+          background: '#268CEA',
         }
       },
       colorPrimary: {
@@ -176,16 +176,16 @@ const theme = {
           color: '#35B899',
         },
         "&.colorPrimaryTreatment": {
-          color: '#268CEA',
-        },
-        "&.colorPrimaryTreatmentresponse": {
           color: '#9664C7',
         },
-        "&.colorPrimarySurvival": {
+        "&.colorPrimaryTreatmentresponse": {
           color: '#006B57',
         },
-        "&.colorPrimaryGeneticanalysis": {
+        "&.colorPrimarySurvival": {
           color: '#862405',
+        },
+        "&.colorPrimaryGeneticanalysis": {
+          color: '#268CEA',
         }
       },
       rail: {
@@ -201,16 +201,16 @@ const theme = {
           background: '#35B899',
         },
         "&.railTreatment": {
-          background: '#268CEA',
-        },
-        "&.railTreatmentresponse": {
           background: '#9664C7',
         },
-        "&.railSurvival": {
+        "&.railTreatmentresponse": {
           background: '#006B57',
         },
-        "&.railGeneticanalysis": {
+        "&.railSurvival": {
           background: '#862405',
+        },
+        "&.railGeneticanalysis": {
+          background: '#268CEA',
         }
       }
 

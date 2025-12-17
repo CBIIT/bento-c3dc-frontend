@@ -65,10 +65,10 @@ const ActionButtons = (props) => {
 
     // Memoized complex tooltip to prevent unnecessary re-creation
     const exploreCCDIHubTooltip = useMemo(() => (
-        <p style={{ fontFamily: "Poppins", zIndex: 10000, fontWeight: 400, fontSize: 13, margin: 0 }}>
+        <p className={classes.exploreTooltipText}>
             {TOOLTIP_MESSAGES.exploreCCDIHub.mainText}
         </p>
-    ), []);
+    ), [classes.exploreTooltipText]);
 
     const [showDownloadDropdown, setShowDownloadDropdown] = useState(false);
     const dropdownRef = useRef(null);
@@ -178,7 +178,7 @@ const ActionButtons = (props) => {
                     disabled={isExportingToCCDI}
                     aria-label={isExportingToCCDI ? 'Preparing CCDI Hub link...' : 'Open cohort in CCDI Hub in new tab'}
                 >
-                    <span style={{textAlign: 'left'}}>
+                    <span className={classes.exploreButtonText}>
                         EXPLORE <br /> IN CCDI Hub
                     </span>
                     <img src={Linkout} width={14} height={14} alt="External link icon" />
@@ -222,6 +222,16 @@ const styles = () => {
             flexDirection: 'row',
             gap: 10,
             justifyContent: 'flex-end'
+        },
+        exploreTooltipText: {
+            fontFamily: 'Poppins',
+            zIndex: 10000,
+            fontWeight: 400,
+            fontSize: 13,
+            margin: 0,
+        },
+        exploreButtonText: {
+            textAlign: 'left',
         },
     dropdownSection: {
         position: 'relative',
