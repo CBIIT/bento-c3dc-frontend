@@ -56,6 +56,12 @@ const theme = {
         },
         '&.diagnosisCheckedOdd': {
           backgroundColor: '#F9FAFA',
+          '&.geneticanalysisCheckedEven': {
+          backgroundColor: '#EFF3F1',
+        },
+        '&.geneticanalysisCheckedOdd': {
+          backgroundColor: '#F9FAFA',
+        },
         },
         '&.treatmentCheckedEven': {
           backgroundColor: '#EFF3F1',
@@ -73,12 +79,6 @@ const theme = {
           backgroundColor: '#EFF3F1',
         },
         '&.survivalCheckedOdd': {
-          backgroundColor: '#F9FAFA',
-        },
-        '&.geneticanalysisCheckedEven': {
-          backgroundColor: '#EFF3F1',
-        },
-        '&.geneticanalysisCheckedOdd': {
           backgroundColor: '#F9FAFA',
         },
       },
@@ -137,6 +137,16 @@ const theme = {
           marginTop: 'auto',
           fontWeight: '600',
         },
+        '&.geneticanalysisSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
+        },
         '&.treatmentSubjects': {
           color: '#504343',
           backgroundColor: '#D8D8D8',
@@ -158,16 +168,6 @@ const theme = {
           fontWeight: '600',
         },
         '&.survivalSubjects': {
-          color: '#504343',
-          backgroundColor: '#D8D8D8',
-          padding: '2px 2px 1px 2px',
-          fontSize: '11px',
-          fontFamily: 'Nunito',
-          marginRight: '0px',
-          marginTop: 'auto',
-          fontWeight: '600',
-        },
-        '&.geneticanalysisSubjects': {
           color: '#504343',
           backgroundColor: '#D8D8D8',
           padding: '2px 2px 1px 2px',

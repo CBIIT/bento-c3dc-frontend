@@ -171,6 +171,10 @@ export default () => ({
     color: '#35B899',
     fontWeight: 600,
   },
+  activeFacetGeneticanalysis: {
+    color: '#268CEA',
+    fontWeight: 600,
+  },
   activeFacetTreatment: {
     color: '#9664C7',
     fontWeight: 600,
@@ -181,10 +185,6 @@ export default () => ({
   },
   activeFacetSurvival: {
     color: '#862405',
-    fontWeight: 600,
-  },
-  activeFacetGeneticanalysis: {
-    color: '#268CEA',
     fontWeight: 600,
   },
   searchContainer: {
@@ -223,16 +223,16 @@ export default () => ({
   expandedDisplayButtonDiagnosis: {
     backgroundColor: '#35B899 !important',
   },
-  expandedDisplayButtonTreatment: {
+  expandedDisplayButtonGeneticanalysis: {
     backgroundColor: '#268CEA !important',
   },
-  expandedDisplayButtonTreatmentresponse: {
+  expandedDisplayButtonTreatment: {
     backgroundColor: '#9664C7 !important',
   },
-  expandedDisplayButtonSurvival: {
+  expandedDisplayButtonTreatmentresponse: {
     backgroundColor: '#006B57 !important',
   },
-  expandedDisplayButtonGeneticanalysis: {
+  expandedDisplayButtonSurvival: {
     backgroundColor: '#862405 !important',
   },
   findCaseButton: {

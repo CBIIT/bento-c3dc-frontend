@@ -233,10 +233,10 @@ const createSliderStylesForSection = (color) => ({
 //const studySliderStyles = createSliderStylesForSection('#006A8F');
 //const demographicsSliderStyles = createSliderStylesForSection('#E39520');
 const diagnosisSliderStyles = createSliderStylesForSection('#35B899');
-const treatmentSliderStyles = createSliderStylesForSection('#268CEA');
-const treatmentresponseSliderStyles = createSliderStylesForSection('#9664C7');
-const survivalSliderStyles = createSliderStylesForSection('#006B57');
-//const geneticanalysisSliderStyles = createSliderStylesForSection('#862405');
+//const geneticanalysisSliderStyles = createSliderStylesForSection('#268CEA');
+const treatmentSliderStyles = createSliderStylesForSection('#9664C7');
+const treatmentresponseSliderStyles = createSliderStylesForSection('#006B57');
+const survivalSliderStyles = createSliderStylesForSection('#862405');
 
 export const facetsConfig = [
   {

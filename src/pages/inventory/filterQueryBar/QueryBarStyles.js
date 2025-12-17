@@ -131,6 +131,13 @@ export  const customStyles = {
       backgroundColor: '#C2FFF1',
       border: '2px solid #646464',
     },
+    facetSectionGeneticanalysis: {
+      color: '#268CEA',
+    },
+    facetSectionGeneticanalysisBackground: {
+      backgroundColor: '#B5D8F9',
+      border: '2px solid #646464',
+    },
     facetSectionTreatment: {
       color: '#9664C7',
     },
@@ -150,13 +157,6 @@ export  const customStyles = {
     },
     facetSectionSurvivalBackground: {
       backgroundColor: '#FFEDE7',
-      border: '2px solid #646464',
-    },
-    facetSectionGeneticanalysis: {
-      color: '#268CEA',
-    },
-    facetSectionGeneticanalysisBackground: {
-      backgroundColor: '#B5D8F9',
       border: '2px solid #646464',
     },
     localFindAssociatedIdsBackground: {

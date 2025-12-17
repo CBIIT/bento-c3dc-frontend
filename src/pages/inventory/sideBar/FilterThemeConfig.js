@@ -61,6 +61,12 @@ const theme = {
         '&.diagnosisCheckedOdd': {
           backgroundColor: '#BCE1D8',
         },
+        '&.geneticanalysisCheckedEven': {
+          backgroundColor: '#B5D8F9',
+        },
+        '&.geneticanalysisCheckedOdd': {
+          backgroundColor: '#92BADF',
+        },
         '&.treatmentCheckedEven': {
           backgroundColor: '#E8D8F5',
         },
@@ -78,12 +84,6 @@ const theme = {
         },
         '&.survivalCheckedOdd': {
           backgroundColor: '#FFF6F3',
-        },
-        '&.geneticanalysisCheckedEven': {
-          backgroundColor: '#B5D8F9',
-        },
-        '&.geneticanalysisCheckedOdd': {
-          backgroundColor: '#92BADF',
         },
       },
     },
@@ -120,6 +120,9 @@ const theme = {
         "&.thumbDiagnosis": {
           background: '#35B899',
         },
+        "&.thumbGeneticanalysis": {
+          background: '#268CEA',
+        },
         "&.thumbTreatment": {
           background: '#9664C7',
         },
@@ -129,9 +132,6 @@ const theme = {
         "&.thumbSurvival": {
           background: '#862405',
         },
-        "&.thumbGeneticanalysis": {
-          background: '#268CEA',
-        }
       },
       track: {
         borderRadius: 4,
@@ -152,6 +152,9 @@ const theme = {
         "&.trackDiagnosis": {
           background: '#35B899',
         },
+        "&.trackGeneticanalysis": {
+          background: '#268CEA',
+        },
         "&.trackTreatment": {
           background: '#9664C7',
         },
@@ -161,9 +164,6 @@ const theme = {
         "&.trackSurvival": {
           background: '#862405',
         },
-        "&.trackGeneticanalysis": {
-          background: '#268CEA',
-        }
       },
       colorPrimary: {
         "&.colorPrimaryStudy": {
@@ -175,6 +175,9 @@ const theme = {
         "&.colorPrimaryDiagnosis": {
           color: '#35B899',
         },
+        "&.colorPrimaryGeneticanalysis": {
+          color: '#268CEA',
+        },
         "&.colorPrimaryTreatment": {
           color: '#9664C7',
         },
@@ -184,9 +187,6 @@ const theme = {
         "&.colorPrimarySurvival": {
           color: '#862405',
         },
-        "&.colorPrimaryGeneticanalysis": {
-          color: '#268CEA',
-        }
       },
       rail: {
         borderRadius: 4,
@@ -200,6 +200,9 @@ const theme = {
         "&.railDiagnosis": {
           background: '#35B899',
         },
+        "&.railGeneticanalysis": {
+          background: '#268CEA',
+        },
         "&.railTreatment": {
           background: '#9664C7',
         },
@@ -209,9 +212,6 @@ const theme = {
         "&.railSurvival": {
           background: '#862405',
         },
-        "&.railGeneticanalysis": {
-          background: '#268CEA',
-        }
       }
 
     },
