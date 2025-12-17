@@ -41,7 +41,7 @@ export const ChartTitle = styled.h2`
   color: #333;
   margin-bottom: 20px;
   text-align: left;
-
+  margin-left: 3px;
   &.empty {
     opacity: 0.3;
   }
@@ -73,7 +73,7 @@ export const ChartWrapper = styled.div`
   position: relative;
   width: 66%;
   min-height: 261px;
-  max-height: 261px;
+  max-height: auto;
   margin-bottom: 10px;
   padding: 0px;
   border: 1px solid #D4D4D4;
@@ -192,4 +192,79 @@ export const Tab = styled.button`
   &:hover {
     background: #ffffff;
   }
+`;
+
+export const DownloadDropdown = styled.div`
+  position: relative;
+  display: inline-block;
+`;
+
+export const DownloadDropdownMenu = styled.div`
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 5px;
+  background: white;
+  border: 1.5px solid #4E8191
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 200px;
+  overflow: hidden;
+  padding-left: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+`;
+
+export const DownloadDropdownItem = styled.div`
+  padding: 2px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+
+  &:hover {
+    background-color: #f5f5f5;
+  }
+
+
+`;
+export const SurvivalAnalysisWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const SurvivalAnalysisHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 3px;
+  padding-left: 12px;
+`;
+
+export const SurvivalAnalysisContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const KmChartWrapper = styled.div`
+  width: 100%;
+  padding-left: 160px;
+  margin-right: 100px;
+  margin-top: -20px;
+`;
+
+export const RiskTableWrapper = styled.div`
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 50px;
 `;

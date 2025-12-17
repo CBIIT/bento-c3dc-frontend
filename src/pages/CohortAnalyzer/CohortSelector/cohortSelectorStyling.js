@@ -184,11 +184,10 @@ export const useStyle = makeStyles((theme) => ({
         }
     },
     cardContent: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
         maxWidth: '160px',
         display: 'inline-block',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
     },
 }))
 

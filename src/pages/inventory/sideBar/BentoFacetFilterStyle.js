@@ -172,19 +172,19 @@ export default () => ({
     fontWeight: 600,
   },
   activeFacetTreatment: {
-    color: '#268CEA',
-    fontWeight: 600,
-  },
-  activeFacetTreatmentresponse: {
     color: '#9664C7',
     fontWeight: 600,
   },
-  activeFacetSurvival: {
+  activeFacetTreatmentresponse: {
     color: '#006B57',
     fontWeight: 600,
   },
-  activeFacetGeneticanalysis: {
+  activeFacetSurvival: {
     color: '#862405',
+    fontWeight: 600,
+  },
+  activeFacetGeneticanalysis: {
+    color: '#268CEA',
     fontWeight: 600,
   },
   searchContainer: {

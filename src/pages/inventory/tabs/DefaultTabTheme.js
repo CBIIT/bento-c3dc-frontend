@@ -46,22 +46,22 @@ export const customTheme = {
         '&.treatment': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #268CEA',
+          borderTop: '6px solid #9664C7',
         },
         '&.treatment_response': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #9664C7',
+          borderTop: '6px solid #006B57',
         },
         '&.survival': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #006B57',
+          borderTop: '6px solid #862405',
         },
         '&.genetic_analysis': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #862405',
+          borderTop: '6px solid #268CEA',
         },
         '&.MuiTypography-body1': {
           color: 'red',
