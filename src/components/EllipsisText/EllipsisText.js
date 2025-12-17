@@ -36,99 +36,123 @@ const EllipsisText = ({ text, className, classes, onTruncate, mode = 'middle' })
 
         const container = containerRef.current;
 
-        // End mode: Simple overflow detection, CSS handles truncation
-        if (mode === 'end') {
-            const isOverflowing = container.scrollWidth > container.clientWidth;
-            if (onTruncate) onTruncate(isOverflowing);
-            setDisplayText(text);
-            return;
-        }
+        const measureAndTruncate = () => {
+            if (!container) return;
 
-        // Middle mode: Custom truncation logic
-        if (!measureRef.current) {
-            setDisplayText(text);
-            return;
-        }
-
-        const measureSpan = measureRef.current;
-        const availableWidth = container.offsetWidth;
-
-        if (availableWidth === 0) {
-            setDisplayText(text);
-            return;
-        }
-
-        // Measure full text width
-        measureSpan.textContent = text;
-        const fullWidth = measureSpan.offsetWidth;
-
-        // If text fits, no truncation needed
-        if (fullWidth <= availableWidth) {
-            setDisplayText(text);
-            if (onTruncate) onTruncate(false);
-            return;
-        }
-
-        // Text needs truncation with middle ellipsis
-        const ellipsis = '...';
-        measureSpan.textContent = ellipsis;
-        const ellipsisWidth = measureSpan.offsetWidth;
-        const targetWidth = availableWidth - ellipsisWidth;
-
-        let bestFit = '';
-
-        // Use binary search to find the maximum number of characters that fit (O(log n) complexity)
-        let left = MIN_TOTAL_CHARS;
-        let right = text.length - MIN_CHARS_PER_SIDE;
-
-        while (left <= right) {
-            const totalChars = Math.floor((left + right) / 2);
-
-            // Split as evenly as possible (50/50)
-            const startLen = Math.floor(totalChars / 2);
-            const endLen = totalChars - startLen;
-
-            if (startLen < MIN_CHARS_PER_SIDE || endLen < MIN_CHARS_PER_SIDE) {
-                right = totalChars - 1;
-                continue;
+            // End mode: Simple overflow detection, CSS handles truncation
+            if (mode === 'end') {
+                const isOverflowing = container.scrollWidth > container.clientWidth;
+                if (onTruncate) onTruncate(isOverflowing);
+                setDisplayText(text);
+                return;
             }
 
-            const start = text.substring(0, startLen);
-            const end = text.substring(text.length - endLen);
-
-            measureSpan.textContent = start + end;
-            const combinedWidth = measureSpan.offsetWidth;
-
-            if (combinedWidth <= targetWidth) {
-                // This fits, try to fit more characters
-                bestFit = start + ellipsis + end;
-                left = totalChars + 1;
-            } else {
-                // Too wide, try fewer characters
-                right = totalChars - 1;
+            // Middle mode: Custom truncation logic
+            if (!measureRef.current) {
+                setDisplayText(text);
+                return;
             }
-        }
 
-        if (bestFit) {
-            setDisplayText(bestFit);
-            if (onTruncate) onTruncate(true);
-        } else {
-            // Fallback: just show first part with ellipsis
-            let truncateLen = Math.floor(text.length * 0.5);
-            while (truncateLen > 1) {
-                const truncated = text.substring(0, truncateLen) + ellipsis;
-                measureSpan.textContent = truncated;
-                if (measureSpan.offsetWidth <= availableWidth) {
-                    setDisplayText(truncated);
-                    if (onTruncate) onTruncate(true);
-                    return;
+            const measureSpan = measureRef.current;
+            const availableWidth = container.offsetWidth;
+
+            if (availableWidth === 0) {
+                setDisplayText(text);
+                return;
+            }
+
+            // Measure full text width
+            measureSpan.textContent = text;
+            const fullWidth = measureSpan.offsetWidth;
+
+            // If text fits, no truncation needed
+            if (fullWidth <= availableWidth) {
+                setDisplayText(text);
+                if (onTruncate) onTruncate(false);
+                return;
+            }
+
+            // Text needs truncation with middle ellipsis
+            const ellipsis = '...';
+            measureSpan.textContent = ellipsis;
+            const ellipsisWidth = measureSpan.offsetWidth;
+            const targetWidth = availableWidth - ellipsisWidth;
+
+            let bestFit = '';
+
+            // Use binary search to find the maximum number of characters that fit (O(log n) complexity)
+            let left = MIN_TOTAL_CHARS;
+            let right = text.length - MIN_CHARS_PER_SIDE;
+
+            while (left <= right) {
+                const totalChars = Math.floor((left + right) / 2);
+
+                // Split as evenly as possible (50/50)
+                const startLen = Math.floor(totalChars / 2);
+                const endLen = totalChars - startLen;
+
+                if (startLen < MIN_CHARS_PER_SIDE || endLen < MIN_CHARS_PER_SIDE) {
+                    right = totalChars - 1;
+                    continue;
                 }
-                truncateLen--;
+
+                const start = text.substring(0, startLen);
+                const end = text.substring(text.length - endLen);
+
+                measureSpan.textContent = start + end;
+                const combinedWidth = measureSpan.offsetWidth;
+
+                if (combinedWidth <= targetWidth) {
+                    // This fits, try to fit more characters
+                    bestFit = start + ellipsis + end;
+                    left = totalChars + 1;
+                } else {
+                    // Too wide, try fewer characters
+                    right = totalChars - 1;
+                }
             }
-            setDisplayText(text.substring(0, 1) + ellipsis);
-            if (onTruncate) onTruncate(true);
+
+            if (bestFit) {
+                setDisplayText(bestFit);
+                if (onTruncate) onTruncate(true);
+            } else {
+                // Fallback: just show first part with ellipsis
+                let truncateLen = Math.floor(text.length * 0.5);
+                while (truncateLen > 1) {
+                    const truncated = text.substring(0, truncateLen) + ellipsis;
+                    measureSpan.textContent = truncated;
+                    if (measureSpan.offsetWidth <= availableWidth) {
+                        setDisplayText(truncated);
+                        if (onTruncate) onTruncate(true);
+                        return;
+                    }
+                    truncateLen--;
+                }
+                setDisplayText(text.substring(0, 1) + ellipsis);
+                if (onTruncate) onTruncate(true);
+            }
+        };
+
+        // Use ResizeObserver to react to actual layout changes
+        const resizeObserver = new ResizeObserver((entries) => {
+            // Only measure when container has stable, non-zero dimensions
+            const entry = entries[0];
+            if (entry && entry.contentRect.width > 0) {
+                measureAndTruncate();
+            }
+        });
+
+        resizeObserver.observe(container);
+
+        // Also run immediately in case container is already sized
+        if (container.offsetWidth > 0) {
+            measureAndTruncate();
         }
-    }, [text, mode, onTruncate]);
+
+        return () => {
+            resizeObserver.disconnect();
+        };
+    }, [text, mode, onTruncate, MIN_CHARS_PER_SIDE, MIN_TOTAL_CHARS]);
 
     // End mode: Simple span with CSS truncation
     if (mode === 'end') {
