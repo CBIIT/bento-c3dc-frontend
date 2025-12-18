@@ -261,12 +261,12 @@ export const SurvivalAnalysisContainer = styled.div`
 export const KmChartWrapper = styled.div`
   width: 100%;
   padding-left: 100px;
-  margin-right: 0px;
+  margin-right: 40px;
   margin-top: -20px;
 `;
 
 export const RiskTableWrapper = styled.div`
-  width: 100%;
+  width: 95%;
   padding-left: 30px;
   padding-right: 50px;
   margin-top: 10px;
@@ -280,7 +280,6 @@ export const SurvivalAnalysisModalContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  padding: 20px;
   overflow: hidden;
   box-sizing: border-box;
 `;
@@ -291,8 +290,7 @@ export const SurvivalAnalysisModalContent = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-sizing: border-box;
-  gap: 10px;
+  gap: 20px;
 `;
 
 export const KmChartModalWrapper = styled.div`
@@ -311,8 +309,8 @@ export const KmChartModalWrapper = styled.div`
 
 export const RiskTableModalWrapper = styled.div`
   width: 100%;
-  padding-left: 160px;
-  padding-right: 150px;
+  padding-left: 80px;
+  padding-right: 145px;
   flex: 1 1 0;
   min-height: 0;
   overflow-x: auto;

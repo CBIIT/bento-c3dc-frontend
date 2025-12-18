@@ -191,6 +191,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
       // Store original margin and temporarily remove it
       const originalMargin = tableElement.style.marginLeft;
       tableElement.style.marginLeft = '0';
+      tableElement.style.backgroundColor = 'transparent';
 
       // Generate image from the ref element using html-to-image
       htmlToImage.toPng(tableElement, {
@@ -404,7 +405,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                   border={'1px solid #598ac5'}
                   arrowBorder={'1px solid #598AC5'}
                   title={<div>
-                    {"Participants with unreported age values or whose last diagnosis age is later than their last survival follow-up were excluded to ensure valid survival timelines. "}
+                    {"Participants with unreported age values or whose last diagnosis age is later than their last survival follow-up were excluded to ensure valid survival timelines. Displays survival data based on the earliest diagnosis when multiple diagnoses exist. "}
                   </div>}
                   placement="top-end"
                   arrow
@@ -470,6 +471,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
               <RiskTableWrapper ref={riskTableRef}>
                   <RiskTable
                      classes={{ cohortName: riskTableClasses.cohortNameEllipsis }}
+                     cohortNameCharLimit={10}
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
                   />
