@@ -12,6 +12,37 @@ const TREATMENT = 'Treatment';
 const TREATMENTRESPONSE = 'Treatmentresponse';
 const GENETICANALYSIS = 'Geneticanalysis';
 
+export const FACET_NAMES = {
+  DEMOGRAPHICS,
+  DIAGNOSIS,
+  STUDY,
+  SURVIVAL,
+  TREATMENT,
+  TREATMENTRESPONSE,
+  GENETICANALYSIS,
+};
+
+// MODIFY THIS ORDER TO CHANGE THE COLOR STYLES
+export const FACET_ORDER = [
+  STUDY,
+  DEMOGRAPHICS,
+  DIAGNOSIS,
+  GENETICANALYSIS,
+  TREATMENT,
+  TREATMENTRESPONSE,
+  SURVIVAL,
+];
+
+//Facet colors generated based on index (modulo the length of the array)
+export const FACET_COLORS = [
+  { facetCategoryColor: '#3388A6', slideOutComponentColor: '#307F9C', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
+  { facetCategoryColor: '#C78800', slideOutComponentColor: '#9D6C00', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
+  { facetCategoryColor: '#39A28A', slideOutComponentColor: '#2A8470', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
+  { facetCategoryColor: '#9852DC', slideOutComponentColor: '#9852DC', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
+  { facetCategoryColor: '#006B57', slideOutComponentColor: '#006B57', zebraStripesColor1: '#E0ECEA', zebraStripesColor2: '#E9F5F3' },
+  { facetCategoryColor: '#862405', slideOutComponentColor: '#862405', zebraStripesColor1: '#FFEDE7', zebraStripesColor2: '#FFF6F3' },
+];
+
 // --------------- Facet resetIcon link configuration --------------
 // Ideal size for resetIcon is 16x16 px
 export const resetIcon = {
@@ -229,15 +260,6 @@ const createSliderStylesForSection = (color) => ({
   }
 });
 
-// Section-specific slider styles
-//const studySliderStyles = createSliderStylesForSection('#006A8F');
-//const demographicsSliderStyles = createSliderStylesForSection('#E39520');
-const diagnosisSliderStyles = createSliderStylesForSection('#35B899');
-//const geneticanalysisSliderStyles = createSliderStylesForSection('#268CEA');
-const treatmentSliderStyles = createSliderStylesForSection('#9664C7');
-const treatmentresponseSliderStyles = createSliderStylesForSection('#006B57');
-const survivalSliderStyles = createSliderStylesForSection('#862405');
-
 export const facetsConfig = [
   {
     section: STUDY,
@@ -298,7 +320,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: diagnosisSliderStyles,
+    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(DIAGNOSIS) % FACET_COLORS.length].slideOutComponentColor),
   },
   {
     section: DIAGNOSIS,
@@ -467,7 +489,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: treatmentSliderStyles,
+    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(TREATMENT) % FACET_COLORS.length].slideOutComponentColor),
   },
   {
     section: TREATMENT,
@@ -484,7 +506,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: treatmentSliderStyles,
+    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(TREATMENT) % FACET_COLORS.length].slideOutComponentColor),
   },
   {
     section: TREATMENT,
@@ -534,7 +556,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: treatmentresponseSliderStyles,
+    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(TREATMENTRESPONSE) % FACET_COLORS.length].slideOutComponentColor),
   },
   {
     section: TREATMENTRESPONSE,
@@ -584,7 +606,7 @@ export const facetsConfig = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: survivalSliderStyles,
+    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(SURVIVAL) % FACET_COLORS.length].slideOutComponentColor),
   },
   {
     section: SURVIVAL,

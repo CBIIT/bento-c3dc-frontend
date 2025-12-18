@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import { FACET_NAMES, FACET_ORDER, FACET_COLORS } from '../../../bento/dashTemplate';
 
 const theme = {
   overrides: {
@@ -44,46 +45,46 @@ const theme = {
     MuiListItem: {
       root: {
         '&.studyCheckedEven': {
-          backgroundColor: '#B5DDE5',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.studyCheckedOdd': {
-          backgroundColor: '#A5C2C8',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.demographicsCheckedEven': {
-          backgroundColor: '#FFF2DF',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.demographicsCheckedOdd': {
-          backgroundColor: '#F0DCBE',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.diagnosisCheckedEven': {
-          backgroundColor: '#C2FFF1',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.diagnosisCheckedOdd': {
-          backgroundColor: '#BCE1D8',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.geneticanalysisCheckedEven': {
-          backgroundColor: '#B5D8F9',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.geneticanalysisCheckedOdd': {
-          backgroundColor: '#92BADF',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.treatmentCheckedEven': {
-          backgroundColor: '#E8D8F5',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.treatmentCheckedOdd': {
-          backgroundColor: '#D3BFE8',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.treatmentresponseCheckedEven': {
-          backgroundColor: '#E0ECEA',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.treatmentresponseCheckedOdd': {
-          backgroundColor: '#E9F5F3',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.survivalCheckedEven': {
-          backgroundColor: '#FFEDE7',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.survivalCheckedOdd': {
-          backgroundColor: '#FFF6F3',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].zebraStripesColor2,
         },
       },
     },
@@ -111,27 +112,6 @@ const theme = {
           height: "16px !important",
           width: "16px !important",
         },
-        "&.thumbStudy": {
-          background: '#006A8F',
-        },
-        "&.thumbDemographics": {
-          background: '#E39520',
-        },
-        "&.thumbDiagnosis": {
-          background: '#35B899',
-        },
-        "&.thumbGeneticanalysis": {
-          background: '#268CEA',
-        },
-        "&.thumbTreatment": {
-          background: '#9664C7',
-        },
-        "&.thumbTreatmentresponse": {
-          background: '#006B57',
-        },
-        "&.thumbSurvival": {
-          background: '#862405',
-        },
       },
       track: {
         borderRadius: 4,
@@ -143,76 +123,7 @@ const theme = {
         '&~&': {
           background: '#142D64',
         },
-        "&.trackStudy": {
-          background: '#006A8F',
-        },
-        "&.trackDemographics": {
-          background: '#E39520',
-        },
-        "&.trackDiagnosis": {
-          background: '#35B899',
-        },
-        "&.trackGeneticanalysis": {
-          background: '#268CEA',
-        },
-        "&.trackTreatment": {
-          background: '#9664C7',
-        },
-        "&.trackTreatmentresponse": {
-          background: '#006B57',
-        },
-        "&.trackSurvival": {
-          background: '#862405',
-        },
       },
-      colorPrimary: {
-        "&.colorPrimaryStudy": {
-          color: '#006A8F',
-        },
-        "&.colorPrimaryDemographics": {
-          color: '#E39520',
-        },
-        "&.colorPrimaryDiagnosis": {
-          color: '#35B899',
-        },
-        "&.colorPrimaryGeneticanalysis": {
-          color: '#268CEA',
-        },
-        "&.colorPrimaryTreatment": {
-          color: '#9664C7',
-        },
-        "&.colorPrimaryTreatmentresponse": {
-          color: '#006B57',
-        },
-        "&.colorPrimarySurvival": {
-          color: '#862405',
-        },
-      },
-      rail: {
-        borderRadius: 4,
-        height: 6,
-        "&.railStudy": {
-          background: '#006A8F',
-        },
-        "&.railDemographics": {
-          background: '#E39520',
-        },
-        "&.railDiagnosis": {
-          background: '#35B899',
-        },
-        "&.railGeneticanalysis": {
-          background: '#268CEA',
-        },
-        "&.railTreatment": {
-          background: '#9664C7',
-        },
-        "&.railTreatmentresponse": {
-          background: '#006B57',
-        },
-        "&.railSurvival": {
-          background: '#862405',
-        },
-      }
 
     },
     MuiDivider: {

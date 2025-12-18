@@ -1,3 +1,5 @@
+import { FACET_COLORS } from "../../bento/dashTemplate";
+
 export default () => ({
     customButton: {
       borderRadius: '9px',
@@ -23,25 +25,25 @@ export default () => ({
     height: '8px',
     // backgroundColor: '#4D889E',
     '&.divider0': {
-      backgroundColor: '#006A8F',
+      backgroundColor: FACET_COLORS[0 % FACET_COLORS.length].facetCategoryColor,
     },
     '&.divider1': {
-      backgroundColor: '#E39520',
+      backgroundColor: FACET_COLORS[1 % FACET_COLORS.length].facetCategoryColor,
     },
     '&.divider2': {
-      backgroundColor: '#35B899',
+      backgroundColor: FACET_COLORS[2 % FACET_COLORS.length].facetCategoryColor,
     },
     '&.divider3': {
-      backgroundColor: '#268CEA',
+      backgroundColor: FACET_COLORS[3 % FACET_COLORS.length].facetCategoryColor,
     },
     '&.divider4': {
-      backgroundColor: '#9664C7',
+      backgroundColor: FACET_COLORS[4 % FACET_COLORS.length].facetCategoryColor,
     },
     '&.divider5': {
-      backgroundColor: '#006B57',
+      backgroundColor: FACET_COLORS[5 % FACET_COLORS.length].facetCategoryColor,
     },
     '&.divider6': {
-      backgroundColor: '#862405',
+      backgroundColor: FACET_COLORS[6 % FACET_COLORS.length].facetCategoryColor,
     },
   },
   floatRight: {

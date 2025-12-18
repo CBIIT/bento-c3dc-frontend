@@ -1,5 +1,7 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import { FACET_NAMES, FACET_ORDER, FACET_COLORS } from '../../../bento/dashTemplate';
+
 const theme = {
   overrides: {
     Mui: {
@@ -40,46 +42,46 @@ const theme = {
     MuiListItem: {
       root: {
         '&.studyCheckedEven': {
-          backgroundColor: '#EFF3F1',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.studyCheckedOdd': {
-          backgroundColor: '#F9FAFA',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.demographicsCheckedEven': {
-          backgroundColor: '#EFF3F1',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.demographicsCheckedOdd': {
-          backgroundColor: '#F9FAFA',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.diagnosisCheckedEven': {
-          backgroundColor: '#EFF3F1',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.diagnosisCheckedOdd': {
-          backgroundColor: '#F9FAFA',
-          '&.geneticanalysisCheckedEven': {
-          backgroundColor: '#EFF3F1',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].zebraStripesColor2,
+        },
+        '&.geneticanalysisCheckedEven': {
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.geneticanalysisCheckedOdd': {
-          backgroundColor: '#F9FAFA',
-        },
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.treatmentCheckedEven': {
-          backgroundColor: '#EFF3F1',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.treatmentCheckedOdd': {
-          backgroundColor: '#F9FAFA',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.treatmentresponseCheckedEven': {
-          backgroundColor: '#EFF3F1',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.treatmentresponseCheckedOdd': {
-          backgroundColor: '#F9FAFA',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].zebraStripesColor2,
         },
         '&.survivalCheckedEven': {
-          backgroundColor: '#EFF3F1',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].zebraStripesColor1,
         },
         '&.survivalCheckedOdd': {
-          backgroundColor: '#F9FAFA',
+          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].zebraStripesColor2,
         },
       },
     },/*

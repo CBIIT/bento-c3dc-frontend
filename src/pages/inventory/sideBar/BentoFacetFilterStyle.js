@@ -1,3 +1,5 @@
+import { FACET_NAMES, FACET_COLORS, FACET_ORDER } from "../../../bento/dashTemplate";
+
 export default () => ({
   inputRoot: {
     height: 30,
@@ -160,31 +162,31 @@ export default () => ({
     marginRight: '0px',
   },
   activeFacetStudy: {
-    color: '#006A8F',
+    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetDemographics: {
-    color: '#E39520',
+    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetDiagnosis: {
-    color: '#35B899',
+    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetGeneticanalysis: {
-    color: '#268CEA',
+    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetTreatment: {
-    color: '#9664C7',
+    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetTreatmentresponse: {
-    color: '#006B57',
+    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetSurvival: {
-    color: '#862405',
+    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].slideOutComponentColor,
     fontWeight: 600,
   },
   searchContainer: {
@@ -215,25 +217,25 @@ export default () => ({
     justifyContent: 'center',
   },
   expandedDisplayButtonStudy: {
-    backgroundColor: '#006A8F !important',
+    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonDemographics: {
-    backgroundColor: '#E39520 !important',
+    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonDiagnosis: {
-    backgroundColor: '#35B899 !important',
+    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonGeneticanalysis: {
-    backgroundColor: '#268CEA !important',
+    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonTreatment: {
-    backgroundColor: '#9664C7 !important',
+    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonTreatmentresponse: {
-    backgroundColor: '#006B57 !important',
+    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonSurvival: {
-    backgroundColor: '#862405 !important',
+    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].slideOutComponentColor + ' !important',
   },
   findCaseButton: {
     // marginLeft: '105px',
