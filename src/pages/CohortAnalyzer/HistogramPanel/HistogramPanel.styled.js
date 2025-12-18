@@ -293,7 +293,7 @@ export const SurvivalAnalysisModalContent = styled.div`
 
 export const KmChartModalWrapper = styled.div`
   width: 100%;
-  padding-left: 160px;
+  padding-left: 120px;
   padding-right: 100px;
   margin-right: 0px;
   margin-top: -20px;
@@ -307,7 +307,6 @@ export const KmChartModalWrapper = styled.div`
 
 export const RiskTableModalWrapper = styled.div`
   width: 100%;
-  padding-left: 80px;
   padding-right: 145px;
   flex: 1 1 0;
   min-height: 0;
