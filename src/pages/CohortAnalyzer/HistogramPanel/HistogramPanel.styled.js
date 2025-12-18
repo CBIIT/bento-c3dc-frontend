@@ -261,13 +261,11 @@ export const SurvivalAnalysisContainer = styled.div`
 export const KmChartWrapper = styled.div`
   width: 100%;
   padding-left: 100px;
-  margin-right: 40px;
   margin-top: -20px;
 `;
 
 export const RiskTableWrapper = styled.div`
-  width: 95%;
-  padding-left: 30px;
+  width: 100%;
   padding-right: 50px;
   margin-top: 10px;
   min-width: 0;
