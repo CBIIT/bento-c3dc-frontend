@@ -260,7 +260,9 @@ const createSliderStylesForSection = (color) => ({
   }
 });
 
-export const facetsConfig = [
+// Define individual section facet configurations
+
+const studyFacets = [
   {
     section: STUDY,
     label: 'dbGaP ACCESSION',
@@ -283,6 +285,9 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
+];
+
+const demographicsFacets = [
   {
     section: DEMOGRAPHICS,
     label: 'Sex At Birth',
@@ -305,6 +310,9 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
+];
+
+const diagnosisFacets = [
   {
     section: DIAGNOSIS,
     label: 'Age at Diagnosis (days)',
@@ -335,7 +343,7 @@ export const facetsConfig = [
     search: true,
     searchPlaceholder: 'e.g. Neuroblastoma, NOS',
   },
-   {
+  {
     section: DIAGNOSIS,
     label: 'Diagnosis',
     apiPath: 'participantCountByDiagnosis',
@@ -347,8 +355,8 @@ export const facetsConfig = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. Abdomen, NOS',
-   },
-   {
+  },
+  {
     section: DIAGNOSIS,
     label: 'Diagnosis Classification System',
     apiPath: '',
@@ -392,7 +400,10 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
- {
+];
+
+const geneticAnalysisFacets = [
+  {
     section: GENETICANALYSIS,
     label: 'Reported Significance',
     apiPath: '',
@@ -473,7 +484,9 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
- 
+];
+
+const treatmentFacets = [
   {
     section: TREATMENT,
     label: 'Age at Treatment Start',
@@ -530,6 +543,9 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
+];
+
+const treatmentResponseFacets = [
   {
     section: TREATMENTRESPONSE,
     label: 'Response',
@@ -580,6 +596,9 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
+];
+
+const survivalFacets = [
   {
     section: SURVIVAL,
     label: 'Last Known Survival Status',
@@ -630,8 +649,23 @@ export const facetsConfig = [
     sort_type: sortType.ALPHABET,
     show: true,
   },
-  
 ];
+
+// Map section names to their corresponding facet arrays
+const sectionFacetsMap = {
+  [STUDY]: studyFacets,
+  [DEMOGRAPHICS]: demographicsFacets,
+  [DIAGNOSIS]: diagnosisFacets,
+  [GENETICANALYSIS]: geneticAnalysisFacets,
+  [TREATMENT]: treatmentFacets,
+  [TREATMENTRESPONSE]: treatmentResponseFacets,
+  [SURVIVAL]: survivalFacets,
+};
+
+// Combine facets based on FACET_ORDER
+export const facetsConfig = FACET_ORDER.reduce((acc, section) => {
+  return [...acc, ...sectionFacetsMap[section]];
+}, []);
 
 // --------------- Dashboard Widgets configuration --------------
 // Sunburst chart color scheme
