@@ -326,7 +326,7 @@ const styles = () => ({
     },
     cohortListing: {
         height: '100%',
-        overflowY: 'auto',
+        overflow: 'hidden auto',
         backgroundColor: '#CAD1D3',
         // Custom scrollbar styles
         '&::-webkit-scrollbar': {
