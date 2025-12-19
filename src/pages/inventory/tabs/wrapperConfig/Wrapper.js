@@ -98,21 +98,21 @@ export const wrapperConfig = [
     container: 'paginatedTable',
     paginatedTable: true,
   },
+  /* Unused Footer Button Container currently renders empty container */
+  /*
   {
     container: 'buttons',
     size: 'xl',
     clsName: 'container_footer',
     items: [
     ],
-  },
+  },*/
 ];
 
 export const configWrapper = (tab, configs) => {
-  const wrpConfig = configs.map((container) => ({
-    ...container,
-    items: (!container.paginatedTable) && (tab.name !== "Studies") ? container.items.map((item) => ({
-      ...item,
-    })) : [],
-  }));
-  return wrpConfig;
+  // For Studies tab, filter out the header button container
+  if (tab.name === "Studies") {
+    return configs.filter((container) => container.clsName !== 'container_header');
+  }
+  return configs;
 };
