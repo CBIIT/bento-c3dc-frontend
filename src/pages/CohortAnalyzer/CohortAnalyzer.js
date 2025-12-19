@@ -401,7 +401,6 @@ export const CohortAnalyzer = () => {
         page: 0,
         onPageChange: (somevalue) => alert("ok ok"),
         downloadFileName: "download",
-        showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
         showSearchBox: true,
         tableMsg: getTableMessage(cohortList, selectedCohortSection, tableConfig)
