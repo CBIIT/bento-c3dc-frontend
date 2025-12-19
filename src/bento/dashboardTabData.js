@@ -556,7 +556,6 @@ cohortMetadata(
         last_known_survival_status
       }
       synonyms {
-        id
         associated_id
         data_location
         domain_category
@@ -1671,7 +1670,6 @@ export const tabContainers = [
     tableID: 'study_tab_table',
     extendedViewConfig: {
       pagination: true,
-      manageViewColumns: false,
       download: true,
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
@@ -1761,7 +1759,9 @@ export const tabContainers = [
     hasToolTip: true,
     extendedViewConfig: {
       pagination: true,
-      manageViewColumns: false,
+      manageViewColumns: {
+        title: 'Displayed Columns',
+      },
       download: true,
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
@@ -1779,6 +1779,7 @@ export const tabContainers = [
         dataField: 'participant_id',
         header: 'Participant ID',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CPI,
@@ -1787,6 +1788,7 @@ export const tabContainers = [
         dataField: 'race',
         header: 'Race',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM,
@@ -1795,6 +1797,7 @@ export const tabContainers = [
         dataField: 'sex_at_birth',
         header: 'Sex at Birth',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1802,6 +1805,7 @@ export const tabContainers = [
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -1816,6 +1820,7 @@ export const tabContainers = [
         dataField: "study_id",
         header: "Study ID",
         display: false,
+        disableInManageView: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -1846,7 +1851,9 @@ export const tabContainers = [
     tableID: 'diagnosis_tab_table',
     extendedViewConfig: {
       pagination: true,
-      manageViewColumns: false,
+      manageViewColumns: {
+        title: 'Displayed Columns',
+      },
       download: true,
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
@@ -1865,6 +1872,7 @@ export const tabContainers = [
         sortField: 'participant.participant_id',
         header: 'Participant ID',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM
@@ -1873,6 +1881,7 @@ export const tabContainers = [
         dataField: 'diagnosis_id',
         header: 'Diagnosis ID',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1880,50 +1889,7 @@ export const tabContainers = [
         dataField: 'diagnosis',
         header: 'Diagnosis',
         display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'diagnosis_classification_system',
-        header: 'Diagnosis Classification System',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-        cellType: cellTypes.CUSTOM_ELEM,
-      },
-      {
-        dataField: 'diagnosis_basis',
-        header: 'Diagnosis Basis',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-        cellType: cellTypes.CUSTOM_ELEM,
-      },
-      {
-        dataField: 'diagnosis_comment',
-        header: 'Diagnosis Comment',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'disease_phase',
-        header: 'Disease Phase',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'tumor_classification',
-        header: 'Tumor Classification',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'anatomic_site',
-        header: 'Anatomic Site',
-        display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -1931,49 +1897,34 @@ export const tabContainers = [
         dataField: 'age_at_diagnosis',
         header: 'Age at Diagnosis (days)',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.COMMA,
         cellType: cellTypes.COMMA,
       },
       {
-        dataField: 'toronto_childhood_cancer_staging',
-        header: 'Toronto Childhood Cancer Staging',
-        display: false,
+        dataField: 'anatomic_site',
+        header: 'Anatomic Site',
+        display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
+      // Add 'Diagnosis Category' here once the data is available
       {
-        dataField: 'tumor_grade',
-        header: 'Tumor Grade',
-        display: false,
+        dataField: 'diagnosis_classification_system',
+        header: 'Diagnosis Classification System',
+        display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'tumor_stage_clinical_t',
-        header: 'Tumor Stage Clinical T',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'tumor_stage_clinical_n',
-        header: 'Tumor Stage Clinical N',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'tumor_stage_clinical_m',
-        header: 'Tumor Stage Clinical M',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
+        cellType: cellTypes.CUSTOM_ELEM,
       },
       {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -1983,9 +1934,85 @@ export const tabContainers = [
         doNotDownload: true,
       },
       {
+        dataField: 'diagnosis_basis',
+        header: 'Diagnosis Basis',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+        cellType: cellTypes.CUSTOM_ELEM,
+      },
+      {
+        dataField: 'diagnosis_comment',
+        header: 'Diagnosis Comment',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'disease_phase',
+        header: 'Disease Phase',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_classification',
+        header: 'Tumor Classification',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      // Add 'Laterality' here once the data is available
+      // Add 'Year of Diagnosis' here once the data is available
+      {
+        dataField: 'toronto_childhood_cancer_staging',
+        header: 'Toronto Childhood Cancer Staging',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_grade',
+        header: 'Tumor Grade',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_stage_clinical_t',
+        header: 'Tumor Stage Clinical T',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_stage_clinical_n',
+        header: 'Tumor Stage Clinical N',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'tumor_stage_clinical_m',
+        header: 'Tumor Stage Clinical M',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: "study_id",
         header: "Study ID",
         display: false,
+        disableInManageView: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2025,7 +2052,9 @@ export const tabContainers = [
     tableID: 'genetic_analysis_tab_table',
     extendedViewConfig: {
       pagination: true,
-      manageViewColumns: false,
+      manageViewColumns: {
+        title: 'Displayed Columns',
+      },
       download: true,
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
@@ -2044,6 +2073,7 @@ export const tabContainers = [
         sortField: 'participant.participant_id',
         header: 'Participant ID',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM
@@ -2052,6 +2082,7 @@ export const tabContainers = [
         dataField: 'genetic_analysis_id',
         header: 'Genetic Analysis ID',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2059,6 +2090,7 @@ export const tabContainers = [
         dataField: 'gene_symbol',
         header: 'Gene Symbol',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM,
@@ -2067,27 +2099,7 @@ export const tabContainers = [
         dataField: 'status',
         header: 'Status',
         display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'chromosome',
-        header: 'Chromosome',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'cytoband',
-        header: 'Cytoband',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'test',
-        header: 'Test',
-        display: false,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2095,6 +2107,7 @@ export const tabContainers = [
         dataField: 'reported_significance',
         header: 'Reported Significance',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2102,13 +2115,7 @@ export const tabContainers = [
         dataField: 'reported_significance_system',
         header: 'Reported Significance System',
         display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'reference_genome',
-        header: 'Reference Genome',
-        display: false,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2116,27 +2123,7 @@ export const tabContainers = [
         dataField: 'hgvs_genome',
         header: 'HGVS Genome',
         display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'hgvs_coding',
-        header: 'HGVS Coding',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'hgvs_protein',
-        header: 'HGVS Protein',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'exon',
-        header: 'Exon',
-        display: false,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2144,41 +2131,7 @@ export const tabContainers = [
         dataField: 'alteration',
         header: 'Alteration',
         display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'alteration_effect',
-        header: 'Alteration Effect',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'alteration_type',
-        header: 'Alteration Type',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'fusion_partner_gene',
-        header: 'Fusion Partner Gene',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'fusion_partner_exon',
-        header: 'Fusion Partner Exon',
-        display: false,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'genomic_source_category',
-        header: 'Genomic Source Category',
-        display: false,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2186,6 +2139,7 @@ export const tabContainers = [
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -2194,6 +2148,113 @@ export const tabContainers = [
         cellType: cellTypes.CUSTOM_ELEM,
         doNotDownload: true,
       },
+      {
+        dataField: 'hgvs_coding',
+        header: 'HGVS Coding',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'hgvs_protein',
+        header: 'HGVS Protein',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'reference_genome',
+        header: 'Reference Genome',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'chromosome',
+        header: 'Chromosome',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'cytoband',
+        header: 'Cytoband',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      // Add 'Transcript here once the data is available
+      {
+        dataField: 'exon',
+        header: 'Exon',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'fusion_partner_gene',
+        header: 'Fusion Partner Gene',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      // Add 'Fusion Partner Transcript' here once the data is available
+      {
+        dataField: 'fusion_partner_exon',
+        header: 'Fusion Partner Exon',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      // Add 'Translocation Partner Chromosome' here once the data is available
+      // Add 'Translocation Partner Cytoband' here once the data is available
+      {
+        dataField: 'alteration_type',
+        header: 'Alteration Type',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'alteration_effect',
+        header: 'Alteration Effect',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      // Add 'Age at Genetic Analysis' here once the data is available
+      {
+        dataField: 'genomic_source_category',
+        header: 'Genomic Source Category',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'test',
+        header: 'Test',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      // Add 'Method' here once the data is available
+      // Add 'Result' here once the data is available
+      // Add 'Allelic Ratio' here once the data is available
+      // Add 'Variant Allele Fraction' here once the data is available
+      // Add 'DNA Index' here once the data is available
+      // Add 'ISCN' here once the data is available
     ],
     id: 'genetic_analysis_tab',
     tabIndex: '3',
@@ -2222,7 +2283,9 @@ export const tabContainers = [
     toolTipText: 'Count of Treatment Record',
     extendedViewConfig: {
       pagination: true,
-      manageViewColumns: false,
+      manageViewColumns: {
+        title: 'Displayed Columns',
+      },
       download: true,
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
@@ -2237,10 +2300,11 @@ export const tabContainers = [
         role: cellTypes.CHECKBOX,
       },
       {
-         dataField: 'participant',
+        dataField: 'participant',
         sortField: 'participant.participant_id',
         header: 'Participant ID',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM
@@ -2249,6 +2313,7 @@ export const tabContainers = [
         dataField: "id",
         header: "Treatment ID",
         display: true,
+        hideable: false,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2256,6 +2321,7 @@ export const tabContainers = [
         dataField: "age_at_treatment_start",
         header: "Age at Treatment Start",
         display: true,
+        hideable: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2263,6 +2329,7 @@ export const tabContainers = [
         dataField: 'age_at_treatment_end',
         header: 'Age at Treatment End',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2270,6 +2337,7 @@ export const tabContainers = [
         dataField: 'treatment_type',
         header: 'Treatment Type',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2277,6 +2345,7 @@ export const tabContainers = [
         dataField: "treatment_agent",
         header: "Treatment Agent",
         display: true,
+        hideable: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM,
@@ -2285,6 +2354,7 @@ export const tabContainers = [
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -2293,10 +2363,15 @@ export const tabContainers = [
         cellType: cellTypes.CUSTOM_ELEM,
         doNotDownload: true,
       },
+      // Add 'Dose' here once the data is available
+      // Add 'Dose Unit' here once the data is available
+      // Add 'Dose Route' here once the data is available
+      // Add 'Dose Frequency' here once the data is available
       {
         dataField: "study_id",
         header: "Study ID",
         display: false,
+        disableInManageView: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2334,7 +2409,9 @@ export const tabContainers = [
     toolTipText: 'Count of Treatment Response Record',
     extendedViewConfig: {
       pagination: true,
-      manageViewColumns: false,
+      manageViewColumns: {
+        title: 'Displayed Columns',
+      },
       download: true,
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
@@ -2353,6 +2430,7 @@ export const tabContainers = [
         sortField: 'participant.participant_id',
         header: 'Participant ID',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM
@@ -2361,6 +2439,7 @@ export const tabContainers = [
         dataField: "treatment_response_id",
         header: "Treatment Response ID",
         display: true,
+        hideable: false,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2368,6 +2447,7 @@ export const tabContainers = [
         dataField: 'response',
         header: 'Response',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2375,27 +2455,15 @@ export const tabContainers = [
         dataField: 'age_at_response',
         header: 'Age at Response',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: "response_category",
-        header: "Response Category",
-        display: true,
-        tooltipText: "sort",
-        role: cellTypes.DISPLAY
-      },
-      {
-        dataField: "response_system",
-        header: "Response System",
-        display: true,
-        tooltipText: "sort",
-        role: cellTypes.DISPLAY
       },
       {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -2405,9 +2473,26 @@ export const tabContainers = [
         doNotDownload: true,
       },
       {
+        dataField: "response_category",
+        header: "Response Category",
+        display: false,
+        hideable: true,
+        tooltipText: "sort",
+        role: cellTypes.DISPLAY
+      },
+      {
+        dataField: "response_system",
+        header: "Response System",
+        display: false,
+        hideable: true,
+        tooltipText: "sort",
+        role: cellTypes.DISPLAY
+      },
+      {
         dataField: "study_id",
         header: "Study ID",
         display: false,
+        disableInManageView: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2442,7 +2527,9 @@ export const tabContainers = [
     tableID: 'survival_tab_table',
     extendedViewConfig: {
       pagination: true,
-      manageViewColumns: false,
+      manageViewColumns: {
+        title: 'Displayed Columns',
+      },
       download: true,
       downloadButtonConfig: {
         title: 'DOWNLOAD DATA',
@@ -2477,6 +2564,7 @@ export const tabContainers = [
         sortField: 'participant.participant_id',
         header: 'Participant ID',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.CUSTOM_ELEM
@@ -2485,6 +2573,7 @@ export const tabContainers = [
         dataField: "id",
         header: "Survival ID",
         display: true,
+        hideable: false,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2492,6 +2581,7 @@ export const tabContainers = [
         dataField: 'last_known_survival_status',
         header: 'Last Known Survival Status',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
       },
@@ -2499,43 +2589,16 @@ export const tabContainers = [
         dataField: 'age_at_last_known_survival_status',
         header: 'Age at Last Known Survival Status',
         display: true,
+        hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         cellType: cellTypes.COMMA
-      },
-      {
-        dataField: "event_free_survival_status",
-        header: "Event-Free Survival Status",
-        display: false,
-        tooltipText: "sort",
-        role: cellTypes.DISPLAY
-      },
-      {
-        dataField: "age_at_event_free_survival_status",
-        header: "Age at Event-Free Survival Status",
-        display: false,
-        tooltipText: "sort",
-        role: cellTypes.COMMA,
-        cellType: cellTypes.COMMA
-      },
-      {
-        dataField: 'first_event',
-        header: 'First Event',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
-      },
-      {
-        dataField: 'cause_of_death',
-        header: 'Cause of Death',
-        display: true,
-        tooltipText: 'sort',
-        role: cellTypes.DISPLAY,
       },
       {
         dataField: 'dbgap_accession',
         header: 'dbGaP Accession',
         display: true,
+        hideable: false,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
         linkAttr: {
@@ -2545,9 +2608,43 @@ export const tabContainers = [
         doNotDownload: true,
       },
       {
+        dataField: "event_free_survival_status",
+        header: "Event-Free Survival Status",
+        display: false,
+        hideable: true,
+        tooltipText: "sort",
+        role: cellTypes.DISPLAY
+      },
+      {
+        dataField: "age_at_event_free_survival_status",
+        header: "Age at Event-Free Survival Status",
+        display: false,
+        hideable: true,
+        tooltipText: "sort",
+        role: cellTypes.DISPLAY,
+        cellType: cellTypes.COMMA
+      },
+      {
+        dataField: 'first_event',
+        header: 'First Event',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
+        dataField: 'cause_of_death',
+        header: 'Cause of Death',
+        display: false,
+        hideable: true,
+        tooltipText: 'sort',
+        role: cellTypes.DISPLAY,
+      },
+      {
         dataField: "study_id",
         header: "Study ID",
         display: false,
+        disableInManageView: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
