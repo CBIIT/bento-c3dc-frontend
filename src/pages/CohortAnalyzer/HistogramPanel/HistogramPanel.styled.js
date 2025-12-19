@@ -287,8 +287,10 @@ export const SurvivalAnalysisModalContent = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
-  gap: 20px;
+  gap: 40px;
 `;
 
 export const KmChartModalWrapper = styled.div`
@@ -296,22 +298,19 @@ export const KmChartModalWrapper = styled.div`
   padding-left: 120px;
   padding-right: 100px;
   margin-right: 0px;
-  margin-top: -20px;
-  flex: 1 1 0;
-  min-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  flex-shrink: 0;
 `;
 
 export const RiskTableModalWrapper = styled.div`
   width: 100%;
   padding-right: 145px;
-  flex: 1 1 0;
-  min-height: 0;
   overflow-x: auto;
   overflow-y: auto;
+  flex-shrink: 0;
 `;
 
 export const ModalHeaderContainer = styled.div`
