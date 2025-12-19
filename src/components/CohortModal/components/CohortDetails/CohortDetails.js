@@ -103,7 +103,7 @@ const CohortDetails = (props) => {
     }
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column', gap: 20}}>
+        <div className={classes.cohortDetailsContainer}>
             <div className={classes.cohortDetailsSection}>
                 <CohortMetadata
                     config={config}
@@ -129,6 +129,11 @@ const CohortDetails = (props) => {
  */
 
 const styles = () => ({
+    cohortDetailsContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        gap: 20,
+    },
     cohortDetailsSection: {
         flexGrow: 55,
         flexBasis: '0%',

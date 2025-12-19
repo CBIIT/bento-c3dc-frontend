@@ -1,4 +1,4 @@
-import React, {useState, useContext, useRef, useLayoutEffect} from "react";
+import React, {useState, useContext, useRef} from "react";
 import { useStyle, Wrapper, CohortSelectionChild, TrashCanIcon, InstructionsWrapper, Instructions } from "./cohortSelectorStyling";
 import { useStyle as useMainStyle } from "../cohortAnalyzerStyling";
 import trashCan from "../../../assets/icons/trash_can.svg";
@@ -15,7 +15,7 @@ import { useCohortAnalyzer } from "../CohortAnalyzerContext";
 import { CohortStateContext } from "../../../components/CohortSelectorState/CohortStateContext";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import { exampleButtonConfig, getExampleCohortKeys } from "../../../bento/exampleCohortData";
-
+import { MiddleEllipsisText } from "../../../components/EllipsisText";
 
 // Component to handle individual cohort item with overflow detection
 const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDeleteInfo, deleteInfo, state, classes }) => {
@@ -24,24 +24,16 @@ const CohortItem = ({ cohort, cohortData, selectedCohorts, handleCheckbox, setDe
 
     const cohortName = cohortData.cohortName + " (" + cohortData.participants.length + ")";
 
-    useLayoutEffect(() => {
-        const checkOverflow = () => {
-            if (nameRef.current) {
-                const element = nameRef.current;
-                const isOverflowing = element.scrollWidth > element.clientWidth;
-                setIsNameOverflowing(isOverflowing);
-            }
-        };
-        checkOverflow();
-    }, [cohortName]);
-
     const nameElement = (
         <span
             ref={nameRef}
             className={classes.cardContent}
             style={{ color: '#000' }}
         >
-            {cohortName}
+            <MiddleEllipsisText
+                text={cohortName}
+                onTruncate={setIsNameOverflowing}
+            />
         </span>
     );
 

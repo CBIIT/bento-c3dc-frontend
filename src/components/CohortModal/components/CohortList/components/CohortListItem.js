@@ -1,17 +1,16 @@
-import React, { memo, useRef, useState, useLayoutEffect } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import { withStyles } from '@material-ui/core';
 import ToolTip from '@bento-core/tool-tip';
 import TrashCanIconWhite from '../../../../../assets/icons/Trash_Can_Icon_White.svg';
 import DuplicateIcon from '../../../../../assets/icons/Duplicate.svg';
 import { TOOLTIP_MESSAGES } from '../../../../../bento/cohortModalData.js';
-
+import { MiddleEllipsisText } from '../../../../EllipsisText';
 
 /**
  * Individual cohort list item component
  */
 const CohortListItem = ({
     classes,
-    cohort,
     cohortData,
     isSelected,
     onCohortSelect,
@@ -27,28 +26,14 @@ const CohortListItem = ({
         return null;
     }
 
-    // Check if text is overflowing after layout
-    useLayoutEffect(() => {
-        const checkOverflow = () => {
-            if (nameRef.current) {
-                const element = nameRef.current;
-                const isOverflowing = element.scrollWidth > element.clientWidth;
-                setIsNameOverflowing(isOverflowing);
-            }
-        };
-
-        // Check immediately
-        checkOverflow();
-
-        // Also check after a small delay to ensure layout is complete
-        const timeoutId = setTimeout(checkOverflow, 0);
-
-        return () => clearTimeout(timeoutId);
-    }, [cohortData.cohortName, isSelected]);
+    const cohortName = cohortData.cohortName || 'Unnamed Cohort';
 
     const nameElement = (
         <span ref={nameRef} className={classes.cohortListItemText}>
-            {cohortData.cohortName || 'Unnamed Cohort'}
+            <MiddleEllipsisText
+                text={cohortName}
+                onTruncate={setIsNameOverflowing}
+            />
         </span>
     );
 
@@ -128,11 +113,11 @@ const styles = () => ({
         cursor: 'pointer',
     },
     cohortListItemText: {
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
-        whiteSpace: 'nowrap',
         color: 'white',
         width: '85%',
+        paddingRight: '10px',
+        overflow: 'hidden',
+        whiteSpace: 'nowrap',
     },
     selectedCohort: {
         backgroundColor: '#3A555E',

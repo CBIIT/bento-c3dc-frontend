@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { getFilters } from '@bento-core/facet-filter';
 import CustomCheckBox from '../../../../components/CustomCheckbox/CustomCheckbox';
 import DeleteConfirmationModal from '../../../../components/CohortModal/components/shared/DeleteConfirmationModal';
+import { MiddleEllipsisText } from '../../../../components/EllipsisText';
 
 const DropdownContainer = styled.div`
   position: relative;
@@ -49,8 +50,6 @@ const DropdownHeader = styled.div`
   align-items: center;
   justify-content: center;
   text-overflow: ellipsis;
-  
-
 `;
 
 const Title = styled.div`
@@ -73,22 +72,35 @@ const Arrow = styled.span`
 
 const DropdownList = styled.ul`
   position: absolute;
-  min-width: 179px;
-  max-width: 189px;
+  min-width: ${(props) => (props.isExisting ? '213px' : '179px')};
+  max-width: ${(props) => (props.isExisting ? '223px' : '189px')};
   left: 0;
-  scrollbar-color: #003F74 #003F74;
   right: 0;
   background-color: #2A6E93;
   list-style: none;
   margin: 0;
-  padding: 0;
+  padding: 0 0 5px 0;
   border-radius: 0 0 5px 5px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border:  1px #73A9C7 solid;
   z-index: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   max-height: 200px;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: #ffffff;
+    border-radius: 0 0 4px 0;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #003F74;
+    border-radius: 0 0 4px 0;
+  }
 `;
 
 const DropdownItem = styled.li`
@@ -171,6 +183,13 @@ const DropdownItem = styled.li`
   }
 `;
 
+const CohortNameText = styled.span`
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-right: 5px;
+`;
 
 const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, type, borderColor, enabledWithoutSelect = null, filterState, localFindUpload, localFindAutocomplete }) => {
 
@@ -360,7 +379,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
 
       if (participantCount) {
         triggerNotification(participantCount);
-        setShowCohortModal((prev)=>true);
+        setShowCohortModal(true);
       }
     }
   };
@@ -445,7 +464,9 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
       return (
         <DropdownItem key={index} className='existing-cohort-item' >
           <CustomCheckBox selectedItems={checkedItems} item={option.cohortId} handleCheckbox={handleCheckbox} />
-          <span>{option.cohortName}</span>
+          <CohortNameText>
+            <MiddleEllipsisText text={option.cohortName} />
+          </CohortNameText>
         </DropdownItem>
       )
     }
@@ -462,7 +483,7 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
 
       </DropdownHeader>
       {isOpen && (
-        <DropdownList ref={dropDownListRef}>
+        <DropdownList ref={dropDownListRef} isExisting={type === "existing"}>
           {options.map((option, index) => {
             if (type === "new") {
               return getNewCohortDropDownItem(index,option,hiddenSelectedRows,totalRowCount);
