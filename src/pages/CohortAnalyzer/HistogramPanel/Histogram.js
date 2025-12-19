@@ -405,7 +405,10 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                   border={'1px solid #598ac5'}
                   arrowBorder={'1px solid #598AC5'}
                   title={<div>
-                    {"Participants with unreported age values or whose last diagnosis age is later than their last survival follow-up were excluded to ensure valid survival timelines. Displays survival data based on the earliest diagnosis when multiple diagnoses exist. "}
+                    Participants with unreported age values or whose last diagnosis age is later than their last survival follow-up were excluded to ensure valid survival timelines.
+                    <br />
+                    <br />
+                    Displays survival data based on the earliest diagnosis when multiple diagnoses exist. 
                   </div>}
                   placement="top-end"
                   arrow
