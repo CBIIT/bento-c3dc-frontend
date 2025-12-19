@@ -1,10 +1,29 @@
-import React , { useRef, useEffect, useMemo } from "react";
+import React, { useRef, useEffect, useMemo } from "react";
 import { createPortal } from "react-dom";
 import {
-  RadioGroup, RadioInput
-  , RadioLabel, ModalChartWrapper, ModalContent
-  , ModalOverlay, CloseButton, Tab, TabContainer,
+  RadioInput,
+  RadioLabel,
+  ModalChartWrapper,
+  ModalContent,
+  ModalOverlay,
+  CloseButton,
+  Tab,
+  TabContainer,
   barColors,
+  SurvivalAnalysisModalContainer,
+  SurvivalAnalysisModalContent,
+  KmChartModalWrapper,
+  RiskTableModalWrapper,
+  ModalHeaderContainer,
+  ModalActionButtons,
+  DownloadButtonWrapper,
+  DownloadButton,
+  DownloadIconImage,
+  DownloadIconSmall,
+  ModalChartContainer,
+  ModalRadioFieldset,
+  ModalRadioGroup,
+  ModalNoDataContainer,
 } from './HistogramPanel.styled';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import DownloadIcon from "../../../assets/icons/Download_Histogram_icon.svg";
@@ -12,7 +31,8 @@ import DownloadIconBorderless from "../../../assets/icons/download-icon-borderle
 import CustomChartTooltip from './CustomChartTooltip';
 import CustomXAxisTick from './CustomXAxisTick';
 import { KaplanMeierChart } from '@bento-core/kmplot';
-import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem } from './HistogramPanel.styled';
+import RiskTable from '@bento-core/risk-table';
+import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem, } from './HistogramPanel.styled';
 import * as htmlToImage from 'html-to-image';
 
 const ExpandedChartModal = ({
@@ -28,11 +48,15 @@ const ExpandedChartModal = ({
   kmLoading,
   kmError,
   kmChartRef,
+  riskTableRef,
+  cohorts,
+  timeIntervals,
   c1,
   c2,
   c3
 }) => {
   const [showDownloadDropdown, setShowDownloadDropdown] = React.useState(false);
+  const [chartHeight, setChartHeight] = React.useState(350);
   const dropdownRef = useRef(null);
   const survivalAnalysisContainerRef = useRef(null);
   
@@ -158,6 +182,42 @@ const ExpandedChartModal = ({
     }
   };
 
+  const downloadRiskTable = (riskTableRef) => {
+    try {
+      if (!riskTableRef || !riskTableRef.current) {
+        console.error("Risk table ref not available");
+        return;
+      }
+
+      const tableElement = riskTableRef.current;
+
+      // Generate image directly from the element without modifying styles
+      htmlToImage.toPng(tableElement, {
+        backgroundColor: 'transparent',
+        pixelRatio: 6,
+        quality: 1.0,
+        skipAutoScale: true,
+      }).then((dataUrl) => {
+        const a = document.createElement("a");
+        a.href = dataUrl;
+        a.download = `risk_table.png`;
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => {
+          document.body.removeChild(a);
+        }, 100);
+      }).catch(error => {
+        console.error("Error using html-to-image:", error);
+        alert("Error downloading Risk table. Please check the console for details.");
+      });
+
+      setShowDownloadDropdown(false);
+    } catch (error) {
+      console.error("Error downloading Risk table:", error);
+      alert("Error downloading Risk table. Please check the console for details.");
+    }
+  };
+
   const downloadBoth = () => {
     try {
       setShowDownloadDropdown(false);
@@ -225,7 +285,23 @@ const ExpandedChartModal = ({
         document.body.style.overflow = original;
       };
     
-  }, [])
+  }, []);
+
+  // Calculate height for KM chart - use reasonable size that doesn't fill full height
+  useEffect(() => {
+    const updateHeight = () => {
+      if (survivalAnalysisContainerRef.current && activeTab === 'survivalAnalysis') {
+        const containerHeight = survivalAnalysisContainerRef.current.clientHeight;
+        // Use 40% of container height to leave room for centering and gap
+        const calculatedHeight = Math.floor(containerHeight * 0.4);
+        setChartHeight(Math.max(300, Math.min(calculatedHeight, 500))); // between 300px and 500px
+      }
+    };
+
+    updateHeight();
+    window.addEventListener('resize', updateHeight);
+    return () => window.removeEventListener('resize', updateHeight);
+  }, [activeTab]);
 
 
   return (
@@ -233,7 +309,7 @@ const ExpandedChartModal = ({
     <ModalOverlay onClick={() => setExpandedChart(null)}>
             
       <ModalContent onClick={(e) => e.stopPropagation()}>
-          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', position: 'relative',width:"100%"}}>
+          <ModalHeaderContainer>
           {/* Tab Navigation */}
           <TabContainer>
             {Object.keys(data).map(dataset => (
@@ -255,67 +331,72 @@ const ExpandedChartModal = ({
             )}
           </TabContainer>
 
-          <div style={{ minWidth: 300, right: 10, top:2, position:'absolute', justifyContent: 'flex-end', display: 'flex', gap: 5 }}>
+          <ModalActionButtons>
             {activeTab === 'survivalAnalysis' ? (
-              <div style={{marginRight: 0, display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-               <span 
+              <DownloadButtonWrapper>
+               <DownloadButton 
                   onClick={() => setShowDownloadDropdown(!showDownloadDropdown)}
-                  style={{ cursor: 'pointer', marginTop: 5 }}
                 >
-                  <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px'}} />
-                </span>
+                  <DownloadIconImage src={DownloadIcon} alt={"download"} />
+                </DownloadButton>
               <DownloadDropdown ref={dropdownRef}>
                
                 {showDownloadDropdown && (
                   <DownloadDropdownMenu>
                     <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
-                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                      <DownloadIconSmall src={DownloadIconBorderless} alt="download" />
                       Kaplan-Meier 
                     </DownloadDropdownItem>
-                    <DownloadDropdownItem >
-                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                    <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
+                      <DownloadIconSmall src={DownloadIconBorderless} alt="download" />
                       Risk Table 
                     </DownloadDropdownItem>
                     <DownloadDropdownItem onClick={() => downloadBoth()}>
-                      <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                      <DownloadIconSmall src={DownloadIconBorderless} alt="download" />
                       Download Both
                     </DownloadDropdownItem>
                   </DownloadDropdownMenu>
                 )}
               </DownloadDropdown>
-              </div>
+              </DownloadButtonWrapper>
             ) : (
-              <span style={{ marginTop: 5, cursor: 'pointer' }} onClick={() => downloadChart(activeTab,true)}>
-                <img src={DownloadIcon} alt={"download"} style={{ width: '23px', height: '23px' }} />
-              </span>
+              <DownloadButton onClick={() => downloadChart(activeTab,true)}>
+                <DownloadIconImage src={DownloadIcon} alt={"download"} />
+              </DownloadButton>
             )}
             <CloseButton onClick={() => setExpandedChart(null)}>×</CloseButton>
-          </div>
+          </ModalActionButtons>
 
-        </div>
+        </ModalHeaderContainer>
         <ModalChartWrapper>
           {activeTab === 'survivalAnalysis' ? (
-            <div style={{ width: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
-              <div ref={survivalAnalysisContainerRef} style={{width: '100%', display: 'flex', flexDirection: 'column'}}>
-                <div ref={kmChartRef} style={{width: '100%', paddingLeft: '160px', marginRight: '100px',marginTop: -20}}>
+            <SurvivalAnalysisModalContainer>
+              <SurvivalAnalysisModalContent ref={survivalAnalysisContainerRef}>
+                <KmChartModalWrapper ref={kmChartRef}>
                   <KaplanMeierChart
                     data={filteredKmPlotData}
                     title=""
                     width={"100%"}
-                    height={400}
+                    height={chartHeight}
                     loading={kmLoading}
                     error={kmError}
                     colors={cohortColors}
                     showLabels={false}
                     showLegend={false}
                   />
-                </div>
-              </div>
-            </div>
+                </KmChartModalWrapper>
+                <RiskTableModalWrapper ref={riskTableRef}>
+                  <RiskTable
+                    cohorts={cohorts}
+                    timeIntervals={timeIntervals}
+                  />
+                </RiskTableModalWrapper>
+              </SurvivalAnalysisModalContent>
+            </SurvivalAnalysisModalContainer>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'row', height: '100%', alignItems: 'center', justifyContent: 'flex-start' }}>
-             <fieldset style={{ border: 'none' }}>
-              <RadioGroup style={{ height: '100px', width:'180px', marginTop: '20px' }}>
+            <ModalChartContainer>
+             <ModalRadioFieldset>
+              <ModalRadioGroup>
                 <RadioLabel>
                   <RadioInput
                     type="radio"
@@ -340,8 +421,8 @@ const ExpandedChartModal = ({
                     % of Cases
                   </legend>
                 </RadioLabel>
-              </RadioGroup>
-               </fieldset>
+              </ModalRadioGroup>
+               </ModalRadioFieldset>
              {Array.isArray(data[activeTab]) && data[activeTab].length > 0 ? (
   <ResponsiveContainer id={`expanded-chart-${activeTab}`} width="100%"  height="100%">
     <BarChart
@@ -387,22 +468,12 @@ const ExpandedChartModal = ({
     </BarChart>
   </ResponsiveContainer>
 ) : (
-  <div style={{
-    width: '90%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    fontSize: '16px',
-    fontFamily: 'Poppins',
-    color: '#999',
-    padding: '2rem'
-  }}>
+  <ModalNoDataContainer>
     No data available
-  </div>
+  </ModalNoDataContainer>
 )}
 
-            </div>
+            </ModalChartContainer>
           )}
         </ModalChartWrapper>
       </ModalContent>
