@@ -1676,12 +1676,16 @@ export const tabContainers = [
         cloudIcon: true,
         //downloadLimit: 5000,
       },
+      manageViewColumns: {
+        title: 'Displayed Columns',
+      },
     },
     columns: [
       {
         dataField: "study_id",
         header: "Study ID",
         display: false,
+        disableInManageView: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -1712,6 +1716,7 @@ export const tabContainers = [
         dataField: "study_description",
         header: "Study Description",
         display: false,
+        disableInManageView: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -1719,6 +1724,7 @@ export const tabContainers = [
         dataField: "external_url",
         header: "External URL",
         display: false,
+        disableInManageView: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       }
