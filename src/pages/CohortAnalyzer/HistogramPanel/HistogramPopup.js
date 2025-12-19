@@ -192,19 +192,37 @@ const ExpandedChartModal = ({
       // Use the ref directly to capture the Risk Table element
       const tableElement = riskTableRef.current;
 
-
-      // Store original margin and temporarily remove it
-      const originalMargin = tableElement.style.marginLeft;
-      tableElement.style.marginLeft = '0';
+      // Store original styles for all elements
+      const originalStyles = new Map();
+      const allElements = [tableElement, ...tableElement.querySelectorAll('*')];
+      
+      allElements.forEach(el => {
+        originalStyles.set(el, {
+          margin: el.style.margin,
+          marginBottom: el.style.marginBottom,
+          padding: el.style.padding,
+          paddingBottom: el.style.paddingBottom,
+        });
+        el.style.margin = '0';
+        el.style.marginBottom = '0';
+        el.style.padding = '0';
+        el.style.paddingBottom = '0';
+      });
 
       // Generate image from the ref element using html-to-image
       htmlToImage.toPng(tableElement, {
         backgroundColor: 'transparent',
-        pixelRatio: 4,
-        quality: 1.0
+        pixelRatio: 6,
+        quality: 1.0,
+        skipAutoScale: true,
       }).then((dataUrl) => {
-        // Restore original margin
-        tableElement.style.marginLeft = originalMargin;
+        // Restore original styles
+        allElements.forEach(el => {
+          const styles = originalStyles.get(el);
+          if (styles) {
+            Object.assign(el.style, styles);
+          }
+        });
 
         const a = document.createElement("a");
         a.href = dataUrl;
@@ -215,8 +233,13 @@ const ExpandedChartModal = ({
           document.body.removeChild(a);
         }, 100);
       }).catch(error => {
-        // Restore original margin even on error
-        tableElement.style.marginLeft = originalMargin;
+        // Restore original styles even on error
+        allElements.forEach(el => {
+          const styles = originalStyles.get(el);
+          if (styles) {
+            Object.assign(el.style, styles);
+          }
+        });
         console.error("Error using html-to-image:", error);
         alert("Error downloading Risk table. Please check the console for details.");
       });
