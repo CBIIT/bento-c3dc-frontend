@@ -189,41 +189,15 @@ const ExpandedChartModal = ({
         return;
       }
 
-      // Use the ref directly to capture the Risk Table element
       const tableElement = riskTableRef.current;
 
-      // Store original styles for all elements
-      const originalStyles = new Map();
-      const allElements = [tableElement, ...tableElement.querySelectorAll('*')];
-      
-      allElements.forEach(el => {
-        originalStyles.set(el, {
-          margin: el.style.margin,
-          marginBottom: el.style.marginBottom,
-          padding: el.style.padding,
-          paddingBottom: el.style.paddingBottom,
-        });
-        el.style.margin = '0';
-        el.style.marginBottom = '0';
-        el.style.padding = '0';
-        el.style.paddingBottom = '0';
-      });
-
-      // Generate image from the ref element using html-to-image
+      // Generate image directly from the element without modifying styles
       htmlToImage.toPng(tableElement, {
         backgroundColor: 'transparent',
         pixelRatio: 6,
         quality: 1.0,
         skipAutoScale: true,
       }).then((dataUrl) => {
-        // Restore original styles
-        allElements.forEach(el => {
-          const styles = originalStyles.get(el);
-          if (styles) {
-            Object.assign(el.style, styles);
-          }
-        });
-
         const a = document.createElement("a");
         a.href = dataUrl;
         a.download = `risk_table.png`;
@@ -233,13 +207,6 @@ const ExpandedChartModal = ({
           document.body.removeChild(a);
         }, 100);
       }).catch(error => {
-        // Restore original styles even on error
-        allElements.forEach(el => {
-          const styles = originalStyles.get(el);
-          if (styles) {
-            Object.assign(el.style, styles);
-          }
-        });
         console.error("Error using html-to-image:", error);
         alert("Error downloading Risk table. Please check the console for details.");
       });
@@ -320,15 +287,14 @@ const ExpandedChartModal = ({
     
   }, []);
 
-  // Calculate height for KM chart and risk table to share space equally
+  // Calculate height for KM chart - use reasonable size that doesn't fill full height
   useEffect(() => {
     const updateHeight = () => {
       if (survivalAnalysisContainerRef.current && activeTab === 'survivalAnalysis') {
         const containerHeight = survivalAnalysisContainerRef.current.clientHeight;
-        // Divide space equally, accounting for gap (10px) and margins
-        const availableHeight = containerHeight - 10; // gap between elements
-        const halfHeight = Math.floor(availableHeight / 2);
-        setChartHeight(Math.max(250, halfHeight - 20)); // min 250px, account for padding
+        // Use 40% of container height to leave room for centering and gap
+        const calculatedHeight = Math.floor(containerHeight * 0.4);
+        setChartHeight(Math.max(300, Math.min(calculatedHeight, 500))); // between 300px and 500px
       }
     };
 
