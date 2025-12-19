@@ -10,7 +10,7 @@ export const tableConfig = {
   name: 'Participants',
   dataField: 'dataParticipant',
   api: GET_COHORT_MANIFEST_QUERY,
-  paginationAPIField: 'diagnosisOverview',
+  paginationAPIField: 'cohortManifest',
   count: 'numberOfParticipants',
   fileCount: 'participantsFileCount',
   dataKey: 'participant_id',
@@ -97,7 +97,7 @@ export const diagnosesTableConfig =
   name: 'Participants',
   dataField: 'dataParticipant',
   api: GET_COHORT_MANIFEST_QUERY,
-  paginationAPIField: 'diagnosisOverview',
+  paginationAPIField: 'cohortManifest',
   count: 'numberOfParticipants',
   fileCount: 'participantsFileCount',
   dataKey: 'participant_id',
@@ -167,7 +167,7 @@ export const treatmentTableConfig = {
   name: 'Participants',
   dataField: 'dataParticipant',
   api: GET_COHORT_MANIFEST_QUERY,
-  paginationAPIField: 'diagnosisOverview',
+  paginationAPIField: '',
   count: 'numberOfParticipants',
   fileCount: 'participantsFileCount',
   dataKey: 'participant_id',
@@ -235,4 +235,4 @@ export const treatmentTableConfig = {
 
 export const analyzer_query = [GET_PARTICIPANTS_OVERVIEW_QUERY, GET_DIAGNOSIS_OVERVIEW_QUERY, GET_TREATMENT_OVERVIEW_QUERY];
 export const analyzer_tables = [tableConfig, diagnosesTableConfig, treatmentTableConfig];
-export const responseKeys = ["participantOverview", "diagnosisOverview", "treatmentOverview"];
+export const responseKeys = ["participantOverview", "cohortManifest", "treatmentOverview"];

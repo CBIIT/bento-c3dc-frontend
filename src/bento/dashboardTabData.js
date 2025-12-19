@@ -615,10 +615,10 @@ export const GET_COHORT_MANIFEST_QUERY = gql`
     $offset: Int
     $order_by: String
     $sort_direction: String
-  ) {
-    diagnosisOverview(
-      # Demographics
-      participant_pk: $participant_pk
+) {
+cohortManifest(
+    # Demographics
+    participant_pk: $participant_pk,
 
       # Table config
       first: $first
@@ -883,57 +883,64 @@ export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
 `;
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
-  query diagnosisOverview(
-    # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
-    # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
-    # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
-    # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
-    # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
-    # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
-    # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
-    $response_system: [String]
-    # Table config
-    $first: Int
-    $offset: Int
-    $order_by: String
-    $sort_direction: String
-  ) {
-    diagnosisOverview(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+query cohortManifest(
+  # Demographics
+  $participant_pk: [String],
+  $participant_id: [String],
+  $race: [String],
+  $sex_at_birth: [String],
+
+  # Diagnoses
+  $age_at_diagnosis: [Int],
+  $anatomic_site: [String],
+  $diagnosis: [String],
+  $diagnosis_classification_system: [String],
+  $diagnosis_basis: [String],
+  $disease_phase: [String],
+
+  # Genetic Analyses
+  $alteration: [String],
+  $alteration_type: [String],
+  $fusion_partner_gene: [String],
+  $gene_symbol: [String],
+  $reported_significance: [String],
+  $reported_significance_system: [String],
+  $status: [String],
+
+  # Studies
+  $dbgap_accession: [String],
+  $study_name: [String],
+
+  # Survivals
+  $age_at_last_known_survival_status: [Int],
+  $cause_of_death: [String],
+  $first_event: [String],
+  $last_known_survival_status: [String],
+
+  # Treatments
+  $age_at_treatment_start: [Int],
+  $age_at_treatment_end: [Int],
+  $treatment_type: [String],
+  $treatment_agent: [String],
+
+  # Treatment Responses
+  $response: [String],
+  $age_at_response: [Int],
+  $response_category: [String],
+  $response_system: [String],
+
+  # Table config
+  $first: Int,
+  $offset: Int,
+  $order_by: String,
+  $sort_direction: String
+) {
+cohortManifest(
+  # Demographics
+  participant_pk: $participant_pk,
+  participant_id: $participant_id,
+  race: $race,
+  sex_at_birth: $sex_at_birth,
 
       # Diagnoses
       age_at_diagnosis: $age_at_diagnosis
@@ -1767,7 +1774,7 @@ const diagnosisTab = {
   statsQuery: DASHBOARD_QUERY_STATS,
   statsQueryName: "getParticipants",
   //asyncDownload: true,
-  paginationAPIField: "diagnosisOverview",
+  paginationAPIField: "cohortManifest",
   defaultSortField: "participant.participant_id",
   defaultSortDirection: "asc",
   count: "numberOfDiagnoses",

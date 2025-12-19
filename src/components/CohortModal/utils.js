@@ -308,7 +308,7 @@ export const downloadCohortManifest = async (participants, cohortId, options = {
       },
     });
 
-    arrayToCSVDownload(data['diagnosisOverview'], cohortId);
+    arrayToCSVDownload(data['cohortManifest'], cohortId);
     if (showAlert) showAlert('success', 'Manifest CSV downloaded successfully!');
 
     return data;
