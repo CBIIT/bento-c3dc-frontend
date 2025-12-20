@@ -1,4 +1,4 @@
-import { FACET_COLORS } from "../../bento/dashTemplate";
+import { obtainColorFromFacetIndex } from "../../bento/dashTemplate";
 
 export default () => ({
     customButton: {
@@ -25,25 +25,25 @@ export default () => ({
     height: '8px',
     // backgroundColor: '#4D889E',
     '&.divider0': {
-      backgroundColor: FACET_COLORS[0 % FACET_COLORS.length].facetCategoryColor,
+      backgroundColor: obtainColorFromFacetIndex(0).facetCategoryColor,
     },
     '&.divider1': {
-      backgroundColor: FACET_COLORS[1 % FACET_COLORS.length].facetCategoryColor,
+      backgroundColor: obtainColorFromFacetIndex(1).facetCategoryColor,
     },
     '&.divider2': {
-      backgroundColor: FACET_COLORS[2 % FACET_COLORS.length].facetCategoryColor,
+      backgroundColor: obtainColorFromFacetIndex(2).facetCategoryColor,
     },
     '&.divider3': {
-      backgroundColor: FACET_COLORS[3 % FACET_COLORS.length].facetCategoryColor,
+      backgroundColor: obtainColorFromFacetIndex(3).facetCategoryColor,
     },
     '&.divider4': {
-      backgroundColor: FACET_COLORS[4 % FACET_COLORS.length].facetCategoryColor,
+      backgroundColor: obtainColorFromFacetIndex(4).facetCategoryColor,
     },
     '&.divider5': {
-      backgroundColor: FACET_COLORS[5 % FACET_COLORS.length].facetCategoryColor,
+      backgroundColor: obtainColorFromFacetIndex(5).facetCategoryColor,
     },
     '&.divider6': {
-      backgroundColor: FACET_COLORS[6 % FACET_COLORS.length].facetCategoryColor,
+      backgroundColor: obtainColorFromFacetIndex(6).facetCategoryColor,
     },
   },
   floatRight: {

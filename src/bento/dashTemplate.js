@@ -34,7 +34,7 @@ export const FACET_ORDER = [
 ];
 
 //Facet colors generated based on index (modulo the length of the array)
-export const FACET_COLORS = [
+const FACET_COLORS = [
   { facetCategoryColor: '#3388A6', slideOutComponentColor: '#307F9C', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
   { facetCategoryColor: '#C78800', slideOutComponentColor: '#9D6C00', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
   { facetCategoryColor: '#39A28A', slideOutComponentColor: '#2A8470', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
@@ -42,6 +42,14 @@ export const FACET_COLORS = [
   { facetCategoryColor: '#006B57', slideOutComponentColor: '#006B57', zebraStripesColor1: '#E0ECEA', zebraStripesColor2: '#E9F5F3' },
   { facetCategoryColor: '#862405', slideOutComponentColor: '#862405', zebraStripesColor1: '#FFEDE7', zebraStripesColor2: '#FFF6F3' },
 ];
+
+export const obtainColorFromFacetIndex = (index) => {
+  return FACET_COLORS[index % FACET_COLORS.length];
+};
+
+export const obtainColorFromSectionName = (sectionName) => {
+  return obtainColorFromFacetIndex(FACET_ORDER.indexOf(sectionName));
+};
 
 // --------------- Facet resetIcon link configuration --------------
 // Ideal size for resetIcon is 16x16 px
@@ -328,7 +336,7 @@ const diagnosisFacets = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(DIAGNOSIS) % FACET_COLORS.length].slideOutComponentColor),
+    style: createSliderStylesForSection(obtainColorFromSectionName(DIAGNOSIS).slideOutComponentColor),
   },
   {
     section: DIAGNOSIS,
@@ -502,7 +510,7 @@ const treatmentFacets = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(TREATMENT) % FACET_COLORS.length].slideOutComponentColor),
+    style: createSliderStylesForSection(obtainColorFromSectionName(TREATMENT).slideOutComponentColor),
   },
   {
     section: TREATMENT,
@@ -519,7 +527,7 @@ const treatmentFacets = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(TREATMENT) % FACET_COLORS.length].slideOutComponentColor),
+    style: createSliderStylesForSection(obtainColorFromSectionName(TREATMENT).slideOutComponentColor),
   },
   {
     section: TREATMENT,
@@ -572,7 +580,7 @@ const treatmentResponseFacets = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(TREATMENTRESPONSE) % FACET_COLORS.length].slideOutComponentColor),
+    style: createSliderStylesForSection(obtainColorFromSectionName(TREATMENTRESPONSE).slideOutComponentColor),
   },
   {
     section: TREATMENTRESPONSE,
@@ -625,7 +633,7 @@ const survivalFacets = [
     minLowerBound: 0,
     maxUpperBound: 100,
     quantifier: 'Days',
-    style: createSliderStylesForSection(FACET_COLORS[FACET_ORDER.indexOf(SURVIVAL) % FACET_COLORS.length].slideOutComponentColor),
+    style: createSliderStylesForSection(obtainColorFromSectionName(SURVIVAL).slideOutComponentColor),
   },
   {
     section: SURVIVAL,

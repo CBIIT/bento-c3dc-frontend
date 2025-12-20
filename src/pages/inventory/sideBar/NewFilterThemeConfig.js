@@ -1,6 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
-import { FACET_NAMES, FACET_ORDER, FACET_COLORS } from '../../../bento/dashTemplate';
+import { FACET_NAMES, obtainColorFromSectionName } from '../../../bento/dashTemplate';
 
 const theme = {
   overrides: {
@@ -42,46 +42,46 @@ const theme = {
     MuiListItem: {
       root: {
         '&.studyCheckedEven': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].zebraStripesColor1,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).zebraStripesColor1,
         },
         '&.studyCheckedOdd': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].zebraStripesColor2,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).zebraStripesColor2,
         },
         '&.demographicsCheckedEven': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].zebraStripesColor1,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).zebraStripesColor1,
         },
         '&.demographicsCheckedOdd': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].zebraStripesColor2,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).zebraStripesColor2,
         },
         '&.diagnosisCheckedEven': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].zebraStripesColor1,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).zebraStripesColor1,
         },
         '&.diagnosisCheckedOdd': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].zebraStripesColor2,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).zebraStripesColor2,
         },
         '&.geneticanalysisCheckedEven': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].zebraStripesColor1,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).zebraStripesColor1,
         },
         '&.geneticanalysisCheckedOdd': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].zebraStripesColor2,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).zebraStripesColor2,
         },
         '&.treatmentCheckedEven': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].zebraStripesColor1,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).zebraStripesColor1,
         },
         '&.treatmentCheckedOdd': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].zebraStripesColor2,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).zebraStripesColor2,
         },
         '&.treatmentresponseCheckedEven': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].zebraStripesColor1,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).zebraStripesColor1,
         },
         '&.treatmentresponseCheckedOdd': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].zebraStripesColor2,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).zebraStripesColor2,
         },
         '&.survivalCheckedEven': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].zebraStripesColor1,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).zebraStripesColor1,
         },
         '&.survivalCheckedOdd': {
-          backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].zebraStripesColor2,
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).zebraStripesColor2,
         },
       },
     },/*

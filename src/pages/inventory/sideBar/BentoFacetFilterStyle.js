@@ -1,4 +1,4 @@
-import { FACET_NAMES, FACET_COLORS, FACET_ORDER } from "../../../bento/dashTemplate";
+import { FACET_NAMES, obtainColorFromSectionName } from "../../../bento/dashTemplate";
 
 export default () => ({
   inputRoot: {
@@ -162,31 +162,31 @@ export default () => ({
     marginRight: '0px',
   },
   activeFacetStudy: {
-    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].slideOutComponentColor,
+    color: obtainColorFromSectionName(FACET_NAMES.STUDY).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetDemographics: {
-    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].slideOutComponentColor,
+    color: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetDiagnosis: {
-    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].slideOutComponentColor,
+    color: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetGeneticanalysis: {
-    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].slideOutComponentColor,
+    color: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetTreatment: {
-    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].slideOutComponentColor,
+    color: obtainColorFromSectionName(FACET_NAMES.TREATMENT).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetTreatmentresponse: {
-    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].slideOutComponentColor,
+    color: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetSurvival: {
-    color: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].slideOutComponentColor,
+    color: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).slideOutComponentColor,
     fontWeight: 600,
   },
   searchContainer: {
@@ -217,25 +217,25 @@ export default () => ({
     justifyContent: 'center',
   },
   expandedDisplayButtonStudy: {
-    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.STUDY) % FACET_COLORS.length].slideOutComponentColor + ' !important',
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonDemographics: {
-    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DEMOGRAPHICS) % FACET_COLORS.length].slideOutComponentColor + ' !important',
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonDiagnosis: {
-    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.DIAGNOSIS) % FACET_COLORS.length].slideOutComponentColor + ' !important',
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonGeneticanalysis: {
-    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.GENETICANALYSIS) % FACET_COLORS.length].slideOutComponentColor + ' !important',
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonTreatment: {
-    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENT) % FACET_COLORS.length].slideOutComponentColor + ' !important',
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonTreatmentresponse: {
-    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.TREATMENTRESPONSE) % FACET_COLORS.length].slideOutComponentColor + ' !important',
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).slideOutComponentColor + ' !important',
   },
   expandedDisplayButtonSurvival: {
-    backgroundColor: FACET_COLORS[FACET_ORDER.indexOf(FACET_NAMES.SURVIVAL) % FACET_COLORS.length].slideOutComponentColor + ' !important',
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).slideOutComponentColor + ' !important',
   },
   findCaseButton: {
     // marginLeft: '105px',

@@ -1,6 +1,5 @@
 import React, { useState , useMemo } from 'react';
 import {
-  NavLink,
   useLocation,
   useNavigate,
 } from "react-router-dom";
@@ -16,7 +15,7 @@ import {
   resetAllData,
 } from '@bento-core/local-find';
 import { generateQueryStr } from '@bento-core/util';
-import { resetIcon, queryParams, facetsConfig, sectionLabel } from '../../bento/dashTemplate';
+import { resetIcon, queryParams, facetsConfig, sectionLabel, obtainColorFromFacetIndex } from '../../bento/dashTemplate';
 import styles from './inventoryStyle';
 import NewBentoFacetFilter from './sideBar/NewBentoFacetFilter';
 import WidgetView from './widget/WidgetView';
@@ -66,19 +65,6 @@ const RightContentPanel = styled.div`
   border-left: thin solid #8A7F7C;
   transition: all .5s;
 `;
-
-const getDividerColor = (index) => {
-  const colors = [
-    '#006A8F', // divider0
-    '#E39520', // divider1
-    '#35B899', // divider2
-    '#268CEA', // divider3
-    '#9664C7', // divider4
-    '#006B57', // divider5
-    '#862405', // divider6
-  ];
-  return colors[index % colors.length]; // Use modulo to cycle through colors if needed
-};
 
 const Inventory = ({
   classes,
@@ -299,7 +285,7 @@ const Inventory = ({
                               <span className={classes.categoryCount}>
                                 {sectionCount[category] !== 0 ? (
                                   <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="4.5" cy="4.5" r="4.5" fill={getDividerColor(idx)} />
+                                    <circle cx="4.5" cy="4.5" r="4.5" fill={obtainColorFromFacetIndex(idx).facetCategoryColor} />
                                   </svg>
                                 ) : ''}
                               </span>
