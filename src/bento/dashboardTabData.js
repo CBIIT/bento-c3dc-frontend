@@ -883,7 +883,7 @@ export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
 `;
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
-query cohortManifest(
+query diagnosisOverview(
   # Demographics
   $participant_pk: [String],
   $participant_id: [String],
@@ -935,7 +935,7 @@ query cohortManifest(
   $order_by: String,
   $sort_direction: String
 ) {
-cohortManifest(
+diagnosisOverview(
   # Demographics
   participant_pk: $participant_pk,
   participant_id: $participant_id,
@@ -1590,8 +1590,7 @@ export const GET_FILE_IDS_FROM_FILE_NAME = gql`
 `;
 
 // --------------- Tabs Table configuration --------------
-export const tabContainers = [
-  {
+const studyTab = {
     name: 'Studies',
     dataField: 'dataStudy',
     api: GET_STUDY_OVERVIEW_QUERY,
@@ -1776,8 +1775,7 @@ const participantTab = {
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
-  },
-};
+  };
 const diagnosisTab = {
   name: "Diagnosis",
   dataField: "dataDiagnosis",
@@ -1785,7 +1783,7 @@ const diagnosisTab = {
   statsQuery: DASHBOARD_QUERY_STATS,
   statsQueryName: "getParticipants",
   //asyncDownload: true,
-  paginationAPIField: "cohortManifest",
+  paginationAPIField: "diagnosisOverview",
   defaultSortField: "participant.participant_id",
   defaultSortDirection: "asc",
   count: "numberOfDiagnoses",
@@ -1961,8 +1959,6 @@ const diagnosisTab = {
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
-
-
     ],
     id: 'diagnosis_tab',
     tabIndex: '3',
@@ -2208,8 +2204,7 @@ const geneticAnalysisTab = {
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
-  },
-};
+  };
 const treatmentTab = {
   name: "Treatment",
   dataField: "dataTreatment",
@@ -2336,8 +2331,8 @@ const treatmentTab = {
     addAllFilesResponseKeys: ['treatmentOverview', 'files'],
     addAllFileQuery: "",
     addSelectedFilesQuery: GET_ALL_FILEIDS_DIAGNOSISTAB_FOR_SELECT_ALL,
-  },
-  {
+  };
+const treatmentResponseTab = {
     name: 'Treatment Response',
     dataField: 'dataTreatmentResponse',
     api: GET_TREATMENT_RESPONSE_OVERVIEW_QUERY,
@@ -2454,8 +2449,8 @@ const treatmentTab = {
     addFilesRequestVariableKey: 'treatment_response_ids',
     addFilesResponseKeys: ['fileIDsFromList'],
     addAllFilesResponseKeys: ['treatmentResponseOverview', 'files'],
-  },
-  {
+  };
+  const survivalTab = {
     name: 'Survival',
     dataField: 'dataSurvival',
     api: GET_SURVIVAL_OVERVIEW_QUERY,
@@ -2603,6 +2598,23 @@ const treatmentTab = {
     tableMsg: {
       noMatch: 'No Matching Records Found',
     },
-  },
- 
-];
+  };
+
+  // Map facet section names to their corresponding tab objects
+const facetTabMap = {
+  [FACET_NAMES.STUDY]: studyTab,
+  [FACET_NAMES.DEMOGRAPHICS]: participantTab,  // Demographics tab is called 'Participants'
+  [FACET_NAMES.DIAGNOSIS]: diagnosisTab,
+  [FACET_NAMES.GENETICANALYSIS]: geneticAnalysisTab,
+  [FACET_NAMES.TREATMENT]: treatmentTab,
+  [FACET_NAMES.TREATMENTRESPONSE]: treatmentResponseTab,
+  [FACET_NAMES.SURVIVAL]: survivalTab,
+};
+
+// Generate tabContainers array based on FACET_ORDER
+export const tabContainers = FACET_ORDER.reduce((acc, section) => {
+  if (facetTabMap[section]) {
+    return [...acc, facetTabMap[section]];
+  }
+  return acc;
+}, []);
