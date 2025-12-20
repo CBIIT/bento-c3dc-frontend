@@ -267,11 +267,13 @@ const Inventory = ({
                 Component={CustomClearAllFiltersBtn}
                 activeFilters={activeFilters}
               />
-              <div className={classes.activeFiltersCount}>
-                Total Filters Selected:
-                <span>
-                  {activeFiltersCount}
-                </span>
+              <div className={classes.activeFiltersCountContainer}>
+                <div className={classes.activeFiltersCount}>
+                  Total Filters Selected:
+                  <span>
+                    {activeFiltersCount}
+                  </span>
+                </div>
               </div>
               <ULSection className={classes.siderContent}>
                 {
@@ -302,7 +304,7 @@ const Inventory = ({
               <div className={classes.activeFilterLegend}>
                 <span>Facets(s) selected denoted with</span>
                 <svg width="9" height="9" viewBox="0 0 9 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="4.5" cy="4.5" r="4.5" fill="#FFFFFF" />
+                  <circle cx="4.5" cy="4.5" r="4.5" fill="#616161" />
                 </svg>
               </div>
             </div>

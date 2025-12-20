@@ -54,8 +54,8 @@ export const obtainColorFromSectionName = (sectionName) => {
 // --------------- Facet resetIcon link configuration --------------
 // Ideal size for resetIcon is 16x16 px
 export const resetIcon = {
-  src: clearButton,
-  srcHover: clearButtonHover,
+  src: clearButtonHover,
+  srcHover: clearButton,
   alt: 'Reset icon',
   size: '12px',
 };

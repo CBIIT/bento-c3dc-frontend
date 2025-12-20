@@ -25,9 +25,9 @@ const UseGuideButtonContainer = styled.div`
   }
 
   .buttonText {
-    color: #FFFFFF;
-    font-weight: 400;
-    font-family: 'Open Sans';
+    color: #415153;
+    font-weight: 600;
+    font-family: 'Nunito Sans';
     font-size: 14px;
     line-height: 30px;
     margin-left: 8px;
@@ -90,7 +90,7 @@ const ExploreUserGuide = ({ classes }) => {
           onMouseEnter={() => setIsHover(true)}
           onMouseLeave={() => setIsHover(false)}
         >
-          <img src={isHover ? userguideIcon : userguideIconWhite} alt="user guide icon" />
+          <img src={isHover ? userguideIconWhite : userguideIcon} alt="user guide icon" />
         </Button>
         <div className='buttonText'>Explore the C3DC User Guide</div>
       </div>
