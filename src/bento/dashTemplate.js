@@ -35,12 +35,12 @@ export const FACET_ORDER = [
 
 //Facet colors generated based on index (modulo the length of the array)
 const FACET_COLORS = [
-  { facetCategoryColor: '#3388A6', slideOutComponentColor: '#307F9C', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
-  { facetCategoryColor: '#C78800', slideOutComponentColor: '#9D6C00', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
-  { facetCategoryColor: '#39A28A', slideOutComponentColor: '#2A8470', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
-  { facetCategoryColor: '#9852DC', slideOutComponentColor: '#9852DC', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA' },
-  { facetCategoryColor: '#006B57', slideOutComponentColor: '#006B57', zebraStripesColor1: '#E0ECEA', zebraStripesColor2: '#E9F5F3' },
-  { facetCategoryColor: '#862405', slideOutComponentColor: '#862405', zebraStripesColor1: '#FFEDE7', zebraStripesColor2: '#FFF6F3' },
+  { facetCategoryColor: '#3388A6', slideOutComponentColor: '#307F9C', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#98D6EC', queryBarAttrbTextColor: '#307F9C' },
+  { facetCategoryColor: '#C78800', slideOutComponentColor: '#9D6C00', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#FFDA8A', queryBarAttrbTextColor: '#9D6C00' },
+  { facetCategoryColor: '#39A28A', slideOutComponentColor: '#2A8470', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#A2E0D2', queryBarAttrbTextColor: '#2A8470' },
+  { facetCategoryColor: '#9852DC', slideOutComponentColor: '#9852DC', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#CEA3F8', queryBarAttrbTextColor: '#9852DC' },
+  { facetCategoryColor: '#006B57', slideOutComponentColor: '#006B57', zebraStripesColor1: '#E0ECEA', zebraStripesColor2: '#E9F5F3',  queryBarNameBkgdColor: '#91B6AF', queryBarAttrbTextColor: '#006B57' },
+  { facetCategoryColor: '#862405', slideOutComponentColor: '#862405', zebraStripesColor1: '#FFEDE7', zebraStripesColor2: '#FFF6F3',  queryBarNameBkgdColor: '#DDA0A0', queryBarAttrbTextColor: '#862405' },
 ];
 
 export const obtainColorFromFacetIndex = (index) => {

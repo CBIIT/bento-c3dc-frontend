@@ -1,6 +1,7 @@
 /**
  * Generate the default styling for the component
  */
+import { FACET_NAMES, obtainColorFromSectionName } from '../../../bento/dashTemplate';
 export  const customStyles = {
     queryWrapper: {
       //height: '120px',
@@ -111,52 +112,52 @@ export  const customStyles = {
       backgroundColor: '#F5C3F1',
     },*/
     facetSectionStudy: {
-      color: '#006A8F',
+      color: obtainColorFromSectionName(FACET_NAMES.STUDY).queryBarAttrbTextColor,
     },
     facetSectionStudyBackground: {
-      backgroundColor: '#B5DDE5',
+      backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).queryBarNameBkgdColor,
       border: '2px solid #646464',
     },
     facetSectionDemographics: {
-      color: '#E39520',
+      color: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).queryBarAttrbTextColor,
     },
     facetSectionDemographicsBackground: {
-      backgroundColor: '#FFF2DF',
+      backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).queryBarNameBkgdColor,
       border: '2px solid #646464',
     },
     facetSectionDiagnosis: {
-      color: '#35B899',
+      color: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).queryBarAttrbTextColor,
     },
     facetSectionDiagnosisBackground: {
-      backgroundColor: '#C2FFF1',
+      backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).queryBarNameBkgdColor,
       border: '2px solid #646464',
     },
     facetSectionGeneticanalysis: {
-      color: '#268CEA',
+      color: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).queryBarAttrbTextColor,
     },
     facetSectionGeneticanalysisBackground: {
-      backgroundColor: '#B5D8F9',
+      backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).queryBarNameBkgdColor,
       border: '2px solid #646464',
     },
     facetSectionTreatment: {
-      color: '#9664C7',
+      color: obtainColorFromSectionName(FACET_NAMES.TREATMENT).queryBarAttrbTextColor,
     },
     facetSectionTreatmentBackground: {
-      backgroundColor: '#E8D8F5',
+      backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).queryBarNameBkgdColor,
       border: '2px solid #646464',
     },
     facetSectionTreatmentresponse: {
-      color: '#006B57',
+      color: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).queryBarAttrbTextColor,
     },
     facetSectionTreatmentresponseBackground: {
-      backgroundColor: '#E0ECEA',
+      backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).queryBarNameBkgdColor,
       border: '2px solid #646464',
     },
     facetSectionSurvival: {
-      color: '#862405',
+      color: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).queryBarAttrbTextColor,
     },
     facetSectionSurvivalBackground: {
-      backgroundColor: '#FFEDE7',
+      backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).queryBarNameBkgdColor,
       border: '2px solid #646464',
     },
     localFindAssociatedIdsBackground: {
