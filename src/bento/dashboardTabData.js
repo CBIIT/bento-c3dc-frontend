@@ -905,7 +905,7 @@ participantOverview(
 `;
 
 export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
-query cohortManifest(
+query diagnosisOverview(
   # Demographics
   $participant_pk: [String],
   $participant_id: [String],
@@ -957,7 +957,7 @@ query cohortManifest(
   $order_by: String,
   $sort_direction: String
 ) {
-cohortManifest(
+diagnosisOverview(
   # Demographics
   participant_pk: $participant_pk,
   participant_id: $participant_id,
@@ -1846,7 +1846,7 @@ export const tabContainers = [
     statsQuery: DASHBOARD_QUERY_STATS,
     statsQueryName: 'getParticipants',
     //asyncDownload: true,
-    paginationAPIField: 'cohortManifest',
+    paginationAPIField: 'diagnosisOverview',
     defaultSortField: 'participant.participant_id',
     defaultSortDirection: 'asc',
     count: 'numberOfDiagnoses',
