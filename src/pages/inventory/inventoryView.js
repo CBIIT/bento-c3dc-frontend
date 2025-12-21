@@ -1,7 +1,7 @@
 import React, { useState , useMemo } from 'react';
 import {
   useLocation,
-  useNavigate,
+  //useNavigate,
 } from "react-router-dom";
 import { 
   Button,
@@ -14,8 +14,14 @@ import store from '../../store';
 import {
   resetAllData,
 } from '@bento-core/local-find';
-import { generateQueryStr } from '@bento-core/util';
-import { resetIcon, queryParams, facetsConfig, sectionLabel, obtainColorFromFacetIndex } from '../../bento/dashTemplate';
+//import { generateQueryStr } from '@bento-core/util';
+import { 
+  resetIcon, 
+  facetsConfig,
+  //queryParams, 
+  sectionLabel, 
+  obtainColorFromFacetIndex,
+} from '../../bento/dashTemplate';
 import styles from './inventoryStyle';
 import NewBentoFacetFilter from './sideBar/NewBentoFacetFilter';
 import WidgetView from './widget/WidgetView';
@@ -180,8 +186,8 @@ const Inventory = ({
   */
   const CustomClearAllFiltersBtn = ({ onClearAllFilters, disable }) => {
     const [isHover, setIsHover] = useState(false);
-    const query = new URLSearchParams(useLocation().search);
-    const navigate = useNavigate();
+    //const query = new URLSearchParams(useLocation().search);
+    //const navigate = useNavigate();
     return (
       <div className={classes.floatRight}>
         <Button
@@ -189,6 +195,7 @@ const Inventory = ({
           variant="outlined"
           disabled={disable}
           onClick={() => {
+            /*
             const paramValue = {
               'p_id': '', 'u': '', 'u_fc': '', 'u_um': '', 'sex_at_birth': '', 'race': '',
               'age_at_diagnosis': '', 'age_at_diagnosis_unknownAges': '', 'diagnosis': '', 'diagnosis_anatomic_site': '', 'diagnosis_classification_system': '', 'diagnosis_basis': '', 'disease_phase': '',
@@ -199,7 +206,7 @@ const Inventory = ({
               'library_selection': '', 'library_strategy': '', 'library_source_material': '', 'library_source_molecule': ''
             };
             const queryStr = generateQueryStr(query, queryParams, paramValue);
-            navigate(`/explore${queryStr}`);
+            navigate(`/explore${queryStr}`);*/
             onClearAllFilters();
             store.dispatch(resetAllData());
             

@@ -64,11 +64,12 @@ const { SearchBox } = SearchBoxGenerator({
   },
   functions: {
     updateBrowserUrl: (query, navigate, newUniqueValue) => {
+      /*
       const paramValue = {
         'p_id': newUniqueValue.map((data) => data.title).join('|')
       };
       const queryStr = generateQueryStr(query, queryParams, paramValue);
-      navigate(`/explore${queryStr}`);
+      navigate(`/explore${queryStr}`);*/
     },
     getSuggestions: async (searchType) => {
       try {
@@ -103,8 +104,8 @@ const { UploadModal } = UploadModalGenerator({
         'u_fc': fc.join('|'),
         'u_um': unmatchedIds.join('|'),
       };
-      const queryStr = generateQueryStr(query, queryParams, paramValue);
-      navigate(`/explore${queryStr}`);
+      /*const queryStr = generateQueryStr(query, queryParams, paramValue);
+      navigate(`/explore${queryStr}`);*/
     },
     searchMatches: async (inputArray) => {
       try {
