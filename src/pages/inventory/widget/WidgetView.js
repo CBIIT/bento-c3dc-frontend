@@ -49,6 +49,12 @@ const WidgetView = ({ classes, data, theme }) => {
         textColor: theme.palette.widgetBackground.contrastText,
       },
     },
+  BarChartConfig: {
+      colors,
+      styles: {
+        textColor: theme.palette.widgetBackground.contrastText,
+      },
+    },
   };
   const { Widget } = useCallback(WidgetGenerator(widgetGeneratorConfig), []);
 
