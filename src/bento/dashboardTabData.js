@@ -88,387 +88,421 @@ export const tabResponsiveBreakpoints = {
 export const DASHBOARD_QUERY_NEW = gql`
   query search(
     # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
     # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
     # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
     # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
+    $dbgap_accession: [String],
+    $study_name: [String],
+
     # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
+    $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
     # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
+    $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
     # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
+    $response: [String],
+    $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
+    $response_category: [String],
     $response_system: [String]
   ) {
-    getParticipants(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+  getParticipants(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
 
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
+    age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
+    response_category: $response_category,
+    response_system: $response_system
+  ) {
+    numberOfParticipants
+    numberOfDiagnoses
+    numberOfDiseases
+    numberOfGeneticAnalyses
+    numberOfStudies
+    numberOfSurvivals
+    numberOfTreatments
+    numberOfTreatmentResponses
 
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
-    ) {
-      numberOfParticipants
-      numberOfDiagnoses
-      numberOfDiseases
-      numberOfGeneticAnalyses
-      numberOfStudies
-      numberOfSurvivals
-      numberOfTreatments
-      numberOfTreatmentResponses
+    pageSize
 
-      # Widget counts
-      participantCountByRace {
-        group
-        subjects
-        __typename
-      }
-      participantCountBySexAtBirth {
-        group
-        subjects
-        __typename
-      }
-      participantCountByAgeAtDiagnosis {
-        group
-        subjects
-        __typename
-      }
-      participantCountByAnatomicSite {
-        group
-        subjects
-        __typename
-      }
-      participantCountByDiagnosis {
-        group
-        subjects
-        __typename
-      }
-      participantCountByTreatmentType {
-        group
-        subjects
-        __typename
-      }
-
-      # Demographic filter counts
-      filterParticipantCountByRace {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountBySexAtBirth {
-        group
-        subjects
-        __typename
-      }
-
-      # Diagnosis filter counts
-      filterParticipantCountByAgeAtDiagnosis {
-        lowerBound
-        upperBound
-        subjects
-        __typename
-      }
-      filterParticipantCountByAnatomicSite {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByDiagnosis {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByDiagnosisClassificationSystem {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByDiagnosisBasis {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByDiseasePhase {
-        group
-        subjects
-        __typename
-      }
-
-      # Genetic Analysis filter counts
-      filterParticipantCountByAlteration {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByAlterationType {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByFusionPartnerGene {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByGeneSymbol {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByReportedSignificance {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByReportedSignificanceSystem {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByStatus {
-        group
-        subjects
-        __typename
-      }
-
-      # Study filter counts
-      filterParticipantCountByDbgapAccession {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByStudyName {
-        group
-        subjects
-        __typename
-      }
-
-      # Survival filter counts
-      filterParticipantCountByAgeAtLastKnownSurvivalStatus {
-        lowerBound
-        upperBound
-        subjects
-        __typename
-      }
-      filterParticipantCountByCauseOfDeath {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByFirstEvent {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByLastKnownSurvivalStatus {
-        group
-        subjects
-        __typename
-      }
-
-      # Treatment filter counts
-      filterParticipantCountByAgeAtTreatmentStart {
-        lowerBound
-        upperBound
-        subjects
-        __typename
-      }
-      filterParticipantCountByAgeAtTreatmentEnd {
-        lowerBound
-        upperBound
-        subjects
-        __typename
-      }
-      filterParticipantCountByTreatmentType {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByTreatmentAgent {
-        group
-        subjects
-        __typename
-      }
-
-      # Treatment Response filter counts
-      filterParticipantCountByResponse {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByAgeAtResponse {
-        lowerBound
-        upperBound
-        subjects
-        __typename
-      }
-      filterParticipantCountByResponseCategory {
-        group
-        subjects
-        __typename
-      }
-      filterParticipantCountByResponseSystem {
-        group
-        subjects
-        __typename
-      }
-
+    # Widget counts
+    participantCountByRace {
+      group
+      subjects
       __typename
     }
+    participantCountBySexAtBirth {
+      group
+      subjects
+      __typename
+    }
+    participantCountByAgeAtDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    participantCountByAnatomicSite {
+      group
+      subjects
+      __typename
+    }
+    participantCountByDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    participantCountByTreatmentType {
+      group
+      subjects
+      __typename
+    }
+
+    # Demographic filter counts
+    filterParticipantCountByRace {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountBySexAtBirth {
+      group
+      subjects
+      __typename
+    }
+
+    # Diagnosis filter counts
+    filterParticipantCountByAgeAtDiagnosis {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByAnatomicSite {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosis {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosisClassificationSystem {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiagnosisBasis {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByDiseasePhase {
+      group
+      subjects
+      __typename
+    }
+
+    # Genetic Analysis filter counts
+    filterParticipantCountByAlteration {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByAlterationType {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByFusionPartnerGene {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByGeneSymbol {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByReportedSignificance {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByReportedSignificanceSystem {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByStatus {
+      group
+      subjects
+      __typename
+    }
+
+    # Study filter counts
+    filterParticipantCountByDbgapAccession {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByStudyName {
+      group
+      subjects
+      __typename
+    }
+
+    # Survival filter counts
+    filterParticipantCountByAgeAtLastKnownSurvivalStatus {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByCauseOfDeath {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByFirstEvent {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByLastKnownSurvivalStatus {
+      group
+      subjects
+      __typename
+    }
+
+    # Treatment filter counts
+    filterParticipantCountByAgeAtTreatmentStart {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByAgeAtTreatmentEnd {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByTreatmentType {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByTreatmentAgent {
+      group
+      subjects
+      __typename
+    }
+
+    # Treatment Response filter counts
+    filterParticipantCountByResponse {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByAgeAtResponse {
+      lowerBound
+      upperBound
+      subjects
+      __typename
+    }
+    filterParticipantCountByResponseCategory {
+      group
+      subjects
+      __typename
+    }
+    filterParticipantCountByResponseSystem {
+      group
+      subjects
+      __typename
+    }
+
+    __typename
   }
+}
 `;
 
 export const DASHBOARD_QUERY_STATS = gql`
   query search(
     # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
     # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
     # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
     # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
+    $dbgap_accession: [String],
+    $study_name: [String],
+
     # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
+    $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
     # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
+    $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
     # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
+    $response: [String],
+    $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
+    $response_category: [String],
     $response_system: [String]
   ) {
-    getParticipants(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+  getParticipants(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
 
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
+    age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
-
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
-    ) {
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
+    response_category: $response_category,
+    response_system: $response_system
+  ) {
       numberOfParticipants
       numberOfDiagnoses
       numberOfDiseases
@@ -649,883 +683,979 @@ cohortManifest(
 export const GET_STUDY_OVERVIEW_QUERY = gql`
   query studyOverview(
     # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
     # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
     # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
     # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
+    $dbgap_accession: [String],
+    $study_name: [String],
+
     # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
+    $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
     # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
+    $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
     # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
-    $response_system: [String]
+    $response: [String],
+    $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
+    $response_category: [String],
+    $response_system: [String],
+
     # Table config
-    $first: Int
-    $offset: Int
-    $order_by: String
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
     $sort_direction: String
   ) {
-    studyOverview(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+  studyOverview(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
 
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
+    age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
+    response_category: $response_category,
+    response_system: $response_system,
 
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+  ) {
+    # Studies
+    id
+    external_url
+    dbgap_accession
+    study_description
+    study_id
+    study_name
 
-      # Table config
-      first: $first
-      offset: $offset
-      order_by: $order_by
-      sort_direction: $sort_direction
-    ) {
-      # Studies
-      id
-      external_url
-      dbgap_accession
-      study_description
-      study_id
-      study_name
-
-      __typename
-    }
+    __typename
   }
+}
 `;
 
 export const GET_PARTICIPANTS_OVERVIEW_QUERY = gql`
   query participantOverview(
     # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
     # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
     # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
     # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
+    $dbgap_accession: [String],
+    $study_name: [String],
+
     # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
+    $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
     # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
+    $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
     # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
-    $response_system: [String]
+    $response: [String],
+    $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
+    $response_category: [String],
+    $response_system: [String],
+
     # Table config
-    $first: Int
-    $offset: Int
-    $order_by: String
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
     $sort_direction: String
   ) {
-    participantOverview(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+  participantOverview(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
 
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
+    age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
+    response_category: $response_category,
+    response_system: $response_system,
 
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+  ) {
+    # Participiants
+    id
+    participant_id
+    race
+    sex_at_birth
 
-      # Table config
-      first: $first
-      offset: $offset
-      order_by: $order_by
-      sort_direction: $sort_direction
-    ) {
-      # Participants
+    # Studies
+    dbgap_accession
+    study_id
+
+    # Synonyms
+    cpi_data {
+      associated_id
+      repository_of_synonym_id
+      domain_description
+      domain_category
+      data_location
+      data_type
+
+      __typename
+    }
+    
+    __typename
+  }
+}
+`;
+
+export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
+  query diagnosisOverview(
+    # Demographics
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
+    # Diagnoses
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
+    # Genetic Analyses
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
+    # Studies
+    $dbgap_accession: [String],
+    $study_name: [String],
+
+    # Survivals
+    $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
+    # Treatments
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
+    # Treatment Responses
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String],
+
+    # Table config
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
+    $sort_direction: String
+  ) {
+  diagnosisOverview(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
+
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
+
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
+
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
+
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
+
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system,
+
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+  ) {
+    # Demographics
+    participant {
       id
       participant_id
       race
       sex_at_birth
-
-      # Studies
-      dbgap_accession
-      study_id
-
-      # Synonyms
-      cpi_data {
-        associated_id
-        repository_of_synonym_id
-        domain_description
-        domain_category
-        data_location
-        data_type
-
-        __typename
-      }
-
-      __typename
     }
+
+    # Diagnosis
+    id
+    age_at_diagnosis
+    anatomic_site
+    diagnosis_basis
+    diagnosis
+    diagnosis_classification_system
+    diagnosis_comment
+    diagnosis_id
+    disease_phase
+    toronto_childhood_cancer_staging
+    tumor_classification
+    tumor_grade
+    tumor_stage_clinical_m
+    tumor_stage_clinical_n
+    tumor_stage_clinical_t
+
+    # Study
+    dbgap_accession
+    study_id
+
+    __typename
   }
-`;
-
-export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
-query diagnosisOverview(
-  # Demographics
-  $participant_pk: [String],
-  $participant_id: [String],
-  $race: [String],
-  $sex_at_birth: [String],
-
-  # Diagnoses
-  $age_at_diagnosis: [Int],
-  $anatomic_site: [String],
-  $diagnosis: [String],
-  $diagnosis_classification_system: [String],
-  $diagnosis_basis: [String],
-  $disease_phase: [String],
-
-  # Genetic Analyses
-  $alteration: [String],
-  $alteration_type: [String],
-  $fusion_partner_gene: [String],
-  $gene_symbol: [String],
-  $reported_significance: [String],
-  $reported_significance_system: [String],
-  $status: [String],
-
-  # Studies
-  $dbgap_accession: [String],
-  $study_name: [String],
-
-  # Survivals
-  $age_at_last_known_survival_status: [Int],
-  $cause_of_death: [String],
-  $first_event: [String],
-  $last_known_survival_status: [String],
-
-  # Treatments
-  $age_at_treatment_start: [Int],
-  $age_at_treatment_end: [Int],
-  $treatment_type: [String],
-  $treatment_agent: [String],
-
-  # Treatment Responses
-  $response: [String],
-  $age_at_response: [Int],
-  $response_category: [String],
-  $response_system: [String],
-
-  # Table config
-  $first: Int,
-  $offset: Int,
-  $order_by: String,
-  $sort_direction: String
-) {
-diagnosisOverview(
-  # Demographics
-  participant_pk: $participant_pk,
-  participant_id: $participant_id,
-  race: $race,
-  sex_at_birth: $sex_at_birth,
-
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
-
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
-
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
-
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
-
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
-
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
-
-      # Table config
-      first: $first
-      offset: $offset
-      order_by: $order_by
-      sort_direction: $sort_direction
-    ) {
-      # Demographics
-      participant {
-        id
-        participant_id
-        race
-        sex_at_birth
-      }
-
-      # Diagnosis
-      id
-      age_at_diagnosis
-      anatomic_site
-      diagnosis_basis
-      diagnosis
-      diagnosis_classification_system
-      diagnosis_comment
-      diagnosis_id
-      disease_phase
-      toronto_childhood_cancer_staging
-      tumor_classification
-      tumor_grade
-      tumor_stage_clinical_m
-      tumor_stage_clinical_n
-      tumor_stage_clinical_t
-
-      # Study
-      dbgap_accession
-      study_id
-
-      __typename
-    }
-  }
+}
 `;
 
 export const GET_TREATMENT_OVERVIEW_QUERY = gql`
   query treatmentOverview(
     # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
     # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
     # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
     # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
+    $dbgap_accession: [String],
+    $study_name: [String],
+
     # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
+    $age_at_last_known_survival_status: [Int],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
     # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_end: [Int],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
     # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
-    $response_system: [String]
+    $response: [String],
+    $age_at_response: [Int],
+    $response_category: [String],
+    $response_system: [String],
+
     # Table config
-    $first: Int
-    $offset: Int
-    $order_by: String
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
     $sort_direction: String
   ) {
-    treatmentOverview(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+  treatmentOverview(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
 
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_end: $age_at_treatment_end,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    response_category: $response_category,
+    response_system: $response_system,
 
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
-
-      # Table config
-      first: $first
-      offset: $offset
-      order_by: $order_by
-      sort_direction: $sort_direction
-    ) {
-      # Participant
-      participant {
-        id
-        participant_id
-        race
-        sex_at_birth
-      }
-
-      # Study
-      dbgap_accession
-      study_id
-
-      # Treatment
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+  ) {
+    # Participant
+    participant {
       id
-      treatment_id
-      age_at_treatment_start
-      age_at_treatment_end
-      treatment_type
-      treatment_agent
-
-      __typename
+      participant_id
+      race
+      sex_at_birth
     }
+
+    # Study
+    dbgap_accession
+    study_id
+
+    # Treatment
+    id
+    treatment_id
+    age_at_treatment_start
+    age_at_treatment_end
+    treatment_type
+    treatment_agent
+
+    __typename
   }
+}
 `;
 
 export const GET_TREATMENT_RESPONSE_OVERVIEW_QUERY = gql`
   query treatmentResponseOverview(
     # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
     # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
     # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
     # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
+    $dbgap_accession: [String],
+    $study_name: [String],
+
     # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
+    $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
     # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
+    $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
     # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
-    $response_system: [String]
+    $response: [String],
+    $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
+    $response_category: [String],
+    $response_system: [String],
+
     # Table config
-    $first: Int
-    $offset: Int
-    $order_by: String
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
     $sort_direction: String
   ) {
-    treatmentResponseOverview(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+  treatmentResponseOverview(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
 
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
+    age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
+    response_category: $response_category,
+    response_system: $response_system,
 
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
-
-      # Table config
-      first: $first
-      offset: $offset
-      order_by: $order_by
-      sort_direction: $sort_direction
-    ) {
-      # Participant
-      participant {
-        id
-        participant_id
-        race
-        sex_at_birth
-      }
-
-      # Study
-      dbgap_accession
-      study_id
-
-      # Treatment Response
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+  ) {
+    # Participant
+    participant {
       id
-      treatment_response_id
-      response
-      age_at_response
-      response_category
-      response_system
-
-      __typename
+      participant_id
+      race
+      sex_at_birth
     }
+
+    # Study
+    dbgap_accession
+    study_id
+
+    # Treatment Response
+    id
+    treatment_response_id
+    response
+    age_at_response
+    response_category
+    response_system
+
+    __typename
   }
+}
 `;
 
 export const GET_SURVIVAL_OVERVIEW_QUERY = gql`
   query survivalOverview(
     # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
     # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
     # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
     # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
+    $dbgap_accession: [String],
+    $study_name: [String],
+
     # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
+    $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
     # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
+    $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
     # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
-    $response_system: [String]
+    $response: [String],
+    $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
+    $response_category: [String],
+    $response_system: [String],
+
     # Table config
-    $first: Int
-    $offset: Int
-    $order_by: String
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
     $sort_direction: String
   ) {
-    survivalOverview(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+  survivalOverview(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
 
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
+    age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
+    response_category: $response_category,
+    response_system: $response_system,
 
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
-
-      # Table config
-      first: $first
-      offset: $offset
-      order_by: $order_by
-      sort_direction: $sort_direction
-    ) {
-      # Participant
-      participant {
-        id
-        participant_id
-        race
-        sex_at_birth
-      }
-
-      # Study
-      dbgap_accession
-      study_id
-
-      # Survival
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+  ) {
+    # Participant
+    participant {
       id
-      age_at_event_free_survival_status
-      age_at_last_known_survival_status
-      cause_of_death
-      event_free_survival_status
-      first_event
-      last_known_survival_status
-      survival_id
-
-      __typename
+      participant_id
+      race
+      sex_at_birth
     }
+
+    # Study
+    dbgap_accession
+    study_id
+
+    # Survival
+    id
+    age_at_event_free_survival_status
+    age_at_last_known_survival_status
+    cause_of_death
+    event_free_survival_status
+    first_event
+    last_known_survival_status
+    survival_id
+
+    __typename
   }
+}
 `;
 
 export const GET_GENETIC_ANALYSIS_OVERVIEW_QUERY = gql`
   query geneticAnalysisOverview(
     # Demographics
-    $participant_pk: [String]
-    $participant_id: [String]
-    $race: [String]
-    $sex_at_birth: [String]
+    $participant_pk: [String],
+    $participant_id: [String],
+    $race: [String],
+    $sex_at_birth: [String],
+
     # Diagnoses
-    $age_at_diagnosis: [Int]
-    $anatomic_site: [String]
-    $diagnosis: [String]
-    $diagnosis_classification_system: [String]
-    $diagnosis_basis: [String]
-    $disease_phase: [String]
+    $age_at_diagnosis: [Int],
+    $age_at_diagnosis_unknownAges: [String],
+    $anatomic_site: [String],
+    $diagnosis: [String],
+    $diagnosis_classification_system: [String],
+    $diagnosis_basis: [String],
+    $disease_phase: [String],
+
     # Genetic Analyses
-    $alteration: [String]
-    $alteration_type: [String]
-    $fusion_partner_gene: [String]
-    $gene_symbol: [String]
-    $reported_significance: [String]
-    $reported_significance_system: [String]
-    $status: [String]
+    $alteration: [String],
+    $alteration_type: [String],
+    $fusion_partner_gene: [String],
+    $gene_symbol: [String],
+    $reported_significance: [String],
+    $reported_significance_system: [String],
+    $status: [String],
+
     # Studies
-    $dbgap_accession: [String]
-    $study_name: [String]
+    $dbgap_accession: [String],
+    $study_name: [String],
+
     # Survivals
-    $age_at_last_known_survival_status: [Int]
-    $cause_of_death: [String]
-    $first_event: [String]
-    $last_known_survival_status: [String]
+    $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
+    $cause_of_death: [String],
+    $first_event: [String],
+    $last_known_survival_status: [String],
+
     # Treatments
-    $age_at_treatment_start: [Int]
-    $age_at_treatment_end: [Int]
-    $treatment_type: [String]
-    $treatment_agent: [String]
+    $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
+    $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
+    $treatment_type: [String],
+    $treatment_agent: [String],
+
     # Treatment Responses
-    $response: [String]
-    $age_at_response: [Int]
-    $response_category: [String]
-    $response_system: [String]
+    $response: [String],
+    $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
+    $response_category: [String],
+    $response_system: [String],
+
     # Table config
-    $first: Int
-    $offset: Int
-    $order_by: String
+    $first: Int,
+    $offset: Int,
+    $order_by: String,
     $sort_direction: String
   ) {
-    geneticAnalysisOverview(
-      # Demographics
-      participant_pk: $participant_pk
-      participant_id: $participant_id
-      race: $race
-      sex_at_birth: $sex_at_birth
+  geneticAnalysisOverview(
+    # Demographics
+    participant_pk: $participant_pk,
+    participant_id: $participant_id,
+    race: $race,
+    sex_at_birth: $sex_at_birth,
 
-      # Diagnoses
-      age_at_diagnosis: $age_at_diagnosis
-      anatomic_site: $anatomic_site
-      diagnosis: $diagnosis
-      diagnosis_classification_system: $diagnosis_classification_system
-      diagnosis_basis: $diagnosis_basis
-      disease_phase: $disease_phase
+    # Diagnoses
+    age_at_diagnosis: $age_at_diagnosis,
+    age_at_diagnosis_unknownAges: $age_at_diagnosis_unknownAges,
+    anatomic_site: $anatomic_site,
+    diagnosis: $diagnosis,
+    diagnosis_classification_system: $diagnosis_classification_system,
+    diagnosis_basis: $diagnosis_basis,
+    disease_phase: $disease_phase,
 
-      # Genetic Analyses
-      alteration: $alteration
-      alteration_type: $alteration_type
-      fusion_partner_gene: $fusion_partner_gene
-      gene_symbol: $gene_symbol
-      reported_significance: $reported_significance
-      reported_significance_system: $reported_significance_system
-      status: $status
+    # Genetic Analyses
+    alteration: $alteration,
+    alteration_type: $alteration_type,
+    fusion_partner_gene: $fusion_partner_gene,
+    gene_symbol: $gene_symbol,
+    reported_significance: $reported_significance,
+    reported_significance_system: $reported_significance_system,
+    status: $status,
+    
+    # Studies
+    dbgap_accession: $dbgap_accession,
+    study_name: $study_name,
 
-      # Studies
-      dbgap_accession: $dbgap_accession
-      study_name: $study_name
+    # Survivals
+    age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
+    cause_of_death: $cause_of_death,
+    first_event: $first_event,
+    last_known_survival_status: $last_known_survival_status
 
-      # Survivals
-      age_at_last_known_survival_status: $age_at_last_known_survival_status
-      cause_of_death: $cause_of_death
-      first_event: $first_event
-      last_known_survival_status: $last_known_survival_status
+    # Treatments
+    age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
+    age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
+    treatment_type: $treatment_type,
+    treatment_agent: $treatment_agent,
 
-      # Treatments
-      age_at_treatment_start: $age_at_treatment_start
-      age_at_treatment_end: $age_at_treatment_end
-      treatment_type: $treatment_type
-      treatment_agent: $treatment_agent
+    # Treatment Responses
+    response: $response,
+    age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
+    response_category: $response_category,
+    response_system: $response_system,
 
-      # Treatment Responses
-      response: $response
-      age_at_response: $age_at_response
-      response_category: $response_category
-      response_system: $response_system
+    # Table config
+    first: $first,
+    offset: $offset,
+    order_by: $order_by,
+    sort_direction: $sort_direction
+  ) {
+    # Study
+    dbgap_accession
 
-      # Table config
-      first: $first
-      offset: $offset
-      order_by: $order_by
-      sort_direction: $sort_direction
-    ) {
-      # Study
-      dbgap_accession
-
-      # Participant
-      participant {
-        id
-        participant_id
-      }
-
-      # Genetic Analysis
+    # Participant
+    participant {
       id
-      genetic_analysis_id
-      alteration
-      cytoband
-      gene_symbol
-      genomic_source_category
-      hgvs_coding
-      hgvs_genome
-      hgvs_protein
-      status
-      test
-      reported_significance
-      reported_significance_system
-
-      # Additional properties for download
-      alteration_effect
-      alteration_type
-      chromosome
-      exon
-      fusion_partner_exon
-      fusion_partner_gene
-      reference_genome
-
-      __typename
+      participant_id
     }
+
+    # Genetic Analysis
+    id
+    genetic_analysis_id
+    alteration
+    cytoband
+    gene_symbol
+    genomic_source_category
+    hgvs_coding
+    hgvs_genome
+    hgvs_protein
+    status
+    test
+    reported_significance
+    reported_significance_system
+
+    # Additional properties for download
+    alteration_effect
+    alteration_type
+    chromosome
+    exon
+    fusion_partner_exon
+    fusion_partner_gene
+    reference_genome
+
+    __typename
   }
+}
 `;
 
 export const GET_ALL_FILEIDS_PARTICIPANTSTAB_FOR_SELECT_ALL = gql`
