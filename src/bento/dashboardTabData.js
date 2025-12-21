@@ -74,14 +74,19 @@ export const externalLinkIcon = {
 };
 
 // --------------- Responsive Tab Breakpoint Configuration --------------
+// These breakpoints are calculated by multiplying the width of each tab
+// including the padding/margin (203px)
+// and counting the more button as a tab (203px)
+// We will have enough space for tabs + more button + empty tab space
+// e.g. 2 tabs: (203 * 2) + 203 + 203 = 812px
 export const tabResponsiveBreakpoints = {
   breakpoints: [
-    { maxWidth: 1249, tabLimit: 2 },
-    { maxWidth: 1399, tabLimit: 3 },
-    { maxWidth: 1549, tabLimit: 4 },
-    { maxWidth: 1699, tabLimit: 5 },
+    { maxWidth: 812, tabLimit: 2 },
+    { maxWidth: 1015, tabLimit: 3 },
+    { maxWidth: 1281, tabLimit: 4 },
+    { maxWidth: 1421, tabLimit: 5 },
   ],
-  defaultTabLimit: 6, // >= 1700px
+  defaultTabLimit: 6,
 };
 
 //NOTE: Change 'getParticipants' to 'searchParticipants' in the backend.
