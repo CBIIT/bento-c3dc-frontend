@@ -18,6 +18,9 @@ export default () => ({
         backgroundColor: '#063134',
         border: '1px solid #063134',
       },
+      '&:disabled': {
+        border: '1px solid #AEBDBE !important',
+      },
   },
   divider: {
     marginLeft: '0px',
@@ -63,7 +66,7 @@ export default () => ({
   resetTextDisabled: {
     marginTop: '0px',
     marginLeft: '8px',
-    color: '#415153',
+    color: '#AEBDBE',
     fontSize: 14,
     fontFamily: 'Nunito Sans',
     fontWeight: 600,
