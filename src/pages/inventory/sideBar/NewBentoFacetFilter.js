@@ -1,19 +1,11 @@
-/* eslint-disable block-scoped-var */
-/* eslint-disable no-plusplus */
-/* eslint-disable no-unused-vars */
-/* eslint-disable guard-for-in */
-/* eslint-disable no-var */
-/* eslint-disable vars-on-top */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable arrow-body-style */
-import React, { useState } from 'react';
+import React from 'react';
+/*
 import {
   useLocation,
   useNavigate,
-} from "react-router-dom";
+} from "react-router-dom";*/
 import {
   AccordionSummary,
-  Button,
   withStyles,
 } from '@material-ui/core';
 import {
@@ -21,14 +13,13 @@ import {
 } from '@material-ui/icons';
 import clsx from 'clsx';
 import {
-  resetAllData, chunkSplit,
+  chunkSplit,
   SearchView, SearchBoxGenerator, UploadModalGenerator,
 } from '@bento-core/local-find';
-import store from '../../../store';
 import styles from './BentoFacetFilterStyle';
 import { NewFacetFilter } from '@bento-core/facet-filter';
 // import { generateQueryStr } from '@bento-core/util';
-import { facetsConfig, facetSectionVariables, resetIcon, sectionLabel, queryParams } from '../../../bento/dashTemplate';
+import { facetsConfig, facetSectionVariables, queryParams } from '../../../bento/dashTemplate';
 import FacetFilterThemeProvider from './NewFilterThemeConfig';
 import {
   getAllParticipantIds, getAllIds,
@@ -95,6 +86,7 @@ const { SearchBox } = SearchBoxGenerator({
 const { UploadModal } = UploadModalGenerator({
   functions: {
     updateBrowserUrl: (query, navigate, filename, fileContent, matchIds, unmatchedIds) => {
+      /*
       const fc = fileContent
         .split(/[,\n]/g)
         .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
@@ -105,7 +97,8 @@ const { UploadModal } = UploadModalGenerator({
         'u_um': unmatchedIds.join('|'),
       };
       /*const queryStr = generateQueryStr(query, queryParams, paramValue);
-      navigate(`/explore${queryStr}`);*/
+      navigate(`/explore${queryStr}`);
+      */
     },
     searchMatches: async (inputArray) => {
       try {
