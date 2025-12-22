@@ -190,7 +190,7 @@ const ExpandedChartModal = ({
       }
 
       const tableElement = riskTableRef.current;
-
+      tableElement.style.height = 'auto';
       // Generate image directly from the element without modifying styles
       htmlToImage.toPng(tableElement, {
         backgroundColor: 'transparent',
@@ -210,7 +210,7 @@ const ExpandedChartModal = ({
         console.error("Error using html-to-image:", error);
         alert("Error downloading Risk table. Please check the console for details.");
       });
-
+      tableElement.style.height = '350px';
       setShowDownloadDropdown(false);
     } catch (error) {
       console.error("Error downloading Risk table:", error);
