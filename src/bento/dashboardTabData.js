@@ -583,7 +583,6 @@ export const GET_COHORT_METADATA_QUERY = gql`
             last_known_survival_status
           }
           synonyms {
-            id
             associated_id
             data_location
             domain_category
