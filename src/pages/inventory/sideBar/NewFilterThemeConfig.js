@@ -12,21 +12,18 @@ const theme = {
         color: 'red',
       },
     },
+    MuiAccordion: {
+      root: {
+        margin: '0px 0px !important',
+      },
+      '&$expanded': {
+        margin: '0px 0px',
+      },
+    },
     MuiAccordionDetails: {
       root: {
         padding: '0px 1px 0px',
-      },
-    },
-    MuiAccordion: {
-      root: {
-        '&$expanded': {
-          margin: 'auto',
-        },
-      },
-    },
-    MuiAccordionSummary: {
-      content: {
-        margin: '0',
+        // margin: '0px 0px',
       },
     },
     MuiList: {
@@ -87,44 +84,102 @@ const theme = {
           backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).zebraStripesColor2,
         },
       },
-    },
-    MuiListItemText: {
+    },/*
+    MuiSvgIcon: {
       root: {
-        flex: 'none',
-        //width: '3px',
-        paddingRight: '3px',
+        '&.demographicsCheckedIcon': {
+          color: '#6D5F5B',
+        },
+        '&.diagnosisCheckedIcon': {
+          color: '#6D5F5B',
+        },
+        '&.samplesCheckedIcon': {
+          color: '#6D5F5B',
+        },
+        '&.datacategoryCheckedIcon': {
+          color: '#6D5F5B',
+        },
+        '&.studyCheckedIcon': {
+          color: '#6D5F5B',
+        },
+        '&.sequencinglibraryCheckedIcon': {
+          color: '#6D5F5B',
+        },
       },
-    },
+    },*/
     MuiTypography: {
-      body1: {
-        color: '#000000',
-        fontFamily: 'Nunito',
-        fontWeight: '300',
-        fontSize: '14px !important',
-        lineHeight: '19.1px',
-      },
-    },
-    MuiSlider: {
-      thumb: {
-        height: 16,
-        width: 16,
-        "&.invalidThumb": {
-          height: "16px !important",
-          width: "16px !important",
+      root: {
+        '&.studySubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
+        },
+        '&.demographicsSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
+        },
+        '&.diagnosisSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
+        },
+        '&.geneticanalysisSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
+        },
+        '&.treatmentSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
+        },
+        '&.treatmentresponseSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
+        },
+        '&.survivalSubjects': {
+          color: '#504343',
+          backgroundColor: '#D8D8D8',
+          padding: '2px 2px 1px 2px',
+          fontSize: '11px',
+          fontFamily: 'Nunito',
+          marginRight: '0px',
+          marginTop: 'auto',
+          fontWeight: '600',
         },
       },
-      track: {
-        borderRadius: 4,
-        height: 6,
-        "&.invalidTrack": {
-          borderRadius: "4px !important",
-          height: "6px !important",
-        },
-        '&~&': {
-          background: '#142D64',
-        },
-      },
-
     },
     MuiDivider: {
       middle: {
@@ -134,25 +189,31 @@ const theme = {
       root: {
         height: '8px',
         '&.divider0': {
-          backgroundColor: '#006A8F',
+          backgroundColor: '#4D889E',
         },
         '&.divider1': {
-          backgroundColor: '#E39520',
+          backgroundColor: '#974599',
         },
         '&.divider2': {
-          backgroundColor: '#35B899',
+          backgroundColor: '#4150A4',
         },
         '&.divider3': {
-          backgroundColor: '#268CEA',
+          backgroundColor: '#E9B34A',
         },
         '&.divider4': {
-          backgroundColor: '#9664C7',
+          backgroundColor: '#CD5C4E',
         },
         '&.divider5': {
-          backgroundColor: '#006B57',
+          backgroundColor: '#1F6BBF',
         },
         '&.divider6': {
-          backgroundColor: '#862405',
+          backgroundColor: '#60C4A1',
+        },
+        '&.divider7': {
+          backgroundColor: '#357288',
+        },
+        '&.divider8': {
+          backgroundColor: '#974599',
         },
       },
     },
