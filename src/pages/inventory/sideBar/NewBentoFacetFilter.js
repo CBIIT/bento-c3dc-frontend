@@ -27,7 +27,7 @@ import {
 import store from '../../../store';
 import styles from './BentoFacetFilterStyle';
 import { NewFacetFilter } from '@bento-core/facet-filter';
-import { generateQueryStr } from '@bento-core/util';
+// import { generateQueryStr } from '@bento-core/util';
 import { facetsConfig, facetSectionVariables, resetIcon, sectionLabel, queryParams } from '../../../bento/dashTemplate';
 import FacetFilterThemeProvider from './NewFilterThemeConfig';
 import {
