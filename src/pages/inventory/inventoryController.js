@@ -3,7 +3,7 @@ import { useApolloClient } from '@apollo/client';
 import { connect } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
-import { getFilters } from '@bento-core/facet-filter';
+import { getFiltersWithUnknownAges } from '@bento-core/facet-filter';
 import InventoryView from './inventoryView';
 import { DASHBOARD_QUERY_NEW } from '../../bento/dashboardTabData';
 import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
@@ -15,7 +15,7 @@ let latestRequestId = 0;
 
 const getDashData = (states) => {
   const {
-    filterState,
+    filterState, unknownAgesState,
     localFindUpload, localFindAutocomplete,
   } = states;
 
@@ -43,7 +43,7 @@ const getDashData = (states) => {
 
 
   const activeFilters = {
-    ...getFilters(filterState),
+    ...getFiltersWithUnknownAges(filterState, unknownAgesState),
     participant_id: [
       ...(localFindUpload || []).map((obj) => obj.participant_id),
       ...(localFindAutocomplete || []).map((obj) => obj.title),
@@ -58,7 +58,7 @@ const getDashData = (states) => {
       }
     });
     return () => controller.abort();
-  }, [filterState, localFindUpload, localFindAutocomplete]);
+  }, [filterState, unknownAgesState, localFindUpload, localFindAutocomplete]);
   return { dashData, activeFilters, loading };
 };
 
@@ -112,6 +112,7 @@ const InventoryController = ((props) => {
 
 const mapStateToProps = (state) => ({
   filterState: state.statusReducer.filterState,
+  unknownAgesState: state.statusReducer.unknownAgesState,
   localFindUpload: state.localFind.upload,
   localFindAutocomplete: state.localFind.autocomplete,
 });
