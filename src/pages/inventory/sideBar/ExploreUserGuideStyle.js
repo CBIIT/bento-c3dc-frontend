@@ -141,9 +141,11 @@ export default () => ({
         textTransform: 'none',
         color: '#3d4241',
         marginLeft: '0px',
-        border: '1px solid #60797B',
+        backgroundColor: '#ffffff',
+        border: '1px solid #063134',
         '&:hover': {
-          backgroundColor: '#60797B',
+          backgroundColor: '#063134',
+          border: '1px solid #063134',
           color: 'white',
         },
     },

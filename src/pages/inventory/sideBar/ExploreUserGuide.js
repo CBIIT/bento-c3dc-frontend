@@ -20,13 +20,14 @@ import ContactUsSection from './ExploreUserGuide/ContactUsSection';
 const UseGuideButtonContainer = styled.div`
   .buttonContainer {
     display: flex;
-    margin-left: 19px;
-    margin-top: 17px;
+    margin-left: 12.5px;
+    margin-top: 15px;
   }
 
   .buttonText {
-    color: #627B7A;
-    font-weight: 400;
+    color: #415153;
+    font-weight: 600;
+    font-family: 'Nunito Sans';
     font-size: 14px;
     line-height: 30px;
     margin-left: 8px;

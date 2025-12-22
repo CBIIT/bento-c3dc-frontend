@@ -60,9 +60,10 @@ const styles = (theme) => ({
   },
   widgetsCollapse: {
     background: theme.palette.widgetBackground.main,
+    position: 'relative',
   },
   floatRight: {
-    top: '0px',
+    top: '-1px',
     right: '80px',
     position: 'absolute',
     zIndex: 1,
