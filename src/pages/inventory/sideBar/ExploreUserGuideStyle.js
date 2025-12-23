@@ -9,12 +9,11 @@ export default () => ({
     },
     paperArea: {
         display: 'flex',
-        paddingLeft: '20px',
+        paddingLeft: '64px',
         paddingTop: '54px',
     },
     navSection: {
         minWidth: '267px',
-        marginLeft: '40px',
         color: '#477C90',
         position: 'relative',
     },
@@ -54,7 +53,7 @@ export default () => ({
     },
     contentSection: {
         display: 'flex',
-        padding: '0 50px',
+        padding: '0px 64px 0px 50px',
         height: '683px',
         overflow: 'auto',
         '&::-webkit-scrollbar': {
