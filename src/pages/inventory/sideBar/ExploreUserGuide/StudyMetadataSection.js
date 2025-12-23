@@ -4,7 +4,7 @@ import figure5 from "./images/figure5.png";;
 const StudyMetadataSection = ({ classes }) => (
   <div>
     <div id='Downloading Metadata from the Studies tab' className={classes.sectionTitle}>
-      <p>Downloading Participant Metadata and Harmonized Clinical Data</p>
+      Downloading Participant Metadata and Harmonized Clinical Data
     </div>
     <div className={classes.contentContainer}>
       <p>

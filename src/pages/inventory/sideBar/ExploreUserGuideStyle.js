@@ -74,7 +74,7 @@ export default () => ({
         fontWeight: '600',
         fontSize: '35px',
         lineHeight: '38px',
-        marginBottom: '20px',
+        marginBottom: '0px',
         color: '#05555C',
     },
     sectionTitle: {
@@ -83,6 +83,7 @@ export default () => ({
         fontSize: '25px',
         lineHeight: '27px',
         letterSpacing: '-0.02em',
+        marginTop: '20px',
         marginBottom: '20px',
         color: '#007A85',
     },
