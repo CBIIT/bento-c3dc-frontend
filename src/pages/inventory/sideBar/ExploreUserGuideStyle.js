@@ -10,7 +10,7 @@ export default () => ({
     paperArea: {
         display: 'flex',
         paddingLeft: '20px',
-        paddingTop: '40px',
+        paddingTop: '54px',
     },
     navSection: {
         minWidth: '267px',
