@@ -406,7 +406,7 @@ const styles = () => ({
   },
   texture: {
     backgroundSize: 'cover',
-    padding: '120px 0 80px 0',
+    padding: '50px 0 80px 0',
     backgroundImage: `url(${landingPageData.landingTileBackground.img})`,
   },
   container: {
