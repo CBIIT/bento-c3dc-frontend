@@ -168,7 +168,7 @@ export const CloseButton = styled.button`
 
 export const ModalChartWrapper = styled.div`
   width: 100%;
-  height: calc(100% - 100px);
+  height: calc(100% - 50px);
   margin-top: 20px;
 `;
 
@@ -290,7 +290,7 @@ export const SurvivalAnalysisModalContent = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
-  gap: 40px;
+  gap: 5px;
 `;
 
 export const KmChartModalWrapper = styled.div`
@@ -301,8 +301,7 @@ export const KmChartModalWrapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  flex-shrink: 0;
+  overflow: visible;
 `;
 
 export const RiskTableModalWrapper = styled.div`
@@ -310,7 +309,7 @@ export const RiskTableModalWrapper = styled.div`
   padding-right: 145px;
   overflow-x: auto;
   overflow-y: auto;
-  height: 350px;
+  height: 300px;
   flex-shrink: 0;
 `;
 

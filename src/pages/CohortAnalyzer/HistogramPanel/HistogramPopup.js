@@ -210,7 +210,7 @@ const ExpandedChartModal = ({
         console.error("Error using html-to-image:", error);
         alert("Error downloading Risk table. Please check the console for details.");
       });
-      tableElement.style.height = '350px';
+      tableElement.style.height = '300px';
       setShowDownloadDropdown(false);
     } catch (error) {
       console.error("Error downloading Risk table:", error);
