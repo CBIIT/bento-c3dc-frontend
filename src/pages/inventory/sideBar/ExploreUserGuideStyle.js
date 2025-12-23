@@ -24,7 +24,7 @@ export default () => ({
         fontSize: '17px',
         lineHeight: '20px',
         letterSpacing: '0.02em',
-        marginBottom: '29px',
+        marginBottom: '20px',
     },
     navTopicItem: {
         marginBottom: '20px',
