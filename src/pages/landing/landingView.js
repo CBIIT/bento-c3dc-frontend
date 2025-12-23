@@ -713,7 +713,7 @@ const styles = () => ({
   },
   aboutImageSection: {
     height: '249px',
-    width: '296px',
+    width: '100%',
   },
   DCWords: {
     height: '200px',
