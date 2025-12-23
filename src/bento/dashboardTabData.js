@@ -1756,7 +1756,7 @@ const studyTab = {
         dataField: "study_id",
         header: "Study ID",
         display: false,
-        disableInManageView: true,
+        downloadOnly: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -1787,7 +1787,7 @@ const studyTab = {
         dataField: "study_description",
         header: "Study Description",
         display: false,
-        disableInManageView: true,
+        downloadOnly: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -1795,7 +1795,7 @@ const studyTab = {
         dataField: "external_url",
         header: "External URL",
         display: false,
-        disableInManageView: true,
+        downloadOnly: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       }
@@ -1897,7 +1897,7 @@ const participantTab = {
         dataField: "study_id",
         header: "Study ID",
         display: false,
-        disableInManageView: true,
+        downloadOnly: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2089,7 +2089,7 @@ const diagnosisTab = {
         dataField: "study_id",
         header: "Study ID",
         display: false,
-        disableInManageView: true,
+        downloadOnly: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2446,7 +2446,7 @@ const treatmentTab = {
         dataField: "study_id",
         header: "Study ID",
         display: false,
-        disableInManageView: true,
+        downloadOnly: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2567,7 +2567,7 @@ const treatmentResponseTab = {
         dataField: "study_id",
         header: "Study ID",
         display: false,
-        disableInManageView: true,
+        downloadOnly: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
@@ -2719,7 +2719,7 @@ const treatmentResponseTab = {
         dataField: "study_id",
         header: "Study ID",
         display: false,
-        disableInManageView: true,
+        downloadOnly: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY
       },
