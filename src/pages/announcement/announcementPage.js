@@ -60,7 +60,9 @@ const AnnouncementContainer = styled.div`
     
     }
 .option {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 40px;
     font-size: 16px;
     font-style: Open Sans;  
     font-weight: 600;
@@ -70,7 +72,9 @@ const AnnouncementContainer = styled.div`
     border-bottom: 3px #07645C solid;
     color: #07645C;
     font-size: 16px;
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 40px;
     font-style: Open Sans;  
     font-weight: 600;
 }
@@ -118,7 +122,7 @@ const AnnouncementContainer = styled.div`
       font-weight: 400;
       line-height: 24px;
       text-align: left;
-      margin-top: 10px;
+      margin-top: 15px;
       width: 120%;
     }
   .announcementButton{
@@ -130,9 +134,10 @@ const AnnouncementContainer = styled.div`
     color: #3C7D76;
     border: 1px #3C7D76 solid;
     padding: 5px;
-    border-radius: 10px;
+    border-radius: 20px;
     margin: 10px;
-    margin-top: 40px;
+    margin-left: 0px;
+    margin-top: 15px;
     cursor: pointer;
 }
 .announcementPagination {

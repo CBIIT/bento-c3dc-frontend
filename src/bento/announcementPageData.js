@@ -13,7 +13,7 @@ export const announcementPageData = [
     "image": fig9,
     "type": 1,
     "is_release_notes": true,
-    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "alt": "abstract depiction of binary on a screen",
     "verbiage": "This release includes newly harmonized data for the following studies: phs003160, phs003161, phs003111, phs001327, phs002620, phs002276, and phs002883, along with updates to several existing CCDI datasets. These new datasets add approximately 3,750 participants."
   },
   {
@@ -40,7 +40,7 @@ export const announcementPageData = [
     "image": fig2,
     "type": 2,
     "is_release_notes": true,
-    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "alt": "Woman sitting in front of two monitors writing code",
     "verbiage": "The Explore Page now features an ‘Explore the C3DC User Guide’ pop-up, the ability to toggle between pie charts and histograms, and options to download all visualizations."
   },
   {
@@ -49,7 +49,7 @@ export const announcementPageData = [
     "image": fig3,
     "type": 2,
     "is_release_notes": true,
-    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "alt": "two hands on a laptop typing",
     "verbiage": "Cohort Selector JSON downloads have been updated to include CPI synonym values, and users can now export more participant-level data to the CCDI Hub. Cohorts can be exported with data pre-filtered by selected participants, increasing the previous limit of up to 600 participants."
   },
   {
@@ -58,7 +58,7 @@ export const announcementPageData = [
     "image": fig4,
     "type": 2,
     "is_release_notes": true,
-    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "alt": "illustration showing a laptop updating",
     "verbiage": "The Cohort Analyzer now includes an ‘Add Example Cohort’ button, allowing users to view a mock Venn diagram displaying example data from three cohorts. Histogram-based visual summaries facilitate cohort comparison, and the JSON structure has been updated to include CPI synonym values in Cohort Analyzer downloads."
   }
  ];
