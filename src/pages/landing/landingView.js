@@ -823,7 +823,7 @@ const styles = () => ({
 
   study: {
     float: 'left',
-    margin: '0 10px 6.8px 0px',
+    margin: '0 10px 18px 0px',
     border: 'solid 2px #096761',
 
   },
