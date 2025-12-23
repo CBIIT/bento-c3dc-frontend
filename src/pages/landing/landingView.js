@@ -892,7 +892,7 @@ const styles = () => ({
     margin: '0',
   },
   mountainMeadowContent: {
-    width: '197px',
+    width: '184px',
     color: '#ffffff',
     fontFamily: 'Inter',
     fontSize: '16px',
