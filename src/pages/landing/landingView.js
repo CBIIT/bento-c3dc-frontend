@@ -732,7 +732,7 @@ const styles = () => ({
   },
   contentLeft: {
     float: 'left',
-    paddingRight: '10px',
+    paddingRight: '18px',
   },
   about: {
     width: '300px',
