@@ -736,6 +736,7 @@ const styles = () => ({
   },
   about: {
     width: '300px',
+    height: '100%',
     backgroundColor: 'white',
     border: 'solid 2px #096761',
   },
