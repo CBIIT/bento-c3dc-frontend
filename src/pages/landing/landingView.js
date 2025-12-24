@@ -406,7 +406,7 @@ const styles = () => ({
   },
   texture: {
     backgroundSize: 'cover',
-    padding: '120px 0 80px 0',
+    padding: '50px 0 80px 0',
     backgroundImage: `url(${landingPageData.landingTileBackground.img})`,
   },
   container: {
@@ -713,7 +713,7 @@ const styles = () => ({
   },
   aboutImageSection: {
     height: '249px',
-    width: '296px',
+    width: '100%',
   },
   DCWords: {
     height: '200px',
@@ -732,10 +732,11 @@ const styles = () => ({
   },
   contentLeft: {
     float: 'left',
-    paddingRight: '10px',
+    paddingRight: '18px',
   },
   about: {
     width: '300px',
+    height: '100%',
     backgroundColor: 'white',
     border: 'solid 2px #096761',
   },
@@ -823,7 +824,7 @@ const styles = () => ({
 
   study: {
     float: 'left',
-    margin: '0 10px 6.8px 0px',
+    margin: '0 10px 18px 0px',
     border: 'solid 2px #096761',
 
   },
@@ -891,7 +892,7 @@ const styles = () => ({
     margin: '0',
   },
   mountainMeadowContent: {
-    width: '197px',
+    width: '184px',
     color: '#ffffff',
     fontFamily: 'Inter',
     fontSize: '16px',
