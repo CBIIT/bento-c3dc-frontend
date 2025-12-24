@@ -311,7 +311,12 @@ const AnnouncementPage = () => {
 
             return (
               (selectedOption === 0 || content.type === selectedOption) &&
-              <div key={idx} className={'announcementCard'}>
+              <div 
+                key={idx} 
+                className={'announcementCard'}
+                onClick={content.is_release_notes ? () => navigator("/release_notes") : undefined}
+                style={content.is_release_notes ? { cursor: 'pointer' } : undefined}
+              >
                 <div className="sectionOne">
                   <div className='sectionOne-first'>
                     <span className="title">{isExpanded ? content.title : content.title.substring(0, 100)}</span>
@@ -342,7 +347,7 @@ const AnnouncementPage = () => {
         <div className="announcementPagination">
           <div className="resultsPerPage">
             <span>Result Per Page:</span>
-            <select value={resultsPerPage} onChange={(e) => { setResultsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
+            <select style={{border: 'none'}} value={resultsPerPage} onChange={(e) => { setResultsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
               <option value={10}>10</option>
               <option value={25}>25</option>
               <option value={50}>50</option>

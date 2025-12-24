@@ -22,7 +22,7 @@ export const announcementPageData = [
     "image": fig8,
     "type": 1,
     "is_release_notes": true,
-    "alt": "Hand holding a yellow and red megaphone against a red and teal background with the text \"C3DC News.\"",
+    "alt": "Abstract imagery connecting icons of people",
     "verbiage": "The C3DC data model has been enhanced, including the new Laboratory Test node, which captures a multitude of different analyses, and the new Genetic Analysis node that captures gene mutation information for participants."
   },
   {
