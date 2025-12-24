@@ -123,17 +123,6 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         // navigate(`/explore${queryStr}`, { replace: true });*/
         dispatch(resetAllData());
         dispatch(clearAllFilters());
-
-        // Reset unknownAges state to default values
-        ageRelatedParams.forEach(param => {
-          store.dispatch({
-            type: 'UNKNOWN_AGES_CHANGED',
-            payload: {
-              datafield: param,
-              unknownAges: 'include',
-            },
-          });
-        });
       },
       clearImportFrom: () => {
         /*
@@ -222,17 +211,6 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
           // const queryStr = generateQueryStr(query, queryParams, paramValue);
           // navigate(`/explore${queryStr}`, { replace: true });
           dispatch(clearSliderSection(section));
-
-          // Reset the corresponding unknownAges parameter in Redux state
-          if (queryParams.includes(unknownAgesField)) {
-            store.dispatch({
-              type: 'UNKNOWN_AGES_CHANGED',
-              payload: {
-                datafield: field,
-                unknownAges: 'include',
-              },
-            });
-          }
         }
       },
       resetUnknownAges: (section) => {
