@@ -5,7 +5,7 @@ import figure10 from "./images/figure10.png";
 const AnalyzingCohortsSection = ({ classes }) => (
   <div>
     <div id="Analyzing Cohorts" className={classes.sectionTitle}>
-      <p>Analyzing Cohorts</p>
+      Analyzing Cohorts
     </div>
     <div className={classes.contentContainer}>
       <p>

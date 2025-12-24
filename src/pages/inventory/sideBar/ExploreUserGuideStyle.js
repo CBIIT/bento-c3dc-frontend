@@ -9,12 +9,11 @@ export default () => ({
     },
     paperArea: {
         display: 'flex',
-        paddingLeft: '20px',
-        paddingTop: '40px',
+        paddingLeft: '64px',
+        paddingTop: '54px',
     },
     navSection: {
         minWidth: '267px',
-        marginLeft: '40px',
         color: '#477C90',
         position: 'relative',
     },
@@ -24,7 +23,7 @@ export default () => ({
         fontSize: '17px',
         lineHeight: '20px',
         letterSpacing: '0.02em',
-        marginBottom: '29px',
+        marginBottom: '20px',
     },
     navTopicItem: {
         marginBottom: '20px',
@@ -54,7 +53,7 @@ export default () => ({
     },
     contentSection: {
         display: 'flex',
-        padding: '0 50px',
+        padding: '0px 64px 0px 50px',
         height: '683px',
         overflow: 'auto',
         '&::-webkit-scrollbar': {
@@ -75,7 +74,7 @@ export default () => ({
         fontWeight: '600',
         fontSize: '35px',
         lineHeight: '38px',
-        marginBottom: '20px',
+        marginBottom: '0px',
         color: '#05555C',
     },
     sectionTitle: {
@@ -84,6 +83,7 @@ export default () => ({
         fontSize: '25px',
         lineHeight: '27px',
         letterSpacing: '-0.02em',
+        marginTop: '20px',
         marginBottom: '20px',
         color: '#007A85',
     },
