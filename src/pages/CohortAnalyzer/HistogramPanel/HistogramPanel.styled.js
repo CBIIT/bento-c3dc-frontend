@@ -309,7 +309,7 @@ export const RiskTableModalWrapper = styled.div`
   padding-right: 145px;
   overflow-x: auto;
   overflow-y: auto;
-  height: 300px;
+  height: 280px;
   flex-shrink: 0;
 `;
 
