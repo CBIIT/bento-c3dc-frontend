@@ -219,6 +219,9 @@ const AnnouncementContainer = styled.div`
       margin: 0px;
       font-size: 16px;
     }
+      .noBorder{
+      border: none;
+      }
   .resultsPerPage{
       margin: 15px;
   }
@@ -227,7 +230,7 @@ const AnnouncementContainer = styled.div`
 
 const AnnouncementPage = () => {
   const [selectedOption, setSelectedOption] = useState(0);
-  const [options] = useState(["All", "Data Update","Application Update"]);
+  const [options] = useState(["All", "Data Update", "Application Update"]);
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [expandedIndices, setExpandedIndices] = useState([]);
@@ -281,9 +284,9 @@ const AnnouncementPage = () => {
   };
 
 
-  useEffect(()=>{
-  calculatePageInfo(announcementPageData)
-  },[currentPage,resultsPerPage])
+  useEffect(() => {
+    calculatePageInfo(announcementPageData)
+  }, [currentPage, resultsPerPage])
 
   return (
     <AnnouncementContainer>
@@ -312,8 +315,8 @@ const AnnouncementPage = () => {
 
             return (
               (selectedOption === 0 || content.type === selectedOption) &&
-              <div 
-                key={idx} 
+              <div
+                key={idx}
                 className={'announcementCard'}
                 role={content.is_release_notes ? 'button' : undefined}
                 tabIndex={content.is_release_notes ? 0 : -1}
@@ -321,11 +324,11 @@ const AnnouncementPage = () => {
                 onKeyDown={
                   content.is_release_notes
                     ? (event) => {
-                        if (event.key === 'Enter' || event.key === ' ') {
-                          event.preventDefault();
-                          navigator("/release_notes");
-                        }
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        navigator("/release_notes");
                       }
+                    }
                     : undefined
                 }
                 style={content.is_release_notes ? { cursor: 'pointer' } : undefined}
@@ -334,12 +337,12 @@ const AnnouncementPage = () => {
                   <div className='sectionOne-first'>
                     <span className="title">{isExpanded ? content.title : content.title.substring(0, 100)}</span>
                     <span className="timestamp">{content.timestamp}</span>
-                    <span className="announcementContent" dangerouslySetInnerHTML={{__html: content.verbiage}} />
-                    
+                    <span className="announcementContent" dangerouslySetInnerHTML={{ __html: content.verbiage }} />
+
                   </div>
                   <img src={content.image} width={197} height={172} alt={content.alt} />
                 </div>
-            
+
 
                 {
                   content.is_release_notes &&
@@ -360,7 +363,7 @@ const AnnouncementPage = () => {
         <div className="announcementPagination">
           <div className="resultsPerPage">
             <span>Result Per Page:</span>
-            <select style={{border: 'none'}} value={resultsPerPage} onChange={(e) => { setResultsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
+            <select className="noBorder" value={resultsPerPage} onChange={(e) => { setResultsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
               <option value={10}>10</option>
               <option value={25}>25</option>
               <option value={50}>50</option>
