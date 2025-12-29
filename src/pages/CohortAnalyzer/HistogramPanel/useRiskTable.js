@@ -73,6 +73,7 @@ export default function useRiskTable({ c1, c2, c3 }) {
         const result = await client.query({
           query: RISK_TABLE_QUERY,
           variables: { c1, c2, c3 },
+          fetchPolicy: 'no-cache',
         });
 
         // Only update state if component is still mounted

@@ -3,7 +3,7 @@ import React from "react";
 const FullGuideSection = ({ classes }) => (
   <div>
     <div id="Full User Guide" className={classes.sectionTitle}>
-      <p>Full User Guide</p>
+      Full User Guide
     </div>
     <div className={classes.contentContainer}>
       <p  style={{ paddingBottom: '100px' }}>

@@ -10,7 +10,7 @@ const FindDataSection = ({ classes }) => (
       id="Finding Participants, Studies, Samples, and Files"
       className={classes.sectionTitle}
     >
-      <p>Finding Participants and Studies</p>
+      Finding Participants and Studies
     </div>
     <div className={classes.contentContainer}>
       <p>

@@ -205,6 +205,7 @@ export const facetSectionVariables = {
       marginTop: '10px',
       display: 'flex',
       justifyContent: 'start',
+      borderBottom: '1px solid #CCCCCC',
     },
     invalidSliderText: {
       color: '#D32F2F',
@@ -216,6 +217,7 @@ export const facetSectionVariables = {
       textAlign: 'right',
       background: '#E57373',
       marginTop: '10px',
+      borderBottom: '1px solid #CCCCCC',
     },
     sliderListItem: {
       height: '15px',

@@ -70,6 +70,7 @@ export default function useKmplot({ c1, c2, c3 }) {
         const result = await client.query({
           query: KM_PLOT_QUERY,
           variables: { c1, c2, c3 },
+          fetchPolicy: 'no-cache', 
         });
 
         // Only update state if component is still mounted
