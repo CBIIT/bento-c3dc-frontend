@@ -17,12 +17,12 @@ export const customTheme = {
       borderLeft: '1px solid #8B8B8B',
       borderRight: '1px solid #8B8B8B',
       fontWeight: '400',
-      lineHeight: '16px',
+      lineHeight: '19px',
       letterSpacing: '0.25px',
       marginRight: '10px',
       fontSize: '17px',
       width: '203px',
-      textTransform: 'uppercase',
+      textTransform: 'none',
       fontFamily: 'Poppins',
       '& span': {
         color: '#000000',
@@ -117,17 +117,22 @@ export const customTheme = {
     root: {
       '&.popover-list-item': {
         minWidth: '200px',
-        padding: '13px 16px',
+        padding: '7.5px 16px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        '&:first-child': {
+          paddingTop: '10px',
+        },
+        '&:last-child': {
+          paddingBottom: '10px',
+        },
         '& .popover-tab-name': {
           fontFamily: 'Poppins',
           fontWeight: 300,
           fontSize: '14px',
           color: 'black',
           lineHeight: '107%',
-          letterSpacing: '-2%',
           textTransform: 'capitalize',
           flex: 1,
           textAlign: 'left',
@@ -138,7 +143,6 @@ export const customTheme = {
           fontSize: '14px',
           color: 'black',
           lineHeight: '107%',
-          letterSpacing: '-2%',
           textAlign: 'right',
           marginLeft: '16px',
         },
