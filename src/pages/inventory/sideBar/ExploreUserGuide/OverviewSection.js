@@ -4,7 +4,7 @@ import figure1 from "./images/figure1.png";
 const OverviewSection = ({ classes }) => (
   <>
     <div id="Overview" className={classes.sectionTitle}>
-      <p>Overview</p>
+      Overview
     </div>
     <div className={classes.contentContainer}>
       <p>

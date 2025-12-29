@@ -136,6 +136,11 @@ const Inventory = ({
     
     // Count filters, but handle age-related facets specially to avoid double counting
     Object.keys(activeFilters || {}).forEach(key => {
+      // Skip unknownAges keys as they are counted with their parent age field
+      if (key.endsWith('_unknownAges')) {
+        return;
+      }
+
       if (ageRelatedParams.includes(key)) {
         // For age-related facets, only count once regardless of slider or unknownAges
         const hasSliderFilter = activeFilters[key] && activeFilters[key].length > 0;
@@ -209,18 +214,6 @@ const Inventory = ({
             navigate(`/explore${queryStr}`);*/
             onClearAllFilters();
             store.dispatch(resetAllData());
-            
-            // Reset unknownAges state to default values
-            const ageRelatedParams = ['age_at_diagnosis', 'age_at_treatment_start', 'age_at_response', 'age_at_last_known_survival_status', 'participant_age_at_collection'];
-            ageRelatedParams.forEach(param => {
-              store.dispatch({
-                type: 'UNKNOWN_AGES_CHANGED',
-                payload: {
-                  datafield: param,
-                  unknownAges: 'include',
-                },
-              });
-            });
           }}
           className={classes.customButton}
           onMouseEnter={() => setIsHover(true)}

@@ -6,7 +6,7 @@ import figure8 from "./images/figure8.png";
 const CohortSection = ({ classes }) => (
   <div>
     <div id="Creating and managing cohorts" className={classes.sectionTitle}>
-      <p>Creating and Managing Cohorts</p>
+      Creating and Managing Cohorts
     </div>
     <div className={classes.contentContainer}>
       <p>

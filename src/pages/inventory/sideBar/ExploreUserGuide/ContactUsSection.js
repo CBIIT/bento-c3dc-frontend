@@ -3,7 +3,7 @@ import React from 'react';
 const ContactUsSection = ({ classes }) => (
   <div>
     <div id='Contact Us' className={classes.sectionTitle}>
-      <p>Contact Information</p>
+      Contact Information
     </div>
     <div className={classes.contentContainer}>
       <p style={{ paddingBottom: '10px' }}>
