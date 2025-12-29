@@ -65,7 +65,7 @@ const AnnouncementContainer = styled.div`
     margin-bottom: 10px;
     margin-right: 40px;
     font-size: 16px;
-    font-style: Open Sans;  
+    font-family: "Open Sans";  
     font-weight: 600;
     cursor: pointer;
 }
@@ -76,7 +76,7 @@ const AnnouncementContainer = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
     margin-right: 40px;
-    font-style: Open Sans;  
+    font-family: "Open Sans";  
     font-weight: 600;
 }
 .announcementCard { 
