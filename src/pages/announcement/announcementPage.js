@@ -315,7 +315,19 @@ const AnnouncementPage = () => {
               <div 
                 key={idx} 
                 className={'announcementCard'}
+                role={content.is_release_notes ? 'button' : undefined}
+                tabIndex={content.is_release_notes ? 0 : -1}
                 onClick={content.is_release_notes ? () => navigator("/release_notes") : undefined}
+                onKeyDown={
+                  content.is_release_notes
+                    ? (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                          event.preventDefault();
+                          navigator("/release_notes");
+                        }
+                      }
+                    : undefined
+                }
                 style={content.is_release_notes ? { cursor: 'pointer' } : undefined}
               >
                 <div className="sectionOne">
