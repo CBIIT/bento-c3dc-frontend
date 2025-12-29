@@ -42,6 +42,7 @@ const AnnouncementContainer = styled.div`
     flex-direction: column;
     align-items: center;
     background-width: 100%;
+    padding: 10px;
     padding-bottom: 100px;
   } 
 .options {
@@ -80,7 +81,7 @@ const AnnouncementContainer = styled.div`
 }
 .announcementCard { 
     border: 2px #9FBEB5 solid;
-    width: 1046px;
+    max-width: 1046px;
     min-height: 300px;
     border-radius: 20px;
     padding: 25px 30px 25px 30px;
