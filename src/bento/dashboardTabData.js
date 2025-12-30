@@ -524,91 +524,127 @@ export const DASHBOARD_QUERY_STATS = gql`
 `;
 
 export const GET_COHORT_METADATA_QUERY = gql`
-  query cohortMetadata(
-    # Demographics
-    $participant_pk: [String]
-    # Table config
-    $first: Int
-    $offset: Int
-    $order_by: String
-    $sort_direction: String
-  ) {
-    cohortMetadata(
-      # Demographics
-      participant_pk: $participant_pk
+query cohortMetadata(
+  # Demographics
+  $participant_pk: [String],
 
-      # Table config
-      first: $first
-      offset: $offset
-      order_by: $order_by
-      sort_direction: $sort_direction
-    ) {
-      dbgap_accession
+  # Table config
+  $first: Int,
+  $offset: Int,
+  $order_by: String,
+  $sort_direction: String
+) {
+cohortMetadata(
+  # Demographics
+  participant_pk: $participant_pk,
 
-      consent_groups {
-        consent_group_name
-        consent_group_number
+  # Table config
+  first: $first,
+  offset: $offset,
+  order_by: $order_by,
+  sort_direction: $sort_direction
+) {
+  dbgap_accession
 
-        participants {
-          id
-          participant_id
-          race
-          sex_at_birth
+  consent_groups {
+    consent_group_name
+    consent_group_number
 
-          diagnoses {
-            id
-            diagnosis_id
-            age_at_diagnosis
-            anatomic_site
-            diagnosis
-            diagnosis_basis
-            diagnosis_classification_system
-            diagnosis_comment
-            disease_phase
-            toronto_childhood_cancer_staging
-            tumor_classification
-            tumor_grade
-            tumor_stage_clinical_m
-            tumor_stage_clinical_n
-            tumor_stage_clinical_t
-          }
-          survivals {
-            id
-            survival_id
-            age_at_event_free_survival_status
-            age_at_last_known_survival_status
-            cause_of_death
-            event_free_survival_status
-            first_event
-            last_known_survival_status
-          }
-          synonyms {
-            associated_id
-            data_location
-            domain_category
-            domain_description
-            repository_of_synonym_id
-          }
-          treatments {
-            id
-            treatment_id
-            age_at_treatment_end
-            age_at_treatment_start
-            treatment_agent
-            treatment_type
-          }
-          treatment_responses {
-            id
-            treatment_response_id
-            age_at_response
-            response
-            response_category
-            response_system
-          }
-        }
+    participants {
+      id
+      participant_id
+      race
+      sex_at_birth
+
+      diagnoses {
+        id
+        diagnosis_id
+        age_at_diagnosis
+        anatomic_site
+        diagnosis
+        diagnosis_basis
+        diagnosis_classification_system
+        diagnosis_comment
+        disease_phase
+        toronto_childhood_cancer_staging
+        tumor_classification
+        tumor_grade
+        tumor_stage_clinical_m
+        tumor_stage_clinical_n
+        tumor_stage_clinical_t
+
+        __typename
       }
+      genetic_analyses {
+        id
+        genetic_analysis_id
+        alteration
+        alteration_effect
+        alteration_type
+        chromosome
+        cytoband
+        exon
+        fusion_partner_exon
+        fusion_partner_gene
+        gene_symbol
+        genomic_source_category
+        hgvs_coding
+        hgvs_genome
+        hgvs_protein
+        reference_genome
+        reported_significance
+        reported_significance_system
+        status
+        test
+      }
+      survivals {
+        id
+        survival_id
+        age_at_event_free_survival_status
+        age_at_last_known_survival_status
+        cause_of_death
+        event_free_survival_status
+        first_event
+        last_known_survival_status
+
+        __typename
+      }
+      synonyms {
+        associated_id
+        data_location
+        domain_category
+        domain_description
+        repository_of_synonym_id
+
+        __typename
+      }
+      treatments {
+        id
+        treatment_id
+        age_at_treatment_end
+        age_at_treatment_start
+        treatment_agent
+        treatment_type
+
+        __typename
+      }
+      treatment_responses {
+        id
+        treatment_response_id
+        age_at_response
+        response
+        response_category
+        response_system
+
+        __typename
+      }
+
+      __typename
     }
   }
+
+  __typename
+}}
 `;
 
 export const DISPLAY_COHORT_QUERY = gql`
