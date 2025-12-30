@@ -29,7 +29,6 @@ export const customTheme = {
       },
       '&.Mui-selected': {
         fontWeight: '500',
-        fontSize: '18px',
         '&.studies': {
           background: '#FFFFFF',
           color: '#000000',
