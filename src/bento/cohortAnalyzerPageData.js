@@ -216,4 +216,4 @@ export const treatmentTableConfig = {
 
 export const analyzer_query = [GET_PARTICIPANTS_OVERVIEW_QUERY, GET_DIAGNOSIS_OVERVIEW_QUERY, GET_TREATMENT_OVERVIEW_QUERY];
 export const analyzer_tables = [tableConfig, diagnosesTableConfig, treatmentTableConfig];
-export const responseKeys = ["participantOverview", "cohortManifest", "treatmentOverview"];
+export const responseKeys = ["participantOverview", "diagnosisOverview", "treatmentOverview"];
