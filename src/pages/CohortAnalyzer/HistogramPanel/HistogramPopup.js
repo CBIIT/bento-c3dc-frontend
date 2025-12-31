@@ -427,7 +427,7 @@ const ExpandedChartModal = ({
   <ResponsiveContainer id={`expanded-chart-${activeTab}`} width="100%"  height="100%">
     <BarChart
       data={data[activeTab]}
-      margin={{ top: 20, right: 30, left: 10, bottom: 60 }}
+      margin={{ top: 20, right: 30, left: 10, bottom: 35 }}
     >
       <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
       <XAxis
@@ -438,7 +438,8 @@ const ExpandedChartModal = ({
           const dataLength = (data[activeTab] && data[activeTab].length) || 1;
           const estimatedChartWidth = 800; // Larger width for expanded modal
           const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
-          return <CustomXAxisTick {...props} width={availableWidth} fontSize={10} />;
+          // Expanded view: both X and Y axis 13/13/0
+          return <CustomXAxisTick {...props} width={availableWidth} fontSize={13} lineHeight={13} letterSpacing={0} />;
         }}
         interval={0}
         angle={0}
@@ -452,7 +453,14 @@ const ExpandedChartModal = ({
     const formatted = num % 1 === 0 ? num : num.toFixed(1);
     return viewType[activeTab] === 'percentage' ? `${formatted}%` : formatted;
   }}
-        tick={{ fontSize: 11, fill: '#666666', fontFamily: 'Nunito', fontWeight: 500 }}
+        tick={{ 
+          fontSize: 13, 
+          fill: '#666666', 
+          fontFamily: 'Nunito', 
+          fontWeight: 500,
+          lineHeight: 13,
+          letterSpacing: 0
+        }}
       />
       <Tooltip content={(props) => ( <CustomChartTooltip {...props} viewType={viewType[activeTab]} cellHoverRef={cellHover} /> )} />
        {valueA>0 &&

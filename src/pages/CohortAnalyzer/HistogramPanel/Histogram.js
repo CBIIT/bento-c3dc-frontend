@@ -35,10 +35,16 @@ const useStyles = makeStyles({
     whiteSpace: 'nowrap',
     display: 'block',
   },
+  chartContentWrapper: {
+    margin: 0,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+  },
 });
 
 const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
-  const riskTableClasses = useStyles();
+  const classes = useStyles();
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({ c1, c2, c3 });
   const {
     data: kmPlotData,
@@ -369,6 +375,11 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
 
   const allInputsEmpty = [c1, c2, c3].every(arr => !Array.isArray(arr) || arr.length === 0);
 
+  // Helper function to check if dataset requires compact spacing
+  const requiresCompactSpacing = (dataset) => {
+    return dataset === 'race' || dataset === 'treatmentType' || dataset === 'response';
+  };
+
   return (
     <HistogramContainer>
       {/* Dataset Selection */}
@@ -473,7 +484,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
               </KmChartWrapper>
               <RiskTableWrapper ref={riskTableRef}>
                   <RiskTable
-                     classes={{ cohortName: riskTableClasses.cohortNameEllipsis }}
+                     classes={{ cohortName: classes.cohortNameEllipsis }}
                      cohortNameCharLimit={10}
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
@@ -539,7 +550,12 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                   </ChartActionButtons>
 
                 </HeaderSection>
-                <div style={{ margin: 0, width: '100%', display: 'flex', flexDirection: 'row' }}>
+                <div 
+                  className={classes.chartContentWrapper}
+                  style={{ 
+                    paddingBottom: requiresCompactSpacing(dataset) ? '12px' : '0px'
+                  }}
+                >
 
                   {Array.isArray(data[dataset]) && data[dataset].length > 0 ? (
                     <>
@@ -573,7 +589,12 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                       <ResponsiveContainer width="80%" height="100%">
                         <BarChart
                           data={filteredData[dataset]}
-                          margin={{ top: 20, right: 30, left: 10, bottom: 0 }}
+                          margin={{ 
+                            top: 20, 
+                            right: 30, 
+                            left: 10, 
+                            bottom: requiresCompactSpacing(dataset) ? 12 : 0 
+                          }}
                         >
                           <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
                           <XAxis
@@ -583,13 +604,22 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                             textAnchor="middle"
                             height={50}
                             tick={(props) => {
-                              // Calculate available width per tick based on chart width and data points
-                              // Assuming chart is about 80% of container width (from ResponsiveContainer)
-                              // and leaving some padding between ticks
+                           
                               const dataLength = (filteredData[dataset] && filteredData[dataset].length) || 1;
                               const estimatedChartWidth = 400; // Approximate width of chart area
                               const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
-                              return <CustomXAxisTick {...props} width={availableWidth} fontSize={8} />;
+                              
+                            
+                              let xFontSize = 11;
+                              let xLineHeight = 11;
+                              let xLetterSpacing = 0;
+                              
+                              if (requiresCompactSpacing(dataset)) {
+                                xFontSize = 10;
+                                xLineHeight = 10;
+                              }
+                              
+                              return <CustomXAxisTick {...props} width={availableWidth} fontSize={xFontSize} lineHeight={xLineHeight} letterSpacing={xLetterSpacing} />;
                             }}
                           />
                           <YAxis
@@ -598,7 +628,15 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                               const num = Number(value);
                               const formatted = num % 1 === 0 ? num : num.toFixed(1);
                               return viewType[dataset] === 'percentage' ? `${formatted}%` : formatted;
-                            }} tick={{ fontSize: 11, fill: '#666666', fontFamily: 'Nunito', fontWeight: 500 }}
+                            }} 
+                            tick={{ 
+                              fontSize: 11, 
+                              fill: '#666666', 
+                              fontFamily: 'Nunito', 
+                              fontWeight: 500,
+                              lineHeight: 11,
+                              letterSpacing: 0
+                            }}
                           />
                           <Tooltip content={<CustomChartTooltip viewType={viewType[dataset]} cellHoverRef={cellHover} />} />
                           {valueA > 0 && (

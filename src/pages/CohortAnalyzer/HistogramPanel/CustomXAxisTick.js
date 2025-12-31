@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import CustomChartTooltip from './CustomChartTooltip';
 
-const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
+const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8, lineHeight = fontSize, letterSpacing = 0 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
@@ -90,7 +90,9 @@ const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8 }) => {
             fill="#333"
             fontSize={fontSize}
             style={{
-              pointerEvents: isTruncated ? 'none' : 'auto'  // Disable pointer events on text when using rect
+              pointerEvents: isTruncated ? 'none' : 'auto',  // Disable pointer events on text when using rect
+              letterSpacing: `${letterSpacing}px`,
+              lineHeight: `${lineHeight}px`
             }}
           >
             {/* Add title to each text element as well for better browser support */}
