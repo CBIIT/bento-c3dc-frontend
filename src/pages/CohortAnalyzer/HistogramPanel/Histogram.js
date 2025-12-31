@@ -375,6 +375,11 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
 
   const allInputsEmpty = [c1, c2, c3].every(arr => !Array.isArray(arr) || arr.length === 0);
 
+  // Helper function to check if dataset requires compact spacing
+  const requiresCompactSpacing = (dataset) => {
+    return dataset === 'race' || dataset === 'treatmentType' || dataset === 'response';
+  };
+
   return (
     <HistogramContainer>
       {/* Dataset Selection */}
@@ -548,7 +553,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                 <div 
                   className={classes.chartContentWrapper}
                   style={{ 
-                    paddingBottom: (dataset === 'race' || dataset === 'treatmentType' || dataset === 'response') ? '12px' : '0px'
+                    paddingBottom: requiresCompactSpacing(dataset) ? '12px' : '0px'
                   }}
                 >
 
@@ -588,7 +593,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                             top: 20, 
                             right: 30, 
                             left: 10, 
-                            bottom: (dataset === 'race' || dataset === 'treatmentType' || dataset === 'response') ? 12 : 0 
+                            bottom: requiresCompactSpacing(dataset) ? 12 : 0 
                           }}
                         >
                           <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
@@ -609,7 +614,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                               let xLineHeight = 11;
                               let xLetterSpacing = 0;
                               
-                              if (dataset === 'race' || dataset === 'treatmentType' || dataset === 'response') {
+                              if (requiresCompactSpacing(dataset)) {
                                 xFontSize = 10;
                                 xLineHeight = 10;
                               }
