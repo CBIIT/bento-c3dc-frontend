@@ -539,7 +539,13 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                   </ChartActionButtons>
 
                 </HeaderSection>
-                <div style={{ margin: 0, width: '100%', display: 'flex', flexDirection: 'row' }}>
+                <div style={{ 
+                  margin: 0, 
+                  width: '100%', 
+                  display: 'flex', 
+                  flexDirection: 'row',
+                  paddingBottom: (dataset === 'race' || dataset === 'treatmentType' || dataset === 'response') ? '12px' : '0px'
+                }}>
 
                   {Array.isArray(data[dataset]) && data[dataset].length > 0 ? (
                     <>
@@ -573,7 +579,12 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                       <ResponsiveContainer width="80%" height="100%">
                         <BarChart
                           data={filteredData[dataset]}
-                          margin={{ top: 20, right: 30, left: 10, bottom: 0 }}
+                          margin={{ 
+                            top: 20, 
+                            right: 30, 
+                            left: 10, 
+                            bottom: (dataset === 'race' || dataset === 'treatmentType' || dataset === 'response') ? 12 : 0 
+                          }}
                         >
                           <CartesianGrid strokeDasharray="3 3" stroke="#e0e0e0" horizontal={true} vertical={false} />
                           <XAxis
@@ -589,7 +600,20 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                               const dataLength = (filteredData[dataset] && filteredData[dataset].length) || 1;
                               const estimatedChartWidth = 400; // Approximate width of chart area
                               const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
-                              return <CustomXAxisTick {...props} width={availableWidth} fontSize={8} />;
+                              
+                              // Apply font sizes based on chart type
+                              // Sex at birth, Survival Analysis, Risk: 11/11/0
+                              // Race, Treatment Outcome, Treatment Type: 10/10/0
+                              let xFontSize = 11;
+                              let xLineHeight = 11;
+                              let xLetterSpacing = 0;
+                              
+                              if (dataset === 'race' || dataset === 'treatmentType' || dataset === 'response') {
+                                xFontSize = 10;
+                                xLineHeight = 10;
+                              }
+                              
+                              return <CustomXAxisTick {...props} width={availableWidth} fontSize={xFontSize} lineHeight={xLineHeight} letterSpacing={xLetterSpacing} />;
                             }}
                           />
                           <YAxis
@@ -598,7 +622,15 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                               const num = Number(value);
                               const formatted = num % 1 === 0 ? num : num.toFixed(1);
                               return viewType[dataset] === 'percentage' ? `${formatted}%` : formatted;
-                            }} tick={{ fontSize: 11, fill: '#666666', fontFamily: 'Nunito', fontWeight: 500 }}
+                            }} 
+                            tick={{ 
+                              fontSize: 11, 
+                              fill: '#666666', 
+                              fontFamily: 'Nunito', 
+                              fontWeight: 500,
+                              lineHeight: 11,
+                              letterSpacing: 0
+                            }}
                           />
                           <Tooltip content={<CustomChartTooltip viewType={viewType[dataset]} cellHoverRef={cellHover} />} />
                           {valueA > 0 && (
