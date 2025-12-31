@@ -35,10 +35,16 @@ const useStyles = makeStyles({
     whiteSpace: 'nowrap',
     display: 'block',
   },
+  chartContentWrapper: {
+    margin: 0,
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+  },
 });
 
 const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
-  const riskTableClasses = useStyles();
+  const classes = useStyles();
   const { graphData, viewType, setViewType, activeTab, setActiveTab, selectedDatasets, expandedChart, setExpandedChart, chartRef, handleDatasetChange, downloadChart } = useHistogramData({ c1, c2, c3 });
   const {
     data: kmPlotData,
@@ -473,7 +479,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
               </KmChartWrapper>
               <RiskTableWrapper ref={riskTableRef}>
                   <RiskTable
-                     classes={{ cohortName: riskTableClasses.cohortNameEllipsis }}
+                     classes={{ cohortName: classes.cohortNameEllipsis }}
                      cohortNameCharLimit={10}
                     cohorts={cohorts}
                     timeIntervals={timeIntervals}
@@ -539,13 +545,12 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                   </ChartActionButtons>
 
                 </HeaderSection>
-                <div style={{ 
-                  margin: 0, 
-                  width: '100%', 
-                  display: 'flex', 
-                  flexDirection: 'row',
-                  paddingBottom: (dataset === 'race' || dataset === 'treatmentType' || dataset === 'response') ? '12px' : '0px'
-                }}>
+                <div 
+                  className={classes.chartContentWrapper}
+                  style={{ 
+                    paddingBottom: (dataset === 'race' || dataset === 'treatmentType' || dataset === 'response') ? '12px' : '0px'
+                  }}
+                >
 
                   {Array.isArray(data[dataset]) && data[dataset].length > 0 ? (
                     <>
@@ -594,16 +599,12 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                             textAnchor="middle"
                             height={50}
                             tick={(props) => {
-                              // Calculate available width per tick based on chart width and data points
-                              // Assuming chart is about 80% of container width (from ResponsiveContainer)
-                              // and leaving some padding between ticks
+                           
                               const dataLength = (filteredData[dataset] && filteredData[dataset].length) || 1;
                               const estimatedChartWidth = 400; // Approximate width of chart area
                               const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
                               
-                              // Apply font sizes based on chart type
-                              // Sex at birth, Survival Analysis, Risk: 11/11/0
-                              // Race, Treatment Outcome, Treatment Type: 10/10/0
+                            
                               let xFontSize = 11;
                               let xLineHeight = 11;
                               let xLetterSpacing = 0;
