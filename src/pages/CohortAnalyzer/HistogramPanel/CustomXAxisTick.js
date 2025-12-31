@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 import CustomChartTooltip from './CustomChartTooltip';
 
-const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8, lineHeight, letterSpacing = 0 }) => {
+const CustomXAxisTick = ({ x, y, payload, width, fontSize = 8, lineHeight = fontSize, letterSpacing = 0 }) => {
   const [showTooltip, setShowTooltip] = useState(false);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
 
