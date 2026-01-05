@@ -739,6 +739,7 @@ const styles = () => ({
     height: '100%',
     backgroundColor: 'white',
     border: 'solid 2px #096761',
+    position: 'relative',
   },
   image: {
     width: '293px',
@@ -757,7 +758,8 @@ const styles = () => ({
   },
   aboutButtonSection: {
     background: 'white',
-    height: '71px',
+    position: 'absolute',
+    bottom: '18px',
   },
   imgIconAbout: {
     width: '49px',
