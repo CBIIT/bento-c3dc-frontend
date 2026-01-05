@@ -3,7 +3,6 @@ import fig1 from "../assets/announcement/fig1.svg";
 import fig2 from "../assets/announcement/fig2.svg";
 import fig3 from "../assets/announcement/fig3.svg";
 import fig4 from "../assets/announcement/fig4.svg";
-import fig8 from "../assets/announcement/fig8.svg";
 import fig9 from "../assets/announcement/fig9.svg";
 
 export const announcementPageData = [
