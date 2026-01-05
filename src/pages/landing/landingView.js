@@ -755,8 +755,9 @@ const styles = () => ({
     height: '100%',
     backgroundColor: 'white',
     border: 'solid 2px #096761',
-    position: 'relative',
     boxSizing: 'border-box',
+    display: 'flex',
+    flexDirection: 'column',
   },
   image: {
     width: '100%',
@@ -773,11 +774,11 @@ const styles = () => ({
     fontSize: '16px',
     fontWeight: '400',
     lineHeight: '24px',
+    flex: 1,
   },
   aboutButtonSection: {
     background: 'white',
-    position: 'absolute',
-    bottom: LAYOUT_GAP,
+    marginBottom: LAYOUT_GAP,
   },
   imgIconAbout: {
     width: '49px',
