@@ -68,6 +68,7 @@ const AnnouncementContainer = styled.div`
     font-family: "Open Sans";  
     font-weight: 600;
     cursor: pointer;
+    border-bottom: 3px transparent solid;
 }
 .option-selected {
     border-bottom: 3px #07645C solid;
@@ -124,7 +125,6 @@ const AnnouncementContainer = styled.div`
       line-height: 24px;
       text-align: left;
       margin-top: 15px;
-      width: 120%;
     }
   .announcementButton{
     font-family: Poppins;
@@ -134,7 +134,7 @@ const AnnouncementContainer = styled.div`
     text-align: left;
     color: #3C7D76;
     border: 1px #3C7D76 solid;
-    padding: 5px;
+    padding: 5px 10px 5px 10px;
     border-radius: 20px;
     margin: 10px;
     margin-left: 0px;
