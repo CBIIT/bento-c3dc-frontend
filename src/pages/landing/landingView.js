@@ -709,11 +709,13 @@ const styles = () => ({
 
   aboutImage: {
     width: '100%',
-    height: '100%'
+    height: '249px',
+    objectFit: 'cover',
   },
   aboutImageSection: {
     height: '249px',
     width: '100%',
+    overflow: 'hidden',
   },
   DCWords: {
     height: '200px',
@@ -731,8 +733,15 @@ const styles = () => ({
     justifyContent: 'center',
   },
   contentLeft: {
-    float: 'left',
-    paddingRight: '18px',
+    flex: '0 0 300px',
+    boxSizing: 'border-box',
+  },
+  contentRight: {
+    flex: '0 0 604px',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '18px',
+    boxSizing: 'border-box',
   },
   about: {
     width: '300px',
@@ -740,10 +749,12 @@ const styles = () => ({
     backgroundColor: 'white',
     border: 'solid 2px #096761',
     position: 'relative',
+    boxSizing: 'border-box',
   },
   image: {
-    width: '293px',
+    width: '100%',
     height: '249px',
+    objectFit: 'cover',
   },
   aboutContent: {
     background: 'white',
@@ -824,24 +835,30 @@ const styles = () => ({
     lineHeight: '24px',
   },
 
+  contentRightTop: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '18px',
+    boxSizing: 'border-box',
+  },
   study: {
-    float: 'left',
-    margin: '0 10px 18px 0px',
     border: 'solid 2px #096761',
-
+    flex: 1,
+    boxSizing: 'border-box',
   },
   studyImg: {
     background: '#fff',
     height: '249px',
+    width: '100%',
+    overflow: 'hidden',
   },
   studies: {
-    float: 'left',
     border: 'solid 2px #096761',
+    flex: 1,
+    boxSizing: 'border-box',
   },
 
   contentRightBottom: {
-    float: 'left',
-    width: '604px',
     background: '#fff',
     backgroundImage: `url(${landingPageData.tile4.img})`,
     backgroundRepeat: 'no-repeat',
@@ -949,12 +966,11 @@ const styles = () => ({
     height: '40px',
   },
   landingContainerInner: {
-    width: '955px',
     display: 'flex',
-    justifyContent: 'center',
+    gap: '18px',
     background: '#e2fff6',
-    paddingTop: '15px',
-    paddingBottom: '17px',
+    padding: '20px',
+    boxSizing: 'border-box',
   },
 });
 export default withStyles(styles, { withTheme: true })(LandingView);
