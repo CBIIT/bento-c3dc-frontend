@@ -8,6 +8,13 @@ import { landingPageData } from '../../bento/landingPageData';
 import icon from '../../assets/landing/LP_ReadMore.svg';
 import iconAbout from '../../assets/landing/LP_About_Fullarticle.Arrow.svg';
 
+// Layout constants
+const TILE_IMAGE_HEIGHT = '249px';
+const LAYOUT_GAP = '18px';
+const CONTENT_LEFT_WIDTH = '300px';
+const CONTENT_RIGHT_WIDTH = '604px';
+const CONTAINER_PADDING = '20px';
+
 const LandingView = ({ classes, statsData }) => (
   <div className={classes.page}>
     <div className={classes.container}>
@@ -709,11 +716,11 @@ const styles = () => ({
 
   aboutImage: {
     width: '100%',
-    height: '249px',
+    height: TILE_IMAGE_HEIGHT,
     objectFit: 'cover',
   },
   aboutImageSection: {
-    height: '249px',
+    height: TILE_IMAGE_HEIGHT,
     width: '100%',
     overflow: 'hidden',
   },
@@ -733,18 +740,18 @@ const styles = () => ({
     justifyContent: 'center',
   },
   contentLeft: {
-    flex: '0 0 300px',
+    flex: `0 0 ${CONTENT_LEFT_WIDTH}`,
     boxSizing: 'border-box',
   },
   contentRight: {
-    flex: '0 0 604px',
+    flex: `0 0 ${CONTENT_RIGHT_WIDTH}`,
     display: 'flex',
     flexDirection: 'column',
-    gap: '18px',
+    gap: LAYOUT_GAP,
     boxSizing: 'border-box',
   },
   about: {
-    width: '300px',
+    width: CONTENT_LEFT_WIDTH,
     height: '100%',
     backgroundColor: 'white',
     border: 'solid 2px #096761',
@@ -753,7 +760,7 @@ const styles = () => ({
   },
   image: {
     width: '100%',
-    height: '249px',
+    height: TILE_IMAGE_HEIGHT,
     objectFit: 'cover',
   },
   aboutContent: {
@@ -770,7 +777,7 @@ const styles = () => ({
   aboutButtonSection: {
     background: 'white',
     position: 'absolute',
-    bottom: '18px',
+    bottom: LAYOUT_GAP,
   },
   imgIconAbout: {
     width: '49px',
@@ -838,7 +845,7 @@ const styles = () => ({
   contentRightTop: {
     display: 'flex',
     flexDirection: 'row',
-    gap: '18px',
+    gap: LAYOUT_GAP,
     boxSizing: 'border-box',
   },
   study: {
@@ -848,7 +855,7 @@ const styles = () => ({
   },
   studyImg: {
     background: '#fff',
-    height: '249px',
+    height: TILE_IMAGE_HEIGHT,
     width: '100%',
     overflow: 'hidden',
   },
@@ -967,9 +974,9 @@ const styles = () => ({
   },
   landingContainerInner: {
     display: 'flex',
-    gap: '18px',
+    gap: LAYOUT_GAP,
     background: '#e2fff6',
-    padding: '20px',
+    padding: CONTAINER_PADDING,
     boxSizing: 'border-box',
   },
 });
