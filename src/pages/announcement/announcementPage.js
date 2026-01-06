@@ -79,6 +79,8 @@ const AnnouncementContainer = styled.div`
     margin-right: 40px;
     padding-left: 4px;
     padding-right: 4px;
+    margin-right: 36px; /* REMOVE THE margin-right: 40px above */
+    margin-left: -4px;
     font-family: "Open Sans";  
     font-weight: 600;
 }
