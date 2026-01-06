@@ -77,6 +77,8 @@ const AnnouncementContainer = styled.div`
     margin-top: 10px;
     margin-bottom: 10px;
     margin-right: 40px;
+    padding-left: 4px;
+    padding-right: 4px;
     font-family: "Open Sans";  
     font-weight: 600;
 }
