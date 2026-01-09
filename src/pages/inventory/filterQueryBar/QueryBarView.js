@@ -2,18 +2,18 @@ import React from 'react';
 import { connect, useDispatch } from 'react-redux';
 import { 
   useLocation,
-  //useNavigate
+  useNavigate
 }  from "react-router-dom";
 import { clearAllFilters, clearFacetSection, clearSliderSection, toggleCheckBox } from '@bento-core/facet-filter';
 import { resetAllData, resetUploadData, updateAutocompleteData } from '@bento-core/local-find';
 // import { updateImportfrom } from '../../../components/Inventory/InventoryState';
 import store from '../../../store';
 import { QueryBarGenerator } from '@bento-core/query-bar';
-// import { generateQueryStr } from '@bento-core/util';
+import { generateQueryStr } from '@bento-core/util';
 import { 
   facetsConfig, 
   queryParams, 
-  //excludedParams, 
+  excludedParams, 
   ageRelatedParams 
 } from '../../../bento/dashTemplate';
 import { customStyles } from './QueryBarStyles';
@@ -35,7 +35,7 @@ import { generateUrl } from './QueryBarUtils';
 const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImportFrom }) => {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const sectionOrder = facetsConfig.map((v) => v.datafield);
 
@@ -112,15 +112,14 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
     },
     functions: {
       clearAll: () => {
-        /*
         const paramValue = queryParams
           .filter((param) => !excludedParams.includes(param))
           .reduce((acc, param) => {
             acc[param] = '';
             return acc;
           }, {});
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });*/
+        const queryStr = generateQueryStr(query, queryParams, paramValue);
+        navigate(`/explore${queryStr}`, { replace: true });
         dispatch(resetAllData());
         dispatch(clearAllFilters());
       },
