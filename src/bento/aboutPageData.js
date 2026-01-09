@@ -1,4 +1,4 @@
-import latestRelease from '../assets/releaseNotes/C3DC_Release_Notes_R8.pdf';
+import latestRelease from '../assets/releaseNotes/C3DC_Release_Notes_R8_V2.pdf';
 import userGuide from '../assets/releaseNotes/C3DC User Guide-R8-V1.pdf';
 
 export const aboutData = {
