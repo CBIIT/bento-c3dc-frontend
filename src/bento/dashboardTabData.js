@@ -2421,7 +2421,7 @@ const treatmentTab = {
         cellType: cellTypes.CUSTOM_ELEM
       },
       {
-        dataField: "id",
+        dataField: "treatment_id",
         header: "Treatment ID",
         display: true,
         hideable: false,
@@ -2681,7 +2681,7 @@ const treatmentResponseTab = {
         cellType: cellTypes.CUSTOM_ELEM
       },
       {
-        dataField: "id",
+        dataField: "survival_id",
         header: "Survival ID",
         display: true,
         hideable: false,
