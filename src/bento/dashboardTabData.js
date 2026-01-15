@@ -1661,6 +1661,7 @@ export const GET_GENETIC_ANALYSIS_OVERVIEW_QUERY = gql`
     sort_direction: $sort_direction
   ) {
     # Study
+    study_id
     dbgap_accession
 
     # Participant
@@ -2366,6 +2367,14 @@ const geneticAnalysisTab = {
       // Add 'Variant Allele Fraction' here once the data is available
       // Add 'DNA Index' here once the data is available
       // Add 'ISCN' here once the data is available
+      {
+        dataField: "study_id",
+        header: "Study ID",
+        display: false,
+        downloadOnly: true,
+        tooltipText: "sort",
+        role: cellTypes.DISPLAY
+      },
     ],
     id: 'genetic_analysis_tab',
     tabIndex: '3',
