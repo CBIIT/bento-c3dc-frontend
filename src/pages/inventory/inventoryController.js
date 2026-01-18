@@ -3,7 +3,7 @@ import { useApolloClient } from '@apollo/client';
 import { connect, useSelector } from 'react-redux';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
-import { getFilters, getFiltersWithUnknownAges, updateFilterState } from '@bento-core/facet-filter';
+import { getFiltersWithUnknownAges, updateFilterState } from '@bento-core/facet-filter';
 import { updateUploadData, updateAutocompleteData, updateUploadMetadata, resetUploadData } from '@bento-core/local-find';
 import store from '../../store';
 import {
@@ -311,6 +311,42 @@ const InventoryController = ((props) => {
       continueWithFilters();
     }
   }, [searchParams, navigationType]);
+
+  /* Disabled in C3DC but added in case for future use
+  // Listen for unknownAgesState changes and update URL
+  const unknownAgesState = useSelector((state) => state.statusReducer.unknownAgesState);
+  const [previousUnknownAgesState, setPreviousUnknownAgesState] = useState(null);
+
+  useEffect(() => {
+    if (unknownAgesState && previousUnknownAgesState !== unknownAgesState) {
+      const query = new URLSearchParams(window.location.search);
+      let hasChanges = false;
+
+      // Update URL with unknownAges parameters
+      Object.keys(unknownAgesState).forEach(key => {
+        const unknownAgesParam = `${key}_unknownAges`;
+        const value = unknownAgesState[key];
+        // Only update URL if value is not "include" (default)
+        if (value && value !== 'include') {
+          query.set(unknownAgesParam, value);
+          hasChanges = true;
+        } else if (value === 'include') {
+          // Remove parameter if it's the default value
+          query.delete(unknownAgesParam);
+          hasChanges = true;
+        }
+      });
+
+      // Update URL if there are changes
+      if (hasChanges) {
+        const newUrl = `/explore${query.toString() ? '?' + query.toString() : ''}`;
+        navigate(newUrl, { replace: true });
+      }
+
+      setPreviousUnknownAgesState(unknownAgesState);
+    }
+  }, [unknownAgesState, navigate, previousUnknownAgesState]);
+  */
 
   useEffect(() => {
     return () => {
