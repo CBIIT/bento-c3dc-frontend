@@ -39,7 +39,17 @@ export const generateUrl = async (queryStr, root, setUrlCallback) => {
         throw new Error('No valid URL returned from interop service');
       }
 
-      setUrlCallback(root.slice(0, -1).concat(`?filterQuery=${processedUrl}`));
+      // Extract only the pathname from root (strip existing query parameters)
+      // root might be relative like "/explore?dbgap_accession=..." or absolute
+      let cleanPath;
+      if (root.startsWith('http://') || root.startsWith('https://')) {
+        const url = new URL(root);
+        cleanPath = url.origin + url.pathname;
+      } else {
+        // Handle relative URLs - just take the pathname before any query params
+        cleanPath = root.split('?')[0];
+      }
+      setUrlCallback(`${cleanPath}?filterQuery=${processedUrl}`);
     } catch (error) {
       console.log('Error generating URL:', error);
     }
