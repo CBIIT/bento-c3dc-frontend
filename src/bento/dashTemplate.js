@@ -285,6 +285,7 @@ const studyFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    updateURL: true
   },
   {
     section: STUDY,
