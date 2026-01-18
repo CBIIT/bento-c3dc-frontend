@@ -210,7 +210,7 @@ const InventoryCover = ({
         const tab_number = parseInt(tab, 10);
         !isNaN(tab_number) && store.dispatch(changeTab(tab_number, 'facet'));
       } else {
-        store.dispatch(changeTab(0, 'facet'));
+        store.dispatch(changeTab(1, 'facet'));
       }
 
       // Data loading logic

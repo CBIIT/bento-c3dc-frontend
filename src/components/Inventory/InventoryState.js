@@ -7,7 +7,7 @@ export const initialState = {
   dashData: null,
   return_2_page: false,
   return_query_url: '',
-  tab: 0,
+  tab: 1,
   action_type: 'facet',
 };
 
