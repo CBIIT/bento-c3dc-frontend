@@ -211,12 +211,12 @@ const InventoryCover = ({
       if (action_type === "facet") {
         store.dispatch(inDataloading(true));
         getData(filters).then((result) => {
-          if (result.searchParticipants) {
+          if (result.getParticipants) {
             store.dispatch(return2Page(false));
             store.dispatch(returnQueryUrl(window.location.search));
             store.dispatch(afterInitialLoading());
             store.dispatch(inDataloading(false));
-            store.dispatch(syncUpDashboard(filters, result.searchParticipants));
+            store.dispatch(syncUpDashboard(filters, result.getParticipants));
           }
         });
       } else {
