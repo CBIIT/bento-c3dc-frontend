@@ -6,7 +6,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useApolloClient } from '@apollo/client';
-import { updateFilterState } from '@bento-core/facet-filter';
+import { updateFilterState, getFiltersWithUnknownAges } from '@bento-core/facet-filter';
 import { updateUploadData, updateAutocompleteData, updateUploadMetadata, resetUploadData } from '@bento-core/local-find';
 import store from '../../store';
 import { withStyles, CircularProgress, Backdrop } from '@material-ui/core';
@@ -35,6 +35,12 @@ const InventoryCover = ({
   const return_2_page = useSelector((state) => state.inventoryReducer && state.inventoryReducer.return_2_page);
   const return_query_url = useSelector((state) => state.inventoryReducer && state.inventoryReducer.return_query_url);
   const action_type = useSelector((state) => state.inventoryReducer && state.inventoryReducer.action_type);
+
+  // Selectors for filter-driven updates
+  const filterState = useSelector((state) => state.statusReducer.filterState);
+  const unknownAgesState = useSelector((state) => state.statusReducer.unknownAgesState);
+  const localFindUpload = useSelector((state) => state.localFind.upload);
+  const localFindAutocomplete = useSelector((state) => state.localFind.autocomplete);
 
   const client = useApolloClient();
 
@@ -245,6 +251,33 @@ const InventoryCover = ({
       continueWithFilters();
     }
   }, [searchParams, navigationType]);
+
+  // Re-fetch data when filters change (from UI interactions like facet selections)
+  useEffect(() => {
+    // Skip if we haven't done initial loading yet
+    if (initialLoading) {
+      return;
+    }
+
+    const activeFilters = {
+      ...getFiltersWithUnknownAges(filterState, unknownAgesState),
+      participant_id: [
+        ...(localFindUpload || []).map((obj) => obj.participant_id),
+        ...(localFindAutocomplete || []).map((obj) => obj.title),
+      ],
+    };
+
+    store.dispatch(inDataloading(true));
+    getData(activeFilters).then((result) => {
+      if (result && result.getParticipants) {
+        store.dispatch(inDataloading(false));
+        store.dispatch(syncUpDashboard(activeFilters, result.getParticipants));
+      }
+    }).catch((error) => {
+      console.error("Error fetching data:", error);
+      store.dispatch(inDataloading(false));
+    });
+  }, [filterState, unknownAgesState, localFindUpload, localFindAutocomplete, initialLoading]);
 
   /* Disabled in C3DC but added in case for future use
   // Listen for unknownAgesState changes and update URL
