@@ -63,7 +63,7 @@ export async function getAllParticipantIds(participantIdsArray) {
 export const setActiveFilterByPathQuery = (filterQuery) => {
   const query = decodeURIComponent(filterQuery || '');
   const filterObject = JSON.parse(query);
-  const { autocomplete = [], upload = [], uploadMetadata } = filterObject;
+  const { autocomplete = [], upload = [], uploadMetadata, unknownAgesState } = filterObject;
 
   const activeFilterValues = Object.keys(filterObject).reduce((curr, key) => {
     if (Array.isArray(filterObject[key])) {
@@ -85,14 +85,27 @@ export const setActiveFilterByPathQuery = (filterQuery) => {
       if (isSlider) {
         acc[key] = Object.keys(filters[key]).map(Number);
       } else {
-        acc[key] = filters[key]; 
+        acc[key] = filters[key];
       }
       return acc;
     }, {});
   };
-  
+
   store.dispatch(clearAllAndSelectFacet(transformSliderFilters(activeFilterValues)));
   store.dispatch(updateAutocompleteData(autocomplete));
   store.dispatch(updateUploadData(upload));
   store.dispatch(updateUploadMetadata(uploadMetadata));
+
+  // Restore unknownAgesState if it exists
+  if (unknownAgesState) {
+    Object.keys(unknownAgesState).forEach((datafield) => {
+      store.dispatch({
+        type: 'UNKNOWN_AGES_CHANGED',
+        payload: {
+          datafield,
+          unknownAges: unknownAgesState[datafield],
+        },
+      });
+    });
+  }
 };
