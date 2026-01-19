@@ -39,8 +39,36 @@ const InventoryController = (() => {
           setActiveFilterByPathQuery(data.key);
 
           // Build URL parameters for facets with updateURL: true
-          const query = new URLSearchParams();
+          const query = new URLSearchParams(window.location.search);
           const paramValue = {};
+
+          // Extract participant data from filterObject and convert to URL parameters
+          // Handle autocomplete participant IDs
+          if (filterObject.autocomplete && Array.isArray(filterObject.autocomplete) && filterObject.autocomplete.length > 0) {
+            paramValue['p_id'] = filterObject.autocomplete.map((data) => data.title).join('|');
+          }
+
+          // Handle uploaded participant IDs
+          if (filterObject.upload && Array.isArray(filterObject.upload) && filterObject.upload.length > 0) {
+            paramValue['u'] = filterObject.upload.map((data) => data.participant_id).join('|');
+
+            // Handle upload metadata (file content and unmatched IDs)
+            if (filterObject.uploadMetadata) {
+              const { fileContent, unmatched } = filterObject.uploadMetadata;
+
+              if (fileContent) {
+                const fc = fileContent
+                  .split(/[,\n]/g)
+                  .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
+                  .filter((e) => e && e.length > 1);
+                paramValue['u_fc'] = fc.join('|');
+              }
+
+              if (unmatched && Array.isArray(unmatched) && unmatched.length > 0) {
+                paramValue['u_um'] = unmatched.join('|');
+              }
+            }
+          }
 
           // Get list of facets that should update URL
           const updateURLFacets = facetsConfig

@@ -18,7 +18,7 @@ import {
 } from '@bento-core/local-find';
 import styles from './BentoFacetFilterStyle';
 import { NewFacetFilter } from '@bento-core/facet-filter';
-// import { generateQueryStr } from '@bento-core/util';
+import { generateQueryStr } from '@bento-core/util';
 import { facetsConfig, facetSectionVariables, queryParams } from '../../../bento/dashTemplate';
 import FacetFilterThemeProvider from './NewFilterThemeConfig';
 import {
@@ -54,13 +54,13 @@ const { SearchBox } = SearchBoxGenerator({
     searchType: ['participantIds', 'associatedIds'],
   },
   functions: {
-    updateBrowserUrl: (query, navigate, newUniqueValue) => {
-      /*
+    updateBrowserUrl: (newUniqueValue) => {
+      const query = new URLSearchParams(window.location.search);
       const paramValue = {
         'p_id': newUniqueValue.map((data) => data.title).join('|')
       };
       const queryStr = generateQueryStr(query, queryParams, paramValue);
-      navigate(`/explore${queryStr}`);*/
+      window.history.replaceState(null, '', `/explore${queryStr}`);
     },
     getSuggestions: async (searchType) => {
       try {
@@ -85,8 +85,8 @@ const { SearchBox } = SearchBoxGenerator({
 // Generate UploadModal Component
 const { UploadModal } = UploadModalGenerator({
   functions: {
-    updateBrowserUrl: (query, navigate, filename, fileContent, matchIds, unmatchedIds) => {
-      /*
+    updateBrowserUrl: (_filename, fileContent, matchIds, unmatchedIds) => {
+      const query = new URLSearchParams(window.location.search);
       const fc = fileContent
         .split(/[,\n]/g)
         .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
@@ -96,9 +96,8 @@ const { UploadModal } = UploadModalGenerator({
         'u_fc': fc.join('|'),
         'u_um': unmatchedIds.join('|'),
       };
-      /*const queryStr = generateQueryStr(query, queryParams, paramValue);
-      navigate(`/explore${queryStr}`);
-      */
+      const queryStr = generateQueryStr(query, queryParams, paramValue);
+      window.history.replaceState(null, '', `/explore${queryStr}`);
     },
     searchMatches: async (inputArray) => {
       try {
