@@ -4,6 +4,8 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalProvider } from '../../components/CohortModal/CohortModalContext';
 import { setActiveFilterByPathQuery } from './sideBar/BentoFilterUtils';
+import { facetsConfig, queryParams } from '../../bento/dashTemplate';
+import { generateQueryStr } from '@bento-core/util';
 import InventoryView from './inventoryView';
 import InventoryCover from './inventoryCover';
 
@@ -30,8 +32,45 @@ const InventoryController = (() => {
           return res.json();
         })
         .then((data) => {
+          // Parse the filterQuery data to extract facets
+          const filterObject = JSON.parse(decodeURIComponent(data.key || ''));
+
+          // Set the Redux state with all filters
           setActiveFilterByPathQuery(data.key);
-          const redirectUrl = "/explore";
+
+          // Build URL parameters for facets with updateURL: true
+          const query = new URLSearchParams();
+          const paramValue = {};
+
+          // Get list of facets that should update URL
+          const updateURLFacets = facetsConfig
+            .filter((f) => f.updateURL === true)
+            .map((f) => f.datafield);
+
+          // Add updateURL facets to paramValue
+          Object.keys(filterObject).forEach((key) => {
+            if (updateURLFacets.includes(key) && Array.isArray(filterObject[key])) {
+              paramValue[key] = filterObject[key].join('|');
+            }
+          });
+
+          // Add unknownAges parameters for updateURL facets if they exist
+          if (filterObject.unknownAgesState) {
+            Object.keys(filterObject.unknownAgesState).forEach((datafield) => {
+              if (updateURLFacets.includes(datafield)) {
+                const unknownAges = filterObject.unknownAgesState[datafield];
+                if (unknownAges && unknownAges !== 'include') {
+                  const unknownAgesParam = `${datafield}_unknownAges`;
+                  paramValue[unknownAgesParam] = unknownAges;
+                }
+              }
+            });
+          }
+
+          // Generate query string
+          const queryStr = generateQueryStr(query, queryParams, paramValue);
+          const redirectUrl = `/explore${queryStr}`;
+
           navigate(redirectUrl, { replace: true });
         })
         .catch((err) => {
