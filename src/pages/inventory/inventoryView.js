@@ -1,7 +1,6 @@
 import React, { useState , useMemo } from 'react';
 import {
   useLocation,
-  useNavigate,
 } from "react-router-dom";
 import { 
   Button,
@@ -193,7 +192,6 @@ const Inventory = ({
   const CustomClearAllFiltersBtn = ({ onClearAllFilters, disable }) => {
     const [isHover, setIsHover] = useState(false);
     const query = new URLSearchParams(useLocation().search);
-    const navigate = useNavigate();
     return (
       <div className={classes.floatRight}>
         <Button
@@ -211,7 +209,7 @@ const Inventory = ({
 
 
             const queryStr = generateQueryStr(query, queryParams, paramValue);
-            navigate(`/explore${queryStr}`);
+            window.history.replaceState(null, '', `/explore${queryStr}`);
             onClearAllFilters();
             store.dispatch(resetAllData());
 

@@ -307,7 +307,7 @@ const InventoryCover = ({
       // Update URL if there are changes
       if (hasChanges) {
         const newUrl = `/explore${query.toString() ? '?' + query.toString() : ''}`;
-        navigate(newUrl, { replace: true });
+        window.history.replaceState(null, '', newUrl);
       }
 
       setPreviousUnknownAgesState(unknownAgesState);

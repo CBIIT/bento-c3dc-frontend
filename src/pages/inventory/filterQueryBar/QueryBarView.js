@@ -1,8 +1,7 @@
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { 
-  useLocation,
-  useNavigate
+import {
+  useLocation
 }  from "react-router-dom";
 import { clearAllFilters, clearFacetSection, clearSliderSection, toggleCheckBox } from '@bento-core/facet-filter';
 import { resetAllData, resetUploadData, updateAutocompleteData } from '@bento-core/local-find';
@@ -35,7 +34,6 @@ import { generateUrl } from './QueryBarUtils';
 const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImportFrom }) => {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
-  const navigate = useNavigate();
 
   const sectionOrder = facetsConfig.map((v) => v.datafield);
 
@@ -119,7 +117,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
             return acc;
           }, {});
         const queryStr = generateQueryStr(query, queryParams, paramValue);
-        navigate(`/explore${queryStr}`, { replace: true });
+        window.history.replaceState(null, '', `/explore${queryStr}`);
         dispatch(resetAllData());
         dispatch(clearAllFilters());
       },
