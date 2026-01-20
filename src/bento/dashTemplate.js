@@ -831,7 +831,7 @@ export const widgetToolTipConfig = {
 
 // Maximum URL length before switching to filterQuery approach
 // URLs exceeding this limit will use the interop service filterQuery method
-export const URL_CHARACTER_LIMIT = 150;
+export const URL_CHARACTER_LIMIT = 5000;
 
 export const queryParams = [
    // Special search/import parameters
