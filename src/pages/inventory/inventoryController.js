@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalProvider } from '../../components/CohortModal/CohortModalContext';
 import { setActiveFilterByPathQuery } from './sideBar/BentoFilterUtils';
-import { facetsConfig, queryParams } from '../../bento/dashTemplate';
+import { facetsConfig, queryParams, URL_CHARACTER_LIMIT } from '../../bento/dashTemplate';
 import { generateQueryStr } from '@bento-core/util';
 import InventoryView from './inventoryView';
 import InventoryCover from './inventoryCover';
@@ -99,7 +99,11 @@ const InventoryController = (() => {
           const queryStr = generateQueryStr(query, queryParams, paramValue);
           const redirectUrl = `/explore${queryStr}`;
 
-          navigate(redirectUrl, { replace: true });
+          // Only navigate to the deconstructed URL if it's under the character limit
+          // Otherwise, keep the original filterQuery URL
+          if (redirectUrl.length <= URL_CHARACTER_LIMIT) {
+            navigate(redirectUrl, { replace: true });
+          }
         })
         .catch((err) => {
           console.error("Error loading filterQuery:", err);
