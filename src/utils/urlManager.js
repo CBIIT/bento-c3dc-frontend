@@ -82,12 +82,49 @@ export const updateBrowserUrlWithLimit = async (paramValue, options = {}) => {
     currentQuery.delete('filterQuery');
   }
 
+  // IMPORTANT: Always sync participant IDs from Redux state to ensure they're included in URL
+  // This prevents losing upload modal data when adding facet filters
+  const completeParamValue = { ...paramValue };
+
+  // Sync autocomplete participant IDs from Redux state
+  if (localFind.autocomplete && localFind.autocomplete.length > 0) {
+    completeParamValue.p_id = localFind.autocomplete.map((data) => data.title).join('|');
+  } else if (!paramValue.p_id) {
+    // Only clear if not explicitly set in paramValue
+    completeParamValue.p_id = '';
+  }
+
+  // Sync uploaded participant IDs from Redux state
+  if (localFind.upload && localFind.upload.length > 0) {
+    completeParamValue.u = localFind.upload.map((data) => data.participant_id).join('|');
+
+    // Sync upload metadata (file content and unmatched IDs)
+    if (localFind.uploadMetadata && localFind.uploadMetadata.fileContent) {
+      const fc = localFind.uploadMetadata.fileContent
+        .split(/[,\n]/g)
+        .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
+        .filter((e) => e && e.length > 1);
+      completeParamValue.u_fc = fc.join('|');
+    }
+
+    if (localFind.uploadMetadata
+      && localFind.uploadMetadata.unmatched
+      && localFind.uploadMetadata.unmatched.length > 0) {
+      completeParamValue.u_um = localFind.uploadMetadata.unmatched.join('|');
+    }
+  } else if (!paramValue.u) {
+    // Only clear if not explicitly set in paramValue
+    completeParamValue.u = '';
+    completeParamValue.u_fc = '';
+    completeParamValue.u_um = '';
+  }
+
   // Generate the query string with current parameters (excluding old filterQuery)
-  const queryStr = generateQueryStr(currentQuery, queryParams, paramValue);
+  const queryStr = generateQueryStr(currentQuery, queryParams, completeParamValue);
   const fullUrl = `${basePath}${queryStr}`;
 
-  // Check if URL exceeds character limit OR if we were already using filterQuery
-  if (fullUrl.length > URL_CHARACTER_LIMIT || hasFilterQuery) {
+  // Check if URL exceeds character limit
+  if (fullUrl.length > URL_CHARACTER_LIMIT) {
     // Build complete filter state object from Redux (the source of truth)
     const filterObject = buildFilterStateObject(activeFilters, localFind, unknownAgesState);
     const filterQueryStr = JSON.stringify(filterObject);
@@ -97,6 +134,10 @@ export const updateBrowserUrlWithLimit = async (paramValue, options = {}) => {
       // The generateUrl callback receives the full URL with filterQuery parameter
       window.history.replaceState(null, '', filterQueryUrl);
     });
+  } else if (hasFilterQuery) {
+    // We were using filterQuery but the deconstructed URL is now under the limit
+    // We can switch back to normal URL to make it more readable
+    window.history.replaceState(null, '', fullUrl);
   } else {
     // URL is under limit, use normal approach
     window.history.replaceState(null, '', fullUrl);
