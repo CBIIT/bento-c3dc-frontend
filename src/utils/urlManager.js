@@ -72,14 +72,23 @@ export const updateBrowserUrlWithLimit = async (paramValue, options = {}) => {
     basePath = '/explore',
   } = options;
 
-  // Generate the query string with current parameters
-  const query = new URLSearchParams(window.location.search);
-  const queryStr = generateQueryStr(query, queryParams, paramValue);
+  // Check if we're currently using a filterQuery URL
+  const currentQuery = new URLSearchParams(window.location.search);
+  const hasFilterQuery = currentQuery.has('filterQuery');
+
+  // If we're using filterQuery, we need to rebuild from Redux state, not from URL
+  // Remove filterQuery from current query to avoid mixing approaches
+  if (hasFilterQuery) {
+    currentQuery.delete('filterQuery');
+  }
+
+  // Generate the query string with current parameters (excluding old filterQuery)
+  const queryStr = generateQueryStr(currentQuery, queryParams, paramValue);
   const fullUrl = `${basePath}${queryStr}`;
 
-  // Check if URL exceeds character limit
-  if (fullUrl.length > URL_CHARACTER_LIMIT) {
-    // Build complete filter state object
+  // Check if URL exceeds character limit OR if we were already using filterQuery
+  if (fullUrl.length > URL_CHARACTER_LIMIT || hasFilterQuery) {
+    // Build complete filter state object from Redux (the source of truth)
     const filterObject = buildFilterStateObject(activeFilters, localFind, unknownAgesState);
     const filterQueryStr = JSON.stringify(filterObject);
 
