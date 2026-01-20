@@ -9,16 +9,17 @@ import { resetAllData, resetUploadData, updateAutocompleteData } from '@bento-co
 import store from '../../../store';
 import { QueryBarGenerator } from '@bento-core/query-bar';
 import { generateQueryStr } from '@bento-core/util';
-import { 
-  facetsConfig, 
-  queryParams, 
-  excludedParams, 
-  ageRelatedParams 
+import {
+  facetsConfig,
+  queryParams,
+  excludedParams,
+  ageRelatedParams
 } from '../../../bento/dashTemplate';
 import { customStyles } from './QueryBarStyles';
 import { Container, createTheme, ThemeProvider } from '@material-ui/core';
 import theme from './QueryBarTheme';
 import { generateUrl } from './QueryBarUtils';
+import { useUrlManager } from '../../../hooks/useUrlManager';
 
 /**
  * Generate the Explore Tab Query Bar
@@ -34,6 +35,7 @@ import { generateUrl } from './QueryBarUtils';
 const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImportFrom }) => {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
+  const updateUrl = useUrlManager('/explore');
 
   const sectionOrder = facetsConfig.map((v) => v.datafield);
 
@@ -177,16 +179,14 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
           'u_fc': '',
           'u_um': '',
         };
-        const queryStr = generateQueryStr(query, queryParams, paramValue);
-        window.history.replaceState(null, '', `/explore${queryStr}`);
+        updateUrl(paramValue);
         dispatch(resetUploadData());
       },
       clearAutocomplete: () => {
         const paramValue = {
           'p_id': ''
         };
-        const queryStr = generateQueryStr(query, queryParams, paramValue);
-        window.history.replaceState(null, '', `/explore${queryStr}`);
+        updateUrl(paramValue);
         dispatch(updateAutocompleteData([]));
       },
       deleteAutocompleteItem: (title) => {
@@ -199,8 +199,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
           const paramValue = {
             'p_id': newdata.map((dt) => dt.title).join('|')
           };
-          const queryStr = generateQueryStr(query, queryParams, paramValue);
-          window.history.replaceState(null, '', `/explore${queryStr}`);
+          updateUrl(paramValue);
           dispatch(updateAutocompleteData(newdata));
         }
       },
@@ -214,8 +213,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
           // Sync participant IDs from Redux state
           syncParticipantIdsToUrl(paramValue);
 
-          const queryStr = generateQueryStr(query, queryParams, paramValue);
-          window.history.replaceState(null, '', `/explore${queryStr}`);
+          updateUrl(paramValue);
         }
         dispatch(clearFacetSection(section));
       },
@@ -235,8 +233,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
             // Sync participant IDs from Redux state
             syncParticipantIdsToUrl(paramValue);
 
-            const queryStr = generateQueryStr(query, queryParams, paramValue);
-            window.history.replaceState(null, '', `/explore${queryStr}`);
+            updateUrl(paramValue);
           }
 
           // Reset the unknownAges parameter in Redux state
@@ -262,8 +259,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
             // Sync participant IDs from Redux state
             syncParticipantIdsToUrl(paramValue);
 
-            const queryStr = generateQueryStr(query, queryParams, paramValue);
-            window.history.replaceState(null, '', `/explore${queryStr}`);
+            updateUrl(paramValue);
           }
           dispatch(clearSliderSection(section));
         }
@@ -280,8 +276,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
           // Sync participant IDs from Redux state
           syncParticipantIdsToUrl(paramValue);
 
-          const queryStr = generateQueryStr(query, queryParams, paramValue);
-          window.history.replaceState(null, '', `/explore${queryStr}`);
+          updateUrl(paramValue);
         }
 
         // Reset the corresponding unknownAges parameter in Redux state
@@ -309,8 +304,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
           // Sync participant IDs from Redux state
           syncParticipantIdsToUrl(paramValue);
 
-          const queryStr = generateQueryStr(query, queryParams, paramValue);
-          window.history.replaceState(null, '', `/explore${queryStr}`);
+          updateUrl(paramValue);
         }
 
         dispatch(toggleCheckBox({

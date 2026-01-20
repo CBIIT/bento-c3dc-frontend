@@ -829,6 +829,10 @@ export const widgetToolTipConfig = {
 // --------------- query url configuration --------------
 // Facets, tab, pagination paramters
 
+// Maximum URL length before switching to filterQuery approach
+// URLs exceeding this limit will use the interop service filterQuery method
+export const URL_CHARACTER_LIMIT = 150;
+
 export const queryParams = [
    // Special search/import parameters
    'import_from', 'p_id', 'u', 'u_fc', 'u_um',

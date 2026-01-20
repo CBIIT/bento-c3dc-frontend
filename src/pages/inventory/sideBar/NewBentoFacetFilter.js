@@ -24,6 +24,7 @@ import FacetFilterThemeProvider from './NewFilterThemeConfig';
 import {
   getAllParticipantIds, getAllIds,
 } from './BentoFilterUtils';
+import { useUrlManager } from '../../../hooks/useUrlManager';
 
 const CustomExpansionPanelSummary = withStyles({
   root: {
@@ -141,6 +142,7 @@ const NewBentoFacetFilter = ({
   selectedSection,
   unknownAgesState,
 }) => {
+  const updateUrl = useUrlManager('/explore');
   /** Note:
   * Generate Custom facet Section Component
   * 1. Config local search input for Case
@@ -217,6 +219,7 @@ const NewBentoFacetFilter = ({
               queryParams={queryParams}
               unknownAgesState={unknownAgesState}
               searchFacetClasses={classes}
+              onUrlUpdate={updateUrl}
             />
           </FacetFilterThemeProvider>
         )
