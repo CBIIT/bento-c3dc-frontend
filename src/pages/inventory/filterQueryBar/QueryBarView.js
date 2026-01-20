@@ -37,6 +37,46 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
 
   const sectionOrder = facetsConfig.map((v) => v.datafield);
 
+  // Helper function to sync participant IDs from Redux state to URL
+  const syncParticipantIdsToUrl = (paramValue) => {
+    /* eslint-disable no-param-reassign */
+    // Sync autocomplete participant IDs
+    if (localFind && localFind.autocomplete && localFind.autocomplete.length > 0) {
+      paramValue.p_id = localFind.autocomplete.map((data) => data.title).join('|');
+    } else {
+      paramValue.p_id = '';
+    }
+
+    // Sync uploaded participant IDs
+    if (localFind && localFind.upload && localFind.upload.length > 0) {
+      paramValue.u = localFind.upload.map((data) => data.participant_id).join('|');
+
+      // Sync upload metadata
+      if (localFind.uploadMetadata && localFind.uploadMetadata.fileContent) {
+        const fc = localFind.uploadMetadata.fileContent
+          .split(/[,\n]/g)
+          .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
+          .filter((e) => e && e.length > 1);
+        paramValue.u_fc = fc.join('|');
+      } else {
+        paramValue.u_fc = '';
+      }
+
+      if (localFind.uploadMetadata
+        && localFind.uploadMetadata.unmatched
+        && localFind.uploadMetadata.unmatched.length > 0) {
+        paramValue.u_um = localFind.uploadMetadata.unmatched.join('|');
+      } else {
+        paramValue.u_um = '';
+      }
+    } else {
+      paramValue.u = '';
+      paramValue.u_fc = '';
+      paramValue.u_um = '';
+    }
+    /* eslint-enable no-param-reassign */
+  };
+
   // Create mapped filter state from regular facets
   const mappedFilterState = Object.keys(statusReducer || {}).map((facet) => {
     const config = facetsConfig.find((config) => config.datafield === facet);
@@ -165,16 +205,23 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         }
       },
       resetFacetSection: (section) => {
-        const field = section.datafield;
-        let paramValue = {};
-        paramValue[field] = '';
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });
+        // Only update URL if updateURL flag is explicitly set to true in facet config
+        if (section.updateURL === true) {
+          const field = section.datafield;
+          const paramValue = {};
+          paramValue[field] = '';
+
+          // Sync participant IDs from Redux state
+          syncParticipantIdsToUrl(paramValue);
+
+          const queryStr = generateQueryStr(query, queryParams, paramValue);
+          window.history.replaceState(null, '', `/explore${queryStr}`);
+        }
         dispatch(clearFacetSection(section));
       },
       resetFacetSlider: (section) => {
         const field = section.datafield;
-        let paramValue = {};
+        const paramValue = {};
 
         // Check if this is an unknownAges entry
         if (section.isUnknownAges) {
@@ -182,8 +229,15 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
           const unknownAgesField = `${section.parentDatafield}_unknownAges`;
           paramValue[unknownAgesField] = '';
 
-          // const queryStr = generateQueryStr(query, queryParams, paramValue);
-          // navigate(`/explore${queryStr}`, { replace: true });
+          // Get the parent config to check updateURL flag
+          const parentConfig = facetsConfig.find((c) => c.datafield === section.parentDatafield);
+          if (parentConfig && parentConfig.updateURL === true) {
+            // Sync participant IDs from Redux state
+            syncParticipantIdsToUrl(paramValue);
+
+            const queryStr = generateQueryStr(query, queryParams, paramValue);
+            window.history.replaceState(null, '', `/explore${queryStr}`);
+          }
 
           // Reset the unknownAges parameter in Redux state
           store.dispatch({
@@ -203,19 +257,32 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
             paramValue[unknownAgesField] = '';
           }
 
-          // const queryStr = generateQueryStr(query, queryParams, paramValue);
-          // navigate(`/explore${queryStr}`, { replace: true });
+          // Only update URL if updateURL flag is explicitly set to true in facet config
+          if (section.updateURL === true) {
+            // Sync participant IDs from Redux state
+            syncParticipantIdsToUrl(paramValue);
+
+            const queryStr = generateQueryStr(query, queryParams, paramValue);
+            window.history.replaceState(null, '', `/explore${queryStr}`);
+          }
           dispatch(clearSliderSection(section));
         }
       },
       resetUnknownAges: (section) => {
         const field = section.parentDatafield || section.datafield.replace('_unknownAges', '');
         const unknownAgesField = `${field}_unknownAges`;
-        let paramValue = {};
+        const paramValue = {};
         paramValue[unknownAgesField] = '';
 
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });
+        // Get the parent config to check updateURL flag
+        const parentConfig = facetsConfig.find((c) => c.datafield === field);
+        if (parentConfig && parentConfig.updateURL === true) {
+          // Sync participant IDs from Redux state
+          syncParticipantIdsToUrl(paramValue);
+
+          const queryStr = generateQueryStr(query, queryParams, paramValue);
+          window.history.replaceState(null, '', `/explore${queryStr}`);
+        }
 
         // Reset the corresponding unknownAges parameter in Redux state
         store.dispatch({
@@ -233,10 +300,19 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         if (idx > -1) {
           items.splice(idx, 1);
         }
-        let paramValue = {};
-        paramValue[field] = items.length > 0 ? items.join('|') : '';
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });
+
+        // Only update URL if updateURL flag is explicitly set to true in facet config
+        if (section.updateURL === true) {
+          const paramValue = {};
+          paramValue[field] = items.length > 0 ? items.join('|') : '';
+
+          // Sync participant IDs from Redux state
+          syncParticipantIdsToUrl(paramValue);
+
+          const queryStr = generateQueryStr(query, queryParams, paramValue);
+          window.history.replaceState(null, '', `/explore${queryStr}`);
+        }
+
         dispatch(toggleCheckBox({
           datafield: section.datafield,
           isChecked: false,
