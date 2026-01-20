@@ -128,26 +128,25 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         };
         // const queryStr = generateQueryStr(query, queryParams, paramValue);
         // navigate(`/explore${queryStr}`, { replace: true });
-        dispatch(updateImportfrom(null, []));
+        // dispatch(updateImportfrom(null, []));
+        */
       },
       clearUpload: () => {
-        /*
         const paramValue = {
           'u': '',
           'u_fc': '',
           'u_um': '',
         };
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });*/
+        const queryStr = generateQueryStr(query, queryParams, paramValue);
+        window.history.replaceState(null, '', `/explore${queryStr}`);
         dispatch(resetUploadData());
       },
       clearAutocomplete: () => {
-        /*
         const paramValue = {
           'p_id': ''
         };
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });*/
+        const queryStr = generateQueryStr(query, queryParams, paramValue);
+        window.history.replaceState(null, '', `/explore${queryStr}`);
         dispatch(updateAutocompleteData([]));
       },
       deleteAutocompleteItem: (title) => {
@@ -157,12 +156,11 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
 
         if (index > -1) {
           newdata.splice(index, 1);
-          /*
           const paramValue = {
             'p_id': newdata.map((dt) => dt.title).join('|')
           };
-          // const queryStr = generateQueryStr(query, queryParams, paramValue);
-          // navigate(`/explore${queryStr}`, { replace: true });*/
+          const queryStr = generateQueryStr(query, queryParams, paramValue);
+          window.history.replaceState(null, '', `/explore${queryStr}`);
           dispatch(updateAutocompleteData(newdata));
         }
       },
