@@ -153,10 +153,10 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         // navigate(`/explore${queryStr}`, { replace: true });*/
         dispatch(updateAutocompleteData([]));
       },
-      deleteAutocompleteItem: (title) => {
+      deleteAutocompleteItem: (item) => {
         const { autocomplete } = localFind;
         const newdata = [...autocomplete];
-        const index = newdata.findIndex((v) => v.title === title);
+        const index = newdata.findIndex((v) => v.title === item.title && v.type === item.type);
 
         if (index > -1) {
           newdata.splice(index, 1);
@@ -234,6 +234,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
       resetFacetCheckbox: (section, checkbox) => {
         const field = section.datafield;
         const items = section.items;
+        alert("test6")
         const idx = items.indexOf(checkbox);
         if (idx > -1) {
           items.splice(idx, 1);
