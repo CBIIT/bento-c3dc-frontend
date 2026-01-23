@@ -26,6 +26,7 @@ import TreatmentTypePlaceHolder from '../../../assets/histogram/TreatmentTypePla
 import RiskTable from '@bento-core/risk-table';
 
 import * as htmlToImage from 'html-to-image';
+import { NoDataCard } from '../NoDataCard';
 
 const useStyles = makeStyles({
   cohortNameEllipsis: {
@@ -668,7 +669,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                         <img src={nullImages[dataset]} alt="No data" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                       </div>) : (
                       <div style={{ width: '100%', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <p>No data available</p>
+                        <NoDataCard />
                       </div>
                     )
                   )}

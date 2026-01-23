@@ -34,6 +34,7 @@ import { KaplanMeierChart } from '@bento-core/kmplot';
 import RiskTable from '@bento-core/risk-table';
 import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem, } from './HistogramPanel.styled';
 import * as htmlToImage from 'html-to-image';
+import { NoDataCard } from "../NoDataCard";
 
 const ExpandedChartModal = ({
   activeTab,
@@ -477,7 +478,7 @@ const ExpandedChartModal = ({
   </ResponsiveContainer>
 ) : (
   <ModalNoDataContainer>
-    No data available
+   <NoDataCard /> 
   </ModalNoDataContainer>
 )}
 
