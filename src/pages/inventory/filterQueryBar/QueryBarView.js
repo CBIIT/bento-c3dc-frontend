@@ -234,7 +234,6 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
       resetFacetCheckbox: (section, checkbox) => {
         const field = section.datafield;
         const items = section.items;
-        alert("test6")
         const idx = items.indexOf(checkbox);
         if (idx > -1) {
           items.splice(idx, 1);
