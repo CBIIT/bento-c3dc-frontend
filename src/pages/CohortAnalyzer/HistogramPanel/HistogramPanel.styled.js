@@ -305,12 +305,15 @@ export const KmChartModalWrapper = styled.div`
 `;
 
 export const RiskTableModalWrapper = styled.div`
-  width: 100%;
-  padding-right: 145px;
+  width: 75%;
+  padding-right: 5px;
   overflow-x: auto;
   overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 280px;
-  flex-shrink: 0;
+  padding-bottom: 15px;
 `;
 
 export const ModalHeaderContainer = styled.div`

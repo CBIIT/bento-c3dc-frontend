@@ -3,8 +3,8 @@ import React from 'react';
 export const NoDataCard = () => {
   return (
     <div style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>    
-    <div className="no-data-card">
-  <svg width="896" height="440" viewBox="0 0 896 440" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <div className="no-data-card" style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+  <svg style={{ width: '100%', height: '100%', maxWidth: '100%', maxHeight: '100%' }} viewBox="0 0 896 440" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
 <line x1="85.5" y1="376.495" x2="85.5" y2="10.4951" stroke="#666666"/>
 <line x1="85.5" y1="376.495" x2="85.5" y2="10.4951" stroke="#666666"/>
 <line x1="85.5" y1="376.495" x2="85.5" y2="10.4951" stroke="#666666"/>
@@ -82,6 +82,18 @@ export const NoDataCard = () => {
 <line x1="84.9997" y1="353.75" x2="814" y2="353.25" stroke="#CCCCCC" stroke-dasharray="3 3"/>
 <line y1="376.5" x2="815" y2="376.5" stroke="#666666"/>
 </svg>
+      <div style={{ 
+        position: 'absolute',
+        fontFamily: 'Open Sans',
+        top: '50%', 
+        left: '50%', 
+        transform: 'translate(-50%, -50%)',
+        fontSize: '16px',
+        fontWeight: '400',
+        color: '#000000'
+      }}>
+        No Data Available 
+      </div>
  </div>
  </div>
   );

@@ -668,7 +668,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                       <div style={{ width: '100%', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                         <img src={nullImages[dataset]} alt="No data" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                       </div>) : (
-                      <div style={{ width: '100%', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <div style={{ width: '100%', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center', overflow: 'hidden' }}>
                         <NoDataCard />
                       </div>
                     )
