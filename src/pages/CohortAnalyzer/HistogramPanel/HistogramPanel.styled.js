@@ -6,6 +6,12 @@ export const barColors = {
   colorC: '#A3CCE8'
 };
 
+export const kmplotColors = {
+  colorA: '#B18A00',
+  colorB: '#00A45C',
+  colorC: '#008FF7'
+};
+
 export const HistogramContainer = styled.div`
   background: white;
   border: 1px solid #679AAA;
