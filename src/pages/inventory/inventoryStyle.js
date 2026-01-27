@@ -160,7 +160,7 @@ export default () => ({
       minHeight: '48px',
       paddingLeft: '14px',
       marginBottom: '-1px',
-      paddingRight: '14px',
+      paddingRight: '11px',
     }
   },
   categoryContainer: {
