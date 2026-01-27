@@ -156,7 +156,7 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
       deleteAutocompleteItem: (item) => {
         const { autocomplete } = localFind;
         const newdata = [...autocomplete];
-        const index = newdata.findIndex((v) => v.title === item.title && v.type === item.type);
+        const index = newdata.findIndex((v) => v.title === item.title && v.type === item.type && v.synonym === item.synonym);
 
         if (index > -1) {
           newdata.splice(index, 1);
