@@ -427,6 +427,24 @@ const modalFilterStyles = {
   checkedContainer: {
   },
   itemsContainer: {
+  '&::-webkit-scrollbar': {
+    width: '17px',
+    backgroundColor: '#FFFFFF',
+  },
+
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: '#CECECE',
+    borderRadius: '20px',
+    border: '4px solid #FFFFFF',
+    backgroundClip: 'padding-box',
+  },
+
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#477C90',
+    borderRadius: '20px',
+    border: '4px solid transparent',
+    backgroundClip: 'padding-box',
+  },
   },
   sortingContainer: {
   },
