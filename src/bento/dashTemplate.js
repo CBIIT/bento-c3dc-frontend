@@ -114,7 +114,9 @@ export const facetSectionVariables = {
       float: 'left',
       width: '50%',
       display: 'flex',
+      alignItems: 'center',
       textTransform: 'uppercase',
+      maxHeight: '22px',
     },
     maxValue: {
       fontFamily: 'Nunito',
@@ -124,7 +126,9 @@ export const facetSectionVariables = {
       marginBottom: '0px',
       width: '50%',
       display: 'flex',
+      alignItems: 'center',
       textTransform: 'uppercase',
+      maxHeight: '22px',
     },
     rail: {
       borderRadius: 4,
@@ -238,8 +242,9 @@ export const facetSectionVariables = {
         color: '#717171',
         background: '#F0F0F0',
         '& input': {
+          height: '22px',
           width: '68px',
-          paddingLeft: '2px',
+          padding: '0px 0px 0px 2px',
         },
       },
       slider_INPUT_MAX: {
@@ -249,8 +254,9 @@ export const facetSectionVariables = {
         color: '#717171',
         background: '#F0F0F0',
         '& input': {
+          height: '22px',
           width: '68px',
-          paddingLeft: '2px',
+          padding: '0px 0px 0px 2px',
         },
       },
     },
