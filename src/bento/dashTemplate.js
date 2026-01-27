@@ -254,6 +254,26 @@ export const facetSectionVariables = {
         },
       },
     },
+    unknownAgesRadioGroup: {
+      flexDirection: 'row',
+      gap: '6px',
+      padding: '9px 0px',
+    },
+    radioLabel: {
+      marginRight: '10px',
+      marginBottom: '0px',
+      marginTop: '0px',
+      '&:nth-of-type(2)': {
+        paddingLeft: '4px',
+      },
+    },
+    radio: {
+      color: '#CCCCCC',
+      padding: '0px 9px',
+      '&:hover': {
+        backgroundColor: 'transparent',
+      },
+    },
   }
 
 // Helper function to create section-specific slider styles
