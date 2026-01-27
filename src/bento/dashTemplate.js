@@ -254,10 +254,18 @@ export const facetSectionVariables = {
         },
       },
     },
+    unknownAgesTitle: {
+      fontFamily: 'Poppins',
+      fontSize: '13px',
+      fontWeight: '400',
+      color: '#323232',
+      marginBottom: '0px',
+      letterSpacing: '0.25px',
+    },
     unknownAgesRadioGroup: {
       flexDirection: 'row',
       gap: '6px',
-      padding: '9px 0px',
+      padding: '8px 0px 9px 0px',
     },
     radioLabel: {
       marginRight: '10px',
