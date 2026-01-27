@@ -365,10 +365,81 @@ const checkboxStyles = {
   },
 };
 
+// Modal styles for expanded search view
+const modalStyles = {
+  header: {
+  },
+  closeButton: {
+  },
+  resetIcon: {
+  },
+  modalTitle: {
+  },
+  modalBody: {
+  },
+  searchContainer: {
+  },
+  searchInputbox: {
+  },
+  searchBox: {
+  },
+  highlight: {
+  },
+  sortGroup: {
+  },
+  sortGroupIcon: {
+  },
+  sortGroupItem: {
+  },
+  NonSortGroup: {
+  },
+  NonSortGroupItem: {
+  },
+  sortGroupItemCounts: {
+  },
+  itemContainer: {
+  },
+};
+
+// Modal filter styles (for items inside the modal)
+const modalFilterStyles = {
+  sortGroup: {
+  },
+  highlight: {
+  },
+  sortGroupIcon: {
+  },
+  sortGroupItem: {
+  },
+  sortGroupItemCounts: {
+    marginLeft: '38px',
+  },
+  checkboxContainer: {
+  },
+  checkedContainer: {
+  },
+  itemsContainer: {
+  },
+  sortingContainer: {
+  },
+  selectionText: {
+  },
+  totalText: {
+  },
+  emptyItem: {
+  },
+};
+
 // Helper function to create section-specific checkbox styles
 const createCheckboxStylesForSection = () => ({
   checkbox: {
     ...checkboxStyles,
+  },
+  modal: {
+    ...modalStyles,
+  },
+  modalFilter: {
+    ...modalFilterStyles,
   },
 });
 
