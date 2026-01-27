@@ -14,14 +14,14 @@ export  const customStyles = {
     queryContainer: {
       marginLeft: 5,
       position: 'relative',
-      lineHeight: '2.4em',
+      lineHeight: '25px',
       fontFamily: 'Nunito',
       fontSize: '12px',
       color: '#000000',
     },
     filterName: {
       textTransform: 'uppercase',
-      padding: '2px 5px',
+      padding: '1px 5px',
       borderRadius: 5,
       fontSize: 12,
       fontWeight: 600,
@@ -30,9 +30,10 @@ export  const customStyles = {
       backgroundColor: '#E6FFF9',
       lineHeight: '100%',
       letterSpacing: '0%',
+      maxHeight: '20px',
     },
     filterCheckboxes: {
-      padding: '2.5px 6px',
+      padding: '1.5px 6px',
       borderRadius: 5,
       fontSize: 12,
       fontWeight: 500,
@@ -44,6 +45,7 @@ export  const customStyles = {
       backgroundColor: '#fff',
       cursor: 'pointer',
       color: '#008566',
+      maxHeight: '20px',
     },
     bracketsOpen: {
       fontSize: 20,
