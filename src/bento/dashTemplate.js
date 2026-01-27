@@ -361,7 +361,7 @@ const checkboxStyles = {
     fontWeight: 300,
     marginTop: '1.5px',
     fontFamily: 'Nunito',
-    lineHeight: '120%',
+    lineHeight: '100%',
   },
 };
 
