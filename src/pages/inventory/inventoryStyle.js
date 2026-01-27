@@ -154,8 +154,8 @@ export default () => ({
     margin: '0px',
     backgroundColor: '#f4f4f4',
     '& li': {
-      height: '50px',
-      lineHeight: '50px',
+      height: '53px',
+      lineHeight: '53px',
       padding: '0 5px 0 13px',
       minHeight: '48px',
       paddingLeft: '14px',
