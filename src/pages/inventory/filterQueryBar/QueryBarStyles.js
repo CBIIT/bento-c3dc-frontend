@@ -21,18 +21,24 @@ export  const customStyles = {
     },
     filterName: {
       textTransform: 'uppercase',
-      padding: '3px 6px 3px 6px',
-      borderRadius: 4,
-      fontSize: 12,
-      fontWeight: 600,
-      cursor: 'pointer',
-      backgroundColor: '#E6FFF9',
-    },
-    filterCheckboxes: {
-      padding: '3px 6px 3px 6px',
+      padding: '2px 5px',
       borderRadius: 5,
       fontSize: 12,
       fontWeight: 600,
+      fontFamily: 'Nunito',
+      cursor: 'pointer',
+      backgroundColor: '#E6FFF9',
+      lineHeight: '100%',
+      letterSpacing: '0%',
+    },
+    filterCheckboxes: {
+      padding: '2.5px 6px',
+      borderRadius: 5,
+      fontSize: 12,
+      fontWeight: 500,
+      fontFamily: 'Nunito',
+      lineHeight: '100%',
+      letterSpacing: '0%',
       border: '0.5px solid #646464',
       width: 'fit-content',
       backgroundColor: '#fff',
@@ -116,49 +122,49 @@ export  const customStyles = {
     },
     facetSectionStudyBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionDemographics: {
       color: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).queryBarAttrbTextColor,
     },
     facetSectionDemographicsBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionDiagnosis: {
       color: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).queryBarAttrbTextColor,
     },
     facetSectionDiagnosisBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionGeneticanalysis: {
       color: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).queryBarAttrbTextColor,
     },
     facetSectionGeneticanalysisBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionTreatment: {
       color: obtainColorFromSectionName(FACET_NAMES.TREATMENT).queryBarAttrbTextColor,
     },
     facetSectionTreatmentBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionTreatmentresponse: {
       color: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).queryBarAttrbTextColor,
     },
     facetSectionTreatmentresponseBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionSurvival: {
       color: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).queryBarAttrbTextColor,
     },
     facetSectionSurvivalBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     localFindAssociatedIdsBackground: {
       backgroundColor: '#F6A700',
