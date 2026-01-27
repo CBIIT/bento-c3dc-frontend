@@ -94,10 +94,10 @@ export  const customStyles = {
       },
     },
     divider: {
-      padding: '0 0 3px 0',
+      paddingLeft: '16px',
       fontSize: '23px',
-      borderRight: '1px solid #969696',
-      marginLeft: 7,
+      borderRight: '.5px solid #969696',
+      marginRight: '8px',
     },
     /* Custom Styling by Project */
     localFind: {
