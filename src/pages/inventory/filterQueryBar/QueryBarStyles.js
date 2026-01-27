@@ -79,8 +79,8 @@ export  const customStyles = {
       boxSizing: 'border-box',
       backgroundColor: '#646464',
       textTransform: 'capitalize',
-      border: '1px solid #B4B4B4',
-      padding: '1px 5px 0px 6px',
+      border: 'none',
+      padding: '2px 7px',
       '&:hover': {
         backgroundColor: '#646464',
       },
