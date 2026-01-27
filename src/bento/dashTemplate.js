@@ -374,6 +374,13 @@ const modalStyles = {
   resetIcon: {
   },
   modalTitle: {
+    fontFamily: 'Poppins',
+    fontWeight: '400',
+    fontSize: '21px',
+    lineHeight: '21px',
+    letterSpacing: '0%',
+    textAlign: 'center',
+    color: '#000000',
   },
   modalBody: {
   },
