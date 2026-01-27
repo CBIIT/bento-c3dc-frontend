@@ -8,7 +8,7 @@ export  const customStyles = {
       paddingBottom: '12px',
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #B0B0B0',
-      padding: '14px 14px 0px 25px',
+      padding: '2px 0px 12px 25px',
       overflowY: 'auto',
     },
     queryContainer: {
@@ -114,6 +114,11 @@ export  const customStyles = {
       '&:hover': {
         backgroundColor: '#1D79A8',
       },
+    },
+    urlContainer: {
+      display: 'flex',
+      marginTop: '5px',
+      minHeight: '10px',
     },
     /* Custom Styling by Project */
     localFind: {
