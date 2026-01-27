@@ -430,6 +430,23 @@ const modalFilterStyles = {
   },
 };
 
+// Modal checkbox styles (for checkboxes inside the modal)
+const modalCheckboxStyles = {
+  listItemGutters: {
+    padding: '6px 10px 6px 0px',
+  },
+  checkboxRoot: {
+  },
+  panelDetailText: {
+  },
+  panelSubjectText: {
+  },
+  checkboxLabel: {
+  },
+  checkboxName: {
+  },
+};
+
 // Helper function to create section-specific checkbox styles
 const createCheckboxStylesForSection = () => ({
   checkbox: {
@@ -440,6 +457,9 @@ const createCheckboxStylesForSection = () => ({
   },
   modalFilter: {
     ...modalFilterStyles,
+  },
+  modalCheckbox: {
+    ...modalCheckboxStyles,
   },
 });
 
