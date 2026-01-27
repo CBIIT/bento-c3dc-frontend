@@ -99,6 +99,22 @@ export  const customStyles = {
       borderRight: '.5px solid #969696',
       marginRight: '8px',
     },
+    viewLinkToggleBtn: {
+      margin: '1px',
+      fontWeight: 600,
+      fontSize: '12px',
+      color: '#fff',
+      borderRadius: '5px',
+      fontFamily: 'Nunito',
+      boxSizing: 'border-box',
+      backgroundColor: '#1D79A8',
+      textTransform: 'capitalize',
+      border: 'none',
+      padding: '2px 7px',
+      '&:hover': {
+        backgroundColor: '#1D79A8',
+      },
+    },
     /* Custom Styling by Project */
     localFind: {
       color: '#7AA6B6',
