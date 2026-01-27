@@ -389,6 +389,7 @@ const modalStyles = {
   searchInputbox: {
   },
   searchBox: {
+    paddingLeft: '11px',
   },
   highlight: {
   },
