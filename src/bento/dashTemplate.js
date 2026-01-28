@@ -457,6 +457,19 @@ const modalFilterStyles = {
 };
 
 // Modal checkbox styles (for checkboxes inside the modal)
+const modalSubjectsTextStyle = {
+  color: '#000000',
+  padding: '2px 2px 1px 10px',
+  fontFamily: 'Nunito',
+  fontSize: '12px',
+  fontWeight: '600',
+  lineHeight: '17px',
+  letterSpacing: '0%',
+  marginRight: '0px',
+  marginTop: '0px',
+  backgroundColor: 'transparent',
+};
+
 const modalCheckboxStyles = {
   listItemGutters: {
     padding: '6px 10px 6px 0px',
@@ -470,6 +483,15 @@ const modalCheckboxStyles = {
   checkboxLabel: {
   },
   checkboxName: {
+  },
+  subjectsText: {
+    '&.studySubjects': modalSubjectsTextStyle,
+    '&.demographicsSubjects': modalSubjectsTextStyle,
+    '&.diagnosisSubjects': modalSubjectsTextStyle,
+    '&.geneticanalysisSubjects': modalSubjectsTextStyle,
+    '&.treatmentSubjects': modalSubjectsTextStyle,
+    '&.treatmentresponseSubjects': modalSubjectsTextStyle,
+    '&.survivalSubjects': modalSubjectsTextStyle,
   },
 };
 
