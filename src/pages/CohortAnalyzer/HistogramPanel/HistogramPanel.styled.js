@@ -311,7 +311,7 @@ export const KmChartModalWrapper = styled.div`
 `;
 
 export const RiskTableModalWrapper = styled.div`
-  width: 75%;
+  width: 75.5%;
   padding-right: 5px;
   overflow-x: auto;
   overflow-y: auto;
