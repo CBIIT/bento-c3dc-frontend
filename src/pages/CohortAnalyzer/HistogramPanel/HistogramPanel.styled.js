@@ -175,7 +175,7 @@ export const CloseButton = styled.button`
 export const ModalChartWrapper = styled.div`
   width: 100%;
   height: calc(100% - 50px);
-  margin-top: 20px;
+  margin-top: 0px;
 `;
 
 export const TabContainer = styled.div`
