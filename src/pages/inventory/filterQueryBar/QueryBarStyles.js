@@ -8,7 +8,7 @@ export  const customStyles = {
       paddingBottom: '12px',
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #B0B0B0',
-      padding: '2px 0px 12px 25px',
+      padding: '2.7px 0px 12px 25px',
       overflowY: 'auto',
     },
     queryContainer: {
@@ -89,15 +89,17 @@ export  const customStyles = {
       textTransform: 'capitalize',
       border: 'none',
       padding: '2px 7px',
+      marginBottom: '1.6px',
       '&:hover': {
         backgroundColor: '#646464',
       },
     },
     divider: {
       paddingLeft: '16px',
-      fontSize: '23px',
+      fontSize: '26px',
       borderRight: '.5px solid #969696',
       marginRight: '8px',
+      verticalAlign: 'middle',
     },
     viewLinkToggleBtn: {
       margin: '1px',
