@@ -474,20 +474,38 @@ const modalCheckboxStyles = {
 };
 
 // Helper function to create section-specific checkbox styles
-const createCheckboxStylesForSection = () => ({
-  checkbox: {
-    ...checkboxStyles,
-  },
-  modal: {
-    ...modalStyles,
-  },
-  modalFilter: {
-    ...modalFilterStyles,
-  },
-  modalCheckbox: {
-    ...modalCheckboxStyles,
-  },
-});
+const createCheckboxStylesForSection = (sectionName) => {
+  const sectionColor = sectionName
+    ? obtainColorFromSectionName(sectionName).slideOutComponentColor
+    : '#7A437A';
+
+  return {
+    checkbox: {
+      ...checkboxStyles,
+    },
+    modal: {
+      ...modalStyles,
+      searchInputbox: {
+        ...modalStyles.searchInputbox,
+        color: sectionColor,
+      },
+    },
+    modalFilter: {
+      ...modalFilterStyles,
+      selectionText: {
+        ...modalFilterStyles.selectionText,
+        color: sectionColor,
+      },
+      totalText: {
+        ...modalFilterStyles.totalText,
+        color: sectionColor,
+      },
+    },
+    modalCheckbox: {
+      ...modalCheckboxStyles,
+    },
+  };
+};
 
 // Define individual section facet configurations
 
@@ -502,7 +520,7 @@ const studyFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(STUDY),
   },
   {
     section: STUDY,
@@ -514,7 +532,7 @@ const studyFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(STUDY),
   },
 ];
 
@@ -529,7 +547,7 @@ const demographicsFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(DEMOGRAPHICS),
   },
   {
     section: DEMOGRAPHICS,
@@ -541,7 +559,7 @@ const demographicsFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(DEMOGRAPHICS),
   },
 ];
 
@@ -575,7 +593,7 @@ const diagnosisFacets = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. Neuroblastoma, NOS',
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
   {
     section: DIAGNOSIS,
@@ -589,7 +607,7 @@ const diagnosisFacets = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. Abdomen, NOS',
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
   {
     section: DIAGNOSIS,
@@ -601,7 +619,7 @@ const diagnosisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
   // {
   //   section: DIAGNOSIS,
@@ -624,7 +642,7 @@ const diagnosisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
   {
     section: DIAGNOSIS,
@@ -636,7 +654,7 @@ const diagnosisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
 ];
 
@@ -651,7 +669,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -663,7 +681,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -677,7 +695,7 @@ const geneticAnalysisFacets = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. MLL, TP53, BRAF',
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -691,7 +709,7 @@ const geneticAnalysisFacets = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. LOH, Gain, Heterozygosity',
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -703,7 +721,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -715,7 +733,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -727,7 +745,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
 ];
 
@@ -776,7 +794,7 @@ const treatmentFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(TREATMENT),
   },
   {
     section: TREATMENT,
@@ -788,7 +806,7 @@ const treatmentFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(TREATMENT),
   },
 ];
 
@@ -803,7 +821,7 @@ const treatmentResponseFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(TREATMENTRESPONSE),
   },
   {
     section: TREATMENTRESPONSE,
@@ -832,7 +850,7 @@ const treatmentResponseFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(TREATMENTRESPONSE),
   },
   {
     section: TREATMENTRESPONSE,
@@ -844,7 +862,7 @@ const treatmentResponseFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(TREATMENTRESPONSE),
   },
 ];
 
@@ -859,7 +877,7 @@ const survivalFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(SURVIVAL),
   },
   {
     section: SURVIVAL,
@@ -888,7 +906,7 @@ const survivalFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(SURVIVAL),
   },
   {
     section: SURVIVAL,
@@ -900,7 +918,7 @@ const survivalFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    style: createCheckboxStylesForSection(),
+    style: createCheckboxStylesForSection(SURVIVAL),
   },
 ];
 
