@@ -12,7 +12,7 @@ RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm set p
 RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm ci --legacy-peer-deps
 RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm run build --silent
 
-FROM nginx:1.29.2-alpine3.22-slim AS fnl_base_image
+FROM nginx:1.29.4-alpine3.23-slim AS fnl_base_image
 
 # libxml2 CVE
 # CVE-2025-58050
