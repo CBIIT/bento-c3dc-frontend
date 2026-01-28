@@ -9,7 +9,6 @@ import {
   CloseButton,
   Tab,
   TabContainer,
-  barColors,
   SurvivalAnalysisModalContainer,
   SurvivalAnalysisModalContent,
   KmChartModalWrapper,
