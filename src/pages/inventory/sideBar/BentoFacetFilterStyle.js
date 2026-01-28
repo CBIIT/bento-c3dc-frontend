@@ -274,7 +274,7 @@ export default () => ({
     paddingRight: 12,
     margin:'0px auto',
     '&:hover': {
-      backgroundColor: '#E39520',
+      backgroundColor: '#9D6C00',
     },
   },
   iconSpan: {
