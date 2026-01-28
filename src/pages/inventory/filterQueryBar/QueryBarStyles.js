@@ -4,12 +4,30 @@
 import { FACET_NAMES, obtainColorFromSectionName } from '../../../bento/dashTemplate';
 export  const customStyles = {
     queryWrapper: {
-      //height: '120px',
+      height: '100px',
       paddingBottom: '12px',
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #B0B0B0',
       padding: '2.7px 0px 12px 25px',
       overflowY: 'auto',
+      '&::-webkit-scrollbar': {
+        width: '17px',
+        backgroundColor: '#FFFFFF',
+      },
+
+      '&::-webkit-scrollbar-track': {
+        backgroundColor: '#CECECE',
+        borderRadius: '20px',
+        border: '4px solid #FFFFFF',
+        backgroundClip: 'padding-box',
+      },
+
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: '#477C90',
+        borderRadius: '20px',
+        border: '4px solid transparent',
+        backgroundClip: 'padding-box',
+      },
     },
     queryContainer: {
       marginLeft: 5,
