@@ -118,7 +118,7 @@ export default () => ({
     fontFamily: 'Open Sans',
     fontWeight: 400,
     fontSize: 14,
-    letterSpacing: '0%',
+    letterSpacing: '0',
     margin: '0 16px',
     padding: '16px 0',
     fontStyle: 'italic',

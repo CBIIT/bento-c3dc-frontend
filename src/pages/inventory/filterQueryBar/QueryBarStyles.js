@@ -4,7 +4,9 @@
 import { FACET_NAMES, obtainColorFromSectionName } from '../../../bento/dashTemplate';
 export  const customStyles = {
     queryWrapper: {
-      height: '100px',
+      height: '107px',
+      minHeight: '107px',
+      maxHeight: '107px',
       paddingBottom: '12px',
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #B0B0B0',
@@ -47,7 +49,7 @@ export  const customStyles = {
       cursor: 'pointer',
       backgroundColor: '#E6FFF9',
       lineHeight: '100%',
-      letterSpacing: '0%',
+      letterSpacing: '0',
       maxHeight: '20px',
     },
     filterCheckboxes: {
@@ -57,7 +59,7 @@ export  const customStyles = {
       fontWeight: 500,
       fontFamily: 'Nunito',
       lineHeight: '100%',
-      letterSpacing: '0%',
+      letterSpacing: '0',
       border: '0.5px solid #646464',
       width: 'fit-content',
       backgroundColor: '#fff',
@@ -137,7 +139,6 @@ export  const customStyles = {
     },
     urlContainer: {
       display: 'flex',
-      marginTop: '5px',
       minHeight: '10px',
     },
     /* Custom Styling by Project */
