@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../ResponsiveHeader/components/LogoMobile';
@@ -7,6 +7,7 @@ import menuClearIcon from '../../assets/header/Menu_Cancel_Icon.svg';
 import rightArrowIcon from '../../assets/header/Right_Arrow.svg';
 import leftArrowIcon from '../../assets/header/Left_Arrow.svg';
 import { navMobileList, navbarSublists, navBarCartData } from '../../bento/globalHeaderData'
+import { USGovBannerData } from '../../bento/globalHeaderData';
 
 const HeaderBanner = styled.div`
   width: 100%;
@@ -158,18 +159,95 @@ const MenuArea = styled.div`
     }
 `;
 
+const USGovBanner = styled.div`
+  background-color: #f0f0f0;
+  height: 46px;
+  width: 100%;
+  align-items: center;
+    .USGovBannerInner {
+      padding: 8px 32px;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      margin: 0 auto;
+      max-width: 1420px;
+    }
+
+  img {
+      height: 11px;
+      width: 16px;
+    }
+
+    .bannerLeft {
+        width: 100%;
+        text-align: left;
+        display: flex;
+        align-items: center;
+    }
+    .bannerText {
+        font-family: 'Open Sans';
+        font-size: 12px;
+        font-weight: 400;
+        color: #000000;
+        margin-left: 15px;
+    }
+    .bannerRight {
+        width: 50%;
+        text-align: right;
+    .bannerButton {
+        display: inline-block;
+        background-color: #3b7f84;
+        width: 72px;
+        height: 30px;
+        border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
+        font-size: 15px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 0em;
+        text-align: center;
+        line-height: 30px;
+        cursor: pointer;
+    }
+  }
+
+`;
+
 const Header = () => {
   const path = useLocation().pathname;
+  const [clickTitle, setClickTitle] = useState('');
   const [navMobileDisplay, setNavMobileDisplay] = useState('none');
   const [navbarMobileList, setNavbarMobileList] = useState(navMobileList);
-  
+
   const clickNavItem = (e) => {
-    const clickTitle = e.target.innerText;
-    setNavbarMobileList(navbarSublists[clickTitle]);
+    const ctitle = e.target.innerText;
+    setClickTitle(ctitle);
   }
+
+  useEffect(() => {
+    if (clickTitle) {
+      setNavbarMobileList(navbarSublists[clickTitle].sort((a, b) => a.name.localeCompare(b.name)));
+    } else {
+      setNavbarMobileList(navMobileList);
+    }
+  }, [clickTitle]);
 
   return (
     <>
+      <USGovBanner>
+        <div className ='USGovBannerInner'>
+          <div className='bannerLeft'>
+            <img src={USGovBannerData.logo} alt={"US Flag logo"}></img>
+            <span className='bannerText'>An official website of the United States government</span>
+          </div>
+
+          <div className='bannerRight'>
+            {/*
+            <span className='bannerButton'>Español</span>
+            */}
+          </div>
+        </div>
+      </USGovBanner>
       <HeaderBanner role="banner">
         <HeaderContainer>
           <Logo />
@@ -183,17 +261,17 @@ const Header = () => {
         <MenuArea>
             <div className='menuContainer'>
                 <div className='closeIcon' onClick={() => setNavMobileDisplay('none')}><img className='closeIconImg' src={menuClearIcon} alt="menuClearButton" /></div>
-                { navbarMobileList !== navMobileList && <div className='backButton' onClick={() => setNavbarMobileList(navMobileList)}>Main Menu</div>}
+                { navbarMobileList !== navMobileList && <div className='backButton' onClick={() => setClickTitle('')}>Main Menu</div>}
                 <div className='navMobileContainer'>
+                { navbarMobileList !== navMobileList && <div className='navMobileItem'>{clickTitle}</div>}
                     {
                         navbarMobileList.map((navMobileItem, idx) => {
                             const mobilekey = `mobile_${idx}`;
                             return (
                                 <>
-                                    {navMobileItem.className === 'navMobileItem' && <NavLink to={navMobileItem.link} key={mobilekey} onClick={() => setNavMobileDisplay('none')}><div className='navMobileItem'>{navMobileItem.name}</div></NavLink>}
+                                    {navMobileItem.className === 'navMobileItem' && <NavLink to={navMobileItem.link} state={{ navigationType: 'main_menu' }} key={mobilekey} onClick={() => setNavMobileDisplay('none')}><div className='navMobileItem'>{navMobileItem.name}</div></NavLink>}
                                     {navMobileItem.className === 'navMobileItem clickable' && <div key={mobilekey} className='navMobileItem clickable' onClick={clickNavItem}>{navMobileItem.name}</div>}
-                                    {navMobileItem.className === 'navMobileSubItem' && <a href={navMobileItem.link} key={mobilekey}><div className='navMobileItem SubItem' onClick={() => setNavMobileDisplay('none')}>{navMobileItem.name}</div></a>}
-                                    {navMobileItem.className === 'navMobileSubTitle' && <div key={mobilekey} className='navMobileItem'>{navMobileItem.name}</div>}
+                                    {navMobileItem.className === 'navMobileSubItem' && <a href={navMobileItem.link} target={navMobileItem.link.includes("http") || navMobileItem.link.includes("pdf") || navMobileItem.link.includes("release-notes") ? "_blank" : ""} rel="noopener noreferrer"  key={mobilekey}><div className='navMobileItem SubItem' onClick={() => setNavMobileDisplay('none')}>{navMobileItem.name}</div></a>}
                                     {navMobileItem.className === 'cart' && <NavLink to={navBarCartData.cartLink} key='cart_key' onClick={() => setNavMobileDisplay('none')}><div className='navMobileItem' style={{fontWeight: '600'}}>MY FILES</div></NavLink>}
                                 </>
                             )
