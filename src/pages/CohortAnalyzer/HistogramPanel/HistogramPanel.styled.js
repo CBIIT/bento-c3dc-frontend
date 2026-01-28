@@ -6,6 +6,12 @@ export const barColors = {
   colorC: '#A3CCE8'
 };
 
+export const kmplotColors = {
+  colorA: '#B18A00',
+  colorB: '#00A45C',
+  colorC: '#008FF7'
+};
+
 export const HistogramContainer = styled.div`
   background: white;
   border: 1px solid #679AAA;
@@ -169,7 +175,7 @@ export const CloseButton = styled.button`
 export const ModalChartWrapper = styled.div`
   width: 100%;
   height: calc(100% - 50px);
-  margin-top: 20px;
+  margin-top: 0px;
 `;
 
 export const TabContainer = styled.div`
@@ -305,12 +311,15 @@ export const KmChartModalWrapper = styled.div`
 `;
 
 export const RiskTableModalWrapper = styled.div`
-  width: 100%;
-  padding-right: 145px;
+  width: 75.5%;
+  padding-right: 5px;
   overflow-x: auto;
   overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 280px;
-  flex-shrink: 0;
+  padding-bottom: 15px;
 `;
 
 export const ModalHeaderContainer = styled.div`
