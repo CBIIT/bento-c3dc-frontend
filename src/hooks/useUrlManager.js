@@ -1,6 +1,6 @@
-import { useSelector } from 'react-redux';
 import { useCallback, useRef, useEffect } from 'react';
 import { updateBrowserUrlWithLimit } from '../utils/urlManager';
+import store from '../store';
 
 /**
  * Hook to manage URL updates with automatic fallback to filterQuery for long URLs
@@ -11,11 +11,6 @@ import { updateBrowserUrlWithLimit } from '../utils/urlManager';
  * @returns {Function} Function to update browser URL with character limit handling
  */
 export const useUrlManager = (basePath = '/explore', debounceMs = 1000) => {
-  // Get Redux state
-  const activeFilters = useSelector((state) => state.statusReducer && state.statusReducer.filterState);
-  const localFind = useSelector((state) => state.localFind);
-  const unknownAgesState = useSelector((state) => state.statusReducer && state.statusReducer.unknownAgesState);
-
   // Store timeout reference
   const timeoutRef = useRef(null);
   const pendingUpdateRef = useRef(null);
@@ -42,6 +37,13 @@ export const useUrlManager = (basePath = '/explore', debounceMs = 1000) => {
     // Set new timeout to update URL after debounce period
     timeoutRef.current = setTimeout(async () => {
       if (pendingUpdateRef.current) {
+        // Read FRESH state from Redux store at execution time
+        // This ensures we get the latest state after all dispatches have completed
+        const state = store.getState();
+        const activeFilters = (state.statusReducer && state.statusReducer.filterState) || {};
+        const localFind = state.localFind || {};
+        const unknownAgesState = (state.statusReducer && state.statusReducer.unknownAgesState) || {};
+
         await updateBrowserUrlWithLimit(pendingUpdateRef.current, {
           activeFilters,
           localFind,
@@ -51,7 +53,7 @@ export const useUrlManager = (basePath = '/explore', debounceMs = 1000) => {
         pendingUpdateRef.current = null;
       }
     }, debounceMs);
-  }, [activeFilters, localFind, unknownAgesState, basePath, debounceMs]);
+  }, [basePath, debounceMs]); // Remove state dependencies - we read fresh state inside
 
   return updateUrl;
 };

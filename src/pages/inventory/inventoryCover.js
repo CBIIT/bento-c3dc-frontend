@@ -113,7 +113,6 @@ const InventoryCover = ({
   }
 
   useEffect(() => {
-
     // Skip this effect if we just processed a filterQuery to avoid overwriting filters
 
     if (justProcessedFilterQuery) {
