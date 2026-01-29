@@ -225,8 +225,8 @@ const Header = () => {
   }
 
   useEffect(() => {
-    if (clickTitle) {
-      setNavbarMobileList(navbarSublists[clickTitle].sort((a, b) => a.name.localeCompare(b.name)));
+    if (clickTitle && navbarSublists[clickTitle]) {
+      setNavbarMobileList([...navbarSublists[clickTitle]].sort((a, b) => a.name.localeCompare(b.name)));
     } else {
       setNavbarMobileList(navMobileList);
     }
@@ -271,7 +271,7 @@ const Header = () => {
                                 <>
                                     {navMobileItem.className === 'navMobileItem' && <NavLink to={navMobileItem.link} state={{ navigationType: 'main_menu' }} key={mobilekey} onClick={() => setNavMobileDisplay('none')}><div className='navMobileItem'>{navMobileItem.name}</div></NavLink>}
                                     {navMobileItem.className === 'navMobileItem clickable' && <div key={mobilekey} className='navMobileItem clickable' onClick={clickNavItem}>{navMobileItem.name}</div>}
-                                    {navMobileItem.className === 'navMobileSubItem' && <a href={navMobileItem.link} target={navMobileItem.link.includes("http") || navMobileItem.link.includes("pdf") || navMobileItem.link.includes("release-notes") ? "_blank" : ""} rel="noopener noreferrer"  key={mobilekey}><div className='navMobileItem SubItem' onClick={() => setNavMobileDisplay('none')}>{navMobileItem.name}</div></a>}
+                                    {navMobileItem.className === 'navMobileSubItem' && <a href={navMobileItem.link} target={navMobileItem.externalLink ? "_blank" : ""} rel="noopener noreferrer" key={mobilekey}><div className='navMobileItem SubItem' onClick={() => setNavMobileDisplay('none')}>{navMobileItem.name}</div></a>}
                                     {navMobileItem.className === 'cart' && <NavLink to={navBarCartData.cartLink} key='cart_key' onClick={() => setNavMobileDisplay('none')}><div className='navMobileItem' style={{fontWeight: '600'}}>MY FILES</div></NavLink>}
                                 </>
                             )
