@@ -1,5 +1,5 @@
 import { generateQueryStr } from '@bento-core/util';
-import { queryParams, URL_CHARACTER_LIMIT } from '../bento/dashTemplate';
+import { queryParams, URL_CHARACTER_LIMIT, whitelistedUrlParams } from '../bento/dashTemplate';
 import { generateUrl } from '../pages/inventory/filterQueryBar/QueryBarUtils';
 
 /**
@@ -8,14 +8,19 @@ import { generateUrl } from '../pages/inventory/filterQueryBar/QueryBarUtils';
  * @param {object} activeFilters - Redux state from statusReducer.filterState
  * @param {object} localFind - Redux state from localFind
  * @param {object} unknownAgesState - Redux state from statusReducer.unknownAgesState
+ * @param {array} whitelist - Optional list of datafields to include (if null, includes all)
  * @returns {object} Complete filter state object
  */
-export const buildFilterStateObject = (activeFilters, localFind, unknownAgesState) => {
+export const buildFilterStateObject = (activeFilters, localFind, unknownAgesState, whitelist = null) => {
   const filterObject = {};
 
   // Add facet filters
   if (activeFilters) {
     Object.keys(activeFilters).forEach((key) => {
+      // Skip if whitelist provided and key not in whitelist
+      if (whitelist && !whitelist.includes(key)) {
+        return;
+      }
       const filterValue = activeFilters[key];
       if (filterValue && typeof filterValue === 'object') {
         // Convert object of {value: true} to array of values
@@ -125,8 +130,9 @@ export const updateBrowserUrlWithLimit = async (paramValue, options = {}) => {
 
   // Check if URL exceeds character limit
   if (fullUrl.length > URL_CHARACTER_LIMIT) {
-    // Build complete filter state object from Redux (the source of truth)
-    const filterObject = buildFilterStateObject(activeFilters, localFind, unknownAgesState);
+    // Build filter state with ONLY whitelisted facets for browser URL
+    // This ensures browser URL only contains updateURL: true facets + participant IDs
+    const filterObject = buildFilterStateObject(activeFilters, localFind, unknownAgesState, whitelistedUrlParams);
     const filterQueryStr = JSON.stringify(filterObject);
 
     // Generate filterQuery URL using interop service

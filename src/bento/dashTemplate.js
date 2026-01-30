@@ -680,6 +680,11 @@ export const facetsConfig = FACET_ORDER.reduce((acc, section) => {
   return [...acc, ...sectionFacetsMap[section]];
 }, []);
 
+// List of datafields that have updateURL: true (whitelisted for browser URL)
+export const whitelistedUrlParams = facetsConfig
+  .filter((facet) => facet.updateURL === true)
+  .map((facet) => facet.datafield);
+
 // --------------- Dashboard Widgets configuration --------------
 // Sunburst chart color scheme
 export const SUNBURST_COLORS_LEVEL_1 = [
