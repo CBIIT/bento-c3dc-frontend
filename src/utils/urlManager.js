@@ -87,9 +87,29 @@ export const updateBrowserUrlWithLimit = async (paramValue, options = {}) => {
     currentQuery.delete('filterQuery');
   }
 
-  // IMPORTANT: Always sync participant IDs from Redux state to ensure they're included in URL
-  // This prevents losing upload modal data when adding facet filters
+  // IMPORTANT: Always sync from Redux state to ensure data is preserved in URL
   const completeParamValue = { ...paramValue };
+
+  // Sync whitelisted facet filters from Redux state
+  if (activeFilters && whitelistedUrlParams) {
+    whitelistedUrlParams.forEach((datafield) => {
+      const filterValue = activeFilters[datafield];
+      if (filterValue && typeof filterValue === 'object' && !Array.isArray(filterValue)) {
+        // Convert object of {value: true} to pipe-separated string
+        const values = Object.keys(filterValue).filter((v) => filterValue[v] === true);
+        if (values.length > 0) {
+          completeParamValue[datafield] = values.join('|');
+        } else if (!paramValue[datafield]) {
+          completeParamValue[datafield] = '';
+        }
+      } else if (Array.isArray(filterValue) && filterValue.length > 0) {
+        // Slider values - join with comma
+        completeParamValue[datafield] = filterValue.join(',');
+      } else if (!paramValue[datafield]) {
+        completeParamValue[datafield] = '';
+      }
+    });
+  }
 
   // Sync autocomplete participant IDs from Redux state
   if (localFind.autocomplete && localFind.autocomplete.length > 0) {

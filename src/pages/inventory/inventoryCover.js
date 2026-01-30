@@ -23,6 +23,7 @@ import {
 import styles from './inventoryStyle';
 import { DASHBOARD_QUERY_NEW } from '../../bento/dashboardTabData';
 import { queryParams, ageRelatedParams } from '../../bento/dashTemplate';
+import { updateBrowserUrlWithLimit } from '../../utils/urlManager';
 
 const InventoryCover = ({
   classes,
@@ -329,6 +330,40 @@ const InventoryCover = ({
     }
   }, [unknownAgesState, navigate, previousUnknownAgesState]);
   */
+
+  // Sync browser URL when localFind data changes (participant set add/remove)
+  useEffect(() => {
+    // Skip during initial loading to avoid conflicts with URL parsing
+    if (initialLoading) {
+      return;
+    }
+
+    // Build param values based on current localFind state
+    const paramValue = {};
+
+    // Sync autocomplete participant IDs
+    if (localFindAutocomplete && localFindAutocomplete.length > 0) {
+      paramValue.p_id = localFindAutocomplete.map((data) => data.title).join('|');
+    } else {
+      paramValue.p_id = '';
+    }
+
+    // Sync upload participant IDs
+    if (localFindUpload && localFindUpload.length > 0) {
+      paramValue.u = localFindUpload.map((data) => data.participant_id).join('|');
+    } else {
+      paramValue.u = '';
+      paramValue.u_fc = '';
+      paramValue.u_um = '';
+    }
+
+    // Update browser URL (handles filterQuery vs normal URL based on length)
+    updateBrowserUrlWithLimit(paramValue, {
+      activeFilters: store.getState().statusReducer.filterState,
+      localFind: store.getState().localFind,
+      unknownAgesState: store.getState().statusReducer.unknownAgesState,
+    });
+  }, [localFindUpload, localFindAutocomplete, initialLoading]);
 
   useEffect(() => {
     return () => {
