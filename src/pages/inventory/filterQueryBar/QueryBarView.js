@@ -189,10 +189,12 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         updateUrl(paramValue);
         dispatch(updateAutocompleteData([]));
       },
-      deleteAutocompleteItem: (title) => {
+      deleteAutocompleteItem: (item) => {
         const { autocomplete } = localFind;
         const newdata = [...autocomplete];
-        const index = newdata.findIndex((v) => v.title === title);
+        // Handle both object (new) and string (legacy) parameter
+        const titleToDelete = typeof item === 'object' ? item.title : item;
+        const index = newdata.findIndex((v) => v.title === titleToDelete);
 
         if (index > -1) {
           newdata.splice(index, 1);
