@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import {
   useLocation,
@@ -43,6 +43,9 @@ const InventoryCover = ({
   const localFindAutocomplete = useSelector((state) => state.localFind.autocomplete);
 
   const client = useApolloClient();
+
+  // Request ID tracking for ignoring stale responses
+  const latestRequestId = useRef(0);
 
   const query = new URLSearchParams(useLocation().search);
 
@@ -266,13 +269,26 @@ const InventoryCover = ({
       ],
     };
 
+    // Track this request with a unique ID
+    latestRequestId.current += 1;
+    const currentRequestId = latestRequestId.current;
+
     store.dispatch(inDataloading(true));
     getData(activeFilters).then((result) => {
+      // Ignore stale responses - only process if this is still the latest request
+      if (currentRequestId !== latestRequestId.current) {
+        return;
+      }
+
       if (result && result.getParticipants) {
         store.dispatch(inDataloading(false));
         store.dispatch(syncUpDashboard(activeFilters, result.getParticipants));
       }
     }).catch((error) => {
+      // Only handle error if this is still the latest request
+      if (currentRequestId !== latestRequestId.current) {
+        return;
+      }
       console.error("Error fetching data:", error);
       store.dispatch(inDataloading(false));
     });
