@@ -64,8 +64,13 @@ export const setActiveFilterByPathQuery = (filterQuery) => {
   const query = decodeURIComponent(filterQuery || '');
   const filterObject = JSON.parse(query);
   const { autocomplete = [], upload = [], uploadMetadata, unknownAgesState } = filterObject;
+  const nonFacetKeys = ['autocomplete', 'upload', 'uploadMetadata', 'unknownAgesState'];
 
   const activeFilterValues = Object.keys(filterObject).reduce((curr, key) => {
+    // Skip non-facet keys - they are handled separately via updateAutocompleteData/updateUploadData
+    if (nonFacetKeys.includes(key)) {
+      return curr;
+    }
     if (Array.isArray(filterObject[key])) {
       const activeFilters = filterObject[key].reduce((value, item) => ({
         ...value,
