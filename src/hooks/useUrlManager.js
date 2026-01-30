@@ -7,10 +7,10 @@ import store from '../store';
  * Includes debouncing to wait 1 seconds after last change before updating URL
  *
  * @param {string} basePath - Base path for URLs (default: '/explore')
- * @param {number} debounceMs - Debounce delay in milliseconds (default: 1000)
+ * @param {number} debounceMs - Debounce delay in milliseconds (default: 500)
  * @returns {Function} Function to update browser URL with character limit handling
  */
-export const useUrlManager = (basePath = '/explore', debounceMs = 1000) => {
+export const useUrlManager = (basePath = '/explore', debounceMs = 500) => {
   // Store timeout reference
   const timeoutRef = useRef(null);
   const pendingUpdateRef = useRef(null);
