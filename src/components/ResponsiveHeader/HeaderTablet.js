@@ -225,7 +225,7 @@ const Header = () => {
 
   useEffect(() => {
     if (clickTitle && navbarSublists[clickTitle]) {
-      setNavbarMobileList([...navbarSublists[clickTitle]].sort((a, b) => a.name.localeCompare(b.name)));
+      setNavbarMobileList([...navbarSublists[clickTitle]]);
     } else {
       setNavbarMobileList(navMobileList);
     }
