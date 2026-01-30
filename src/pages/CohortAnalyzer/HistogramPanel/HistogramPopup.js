@@ -9,7 +9,6 @@ import {
   CloseButton,
   Tab,
   TabContainer,
-  barColors,
   SurvivalAnalysisModalContainer,
   SurvivalAnalysisModalContent,
   KmChartModalWrapper,
@@ -34,6 +33,8 @@ import { KaplanMeierChart } from '@bento-core/kmplot';
 import RiskTable from '@bento-core/risk-table';
 import { DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem, } from './HistogramPanel.styled';
 import * as htmlToImage from 'html-to-image';
+import { NoDataCard } from "../NoDataCard";
+import { kmplotColors } from './HistogramPanel.styled';
 
 const ExpandedChartModal = ({
   activeTab,
@@ -86,9 +87,9 @@ const ExpandedChartModal = ({
   // Map cohort colors based on which cohorts are selected - must be at top level
   const cohortColors = useMemo(() => {
     const colors = [];
-    if (c1 && c1.length > 0) colors.push(barColors.colorA);
-    if (c2 && c2.length > 0) colors.push(barColors.colorB);
-    if (c3 && c3.length > 0) colors.push(barColors.colorC);
+    if (c1 && c1.length > 0) colors.push(kmplotColors.colorA);
+    if (c2 && c2.length > 0) colors.push(kmplotColors.colorB);
+    if (c3 && c3.length > 0) colors.push(kmplotColors.colorC);
     return colors;
   }, [c1, c2, c3]);
   
@@ -477,7 +478,7 @@ const ExpandedChartModal = ({
   </ResponsiveContainer>
 ) : (
   <ModalNoDataContainer>
-    No data available
+   <NoDataCard /> 
   </ModalNoDataContainer>
 )}
 

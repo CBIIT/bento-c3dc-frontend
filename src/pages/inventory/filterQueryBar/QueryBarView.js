@@ -193,8 +193,10 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         const { autocomplete } = localFind;
         const newdata = [...autocomplete];
         // Handle both object (new) and string (legacy) parameter
-        const titleToDelete = typeof item === 'object' ? item.title : item;
-        const index = newdata.findIndex((v) => v.title === titleToDelete);
+        // For objects, use strict matching (title + type + synonym) from 1.9.0
+        const index = typeof item === 'object'
+          ? newdata.findIndex((v) => v.title === item.title && v.type === item.type && v.synonym === item.synonym)
+          : newdata.findIndex((v) => v.title === item);
 
         if (index > -1) {
           newdata.splice(index, 1);
