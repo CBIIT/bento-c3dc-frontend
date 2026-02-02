@@ -285,6 +285,7 @@ const studyFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    updateURL: true
   },
   {
     section: STUDY,
@@ -679,6 +680,11 @@ export const facetsConfig = FACET_ORDER.reduce((acc, section) => {
   return [...acc, ...sectionFacetsMap[section]];
 }, []);
 
+// List of datafields that have updateURL: true (whitelisted for browser URL)
+export const whitelistedUrlParams = facetsConfig
+  .filter((facet) => facet.updateURL === true)
+  .map((facet) => facet.datafield);
+
 // --------------- Dashboard Widgets configuration --------------
 // Sunburst chart color scheme
 export const SUNBURST_COLORS_LEVEL_1 = [
@@ -827,6 +833,10 @@ export const widgetToolTipConfig = {
 
 // --------------- query url configuration --------------
 // Facets, tab, pagination paramters
+
+// Maximum URL length before switching to filterQuery approach
+// URLs exceeding this limit will use the interop service filterQuery method
+export const URL_CHARACTER_LIMIT = 5000;
 
 export const queryParams = [
    // Special search/import parameters

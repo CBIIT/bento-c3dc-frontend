@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 /*
 import {
   useLocation,
@@ -18,12 +18,12 @@ import {
 } from '@bento-core/local-find';
 import styles from './BentoFacetFilterStyle';
 import { NewFacetFilter } from '@bento-core/facet-filter';
-// import { generateQueryStr } from '@bento-core/util';
 import { facetsConfig, facetSectionVariables, queryParams } from '../../../bento/dashTemplate';
 import FacetFilterThemeProvider from './NewFilterThemeConfig';
 import {
   getAllParticipantIds, getAllIds,
 } from './BentoFilterUtils';
+import { useUrlManager } from '../../../hooks/useUrlManager';
 
 const CustomExpansionPanelSummary = withStyles({
   root: {
@@ -46,95 +46,6 @@ const CustomExpansionPanelSummary = withStyles({
   expanded: {},
 })(AccordionSummary);
 
-// Generate SearchBox Component
-const { SearchBox } = SearchBoxGenerator({
-  config: {
-    inputPlaceholder: 'Participant ID Search',
-    noOptionsText: 'No matching items found',
-    searchType: ['participantIds', 'associatedIds'],
-  },
-  functions: {
-    updateBrowserUrl: (query, navigate, newUniqueValue) => {
-      /*
-      const paramValue = {
-        'p_id': newUniqueValue.map((data) => data.title).join('|')
-      };
-      const queryStr = generateQueryStr(query, queryParams, paramValue);
-      navigate(`/explore${queryStr}`);*/
-    },
-    getSuggestions: async (searchType) => {
-      try {
-        const response = await getAllIds(searchType).catch(() => []);
-
-        const participantSuggestions = response && response[searchType[0]] instanceof Array 
-          ? response[searchType[0]].map((id) => ({ type: searchType[0], title: id }))
-          : [];
-
-        const associatedIdsSuggestions = response && response[searchType[1]] instanceof Object 
-          ? response[searchType[1]].map((item) => ({ type: searchType[1], title: item.participant_id, synonym: item.associated_id }))
-          : [];
-
-        return [...participantSuggestions, ...associatedIdsSuggestions];
-      } catch (e) {
-        return [];
-      }
-    },
-  },
-});
-
-// Generate UploadModal Component
-const { UploadModal } = UploadModalGenerator({
-  functions: {
-    updateBrowserUrl: (query, navigate, filename, fileContent, matchIds, unmatchedIds) => {
-      /*
-      const fc = fileContent
-        .split(/[,\n]/g)
-        .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
-        .filter((e) => e && e.length > 1);
-      const paramValue = {
-        'u': matchIds.map((data) => data.participant_id).join('|'),
-        'u_fc': fc.join('|'),
-        'u_um': unmatchedIds.join('|'),
-      };
-      /*const queryStr = generateQueryStr(query, queryParams, paramValue);
-      navigate(`/explore${queryStr}`);
-      */
-    },
-    searchMatches: async (inputArray) => {
-      try {
-        // Split the search terms into chunks of 500
-        const caseChunks = chunkSplit(inputArray, 500);
-        const matched = (await Promise.allSettled(caseChunks.map((chunk) => getAllParticipantIds(chunk))))
-          .filter((result) => result.status === 'fulfilled')
-          .map((result) => result.value || [])
-          .flat(1);
-
-        // Combine the results and remove duplicates
-        const unmatched = new Set(inputArray);
-        matched.forEach((obj) => unmatched.delete(obj.participant_id.toUpperCase()));
-        return { matched, unmatched: [...unmatched] };
-      } catch (e) {
-        return { matched: [], unmatched: [] };
-      }
-    },
-  },
-  config: {
-    title: 'Upload Participants Set',
-    inputPlaceholder: 'e.g. C3DC-PARTICIPANT-101025, C3DC-PARTICIPANT-101026, C3DC-PARTICIPANT-101027',
-    inputTooltip: 'Enter valid Participant IDs.',
-    uploadTooltip: 'Select a file from your computer.',
-    accept: '.csv,.txt',
-    maxSearchTerms: 1000,
-    mappedLabel: 'Participant record(s)',
-    matchedId: 'participant_id',
-    matchedLabel : 'Participant ID',
-    associateId: 'study_id',
-    associateLabel: 'Study ID',
-    projectName: 'C3DC',
-    caseIds: 'Participant ID(s)',
-  },
-});
-
 const NewBentoFacetFilter = ({
   classes,
   searchData,
@@ -142,6 +53,92 @@ const NewBentoFacetFilter = ({
   selectedSection,
   unknownAgesState,
 }) => {
+  const updateUrl = useUrlManager('/explore');
+
+  // Generate SearchBox Component with URL manager
+  const { SearchBox } = useMemo(() => SearchBoxGenerator({
+    config: {
+      inputPlaceholder: 'Participant ID Search',
+      noOptionsText: 'No matching items found',
+      searchType: ['participantIds', 'associatedIds'],
+    },
+    functions: {
+      updateBrowserUrl: (newUniqueValue) => {
+        const paramValue = {
+          'p_id': newUniqueValue.map((data) => data.title).join('|')
+        };
+        updateUrl(paramValue);
+      },
+      getSuggestions: async (searchType) => {
+        try {
+          const response = await getAllIds(searchType).catch(() => []);
+
+          const participantSuggestions = response && response[searchType[0]] instanceof Array
+            ? response[searchType[0]].map((id) => ({ type: searchType[0], title: id }))
+            : [];
+
+          const associatedIdsSuggestions = response && response[searchType[1]] instanceof Object
+            ? response[searchType[1]].map((item) => ({ type: searchType[1], title: item.participant_id, synonym: item.associated_id }))
+            : [];
+
+          return [...participantSuggestions, ...associatedIdsSuggestions];
+        } catch (e) {
+          return [];
+        }
+      },
+    },
+  }), [updateUrl]);
+
+  // Generate UploadModal Component with URL manager
+  const { UploadModal } = useMemo(() => UploadModalGenerator({
+    functions: {
+      updateBrowserUrl: (_filename, fileContent, matchIds, unmatchedIds) => {
+        const fc = fileContent
+          .split(/[,\n]/g)
+          .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
+          .filter((e) => e && e.length > 1);
+        const paramValue = {
+          'u': matchIds.map((data) => data.participant_id).join('|'),
+          'u_fc': fc.join('|'),
+          'u_um': unmatchedIds.join('|'),
+        };
+        updateUrl(paramValue);
+      },
+      searchMatches: async (inputArray) => {
+        try {
+          // Split the search terms into chunks of 500
+          const caseChunks = chunkSplit(inputArray, 500);
+          const matched = (await Promise.allSettled(caseChunks.map((chunk) => getAllParticipantIds(chunk))))
+            .filter((result) => result.status === 'fulfilled')
+            .map((result) => result.value || [])
+            .flat(1);
+
+          // Combine the results and remove duplicates
+          const unmatched = new Set(inputArray);
+          matched.forEach((obj) => unmatched.delete(obj.participant_id.toUpperCase()));
+          return { matched, unmatched: [...unmatched] };
+        } catch (e) {
+          return { matched: [], unmatched: [] };
+        }
+      },
+    },
+    config: {
+      title: 'Upload Participants Set',
+      inputPlaceholder: 'e.g. C3DC-PARTICIPANT-101025, C3DC-PARTICIPANT-101026, C3DC-PARTICIPANT-101027',
+      inputTooltip: 'Enter valid Participant IDs.',
+      uploadTooltip: 'Select a file from your computer.',
+      accept: '.csv,.txt',
+      maxSearchTerms: 1000,
+      mappedLabel: 'Participant record(s)',
+      matchedId: 'participant_id',
+      matchedLabel : 'Participant ID',
+      associateId: 'study_id',
+      associateLabel: 'Study ID',
+      projectName: 'C3DC',
+      caseIds: 'Participant ID(s)',
+    },
+  }), [updateUrl]);
+
   /** Note:
   * Generate Custom facet Section Component
   * 1. Config local search input for Case
@@ -218,6 +215,7 @@ const NewBentoFacetFilter = ({
               queryParams={queryParams}
               unknownAgesState={unknownAgesState}
               searchFacetClasses={classes}
+              onUrlUpdate={updateUrl}
             />
           </FacetFilterThemeProvider>
         )

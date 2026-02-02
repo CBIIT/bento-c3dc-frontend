@@ -1,120 +1,134 @@
 import React, { useEffect, useState } from 'react';
-import { useApolloClient } from '@apollo/client';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { CircularProgress } from '@material-ui/core';
-import { getFiltersWithUnknownAges } from '@bento-core/facet-filter';
-import InventoryView from './inventoryView';
-import { DASHBOARD_QUERY_NEW } from '../../bento/dashboardTabData';
 import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalProvider } from '../../components/CohortModal/CohortModalContext';
 import { setActiveFilterByPathQuery } from './sideBar/BentoFilterUtils';
+import { facetsConfig, queryParams, URL_CHARACTER_LIMIT } from '../../bento/dashTemplate';
+import { generateQueryStr } from '@bento-core/util';
+import InventoryView from './inventoryView';
+import InventoryCover from './inventoryCover';
 
-
-let latestRequestId = 0;
-
-const getDashData = (states) => {
-  const {
-    filterState, unknownAgesState,
-    localFindUpload, localFindAutocomplete,
-  } = states;
-
-  const client = useApolloClient();
-  const [dashData, setDashData] = useState(null);
-  const [loading, setLoading] = useState(true); // new loading state
-
-  async function getData(activeFilters) {
-    const currentRequestId = ++latestRequestId;
-    setLoading(true); // start loading
-
-    let result = await client.query({
-      query: DASHBOARD_QUERY_NEW,
-      variables: activeFilters,
-    })
-      .then((response) => response.data);
-
-    if (currentRequestId !== latestRequestId) {
-      return null;
-    }
-
-    setLoading(false); // done loading
-    return result;
-  }
-
-
-  const activeFilters = {
-    ...getFiltersWithUnknownAges(filterState, unknownAgesState),
-    participant_id: [
-      ...(localFindUpload || []).map((obj) => obj.participant_id),
-      ...(localFindAutocomplete || []).map((obj) => obj.title),
-    ],
-  };
-
-  useEffect(() => {
-    const controller = new AbortController();
-    getData(activeFilters).then((result) => {
-      if (result && result.getParticipants) {
-        setDashData(result.getParticipants);
-      }
-    });
-    return () => controller.abort();
-  }, [filterState, unknownAgesState, localFindUpload, localFindAutocomplete]);
-  return { dashData, activeFilters, loading };
-};
-
-const InventoryController = ((props) => {
+const InventoryController = (() => {
   const [searchParams] = useSearchParams();
   const filterQuery = searchParams.get("filterQuery");
   const [loadingFilterQuery, setLoadingFilterQuery] = useState(false);
-
-
+  const [justProcessedFilterQuery, setJustProcessedFilterQuery] = useState(false);
   const navigate = useNavigate();
 
+  // Read from Redux (data is stored by inventoryCover)
+  const activeFilters = useSelector((state) => state.inventoryReducer && state.inventoryReducer.activeFilters);
+  const dashData = useSelector((state) => state.inventoryReducer && state.inventoryReducer.dashData);
+  const unknownAgesState = useSelector((state) => state.statusReducer.unknownAgesState);
+
+  // Handle filterQuery parameter (C3DC-specific cohort modal feature)
   useEffect(() => {
     if (filterQuery) {
-      // Fetch filter string from backend using the id in URL
-      setLoadingFilterQuery(true); // start loading
-
+      setLoadingFilterQuery(true);
+      setJustProcessedFilterQuery(true);
       fetch(`${filterQuery}`)
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch filterQuery");
           return res.json();
         })
         .then((data) => {
+          // Parse the filterQuery data to extract facets
+          const filterObject = JSON.parse(decodeURIComponent(data.key || ''));
+
+          // Set the Redux state with all filters
           setActiveFilterByPathQuery(data.key);
-          const redirectUrl = "/explore";
-          navigate(redirectUrl, { replace: true });
+
+          // Build URL parameters for facets with updateURL: true
+          const query = new URLSearchParams(window.location.search);
+          const paramValue = {};
+
+          // Extract participant data from filterObject and convert to URL parameters
+          // Handle autocomplete participant IDs
+          if (filterObject.autocomplete && Array.isArray(filterObject.autocomplete) && filterObject.autocomplete.length > 0) {
+            paramValue['p_id'] = filterObject.autocomplete.map((data) => data.title).join('|');
+          }
+
+          // Handle uploaded participant IDs
+          if (filterObject.upload && Array.isArray(filterObject.upload) && filterObject.upload.length > 0) {
+            paramValue['u'] = filterObject.upload.map((data) => data.participant_id).join('|');
+
+            // Handle upload metadata (file content and unmatched IDs)
+            if (filterObject.uploadMetadata) {
+              const { fileContent, unmatched } = filterObject.uploadMetadata;
+
+              if (fileContent) {
+                const fc = fileContent
+                  .split(/[,\n]/g)
+                  .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
+                  .filter((e) => e && e.length > 1);
+                paramValue['u_fc'] = fc.join('|');
+              }
+
+              if (unmatched && Array.isArray(unmatched) && unmatched.length > 0) {
+                paramValue['u_um'] = unmatched.join('|');
+              }
+            }
+          }
+
+          // Get list of facets that should update URL
+          const updateURLFacets = facetsConfig
+            .filter((f) => f.updateURL === true)
+            .map((f) => f.datafield);
+
+          // Add updateURL facets to paramValue
+          Object.keys(filterObject).forEach((key) => {
+            if (updateURLFacets.includes(key) && Array.isArray(filterObject[key])) {
+              paramValue[key] = filterObject[key].join('|');
+            }
+          });
+
+          // Add unknownAges parameters for updateURL facets if they exist
+          if (filterObject.unknownAgesState) {
+            Object.keys(filterObject.unknownAgesState).forEach((datafield) => {
+              if (updateURLFacets.includes(datafield)) {
+                const unknownAges = filterObject.unknownAgesState[datafield];
+                if (unknownAges && unknownAges !== 'include') {
+                  const unknownAgesParam = `${datafield}_unknownAges`;
+                  paramValue[unknownAgesParam] = unknownAges;
+                }
+              }
+            });
+          }
+
+          // Generate query string
+          const queryStr = generateQueryStr(query, queryParams, paramValue);
+          const redirectUrl = `/explore${queryStr}`;
+
+          // Only navigate to the deconstructed URL if it's under the character limit
+          // Otherwise, keep the original filterQuery URL
+          if (redirectUrl.length <= URL_CHARACTER_LIMIT) {
+            navigate(redirectUrl, { replace: true });
+          }
         })
         .catch((err) => {
           console.error("Error loading filterQuery:", err);
-        }).finally(() => setLoadingFilterQuery(false));
+          setJustProcessedFilterQuery(false);
+        })
+        .finally(() => setLoadingFilterQuery(false));
     }
   }, [filterQuery]);
-
-  const { dashData, activeFilters, loading } = getDashData(props);
-  if (!dashData) {
-    return (<div style={{"height": "1200px","paddingTop": "10px"}}><div style={{"margin": "auto","display": "flex","maxWidth": "1800px"}}><CircularProgress /></div></div>);
-  }
 
   return (
     <CohortStateProvider>
       <CohortModalProvider>
+        <InventoryCover
+          justProcessedFilterQuery={justProcessedFilterQuery}
+          setJustProcessedFilterQuery={setJustProcessedFilterQuery}
+        />
         <InventoryView
-          {...props}
           dashData={dashData}
           activeFilters={activeFilters}
-          loading={loading || loadingFilterQuery}
+          unknownAgesState={unknownAgesState}
+          loading={loadingFilterQuery}
         />
       </CohortModalProvider>
     </CohortStateProvider>
   );
 });
 
-const mapStateToProps = (state) => ({
-  filterState: state.statusReducer.filterState,
-  unknownAgesState: state.statusReducer.unknownAgesState,
-  localFindUpload: state.localFind.upload,
-  localFindAutocomplete: state.localFind.autocomplete,
-});
-
-export default connect(mapStateToProps, null)(InventoryController);
+export default InventoryController;
