@@ -1,7 +1,6 @@
 import React, { useState , useMemo } from 'react';
 import {
   useLocation,
-  //useNavigate,
 } from "react-router-dom";
 import { 
   Button,
@@ -14,11 +13,13 @@ import store from '../../store';
 import {
   resetAllData,
 } from '@bento-core/local-find';
-//import { generateQueryStr } from '@bento-core/util';
+import { generateQueryStr } from '@bento-core/util';
 import { 
   resetIcon, 
   facetsConfig,
-  //queryParams, 
+  queryParams,
+  excludedParams,
+  ageRelatedParams, 
   sectionLabel, 
   obtainColorFromFacetIndex,
 } from '../../bento/dashTemplate';
@@ -129,10 +130,9 @@ const Inventory = ({
   
     // Get unique list of section names
     const sectionList = [...new Set(facetsConfig.map(item => item.section))];
-    
+
     // Calculate total number of active filters across all sections
     let activeFiltersCount = 0;
-    const ageRelatedParams = ['age_at_diagnosis', 'age_at_treatment_start', 'age_at_response', 'age_at_last_known_survival_status', 'participant_age_at_collection'];
     
     // Count filters, but handle age-related facets specially to avoid double counting
     Object.keys(activeFilters || {}).forEach(key => {
@@ -191,8 +191,7 @@ const Inventory = ({
   */
   const CustomClearAllFiltersBtn = ({ onClearAllFilters, disable }) => {
     const [isHover, setIsHover] = useState(false);
-    //const query = new URLSearchParams(useLocation().search);
-    //const navigate = useNavigate();
+    const query = new URLSearchParams(useLocation().search);
     return (
       <div className={classes.floatRight}>
         <Button
@@ -200,20 +199,31 @@ const Inventory = ({
           variant="outlined"
           disabled={disable}
           onClick={() => {
-            /*
-            const paramValue = {
-              'p_id': '', 'u': '', 'u_fc': '', 'u_um': '', 'sex_at_birth': '', 'race': '',
-              'age_at_diagnosis': '', 'age_at_diagnosis_unknownAges': '', 'diagnosis': '', 'diagnosis_anatomic_site': '', 'diagnosis_classification_system': '', 'diagnosis_basis': '', 'disease_phase': '',
-              'treatment_type': '', 'treatment_agent': '', 'age_at_treatment_start': '', 'age_at_treatment_start_unknownAges': '', 'response_category': '', 'age_at_response': '', 'age_at_response_unknownAges': '',
-              'age_at_last_known_survival_status': '', 'age_at_last_known_survival_status_unknownAges': '', 'first_event': '', 'last_known_survival_status': '',
-              'participant_age_at_collection': '', 'participant_age_at_collection_unknownAges': '', 'sample_anatomic_site': '', 'sample_tumor_status': '', 'tumor_classification': '',
-              'data_category': '', 'file_type': '', 'dbgap_accession': '', 'study_name': '', 'study_status': '',
-              'library_selection': '', 'library_strategy': '', 'library_source_material': '', 'library_source_molecule': ''
-            };
+            const paramValue = queryParams
+              .filter((param) => !excludedParams.includes(param))
+              .reduce((acc, param) => {
+                acc[param] = '';
+                return acc;
+              }, {});
+
+
+
             const queryStr = generateQueryStr(query, queryParams, paramValue);
-            navigate(`/explore${queryStr}`);*/
+            window.history.replaceState(null, '', `/explore${queryStr}`);
             onClearAllFilters();
             store.dispatch(resetAllData());
+
+            // Reset unknownAges state to default values
+
+            ageRelatedParams.forEach(param => {
+              store.dispatch({
+                type: 'UNKNOWN_AGES_CHANGED',
+                payload: {
+                  datafield: param,
+                  unknownAges: 'include',
+                },
+              });
+            });
           }}
           className={classes.customButton}
           onMouseEnter={() => setIsHover(true)}
