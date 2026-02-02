@@ -382,7 +382,13 @@ const modalStyles = {
     textAlign: 'center',
     color: '#000000',
   },
-  modalBody: {
+  modalBody: {                                                                                                                                                                                                                                                                                                                                                                                                                
+    position: 'absolute',                                                                                                                                                                                                                                                                                                                                                                                                     
+    top: '50%',                                                                                                                                                                                                                                                                                                                                                                                                               
+    left: '50%',                                                                                                                                                                                                                                                                                                                                                                                                              
+    transform: 'translate(-50%, -50%)',                                                                                                                                                                                                                                                                                                                                                                                       
+    width: '836px',                                                                                                                                                                                                                                                                                                                                                                                                           
+    height: '671px',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
   },
   searchContainer: {
   },
@@ -542,7 +548,7 @@ const studyFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    updateURL: true
+    updateURL: true,
     style: createCheckboxStylesForSection(STUDY),
   },
   {
