@@ -5,6 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import { sideBarReducerGenerator } from '@bento-core/facet-filter';
 import layout from '../components/Layout/LayoutState';
 import stats from '../components/Stats/StatsState';
+import inventoryReducer from '../components/Inventory/InventoryState';
 import { cartReducerGenerator } from '@bento-core/cart';
 import { LocalFindReducerGenerator } from '@bento-core/local-find';
 
@@ -14,6 +15,7 @@ const { cartReducer } = cartReducerGenerator();
 
 const reducers = {
   localFind,
+  inventoryReducer,
   cartReducer,
   statusReducer,
   layout,

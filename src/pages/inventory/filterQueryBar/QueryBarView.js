@@ -1,25 +1,25 @@
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
-import { 
-  useLocation,
-  //useNavigate
+import {
+  useLocation
 }  from "react-router-dom";
 import { clearAllFilters, clearFacetSection, clearSliderSection, toggleCheckBox } from '@bento-core/facet-filter';
 import { resetAllData, resetUploadData, updateAutocompleteData } from '@bento-core/local-find';
 // import { updateImportfrom } from '../../../components/Inventory/InventoryState';
 import store from '../../../store';
 import { QueryBarGenerator } from '@bento-core/query-bar';
-// import { generateQueryStr } from '@bento-core/util';
-import { 
-  facetsConfig, 
-  queryParams, 
-  //excludedParams, 
-  ageRelatedParams 
+import { generateQueryStr } from '@bento-core/util';
+import {
+  facetsConfig,
+  queryParams,
+  excludedParams,
+  ageRelatedParams
 } from '../../../bento/dashTemplate';
 import { customStyles } from './QueryBarStyles';
 import { Container, createTheme, ThemeProvider } from '@material-ui/core';
 import theme from './QueryBarTheme';
 import { generateUrl } from './QueryBarUtils';
+import { useUrlManager } from '../../../hooks/useUrlManager';
 
 /**
  * Generate the Explore Tab Query Bar
@@ -35,9 +35,49 @@ import { generateUrl } from './QueryBarUtils';
 const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImportFrom }) => {
   const dispatch = useDispatch();
   const query = new URLSearchParams(useLocation().search);
-  // const navigate = useNavigate();
+  const updateUrl = useUrlManager('/explore');
 
   const sectionOrder = facetsConfig.map((v) => v.datafield);
+
+  // Helper function to sync participant IDs from Redux state to URL
+  const syncParticipantIdsToUrl = (paramValue) => {
+    /* eslint-disable no-param-reassign */
+    // Sync autocomplete participant IDs
+    if (localFind && localFind.autocomplete && localFind.autocomplete.length > 0) {
+      paramValue.p_id = localFind.autocomplete.map((data) => data.title).join('|');
+    } else {
+      paramValue.p_id = '';
+    }
+
+    // Sync uploaded participant IDs
+    if (localFind && localFind.upload && localFind.upload.length > 0) {
+      paramValue.u = localFind.upload.map((data) => data.participant_id).join('|');
+
+      // Sync upload metadata
+      if (localFind.uploadMetadata && localFind.uploadMetadata.fileContent) {
+        const fc = localFind.uploadMetadata.fileContent
+          .split(/[,\n]/g)
+          .map((e) => e.trim().replace(/\r/g, '').toUpperCase())
+          .filter((e) => e && e.length > 1);
+        paramValue.u_fc = fc.join('|');
+      } else {
+        paramValue.u_fc = '';
+      }
+
+      if (localFind.uploadMetadata
+        && localFind.uploadMetadata.unmatched
+        && localFind.uploadMetadata.unmatched.length > 0) {
+        paramValue.u_um = localFind.uploadMetadata.unmatched.join('|');
+      } else {
+        paramValue.u_um = '';
+      }
+    } else {
+      paramValue.u = '';
+      paramValue.u_fc = '';
+      paramValue.u_um = '';
+    }
+    /* eslint-enable no-param-reassign */
+  };
 
   // Create mapped filter state from regular facets
   const mappedFilterState = Object.keys(statusReducer || {}).map((facet) => {
@@ -112,15 +152,14 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
     },
     functions: {
       clearAll: () => {
-        /*
         const paramValue = queryParams
           .filter((param) => !excludedParams.includes(param))
           .reduce((acc, param) => {
             acc[param] = '';
             return acc;
           }, {});
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });*/
+        const queryStr = generateQueryStr(query, queryParams, paramValue);
+        window.history.replaceState(null, '', `/explore${queryStr}`);
         dispatch(resetAllData());
         dispatch(clearAllFilters());
       },
@@ -131,55 +170,60 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         };
         // const queryStr = generateQueryStr(query, queryParams, paramValue);
         // navigate(`/explore${queryStr}`, { replace: true });
-        dispatch(updateImportfrom(null, []));
+        // dispatch(updateImportfrom(null, []));
+        */
       },
       clearUpload: () => {
-        /*
         const paramValue = {
           'u': '',
           'u_fc': '',
           'u_um': '',
         };
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });*/
+        updateUrl(paramValue);
         dispatch(resetUploadData());
       },
       clearAutocomplete: () => {
-        /*
         const paramValue = {
           'p_id': ''
         };
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });*/
+        updateUrl(paramValue);
         dispatch(updateAutocompleteData([]));
       },
-      deleteAutocompleteItem: (title) => {
+      deleteAutocompleteItem: (item) => {
         const { autocomplete } = localFind;
         const newdata = [...autocomplete];
-        const index = newdata.findIndex((v) => v.title === title);
+        // Handle both object (new) and string (legacy) parameter
+        // For objects, use strict matching (title + type + synonym) from 1.9.0
+        const index = typeof item === 'object'
+          ? newdata.findIndex((v) => v.title === item.title && v.type === item.type && v.synonym === item.synonym)
+          : newdata.findIndex((v) => v.title === item);
 
         if (index > -1) {
           newdata.splice(index, 1);
-          /*
           const paramValue = {
             'p_id': newdata.map((dt) => dt.title).join('|')
           };
-          // const queryStr = generateQueryStr(query, queryParams, paramValue);
-          // navigate(`/explore${queryStr}`, { replace: true });*/
+          updateUrl(paramValue);
           dispatch(updateAutocompleteData(newdata));
         }
       },
       resetFacetSection: (section) => {
-        const field = section.datafield;
-        let paramValue = {};
-        paramValue[field] = '';
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });
+        // Only update URL if updateURL flag is explicitly set to true in facet config
+        if (section.updateURL === true) {
+          const field = section.datafield;
+          const paramValue = {};
+          paramValue[field] = '';
+
+          // Sync participant IDs from Redux state
+          syncParticipantIdsToUrl(paramValue);
+
+          updateUrl(paramValue);
+        }
         dispatch(clearFacetSection(section));
       },
       resetFacetSlider: (section) => {
         const field = section.datafield;
-        let paramValue = {};
+        const paramValue = {};
 
         // Check if this is an unknownAges entry
         if (section.isUnknownAges) {
@@ -187,8 +231,14 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
           const unknownAgesField = `${section.parentDatafield}_unknownAges`;
           paramValue[unknownAgesField] = '';
 
-          // const queryStr = generateQueryStr(query, queryParams, paramValue);
-          // navigate(`/explore${queryStr}`, { replace: true });
+          // Get the parent config to check updateURL flag
+          const parentConfig = facetsConfig.find((c) => c.datafield === section.parentDatafield);
+          if (parentConfig && parentConfig.updateURL === true) {
+            // Sync participant IDs from Redux state
+            syncParticipantIdsToUrl(paramValue);
+
+            updateUrl(paramValue);
+          }
 
           // Reset the unknownAges parameter in Redux state
           store.dispatch({
@@ -208,19 +258,30 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
             paramValue[unknownAgesField] = '';
           }
 
-          // const queryStr = generateQueryStr(query, queryParams, paramValue);
-          // navigate(`/explore${queryStr}`, { replace: true });
+          // Only update URL if updateURL flag is explicitly set to true in facet config
+          if (section.updateURL === true) {
+            // Sync participant IDs from Redux state
+            syncParticipantIdsToUrl(paramValue);
+
+            updateUrl(paramValue);
+          }
           dispatch(clearSliderSection(section));
         }
       },
       resetUnknownAges: (section) => {
         const field = section.parentDatafield || section.datafield.replace('_unknownAges', '');
         const unknownAgesField = `${field}_unknownAges`;
-        let paramValue = {};
+        const paramValue = {};
         paramValue[unknownAgesField] = '';
 
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });
+        // Get the parent config to check updateURL flag
+        const parentConfig = facetsConfig.find((c) => c.datafield === field);
+        if (parentConfig && parentConfig.updateURL === true) {
+          // Sync participant IDs from Redux state
+          syncParticipantIdsToUrl(paramValue);
+
+          updateUrl(paramValue);
+        }
 
         // Reset the corresponding unknownAges parameter in Redux state
         store.dispatch({
@@ -238,10 +299,18 @@ const QueryBarView = ({ data, statusReducer, localFind, unknownAgesState, hasImp
         if (idx > -1) {
           items.splice(idx, 1);
         }
-        let paramValue = {};
-        paramValue[field] = items.length > 0 ? items.join('|') : '';
-        // const queryStr = generateQueryStr(query, queryParams, paramValue);
-        // navigate(`/explore${queryStr}`, { replace: true });
+
+        // Only update URL if updateURL flag is explicitly set to true in facet config
+        if (section.updateURL === true) {
+          const paramValue = {};
+          paramValue[field] = items.length > 0 ? items.join('|') : '';
+
+          // Sync participant IDs from Redux state
+          syncParticipantIdsToUrl(paramValue);
+
+          updateUrl(paramValue);
+        }
+
         dispatch(toggleCheckBox({
           datafield: section.datafield,
           isChecked: false,
