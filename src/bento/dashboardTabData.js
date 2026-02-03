@@ -2444,6 +2444,7 @@ const treatmentTab = {
         hideable: true,
       tooltipText: "sort",
       role: cellTypes.DISPLAY,
+      cellType: cellTypes.COMMA,
     },
     {
       dataField: "age_at_treatment_end",
@@ -2452,6 +2453,7 @@ const treatmentTab = {
         hideable: true,
       tooltipText: "sort",
       role: cellTypes.DISPLAY,
+      cellType: cellTypes.COMMA,
     },
     {
       dataField: "treatment_type",
@@ -2578,6 +2580,7 @@ const treatmentResponseTab = {
         hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
+        cellType: cellTypes.COMMA,
       },
       {
         dataField: 'dbgap_accession',
@@ -2712,7 +2715,7 @@ const treatmentResponseTab = {
         hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-        cellType: cellTypes.COMMA
+        cellType: cellTypes.COMMA,
       },
       {
         dataField: 'dbgap_accession',
@@ -2742,7 +2745,7 @@ const treatmentResponseTab = {
         hideable: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY,
-        cellType: cellTypes.COMMA
+        cellType: cellTypes.COMMA,
       },
       {
         dataField: 'first_event',
