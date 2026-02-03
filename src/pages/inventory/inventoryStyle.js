@@ -187,6 +187,7 @@ export default () => ({
     lineHeight: '22px',
     fontSize: '22px',
     verticalAlign: '-5px',
+    marginRight: '2px',
   },
   categoryTitle: {
     color: '#000000',
