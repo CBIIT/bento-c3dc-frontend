@@ -271,7 +271,7 @@ export const facetSectionVariables = {
     unknownAgesRadioGroup: {
       flexDirection: 'row',
       gap: '2px',
-      padding: '8px 0px 9px 0px',
+      padding: '2px 0px 9px 0px',
     },
     radioLabel: {
       marginRight: '10px',
