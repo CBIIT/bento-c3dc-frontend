@@ -4,13 +4,14 @@
 import { FACET_NAMES, obtainColorFromSectionName } from '../../../bento/dashTemplate';
 export  const customStyles = {
     queryWrapper: {
+      position: 'relative',
       height: '107px',
       minHeight: '107px',
       maxHeight: '107px',
       paddingBottom: '12px',
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #B0B0B0',
-      padding: '2.7px 0px 12px 25px',
+      padding: '10px 0px 12px 25px',
       overflowY: 'auto',
       '&::-webkit-scrollbar': {
         width: '17px',
@@ -34,7 +35,7 @@ export  const customStyles = {
     queryContainer: {
       marginLeft: 5,
       position: 'relative',
-      lineHeight: '25px',
+      lineHeight: '23px',
       fontFamily: 'Nunito',
       fontSize: '12px',
       color: '#000000',
@@ -97,7 +98,7 @@ export  const customStyles = {
       fontWeight: 'bold',
     },
     clearQueryButton: {
-      margin: '1px',
+      marginRight: '23.5px',
       //marginLeft: -6,
       fontWeight: 600,
       fontSize: '12px',
@@ -115,11 +116,11 @@ export  const customStyles = {
       },
     },
     divider: {
-      paddingLeft: '16px',
-      fontSize: '26px',
+      position: 'absolute',
+      height: '26px',
       borderRight: '.5px solid #969696',
-      marginRight: '8px',
       verticalAlign: 'middle',
+      left: '141px',
     },
     viewLinkToggleBtn: {
       margin: '1px',
