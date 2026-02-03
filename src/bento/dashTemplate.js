@@ -334,6 +334,7 @@ const createSliderStylesForSection = (color) => ({
 const checkboxStyles = {
   listItemGutters: {
     padding: '5.15px 10px 5.15px 0px',
+    minHeight: '31px',
   },
   checkboxRoot: {
     marginLeft: '8px',
