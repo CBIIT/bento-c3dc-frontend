@@ -85,7 +85,7 @@ export default () => ({
     flexShrink: '0',
     fontFamily: 'Poppins',
     fontWeight: 400,
-    lineHeight: '24px',
+    lineHeight: '100%',
     marginLeft: '5px',
     letterSpacing: '-0.02em',
     textTransform: 'capitalize',
