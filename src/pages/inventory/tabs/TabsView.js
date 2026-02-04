@@ -1,4 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
+import { connect, useDispatch } from 'react-redux';
+/* Commented out the tab change via URL logic but kept for future reference
+import {
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
+import { generateQueryStr } from '@bento-core/util';
+import { queryParams } from '../../../bento/dashTemplate';
+*/
+import {
+  changeTab,
+} from '../../../components/Inventory/InventoryState';
 import TabPanel from './TabPanel';
 import { tabContainers, tabResponsiveBreakpoints } from '../../../bento/dashboardTabData';
 import { Tabs as BentoTabs }  from '@bento-core/tab';
@@ -9,12 +21,20 @@ import DeleteConfirmationModal from '../../../components/CohortModal/components/
 
 
 const Tabs = (props) => {
-  const [currentTab, setCurrentTab] = tabContainers.length > 0 ? useState(1) : useState(0);
-  const handleTabChange = (_, value) => {
-    setCurrentTab(value);
-  };
-
+  const { currentTab } = props;
   const { showCohortModal, setShowCohortModal , setWarningMessage, warningMessage } = useContext(CohortModalContext);
+  const dispatch = useDispatch();
+  // const query = new URLSearchParams(useLocation().search);
+  // const navigate = useNavigate();
+
+  const handleTabChange = (event, value) => {
+    // Commented out URL update on tab change
+    // let paramValue = {};
+    // paramValue.tab = value;
+    // const queryStr = generateQueryStr(query, queryParams, paramValue);
+    // navigate(`/explore${queryStr}`, { replace: false });
+    dispatch(changeTab(value, 'not-facet'));
+  };
 
   /**
   * 1. change <name> to <display> as array item
@@ -74,4 +94,8 @@ const Tabs = (props) => {
   );
 };
 
-export default Tabs;
+const mapStateToProps = (state) => ({
+  currentTab: state.inventoryReducer.tab
+});
+
+export default connect(mapStateToProps, null)(Tabs);
