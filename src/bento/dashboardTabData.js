@@ -1022,19 +1022,23 @@ export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
 
     # Survivals
     $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
     $cause_of_death: [String],
     $first_event: [String],
     $last_known_survival_status: [String],
 
     # Treatments
     $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
     $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
     $treatment_type: [String],
     $treatment_agent: [String],
 
     # Treatment Responses
     $response: [String],
     $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
     $response_category: [String],
     $response_system: [String],
 
@@ -1068,26 +1072,30 @@ export const GET_DIAGNOSIS_OVERVIEW_QUERY = gql`
     reported_significance: $reported_significance,
     reported_significance_system: $reported_significance_system,
     status: $status,
-    
+
     # Studies
     dbgap_accession: $dbgap_accession,
     study_name: $study_name,
 
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
     cause_of_death: $cause_of_death,
     first_event: $first_event,
     last_known_survival_status: $last_known_survival_status
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
     age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
     treatment_type: $treatment_type,
     treatment_agent: $treatment_agent,
 
     # Treatment Responses
     response: $response,
     age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
     response_category: $response_category,
     response_system: $response_system,
 
@@ -1163,19 +1171,23 @@ export const GET_TREATMENT_OVERVIEW_QUERY = gql`
 
     # Survivals
     $age_at_last_known_survival_status: [Int],
+    $age_at_last_known_survival_status_unknownAges: [String],
     $cause_of_death: [String],
     $first_event: [String],
     $last_known_survival_status: [String],
 
     # Treatments
     $age_at_treatment_start: [Int],
+    $age_at_treatment_start_unknownAges: [String],
     $age_at_treatment_end: [Int],
+    $age_at_treatment_end_unknownAges: [String],
     $treatment_type: [String],
     $treatment_agent: [String],
 
     # Treatment Responses
     $response: [String],
     $age_at_response: [Int],
+    $age_at_response_unknownAges: [String],
     $response_category: [String],
     $response_system: [String],
 
@@ -1209,26 +1221,30 @@ export const GET_TREATMENT_OVERVIEW_QUERY = gql`
     reported_significance: $reported_significance,
     reported_significance_system: $reported_significance_system,
     status: $status,
-    
+
     # Studies
     dbgap_accession: $dbgap_accession,
     study_name: $study_name,
 
     # Survivals
     age_at_last_known_survival_status: $age_at_last_known_survival_status,
+    age_at_last_known_survival_status_unknownAges: $age_at_last_known_survival_status_unknownAges,
     cause_of_death: $cause_of_death,
     first_event: $first_event,
     last_known_survival_status: $last_known_survival_status
 
     # Treatments
     age_at_treatment_start: $age_at_treatment_start,
+    age_at_treatment_start_unknownAges: $age_at_treatment_start_unknownAges,
     age_at_treatment_end: $age_at_treatment_end,
+    age_at_treatment_end_unknownAges: $age_at_treatment_end_unknownAges,
     treatment_type: $treatment_type,
     treatment_agent: $treatment_agent,
 
     # Treatment Responses
     response: $response,
     age_at_response: $age_at_response,
+    age_at_response_unknownAges: $age_at_response_unknownAges,
     response_category: $response_category,
     response_system: $response_system,
 
@@ -2444,6 +2460,7 @@ const treatmentTab = {
         hideable: true,
       tooltipText: "sort",
       role: cellTypes.DISPLAY,
+      cellType: cellTypes.COMMA,
     },
     {
       dataField: "age_at_treatment_end",
@@ -2452,6 +2469,7 @@ const treatmentTab = {
         hideable: true,
       tooltipText: "sort",
       role: cellTypes.DISPLAY,
+      cellType: cellTypes.COMMA,
     },
     {
       dataField: "treatment_type",
@@ -2578,6 +2596,7 @@ const treatmentResponseTab = {
         hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
+        cellType: cellTypes.COMMA,
       },
       {
         dataField: 'dbgap_accession',
@@ -2712,7 +2731,7 @@ const treatmentResponseTab = {
         hideable: true,
         tooltipText: 'sort',
         role: cellTypes.DISPLAY,
-        cellType: cellTypes.COMMA
+        cellType: cellTypes.COMMA,
       },
       {
         dataField: 'dbgap_accession',
@@ -2742,7 +2761,7 @@ const treatmentResponseTab = {
         hideable: true,
         tooltipText: "sort",
         role: cellTypes.DISPLAY,
-        cellType: cellTypes.COMMA
+        cellType: cellTypes.COMMA,
       },
       {
         dataField: 'first_event',
