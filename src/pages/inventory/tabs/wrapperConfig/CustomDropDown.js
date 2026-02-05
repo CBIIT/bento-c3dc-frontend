@@ -13,7 +13,7 @@ import { GET_PARTICIPANTS_OVERVIEW_QUERY } from '../../../../bento/dashboardTabD
 import { connect } from 'react-redux';
 import { getFilters } from '@bento-core/facet-filter';
 import CustomCheckBox from '../../../../components/CustomCheckbox/CustomCheckbox';
-import DeleteConfirmationModal from '../../../../components/CohortModal/components/shared/DeleteConfirmationModal';
+import ConfirmationModal from '../../../../components/CohortModal/components/shared/ConfirmationModal';
 import { MiddleEllipsisText } from '../../../../components/EllipsisText';
 
 const DropdownContainer = styled.div`
@@ -497,11 +497,11 @@ const CustomDropDownComponent = ({ options, label, isHidden, backgroundColor, ty
           })}
         </DropdownList>
       )}
-          <DeleteConfirmationModal
+          <ConfirmationModal
                 classes={""}
                 open={showPopupMessage}
                 setOpen={() => { setShowPopupMessage("")  }}
-                handleDelete={() => { setShowPopupMessage("") }}
+                handleConfirm={() => { setShowPopupMessage("") }}
                 deletionType={false}
                 message={showPopupMessage}
             />

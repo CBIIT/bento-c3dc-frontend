@@ -8,9 +8,9 @@ export const CohortModalProvider = ({ children }) => {
   const [currentCohortChanges, setCurrentCohortChanges] = useState(null);
   const [alert, setAlert] = useState({ type: '', message: '' });
   const [selectedCohort, setSelectedCohort] = useState(null);
-  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
-  const [deleteModalProps, setDeleteModalProps] = useState({
-    handleDelete: () => { },
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [confirmModalProps, setConfirmModalProps] = useState({
+    handleConfirm: () => { },
     deletionType: "",
   });
 
@@ -42,10 +42,10 @@ export const CohortModalProvider = ({ children }) => {
     selectedCohort,
     setSelectedCohort,
     clearCurrentCohortChanges,
-    showDeleteConfirmation,
-    setShowDeleteConfirmation,
-    deleteModalProps,
-    setDeleteModalProps
+    showConfirmation,
+    setShowConfirmation,
+    confirmModalProps,
+    setConfirmModalProps
   };
 
   return (

@@ -10,7 +10,7 @@ import {
 import { CohortModalContext } from '../../CohortModalContext';
 import TrashCanIconGray from '../../../../assets/icons/Trash_Can_Icon_Gray.svg';
 import DEFAULT_CONFIG from '../../config';
-import { deletionTypes } from '../shared/DeleteConfirmationModal';
+import { confirmationTypes } from '../shared/ConfirmationModal';
 import CohortListItem from './components/CohortListItem';
 import { TOOLTIP_MESSAGES } from '../../../../bento/cohortModalData';
 
@@ -34,12 +34,12 @@ const CohortList = (props) => {
     } = props;
 
     const { state, dispatch } = useContext(CohortStateContext);
-    const { 
-        selectedCohort, 
-        setSelectedCohort, 
+    const {
+        selectedCohort,
+        setSelectedCohort,
         clearCurrentCohortChanges,
-        setShowDeleteConfirmation,
-        setDeleteModalProps,
+        setShowConfirmation,
+        setConfirmModalProps,
         clearAlert,
         showAlert
     } = useContext(CohortModalContext);
@@ -113,12 +113,12 @@ const CohortList = (props) => {
     }, [state, dispatch, showAlert, setSelectedCohort]);
 
     const handleDeleteAllClick = useCallback(() => {
-        setDeleteModalProps({
-            handleDelete: () => handleDeleteAllCohorts(),
-            deletionType: deletionTypes.DELETE_ALL_COHORTS,
+        setConfirmModalProps({
+            handleConfirm: () => handleDeleteAllCohorts(),
+            deletionType: confirmationTypes.DELETE_ALL_COHORTS,
         });
-        setShowDeleteConfirmation(true);
-    }, [setDeleteModalProps, setShowDeleteConfirmation, handleDeleteAllCohorts]);
+        setShowConfirmation(true);
+    }, [setConfirmModalProps, setShowConfirmation, handleDeleteAllCohorts]);
 
     const handleCohortSelection = useCallback((cohortId) => {
         if (cohortId === selectedCohort) {
@@ -129,41 +129,41 @@ const CohortList = (props) => {
         clearAlert();
         
         if (unSavedChanges) {
-            setDeleteModalProps({
-                handleDelete: () => {
+            setConfirmModalProps({
+                handleConfirm: () => {
                     setSelectedCohort(cohortId);
                     clearCurrentCohortChanges();
                 },
-                deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
+                deletionType: confirmationTypes.CLEAR_UNSAVED_CHANGES,
             });
-            setShowDeleteConfirmation(true);
+            setShowConfirmation(true);
         } else {
             setSelectedCohort(cohortId);
             clearCurrentCohortChanges();
         }
-    }, [selectedCohort, unSavedChanges, setDeleteModalProps, setShowDeleteConfirmation, setSelectedCohort, clearCurrentCohortChanges, clearAlert]);
+    }, [selectedCohort, unSavedChanges, setConfirmModalProps, setShowConfirmation, setSelectedCohort, clearCurrentCohortChanges, clearAlert]);
 
     const handleSingleCohortDelete = useCallback((e, cohortId) => {
         e.stopPropagation();
-        setDeleteModalProps({
-            handleDelete: () => handleDeleteCohort(cohortId),
-            deletionType: deletionTypes.DELETE_SINGLE_COHORT,
+        setConfirmModalProps({
+            handleConfirm: () => handleDeleteCohort(cohortId),
+            deletionType: confirmationTypes.DELETE_SINGLE_COHORT,
         });
-        setShowDeleteConfirmation(true);
-    }, [setDeleteModalProps, setShowDeleteConfirmation, handleDeleteCohort]);
+        setShowConfirmation(true);
+    }, [setConfirmModalProps, setShowConfirmation, handleDeleteCohort]);
 
     const handleSingleCohortDuplicate = useCallback((e, cohortId) => {
         e.stopPropagation();
         if (unSavedChanges) {
-            setDeleteModalProps({
-                handleDelete: () => handleDuplicateCohort(cohortId),
-                deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
+            setConfirmModalProps({
+                handleConfirm: () => handleDuplicateCohort(cohortId),
+                deletionType: confirmationTypes.CLEAR_UNSAVED_CHANGES,
             });
-            setShowDeleteConfirmation(true);
+            setShowConfirmation(true);
         } else {
             handleDuplicateCohort(cohortId);
         }
-    }, [handleDuplicateCohort, unSavedChanges, setDeleteModalProps, setShowDeleteConfirmation]);
+    }, [handleDuplicateCohort, unSavedChanges, setConfirmModalProps, setShowConfirmation]);
 
     const listHeading = (config && config.listHeading) || DEFAULT_CONFIG.config.cohortList.listHeading;
 
