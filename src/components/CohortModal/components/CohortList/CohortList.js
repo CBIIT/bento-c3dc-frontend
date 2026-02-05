@@ -154,8 +154,16 @@ const CohortList = (props) => {
 
     const handleSingleCohortDuplicate = useCallback((e, cohortId) => {
         e.stopPropagation();
-        handleDuplicateCohort(cohortId);
-    }, [handleDuplicateCohort]);
+        if (unSavedChanges) {
+            setDeleteModalProps({
+                handleDelete: () => handleDuplicateCohort(cohortId),
+                deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
+            });
+            setShowDeleteConfirmation(true);
+        } else {
+            handleDuplicateCohort(cohortId);
+        }
+    }, [handleDuplicateCohort, selectedCohort, unSavedChanges, setDeleteModalProps, setShowDeleteConfirmation]);
 
     const listHeading = (config && config.listHeading) || DEFAULT_CONFIG.config.cohortList.listHeading;
 
