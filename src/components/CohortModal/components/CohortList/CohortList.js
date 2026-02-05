@@ -163,7 +163,7 @@ const CohortList = (props) => {
         } else {
             handleDuplicateCohort(cohortId);
         }
-    }, [handleDuplicateCohort, selectedCohort, unSavedChanges, setDeleteModalProps, setShowDeleteConfirmation]);
+    }, [handleDuplicateCohort, unSavedChanges, setDeleteModalProps, setShowDeleteConfirmation]);
 
     const listHeading = (config && config.listHeading) || DEFAULT_CONFIG.config.cohortList.listHeading;
 
