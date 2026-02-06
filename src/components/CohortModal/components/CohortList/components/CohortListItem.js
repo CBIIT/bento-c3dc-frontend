@@ -97,7 +97,7 @@ const styles = () => ({
         width: '100%',
         height: '55px',
         display: 'flex',
-        padding: '19px 22px 21px 26px',
+        padding: '20px 22px 19px 25px',
         justifyContent: 'space-between',
         alignItems: 'center',
         color: '#FFFFFF',
