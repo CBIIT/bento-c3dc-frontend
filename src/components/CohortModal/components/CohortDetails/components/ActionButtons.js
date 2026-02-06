@@ -220,7 +220,7 @@ const styles = () => {
         actionButtonsContainer: {
             display: 'flex',
             flexDirection: 'row',
-            gap: 10,
+            gap: 8,
             justifyContent: 'flex-end'
         },
         exploreTooltipText: {
@@ -302,6 +302,7 @@ const styles = () => {
         fontSize: '12px',
         lineHeight: '16px',
         fontWeight: '500',
+        textTransform: 'capitalize',
         '& div': {
             padding: '13.2px 21px',
             '&:hover': {
@@ -325,7 +326,7 @@ const styles = () => {
     },
     exploreButton: {
         ...standardActionButtonStyle,
-        backgroundColor: '#044249',
+        backgroundColor: '#086C78',
         border: '1.25px solid #4EA1A1',
         '&:hover': {
             backgroundColor: '#1d4d67',

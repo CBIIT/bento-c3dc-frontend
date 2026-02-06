@@ -108,7 +108,7 @@ const styles = () => ({
     cohortButtonSection: {
         display: 'flex',
         justifyContent: 'center',
-        padding: '10px 20px 10px 20px',
+        padding: '22px 20px 10px 20px',
         width: '100%',
         gap: '8px',
 
@@ -147,13 +147,16 @@ const styles = () => ({
     },
     cohortLastUpdated: {
         width: '100%',
-        fontSize: 10,
-        color: '#2D5D63',
-        fontFamily: 'Lato',
         textAlign: 'left',
-        lineHeight: '22px',
         paddingLeft: '20px',
         paddingBottom: '10px',
+        color: '#3A7A81',
+        fontFamily: 'Lato',
+        fontSize: '10px',
+        fontStyle: 'normal',
+        fontWeight: 500,
+        lineHeight: '22px',
+        letterSpacing: '0.1px',
     },
 });
 

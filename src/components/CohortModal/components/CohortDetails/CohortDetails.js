@@ -132,7 +132,7 @@ const styles = () => ({
     cohortDetailsContainer: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 20,
+        gap: 28,
     },
     cohortDetailsSection: {
         flexGrow: 55,
