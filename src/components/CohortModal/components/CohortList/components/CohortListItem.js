@@ -104,7 +104,7 @@ const styles = () => ({
         fontFamily: 'Poppins',
         fontSize: 14,
         fontWeight: '300',
-        lineHeight: '15px',
+        lineHeight: '19px',
         backgroundColor: '#4B7B8B',
         borderBottom: '1px solid #FFF',
         '&:last-child': {
