@@ -152,7 +152,7 @@ const styles = () => ({
         paddingBottom: '10px',
         color: '#3A7A81',
         fontFamily: 'Lato',
-        fontSize: '10px',
+        fontSize: 10,
         fontStyle: 'normal',
         fontWeight: 500,
         lineHeight: '22px',
