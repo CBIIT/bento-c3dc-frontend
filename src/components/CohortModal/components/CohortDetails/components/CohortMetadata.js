@@ -197,7 +197,7 @@ const styles = () => ({
     cohortHeading: {
         display: 'flex',
         justifyContent: 'space-between',
-        padding: '17px 23px 0px 23px',
+        padding: '12px 23px 0px 19px',
     },
     cohortTitle: {
         fontFamily: 'Poppins',

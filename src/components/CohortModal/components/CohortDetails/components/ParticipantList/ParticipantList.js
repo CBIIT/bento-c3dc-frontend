@@ -103,7 +103,7 @@ const styles = () => ({
         borderTopRightRadius: '0px',
         borderBottomLeftRadius: '10px',
         borderBottomRightRadius: '10px',
-        marginTop: '16px',
+        marginTop: '19px',
     },
     cohortButtonSection: {
         display: 'flex',
