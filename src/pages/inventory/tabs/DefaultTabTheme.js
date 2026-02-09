@@ -1,3 +1,5 @@
+const tabColor = "#006A8F";
+
 export const customTheme = {
   MuiTabs: {
     root: {
@@ -15,53 +17,52 @@ export const customTheme = {
       borderLeft: '1px solid #8B8B8B',
       borderRight: '1px solid #8B8B8B',
       fontWeight: '400',
-      lineHeight: '19px',
+      lineHeight: '16px',
       letterSpacing: '0.25px',
       marginRight: '10px',
       fontSize: '17px',
       width: '203px',
-      textTransform: 'none',
+      textTransform: 'uppercase',
       fontFamily: 'Poppins',
       '& span': {
         color: '#000000',
       },
       '&.Mui-selected': {
         fontWeight: '500',
-        fontSize: '18px',
         '&.studies': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #006A8F',
+          borderTop: `6px solid ${tabColor}`,
         },
         '&.participants': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #E39520',
+          borderTop: `6px solid ${tabColor}`,
         },
         '&.diagnosis': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #35B899',
+          borderTop: `6px solid ${tabColor}`,
         },
         '&.treatment': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #268CEA',
+          borderTop: `6px solid ${tabColor}`,
         },
         '&.treatment_response': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #9664C7',
+          borderTop: `6px solid ${tabColor}`,
         },
         '&.survival': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #006B57',
+          borderTop: `6px solid ${tabColor}`,
         },
         '&.genetic_analysis': {
           background: '#FFFFFF',
           color: '#000000',
-          borderTop: '6px solid #862405',
+          borderTop: `6px solid ${tabColor}`,
         },
         '&.MuiTypography-body1': {
           color: 'red',
@@ -115,17 +116,22 @@ export const customTheme = {
     root: {
       '&.popover-list-item': {
         minWidth: '200px',
-        padding: '13px 16px',
+        padding: '7.5px 16px',
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
+        '&:first-child': {
+          paddingTop: '10px',
+        },
+        '&:last-child': {
+          paddingBottom: '10px',
+        },
         '& .popover-tab-name': {
           fontFamily: 'Poppins',
           fontWeight: 300,
           fontSize: '14px',
           color: 'black',
           lineHeight: '107%',
-          letterSpacing: '-2%',
           textTransform: 'capitalize',
           flex: 1,
           textAlign: 'left',
@@ -136,7 +142,6 @@ export const customTheme = {
           fontSize: '14px',
           color: 'black',
           lineHeight: '107%',
-          letterSpacing: '-2%',
           textAlign: 'right',
           marginLeft: '16px',
         },

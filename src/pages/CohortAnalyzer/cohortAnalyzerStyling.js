@@ -14,6 +14,8 @@ export const useStyle = makeStyles((theme) => ({
         flex: 1,
         display: 'flex',
         minHeight: 310,
+        maxHeight: 620,
+        minWidth: 450,
         flexDirection: 'column',
         overflow: 'hidden',
         marginLeft: 6,
@@ -423,7 +425,7 @@ export const useStyle = makeStyles((theme) => ({
         [theme.breakpoints.down('lg')]: {
             flexDirection: 'column',
             gap: 0,
-            marginTop: '20px',
+            marginTop: '20px',         
         }
     },
     rightSideAnalyzerInnerContainer: {

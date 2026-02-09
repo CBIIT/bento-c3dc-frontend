@@ -87,17 +87,28 @@ const { UploadModal } = UploadModalGenerator({
   functions: {
     searchMatches: async (inputArray) => {
       try {
-        // Split the search terms into chunks of 500
-        const caseChunks = chunkSplit(inputArray, 500);
+        // Create a map of uppercase -> original case for lookup
+        const caseMap = new Map();
+        inputArray.forEach((item) => {
+          caseMap.set(item.toUpperCase(), item);
+        });
+
+        // Split the search terms into chunks of 500 (using uppercase for API call)
+        const upperCaseArray = Array.from(caseMap.keys());
+        const caseChunks = chunkSplit(upperCaseArray, 500);
         const matched = (await Promise.allSettled(caseChunks.map((chunk) => getAllParticipantIds(chunk))))
           .filter((result) => result.status === 'fulfilled')
           .map((result) => result.value || [])
           .flat(1);
 
-        // Combine the results and remove duplicates
-        const unmatched = new Set(inputArray);
-        matched.forEach((obj) => unmatched.delete(obj.participant_id.toUpperCase()));
-        return { matched, unmatched: [...unmatched] };
+        // Start with all uppercase keys for matching
+        const unmatchedUppercase = new Set(upperCaseArray);
+        matched.forEach((obj) => unmatchedUppercase.delete(obj.participant_id.toUpperCase()));
+
+        // Convert back to original case for display
+        const unmatched = [...unmatchedUppercase].map((upper) => caseMap.get(upper));
+
+        return { matched, unmatched };
       } catch (e) {
         return { matched: [], unmatched: [] };
       }
@@ -110,12 +121,13 @@ const { UploadModal } = UploadModalGenerator({
     uploadTooltip: 'Select a file from your computer.',
     accept: '.csv,.txt',
     maxSearchTerms: 1000,
+    mappedLabel: 'Participant record(s)',
     matchedId: 'participant_id',
-    matchedLabel : 'Submitted Participant ID',
-    associateId: 'dbgap_accession',
-    associateLabel: '',
+    matchedLabel : 'Participant ID',
+    associateId: 'study_id',
+    associateLabel: 'Study ID',
     projectName: 'C3DC',
-    caseIds: 'Participant IDs',
+    caseIds: 'Participant ID(s)',
   },
 
   customStyles : uploadModalStyles,

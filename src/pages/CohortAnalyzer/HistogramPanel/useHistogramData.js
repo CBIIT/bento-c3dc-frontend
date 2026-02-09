@@ -187,6 +187,14 @@ const fetchChartData = async () => {
     fetchChartData(); // Only runs once to fetch simulated data
   }, [c1, c2, c3, viewType]);
 
+  // Reset checkboxes to default when all cohorts are empty
+  useEffect(() => {
+    const allInputsEmpty = [c1, c2, c3].every(arr => arr.length === 0);
+    if (allInputsEmpty) {
+      setSelectedDatasets(["sexAtBirth", "race"]);
+    }
+  }, [c1, c2, c3]);
+
   const toCamelCase = (input) => {
   return input
     .split("_")

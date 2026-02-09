@@ -12,9 +12,11 @@ RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm set p
 RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm ci --legacy-peer-deps
 RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm run build --silent
 
-FROM nginx:1.29.2-alpine3.22-slim AS fnl_base_image
+FROM nginx:1.29.4-alpine3.23-slim AS fnl_base_image
 
-RUN apk update && apk upgrade libxml2
+# libxml2 CVE
+# CVE-2025-58050
+RUN apk update && apk upgrade libxml2 pcre2
 
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/config/inject.template.js /usr/share/nginx/html/inject.template.js

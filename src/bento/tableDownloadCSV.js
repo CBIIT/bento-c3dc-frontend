@@ -52,8 +52,8 @@ export const customFilesTabDownloadCSV = {
 };
 
 export const GET_DIAGNOSIS_TAB = gql`
-query diagnosisOverview($diagnosis_id: [String], $offset: Int = 0, $first: Int = 1000, $order_by:String =""){
-  diagnosisOverview(diagnosis_id: $diagnosis_id, offset: $offset,first: $first, order_by: $order_by) {
+query cohortManifest($diagnosis_id: [String], $offset: Int = 0, $first: Int = 1000, $order_by:String =""){
+  cohortManifest(diagnosis_id: $diagnosis_id, offset: $offset,first: $first, order_by: $order_by) {
     diagnosis_id
     participant_id
     dbgap_accession
@@ -70,7 +70,7 @@ export const customDiagnosisTabDownloadCSV = {
   keysToInclude: ['participant_id', 'dbgap_accession', 'diagnosis_icd_o', 'disease_phase', 'anatomic_site', 'age_at_diagnosis', 'vital_status'],
   header: ['Participant ID', 'dbGaP ACCESSION', 'ICD-O Morphology', 'Disease Phase', 'Anatomic Site', 'Age at Diagnosis (days)', 'Vital Status'],
   query: GET_DIAGNOSIS_TAB,
-  apiVariable: 'diagnosisOverview',
+  apiVariable: 'cohortManifest',
   fileName: 'tableDownload',
   defaultFullTableDownload: false,
 };

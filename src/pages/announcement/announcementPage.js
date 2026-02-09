@@ -42,6 +42,7 @@ const AnnouncementContainer = styled.div`
     flex-direction: column;
     align-items: center;
     background-width: 100%;
+    padding: 10px;
     padding-bottom: 100px;
   } 
 .options {
@@ -60,23 +61,31 @@ const AnnouncementContainer = styled.div`
     
     }
 .option {
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-right: 40px;
     font-size: 16px;
-    font-style: Open Sans;  
+    font-family: "Open Sans";  
     font-weight: 600;
     cursor: pointer;
+    border-bottom: 3px transparent solid;
 }
 .option-selected {
     border-bottom: 3px #07645C solid;
     color: #07645C;
     font-size: 16px;
-    margin: 10px;
-    font-style: Open Sans;  
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 4px;
+    padding-right: 4px;
+    margin-right: 36px; 
+    margin-left: -4px;
+    font-family: "Open Sans";  
     font-weight: 600;
 }
 .announcementCard { 
     border: 2px #9FBEB5 solid;
-    width: 1046px;
+    max-width: 1046px;
     min-height: 300px;
     border-radius: 20px;
     padding: 25px 30px 25px 30px;
@@ -118,8 +127,7 @@ const AnnouncementContainer = styled.div`
       font-weight: 400;
       line-height: 24px;
       text-align: left;
-      margin-top: 10px;
-      width: 120%;
+      margin-top: 15px;
     }
   .announcementButton{
     font-family: Poppins;
@@ -129,10 +137,11 @@ const AnnouncementContainer = styled.div`
     text-align: left;
     color: #3C7D76;
     border: 1px #3C7D76 solid;
-    padding: 5px;
-    border-radius: 10px;
+    padding: 5px 10px 5px 10px;
+    border-radius: 20px;
     margin: 10px;
-    margin-top: 40px;
+    margin-left: 0px;
+    margin-top: 15px;
     cursor: pointer;
 }
 .announcementPagination {
@@ -213,6 +222,9 @@ const AnnouncementContainer = styled.div`
       margin: 0px;
       font-size: 16px;
     }
+      .noBorder{
+      border: none;
+      }
   .resultsPerPage{
       margin: 15px;
   }
@@ -221,7 +233,7 @@ const AnnouncementContainer = styled.div`
 
 const AnnouncementPage = () => {
   const [selectedOption, setSelectedOption] = useState(0);
-  const [options] = useState(["All", "Data Update","Application Update"]);
+  const [options] = useState(["All", "Data Update", "Application Update"]);
   const [currentPage, setCurrentPage] = useState(1);
   const [resultsPerPage, setResultsPerPage] = useState(10);
   const [expandedIndices, setExpandedIndices] = useState([]);
@@ -275,9 +287,9 @@ const AnnouncementPage = () => {
   };
 
 
-  useEffect(()=>{
-  calculatePageInfo(announcementPageData)
-  },[currentPage,resultsPerPage])
+  useEffect(() => {
+    calculatePageInfo(announcementPageData)
+  }, [currentPage, resultsPerPage])
 
   return (
     <AnnouncementContainer>
@@ -306,17 +318,34 @@ const AnnouncementPage = () => {
 
             return (
               (selectedOption === 0 || content.type === selectedOption) &&
-              <div key={idx} className={'announcementCard'}>
+              <div
+                key={idx}
+                className={'announcementCard'}
+                role={content.is_release_notes ? 'button' : undefined}
+                tabIndex={content.is_release_notes ? 0 : -1}
+                onClick={content.is_release_notes ? () => navigator("/release_notes") : undefined}
+                onKeyDown={
+                  content.is_release_notes
+                    ? (event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        navigator("/release_notes");
+                      }
+                    }
+                    : undefined
+                }
+                style={content.is_release_notes ? { cursor: 'pointer' } : undefined}
+              >
                 <div className="sectionOne">
                   <div className='sectionOne-first'>
                     <span className="title">{isExpanded ? content.title : content.title.substring(0, 100)}</span>
                     <span className="timestamp">{content.timestamp}</span>
-                    <span className="announcementContent" dangerouslySetInnerHTML={{__html: content.verbiage}} />
-                    
+                    <span className="announcementContent" dangerouslySetInnerHTML={{ __html: content.verbiage }} />
+
                   </div>
                   <img src={content.image} width={197} height={172} alt={content.alt} />
                 </div>
-            
+
 
                 {
                   content.is_release_notes &&
@@ -337,7 +366,7 @@ const AnnouncementPage = () => {
         <div className="announcementPagination">
           <div className="resultsPerPage">
             <span>Result Per Page:</span>
-            <select value={resultsPerPage} onChange={(e) => { setResultsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
+            <select className="noBorder" value={resultsPerPage} onChange={(e) => { setResultsPerPage(Number(e.target.value)); setCurrentPage(1); }}>
               <option value={10}>10</option>
               <option value={25}>25</option>
               <option value={50}>50</option>

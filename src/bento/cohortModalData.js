@@ -41,6 +41,9 @@ export const DOWNLOAD_MANIFEST_KEYS = {
 export const TOOLTIP_MESSAGES = {
     viewCohortAnalyzer: "Clicking on this button will take the user to the Cohort Analyzer page, where the user will see the desired cohort and click to proceed with analysis.",
     removeAllCohorts: "Remove all Cohorts",
+    removeCohort: "Remove Cohort",
+    duplicateCohort: "Duplicate Cohort",
+    cohortLimit: "Cohort limit reached",
     exploreCCDIHub: {
         mainText: "Clicking this button will create a url and open a new tab showing the CCDI Hub Explore page with filtered facets based on the user's selected cohort.",
     }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { ThemeProvider, createTheme } from '@material-ui/core/styles';
+import { FACET_NAMES, obtainColorFromSectionName } from '../../../bento/dashTemplate';
 
 const theme = {
   overrides: {
@@ -44,46 +45,46 @@ const theme = {
     MuiListItem: {
       root: {
         '&.studyCheckedEven': {
-          backgroundColor: '#B5DDE5',
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).zebraStripesColor1,
         },
         '&.studyCheckedOdd': {
-          backgroundColor: '#A5C2C8',
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).zebraStripesColor2,
         },
         '&.demographicsCheckedEven': {
-          backgroundColor: '#FFF2DF',
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).zebraStripesColor1,
         },
         '&.demographicsCheckedOdd': {
-          backgroundColor: '#F0DCBE',
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).zebraStripesColor2,
         },
         '&.diagnosisCheckedEven': {
-          backgroundColor: '#C2FFF1',
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).zebraStripesColor1,
         },
         '&.diagnosisCheckedOdd': {
-          backgroundColor: '#BCE1D8',
-        },
-        '&.treatmentCheckedEven': {
-          backgroundColor: '#B5D8F9',
-        },
-        '&.treatmentCheckedOdd': {
-          backgroundColor: '#92BADF',
-        },
-        '&.treatmentresponseCheckedEven': {
-          backgroundColor: '#E8D8F5',
-        },
-        '&.treatmentresponseCheckedOdd': {
-          backgroundColor: '#D3BFE8',
-        },
-        '&.survivalCheckedEven': {
-          backgroundColor: '#E0ECEA',
-        },
-        '&.survivalCheckedOdd': {
-          backgroundColor: '#E9F5F3',
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).zebraStripesColor2,
         },
         '&.geneticanalysisCheckedEven': {
-          backgroundColor: '#FFEDE7',
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).zebraStripesColor1,
         },
         '&.geneticanalysisCheckedOdd': {
-          backgroundColor: '#FFF6F3',
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).zebraStripesColor2,
+        },
+        '&.treatmentCheckedEven': {
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).zebraStripesColor1,
+        },
+        '&.treatmentCheckedOdd': {
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).zebraStripesColor2,
+        },
+        '&.treatmentresponseCheckedEven': {
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).zebraStripesColor1,
+        },
+        '&.treatmentresponseCheckedOdd': {
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).zebraStripesColor2,
+        },
+        '&.survivalCheckedEven': {
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).zebraStripesColor1,
+        },
+        '&.survivalCheckedOdd': {
+          backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).zebraStripesColor2,
         },
       },
     },
@@ -102,6 +103,28 @@ const theme = {
         fontSize: '14px !important',
         lineHeight: '19.1px',
       },
+    },
+    MuiSlider: {
+      thumb: {
+        height: 16,
+        width: 16,
+        "&.invalidThumb": {
+          height: "16px !important",
+          width: "16px !important",
+        },
+      },
+      track: {
+        borderRadius: 4,
+        height: 6,
+        "&.invalidTrack": {
+          borderRadius: "4px !important",
+          height: "6px !important",
+        },
+        '&~&': {
+          background: '#142D64',
+        },
+      },
+
     },
     MuiDivider: {
       middle: {

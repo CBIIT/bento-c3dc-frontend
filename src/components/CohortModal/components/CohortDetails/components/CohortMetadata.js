@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo, useContext, memo } from 'react';
 import { withStyles } from '@material-ui/core';
+import ToolTip from '@bento-core/tool-tip';
 import DEFAULT_CONFIG from '../../../config';
 import { CohortModalContext } from '../../../CohortModalContext';
 import { CohortStateContext } from '../../../../../components/CohortSelectorState/CohortStateContext';
 import { useDebounce } from '../../../hooks/useDebounce';
+import { EndEllipsisText } from '../../../../../components/EllipsisText';
 
 const CohortMetadata = (props) => {
     const { config, classes } = props;
@@ -20,8 +22,8 @@ const CohortMetadata = (props) => {
 
     // Get initial cohort data (either from changes or original)
     const initialCohort = useMemo(() => {
-        return currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId 
-            ? currentCohortChanges 
+        return currentCohortChanges && currentCohortChanges.cohortId === activeCohort.cohortId
+            ? currentCohortChanges
             : activeCohort;
     }, [currentCohortChanges, activeCohort]);
 
@@ -31,7 +33,9 @@ const CohortMetadata = (props) => {
 
     const [isEditingName, setIsEditingName] = useState(false);
     const [isEditingDescription, setIsEditingDescription] = useState(false);
+    const [isNameOverflowing, setIsNameOverflowing] = useState(false);
     const descriptionRef = useRef(null);
+    const nameRef = useRef(null);
 
     // Sync local state when cohort selection changes (use activeCohort to avoid stale context data)
     useEffect(() => {
@@ -122,16 +126,35 @@ const CohortMetadata = (props) => {
                             onBlur={handleFinishEditingName}
                             onChange={handleTextChange}
                             onKeyDown={handleNameKeyDown}
-                            maxLength={18}
+                            maxLength={150}
                             autoFocus
                         />
                     ) : (
-                        <span
-                            onClick={handleEditName}
-                            className={classes.cohortName}
-                        >
-                            {currentCohort.cohortName}
-                        </span>
+                        isNameOverflowing ? (
+                            <ToolTip title={currentCohort.cohortName} placement="top" arrow>
+                                <span
+                                    ref={nameRef}
+                                    onClick={handleEditName}
+                                    className={classes.cohortName}
+                                >
+                                    <EndEllipsisText
+                                        text={currentCohort.cohortName}
+                                        onTruncate={setIsNameOverflowing}
+                                    />
+                                </span>
+                            </ToolTip>
+                        ) : (
+                            <span
+                                ref={nameRef}
+                                onClick={handleEditName}
+                                className={classes.cohortName}
+                            >
+                                <EndEllipsisText
+                                    text={currentCohort.cohortName}
+                                    onTruncate={setIsNameOverflowing}
+                                />
+                            </span>
+                        )
                     )}
                 </div>
                 <span className={classes.cohortItemCounts}>

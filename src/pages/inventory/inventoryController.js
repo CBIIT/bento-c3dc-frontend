@@ -3,18 +3,19 @@ import { useApolloClient } from '@apollo/client';
 import { connect } from 'react-redux';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { CircularProgress } from '@material-ui/core';
-import { getFilters } from '@bento-core/facet-filter';
+import { getFiltersWithUnknownAges } from '@bento-core/facet-filter';
 import InventoryView from './inventoryView';
 import { DASHBOARD_QUERY_NEW } from '../../bento/dashboardTabData';
 import { CohortStateProvider } from '../../components/CohortSelectorState/CohortStateContext';
 import { CohortModalProvider } from '../../components/CohortModal/CohortModalContext';
 import { setActiveFilterByPathQuery } from './sideBar/BentoFilterUtils';
 
+
 let latestRequestId = 0;
 
 const getDashData = (states) => {
   const {
-    filterState,
+    filterState, unknownAgesState,
     localFindUpload, localFindAutocomplete,
   } = states;
 
@@ -42,7 +43,7 @@ const getDashData = (states) => {
 
 
   const activeFilters = {
-    ...getFilters(filterState),
+    ...getFiltersWithUnknownAges(filterState, unknownAgesState),
     participant_id: [
       ...(localFindUpload || []).map((obj) => obj.participant_id),
       ...(localFindAutocomplete || []).map((obj) => obj.title),
@@ -57,21 +58,39 @@ const getDashData = (states) => {
       }
     });
     return () => controller.abort();
-  }, [filterState, localFindUpload, localFindAutocomplete]);
+  }, [filterState, unknownAgesState, localFindUpload, localFindAutocomplete]);
   return { dashData, activeFilters, loading };
 };
 
 const InventoryController = ((props) => {
   const [searchParams] = useSearchParams();
-  const filterQuery = searchParams.get("filterQuery")
+  const filterQuery = searchParams.get("filterQuery");
+  const [loadingFilterQuery, setLoadingFilterQuery] = useState(false);
+
 
   const navigate = useNavigate();
 
-  if (filterQuery) {
-    setActiveFilterByPathQuery(filterQuery);
-    const redirectUrl = '/explore';
-    navigate(redirectUrl, { replace: true })
-  }
+  useEffect(() => {
+    if (filterQuery) {
+      // Fetch filter string from backend using the id in URL
+      setLoadingFilterQuery(true); // start loading
+
+      fetch(`${filterQuery}`)
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch filterQuery");
+          return res.json();
+        })
+        .then((data) => {
+          setActiveFilterByPathQuery(data.key);
+          const redirectUrl = "/explore";
+          navigate(redirectUrl, { replace: true });
+        })
+        .catch((err) => {
+          console.error("Error loading filterQuery:", err);
+        }).finally(() => setLoadingFilterQuery(false));
+    }
+  }, [filterQuery]);
+
   const { dashData, activeFilters, loading } = getDashData(props);
   if (!dashData) {
     return (<div style={{"height": "1200px","paddingTop": "10px"}}><div style={{"margin": "auto","display": "flex","maxWidth": "1800px"}}><CircularProgress /></div></div>);
@@ -84,7 +103,7 @@ const InventoryController = ((props) => {
           {...props}
           dashData={dashData}
           activeFilters={activeFilters}
-          loading={loading}
+          loading={loading || loadingFilterQuery}
         />
       </CohortModalProvider>
     </CohortStateProvider>
@@ -93,6 +112,7 @@ const InventoryController = ((props) => {
 
 const mapStateToProps = (state) => ({
   filterState: state.statusReducer.filterState,
+  unknownAgesState: state.statusReducer.unknownAgesState,
   localFindUpload: state.localFind.upload,
   localFindAutocomplete: state.localFind.autocomplete,
 });

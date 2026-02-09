@@ -49,6 +49,12 @@ const WidgetView = ({ classes, data, theme }) => {
         textColor: theme.palette.widgetBackground.contrastText,
       },
     },
+  BarChartConfig: {
+      colors,
+      styles: {
+        textColor: theme.palette.widgetBackground.contrastText,
+      },
+    },
   };
   const { Widget } = useCallback(WidgetGenerator(widgetGeneratorConfig), []);
 
@@ -72,10 +78,6 @@ const WidgetView = ({ classes, data, theme }) => {
               };
             });
             dataset = newDataset;
-            
-            if (!dataset || dataset.length === 0) {
-              return <></>;
-            }
             const datasetLength = dataset.length;
             if (widget.countType === "discrete") {
               dataset = dataset.sort((a, b) => b.subjects - a.subjects);

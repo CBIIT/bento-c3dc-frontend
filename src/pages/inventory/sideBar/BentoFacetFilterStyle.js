@@ -1,20 +1,31 @@
+import { FACET_NAMES, obtainColorFromSectionName } from "../../../bento/dashTemplate";
+
 export default () => ({
   inputRoot: {
-    height: '26px',
+    height: 30,
+    width: '240px',
+    margin: '0px auto',
     borderRadius: '8px',
     color: '#646464',
     fontFamily: 'Nunito',
-    fontWeight: '500',
-    fontSize: 9,
+    fontWeight: '400',
+    fontSize: '14px',
     '& fieldset': {
       borderWidth: '1px !important',
-      borderColor: '#003F74 !important',
+      borderColor: '#535353 !important',
       '& legend': {
           '& span': {
               fontSize: '11px',
           },
         },
     },
+  },
+  searchLabel: {
+    fontSize: 16,
+    fontWeight: 600,
+    fontFamily: 'Poppins',
+    color: '#9D6C00',
+    marginLeft: '15px',
   },
   clearAllButtonRoot: {
     margin: 'auto',
@@ -90,6 +101,12 @@ export default () => ({
     paddingLeft: 0,
     borderBottom: '1px solid #D2D2D2',
   },
+  customExpansionPanelSummaryRootSpecial:{
+    height: '42px',
+    padding: '0',
+    flexDirection: 'row-reverse',
+    paddingLeft: 0,
+  },
   customExpansionPanelSummaryRootSlider: {
     height: '42px',
     padding: '0',
@@ -97,7 +114,18 @@ export default () => ({
     paddingLeft: 0,
   },
   sortGroup: {
-    padding: '10px',
+    padding: '10px 10px 10px 10px',
+  },
+  sortGroupIconSearchFacet: {
+    cursor: 'pointer',
+    fontFamily: 'Nunito',
+    fontSize: '10px',
+    marginRight: '12px',
+    marginLeft: '20px',
+  },
+  sortGroupSearchFacet: {
+    padding: '12px 4px 6px 0px',
+    display: 'flex',
   },
   sectionSummaryTextContainer: {
     display: 'flex',
@@ -134,37 +162,80 @@ export default () => ({
     marginRight: '0px',
   },
   activeFacetStudy: {
-    color: '#006A8F',
+    color: obtainColorFromSectionName(FACET_NAMES.STUDY).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetDemographics: {
-    color: '#E39520',
+    color: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetDiagnosis: {
-    color: '#35B899',
-    fontWeight: 600,
-  },
-  activeFacetTreatment: {
-    color: '#268CEA',
-    fontWeight: 600,
-  },
-  activeFacetTreatmentresponse: {
-    color: '#9664C7',
-    fontWeight: 600,
-  },
-  activeFacetSurvival: {
-    color: '#006B57',
+    color: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).slideOutComponentColor,
     fontWeight: 600,
   },
   activeFacetGeneticanalysis: {
-    color: '#862405',
+    color: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).slideOutComponentColor,
+    fontWeight: 600,
+  },
+  activeFacetTreatment: {
+    color: obtainColorFromSectionName(FACET_NAMES.TREATMENT).slideOutComponentColor,
+    fontWeight: 600,
+  },
+  activeFacetTreatmentresponse: {
+    color: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).slideOutComponentColor,
+    fontWeight: 600,
+  },
+  activeFacetSurvival: {
+    color: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).slideOutComponentColor,
     fontWeight: 600,
   },
   searchContainer: {
-    paddingTop: '15px',
+    paddingTop: '0px',
     margin: '0 2px',
     marginRight: 6,
+  },
+  searchBox: {
+    fontSize: '14px',
+    fontFamily: 'Nunito',
+    width: 'calc(100% - 26px)',
+    height: '30px',
+    marginTop: '0px',
+    borderRadius: '5px',
+    marginLeft: '6px',
+    border: '1px solid',
+    padding: '5px',
+  },
+  expandedDisplayButton: {
+    border: '1px solid #535353',
+    borderRadius: 8,
+    fontFamily: 'Raleway',
+    fontWeight: 600,
+    lineHeight: '100%',
+    letterSpacing: '2%',
+    textTransform: 'uppercase',
+    color: '#ffffff',
+    justifyContent: 'center',
+  },
+  expandedDisplayButtonStudy: {
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).slideOutComponentColor + ' !important',
+  },
+  expandedDisplayButtonDemographics: {
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).slideOutComponentColor + ' !important',
+  },
+  expandedDisplayButtonDiagnosis: {
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).slideOutComponentColor + ' !important',
+  },
+  expandedDisplayButtonGeneticanalysis: {
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).slideOutComponentColor + ' !important',
+  },
+  expandedDisplayButtonTreatment: {
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).slideOutComponentColor + ' !important',
+  },
+  expandedDisplayButtonTreatmentresponse: {
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).slideOutComponentColor + ' !important',
+  },
+  expandedDisplayButtonSurvival: {
+    backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).slideOutComponentColor + ' !important',
   },
   findCaseButton: {
     // marginLeft: '105px',
@@ -188,21 +259,22 @@ export default () => ({
   uploadButton: {
     boxSizing: 'border-box',
     fontWeight: '600',
-    height: 24,
-    width: '100%',
+    fontSize: 11,
+    fontFamily: 'Raleway',
+    height: 30,
+    width: '240px',
     display: 'flex',
     justifyContent: 'space-between',
-    backgroundColor: '#435C60',
+    backgroundColor: '#9D6C00',
     color: '#fff',
-    border: '1px solid #90A9B2',
-    borderRadius: 10,
-    fontFamily: 'Nunito',
-    fontSize: 11,
+    border: '1px solid #535353',
+    borderRadius: 8,
     boxShadow: 'none',
     paddingLeft: 9,
     paddingRight: 12,
+    margin:'0px auto',
     '&:hover': {
-      backgroundColor: '#435C60',
+      backgroundColor: '#E39520',
     },
   },
   iconSpan: {

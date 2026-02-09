@@ -401,7 +401,6 @@ export const CohortAnalyzer = () => {
         page: 0,
         onPageChange: (somevalue) => alert("ok ok"),
         downloadFileName: "download",
-        showDownloadIcon: false,
         SearchBox: () => SearchBox(classes, handleSearchValue, searchValue, searchRef),
         showSearchBox: true,
         tableMsg: getTableMessage(cohortList, selectedCohortSection, tableConfig)
@@ -449,7 +448,6 @@ export const CohortAnalyzer = () => {
 
                 <CohortSelector
                     handleDemoClick={handleDemoClick}
-                    state={state}
                 />
                 <div className={classes.rightSideAnalyzer}>
                     {alert.message && (
@@ -484,6 +482,9 @@ export const CohortAnalyzer = () => {
                             c1={selectedCohorts[0] && state && state[selectedCohorts[0]] ? state[selectedCohorts[0]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
                             c2={selectedCohorts[1] && state && state[selectedCohorts[1]] ? state[selectedCohorts[1]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
                             c3={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].participants.map((item) => item.id ? item.id : item.participant.id) : []}
+                            c1Name={selectedCohorts[0] && state && state[selectedCohorts[0]] ? state[selectedCohorts[0]].cohortName : ''}
+                            c2Name={selectedCohorts[1] && state && state[selectedCohorts[1]] ? state[selectedCohorts[1]].cohortName : ''}
+                            c3Name={selectedCohorts[2] && state && state[selectedCohorts[2]] ? state[selectedCohorts[2]].cohortName : ''}
                         />
                     </div>
                      <CohortAnalyzerTableSection

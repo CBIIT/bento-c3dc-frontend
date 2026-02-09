@@ -1,22 +1,24 @@
 {
   "homepage": "/",
   "name": "c3dc-frontend",
-  "version": "0.1.0",
+  "version": "1.8.0",
   "dependencies": {
     "@apollo/client": "^3.6.9",
     "@babel/core": "7.2.2",
     "@bento-core/about": "^1.0.1-c3dc.0",
     "@bento-core/cart": "1.0.1-ccdihub.7",
-    "@bento-core/facet-filter": "^1.0.1-c3dc.7",
-    "@bento-core/local-find": "^1.0.0-c3dc.3",
-    "@bento-core/paginated-table": "^1.0.0-c3dc.36",
-    "@bento-core/query-bar": "^1.0.0-c3dc.7",
+    "@bento-core/facet-filter": "^1.0.1-c3dc.11",
+    "@bento-core/kmplot": "^0.1.2",
+    "@bento-core/local-find": "^1.0.0-c3dc.5",
+    "@bento-core/paginated-table": "^1.0.0-c3dc.42",
+    "@bento-core/query-bar": "^1.0.0-c3dc.11",
+    "@bento-core/risk-table": "^1.0.0-c3dc.3",
     "@bento-core/stats-bar": "1.0.1-ccdihub.2",
-    "@bento-core/tab": "^1.0.0-c3dc.3",
-    "@bento-core/table": "^1.0.0-c3dc.30",
+    "@bento-core/tab": "^1.0.0-c3dc.6",
+    "@bento-core/table": "^1.0.0-c3dc.36",
     "@bento-core/tool-tip": "^1.0.0-c3dc.0",
     "@bento-core/util": "^1.0.0-ccdihub.0",
-    "@bento-core/widgets": "^1.0.0-c3dc.3",
+    "@bento-core/widgets": "^1.0.0-c3dc.6",
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "*",
@@ -44,6 +46,7 @@
     "graphql": "^14.7.0",
     "graphql-tag": "^2.11.0",
     "html-react-parser": "^3.0.15",
+    "html-to-image": "^1.11.13",
     "html-webpack-plugin": "4.0.0-alpha.2",
     "jest": "23.6.0",
     "jest-watch-typeahead": "^0.2.1",
@@ -83,8 +86,10 @@
     "start": "npm run lint && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
+    "test:ci": "TZ=UTC node scripts/test.js --ci --passWithNoTests --coverage --maxWorkers=2 --logHeapUsage",
     "lint": "eslint src --max-warnings=0",
-    "lint-fix": "eslint src --fix"
+    "lint:ci": "eslint src --ignore-path .gitignore --max-warnings=0",
+    "lint:fix": "eslint src --fix"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -100,7 +105,6 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts"
     ],
-    "resolver": "jest-pnp-resolver",
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
@@ -135,10 +139,7 @@
       "jsx",
       "node"
     ],
-    "watchPlugins": [
-      "/Users/doddapanenis2/Desktop/Develop/icdc-frontend/node_modules/jest-watch-typeahead/filename.js",
-      "/Users/doddapanenis2/Desktop/Develop/icdc-frontend/node_modules/jest-watch-typeahead/testname.js"
-    ]
+    "watchPlugins": []
   },
   "babel": {
     "presets": [
@@ -146,6 +147,8 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^12.1.5",
     "eslint": "^6.2.2",
     "eslint-plugin-import": "^2.22.0",
     "eslint-plugin-jsx-a11y": "^6.3.1",

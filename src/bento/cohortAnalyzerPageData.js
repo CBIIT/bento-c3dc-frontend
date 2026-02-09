@@ -10,7 +10,7 @@ export const tableConfig = {
   name: 'Participants',
   dataField: 'dataParticipant',
   api: GET_COHORT_MANIFEST_QUERY,
-  paginationAPIField: 'diagnosisOverview',
+  paginationAPIField: 'cohortManifest',
   count: 'numberOfParticipants',
   fileCount: 'participantsFileCount',
   dataKey: 'participant_id',
@@ -23,15 +23,8 @@ export const tableConfig = {
   hasToolTip: true,
   extendedViewConfig: {
     pagination: true,
-    manageViewColumns: false,
-    download: true,
-    downloadButtonConfig: {
-      title: 'DOWNLOAD DATA',
-      cloudIcon: true,
-    },
   },
   columns: [
-  
     {
       dataField: 'participant_id',
       header: 'Participant ID',
@@ -97,7 +90,7 @@ export const diagnosesTableConfig =
   name: 'Participants',
   dataField: 'dataParticipant',
   api: GET_COHORT_MANIFEST_QUERY,
-  paginationAPIField: 'diagnosisOverview',
+  paginationAPIField: 'cohortManifest',
   count: 'numberOfParticipants',
   fileCount: 'participantsFileCount',
   dataKey: 'participant_id',
@@ -110,12 +103,6 @@ export const diagnosesTableConfig =
   hasToolTip: true,
   extendedViewConfig: {
     pagination: true,
-    manageViewColumns: false,
-    download: true,
-    downloadButtonConfig: {
-      title: 'DOWNLOAD DATA',
-      cloudIcon: true,
-    },
   },
   columns: [
     {
@@ -167,7 +154,7 @@ export const treatmentTableConfig = {
   name: 'Participants',
   dataField: 'dataParticipant',
   api: GET_COHORT_MANIFEST_QUERY,
-  paginationAPIField: 'diagnosisOverview',
+  paginationAPIField: '',
   count: 'numberOfParticipants',
   fileCount: 'participantsFileCount',
   dataKey: 'participant_id',
@@ -180,12 +167,6 @@ export const treatmentTableConfig = {
   hasToolTip: true,
   extendedViewConfig: {
     pagination: true,
-    manageViewColumns: false,
-    download: true,
-    downloadButtonConfig: {
-      title: 'DOWNLOAD DATA',
-      cloudIcon: true,
-    },
   },
   columns: [
     {
