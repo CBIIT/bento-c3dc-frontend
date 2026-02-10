@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
+import ToolTip from '@bento-core/tool-tip';
 import { CohortModalContext } from '../../../../../CohortModalContext';
 import { confirmationTypes } from '../../../../shared/ConfirmationModal';
 import TrashCanIconBlue from '../../../../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import SortingIcon from '../../../../../../../assets/icons/Sorting_Icon.svg';
-import { SCROLLBAR_WIDTH } from '../../../../../../../bento/cohortModalData';
+import { SCROLLBAR_WIDTH, TOOLTIP_MESSAGES } from '../../../../../../../bento/cohortModalData';
 
 const ParticipantTable = (props) => {
     const {
@@ -140,13 +141,15 @@ const ParticipantTable = (props) => {
                     label="dbGaP Accession" 
                     altText="sort by dbGaP accession icon" 
                 />
-                <div className={classes.removeHeader} onClick={handleDeleteCohort}>
-                    <img
-                        src={TrashCanIconRed}
-                        alt="delete cohort icon"
-                        className={classes.redTrashCan}
-                    />
-                </div>
+                <ToolTip title={TOOLTIP_MESSAGES.removeCohort} placement="top-end" arrow>
+                    <div className={classes.removeHeader} onClick={handleDeleteCohort}>
+                        <img
+                            src={TrashCanIconRed}
+                            alt="delete cohort icon"
+                            className={classes.redTrashCan}
+                        />
+                    </div>
+                </ToolTip>
             </div>
             <div
                 className={classes.tableBody}
@@ -216,7 +219,6 @@ const styles = () => ({
         '&:hover': {
             cursor: 'pointer',
         },
-        paddingRight: '15px',
     },
     blueTrashCan: {
         height: '20px',
@@ -261,6 +263,7 @@ const styles = () => ({
         flex: '0 0 20px !important',
         cursor: 'pointer',
         paddingLeft: '0px !important',
+        marginRight: '15px',
     },
     tableBody: {
         overflowY: 'auto',
