@@ -8,12 +8,12 @@ import SortingIcon from '../../../../../../../assets/icons/Sorting_Icon.svg';
 import { SCROLLBAR_WIDTH } from '../../../../../../../bento/cohortModalData';
 
 const ParticipantTable = (props) => {
-    const { 
-        classes, 
-        participants, 
-        onDeleteParticipant, 
-        onDeleteAllParticipants,
-        searchText 
+    const {
+        classes,
+        participants,
+        onDeleteParticipant,
+        onDeleteCohort,
+        searchText
     } = props;
 
     const {
@@ -61,13 +61,13 @@ const ParticipantTable = (props) => {
         }
     }, [onDeleteParticipant]);
 
-    const handleDeleteAllParticipants = useCallback(() => {
+    const handleDeleteCohort = useCallback(() => {
         setConfirmModalProps({
-            handleConfirm: () => onDeleteAllParticipants(),
-            deletionType: confirmationTypes.DELETE_ALL_PARTICIPANTS,
+            handleConfirm: () => onDeleteCohort(),
+            deletionType: confirmationTypes.DELETE_SINGLE_COHORT,
         });
         setShowConfirmation(true);
-    }, [onDeleteAllParticipants, setConfirmModalProps, setShowConfirmation]);
+    }, [onDeleteCohort, setConfirmModalProps, setShowConfirmation]);
 
     // Sort participants (memoized for performance)
     const sortedParticipants = useMemo(() => {
@@ -140,7 +140,7 @@ const ParticipantTable = (props) => {
                     label="dbGaP Accession" 
                     altText="sort by dbGaP accession icon" 
                 />
-                <div className={classes.removeHeader} onClick={handleDeleteAllParticipants}>
+                <div className={classes.removeHeader} onClick={handleDeleteCohort}>
                     <img
                         src={TrashCanIconRed}
                         alt="delete cohort icon"

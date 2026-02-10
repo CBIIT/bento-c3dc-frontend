@@ -1,6 +1,7 @@
 import React, { useState, useContext, useCallback, useEffect, useMemo, memo } from 'react';
 import { withStyles, Button } from '@material-ui/core';
 import { CohortStateContext } from '../../../../../../components/CohortSelectorState/CohortStateContext';
+import { onDeleteSingleCohort } from '../../../../../../components/CohortSelectorState/store/action';
 import { CohortModalContext } from '../../../../CohortModalContext';
 import SearchBar from './components/SearchBar';
 import ParticipantTable from './components/ParticipantTable';
@@ -9,11 +10,12 @@ import DEFAULT_CONFIG from '../../../../config';
 const ParticipantList = (props) => {
     const { classes, localCohort, setLocalCohort, handleSave, closeModal, config } = props;
 
-    const { state } = useContext(CohortStateContext);
-    const { 
-        selectedCohort, 
+    const { state, dispatch } = useContext(CohortStateContext);
+    const {
+        selectedCohort,
         currentCohortChanges,
-        setCurrentCohortChanges
+        setCurrentCohortChanges,
+        clearCurrentCohortChanges
     } = useContext(CohortModalContext);
     
     const activeCohort = state[selectedCohort];
@@ -55,9 +57,10 @@ const ParticipantList = (props) => {
         updateCohortState({ participants: updatedParticipants });
     }, [localCohort.participants, updateCohortState]);
 
-    const handleDeleteAllParticipants = useCallback(() => {
-        updateCohortState({ participants: [] });
-    }, [updateCohortState]);
+    const handleDeleteCohort = useCallback(() => {
+        dispatch(onDeleteSingleCohort(selectedCohort));
+        clearCurrentCohortChanges();
+    }, [dispatch, selectedCohort, clearCurrentCohortChanges]);
 
     const datePrefix = useMemo(() => {
         return (config && config.datePrefix) || DEFAULT_CONFIG.config.cohortDetails.datePrefix;
@@ -73,7 +76,7 @@ const ParticipantList = (props) => {
             <ParticipantTable
                 participants={localCohort.participants}
                 onDeleteParticipant={handleDeleteParticipant}
-                onDeleteAllParticipants={handleDeleteAllParticipants}
+                onDeleteCohort={handleDeleteCohort}
                 searchText={searchText}
             />
             <div className={classes.cohortButtonSection}>
