@@ -43,8 +43,8 @@ export const DatasetSelectionTitle = styled.div`
 export const ChartTitle = styled.h2`
   font-family: Poppins; 
   font-size: 19px;
-  font-weight: 600;
-  color: #333;
+  font-weight: 400;
+  color: #000000;
   margin-bottom: 20px;
   text-align: left;
   margin-left: 3px;
@@ -151,8 +151,7 @@ export const ModalOverlay = styled.div`
 export const ModalContent = styled.div`
   background: white;
   border-radius: 8px;
-  padding: 20px;
-  width: 90%;
+  width: 1081px;
   max-width: 1200px;
   height: 80%;
   max-height: 800px;
@@ -180,9 +179,6 @@ export const ModalChartWrapper = styled.div`
 
 export const TabContainer = styled.div`
   display: flex;
-  border-bottom: 1px solid #e0e0e0;
-  margin-bottom: 20px;
-  flex: 1;
 `;
 
 export const Tab = styled.button`
@@ -192,9 +188,8 @@ export const Tab = styled.button`
   cursor: pointer;
   font-family: 'Nunito', sans-serif;
   font-size: 20px;
-  color: ${props => props.active ? '#4A5C5E' : '#666'};
+  color: ${props => props.active ? '#3A7587' : '#666'};
   border-bottom: ${props => props.active ? '2px solid #3A7587' : 'none'};
-  
   &:hover {
     background: #ffffff;
   }
@@ -224,14 +219,14 @@ export const DownloadDropdownMenu = styled.div`
 
 export const DownloadDropdownItem = styled.div`
   padding: 2px;
-  font-family: 'Nunito', sans-serif;
+  font-family: Poppins;
   font-size: 14px;
-  color: #333;
+  color: #000000;
   cursor: pointer;
   transition: background-color 0.2s;
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: 5px;
 
   &:hover {
     background-color: #f5f5f5;
@@ -328,6 +323,11 @@ export const ModalHeaderContainer = styled.div`
   align-items: center;
   position: relative;
   width: 100%;
+  padding: 0px;
+  height: 55px;
+  border-bottom: 1px solid #E0E0E0;
+  border-top-left-radius: 8px;
+  overflow: hidden;
 `;
 
 export const ModalActionButtons = styled.div`
@@ -358,8 +358,8 @@ export const DownloadIconImage = styled.img`
 `;
 
 export const DownloadIconSmall = styled.img`
-  width: 16px;
-  height: 16px;
+  width: 10px;
+  height: 12px;
 `;
 
 export const ModalChartContainer = styled.div`

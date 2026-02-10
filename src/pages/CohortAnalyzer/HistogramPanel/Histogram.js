@@ -388,9 +388,9 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
       <DatasetSelectionTitle disabled={allInputsEmpty}>
         View Venn Diagram in set operations:
       </DatasetSelectionTitle>
-      <div style={{ marginBottom: '15px' }}>
+      <div style={{ marginBottom: '15px', display: 'flex', flexDirection: 'row', gap: '8px' }}>
         {Object.keys(titles).map((key, index) => (
-          <label key={key} style={{ marginRight: '20px', fontFamily: 'Nunito', fontSize: '14px', color: '#666' }}>
+          <label key={key} style={{ fontFamily: 'Poppins', fontSize: '14px', color: '#000000', display: 'flex', alignItems: 'center',flexWrap: 'nowrap',flexDirection: 'row' }}>
             <input
               type="checkbox"
               value={key}
@@ -412,7 +412,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
           <ChartWrapper>
             <SurvivalAnalysisHeader>
               <ChartTitle>
-                {' Overall Survival by Diagnosis'}
+                {'Survival Analysis'}
                 <ToolTip
                   maxWidth="235px"
                   border={'1px solid #598ac5'}
@@ -453,15 +453,15 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                   {showDownloadDropdown && !allInputsEmpty && (
                     <DownloadDropdownMenu>
                       <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
-                        <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
-                        Kaplan-Meier
+                        <img src={DownloadIconBorderless} alt="download" style={{ width: '10px', height: '12px' }} />
+                        Kaplan Meier Plot
                       </DownloadDropdownItem>
                       <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
-                        <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                        <img src={DownloadIconBorderless} alt="download" style={{ width: '10px', height: '12px' }} />
                         Risk Table
                       </DownloadDropdownItem>
                       <DownloadDropdownItem onClick={() => downloadBoth()}>
-                        <img src={DownloadIconBorderless} alt="download" style={{ width: '16px', height: '16px' }} />
+                        <img src={DownloadIconBorderless} alt="download" style={{ width: '10px', height: '12px' }} />
                         Download Both
                       </DownloadDropdownItem>
                     </DownloadDropdownMenu>
@@ -527,7 +527,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                         interactive
                         arrowSize="30px"
                       >
-                        <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px", top: -3, position: 'relative' }} />
+                        <img alt="Question Icon" src={questionIcon} width={10} style={{ border: "0px", top: -3, left: 3, position: 'relative' }} />
                       </ToolTip>
                     )}
                   </ChartTitle>
@@ -612,7 +612,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                               const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
                               
                             
-                              let xFontSize = 11;
+                              let xFontSize = 10;
                               let xLineHeight = 11;
                               let xLetterSpacing = 0;
                               

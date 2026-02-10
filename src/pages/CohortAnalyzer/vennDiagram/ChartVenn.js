@@ -172,10 +172,20 @@ if(data){
 useEffect(() => {
   if (chartRef.current && canvasRef.current) {
     chartRef.current.destroy();
-    canvasRef.current.width = cohortData.length === 2 ? 900 : 800;
-    canvasRef.current.height =  cohortData.length === 2 ? 380 : 370;  
   }
-  chartRef.current = new VennDiagramChart(canvasRef.current, config);
+  
+  if (canvasRef.current && containerRef.current && data && config && config.type) {
+    const maxWidth =  cohortData.length === 2 ? 750 : 800;
+    const maxHeight = cohortData.length === 2 ? 200 : 390;
+    
+    canvasRef.current.width = maxWidth;
+    canvasRef.current.height = maxHeight;
+    canvasRef.current.style.width = `${maxWidth}px`;
+    canvasRef.current.style.height = `${maxHeight}px`;
+    canvasRef.current.style.overflow = 'visible';
+    canvasRef.current.style.margin = "10px";
+    chartRef.current = new VennDiagramChart(canvasRef.current, config);
+  }
 
   return () => {
     if (chartRef.current) chartRef.current.destroy();
