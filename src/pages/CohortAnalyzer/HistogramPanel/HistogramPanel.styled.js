@@ -182,7 +182,7 @@ export const TabContainer = styled.div`
 `;
 
 export const Tab = styled.button`
-  background: #ffffff;
+  background: transparent;
   border: none;
   padding: 12px 24px;
   cursor: pointer;
@@ -190,9 +190,7 @@ export const Tab = styled.button`
   font-size: 20px;
   color: ${props => props.active ? '#3A7587' : '#666'};
   border-bottom: ${props => props.active ? '2px solid #3A7587' : 'none'};
-  &:hover {
-    background: #ffffff;
-  }
+ 
 `;
 
 export const DownloadDropdown = styled.div`
@@ -327,7 +325,6 @@ export const ModalHeaderContainer = styled.div`
   height: 55px;
   border-bottom: 1px solid #E0E0E0;
   border-top-left-radius: 8px;
-  overflow: hidden;
 `;
 
 export const ModalActionButtons = styled.div`
