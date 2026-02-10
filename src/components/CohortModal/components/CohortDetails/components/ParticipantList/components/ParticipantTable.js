@@ -70,6 +70,8 @@ const ParticipantTable = (props) => {
         setShowConfirmation(true);
     }, [onDeleteCohort, setConfirmModalProps, setShowConfirmation]);
 
+    const isDeleteCohortDisabled = participants.length <= 1;
+
     // Sort participants (memoized for performance)
     const sortedParticipants = useMemo(() => {
         return [...participants].sort((a, b) => {
@@ -163,8 +165,8 @@ const ParticipantTable = (props) => {
                             <img
                                 src={TrashCanIconBlue}
                                 alt="delete participant icon"
-                                className={classes.blueTrashCan}
-                                onClick={() => handleDeleteParticipant(participant.participant_pk)}
+                                className={isDeleteCohortDisabled ? classes.blueTrashCanDisabled : classes.blueTrashCan}
+                                onClick={() => !isDeleteCohortDisabled && handleDeleteParticipant(participant.participant_pk)}
                             />
                         </div>
                     </div>
@@ -226,6 +228,12 @@ const styles = () => ({
         '&:hover': {
             cursor: 'pointer',
         },
+    },
+    blueTrashCanDisabled: {
+        height: '20px',
+        paddingTop: '2px',
+        opacity: 0.5,
+        cursor: 'not-allowed',
     },
     removeParticipant: {
         //right align the trash can icon
