@@ -453,15 +453,15 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
                   {showDownloadDropdown && !allInputsEmpty && (
                     <DownloadDropdownMenu>
                       <DownloadDropdownItem onClick={() => downloadKaplanMeierChart(kmChartRef)}>
-                        <img src={DownloadIconBorderless} alt="download" style={{ width: '10px', height: '12px' }} />
+                        <img src={DownloadIconBorderless} alt="download Kaplan Meier Plot" style={{ width: '10px', height: '12px' }} />
                         Kaplan Meier Plot
                       </DownloadDropdownItem>
                       <DownloadDropdownItem onClick={() => downloadRiskTable(riskTableRef)}>
-                        <img src={DownloadIconBorderless} alt="download" style={{ width: '10px', height: '12px' }} />
+                        <img src={DownloadIconBorderless} alt="download Risk Table" style={{ width: '10px', height: '12px' }} />
                         Risk Table
                       </DownloadDropdownItem>
                       <DownloadDropdownItem onClick={() => downloadBoth()}>
-                        <img src={DownloadIconBorderless} alt="download" style={{ width: '10px', height: '12px' }} />
+                        <img src={DownloadIconBorderless} alt="download Both Kaplan Meier Plot and Risk Table" style={{ width: '10px', height: '12px' }} />
                         Download Both
                       </DownloadDropdownItem>
                     </DownloadDropdownMenu>

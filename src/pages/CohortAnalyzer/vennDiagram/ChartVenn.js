@@ -182,7 +182,6 @@ useEffect(() => {
     canvasRef.current.height = maxHeight;
     canvasRef.current.style.width = `${maxWidth}px`;
     canvasRef.current.style.height = `${maxHeight}px`;
-    canvasRef.current.style.overflow = 'visible';
     canvasRef.current.style.margin = "10px";
     chartRef.current = new VennDiagramChart(canvasRef.current, config);
   }
