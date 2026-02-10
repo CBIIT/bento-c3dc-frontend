@@ -16,6 +16,7 @@ export const CCDI_HUB_DBGAP_PARAM = "&dbgap_accession=";
 export const confirmationTypes = {
     DELETE_ALL_COHORTS: 'delete all cohorts?',
     DELETE_SINGLE_COHORT: 'delete this cohort?',
+    DELETE_COHORT_WITH_PARTICIPANTS: 'DELETE_COHORT_WITH_PARTICIPANTS',
     DELETE_ALL_PARTICIPANTS: 'delete all participants?',
     CLEAR_UNSAVED_CHANGES: 'leave?'
 };

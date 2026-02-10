@@ -65,7 +65,7 @@ const ParticipantTable = (props) => {
     const handleDeleteCohort = useCallback(() => {
         setConfirmModalProps({
             handleConfirm: () => onDeleteCohort(),
-            deletionType: confirmationTypes.DELETE_SINGLE_COHORT,
+            deletionType: confirmationTypes.DELETE_COHORT_WITH_PARTICIPANTS,
         });
         setShowConfirmation(true);
     }, [onDeleteCohort, setConfirmModalProps, setShowConfirmation]);
