@@ -4,40 +4,69 @@
 import { FACET_NAMES, obtainColorFromSectionName } from '../../../bento/dashTemplate';
 export  const customStyles = {
     queryWrapper: {
-      //height: '120px',
+      position: 'relative',
+      height: '107px',
+      minHeight: '107px',
+      maxHeight: '107px',
       paddingBottom: '12px',
       backgroundColor: '#FFFFFF',
       borderBottom: '1px solid #B0B0B0',
-      padding: '14px 14px 0px 25px',
+      padding: '10px 0px 12px 25px',
       overflowY: 'auto',
+      '&::-webkit-scrollbar': {
+        width: '17px',
+        backgroundColor: '#FFFFFF',
+      },
+
+      '&::-webkit-scrollbar-track': {
+        backgroundColor: '#CECECE',
+        borderRadius: '20px',
+        border: '4px solid #FFFFFF',
+        backgroundClip: 'padding-box',
+      },
+
+      '&::-webkit-scrollbar-thumb': {
+        backgroundColor: '#477C90',
+        borderRadius: '20px',
+        border: '4px solid transparent',
+        backgroundClip: 'padding-box',
+      },
     },
     queryContainer: {
       marginLeft: 5,
       position: 'relative',
-      lineHeight: '2.4em',
+      lineHeight: '23px',
       fontFamily: 'Nunito',
       fontSize: '12px',
       color: '#000000',
     },
     filterName: {
       textTransform: 'uppercase',
-      padding: '3px 6px 3px 6px',
-      borderRadius: 4,
-      fontSize: 12,
-      fontWeight: 600,
-      cursor: 'pointer',
-      backgroundColor: '#E6FFF9',
-    },
-    filterCheckboxes: {
-      padding: '3px 6px 3px 6px',
+      padding: '1px 5px',
       borderRadius: 5,
       fontSize: 12,
       fontWeight: 600,
+      fontFamily: 'Nunito',
+      cursor: 'pointer',
+      backgroundColor: '#E6FFF9',
+      lineHeight: '100%',
+      letterSpacing: '0',
+      maxHeight: '20px',
+    },
+    filterCheckboxes: {
+      padding: '1.5px 6px',
+      borderRadius: 5,
+      fontSize: 12,
+      fontWeight: 500,
+      fontFamily: 'Nunito',
+      lineHeight: '100%',
+      letterSpacing: '0',
       border: '0.5px solid #646464',
       width: 'fit-content',
       backgroundColor: '#fff',
       cursor: 'pointer',
       color: '#008566',
+      maxHeight: '20px',
     },
     bracketsOpen: {
       fontSize: 20,
@@ -69,7 +98,7 @@ export  const customStyles = {
       fontWeight: 'bold',
     },
     clearQueryButton: {
-      margin: '1px',
+      marginRight: '23.5px',
       //marginLeft: -6,
       fontWeight: 600,
       fontSize: '12px',
@@ -79,17 +108,39 @@ export  const customStyles = {
       boxSizing: 'border-box',
       backgroundColor: '#646464',
       textTransform: 'capitalize',
-      border: '1px solid #B4B4B4',
-      padding: '1px 5px 0px 6px',
+      border: 'none',
+      padding: '2px 7px',
+      marginBottom: '1.6px',
       '&:hover': {
         backgroundColor: '#646464',
       },
     },
     divider: {
-      padding: '0 0 3px 0',
-      fontSize: '23px',
-      borderRight: '1px solid #969696',
-      marginLeft: 7,
+      position: 'absolute',
+      height: '26px',
+      borderRight: '.5px solid #969696',
+      verticalAlign: 'middle',
+      left: '141px',
+    },
+    viewLinkToggleBtn: {
+      margin: '1px',
+      fontWeight: 600,
+      fontSize: '12px',
+      color: '#fff',
+      borderRadius: '5px',
+      fontFamily: 'Nunito',
+      boxSizing: 'border-box',
+      backgroundColor: '#1D79A8',
+      textTransform: 'capitalize',
+      border: 'none',
+      padding: '2px 7px',
+      '&:hover': {
+        backgroundColor: '#1D79A8',
+      },
+    },
+    urlContainer: {
+      display: 'flex',
+      minHeight: '10px',
     },
     /* Custom Styling by Project */
     localFind: {
@@ -116,49 +167,49 @@ export  const customStyles = {
     },
     facetSectionStudyBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.STUDY).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionDemographics: {
       color: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).queryBarAttrbTextColor,
     },
     facetSectionDemographicsBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.DEMOGRAPHICS).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionDiagnosis: {
       color: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).queryBarAttrbTextColor,
     },
     facetSectionDiagnosisBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.DIAGNOSIS).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionGeneticanalysis: {
       color: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).queryBarAttrbTextColor,
     },
     facetSectionGeneticanalysisBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.GENETICANALYSIS).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionTreatment: {
       color: obtainColorFromSectionName(FACET_NAMES.TREATMENT).queryBarAttrbTextColor,
     },
     facetSectionTreatmentBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENT).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionTreatmentresponse: {
       color: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).queryBarAttrbTextColor,
     },
     facetSectionTreatmentresponseBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.TREATMENTRESPONSE).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     facetSectionSurvival: {
       color: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).queryBarAttrbTextColor,
     },
     facetSectionSurvivalBackground: {
       backgroundColor: obtainColorFromSectionName(FACET_NAMES.SURVIVAL).queryBarNameBkgdColor,
-      border: '2px solid #646464',
+      border: '1px solid #646464',
     },
     localFindAssociatedIdsBackground: {
       backgroundColor: '#F6A700',
