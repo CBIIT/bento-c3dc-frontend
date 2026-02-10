@@ -36,6 +36,7 @@ const theme = {
       colorSecondary: {
         '&:first-child': {
           color: '#000000',
+          padding: '9px 7px 9px 9px',
         },
       },
     },
