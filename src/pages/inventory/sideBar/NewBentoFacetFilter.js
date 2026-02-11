@@ -16,7 +16,7 @@ import {
   chunkSplit,
   SearchView, SearchBoxGenerator, UploadModalGenerator,
 } from '@bento-core/local-find';
-import styles from './BentoFacetFilterStyle';
+import styles, { uploadModalStyles } from './BentoFacetFilterStyle';
 import { NewFacetFilter } from '@bento-core/facet-filter';
 import { facetsConfig, facetSectionVariables, queryParams } from '../../../bento/dashTemplate';
 import FacetFilterThemeProvider from './NewFilterThemeConfig';
@@ -137,6 +137,7 @@ const NewBentoFacetFilter = ({
       projectName: 'C3DC',
       caseIds: 'Participant ID(s)',
     },
+    customStyles: uploadModalStyles,
   }), [updateUrl]);
 
   /** Note:

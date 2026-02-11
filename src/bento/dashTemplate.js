@@ -40,8 +40,8 @@ const FACET_COLORS = [
   { facetCategoryColor: '#C78800', slideOutComponentColor: '#9D6C00', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#FFDA8A', queryBarAttrbTextColor: '#9D6C00' },
   { facetCategoryColor: '#39A28A', slideOutComponentColor: '#2A8470', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#A2E0D2', queryBarAttrbTextColor: '#2A8470' },
   { facetCategoryColor: '#9852DC', slideOutComponentColor: '#9852DC', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#CEA3F8', queryBarAttrbTextColor: '#9852DC' },
-  { facetCategoryColor: '#006B57', slideOutComponentColor: '#006B57', zebraStripesColor1: '#E0ECEA', zebraStripesColor2: '#E9F5F3',  queryBarNameBkgdColor: '#91B6AF', queryBarAttrbTextColor: '#006B57' },
-  { facetCategoryColor: '#862405', slideOutComponentColor: '#862405', zebraStripesColor1: '#FFEDE7', zebraStripesColor2: '#FFF6F3',  queryBarNameBkgdColor: '#DDA0A0', queryBarAttrbTextColor: '#862405' },
+  { facetCategoryColor: '#006B57', slideOutComponentColor: '#006B57', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#91B6AF', queryBarAttrbTextColor: '#006B57' },
+  { facetCategoryColor: '#862405', slideOutComponentColor: '#862405', zebraStripesColor1: '#EFF3F1', zebraStripesColor2: '#F9FAFA',  queryBarNameBkgdColor: '#DDA0A0', queryBarAttrbTextColor: '#862405' },
 ];
 
 export const obtainColorFromFacetIndex = (index) => {
@@ -114,7 +114,9 @@ export const facetSectionVariables = {
       float: 'left',
       width: '50%',
       display: 'flex',
+      alignItems: 'center',
       textTransform: 'uppercase',
+      maxHeight: '22px',
     },
     maxValue: {
       fontFamily: 'Nunito',
@@ -124,7 +126,9 @@ export const facetSectionVariables = {
       marginBottom: '0px',
       width: '50%',
       display: 'flex',
+      alignItems: 'center',
       textTransform: 'uppercase',
+      maxHeight: '22px',
     },
     rail: {
       borderRadius: 4,
@@ -230,6 +234,60 @@ export const facetSectionVariables = {
     lowerUpperBound: {
       height: '15px',
     },
+    inputMinMax: {
+      slider_INPUT_MIN: {
+        fontFamily: 'Montserrat',
+        fontSize: '13px',
+        fontWeight: 500,
+        color: '#717171',
+        background: '#F0F0F0',
+        '& input': {
+          height: '22px',
+          width: '68px',
+          padding: '0px 0px 0px 2px',
+        },
+      },
+      slider_INPUT_MAX: {
+        fontFamily: 'Montserrat',
+        fontSize: '13px',
+        fontWeight: 500,
+        color: '#717171',
+        background: '#F0F0F0',
+        '& input': {
+          height: '22px',
+          width: '68px',
+          padding: '0px 0px 0px 2px',
+        },
+      },
+    },
+    unknownAgesTitle: {
+      fontFamily: 'Poppins',
+      fontSize: '13px',
+      fontWeight: '400',
+      color: '#323232',
+      marginBottom: '0px',
+      letterSpacing: '0.25px',
+    },
+    unknownAgesRadioGroup: {
+      flexDirection: 'row',
+      gap: '2px',
+      padding: '2px 0px 9px 0px',
+    },
+    radioLabel: {
+      marginRight: '10px',
+      marginBottom: '0px',
+      marginTop: '0px',
+      '&:nth-of-type(2)': {
+        paddingLeft: '8px',
+      },
+    },
+    radio: {
+      color: '#CCCCCC',
+      padding: '0px 9px',
+      '&:hover': {
+        backgroundColor: 'transparent',
+      },
+    },
   }
 
 // Helper function to create section-specific slider styles
@@ -256,7 +314,7 @@ const createSliderStylesForSection = (color) => ({
   },
   toggleButton: {
     height: 24,
-    border: '1px solid #535353', 
+    border: '1px solid #535353',
     fontFamily: 'Raleway',
     fontWeight: 600,
     fontSize: 11,
@@ -272,6 +330,212 @@ const createSliderStylesForSection = (color) => ({
   }
 });
 
+// Checkbox styles
+const checkboxStyles = {
+  listItemGutters: {
+    padding: '5.15px 10px 5.15px 0px',
+    minHeight: '31px',
+  },
+  checkboxRoot: {
+    marginLeft: '8px',
+    height: 12,
+  },
+  panelDetailText: {
+    color: '#323232',
+    fontFamily: 'Nunito',
+    fontSize: '14px',
+    fontWeight: '200',
+  },
+  panelSubjectText: {
+    color: '#323232',
+    fontFamily: 'Nunito',
+    fontSize: '14px',
+    marginRight: '0px',
+  },
+  checkboxLabel: {
+    margin: '0',
+  },
+  checkboxName: {
+    margin: '0',
+    color: '#000000',
+    fontSize: '16px',
+    fontWeight: 300,
+    marginTop: '1.5px',
+    fontFamily: 'Nunito',
+    lineHeight: '100%',
+  },
+};
+
+// Modal styles for expanded search view
+const modalStyles = {
+  header: {
+  },
+  closeButton: {
+  },
+  resetIcon: {
+  },
+  modalTitle: {
+    fontFamily: 'Poppins',
+    fontWeight: '400',
+    fontSize: '21px',
+    lineHeight: '21px',
+    letterSpacing: '0',
+    textAlign: 'center',
+    color: '#000000',
+  },
+  modalBody: {                                                                                                                                                                                                                                                                                                                                                                                                                
+    position: 'absolute',                                                                                                                                                                                                                                                                                                                                                                                                     
+    top: '50%',                                                                                                                                                                                                                                                                                                                                                                                                               
+    left: '50%',                                                                                                                                                                                                                                                                                                                                                                                                              
+    transform: 'translate(-50%, -50%)',                                                                                                                                                                                                                                                                                                                                                                                       
+    width: '836px',                                                                                                                                                                                                                                                                                                                                                                                                           
+    height: '671px',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               
+  },
+  searchContainer: {
+  },
+  searchInputbox: {
+  },
+  searchBox: {
+    paddingLeft: '11px',
+  },
+  highlight: {
+  },
+  sortGroup: {
+  },
+  sortGroupIcon: {
+  },
+  sortGroupItem: {
+  },
+  NonSortGroup: {
+  },
+  NonSortGroupItem: {
+  },
+  sortGroupItemCounts: {
+  },
+  itemContainer: {
+  },
+};
+
+// Modal filter styles (for items inside the modal)
+const modalFilterStyles = {
+  sortGroup: {
+  },
+  highlight: {
+  },
+  sortGroupIcon: {
+  },
+  sortGroupItem: {
+  },
+  sortGroupItemCounts: {
+    marginLeft: '38px',
+  },
+  checkboxContainer: {
+  },
+  checkedContainer: {
+  },
+  itemsContainer: {
+  '&::-webkit-scrollbar': {
+    width: '17px',
+    backgroundColor: '#FFFFFF',
+  },
+
+  '&::-webkit-scrollbar-track': {
+    backgroundColor: '#CECECE',
+    borderRadius: '20px',
+    border: '4px solid #FFFFFF',
+    backgroundClip: 'padding-box',
+  },
+
+  '&::-webkit-scrollbar-thumb': {
+    backgroundColor: '#477C90',
+    borderRadius: '20px',
+    border: '4px solid transparent',
+    backgroundClip: 'padding-box',
+  },
+  },
+  sortingContainer: {
+  },
+  selectionText: {
+  },
+  totalText: {
+  },
+  emptyItem: {
+  },
+};
+
+// Modal checkbox styles (for checkboxes inside the modal)
+const modalSubjectsTextStyle = {
+  color: '#000000',
+  padding: '2px 2px 1px 10px',
+  fontFamily: 'Nunito',
+  fontSize: '12px',
+  fontWeight: '600',
+  lineHeight: '17px',
+  letterSpacing: '0',
+  marginRight: '0px',
+  marginTop: '0px',
+  backgroundColor: 'transparent',
+};
+
+const modalCheckboxStyles = {
+  listItemGutters: {
+    padding: '6px 10px 6px 0px',
+  },
+  checkboxRoot: {
+  },
+  panelDetailText: {
+  },
+  panelSubjectText: {
+  },
+  checkboxLabel: {
+  },
+  checkboxName: {
+  },
+  subjectsText: {
+    '&.studySubjects': modalSubjectsTextStyle,
+    '&.demographicsSubjects': modalSubjectsTextStyle,
+    '&.diagnosisSubjects': modalSubjectsTextStyle,
+    '&.geneticanalysisSubjects': modalSubjectsTextStyle,
+    '&.treatmentSubjects': modalSubjectsTextStyle,
+    '&.treatmentresponseSubjects': modalSubjectsTextStyle,
+    '&.survivalSubjects': modalSubjectsTextStyle,
+  },
+};
+
+// Helper function to create section-specific checkbox styles
+const createCheckboxStylesForSection = (sectionName) => {
+  const sectionColor = sectionName
+    ? obtainColorFromSectionName(sectionName).slideOutComponentColor
+    : '#7A437A';
+
+  return {
+    checkbox: {
+      ...checkboxStyles,
+    },
+    modal: {
+      ...modalStyles,
+      searchInputbox: {
+        ...modalStyles.searchInputbox,
+        color: sectionColor,
+      },
+    },
+    modalFilter: {
+      ...modalFilterStyles,
+      selectionText: {
+        ...modalFilterStyles.selectionText,
+        color: sectionColor,
+      },
+      totalText: {
+        ...modalFilterStyles.totalText,
+        color: sectionColor,
+      },
+    },
+    modalCheckbox: {
+      ...modalCheckboxStyles,
+    },
+  };
+};
+
 // Define individual section facet configurations
 
 const studyFacets = [
@@ -285,7 +549,8 @@ const studyFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
-    updateURL: true
+    updateURL: true,
+    style: createCheckboxStylesForSection(STUDY),
   },
   {
     section: STUDY,
@@ -297,6 +562,7 @@ const studyFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(STUDY),
   },
 ];
 
@@ -311,6 +577,7 @@ const demographicsFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(DEMOGRAPHICS),
   },
   {
     section: DEMOGRAPHICS,
@@ -322,6 +589,7 @@ const demographicsFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(DEMOGRAPHICS),
   },
 ];
 
@@ -355,6 +623,7 @@ const diagnosisFacets = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. Neuroblastoma, NOS',
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
   {
     section: DIAGNOSIS,
@@ -368,6 +637,7 @@ const diagnosisFacets = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. Abdomen, NOS',
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
   {
     section: DIAGNOSIS,
@@ -379,6 +649,7 @@ const diagnosisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
   // {
   //   section: DIAGNOSIS,
@@ -401,6 +672,7 @@ const diagnosisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
   {
     section: DIAGNOSIS,
@@ -412,6 +684,7 @@ const diagnosisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(DIAGNOSIS),
   },
 ];
 
@@ -426,6 +699,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -437,12 +711,13 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
     label: 'Gene Symbol',
     apiPath: '',
-    apiForFiltering: 'filterParticipantCountByGeneSymbol', 
+    apiForFiltering: 'filterParticipantCountByGeneSymbol',
     datafield: 'gene_symbol',
     field: GROUP,
     type: InputTypes.CHECKBOX,
@@ -450,6 +725,7 @@ const geneticAnalysisFacets = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. MLL, TP53, BRAF',
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -463,6 +739,7 @@ const geneticAnalysisFacets = [
     show: true,
     search: true,
     searchPlaceholder: 'e.g. LOH, Gain, Heterozygosity',
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -474,6 +751,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -485,6 +763,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
   {
     section: GENETICANALYSIS,
@@ -496,6 +775,7 @@ const geneticAnalysisFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(GENETICANALYSIS),
   },
 ];
 
@@ -544,6 +824,7 @@ const treatmentFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(TREATMENT),
   },
   {
     section: TREATMENT,
@@ -555,6 +836,7 @@ const treatmentFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(TREATMENT),
   },
 ];
 
@@ -569,6 +851,7 @@ const treatmentResponseFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(TREATMENTRESPONSE),
   },
   {
     section: TREATMENTRESPONSE,
@@ -597,6 +880,7 @@ const treatmentResponseFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(TREATMENTRESPONSE),
   },
   {
     section: TREATMENTRESPONSE,
@@ -608,6 +892,7 @@ const treatmentResponseFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(TREATMENTRESPONSE),
   },
 ];
 
@@ -622,6 +907,7 @@ const survivalFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(SURVIVAL),
   },
   {
     section: SURVIVAL,
@@ -650,6 +936,7 @@ const survivalFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(SURVIVAL),
   },
   {
     section: SURVIVAL,
@@ -661,6 +948,7 @@ const survivalFacets = [
     type: InputTypes.CHECKBOX,
     sort_type: sortType.ALPHABET,
     show: true,
+    style: createCheckboxStylesForSection(SURVIVAL),
   },
 ];
 
