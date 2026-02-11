@@ -118,14 +118,14 @@ const ParticipantTable = (props) => {
             onClick={() => handleSort(columnKey)}
             className={classes.headerColumn}
         >
-            <span>{label}</span>
+            <span className={classes.headerColumnText}>{label}</span>
             <img
                 src={SortingIcon}
                 alt={altText}
                 className={getSortingIconClasses(columnKey)}
             />
         </div>
-    ), [classes.headerColumn, handleSort, getSortingIconClasses]);
+    ), [classes.headerColumn, classes.headerColumnText, handleSort, getSortingIconClasses]);
 
     return (
         <div className={classes.participantTableSection}>
@@ -190,8 +190,17 @@ const styles = () => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'start',
-        paddingLeft: '25px',
+        paddingLeft: '19px',
         cursor: 'pointer',
+    },
+    headerColumnText: {
+        color: '#0F253A',
+        fontFamily: '"Open Sans"',
+        fontSize: '15px',
+        fontStyle: 'normal',
+        fontWeight: 700,
+        lineHeight: 'normal',
+        letterSpacing: '-0.3px',
     },
     sortingIcon: {
         height: '14px',
@@ -301,7 +310,14 @@ const styles = () => ({
             wordWrap: 'break-word',
             wordBreak: 'break-all',
             whiteSpace: 'normal',
-            paddingLeft: '25px',
+            paddingLeft: '20px',
+            color: '#343434',
+            fontFamily: '"Open Sans"',
+            fontSize: '16px',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            lineHeight: '150%',
+            letterSpacing: '-0.32px',
         },
         '&:nth-child(odd)': {
             backgroundColor: '#D9DFE6',
