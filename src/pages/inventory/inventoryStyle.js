@@ -118,7 +118,7 @@ export default () => ({
     fontFamily: 'Open Sans',
     fontWeight: 400,
     fontSize: 14,
-    letterSpacing: '0%',
+    letterSpacing: '0',
     margin: '0 16px',
     padding: '16px 0',
     fontStyle: 'italic',
@@ -154,13 +154,13 @@ export default () => ({
     margin: '0px',
     backgroundColor: '#f4f4f4',
     '& li': {
-      height: '50px',
-      lineHeight: '50px',
+      height: '53px',
+      lineHeight: '53px',
       padding: '0 5px 0 13px',
       minHeight: '48px',
       paddingLeft: '14px',
       marginBottom: '-1px',
-      paddingRight: '14px',
+      paddingRight: '11px',
     }
   },
   categoryContainer: {
@@ -187,6 +187,7 @@ export default () => ({
     lineHeight: '22px',
     fontSize: '22px',
     verticalAlign: '-5px',
+    marginRight: '2px',
   },
   categoryTitle: {
     color: '#000000',
