@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import { CohortModalContext } from '../../../../../CohortModalContext';
-import { deletionTypes } from '../../../../shared/DeleteConfirmationModal';
+import { confirmationTypes } from '../../../../shared/ConfirmationModal';
 import TrashCanIconBlue from '../../../../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import SortingIcon from '../../../../../../../assets/icons/Sorting_Icon.svg';
@@ -16,9 +16,9 @@ const ParticipantTable = (props) => {
         searchText 
     } = props;
 
-    const { 
-        setShowDeleteConfirmation,
-        setDeleteModalProps
+    const {
+        setShowConfirmation,
+        setConfirmModalProps
     } = useContext(CohortModalContext);
 
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
@@ -62,12 +62,12 @@ const ParticipantTable = (props) => {
     }, [onDeleteParticipant]);
 
     const handleDeleteAllParticipants = useCallback(() => {
-        setDeleteModalProps({
-            handleDelete: () => onDeleteAllParticipants(),
-            deletionType: deletionTypes.DELETE_ALL_PARTICIPANTS,
+        setConfirmModalProps({
+            handleConfirm: () => onDeleteAllParticipants(),
+            deletionType: confirmationTypes.DELETE_ALL_PARTICIPANTS,
         });
-        setShowDeleteConfirmation(true);
-    }, [onDeleteAllParticipants, setDeleteModalProps, setShowDeleteConfirmation]);
+        setShowConfirmation(true);
+    }, [onDeleteAllParticipants, setConfirmModalProps, setShowConfirmation]);
 
     // Sort participants (memoized for performance)
     const sortedParticipants = useMemo(() => {
@@ -118,14 +118,14 @@ const ParticipantTable = (props) => {
             onClick={() => handleSort(columnKey)}
             className={classes.headerColumn}
         >
-            <span>{label}</span>
+            <span className={classes.headerColumnText}>{label}</span>
             <img
                 src={SortingIcon}
                 alt={altText}
                 className={getSortingIconClasses(columnKey)}
             />
         </div>
-    ), [classes.headerColumn, handleSort, getSortingIconClasses]);
+    ), [classes.headerColumn, classes.headerColumnText, handleSort, getSortingIconClasses]);
 
     return (
         <div className={classes.participantTableSection}>
@@ -190,8 +190,17 @@ const styles = () => ({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'start',
-        paddingLeft: '25px',
+        paddingLeft: '19px',
         cursor: 'pointer',
+    },
+    headerColumnText: {
+        color: '#0F253A',
+        fontFamily: '"Open Sans"',
+        fontSize: '15px',
+        fontStyle: 'normal',
+        fontWeight: 700,
+        lineHeight: 'normal',
+        letterSpacing: '-0.3px',
     },
     sortingIcon: {
         height: '14px',
@@ -301,7 +310,14 @@ const styles = () => ({
             wordWrap: 'break-word',
             wordBreak: 'break-all',
             whiteSpace: 'normal',
-            paddingLeft: '25px',
+            paddingLeft: '20px',
+            color: '#343434',
+            fontFamily: '"Open Sans"',
+            fontSize: '16px',
+            fontStyle: 'normal',
+            fontWeight: 400,
+            lineHeight: '150%',
+            letterSpacing: '-0.32px',
         },
         '&:nth-child(odd)': {
             backgroundColor: '#D9DFE6',

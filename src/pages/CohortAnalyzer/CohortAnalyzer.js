@@ -7,7 +7,7 @@ import { onCreateNewCohort, onDeleteAllCohort, onDeleteSingleCohort } from "../.
 import { tableConfig, analyzer_tables } from "../../bento/cohortAnalyzerPageData";
 import ToolTip from "@bento-core/tool-tip/dist/ToolTip";
 import Stats from '../../components/Stats/GlobalStatsController';
-import DeleteConfirmationModal from "../../components/CohortModal/components/shared/DeleteConfirmationModal";
+import ConfirmationModal from "../../components/CohortModal/components/shared/ConfirmationModal";
 import NavigateAwayModal from './navigateAwayModal';
 import { CohortModalContext } from "../../components/CohortModal/CohortModalContext";
 import CohortModal from "../../components/CohortModal/CohortModal";
@@ -413,11 +413,11 @@ export const CohortAnalyzer = () => {
                 setOpen={setShowNavigateAwayModal}
                 onConfirm={handleUserRedirect}
             />
-            <DeleteConfirmationModal
+            <ConfirmationModal
                 classes={""}
                 open={deleteInfo.showDeleteConfirmation}
                 setOpen={() => { handlePopup("", state, setDeleteInfo, deleteInfo) }}
-                handleDelete={() => {
+                handleConfirm={() => {
                     handleDelete(deleteInfo.cohortId,
                         setCohortList,
                         setSelectedCohorts,
@@ -430,11 +430,11 @@ export const CohortAnalyzer = () => {
                 deletionType={deleteInfo.deleteType}
             />
 
-            <DeleteConfirmationModal
+            <ConfirmationModal
                 classes={""}
                 open={warningMessage}
                 setOpen={() => { setWarningMessage("") }}
-                handleDelete={() => { setWarningMessage("") }}
+                handleConfirm={() => { setWarningMessage("") }}
                 deletionType={false}
                 message={warningMessage}
             />

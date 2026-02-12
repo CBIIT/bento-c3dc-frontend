@@ -1,15 +1,15 @@
 import React from 'react';
 import { Modal, withStyles } from '@material-ui/core';
-import { deletionTypes } from '../../../../bento/cohortModalData';
+import { confirmationTypes } from '../../../../bento/cohortModalData';
 
-export { deletionTypes };
+export { confirmationTypes };
 
-const DeleteConfirmationModal = (props) => {
+const ConfirmationModal = (props) => {
     const {
         classes,
         open,
         setOpen,
-        handleDelete,
+        handleConfirm,
         deletionType,
         message
     } = props;
@@ -26,8 +26,8 @@ const DeleteConfirmationModal = (props) => {
                             :
                             <>
                                 <span> Are you sure you want to {deletionType} </span>
-                                {deletionType !== deletionTypes.DELETE_ALL_PARTICIPANTS && <span>{deletionType === deletionTypes.CLEAR_UNSAVED_CHANGES && 'You will lose all unsaved changes. ' }This action cannot be undone.</span>}
-                                {deletionType !== deletionTypes.DELETE_ALL_PARTICIPANTS && <span>Press Confirm or Cancel. </span>}
+                                {deletionType !== confirmationTypes.DELETE_ALL_PARTICIPANTS && <span>{deletionType === confirmationTypes.CLEAR_UNSAVED_CHANGES && 'You will lose all unsaved changes. ' }This action cannot be undone.</span>}
+                                {deletionType !== confirmationTypes.DELETE_ALL_PARTICIPANTS && <span>Press Confirm or Cancel. </span>}
                             </>
                         }
 
@@ -51,7 +51,7 @@ const DeleteConfirmationModal = (props) => {
                                 <button
                                     className={classes.confirmButton}
                                     onClick={() => {
-                                        handleDelete();
+                                        handleConfirm();
                                         setOpen(false);
                                     }}
                                 >
@@ -134,4 +134,4 @@ const styles = () => ({
 
 });
 
-export default withStyles(styles, { withTheme: true })(DeleteConfirmationModal);
+export default withStyles(styles, { withTheme: true })(ConfirmationModal);
