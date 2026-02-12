@@ -39,6 +39,13 @@ export const DatasetSelectionTitle = styled.div`
   opacity: ${props => props.disabled ? 0.8 : 1};
 `;
 
+export const CheckBoxSection = styled.div`
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+`;
+
 
 export const ChartTitle = styled.h2`
   font-family: Poppins; 

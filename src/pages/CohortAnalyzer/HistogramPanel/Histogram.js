@@ -19,7 +19,7 @@ import {
   , RadioLabel, ChartActionButtons, ChartTitle,
   CenterContainer, DatasetSelectionTitle, DownloadDropdown, DownloadDropdownMenu, DownloadDropdownItem
   , SurvivalAnalysisHeader, SurvivalAnalysisContainer, KmChartWrapper,
-  barColors, RiskTableWrapper,
+  barColors, RiskTableWrapper, CheckBoxSection,
 } from './HistogramPanel.styled';
 import ExpandedChartModal from './HistogramPopup';
 import PlaceHolder2 from '../../../assets/histogram/Placeholder2.svg';
@@ -388,7 +388,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
       <DatasetSelectionTitle disabled={allInputsEmpty}>
         View Venn Diagram in set operations:
       </DatasetSelectionTitle>
-      <div style={{ marginBottom: '15px', display: 'flex', flexDirection: 'row', gap: '8px' }}>
+        <CheckBoxSection> 
         {Object.keys(titles).map((key, index) => (
           <label key={key} style={{ fontFamily: 'Poppins', fontSize: '14px', color: '#000000', display: 'flex', alignItems: 'center',flexWrap: 'nowrap',flexDirection: 'row' }}>
             <input
@@ -402,7 +402,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
             {titles[key]}
           </label>
         ))}
-      </div>
+      </CheckBoxSection>
 
       {/* View Type Selection */}
 
