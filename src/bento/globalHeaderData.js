@@ -70,7 +70,14 @@ export const navMobileList = [
        name: 'About',
        link: '',
        className: 'navMobileItem clickable',
-  },/*
+  },
+  {
+    name: 'CCDI Hub in C3DC',
+    link: 'https://ccdi.cancer.gov/',
+    className: 'navMobileItem',
+    externalLink: true,
+  }
+  /*
   {
     name: 'My File',
     link: '/fileCentricCart',
