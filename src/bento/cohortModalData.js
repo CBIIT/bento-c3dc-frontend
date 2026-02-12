@@ -12,8 +12,8 @@ export const CCDI_INTEROP_SERVICE_URL = "https://ccdi.cancer.gov/api/interoperat
 export const CCDI_HUB_LEGACY_BASE_URL = "https://ccdi.cancer.gov/explore?p_id=";
 export const CCDI_HUB_DBGAP_PARAM = "&dbgap_accession=";
 
-// Deletion Types Configuration
-export const deletionTypes = {
+// Confirmation Types Configuration
+export const confirmationTypes = {
     DELETE_ALL_COHORTS: 'delete all cohorts?',
     DELETE_SINGLE_COHORT: 'delete this cohort?',
     DELETE_ALL_PARTICIPANTS: 'delete all participants?',

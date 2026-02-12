@@ -1,6 +1,6 @@
 import { useContext, useCallback } from 'react';
 import { CohortModalContext } from '../CohortModalContext';
-import { deletionTypes } from '../components/shared/DeleteConfirmationModal';
+import { confirmationTypes } from '../components/shared/ConfirmationModal';
 
 /**
  * Custom hook for managing modal state and close operations
@@ -11,8 +11,8 @@ import { deletionTypes } from '../components/shared/DeleteConfirmationModal';
 export const useModalState = (onModalClose, modalClosed) => {
   const {
     setSelectedCohort,
-    setDeleteModalProps,
-    setShowDeleteConfirmation
+    setConfirmModalProps,
+    setShowConfirmation
   } = useContext(CohortModalContext) || {};
 
   // Close modal wrapper, handles cleanup and state reset
@@ -30,17 +30,17 @@ export const useModalState = (onModalClose, modalClosed) => {
 
   const unSavedChangesCheck = useCallback((hasUnsavedChanges) => {
     if (hasUnsavedChanges) {
-      if (setDeleteModalProps && setShowDeleteConfirmation) {
-        setDeleteModalProps({
-          handleDelete: () => closeModalWrapper(),
-          deletionType: deletionTypes.CLEAR_UNSAVED_CHANGES,
+      if (setConfirmModalProps && setShowConfirmation) {
+        setConfirmModalProps({
+          handleConfirm: () => closeModalWrapper(),
+          deletionType: confirmationTypes.CLEAR_UNSAVED_CHANGES,
         });
-        setShowDeleteConfirmation(true);
+        setShowConfirmation(true);
       }
     } else {
       closeModalWrapper();
     }
-  }, [closeModalWrapper, setDeleteModalProps, setShowDeleteConfirmation]);
+  }, [closeModalWrapper, setConfirmModalProps, setShowConfirmation]);
 
   return {
     closeModalWrapper,

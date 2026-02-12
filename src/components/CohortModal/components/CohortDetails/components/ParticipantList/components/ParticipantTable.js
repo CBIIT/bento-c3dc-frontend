@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
 import { CohortModalContext } from '../../../../../CohortModalContext';
-import { deletionTypes } from '../../../../shared/DeleteConfirmationModal';
+import { confirmationTypes } from '../../../../shared/ConfirmationModal';
 import TrashCanIconBlue from '../../../../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import SortingIcon from '../../../../../../../assets/icons/Sorting_Icon.svg';
@@ -16,9 +16,9 @@ const ParticipantTable = (props) => {
         searchText 
     } = props;
 
-    const { 
-        setShowDeleteConfirmation,
-        setDeleteModalProps
+    const {
+        setShowConfirmation,
+        setConfirmModalProps
     } = useContext(CohortModalContext);
 
     const [selectedColumn, setSelectedColumn] = useState(['participant_id', 'ascending']);
@@ -62,12 +62,12 @@ const ParticipantTable = (props) => {
     }, [onDeleteParticipant]);
 
     const handleDeleteAllParticipants = useCallback(() => {
-        setDeleteModalProps({
-            handleDelete: () => onDeleteAllParticipants(),
-            deletionType: deletionTypes.DELETE_ALL_PARTICIPANTS,
+        setConfirmModalProps({
+            handleConfirm: () => onDeleteAllParticipants(),
+            deletionType: confirmationTypes.DELETE_ALL_PARTICIPANTS,
         });
-        setShowDeleteConfirmation(true);
-    }, [onDeleteAllParticipants, setDeleteModalProps, setShowDeleteConfirmation]);
+        setShowConfirmation(true);
+    }, [onDeleteAllParticipants, setConfirmModalProps, setShowConfirmation]);
 
     // Sort participants (memoized for performance)
     const sortedParticipants = useMemo(() => {
