@@ -182,11 +182,13 @@ const styles = () => ({
         whiteSpace: 'nowrap',
         display: 'inline-block',
         maxWidth: '100%',
+        verticalAlign: 'middle',
     },
     middleContainer: {
         position: 'relative',
         display: 'inline-block',
         maxWidth: '100%',
+        verticalAlign: 'middle',
     },
     measureSpan: {
         visibility: 'hidden',
