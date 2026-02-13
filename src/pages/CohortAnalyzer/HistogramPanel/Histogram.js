@@ -412,7 +412,7 @@ const Histogram = ({ c1, c2, c3, c1Name = '', c2Name = '', c3Name = '' }) => {
           <ChartWrapper>
             <SurvivalAnalysisHeader>
               <ChartTitle>
-                {'Survival Analysis'}
+                {'Overall Survival by Diagnosis'}
                 <ToolTip
                   maxWidth="235px"
                   border={'1px solid #598ac5'}
