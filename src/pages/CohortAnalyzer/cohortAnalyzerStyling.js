@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core";
-import { max } from "lodash";
 
 export const useStyle = makeStyles((theme) => ({
     container: {
