@@ -23,6 +23,12 @@ const ConfirmationModal = (props) => {
                     <div className={classes.modalHeading}>
                         {message ?
                             <span>{message}</span>
+                            : deletionType === confirmationTypes.DELETE_SINGLE_COHORT ?
+                            <>
+                                <span>Are you sure you want to delete this cohort?</span>
+                                <span>This will permanently delete the cohort and all associated participants.</span>
+                                <span>Please confirm or cancel.</span>
+                            </>
                             :
                             <>
                                 <span> Are you sure you want to {deletionType} </span>
