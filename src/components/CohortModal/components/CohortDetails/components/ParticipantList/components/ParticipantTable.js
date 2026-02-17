@@ -1,19 +1,20 @@
 import React, { useState, useEffect, useRef, useContext, useCallback, useMemo, memo } from 'react';
 import { withStyles } from '@material-ui/core';
+import ToolTip from '@bento-core/tool-tip';
 import { CohortModalContext } from '../../../../../CohortModalContext';
 import { confirmationTypes } from '../../../../shared/ConfirmationModal';
 import TrashCanIconBlue from '../../../../../../../assets/icons/Trash_Can_Icon_Blue.svg';
 import TrashCanIconRed from '../../../../../../../assets/icons/Trash_Can_Icon_Red.svg';
 import SortingIcon from '../../../../../../../assets/icons/Sorting_Icon.svg';
-import { SCROLLBAR_WIDTH } from '../../../../../../../bento/cohortModalData';
+import { SCROLLBAR_WIDTH, TOOLTIP_MESSAGES } from '../../../../../../../bento/cohortModalData';
 
 const ParticipantTable = (props) => {
-    const { 
-        classes, 
-        participants, 
-        onDeleteParticipant, 
-        onDeleteAllParticipants,
-        searchText 
+    const {
+        classes,
+        participants,
+        onDeleteParticipant,
+        onDeleteCohort,
+        searchText
     } = props;
 
     const {
@@ -61,13 +62,15 @@ const ParticipantTable = (props) => {
         }
     }, [onDeleteParticipant]);
 
-    const handleDeleteAllParticipants = useCallback(() => {
+    const handleDeleteCohort = useCallback(() => {
         setConfirmModalProps({
-            handleConfirm: () => onDeleteAllParticipants(),
-            deletionType: confirmationTypes.DELETE_ALL_PARTICIPANTS,
+            handleConfirm: () => onDeleteCohort(),
+            deletionType: confirmationTypes.DELETE_SINGLE_COHORT,
         });
         setShowConfirmation(true);
-    }, [onDeleteAllParticipants, setConfirmModalProps, setShowConfirmation]);
+    }, [onDeleteCohort, setConfirmModalProps, setShowConfirmation]);
+
+    const isDeleteParticipantDisabled = participants.length <= 1;
 
     // Sort participants (memoized for performance)
     const sortedParticipants = useMemo(() => {
@@ -140,13 +143,15 @@ const ParticipantTable = (props) => {
                     label="dbGaP Accession" 
                     altText="sort by dbGaP accession icon" 
                 />
-                <div className={classes.removeHeader} onClick={handleDeleteAllParticipants}>
-                    <img
-                        src={TrashCanIconRed}
-                        alt="delete cohort icon"
-                        className={classes.redTrashCan}
-                    />
-                </div>
+                <ToolTip title={TOOLTIP_MESSAGES.removeCohort} placement="top-end" arrow>
+                    <div className={classes.removeHeader} onClick={handleDeleteCohort}>
+                        <img
+                            src={TrashCanIconRed}
+                            alt="delete cohort icon"
+                            className={classes.redTrashCan}
+                        />
+                    </div>
+                </ToolTip>
             </div>
             <div
                 className={classes.tableBody}
@@ -160,8 +165,8 @@ const ParticipantTable = (props) => {
                             <img
                                 src={TrashCanIconBlue}
                                 alt="delete participant icon"
-                                className={classes.blueTrashCan}
-                                onClick={() => handleDeleteParticipant(participant.participant_pk)}
+                                className={isDeleteParticipantDisabled ? classes.blueTrashCanDisabled : classes.blueTrashCan}
+                                onClick={() => !isDeleteParticipantDisabled && handleDeleteParticipant(participant.participant_pk)}
                             />
                         </div>
                     </div>
@@ -225,7 +230,6 @@ const styles = () => ({
         '&:hover': {
             cursor: 'pointer',
         },
-        paddingRight: '15px',
     },
     blueTrashCan: {
         height: '20px',
@@ -233,6 +237,12 @@ const styles = () => ({
         '&:hover': {
             cursor: 'pointer',
         },
+    },
+    blueTrashCanDisabled: {
+        height: '20px',
+        paddingTop: '2px',
+        opacity: 0.5,
+        cursor: 'not-allowed',
     },
     removeParticipant: {
         //right align the trash can icon
@@ -270,6 +280,7 @@ const styles = () => ({
         flex: '0 0 20px !important',
         cursor: 'pointer',
         paddingLeft: '0px !important',
+        marginRight: '15px',
     },
     tableBody: {
         overflowY: 'auto',
