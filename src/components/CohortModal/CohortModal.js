@@ -6,7 +6,7 @@ import DEFAULT_STYLES from './styles';
 import DEFAULT_CONFIG from './config';
 import CohortList from './components/CohortList/CohortList';
 import CohortDetails from './components/CohortDetails/CohortDetails';
-import { DeleteConfirmationModal, AlertManager } from './components/shared';
+import { ConfirmationModal, AlertManager } from './components/shared';
 import { CohortModalContext } from './CohortModalContext';
 import { useModalState } from './hooks/useModalState';
 import { useUnsavedChanges } from './hooks/useUnsavedChanges';
@@ -29,11 +29,11 @@ const CohortModal = (props) => {
         ...modalProps
     } = props;
 
-    const { 
+    const {
         clearCurrentCohortChanges,
-        showDeleteConfirmation,
-        setShowDeleteConfirmation,
-        deleteModalProps
+        showConfirmation,
+        setShowConfirmation,
+        confirmModalProps
     } = useContext(CohortModalContext) || {};
 
     // Use custom hooks for complex logic
@@ -49,7 +49,7 @@ const CohortModal = (props) => {
     const {
         CohortList: cohortListClasses,
         CohortDetails: cohortDetailsClasses,
-        DeleteConfirmation: deleteConfirmationClasses,
+        Confirmation: confirmationClasses,
     } = classes;
 
     const handleModalClose = useCallback(() => {
@@ -97,12 +97,12 @@ const CohortModal = (props) => {
                             </div>
                         </div>
                     </Modal>
-                    <DeleteConfirmationModal
-                        classes={deleteConfirmationClasses}
-                        open={showDeleteConfirmation}
-                        setOpen={setShowDeleteConfirmation}
-                        handleDelete={deleteModalProps && deleteModalProps.handleDelete ? deleteModalProps.handleDelete : EMPTY_FUNCTION}
-                        deletionType={deleteModalProps && deleteModalProps.deletionType ? deleteModalProps.deletionType : ""}
+                    <ConfirmationModal
+                        classes={confirmationClasses}
+                        open={showConfirmation}
+                        setOpen={setShowConfirmation}
+                        handleConfirm={confirmModalProps && confirmModalProps.handleConfirm ? confirmModalProps.handleConfirm : EMPTY_FUNCTION}
+                        deletionType={confirmModalProps && confirmModalProps.deletionType ? confirmModalProps.deletionType : ""}
                 />
         </>
     );

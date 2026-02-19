@@ -55,7 +55,9 @@ const CohortAnalyzerTableSection = ({ classes, questionIcon, handleClick, handle
             tooltip={exploreDashboardTooltip}
             icon={questionIcon}
           >
-            BUILD IN EXPLORE DASHBOARD
+            <div className={classes.leftAlignedText}>
+            BUILD IN EXPLORE <br></br> DASHBOARD
+            </div>
           </ButtonWithTooltip>
 
 

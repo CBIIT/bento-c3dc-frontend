@@ -17,7 +17,7 @@ import { Tabs as BentoTabs }  from '@bento-core/tab';
 import { customTheme } from './DefaultTabTheme';
 import CohortModal from '../../../components/CohortModal/CohortModal';
 import { CohortModalContext } from '../../../components/CohortModal/CohortModalContext';
-import DeleteConfirmationModal from '../../../components/CohortModal/components/shared/DeleteConfirmationModal';
+import ConfirmationModal from '../../../components/CohortModal/components/shared/ConfirmationModal';
 
 
 const Tabs = (props) => {
@@ -59,11 +59,11 @@ const Tabs = (props) => {
         onCloseModal={() => setShowCohortModal(false)}
         />
 
-      <DeleteConfirmationModal
+      <ConfirmationModal
            classes={""}
            open={warningMessage}
            setOpen={() => { setWarningMessage("") }}
-           handleDelete={() => { setWarningMessage("") }}
+           handleConfirm={() => { setWarningMessage("") }}
            deletionType={false}
            message={warningMessage}
        />

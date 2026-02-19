@@ -77,9 +77,19 @@ export const useStyle = makeStyles((theme) => ({
         fontSize: 15,
         gap: 15
     },
+    leftAlignedText: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        padding: 10,
+        fontSize: 12,
+        textAlign: 'start'
+    },
     exploreButton: {
         boxSizing: 'border-box',
         minWidth: '189px',
+        maxWidth: '189px',
         height: '41px',
         background: '#086C78',
         border: '1.25px solid #4EA1A1',
@@ -98,7 +108,8 @@ export const useStyle = makeStyles((theme) => ({
         boxSizing: 'border-box',
         fontFamily: 'Poppins',
         minWidth: '189px',
-        height: '41px',
+        maxWidth: '189px',
+        hight: '41px',
         background: '#BBC1C3',
         border: '1.25px solid #4EA1A1',
         borderRadius: '5px',

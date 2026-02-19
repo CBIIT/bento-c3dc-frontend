@@ -117,7 +117,7 @@ const useStyles = makeStyles(() => ({
         backgroundColor: '#556469',
         border: '1.25px solid #73A9C7',
         height: '41px',
-        width: '199px',
+        width: '189px',
         color: 'white',
         borderTopLeftRadius: '5px',
         borderTopRightRadius: '5px',
@@ -130,6 +130,7 @@ const useStyles = makeStyles(() => ({
         boxShadow: 'none',
         opacity: props.isSelected ? 1 : 0.4,
         cursor: props.isSelected ? 'pointer' : 'default',
+        fontFamily: 'Poppins',
         '&:hover': {
             backgroundColor: props.isSelected ? '#003B35' : '#556469',
             boxShadow: 'none',
@@ -145,7 +146,7 @@ const useStyles = makeStyles(() => ({
     downloadButtonOpened: (props) => ({
         backgroundColor: '#0C534C',
         border: '1.25px solid #73A9C7',
-        width: '199px',
+        width: '189px',
         height: '41px',
         color: 'white',
         borderTopLeftRadius: '5px',
@@ -181,7 +182,7 @@ const useStyles = makeStyles(() => ({
     dropdownMenu: {
         position: 'absolute',
         top: '39.5px',
-        width: '199px',
+        width: '189px',
         backgroundColor: '#EFF2F6',
         border: '1px solid #0C534C',
         borderBottomLeftRadius: '5px',
@@ -196,6 +197,7 @@ const useStyles = makeStyles(() => ({
         zIndex: 1,
         '& div': {
             padding: '13.2px 21px',
+            textTransform: 'uppercase',
             '&:hover': {
                 backgroundColor: '#CCD5E1',
                 cursor: 'pointer',
