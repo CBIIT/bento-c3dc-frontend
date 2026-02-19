@@ -273,15 +273,15 @@ const NavBar = () => {
                   <LiSection key={navkey}>
                     <div className='navTitle directLink'>
                       {navMobileItem.externalLink ? (
-                        <a 
-                          href={navMobileItem.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className='navText directLink'
-                          onKeyDown={onKeyPressHandler}
-                          onClick={handleMenuClick}
-                        >
-                          {navMobileItem.name}
+                        <a href={navMobileItem.link} target="_blank" rel="noopener noreferrer">
+                          <div
+                            className='navText directLink'
+                            onKeyDown={onKeyPressHandler}
+                            role="button"
+                            onClick={handleMenuClick}
+                          >
+                            {navMobileItem.name}
+                          </div>
                         </a>
                       ) : (
                         <NavLink to={navMobileItem.link}>
