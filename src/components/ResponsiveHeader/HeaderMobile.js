@@ -269,12 +269,16 @@ const Header = () => {
                             const mobilekey = `mobile_${idx}`;
                             return (
                                 <>
-                                    {navMobileItem.className === 'navMobileItem' && navMobileItem.externalLink ? (
-                                        <a href={navMobileItem.link} target="_blank" rel="noopener noreferrer" key={mobilekey} onClick={() => setNavMobileDisplay('none')}>
-                                            <div className='navMobileItem'>{navMobileItem.name}</div>
-                                        </a>
-                                    ) : (
-                                        navMobileItem.className === 'navMobileItem' && <NavLink to={navMobileItem.link} state={{ navigationType: 'main_menu' }} key={mobilekey} onClick={() => setNavMobileDisplay('none')}><div className='navMobileItem'>{navMobileItem.name}</div></NavLink>
+                                    {navMobileItem.className === 'navMobileItem' && (
+                                        navMobileItem.externalLink ? (
+                                            <a href={navMobileItem.link} target="_blank" rel="noopener noreferrer" key={mobilekey} onClick={() => setNavMobileDisplay('none')}>
+                                                <div className='navMobileItem'>{navMobileItem.name}</div>
+                                            </a>
+                                        ) : (
+                                            <NavLink to={navMobileItem.link} state={{ navigationType: 'main_menu' }} key={mobilekey} onClick={() => setNavMobileDisplay('none')}>
+                                                <div className='navMobileItem'>{navMobileItem.name}</div>
+                                            </NavLink>
+                                        )
                                     )}
                                     {navMobileItem.className === 'navMobileItem clickable' && <div key={mobilekey} className='navMobileItem clickable' onClick={clickNavItem}>{navMobileItem.name}</div>}
                                     {navMobileItem.className === 'navMobileSubItem' && <a href={navMobileItem.link} target={navMobileItem.externalLink ? "_blank" : ""} rel="noopener noreferrer" key={mobilekey}><div className='navMobileItem SubItem' onClick={() => setNavMobileDisplay('none')}>{navMobileItem.name}</div></a>}

@@ -72,11 +72,11 @@ export const navMobileList = [
        className: 'navMobileItem clickable',
   },
   {
-    name: 'CCDI Hub in C3DC',
+    name: 'CCDI Hub',
     link: 'https://ccdi.cancer.gov/',
     className: 'navMobileItem',
     externalLink: true,
-  }
+  },
   /*
   {
     name: 'My File',
