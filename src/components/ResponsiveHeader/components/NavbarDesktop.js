@@ -272,17 +272,30 @@ const NavBar = () => {
                   &&
                   <LiSection key={navkey}>
                     <div className='navTitle directLink'>
-                      <NavLink to={navMobileItem.link}>
-                        <div
+                      {navMobileItem.externalLink ? (
+                        <a 
+                          href={navMobileItem.link} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
                           className='navText directLink'
                           onKeyDown={onKeyPressHandler}
-                          role="button"
                           onClick={handleMenuClick}
-                          style={path === navMobileItem.link || (path === '/' && navMobileItem.link === '/home') ? activeStyle : null}
                         >
                           {navMobileItem.name}
+                        </a>
+                      ) : (
+                        <NavLink to={navMobileItem.link}>
+                          <div
+                            className='navText directLink'
+                            onKeyDown={onKeyPressHandler}
+                            role="button"
+                            onClick={handleMenuClick}
+                            style={path === navMobileItem.link || (path === '/' && navMobileItem.link === '/home') ? activeStyle : null}
+                          >
+                            {navMobileItem.name}
                           </div>
                         </NavLink>
+                      )}
                       </div>
                     </LiSection>
                 }
