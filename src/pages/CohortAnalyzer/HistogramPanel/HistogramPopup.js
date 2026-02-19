@@ -439,8 +439,8 @@ const ExpandedChartModal = ({
           const dataLength = (data[activeTab] && data[activeTab].length) || 1;
           const estimatedChartWidth = 800; // Larger width for expanded modal
           const availableWidth = (estimatedChartWidth / dataLength) * 0.9; // 90% to leave padding
-          // Expanded view: both X and Y axis 13/13/0
-          return <CustomXAxisTick {...props} width={availableWidth} fontSize={13} lineHeight={13} letterSpacing={0} />;
+          // Expanded view: both X and Y axis 11/11/0
+          return <CustomXAxisTick {...props} width={availableWidth} fontSize={11} lineHeight={13} letterSpacing={0} />;
         }}
         interval={0}
         angle={0}
@@ -455,7 +455,7 @@ const ExpandedChartModal = ({
     return viewType[activeTab] === 'percentage' ? `${formatted}%` : formatted;
   }}
         tick={{ 
-          fontSize: 13, 
+          fontSize: 11, 
           fill: '#666666', 
           fontFamily: 'Nunito', 
           fontWeight: 500,
