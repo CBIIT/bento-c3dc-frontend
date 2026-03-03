@@ -15,8 +15,8 @@ RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm run b
 FROM nginx:1.29.4-alpine3.23-slim AS fnl_base_image
 
 # libxml2 CVE
-# CVE-2025-58050
-RUN apk update && apk upgrade libxml2 pcre2
+# CVE-2025-58050 CVE-2026-27171 CVE-2025-60876
+RUN apk update && apk upgrade libxml2 pcre2 zlib busybox busybox-binsh --no-cache
 
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/config/inject.template.js /usr/share/nginx/html/inject.template.js
