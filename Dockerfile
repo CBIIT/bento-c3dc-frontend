@@ -1,4 +1,4 @@
-FROM node:20.11.1-alpine3.19 as build
+FROM node:20.11.1-alpine3.19 AS build
 
 WORKDIR /usr/src/app
 
@@ -12,20 +12,19 @@ RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm set p
 RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm ci --legacy-peer-deps
 RUN NODE_OPTIONS="--openssl-legacy-provider --max-old-space-size=4096" npm run build --silent
 
-FROM nginx:1.29.4-alpine3.23-slim AS fnl_base_image
+FROM nginx:1.29.5-alpine3.23-slim AS fnl_base_image
 
 # libxml2 CVE
 # CVE-2025-58050 CVE-2026-27171 CVE-2025-60876
-RUN apk update && apk upgrade libxml2 pcre2 zlib busybox busybox-binsh --no-cache
+# RUN apk update && apk upgrade libxml2 pcre2 zlib busybox busybox-binsh --no-cache
 
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
 COPY --from=build /usr/src/app/config/inject.template.js /usr/share/nginx/html/inject.template.js
 COPY --from=build /usr/src/app/config/nginx.conf /etc/nginx/conf.d/configfile.template
 COPY --from=build /usr/src/app/config/entrypoint.sh /
 
-ENV PORT 80
-
-ENV HOST 0.0.0.0
+ENV PORT=80
+ENV HOST=0.0.0.0
 
 RUN sh -c "envsubst '\$PORT'  < /etc/nginx/conf.d/configfile.template > /etc/nginx/conf.d/default.conf"
 
