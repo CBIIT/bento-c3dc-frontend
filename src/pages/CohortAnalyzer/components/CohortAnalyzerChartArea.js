@@ -41,6 +41,7 @@ function AddChartToolbarButton({
             onClick={openAddChartInline}
             aria-label={ariaLabel}
             title={tooltipText || undefined}
+            data-chart-export-exclude="true"
         >
             <span className={classes.addChartButtonLabel}>ADD CHART</span>
             <span aria-hidden className={classes.addChartButtonIcon}>+</span>
@@ -285,9 +286,8 @@ export function CohortAnalyzerChartArea({
             </div>
             <div
                 className={classes.chartSummaryMain}
-                ref={chartSummaryExportRef}
             >
-                <div style={chartPreviewContentStyle}>
+                <div style={chartPreviewContentStyle} ref={chartSummaryExportRef}>
                 {topRowOrder.length > 0 && (
                     <div
                         className={classes.vennSurvivalRow}
@@ -377,6 +377,7 @@ export function CohortAnalyzerChartArea({
                 <div
                     ref={addChartScrollAnchorRef}
                     className={classes.chartSummaryHistogramFooter}
+                    data-chart-export-exclude="true"
                 >
                     <AddChartToolbarButton
                         classes={classes}

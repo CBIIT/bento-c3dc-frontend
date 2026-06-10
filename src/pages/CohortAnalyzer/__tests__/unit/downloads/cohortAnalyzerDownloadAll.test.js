@@ -8,15 +8,37 @@ jest.mock('jspdf', () => ({
 
 import {
   CHART_EXPORT_PADDING_PX,
+  CHART_EXPORT_EXCLUDE_ATTR,
   buildRawCohortChartTabularRows,
   formatRowsAsTsv,
   formatRowsAsCsv,
   downloadTextFile,
+  shouldIncludeNodeInChartExport,
 } from '../../../downloads/cohortAnalyzerDownloadAll';
 
 describe('cohortAnalyzerDownloadAll', () => {
   it('exports chart padding constant', () => {
     expect(CHART_EXPORT_PADDING_PX).toBe(50);
+  });
+
+  it('exports chart exclude attribute constant', () => {
+    expect(CHART_EXPORT_EXCLUDE_ATTR).toBe('data-chart-export-exclude');
+  });
+
+  describe('shouldIncludeNodeInChartExport', () => {
+    it('excludes nodes inside chart export exclude markers', () => {
+      const root = document.createElement('div');
+      const excluded = document.createElement('button');
+      excluded.setAttribute(CHART_EXPORT_EXCLUDE_ATTR, 'true');
+      const label = document.createElement('span');
+      label.textContent = 'ADD CHART';
+      excluded.appendChild(label);
+      root.appendChild(excluded);
+
+      expect(shouldIncludeNodeInChartExport(root)).toBe(true);
+      expect(shouldIncludeNodeInChartExport(excluded)).toBe(false);
+      expect(shouldIncludeNodeInChartExport(label)).toBe(false);
+    });
   });
 
   describe('buildRawCohortChartTabularRows', () => {

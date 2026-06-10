@@ -4,6 +4,14 @@ import { jsPDF } from 'jspdf';
 /** White margin around captured chart area for PNG/PDF exports. */
 export const CHART_EXPORT_PADDING_PX = 50;
 
+/** Elements marked with this attribute are omitted from PNG/PDF chart captures. */
+export const CHART_EXPORT_EXCLUDE_ATTR = 'data-chart-export-exclude';
+
+export function shouldIncludeNodeInChartExport(node) {
+  if (!(node instanceof Element)) return true;
+  return !node.closest(`[${CHART_EXPORT_EXCLUDE_ATTR}]`);
+}
+
 function escapeCsvCell(value) {
   const s = String(value == null ? '' : value);
   if (/[",\n\r]/.test(s)) {
@@ -131,6 +139,7 @@ export async function downloadChartAreaAsPng(element, filename = 'cohort-analyze
       pixelRatio: 2,
       cacheBust: true,
       backgroundColor: '#ffffff',
+      filter: shouldIncludeNodeInChartExport,
     });
     const padded = await addUniformPaddingToPngDataUrl(dataUrl, CHART_EXPORT_PADDING_PX);
     const blob = await dataUrlToBlob(padded);
@@ -158,6 +167,7 @@ export async function downloadChartAreaAsPdf(element, filename = 'cohort-analyze
       pixelRatio: 2,
       cacheBust: true,
       backgroundColor: '#ffffff',
+      filter: shouldIncludeNodeInChartExport,
     });
     const paddedDataUrl = await addUniformPaddingToPngDataUrl(dataUrl, CHART_EXPORT_PADDING_PX);
     const img = new Image();
